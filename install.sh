@@ -123,9 +123,6 @@ check_requirements() {
 	else
 		log_warn "Check requirements : lua"
 	fi
-
-	log_info "Checking true colors support"
-	bash -c "$(curl -fsSL https://raw.githubusercontent.com/JohnMorales/dotfiles/master/colors/24-bit-color.sh)"
 }
 # }}}
 
@@ -146,7 +143,7 @@ backup_neovim() {
 	else
 		mkdir -p "$HOME/.config"
 		ln -s "$HOME/.doom-nvim" "$HOME/.config/nvim"
-		log_success "Installed Doom Nvim and some demons were released, be careful!"
+		log_success "Installed Doom Nvim and now there are demons everywhere, be careful!"
 	fi
 }
 # }}}
@@ -163,17 +160,60 @@ update_repo(){
 		git pull origin main
 		cd - > /dev/null 2>&1
 
-		log_success "Successfully updated doom-nvim, more demons were released!"
+		log_success "Successfully updated doom-nvim, more demons were released in your terminal!"
 	else
 		log_info "Trying to clone doom-nvim ..."
 		git clone -q https://github.com/NTBBloodbath/doom-nvim "$HOME/.doom-nvim"
 		if [ $? -eq 0 ]; then
-			log_success "Successfully cloned doom-nvim, some demons were released!"
+			log_success "Successfully cloned doom-nvim, some demons were released in your terminal!"
 		else
 			log_error "Failed to clone doom-nvim"
 			exit 0
 		fi
 	fi
+}
+
+install_packer() {
+    if [[ ! -d "$HOME/.local/share/nvim/site/pack/packer/opt/packer.nvim" ]]; then
+        log_info "Installing packer.nvim ..."
+        git clone -q https://github.com/wbthomason/packer.nvim $HOME/.local/share/nvim/site/pack/packer/opt/packer.nvim
+        log_success "Successfully installed packer.nvim"
+    fi
+}
+
+install_fonts() {
+    if [[ ! -d "$HOME/.local/share/fonts" ]]; then
+        mkdir -p $HOME/.local/share/fonts
+    fi
+
+    download_font "Fira Code Regular Nerd Font Complete Mono.ttf"
+    log_info "Updating font cache, please wait ..."
+    if [ $System == "Darwin" ]; then
+        if [ ! -e "$HOME/Library/Fonts" ]; then
+            mkdir "$HOME/Library/Fonts"
+        fi
+        cp $HOME/.local/share/fonts/* $HOME/Library/Fonts/
+    else
+        gc-cache -fv > /dev/null
+        mkfontdir "$HOME/.local/share/fonts" > /dev/null
+        mkfontscale "$HOME/.local/share/fonts" > /dev/null
+    fi
+    log_success "Font cache done"
+}
+
+download_font() {
+    url="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/patched-fonts/FiraCode/Regular/complete${1// /%20}"
+    download_path="$HOME/.local/share/fonts/$1"
+    if [[ -f "$download_path" && ! -s "$download_path" ]]; then
+        rm "$download_path"
+    fi
+
+    if [[ -f "$path" ]]; then
+        log_success "Downloaded $1"
+    else
+        log_info "Downloading $1 ..."
+        curl -s -o "$download_path" "$url"
+        log_success "Downloaded $1"
 }
 
 install_done() {
@@ -299,6 +339,8 @@ main() {
 		check_all
 		update_repo
 		backup_neovim
+        install_packer
+        install_fonts
         check_requirements
 		install_done
 	fi
