@@ -46,6 +46,8 @@ return require('packer').startup(function()
     use 'wbthomason/packer.nvim'
     -- Auxiliar functions for using Lua in Neovim
     use 'svermeulen/vimpeccable'
+    -- Languages support
+    use 'sheerun/vim-polyglot'
 
     -----[[------------]]-----
     ---     UI Related     ---
@@ -123,12 +125,13 @@ return require('packer').startup(function()
     -----[[--------------]]-----
     ---     Fuzzy Search     ---
     -----]]--------------[[-----
+    disabled_fuzzy = has_value(g.doom_disabled_plugins_group, 'fuzzy')
     use {
         'nvim-telescope/telescope.nvim',
         requires = {
             {'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}
         },
-        disabled = has_value(g.doom_disabled_plugins, 'telescope.nvim')
+        disable = (disabled_fuzzy and true or has_value(g.doom_disabled_plugins, 'telescope.nvim'))
     }
 
     -----[[-------------]]-----
@@ -138,12 +141,12 @@ return require('packer').startup(function()
     -- Git gutter better alternative
     use {
         'mhinz/vim-signify',
-        disabled = (disabled_git and true or has_value(g.doom_disabled_plugins, 'vim-signify'))
+        disable = (disabled_git and true or has_value(g.doom_disabled_plugins, 'vim-signify'))
     }
     -- LazyGit integration
     use {
         'kdheepak/lazygit.nvim',
-        disabled = (disabled_git and true or has_value(g.doom_disabled_plugins, 'lazygit.nvim'))
+        disable = disabled_git and true or has_value(g.doom_disabled_plugins, 'lazygit.nvim')
     }
 
     -----[[------------]]-----
@@ -155,7 +158,7 @@ return require('packer').startup(function()
     use {
         'neovim/nvim-lspconfig',
         commit = '11a581d1860a7ad2b6c1ee1e0ebbb000e81b9950',
-        disabled = (disabled_completion and true or has_value(g.doom_disabled_plugins, 'nvim-lspconfig'))
+        disable = (disabled_completion and true or has_value(g.doom_disabled_plugins, 'nvim-lspconfig'))
     }
     -- Completion plugin
     -- can be disabled to use your own completion plugin
@@ -164,7 +167,7 @@ return require('packer').startup(function()
         requires = {
             {'ray-x/lsp_signature.nvim'}, {'onsails/lspkind-nvim'}, {'norcalli/snippets.nvim'}
         },
-        disabled = (disabled_completion and true or has_value(g.doom_disabled_plugins, 'nvim-compe'))
+        disable = (disabled_completion and true or has_value(g.doom_disabled_plugins, 'nvim-compe'))
     }
     -----[[--------------]]-----
     ---     File Related     ---
@@ -173,36 +176,36 @@ return require('packer').startup(function()
     -- Write / Read files without permissions (e.g. /etc files) without having to use `sudo nvim /path/to/file`
     use {
         'lambdalisue/suda.vim',
-        disabled = (disabled_files and true or has_value(g.doom_disabled_plugins, 'suda.vim'))
+        disable = (disabled_files and true or has_value(g.doom_disabled_plugins, 'suda.vim'))
     }
     -- File formatting
     -- can be disabled to use your own file formatter
     use {
         'sbdchd/neoformat',
-        disabled = (disabled_files and true or has_value(g.doom_disabled_plugins, 'neoformat'))
+        disable = (disabled_files and true or has_value(g.doom_disabled_plugins, 'neoformat'))
     }
     -- Autopairs
     -- can be disabled to use your own autopairs
     use {
         'windwp/nvim-autopairs',
-        disabled = (disabled_files and true or has_value(g.doom_disabled_plugins, 'nvim-autopairs'))
+        disable = (disabled_files and true or has_value(g.doom_disabled_plugins, 'nvim-autopairs'))
     }
     -- EditorConfig support
     use {
         'editorconfig/editorconfig-vim',
-        disabled = (disabled_files and true or has_value(g.doom_disabled_plugins, 'editorconfig-vim'))
+        disable = (disabled_files and true or has_value(g.doom_disabled_plugins, 'editorconfig-vim'))
     }
     -- Tree-Sitter
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
-        disabled = (disabled_files and true or has_value(g.doom_disabled_plugins, 'tree-sitter'))
+        disable = (disabled_files and true or has_value(g.doom_disabled_plugins, 'tree-sitter'))
     }
     -- Comments
     -- can be disabled to use your own comments plugin
     use {
         'b3nj5m1n/kommentary',
-        disabled = (disabled_files and true or has_value(g.doom_disabled_plugins, 'kommentary'))
+        disable = (disabled_files and true or has_value(g.doom_disabled_plugins, 'kommentary'))
     }
 
     -----[[-------------]]-----
@@ -212,17 +215,17 @@ return require('packer').startup(function()
     -- Fastest colorizer without external dependencies!
     use {
         'norcalli/nvim-colorizer.lua',
-        disabled = (disabled_web and true or has_value(g.doom_disabled_plugins, 'nvim-colorizer'))
+        disable = (disabled_web and true or has_value(g.doom_disabled_plugins, 'nvim-colorizer'))
     }
     -- HTPP Client support
     -- Depends on bayne/dot-http to work!
     use {
         'bayne/vim-dot-http',
-        disabled = (disabled_web and true or has_value(g.doom_disabled_plugins, 'vim-dot-http'))
+        disable = (disabled_web and true or has_value(g.doom_disabled_plugins, 'vim-dot-http'))
     }
     -- Emmet plugin
     use {
         'mattn/emmet-vim',
-        disabled = (disabled_web and true or has_value(g.doom_disabled_plugins, 'emmet-vim'))
+        disable = (disabled_web and true or has_value(g.doom_disabled_plugins, 'emmet-vim'))
     }
 end)
