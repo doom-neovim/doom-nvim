@@ -13,7 +13,7 @@ if empty(glob('~/.local/share/nvim/site/pack/packer/opt/packer.nvim'))
     augroup doom_sync_plugins
         autocmd!
         autocmd VimEnter * PackerCompile | source $MYVIMRC
-        autocmd VimEnter * PackerInstall
+        autocmd VimEnter * PackerInstall | source $MYVIMRC
     augroup END
 endif
 
@@ -30,5 +30,17 @@ call doom#begin()
 
 " /home/user/.doom-nvim/lua/plugins.lua
 lua require('plugins')
+" Plugins configurations
+" /home/user/.doom-nvim/lua/configs/*.lua
+lua require('configs.autopairs')
+lua require('configs.lsp')
+lua require('configs.nvim-colorizer')
+lua require('configs.nvim-compe')
+lua require('configs.nvim-focus')
+lua require('configs.nvim-telescope')
+lua require('configs.nvim-toggleterm')
+lua require('configs.nvim-tree')
+lua require('configs.statusline')
+lua require('configs.tree-sitter')
 
 call doom#end()
