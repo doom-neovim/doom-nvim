@@ -51,27 +51,6 @@ function! doom#system#grepconfig(folder, filename, source) abort
     endif
 endfunction
 
-function doom#system#grepfolder(folder) abort
-    let fullpath = g:doom_root . a:folder
-
-    try
-        call doom#logging#message('+', 'Returned '.a:folder.' path', 2)
-        return fullpath
-    catch
-        call doom#logging#message('!', 'Unable to return folder path', 1)
-    endtry
-endfunction
-
-function! doom#system#grepdoc() abort
-    let fullpath = g:doom_root . 'doc'
-
-    try
-        exe ':helptags ' . fullpath
-    catch
-        call doom#logging#message('!', 'Unable to create helptags', 1)
-    endtry
-endfunction
-
 function! doom#system#checkupdates()
     try
         call doom#logging#message('+', 'Updating the outdated plugins ...', 2)
