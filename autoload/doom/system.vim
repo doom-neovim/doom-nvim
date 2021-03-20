@@ -74,7 +74,7 @@ endfunction
 
 function! doom#system#checkupdates()
     try
-        call doom#logging#message('+', 'Purging outdated plugin...', 2)
+        call doom#logging#message('+', 'Updating the outdated plugins ...', 2)
         execute ':PackerSync'
         call doom#logging#message('+', 'Done', 2)
     catch

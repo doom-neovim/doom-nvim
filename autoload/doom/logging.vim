@@ -9,6 +9,9 @@ function! doom#logging#init()
         let today = strftime('%c')
         let boot_msg = '['.today.'] - Starting Doom Nvim '.g:doom_version.' ...'
         try
+            if g:doom_logging == 3
+                echo boot_msg
+            endif
             exec ':silent !echo " " >> $HOME/.doom-nvim/logs/doom.log'
             exec ':silent !echo '.boot_msg.' >> $HOME/.doom-nvim/logs/doom.log'
         catch
@@ -42,12 +45,18 @@ function! doom#logging#message(type, msg, level)
         try
             if g:doom_logging >= a:level
                 if g:doom_logging == 3
-                    echo output
+                    " If it is an error then use echoerr
+                    if output =~ '\!'
+                        echoerr output
+                    else
+                        echo output
+                    endif
                 endif
                 exec ":silent !echo '".output."' >> $HOME/.doom-nvim/logs/doom.log"
             endif
         catch
             let err_msg = '[!] - Cannot save: ' . a:msg . ''
+            echoerr err_msg
             exec ':silent !echo '.err_msg.' >> $HOME/.doom-nvim/logs/doom.log'
         endtry
     endif

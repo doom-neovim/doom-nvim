@@ -1,7 +1,7 @@
 function! doom#autocmds#init() abort
     augroup doom_core
         " Load config
-        call doom#logging#message('+', 'doom#autocmds#init called', 2)
+        call doom#logging#message('+', 'doom.autocmds.init called', 2)
         if g:doom_relative_num
             autocmd BufEnter,WinEnter * if &nu | set rnu | endif
             autocmd BufLeave,WinLeave * if &nu | set nornu | endif

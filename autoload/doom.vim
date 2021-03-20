@@ -82,18 +82,10 @@ let g:doom_disabled_plugins_group = ['git', 'lsp', 'web']
 " Install custom plugins
 " @default = []
 " example:
-"   let g:doom_custom_plugins = ['author/repository']
+"   let g:doom_custom_plugins = ['andweeb/presence.nvim']
 "
 " NOTE: Not implemented yet!
 let g:doom_custom_plugins = []
-
-" Autocomplete pairs
-" @default = 1
-let g:doom_autocomplete_pairs = 1
-
-" Enable dashboard.nvim
-" @default = 1
-let g:doom_enable_startmenu = 1
 
 "Conceal level
 " 0: Disabled
@@ -132,8 +124,8 @@ function! doom#loadConfig(file) abort
 endfunction
 
 " Doom Nvim path
-" @default = $HOME/.doom-nvim
-let g:doom_root = expand('<sfile>:p')[:-22]
+" @default = $HOME/.doom-nvim/
+let g:doom_root = expand('$HOME/.doom-nvim/')
 lockvar g:doom_root
 
 " Call Functions

@@ -14,7 +14,7 @@ endfunction
 
 " /home/user/.doom-nvim/autoload/functions.vim
 function! doom#functions#get_root() abort
-    call doom#logging#message('+', 'doom#functions#get_root called', 2)
+    call doom#logging#message('+', 'doom.functions.get_root called', 2)
 
     let full_root = expand('<sfile>:p')
     let root = full_root[:-22]

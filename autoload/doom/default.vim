@@ -8,7 +8,7 @@
 scriptencoding utf-8
 
 function! doom#default#options() abort
-    call doom#logging#message('+', 'doom#default#options called', 2)
+    call doom#logging#message('+', 'doom.default.options called', 2)
     " Set colorscheme
     exe "colorscheme ".g:doom_colorscheme
     exe "set background=".g:doom_colorscheme_bg
@@ -78,15 +78,7 @@ function doom#default#loadGlob()
 
     " Dashboard
     let g:dashboard_session_directory = g:doom_root . 'sessions/'
-    " let g:dashboard_custom_shortcut = {
-    "             \ 'last_session'       : 'SPC q l',
-    "             \ 'find_history'       : 'SPC s h',
-    "             \ 'find_file'          : 'SPC s f',
-    "             \ 'new_file'           : 'SPC f n',
-    "             \ 'change_colorscheme' : 'SPC m c',
-    "             \ 'find_word'          : 'SPC s w',
-    "             \ 'book_marks'         : 'SPC m j',
-    "             \ }
+    let g:dashboard_default_executive = 'telescope'
     let plugins_count = len(globpath('~/.local/share/nvim/site/pack/packer/start', '*', 0, 1))
     let g:dashboard_custom_footer = [
                 \ 'Doom Nvim loaded '.plugins_count.' plugins'
