@@ -9,6 +9,9 @@ scriptencoding utf-8
 
 function! doom#default#options() abort
     call doom#logging#message('+', 'doom#default#options called', 2)
+    " Set colorscheme
+    exe "colorscheme ".g:doom_colorscheme
+    exe "set background=".g:doom_colorscheme_bg
     " Set default options
     syntax on
     filetype plugin indent on
@@ -23,17 +26,27 @@ function! doom#default#options() abort
     set splitbelow
     set noswapfile
     set noshowmode
-    set hlsearch
+    set nowrap
 
+    set hidden
+    set hlsearch
     set mouse=a
     set laststatus=2
     set backspace=indent,eol,start
+    set updatetime=100
     set timeoutlen=200
+    set completeopt+=menu,menuone,preview,noselect
     set clipboard+=unnamedplus
     set shortmess+=at
 
+    set inccommand=split
+    set signcolumn=yes
+    set scrolloff=4
+    set path=**
+
     let &expandtab = g:doom_expand_tabs
     let &tabstop = g:doom_indent
+    let &shiftwidth = g:doom_indent
     let &softtabstop = g:doom_indent
     let &colorcolumn = g:doom_max_columns
     let &conceallevel = g:doom_conceallevel

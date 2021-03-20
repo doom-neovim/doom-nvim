@@ -16,5 +16,30 @@ function! doom#autocmds#init() abort
     " Compile new plugins changes at save
     autocmd BufWritePost plugins.lua PackerCompile
 
+    " Disable tabline on Dashboard
     autocmd FileType dashboard set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2
+
+    " Automatically enter insert mode on new terminals
+    augroup term_insert
+        autocmd TermOpen * startinsert
+    augroup END
+
+    " Set autosave
+    if g:doom_autosave ==# 1
+        autocmd TextChanged,TextChangedI <buffer> silent! write
+    endif
+
+    " Format on save
+    " NOTE: Requires neoformat to be enabled!
+    if g:doom_fmt_on_save ==# 1
+        autocmd BufWritePre * undojoin | Neoformat
+    endif
+
+    " Preserve last editing pos
+    if g:doom_preserve_edit_pos ==# 1
+        autocmd BufReadPost *
+                    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                    \     exe "normal! g`\"" |
+                    \ endif
+    endif
 endfunction

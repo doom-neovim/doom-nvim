@@ -11,6 +11,18 @@ lockvar g:doom_version
 " Force UTF-8 encoding
 scriptencoding utf-8
 
+" Enable autosave
+" @default = 0
+let g:doom_autosave = 1
+
+" Enable format on save
+" @default = 0
+let g:doom_fmt_on_save = 0
+
+" Preserve last editing position
+" @default = 0
+let g:doom_preserve_edit_pos = 0
+
 " Default indent size
 " @default = 4
 let g:doom_indent = 4
