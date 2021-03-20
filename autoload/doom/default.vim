@@ -35,7 +35,7 @@ function! doom#default#options() abort
     let &expandtab = g:doom_expand_tabs
     let &tabstop = g:doom_indent
     let &softtabstop = g:doom_indent
-    let &colorcolumn = g:doom_max_cols
+    let &colorcolumn = g:doom_max_columns
     let &conceallevel = g:doom_conceallevel
     if g:doom_relative_num ==# 1
         set number relativenumber
