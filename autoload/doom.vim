@@ -124,7 +124,7 @@ function! doom#loadConfig(file) abort
 endfunction
 
 " Doom Nvim path
-" @default = $HOME/.doom-nvim/
+" @default = /home/user/.doom-nvim/
 let g:doom_root = expand('$HOME/.doom-nvim/')
 lockvar g:doom_root
 
