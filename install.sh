@@ -214,6 +214,7 @@ download_font() {
         log_info "Downloading $1 ..."
         curl -s -o "$download_path" "$url"
         log_success "Downloaded $1"
+    fi
 }
 
 install_done() {
