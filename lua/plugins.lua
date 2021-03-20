@@ -79,7 +79,6 @@ return require('packer').startup(function()
     -- can be disabled to use your own statusline
     use {
         'glepnir/galaxyline.nvim',
-        config = require('configs.statusline'),
         disabled = has_value(g.doom_disabled_plugins, 'galaxyline.nvim')
     }
     -- Tabline
@@ -94,14 +93,12 @@ return require('packer').startup(function()
     use {
         'beauwilliams/focus.nvim',
         branch = 'cust_filetypes',
-        config = require('configs.nvim-focus'),
         disabled = has_value(g.doom_disabled_plugins, 'focus.nvim')
     }
     -- Better terminal
     -- can be disabled to use your own terminal plugin
     use {
         'akinsho/nvim-toggleterm.lua',
-        config = require('configs.nvim-toggleterm'),
         disabled = has_value(g.doom_disabled_plugins, 'nvim-toggleterm.lua')
     }
     -- Viewer & finder for LSP symbols and tags
@@ -135,14 +132,13 @@ return require('packer').startup(function()
         requires = {
             {'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}
         },
-        config = require('configs.nvim-telescope'),
         disabled = has_value(g.doom_disabled_plugins, 'telescope.nvim')
     }
 
     -----[[-------------]]-----
     ---     GIT RELATED     ---
     -----]]-------------[[-----
-    local disabled_git = has_value(g.doom_disabled_plugins_group, 'git')
+    disabled_git = has_value(g.doom_disabled_plugins_group, 'git')
     -- Git gutter better alternative
     use {
         'mhinz/vim-signify',
@@ -157,13 +153,12 @@ return require('packer').startup(function()
     -----[[------------]]-----
     ---     Completion     ---
     -----]]------------[[-----
-    local disabled_completion = has_value(g.doom_disabled_plugins_group, 'lsp')
+    disabled_completion = has_value(g.doom_disabled_plugins_group, 'lsp')
     -- Built-in LSP Config
     -- NOTE: It should not be disabled if you are going to use LSP!
     use {
         'neovim/nvim-lspconfig',
         commit = '11a581d1860a7ad2b6c1ee1e0ebbb000e81b9950',
-        config = require('configs.lsp'),
         disabled = (disabled_completion and true or has_value(g.doom_disabled_plugins, 'nvim-lspconfig'))
     }
     -- Completion plugin
@@ -173,13 +168,12 @@ return require('packer').startup(function()
         requires = {
             {'ray-x/lsp_signature.nvim'}, {'onsails/lspkind-nvim'}, {'norcalli/snippets.nvim'}
         },
-        config = requires('configs.nvim-compe'),
         disabled = (disabled_completion and true or has_value(g.doom_disabled_plugins, 'nvim-compe'))
     }
     -----[[--------------]]-----
     ---     File Related     ---
     -----]]--------------[[-----
-    local disabled_files = has_value(g.doom_disabled_plugins_group, 'files')
+    disabled_files = has_value(g.doom_disabled_plugins_group, 'files')
     -- Write / Read files without permissions (e.g. /etc files) without having to use `sudo nvim /path/to/file`
     use {
         'lambdalisue/suda.vim',
@@ -195,7 +189,6 @@ return require('packer').startup(function()
     -- can be disabled to use your own autopairs
     use {
         'windwp/nvim-autopairs',
-        config = require('configs.autopairs'),
         disabled = (disabled_files and true or has_value(g.doom_disabled_plugins, 'nvim-autopairs'))
     }
     -- EditorConfig support
@@ -207,7 +200,6 @@ return require('packer').startup(function()
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
-        config = require('configs.tree-sitter'),
         disabled = (disabled_files and true or has_value(g.doom_disabled_plugins, 'tree-sitter'))
     }
     -- Comments
@@ -220,11 +212,10 @@ return require('packer').startup(function()
     -----[[-------------]]-----
     ---     Web Related     ---
     -----]]-------------[[-----
-    local disabled_web = has_value(g.doom_disabled_plugins_group, 'web')
+    disabled_web = has_value(g.doom_disabled_plugins_group, 'web')
     -- Fastest colorizer without external dependencies!
     use {
         'norcalli/nvim-colorizer.lua',
-        config = require('configs.nvim-colorizer'),
         disabled = (disabled_web and true or has_value(g.doom_disabled_plugins, 'nvim-colorizer'))
     }
     -- HTPP Client support
