@@ -43,10 +43,7 @@ return require('packer').startup(function()
     ---     Essentials     ---
     -----]]------------[[-----
     -- Plugins manager
-    use {
-        'wbthomason/packer.nvim',
-        opt = true
-    }
+    use 'wbthomason/packer.nvim'
     -- Auxiliar functions for using Lua in Neovim
     use 'svermeulen/vimpeccable'
 
@@ -64,7 +61,6 @@ return require('packer').startup(function()
     use {
         'sainnhe/sonokai',
         'wadackel/vim-dogrun',
-        'romgrk/doom-one.vim',
         'joshdick/onedark.vim'
     }
     -- File tree
