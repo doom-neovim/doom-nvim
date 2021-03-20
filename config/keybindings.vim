@@ -187,7 +187,7 @@ nnoremap <silent><esc> :noh<CR>
 nnoremap <F2> :Vista!!<CR>
 nnoremap <F3> :NvimTreeToggle<CR>
 nnoremap <F4> :MinimapToggle<CR>
-nnoremap <F5> :Goyo<CR>")
+nnoremap <F5> :Goyo<CR>
 nnoremap <F6> :DotHttp<CR>
 
 "====================="
