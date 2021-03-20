@@ -9,7 +9,7 @@ if empty(glob('~/.local/share/nvim/site/pack/packer/start/packer.nvim'))
     silent !git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
     " Install plugins at startup
-    autocmd VimEnter * execute "PackerInstall"
+    autocmd VimEnter * execute "PackerInstall" | source $MYVIMRC
     " source $MYVIMRC
 endif
 
@@ -26,7 +26,7 @@ call doom#begin()
 
 " /home/user/.doom-nvim/lua/plugins.lua
 lua require('plugins')
-" Plugins configurations
+" Plugins configurations, will be loaded only if the plugin is enabled!
 " /home/user/.doom-nvim/lua/configs/*.lua
 if doom#functions#checkplugin('nvim-autopairs')
     lua require('configs.autopairs')
