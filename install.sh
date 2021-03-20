@@ -1,0 +1,308 @@
+#!/usr/bin/bash
+#================================================
+# install.sh - Doom Nvim Installation Script
+# Author: NTBBloodbath
+# License: MIT
+#================================================
+
+# Terminal Colors
+# ===============
+# {{{
+Color_reset='\033[0m' # Reset
+
+## Normal colors
+Black='\033[0;30m'    # Black
+White='\033[0;37m'    # White
+Red='\033[0;31m'      # Red
+Blue='\033[0;34m'     # Blue
+Cyan='\033[0;36m'     # Cyan
+Purple='\033[0;35m'   # Purple
+Green='\033[0;32m'    # Green
+Yellow='\033[0;33m'   # Yellow
+
+## Bold colors
+BBlack='\033[1;30m'   # Black
+BWhite='\033[1;37m'   # White
+BRed='\033[1;31m'     # Red
+BBlue='\033[1;34m'    # Blue
+BCyan='\033[1;36m'    # Cyan
+BPurple='\033[1;35m'  # Purple
+BGreen='\033[1;32m'   # Green
+BYellow='\033[1;33m'  # Yellow
+# }}}
+
+
+# Doom Nvim version
+DoomNvimVersion='0.1.0'
+# System OS
+System="$(uname -s)"
+
+
+# Terminal Output
+# ===============
+# {{{
+log() {
+    printf '%b\n' "$1" >&2
+}
+
+log_success() {
+    log "${Green}[✔]${Color_reset} ${1}${2}"
+}
+
+log_info() {
+    log "${Blue}[+]${Color_reset} ${1}${2}"
+}
+
+log_error() {
+    log "${Red}[X]${Color_reset} ${1}${2}"
+    exit 1
+}
+
+log_warn () {
+    log "${Yellow}[!]${Color_reset} ${1}${2}"
+}
+
+pretty_echo () {
+    printf '%b\n' "$1$2$Color_reset" >&2
+}
+# }}}
+
+
+# Check requirements
+# ==================
+# {{{
+need_cmd() {
+    if ! hash "$1" &> /dev/null; then
+        log_error "Need '$1' (command not found)"
+        exit 1
+    fi
+}
+
+check_cmd() {
+	if ! type "$1" &> /dev/null; then
+		log_error "Need '$1' (command not found)"
+		exit 1
+	fi
+}
+
+check_all() {
+    # Install Doom Nvim (see also git)
+	check_cmd 'curl'
+    # Clone repositories and install Doom Nvim
+	check_cmd 'git'
+    # Generate help tags
+	check_cmd 'ctags'
+    # Install LanguageServerProtocols 
+	check_cmd 'npm'
+	check_cmd 'node'
+	# Plugins configurations
+	check_cmd 'lua'
+}
+
+check_requirements() {
+	log_info "Checking requirements"
+	
+    # Checks if git is installed again
+	if hash "git" &> /dev/null; then
+		git_version=$(git --version)
+		log_success "Check requirements : ${git_version}"
+	else
+		log_warn "Check requirements : git"
+	fi
+
+	# Checks if neovim is installed
+	if hash "nvim" &> /dev/null; then
+		log_success "Check requirements : nvim"
+	else
+		log_warn "Check requirements : nvim"
+	fi
+
+	# Check if lua is installed again
+	if hash "lua" &> /dev/null; then
+		log_success "Check requirements : lua"
+	else
+		log_warn "Check requirements : lua"
+	fi
+
+	log_info "Checking true colors support"
+	bash -c "$(curl -fsSL https://raw.githubusercontent.com/JohnMorales/dotfiles/master/colors/24-bit-color.sh)"
+}
+# }}}
+
+
+# Neovim backup and installation of Doom Nvim
+# ===========================================
+# {{{
+backup_neovim() {
+	if [[ -d "$HOME/.config/nvim" ]]; then
+		if [[ "$(readlink $HOME/.config/nvim)" =~ \.doom-nvim$ ]]; then
+			log_success "Installed Doom Nvim and some demons were released, be careful!"
+		else
+			mv "$HOME/.config/nvim" "$HOME/.config/nvim_bak"
+			log_success "Neovim backup is in $HOME/.config/nvim_bak"
+			ln -s "$HOME/.doom-nvim" "$HOME/.config/nvim"
+			log_success "Installed Doom Nvim and some demons were released, be careful!"
+		fi
+	else
+		mkdir -p "$HOME/.config"
+		ln -s "$HOME/.doom-nvim" "$HOME/.config/nvim"
+		log_success "Installed Doom Nvim and some demons were released, be careful!"
+	fi
+}
+# }}}
+
+
+# Doom Nvim updating
+# ==================
+# {{{
+update_repo(){
+	if [[ -d "$HOME/.doom-nvim" ]]; then
+		log_info "Updating doom-nvim ..."
+
+		cd "$HOME/.doom-nvim"
+		git pull origin main
+		cd - > /dev/null 2>&1
+
+		log_success "Successfully updated doom-nvim, more demons were released!"
+	else
+		log_info "Trying to clone doom-nvim ..."
+		git clone -q https://github.com/NTBBloodbath/doom-nvim "$HOME/.doom-nvim"
+		if [ $? -eq 0 ]; then
+			log_success "Successfully cloned doom-nvim, some demons were released!"
+		else
+			log_error "Failed to clone doom-nvim"
+			exit 0
+		fi
+	fi
+}
+
+install_done() {
+	echo ""
+	pretty_echo ${Green} 	"=================================================="
+	pretty_echo ${Green} 	"   You are almost done. Start neovim to install   "
+    pretty_echo ${Green}    "         the plugins and kill some demons.        "
+    pretty_echo ${Green}    "                                                  "
+	pretty_echo ${Green}	" Thanks for installing Doom Nvim, if you have any "
+    pretty_echo ${Green} 	"             issue, please report it :)           "
+	pretty_echo ${Green} 	"=================================================="
+}
+# }}}
+
+
+# Uninstall Doom Nvim
+# ===================
+# {{{
+uninstall() {
+    if [[ -d "$HOME/.config/nvim" ]]; then
+        if [[ "$(readlink $HOME/.config/nvim)" =~ \.doom-nvim$ ]]; then
+            rm "$HOME/.config/nvim"
+            log_success "Uninstalled Doom Nvim"
+            if [[ -d "$HOME/.config/nvim_bak" ]]; then
+                mv "$HOME/.config/nvim_bak" "$HOME/.config/nvim"
+                log_success "Recovered $HOME/.config/nvim_bak backup"
+            fi
+        fi
+    fi
+
+	if  [[ -d "$HOME/.doom-nvim" ]]; then
+		rm -rf "$HOME/.doom-nvim"
+		log_success "Completely uninstalled Doom Nvim and the demons have been disapeared"
+    fi
+}
+# }}}
+
+
+# Init banner
+# ===========
+# {{{
+welcome() {
+    pretty_echo ${BRed}    "  =================     ===============     ===============   ========  ========"
+    pretty_echo ${BRed}    "  \\\\\ . . . . . . .\\\\\   //. . . . . . .\\\\\   //. . . . . . .\\\\\  \\\\\. . .\\\\\// . . //"
+    pretty_echo ${BRed}    "  ||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||"
+    pretty_echo ${BRed}    "  || . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||"
+    pretty_echo ${BRed}    "  ||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||"
+    pretty_echo ${BRed}    "  || . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||"
+    pretty_echo ${BYellow}    "  ||. . ||   ||-'  || ||  \`-||   || . .|| ||. . ||   ||-'  || ||  \`|\_ . .|. .||"
+    pretty_echo ${BYellow}    "  || . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ \`-_/| . ||"
+    pretty_echo ${BYellow}    "  ||_-' ||  .|/    || ||    \|.  || \`-_|| ||_-' ||  .|/    || ||   | \  / |-_.||"
+    pretty_echo ${BYellow}    "  ||    ||_-'      || ||      \`-_||    || ||    ||_-'      || ||   | \  / |  \`||"
+    pretty_echo ${BYellow}    "  ||    \`'         || ||         \`'    || ||    \`'         || ||   | \  / |   ||"
+    pretty_echo ${BYellow}    "  ||            .===' \`===.         .==='.\`===.         .===' /==. |  \/  |   ||"
+    pretty_echo ${BYellow}    "  ||         .=='   \_|-_ \`===. .==='   _|_   \`===. .===' _-|/   \`==  \/  |   ||"
+    pretty_echo ${BYellow}    "  ||      .=='    _-'    \`-_  \`='    _-'   \`-_    \`='  _-'   \`-_  /|  \/  |   ||"
+    pretty_echo ${BYellow}    "  ||   .=='    _-'          '-__\._-'         '-_./__-'         \`' |. /|  |   ||"
+    pretty_echo ${BYellow}    "  ||.=='    _-'                                                     \`' |  /==.||"
+    pretty_echo ${BRed}    "  =='    _-'                                                            \/   \`=="
+    pretty_echo ${BRed}    "  \   _-'                           N e o v i m                         \`-_   /"
+    pretty_echo ${BRed}    "   \`''                                                                      \`\`' "
+    pretty_echo ${BYellow} "                   Version : ${DoomNvimVersion}               By : NTBBloodbath "
+    echo ""
+}
+# }}}
+
+
+# Helper and execution
+# ====================
+# {{{
+helper() {
+    welcome
+	echo ""
+	pretty_echo ${BRed}  "  Usage ./install.sh [OPTION]"
+    echo ""
+	pretty_echo ${BRed}  "  OPTIONS:"
+	pretty_echo ${Yellow} "    -h --help                                    Displays this message"
+	pretty_echo ${Yellow} "    -c --check-requirements                      Check Doom Nvim requirements"
+	pretty_echo ${Yellow} "    -i --install                                 Install Doom Nvim"
+	pretty_echo ${Yellow} "    -u --update                                  Update Doom Nvim"
+	pretty_echo ${Yellow} "    -v --version                                 Echo Doom Nvim version"
+	pretty_echo ${Yellow} "    -x --uninstall                               Uninstall Doom Nvim"
+}
+
+main() {
+	if [ $# -gt 0 ]
+    then
+        case $1 in
+            --check-requirements|-c)
+                check_requirements
+                exit 0
+                ;;
+			--update|-u)
+				update_repo
+				exit 0
+				;;
+			--install|-i)
+				welcome
+				check_all
+				update_repo
+                backup_neovim
+				install_done	
+                exit 0
+                ;;
+			--help|-h)
+				helper
+				exit 0
+				;;
+			--version|-v)
+				log "Doom Nvim v${DoomNvimVersion}"
+				exit 0
+				;;
+			--uninstall|-x)
+				log_info "Uninstalling Doom Nvim ..."
+				uninstall
+				pretty_echo ${Green} "Thanks for using Doom Nvim, there are no more demons!"
+				exit 0
+				;;
+		esac
+	else
+		# Run normal commands
+		welcome
+		check_all
+		update_repo
+		backup_neovim
+        check_requirements
+		install_done
+	fi
+}
+
+main $@
+# }}}
