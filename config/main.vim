@@ -8,12 +8,10 @@
 if empty(glob('~/.local/share/nvim/site/pack/packer/opt/packer.nvim'))
     silent !git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
-    " Sync plugins at startup
-    " Clean old/unused/disabled plugins -> Update/install
+    " Install plugins at startup
     augroup doom_sync_plugins
         autocmd!
-        autocmd VimEnter * PackerCompile | source $MYVIMRC
-        autocmd VimEnter * PackerInstall | source $MYVIMRC
+        autocmd VimEnter * PackerCompile | PackerInstall | source $MYVIMRC
     augroup END
 endif
 
