@@ -5,14 +5,12 @@
 "================================================
 
 " If the plugin manager is not installed then install it.
-if empty(glob('~/.local/share/nvim/site/pack/packer/opt/packer.nvim'))
+if empty(glob('~/.local/share/nvim/site/pack/packer/start/packer.nvim'))
     silent !git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
     " Install plugins at startup
-    augroup doom_sync_plugins
-        autocmd!
-        autocmd VimEnter * PackerCompile | PackerInstall | source $MYVIMRC
-    augroup END
+    autocmd VimEnter * execute "PackerInstall"
+    " source $MYVIMRC
 endif
 
 " Set some configurations on load
@@ -30,15 +28,35 @@ call doom#begin()
 lua require('plugins')
 " Plugins configurations
 " /home/user/.doom-nvim/lua/configs/*.lua
-lua require('configs.autopairs')
-lua require('configs.lsp')
-lua require('configs.nvim-colorizer')
-lua require('configs.nvim-compe')
-lua require('configs.nvim-focus')
-lua require('configs.nvim-telescope')
-lua require('configs.nvim-toggleterm')
-lua require('configs.nvim-tree')
-lua require('configs.statusline')
-lua require('configs.tree-sitter')
+if doom#functions#checkplugin('nvim-autopairs')
+    lua require('configs.autopairs')
+endif
+if doom#functions#checkplugin('nvim-lspconfig')
+    lua require('configs.lsp')
+endif
+if doom#functions#checkplugin('nvim-colorizer.lua')
+    lua require('configs.nvim-colorizer')
+endif
+if doom#functions#checkplugin('nvim-compe')
+    lua require('configs.nvim-compe')
+endif
+if doom#functions#checkplugin('focus.nvim')
+    lua require('configs.nvim-focus')
+endif
+if doom#functions#checkplugin('telescope.nvim')
+    lua require('configs.nvim-telescope')
+endif
+if doom#functions#checkplugin('nvim-toggleterm.lua')
+    lua require('configs.nvim-toggleterm')
+endif
+if doom#functions#checkplugin('nvim-tree.lua')
+    lua require('configs.nvim-tree')
+endif
+if doom#functions#checkplugin('galaxyline.nvim')
+    lua require('configs.statusline')
+endif
+if doom#functions#checkplugin('nvim-treesitter')
+    lua require('configs.tree-sitter')
+endif
 
 call doom#end()

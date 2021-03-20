@@ -5,10 +5,10 @@
 "================================================
 
 function! doom#functions#checkplugin(plugin) abort
-    if isdirectory('~/.local/share/nvim/site/pack/packer/start/' . a:plugin)
-        echo 'Plugin found'
+    if isdirectory(expand('$HOME') . '/.local/share/nvim/site/pack/packer/start/' . a:plugin)
+        return 1
     else
-        echo 'Plugin not found'
+        return 0
     endif
 endfunction
 
