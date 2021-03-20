@@ -12,7 +12,8 @@ if empty(glob('~/.local/share/nvim/site/pack/packer/opt/packer.nvim'))
     " Clean old/unused/disabled plugins -> Update/install
     augroup doom_sync_plugins
         autocmd!
-        autocmd VimEnter * PackerSync | source $MYVIMRC
+        autocmd VimEnter * PackerCompile | source $MYVIMRC
+        autocmd VimEnter * PackerInstall
     augroup END
 endif
 

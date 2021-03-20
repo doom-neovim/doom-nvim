@@ -3,7 +3,7 @@ g = vim.g
 
 -- Useful function to see if the Vim variable have the value we are looking for
 function has_value(tabl, val)
-    for _, val in ipairs(tabl) do
+    for _, value in ipairs(tabl) do
         if value == val then
             return true
         end
