@@ -76,8 +76,8 @@ let g:doom_disabled_plugins = []
 " Disabled plugins groups
 " @default = ['git', 'lsp', 'web']
 " example:
-"   let g:doom_disabled_plugins_group = ['web']
-let g:doom_disabled_plugins_group = ['git', 'lsp', 'web']
+"   let g:doom_disabled_plugins_groups = ['web']
+let g:doom_disabled_plugins_groups = ['git', 'lsp', 'web']
 
 " Install custom plugins
 " @default = []
@@ -147,9 +147,13 @@ function! doom#end() abort
     call doom#system#grepconfig('config', 'gui.vim', 1)
     call doom#system#grepconfig('config', 'keybindings.vim', 1)
 
-    " Plugins
-    call doom#system#grepconfig('config/plugins/', 'vista.vim', 1)
-    call doom#system#grepconfig('config/plugins/', 'neoformat.vim', 1)
+    " Plugins, configs are loaded only if the plugin is enabled.
+    if index(g:doom_disabled_plugins, 'vista') == -1
+        call doom#system#grepconfig('config/plugins/', 'vista.vim', 1)
+    endif
+    if index(g:doom_disabled_plugins, 'neoformat') == -1
+        call doom#system#grepconfig('config/plugins/', 'neoformat.vim', 1)
+    endif
     call doom#system#grepconfig('config/plugins/', 'leader-mapper.vim', 1)
 
     " Check updates
