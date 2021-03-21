@@ -35,7 +35,7 @@ let g:mapleader = " "
 "==========================="
 " If the LSP group is not disabled or the nvim-compe plugin is not disabled
 " then set its mappings.
-if index(g:doom_disabled_plugins_groups, 'lsp') == -1
+if index(g:doom_disabled_modules, 'lsp') == -1
     " https://github.com/hrsh7th/nvim-compe#mappings
     inoremap <silent><expr> <C-Space> compe#complete()
     inoremap <silent><expr> <CR>      compe#confirm('<CR>')
@@ -63,7 +63,7 @@ endif
 if index(g:doom_disabled_plugins, 'goyo') == -1
     nnoremap <F5> :Goyo<CR>
 endif
-if index(g:doom_disabled_plugins_groups, 'web') == -1
+if index(g:doom_disabled_modules, 'web') == -1
     nnoremap <F6> :DotHttp<CR>
 endif
 
@@ -82,7 +82,7 @@ nnoremap q <Nop>
 " Fast exit from Doom Nvim
 nnoremap ZZ :call doom#functions#quit_doom(1,1)<CR>
 
-if index(g:doom_disabled_plugins_groups, 'fuzzy') == -1 || index(g:doom_disabled_plugins, 'telescope') == -1
+if index(g:doom_disabled_modules, 'fuzzy') == -1 || index(g:doom_disabled_plugins, 'telescope') == -1
     " Set-up vim_buffer_ previewer
     autocmd User TelescopePreviewerLoaded setlocal wrap
 endif

@@ -2,7 +2,7 @@
 let g:lmap = {}
 
 " LSP Menu
-if index(g:doom_disabled_plugins_groups, 'lsp') == -1 && index(g:doom_disabled_plugins, 'compe') == -1
+if index(g:doom_disabled_modules, 'lsp') == -1 && index(g:doom_disabled_plugins, 'compe') == -1
     let g:lmap.l = {'name': 'LSP Menu'}
     " Show type definition
     nnoremap <leader>lD <cmd>lua vim.lsp.buf.type_definition()<CR>
@@ -16,8 +16,8 @@ if index(g:doom_disabled_plugins_groups, 'lsp') == -1 && index(g:doom_disabled_p
 endif
 
 " Git Menu
-if index(g:doom_disabled_plugins_groups, 'git') == -1 && index(g:doom_disabled_plugins, 'lazygit') == -1 ||
-            \ index(g:doom_disabled_plugins_groups, 'git') == -1 && index(g:doom_disabled_plugins, 'toggleterm') == -1
+if index(g:doom_disabled_modules, 'git') == -1 && index(g:doom_disabled_plugins, 'lazygit') == -1 ||
+            \ index(g:doom_disabled_modules, 'git') == -1 && index(g:doom_disabled_plugins, 'toggleterm') == -1
     let g:lmap.g = {'name': 'Git Menu'}
     if index(g:doom_disabled_plugins, 'lazygit') == -1
         " Open LazyGit
@@ -164,7 +164,7 @@ nnoremap <leader>wv :vsplit<CR>
 let g:lmap.w.v = 'Split vertically'
 
 " Runner Menu
-if index(g:doom_disabled_plugins_groups, 'web') == -1
+if index(g:doom_disabled_modules, 'web') == -1
     let g:lmap.r = {'name': 'Runner Menu'}
     if  index(g:doom_disabled_plugins, 'dot-http') == -1
         " Run dot-http on the line that the cursor is currently on

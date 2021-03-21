@@ -73,11 +73,11 @@ let g:doom_check_updates = 0
 "   let g:doom_disabled_plugins = ['emmet-vim']
 let g:doom_disabled_plugins = []
 
-" Disabled plugins groups
+" Disabled plugins modules
 " @default = ['git', 'lsp', 'web']
 " example:
-"   let g:doom_disabled_plugins_groups = ['web']
-let g:doom_disabled_plugins_groups = ['git', 'lsp', 'web']
+"   let g:doom_disabled_modules = ['web']
+let g:doom_disabled_modules = ['git', 'lsp', 'web']
 
 " Install custom plugins
 " @default = []

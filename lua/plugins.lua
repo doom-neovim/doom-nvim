@@ -13,7 +13,7 @@ function has_value(tabl, val)
     return false
 end
 
------ Plugins groups
+----- Plugins modules
 -- Essentials,            ! cannot be disabled (Plugin manager, vimpeccable and languages)
 -- UI Related,            / can be disabled    (All look-and-feel plugins)
 -- Fuzzy Search (fuzzy),  + can be disabled    (Fuzzy search & more)
@@ -36,14 +36,14 @@ end
 --   3. We do not provide other LSP integration like coc.nvim,
 --        please refer to our FAQ to see why.
 
---- Set disabled plugins groups and plugins
+--- Set disabled plugins modules and plugins
 disabled_plugins = {}
---- Disabled groups
-disabled_fuzzy = has_value(g.doom_disabled_plugins_groups, 'fuzzy')
-disabled_git = has_value(g.doom_disabled_plugins_groups, 'git')
-disabled_completion = has_value(g.doom_disabled_plugins_groups, 'lsp')
-disabled_files = has_value(g.doom_disabled_plugins_groups, 'files')
-disabled_web = has_value(g.doom_disabled_plugins_groups, 'web')
+--- Disabled modules
+disabled_fuzzy = has_value(g.doom_disabled_modules, 'fuzzy')
+disabled_git = has_value(g.doom_disabled_modules, 'git')
+disabled_completion = has_value(g.doom_disabled_modules, 'lsp')
+disabled_files = has_value(g.doom_disabled_modules, 'files')
+disabled_web = has_value(g.doom_disabled_modules, 'web')
 
 packer = require('packer')
 return packer.startup(function()
