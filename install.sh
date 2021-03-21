@@ -173,6 +173,23 @@ update_repo(){
 	fi
 }
 
+install_nvim_nightly() {
+    log_info "Installing Neovim Nightly AppImage ..."
+
+    curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+    chmod u+x nvim.appimage
+    mkdir -p $HOME/.local/bin
+    mv nvim.appimage $HOME/.local/bin/
+
+    if [ -f "$HOME/.zshrc" ]; then
+        echo "alias 'nvim'=$HOME/.local/bin/nvim.appimage" >> $HOME/.zshrc
+    else
+        echo "alias 'nvim'=$HOME/.local/bin/nvim.appimage" >> $HOME/.bashrc
+    fi
+
+    log_success "Successfully installed Neovim Nightly under $HOME/.local/bin/ directory"
+}
+
 install_packer() {
     if [[ ! -d "$HOME/.local/share/nvim/site/pack/packer/opt/packer.nvim" ]]; then
         log_info "Installing packer.nvim ..."
@@ -202,6 +219,7 @@ install_fonts() {
 }
 
 download_font() {
+    # Download patched Nerd Fonts
     url="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/patched-fonts/FiraCode/Regular/complete${1// /%20}"
     download_path="$HOME/.local/share/fonts/$1"
     if [[ -f "$download_path" && ! -s "$download_path" ]]; then
@@ -304,10 +322,12 @@ main() {
     then
         case $1 in
             --check-requirements|-c)
+                welcome
                 check_requirements
                 exit 0
                 ;;
 			--update|-u)
+                welcome
 				update_repo
 				exit 0
 				;;
@@ -319,6 +339,15 @@ main() {
 				install_done	
                 exit 0
                 ;;
+            --nvim-nightly|-n)
+                welcome
+                check_all
+                update_repo
+                backup_neovim
+                install_nvim_nightly
+                install_done
+                exit 0
+                ;;
 			--help|-h)
 				helper
 				exit 0
@@ -328,6 +357,7 @@ main() {
 				exit 0
 				;;
 			--uninstall|-x)
+                welcome
 				log_info "Uninstalling Doom Nvim ..."
 				uninstall
 				pretty_echo ${Green} "Thanks for using Doom Nvim, there are no more demons!"
