@@ -12,11 +12,11 @@ function! doom#logging#init()
             if g:doom_logging == 3
                 echo boot_msg
             endif
-            exec ':silent !echo " " >> $HOME/.doom-nvim/logs/doom.log'
-            exec ':silent !echo '.boot_msg.' >> $HOME/.doom-nvim/logs/doom.log'
+            exec ':silent !echo " " >> $HOME/.config/doom-nvim/logs/doom.log'
+            exec ':silent !echo '.boot_msg.' >> $HOME/.config/doom-nvim/logs/doom.log'
         catch
             echo 'Cannot write on_start log message'
-            exec ':!touch $HOME/.doom-nvim/logs/doom.log'
+            exec ':!touch $HOME/.config/doom-nvim/logs/doom.log'
         endtry
     endif
 endfunction
@@ -52,12 +52,12 @@ function! doom#logging#message(type, msg, level)
                         echo output
                     endif
                 endif
-                exec ":silent !echo '".output."' >> $HOME/.doom-nvim/logs/doom.log"
+                exec ":silent !echo '".output."' >> $HOME/.config/doom-nvim/logs/doom.log"
             endif
         catch
             let err_msg = '[!] - Cannot save: ' . a:msg . ''
             echoerr err_msg
-            exec ':silent !echo '.err_msg.' >> $HOME/.doom-nvim/logs/doom.log'
+            exec ':silent !echo '.err_msg.' >> $HOME/.config/doom-nvim/logs/doom.log'
         endtry
     endif
 endfunction

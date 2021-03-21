@@ -12,7 +12,7 @@ function! doom#functions#checkplugin(plugin) abort
     endif
 endfunction
 
-" /home/user/.doom-nvim/autoload/functions.vim
+" /home/user/.config/doom-nvim/autoload/functions.vim
 function! doom#functions#get_root() abort
     call doom#logging#message('+', 'doom.functions.get_root called', 2)
 
@@ -28,7 +28,7 @@ function! doom#functions#quit_doom(write, force) abort
         call doom#logging#message('*', 'Checking if the colorscheme was changed...', 2)
         let target = g:colors_name
         if target != g:doom_colorscheme
-            exec ":!sed -i \"s/'".g:doom_colorscheme."'/'".target."'/\" $HOME/.doom-nvimrc"
+            exec ":!sed -i \"s/'".g:doom_colorscheme."'/'".target."'/\" $HOME/.config/doom-nvim/doomrc"
             call doom#logging#message('*', 'Colorscheme successfully changed', 2)
         else
             call doom#logging#message('*', 'No need to write colors (same colorscheme)', 2)
@@ -37,12 +37,12 @@ function! doom#functions#quit_doom(write, force) abort
         call doom#logging#message('!', 'Unable to write to the BFC', 1)
     endtry
 
-    exec ':silent !echo "[---] - Dumping :messages" >> $HOME/.doom-nvim/logs/doom.log'
-    exec 'redir >> $HOME/.doom-nvim/logs/doom.log'
+    exec ':silent !echo "[---] - Dumping :messages" >> $HOME/.config/doom-nvim/logs/doom.log'
+    exec 'redir >> $HOME/.config/doom-nvim/logs/doom.log'
     exec ':silent messages'
     exec ':redir END'
-    exec ':silent !echo " " >> $HOME/.doom-nvim/logs/doom.log'
-    exec ':silent !echo "[---] - End of dump" >> $HOME/.doom-nvim/logs/doom.log'
+    exec ':silent !echo " " >> $HOME/.config/doom-nvim/logs/doom.log'
+    exec ':silent !echo "[---] - End of dump" >> $HOME/.config/doom-nvim/logs/doom.log'
 
     let quit_cmd = ''
 
@@ -59,9 +59,9 @@ endfunction
 " Create a markdown report to use when a bug occurs,
 " useful for debugging issues.
 function! doom#functions#createReport() abort
-    exec ':silent !echo "# doom crash report" >> $HOME/.doom-nvim/logs/report.md'
-    exec ':silent !echo "## Begin log dump" >> $HOME/.doom-nvim/logs/report.md'
-    exec ':silent !echo | cat $HOME/.doom-nvim/logs/doom.log >> $HOME/.doom-nvim/logs/report.md'
-    exec ':silent !echo "## End log dump" >> $HOME/.doom-nvim/logs/report.md'
-    exec ':silent echo "Report created at $HOME/.doom-nvim/logs/report.md"'
+    exec ':silent !echo "# doom crash report" >> $HOME/.config/doom-nvim/logs/report.md'
+    exec ':silent !echo "## Begin log dump" >> $HOME/.config/doom-nvim/logs/report.md'
+    exec ':silent !echo | cat $HOME/.config/doom-nvim/logs/doom.log >> $HOME/.config/doom-nvim/logs/report.md'
+    exec ':silent !echo "## End log dump" >> $HOME/.config/doom-nvim/logs/report.md'
+    exec ':silent echo "Report created at $HOME/.config/doom-nvim/logs/report.md"'
 endfunction
