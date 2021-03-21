@@ -106,8 +106,6 @@ if you are not an advanced vimmer. When you do, here are some places you can loo
     its packages.
   - [The Package Management section][package-management] covers how to install
     and disable packages.
-  - [This section][common-mistakes] lists some common configuration mistakes new
-    users make when using Doom Nvim.
 - Search the [Doom Nvim's issue tracker](https://github.com/NTBBloodbath/doom-nvim/issues)
   before opening a new issue to see if your issue was already been reported and to
   avoid duplicating issues.
@@ -125,7 +123,6 @@ if you are not an advanced vimmer. When you do, here are some places you can loo
 [configuration]: docs/getting_started.md#configuring-doom
 [package-management]: docs/getting_started.md#package-management
 [modules]: docs/modules.md
-[common-mistakes]: docs/getting_started.md#common-mistakes
 [editorconfig]: http://editorconfig.org/
 [fd]: https://github.com/sharkdp/fd
 [ripgrep]: https://github.com/BurntSushi/ripgrep
