@@ -83,8 +83,6 @@ let g:doom_disabled_plugins_groups = ['git', 'lsp', 'web']
 " @default = []
 " example:
 "   let g:doom_custom_plugins = ['andweeb/presence.nvim']
-"
-" NOTE: Not implemented yet!
 let g:doom_custom_plugins = []
 
 "Conceal level

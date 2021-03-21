@@ -13,19 +13,6 @@ function has_value(tabl, val)
     return false
 end
 
---- Set disabled plugins groups and plugins
-disabled_plugins = {}
---- Disabled groups
-disabled_fuzzy = has_value(g.doom_disabled_plugins_groups, 'fuzzy')
-disabled_git = has_value(g.doom_disabled_plugins_groups, 'git')
-disabled_completion = has_value(g.doom_disabled_plugins_groups, 'lsp')
-disabled_files = has_value(g.doom_disabled_plugins_groups, 'files')
-disabled_web = has_value(g.doom_disabled_plugins_groups, 'web')
-
--- Required if you have packer in your `opt` pack
--- /home/user/.local/share/nvim/site/pack/packer/opt
-vim.cmd [[packadd packer.nvim]]
-
 ----- Plugins groups
 -- Essentials,            ! cannot be disabled (Plugin manager, vimpeccable and languages)
 -- UI Related,            / can be disabled    (All look-and-feel plugins)
@@ -48,7 +35,18 @@ vim.cmd [[packadd packer.nvim]]
 --        you can safely disable the Fuzzy Search group.
 --   3. We do not provide other LSP integration like coc.nvim,
 --        please refer to our FAQ to see why.
-return require('packer').startup(function()
+
+--- Set disabled plugins groups and plugins
+disabled_plugins = {}
+--- Disabled groups
+disabled_fuzzy = has_value(g.doom_disabled_plugins_groups, 'fuzzy')
+disabled_git = has_value(g.doom_disabled_plugins_groups, 'git')
+disabled_completion = has_value(g.doom_disabled_plugins_groups, 'lsp')
+disabled_files = has_value(g.doom_disabled_plugins_groups, 'files')
+disabled_web = has_value(g.doom_disabled_plugins_groups, 'web')
+
+packer = require('packer')
+return packer.startup(function()
     -----[[------------]]-----
     ---     Essentials     ---
     -----]]------------[[-----
@@ -344,4 +342,11 @@ return require('packer').startup(function()
         'mattn/emmet-vim',
         disable = (disabled_web and true or disabled_emmet)
     }
+    -----[[----------------]]-----
+    ---     Custom Plugins     ---
+    -----]]----------------[[-----
+    -- If there are custom plugins
+    for _, plugin in ipairs(g.doom_custom_plugins) do
+        packer.use(plugin)
+    end
 end)
