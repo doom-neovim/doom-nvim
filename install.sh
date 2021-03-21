@@ -132,17 +132,17 @@ check_requirements() {
 # {{{
 backup_neovim() {
 	if [[ -d "$HOME/.config/nvim" ]]; then
-		if [[ "$(readlink $HOME/.config/nvim)" =~ \.doom-nvim$ ]]; then
+		if [[ "$(readlink $HOME/.config/nvim)" =~ \.config\/doom-nvim$ ]]; then
 			log_success "Installed Doom Nvim and some demons were released, be careful!"
 		else
 			mv "$HOME/.config/nvim" "$HOME/.config/nvim_bak"
 			log_success "Neovim backup is in $HOME/.config/nvim_bak"
-			ln -s "$HOME/.doom-nvim" "$HOME/.config/nvim"
+			ln -s "$HOME/.config/doom-nvim" "$HOME/.config/nvim"
 			log_success "Installed Doom Nvim and some demons were released, be careful!"
 		fi
 	else
 		mkdir -p "$HOME/.config"
-		ln -s "$HOME/.doom-nvim" "$HOME/.config/nvim"
+		ln -s "$HOME/.config/doom-nvim" "$HOME/.config/nvim"
 		log_success "Installed Doom Nvim and now there are demons everywhere, be careful!"
 	fi
 }
@@ -153,17 +153,17 @@ backup_neovim() {
 # ==================
 # {{{
 update_repo(){
-	if [[ -d "$HOME/.doom-nvim" ]]; then
+	if [[ -d "$HOME/.config/doom-nvim" ]]; then
 		log_info "Updating doom-nvim ..."
 
-		cd "$HOME/.doom-nvim"
+		cd "$HOME/.config/doom-nvim"
 		git pull origin main
 		cd - > /dev/null 2>&1
 
 		log_success "Successfully updated doom-nvim, more demons were released in your terminal!"
 	else
 		log_info "Trying to clone doom-nvim ..."
-		git clone -q https://github.com/NTBBloodbath/doom-nvim "$HOME/.doom-nvim"
+		git clone -q https://github.com/NTBBloodbath/doom-nvim "$HOME/.config/doom-nvim"
 		if [ $? -eq 0 ]; then
 			log_success "Successfully cloned doom-nvim, some demons were released in your terminal!"
 		else
@@ -253,7 +253,7 @@ install_done() {
 # {{{
 uninstall() {
     if [[ -d "$HOME/.config/nvim" ]]; then
-        if [[ "$(readlink $HOME/.config/nvim)" =~ \.doom-nvim$ ]]; then
+        if [[ "$(readlink $HOME/.config/nvim)" =~ \.config\/doom-nvim$ ]]; then
             rm "$HOME/.config/nvim"
             log_success "Uninstalled Doom Nvim"
             if [[ -d "$HOME/.config/nvim_bak" ]]; then
@@ -263,8 +263,8 @@ uninstall() {
         fi
     fi
 
-	if  [[ -d "$HOME/.doom-nvim" ]]; then
-		rm -rf "$HOME/.doom-nvim"
+	if  [[ -d "$HOME/.config/doom-nvim" ]]; then
+		rm -rf "$HOME/.config/doom-nvim"
 		log_success "Completely uninstalled Doom Nvim and the demons have been disapeared"
     fi
 }
