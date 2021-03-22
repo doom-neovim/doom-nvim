@@ -115,7 +115,7 @@ check_requirements() {
 		log_success "Check requirements : nvim"
 	else
 		log_warn "Check requirements : nvim"
-	fi
+    fi
 
 	# Check if lua is installed again
 	if hash "lua" &> /dev/null; then
@@ -123,6 +123,20 @@ check_requirements() {
 	else
 		log_warn "Check requirements : lua"
 	fi
+
+    # Check if nodejs and npm are installed again,
+    # we do not check only nodejs because some Linux distributions
+    # installs nodejs but not also npm
+    if hash "node" &> /dev/null; then
+        log_success "Check requirements : node"
+    else
+        log_warn "Check requirements : node (optional, required to use LSP)"
+    fi
+    if hash "npm" &> /dev/null; then
+        log_success "Check requirements : npm"
+    else
+        log_warn "Check requirements : npm (optional, required to use LSP)"
+    fi
 }
 # }}}
 

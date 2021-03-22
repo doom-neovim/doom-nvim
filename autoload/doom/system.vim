@@ -34,8 +34,9 @@ endfunction
 
 function! doom#system#grepconfig(folder, filename, source) abort
     " Source file or returns the full path
-    let fullpath = g:doom_root . a:folder . g:doom_separator . a:filename
+    let fullpath = g:doom_root . g:doom_separator . a:folder . g:doom_separator . a:filename
 
+    echo fullpath
     if filereadable(fullpath)
         if a:source ==# 1
             try

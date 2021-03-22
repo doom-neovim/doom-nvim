@@ -160,12 +160,12 @@ function! doom#end() abort
 
     " Plugins, configs are loaded only if the plugin is enabled.
     if index(g:doom_disabled_plugins, 'vista') == -1
-        call doom#system#grepconfig('config/plugins/', 'vista.vim', 1)
+        call doom#system#grepconfig('config/plugins', 'vista.vim', 1)
     endif
     if index(g:doom_disabled_plugins, 'neoformat') == -1
-        call doom#system#grepconfig('config/plugins/', 'neoformat.vim', 1)
+        call doom#system#grepconfig('config/plugins', 'neoformat.vim', 1)
     endif
-    call doom#system#grepconfig('config/plugins/', 'leader-mapper.vim', 1)
+    call doom#system#grepconfig('config/plugins', 'leader-mapper.vim', 1)
 
     " Check updates
     call doom#logging#init()

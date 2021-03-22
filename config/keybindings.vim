@@ -57,6 +57,7 @@ if index(g:doom_disabled_plugins, 'vista') == -1
 endif
 if index(g:doom_disabled_plugins, 'tree') == -1
     nnoremap <F3> :NvimTreeToggle<CR>
+endif
 if index(g:doom_disabled_plugins, 'minimap') == -1
     nnoremap <F4> :MinimapToggle<CR>
 endif

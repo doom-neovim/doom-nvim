@@ -60,7 +60,7 @@ endfunction
 function doom#default#loadGlob()
     " Set a custom command to update Doom Nvim
     " can be called by using :DoomUpdate
-    command DoomUpdate !git -C g:doom_root pull
+    command DoomUpdate !git -C ~/.config/doom-nvim/ pull
 
     " Set SPC as the mapleader
     let mapleader = ' '
@@ -68,6 +68,8 @@ function doom#default#loadGlob()
     " Indent Lines
     let g:indent_blankline_enabled = g:doom_show_indent
     let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
+    " Disable indent lines on dashboard and help
+    let g:indent_blankline_filetype_exclude = ['help', 'dashboard']
     " If treesitter is not disabled, then ...
     if index(g:doom_disabled_plugins, 'treesitter') == -1
         " When on, use treesitter to determine the current context. Then show
