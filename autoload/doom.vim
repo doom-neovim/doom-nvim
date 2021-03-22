@@ -13,7 +13,7 @@ scriptencoding utf-8
 
 " Enable autosave
 " @default = 0
-let g:doom_autosave = 1
+let g:doom_autosave = 0
 
 " Enable format on save
 " @default = 0
