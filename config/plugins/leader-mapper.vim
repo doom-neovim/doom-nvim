@@ -176,13 +176,27 @@ endif
 " Session Menu
 let g:lmap.s = {'name': 'Session Menu'}
 " Save session
-nmap <leader>ss :<C-u>SessionSave<CR>
+nnoremap <leader>ss :<C-u>SessionSave<CR>
 let g:lmap.s.s = 'Save session'
 " Load session
-nmap <leader>sl :<C-u>SessionLoad<CR>
+nnoremap <leader>sl :<C-u>SessionLoad<CR>
 let g:lmap.s.l = 'Load session'
 
+" Doom Menu
+let g:lmap.d = {'name': 'Doom Menu'}
+" Open your Doom Nvim configurations
+nnoremap <leader>dc :e ~/.config/doom-nvim/doomrc<CR>
+let g:lmap.d.c = 'Edit your Doom Nvim configuration'
+" Open Doom Nvim docs
+nnoremap <leader>dd :help doom_nvim<CR>
+let g:lmap.d.d = 'Open Doom Nvim Documentation'
+" Check Doom Nvim Updates and update if available
+nnoremap <leader>du :DoomUpdate<CR>
+let g:lmap.d.u = 'Check Doom Nvim Updates'
+
 " ToggleNumbers function,
+" toggle between relative numbers and absolute numbers
+" depending on the value of g:doom_relative_num
 function ToggleNumbers()
     if g:doom_relative_num ==# 1
         set number! relativenumber!
