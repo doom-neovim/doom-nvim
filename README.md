@@ -9,6 +9,8 @@
 
 [Features](#features) • [Install](#install) • [Documentation] • [Contribute](#contribute)
 
+![Doom Nvim demo](./assets/demo.png)
+
 </div>
 
 ---
@@ -48,6 +50,7 @@ Its design is guided by these mantras:
   they have any external dependencies).
 
 # Acknowledgements
+
 - [hlissner](https://github.com/hlissner) per doing Doom Emacs :heart:.
 - [romgrk](https://github.com/romgrk) per doing a port to Vim of the Doom One
   colorscheme from Doom Emacs.
