@@ -1,0 +1,554 @@
+*doom_nvim.txt* A Neovim configuration for the advanced martian hacker
+
+=================     ===============     ===============   ========  ========~
+\\ . . . . . . .\\   //. . . . . . .\\   //. . . . . . .\\  \\. . .\\// . . //~
+||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\/ . . .||~
+|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||~
+||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||~
+|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||~
+||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\_ . .|. .||~
+|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ `-_/| . ||~
+||_-' ||  .|/    || ||    \|.  || `-_|| ||_-' ||  .|/    || ||   | \  / |-_.||~
+||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \  / |  `||~
+||    `'         || ||         `'    || ||    `'         || ||   | \  / |   ||~
+||            .===' `===.         .==='.`===.         .===' /==. |  \/  |   ||~
+||         .=='   \_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \/  |   ||~
+||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \/  |   ||~
+||   .=='    _-'          '-__\._-'         '-_./__-'         `' |. /|  |   ||~
+||.=='    _-'                                                     `' |  /==.||~
+=='    _-'                        N E O V I M                         \/   `==~
+\   _-'                                                                `-_   /~
+ `''                                                                      ``'~
+
+ NTBBloodbath                                                      *doom_nvim*
+
+ =============================================================================
+ CONTENTS                                                 *doom_nvim_contents*
+   1. Introduction...........................................|doom_nvim_intro|
+   2. Options..............................................|doom_nvim_options|
+     1. Autocomplete..........................|doom_nvim_options_autocomplete|
+     2. Colorscheme............................|doom_nvim_options_colorscheme|
+   3. Configuration..................................|doom_nvim_configuration|
+     1. Layout................................|doom_nvim_configuration_layout|
+     2. File Explorer................|doom_nvim_configuration_layout_explorer|
+     3. Main Buffer................|doom_nvim_configuration_layout_mainbuffer|
+     4. Tagbar.........................|doom_nvim_configuration_layout_tagbar|
+     5. Minimap.......................|doom_nvim_configuration_layout_minimap|
+     6. Terminal.....................|doom_nvim_configuration_layout_terminal|
+     7. Modules..............................|doom_nvim_configuration_modules|
+       1. Enabling modules..........|doom_nvim_configuration_modules_enabling|
+       2. Disabling modules........|doom_nvim_configuration_modules_disabling|
+   4. Commands............................................|doom_nvim_commands|
+     1. Keybindings...........................|doom_nvim_commands_keybindings|
+   5. Functions..........................................|doom_nvim_functions|
+   6. Usage..................................................|doom_nvim_usage|
+     1. Moving around..........................|doom_nvim_usage_moving_around|
+   7. Known issues..........................................|doom_nvim_issues|
+   8. FAQ......................................................|doom_nvim_faq|
+   9. Hacking Doom Nvim....................................|doom_nvim_hacking|
+     1. Autoload..................................|doom_nvim_hacking_autoload|
+   10. Acknowledgements...........................|doom_nvim_acknowledgements|
+   11. License.............................................|doom_nvim_license|
+   12. Contributing...................................|doom_nvim_contributing|
+   13. Changelog.........................................|doom_nvim_changelog|
+
+
+==============================================================================
+INTRODUCTION                                                 *doom_nvim_intro*
+
+Doom Nvim is a port to Neovim of the Doom Emacs configuration framework for
+GNU Emacs adapted for all vimmer who want less framework in their framework
+and the performance of a handmade configuration (or better). It can be a base
+for your own setup or a resource for Vim enthusiasts to learn more about our
+favorite editor and how to do X things on it by using Vimscript/Lua.
+
+Doom Nvim is an opinionated collection of reasonable (and optional) defaults
+with a focus on performance (both runtime and startup) and on
+abstraction-light, readable code design, so that there is less between you
+and Neovim.
+
+
+==============================================================================
+OPTIONS                                                    *doom_nvim_options*
+
+Doom Nvim configuration files resides in the `$HOME/.config/doom-nvim/config`
+directory. Global variables for Doom Nvim resides in
+`$HOME/.doom-nvim/autoload/doom.vim`.
+
+All the options available in the `doom.vim` file are global variables.
+They all start with `g:doom_` followed by a description of ther nature:
+`g:doom_indent` followed by their value.
+
+
+`g:doom_indent`
+default value = 4
+Specifies the width of tabs and shifttabs
+
+`g:doom_show_indent`
+default value = 1
+Show Indent Lines
+
+`g:doom_show_indent_context`
+default value = 0
+Show current context on the current indent line.
+If this option slows your Neovim, just turn it off.
+
+`g:doom_expand_tabs`
+default value = 1
+Specifies if spaces or tabs must be used
+0 : spaces
+1 : tabs
+
+`g:doom_relative_num`
+default value = 1
+0 : Shows absolute number lines
+1 : Shows relative number lines
+
+`g:doom_max_columns`
+default value = 80
+Defines the column to show a vertical marker
+
+`g:doom_enable_guicolors`
+default value = 1
+Enables gui colors on GUI versions of Neovim
+
+`g:doom_sidebar_width`
+default value = 25
+Specifies the default width of Tree Explorer and Tagbar
+
+`g:doom_tagbar_left`
+default value = 1
+Sets Tagbar buffer to the left when enabled
+
+`g:doom_show_hidden`
+default value = 1
+Show hidden files with Tree Explorer
+
+`g:doom_colorscheme`
+default value = 'doom-one'
+Specifies the colorscheme to use
+
+`g:doom_colorscheme_bg`
+default value = 'dark'
+Specifies the background color
+Allowed values: 'dark', 'light'
+
+`g:doom_check_updates`
+default value = 0
+Check updates of plugins on start
+
+`g:doom_disabled_plugins`
+default value = []
+List of user disabled plugins
+
+`g:doom_disabled_modules`
+default value = ['git', 'lsp', 'web']
+List of user disabled modules
+
+`g:doom_custom_plugins`
+default value = []
+List of user custom plugins
+
+`g:doom_fmt_on_save`
+default value = 0
+0 : Disable format on save
+1 : Enable format on save
+
+`g:dom_conceallevel`
+default value = 1
+Set Neovim conceal level
+0 : Disable indentline and show all
+1 : Conceal some functions and show indentlines
+2 : Concealed text is completely hidden unless it has a
+    custom replacement character defined
+3 : Concealed text is completely hidden
+
+`g:doom_logging`
+default value = 1
+Select the logging level of doomnvim
+0: Disables the logging
+1: Logs all errors in the `doom.log` file
+2: Logs all errors and messages in the `doom.log` file
+3: Logs all errors and messages in the `doom.log` file and echoes them
+
+`g:doom_root`
+default value = "$HOME/.config/doom-nvim"
+Specifies the root directory of Doom Nvim, unmodifiable.
+
+`g:doom_neovim`
+Utility variables, produce errors if Doom Nvim is running on Vim
+or using it without Neovim Nightly (>=0.5)
+
+
+==============================================================================
+AUTOCOMPLETE                                  *doom_nvim_options_autocomplete*
+
+Doom Neovim uses the built-in LSP as completion engine on Neovim Nightly.
+Use <c-n> to select the next suggestion.
+
+Autocompletion for parenthesis can be disabled by disabling the autopairs
+plugin (see |doom_nvim_configuration_modules_disabling| for more information)
+
+
+==============================================================================
+COLORSCHEME                                    *doom_nvim_options_colorscheme*
+
+The colorscheme of Doom Nvim. Default is 'doom-one'. There are some
+colorschemes listed on `$HOME/.config/doom-nvim/lua/plugins.lua`:
+    - `sonokai`
+    - `dogrun`
+    - `onedark`
+
+You can shiwtch between colorschemes by doing <Space>tc and then type the name
+of the colorscheme you want to use. You can also edit the `BFC` file located
+at: `$HOME/.config/doom-nvim/doomrc` (see |doom_nvim_hacking|).
+
+
+==============================================================================
+CONFIGURATION                                 *doom_nvim_configuration_layout*
+
+Doom Nvim configuration files resides under the
+`$HOME/.config/doom-nvim/config/` directory. See |doom_nvim_hacking| for more
+info.
+
+
+==============================================================================
+LAYOUT                                        *doom_nvim_configuration_layout*
+
+Excluding the statusline, Doom Nvim will mostly have the following layout:
+
+|--------------------------------------|~
+|     |                    |    |      |~
+|     |                    |    |      |~
+|     |                    |    |      |~
+|     |            B       | D* |  E*  |~
+|  A* |                    |    |      |~
+|     |                    |    |      |~
+|     |                    |    |      |~
+|     |--------------------|    |      |~
+|     |            C*      |    |      |~
+|--------------------------------------|~
+
+
+
+'A' : The tagbar (Plugin: vista.vim)
+'B' : The main buffer
+'C' : The terminal (Plugin: nvim-toggleterm.lua)
+'D' : The minimap (Plugin: minimap.vim)
+'E' : The file explorer (Plugin: nvim-tree.lua)
+
+Sections with `*` are not opened by default but can be toggled.
+See |doom_nvim_commands| for more information.
+
+
+==============================================================================
+FILE EXPLORER                        *doom_nvim_configuration_layout_explorer*
+
+Doom Nvim uses nvim-tree.lua plugin as a file explorer when using Neovim
+Nightly. It can be toggled by performing the following commands:
+<Space>te for `FileExplorer`
+<F3> for `FileExplorer`
+
+To create a new file within the file explorer, do <n>[name_of_file]
+Append a `/` if you want to create a directory.
+
+Check `nvim-tree.lua` for more info.
+
+
+==============================================================================
+MAIN BUFFER                        *doom_nvim_configuration_layout_mainbuffer*
+
+The main buffer is the buffer where the code is opened. It can be split into
+multiple buffers which can be resized individually and automatically when the
+plugin `focus.nvim` is enabled.
+
+To split the main buffer, do <Space>w and then select the split method you
+want to use horizontally `h`, or vertically `v`.
+
+
+==============================================================================
+TAGBAR                                 *doom_nvim_configuration_layout_tagbar*
+
+Tagbar is a plugin that can show the tags and structure of the opened file,
+ordered by its scope. For this function, Doom Nvim makes use of Vista.vim.
+
+See https://github.com/liuchengxu/vista.vim for more information.
+
+
+==============================================================================
+TERMINAL                             *doom_nvim_configuration_layout_terminal*
+
+The terminal is placed like in others editors, e.g. Visual Studio Code. The
+buffer of the terminal is automatically set to `INSERT` mode. The only way to
+close it is to enter `exit` to close the shell session, or if you just want to
+toggle it, you can enter <Space>tt in `NORMAL` mode.
+
+
+==============================================================================
+COMMANDS                                                  *doom_nvim_commands*
+
+Doom Nvim uses vim-leader-guide as a command manager, inspired by emacs's
+guide-key. To open it, press <Space> and wait for the popup to show, it should
+not take much time. Each section has a label and is mnemonic.
+e.g:
+        `Toggle Terminal` > <Space>tt
+
+There are multiple sections for Doom Nvim's commands. Those sections create a
+path in the decision tree that identifies any command.
+
+Let's say you want to go to the next buffer you are working on. You will need
+to perform the following keystrokes:
+
+<Space>b
+
+in order to open the `Buffer` section. There we want to go to the `n`ext
+buffer.
+
+<Space>bn
+
+Finally, we changed our current buffer to the next buffer in our workspace.
+You can see more keybindings in |doom_nvim_commands_keybindings|
+
+
+==============================================================================
+KEYBINDINGS                                   *doom_nvim_commands_keybindings*
+
+In Doom Nvim, we make use of the <Space> keystroke as the map leader.
+
+| <b>uffer
+|           | <1> First buffer
+|           | <2> Second buffer
+|           | <3> Third buffer
+|           | <4> Fourth buffer
+|           | <5> Fifth buffer
+|           | <6> Sixth buffer
+|           | <7> Seventh buffer
+|           | <8> Eighth buffer
+|           | <9> Last buffer
+|           | <c> Close buffer
+|           | <f> Format buffer
+|           | <n> Next buffer
+|           | <p> Previous buffer
+|           | <P> Pick buffer
+| <f>ile
+|           | <b> Bookmarks
+|           | <c> Edit your Neovim Configuration
+|           | <f> Find file
+|           | <g> Find word
+|           | <h> Recently opened files
+|           | <n> New unnamed buffer
+|           | <r> Re-open an unreadable file with sudo permissions
+|           | <t> Help tags
+|           | <w> Write an unwritable file with sudo permissions
+| <g>it
+|           | <o> Open LazyGit
+|           | <p> Push
+|           | <P> Pull
+|           | <s> Status
+| <l>sp
+|           | <D> Show type definition
+|           | <e> Show line diagnostics
+|           | <q> Diagnostics into location list
+| <o>rder
+|           | <d> Sort by directory
+|           | <l> Sort by language
+|           | <n> Re-order buffer to next
+|           | <p> Re-order buffer to previous
+| <p>lugin
+|           | <c> Clean unused plugins
+|           | <i> Install missing plugins
+|           | <s> Sync plugins (Clean and Update)
+|           | <u> Update plugins
+| <r>unner
+|           | <h> Run rest client in the current cursor line
+| <s>ession
+|           | <s> Save session
+|           | <l> Load session
+| <t>oggler
+|           | <c> Change colorscheme
+|           | <e> Toggle Tree Explorer
+|           | <m> Toggle Minimap
+|           | <n> Toggle Line Numbers
+|           | <s> Toggle Start Screen
+|           | <t> Toggle Terminal
+|           | <T> Toggle Tagbar
+| <w>indow
+|           | <c> Close current window
+|           | <C> Close all other windows
+|           | <h> Split horizontally
+|           | <v> Split vertically
+
+But there is still more, Doom Nvim knows that you love to use the keyboard but
+you do not like to be typing so much so it has more keybindings that will make
+your life easier!
+
+| <TAB>     | Cycle buffers (next buffer)
+| <S-TAB>   | Cycle buffers (prev buffer)
+| <ESC>     | Search highlighting off
+| <F2>      | Toggle Tagbar
+| <F3>      | Toggle Tree Explorer
+| <F4>      | Toggle Minimap
+| <F5>      | Toggle distraction-free mode
+| <F6>      | Run rest client
+| <Z><Z>    | Fast exit from Doom Nvim
+| <g><c>    | Comment selected block (`VISUAL` mode)
+
+
+==============================================================================
+FUNCTIONS                                                *doom_nvim_functions*
+
+`ToggleTerm`: Toggles a terminal on the bottom part of the window
+(see |doom_nvim_configuration_layout_terminal|).
+
+`ToggleNumbers`: Toggles the line numbers, if `g:doom_relative_num` is `1`
+then it will toggle the relative numbers, otherwise, it will toggle the
+absolute numbers.
+
+
+==============================================================================
+USAGE                                                        *doom_nvim_usage*
+
+Start Doom Nvim by typing `nvim` in a terminal emulator or by executing your
+preferred Neovim GUI.
+
+By default, if no files were opened, Doom Nvim will show the start menu
+`dashboard-nvim` where you can select files to edit.
+
+
+==============================================================================
+MOVING AROUND                                  *doom_nvim_usage_moving_around*
+
+Doom Nvim uses the default Vim keybindings to move around:  `h` `j` `k` `l`
+
+          ^
+          k
+
+    < h   ·   l >  
+
+          j        
+          v
+
+See `Tutor` to know how to use Vim and its keybindings
+
+
+To move around buffers execute <Space>b to select the `buffers` section
+and then press the key corresponding to the buffer you want to select (`1-9`).
+
+
+==============================================================================
+KNOWN ISSUES                                                *doom_nvim_issues*
+
+- When using the distraction-free mode, it will be still displaying the
+  statusbar, at the moment cannot be fixed unless you use other statusline.
+  See |doom_nvim_configuration_modules_disabling| for more information.
+
+- If you are facing an undocummented issue, feel free to open an issue at Doom
+  Nvim's repository on GitHub and we will try to fix it.
+  https://github.com/NTBBloodbath/doom-nvim/issues/new
+
+
+==============================================================================
+FAQ                                                            *doom_nvim_faq*
+
+Nothing here but chickens ...
+
+
+==============================================================================
+HACKING DOOM NVIM                                          *doom_nvim_hacking*
+
+Doom Nvim aims to be hackable to suit everyone's needs. Therefore
+
+This is the structure of Doom Nvim:
+
+ ./
+├──  autoload/           # Files loaded at launch
+│  ├──  color.vim        # Color utilities, required by doom-one.vim
+│  ├──  doom/            # Doom Nvim core
+│  │  ├──  autocmds.vim  # Doom Nvim autocommands
+│  │  ├──  config.vim    # Doom Nvim custom config file loader
+│  │  ├──  default.vim   # Doom Nvim default configs
+│  │  ├──  functions.vim # Doom Nvim core functions
+│  │  ├──  health.vim    # Doom Nvim health
+│  │  ├──  logging.vim   # Doom Nvim logging manager
+│  │  └──  system.vim    # Doom Nvim system detection (early stage)
+│  └──  doom.vim         # Config file for various globals
+├──  colors/             # Doom Nvim colorschemes directory
+│  └──  doom-one.vim     # `romgrk` doom colorscheme ported to Nvim (`default`)
+├──  config/             # Configuration files for Doom Nvim
+│  ├──  gui.vim          # Doom Nvim GUI options
+│  ├──  keybindings.vim  # Doom Nvim keybindings
+│  ├──  main.vim         # Init file, loads packer.nvim and plugins
+│  └──  plugins/         # Vimscript plugins configs directory
+│     ├──  leader....vim # leader-mapper keybindings
+│     ├──  neoformat.vim # neoformat configs
+│     └──  vista.vim     # vista.vim configs
+├──  doc/                # Doom Nvim documentation to be used inside Nvim
+│  └──  doom_nvim.txt    # Doom Nvim help file
+├──  docs/               # Doom Nvim docs meant to be readed on GitHub
+├──  init.vim            # init.vim file
+├──  install.sh          # Doom Nvim manager
+├──  LICENSE             # Doom Nvim License
+├──  logs/               # Location of Doom Nvim log file
+├──  lua/                # Location of Lua plugins, including packer.nvim
+│  ├──  configs/         # Location of Lua plugins configurations
+│  └──  plugins.lua      # Plugin manager configurations
+└──  sessions/           # Location of Vim workspaces
+
+
+Doom Nvim also creates the `BFC`, which serves as the user configuration file
+if it is not present on the system. It allows a fine control over the core
+functions of Doom Nvim. It is a copy of the doom.vim file.
+
+
+==============================================================================
+HACKING AUTOLOAD                                  *doom_nvim_hacking_autoload*
+
+The `autoload` directory content is loaded by Neovim on_start. It is the
+location of the Doom Nvim plugin which is loaded everytime nvim starts.
+
+The `doom.vim` file contains most of the global variables used by Doom Nvim
+and executes the init functions of Doom Nvim.
+
+The files inside the `doom/` directory have core functions for Doom Nvim.
+
+    - autocmds.vim  : Autocommands
+    - config.vim    : Manages the BFC
+    - functions.vim : Utility functions
+    - health.vim    : Used to check the health of installation (WIP)
+    - logging.vim   : Logging handler
+    - system.vim    : Cross-platform support (WIP)
+
+
+==============================================================================
+ACKNOWLEDGEMENTS                                  *doom_nvim_acknowledgements*
+
+Doom Nvim would not have been possible had it not been for
+
+    - hlissner : Creator of Doom Emacs
+    - romgrk   : Ported doom-one colorscheme from Doom Emacs to Vim
+
+
+==============================================================================
+LICENSE                                                    *doom_nvim_license*
+
+Doom Nvim is distributed under MIT License.
+
+
+==============================================================================
+CONTRIBUTING                                          *doom_nvim_contributing*
+
+- I really love pull requests and bug reports
+  (please see the Contributing Guidelines on GitHub before contributing)
+
+- Don't hesitate to tell me my Lua coding style sucks, but please tell me why
+  (I am new to Lua, I may have some bad practices that can be fixed in code).
+
+
+==============================================================================
+CHANGELOG                                                *doom_nvim_changelog*
+
+Doom Nvim follows the semantic versioning and reached its stable version in
+version 1.0.0
+
+- 1.0.0
+  - Initial stable release
