@@ -80,6 +80,26 @@ They all start with `g:doom_` followed by a description of ther nature:
 `g:doom_indent` followed by their value.
 
 
+`g:doom_autosave`
+default value = 0
+0 : Disable autosave
+1 : Enable autosave
+
+`g:doom_fmt_on_save`
+default value = 0
+0 : Disable format on save
+1 : Enable format on save
+
+`g:doom_autosave_sessions`
+default value = 0
+0 : Disable session autosave
+1 : Enable session autosave
+
+`g:doom_preserve_edit_pos`
+default value = 0
+0 : Disable preservation of last editing position
+1 : Enable preservation of last editing position
+
 `g:doom_indent`
 default value = 4
 Specifies the width of tabs and shifttabs
@@ -149,11 +169,6 @@ List of user disabled modules
 default value = []
 List of user custom plugins
 
-`g:doom_fmt_on_save`
-default value = 0
-0 : Disable format on save
-1 : Enable format on save
-
 `g:dom_conceallevel`
 default value = 1
 Set Neovim conceal level
@@ -205,7 +220,7 @@ at: `$HOME/.config/doom-nvim/doomrc` (see |doom_nvim_hacking|).
 
 
 ==============================================================================
-CONFIGURATION                                 *doom_nvim_configuration_layout*
+CONFIGURATION                                        *doom_nvim_configuration*
 
 Doom Nvim configuration files resides under the
 `$HOME/.config/doom-nvim/config/` directory. See |doom_nvim_hacking| for more
@@ -287,9 +302,13 @@ toggle it, you can enter <Space>tt in `NORMAL` mode.
 ==============================================================================
 COMMANDS                                                  *doom_nvim_commands*
 
-Doom Nvim uses vim-leader-guide as a command manager, inspired by emacs's
-guide-key. To open it, press <Space> and wait for the popup to show, it should
-not take much time. Each section has a label and is mnemonic.
+Doom Nvim have its own commands, to make your life easier when developing.
+
+| `:DoomUpdate` | Update Doom Nvim if there are updates.
+
+Doom Nvim also uses `vim-leader-guide` as a command manager, inspired by
+emacs's guide-key. To open it, press <Space> and wait for the popup to show,
+it should not take much time. Each section has a label and is mnemonic.
 e.g:
         `Toggle Terminal` > <Space>tt
 
@@ -330,6 +349,10 @@ In Doom Nvim, we make use of the <Space> keystroke as the map leader.
 |           | <n> Next buffer
 |           | <p> Previous buffer
 |           | <P> Pick buffer
+| <d>oom
+|           | <c> Edit your Doom Nvim configuration
+|           | <d> Open Doom Nvim docs
+|           | <u> Check Doom Nvim updates
 | <f>ile
 |           | <b> Bookmarks
 |           | <c> Edit your Neovim Configuration
@@ -550,5 +573,13 @@ CHANGELOG                                                *doom_nvim_changelog*
 Doom Nvim follows the semantic versioning and reached its stable version in
 version 1.0.0
 
+- 1.1.0
+  - Added `Doom` section to `vim-leader-guide` plugin,
+    see |doom_nvim_commands_keybindings|
+  - Added `:DoomUpdate` command,
+    see |doom_nvim_commands|
+  - Added `g:doom_autosave_sessions`,
+    see |doom_nvim_configuration|
+  - 
 - 1.0.0
   - Initial stable release
