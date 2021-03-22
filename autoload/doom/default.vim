@@ -58,6 +58,10 @@ function! doom#default#options() abort
 endfunction
 
 function doom#default#loadGlob()
+    " Set a custom command to update Doom Nvim
+    " can be called by using :DoomUpdate
+    command DoomUpdate !git -C g:doom_root pull
+
     " Set SPC as the mapleader
     let mapleader = ' '
 
