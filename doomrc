@@ -1,0 +1,105 @@
+"================================================
+" doomrc - Doom Nvim configurations
+" For more information, see `:h doom_nvim`
+"================================================
+
+" Enable autosave
+" @default = 0
+let g:doom_autosave = 0
+
+" Enable format on save
+" @default = 0
+let g:doom_fmt_on_save = 0
+
+" Autosave sessions
+" @default = 0
+let g:doom_autosave_sessions = 0
+
+" Preserve last editing position
+" @default = 0
+let g:doom_preserve_edit_pos = 0
+
+" Default indent size
+" @default = 4
+let g:doom_indent = 4
+
+" Show indent lines
+" @default = 1
+let g:doom_show_indent = 1
+
+" Show current context on the current indent line
+" If this option slows your Neovim, just turn it off.
+" @default = 0
+let g:doom_show_indent_context = 0
+
+" Expand tabs
+" @default = 1
+let g:doom_expand_tabs = 1
+
+" Set numbering
+" @default = 1
+let g:doom_relative_num = 1
+
+" Set max cols
+" @default = 80
+let g:doom_max_columns = 80
+
+" Enable guicolors
+" @default = 1
+let g:doom_enable_guicolors = 1
+
+" Sidebar sizing
+" @default = 25
+let g:doom_sidebar_width = 25
+
+" Tagbar left
+" @default = 1
+let g:doom_tagbar_left = 1
+
+" Show hidden files
+" @default = 1
+let g:doom_show_hidden = 1
+
+" Default colorscheme
+" @default = doom-one
+let g:doom_colorscheme = 'doom-one'
+
+" Background color
+" @default = dark
+let g:doom_colorscheme_bg = 'dark'
+
+" Checkupdates on start
+" @default = 0
+let g:doom_check_updates = 0
+
+" Disabled plugins
+" @default = []
+" example:
+"   let g:doom_disabled_plugins = ['emmet-vim']
+let g:doom_disabled_plugins = []
+
+" Disabled plugins modules
+" @default = ['git', 'lsp', 'web']
+" example:
+"   let g:doom_disabled_modules = ['web']
+let g:doom_disabled_modules = ['git', 'lsp', 'web']
+
+" Install custom plugins
+" @default = []
+" example:
+"   let g:doom_custom_plugins = ['andweeb/presence.nvim']
+let g:doom_custom_plugins = []
+
+"Conceal level
+" 0: Disabled
+" 1: Enabled
+" @default = 0
+let g:doom_conceallevel = 0
+
+" Logging level
+" 0 : No logging
+" 1 : All errors, no echo (default)
+" 2 : All errors and messages, no echo
+" 3 : All errors and messages, echo
+" @default = 1
+let g:doom_logging = 1
