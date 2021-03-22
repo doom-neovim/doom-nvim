@@ -77,7 +77,9 @@ Its design is guided by these mantras:
 - Git 2.23+
 - Neovim Nightly 0.5.0 (for Neovim 0.4.x see the nvim-0.4 branch _coming soon_)
 - GNU `find`
-- _OPTIONALS:_ [ripgrep] 11.0+ or [fd] 7.3.0+ (improves file indexing performance for some commands)
+- _OPTIONALS:_
+  - [ripgrep] 11.0+ or [fd] 7.3.0+ (improves file indexing performance for some commands)
+  - `nodejs` and `npm` (required to use the built-in LSP)
 
 Doom is comprised of [~35 optional modules][modules], some of which may have
 additional dependencies. [Please visit their documentation][modules].
