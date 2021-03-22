@@ -27,6 +27,15 @@ let g:doom_preserve_edit_pos = 0
 " @default = 4
 let g:doom_indent = 4
 
+" Show indent lines
+" @default = 1
+let g:doom_show_indent = 1
+
+" Show current context on the current indent line
+" If this option slows your Neovim, just turn it off.
+" @default = 0
+let g:doom_show_indent_context = 0
+
 " Expand tabs
 " @default = 1
 let g:doom_expand_tabs = 1

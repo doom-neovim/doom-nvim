@@ -275,6 +275,18 @@ return packer.startup(function()
         'windwp/nvim-autopairs',
         disable = (disabled_files and true or disabled_autopairs)
     }
+    -- Indent Lines,
+    -- we use the lua branch for better performance on Neovim Nightly (>=0.5)
+    disabled_indent_lines = has_value(g.doom_disabled_plugins, 'indentlines')
+    if disabled_files and (not disabled_indent_lines) then
+        table.insert(disabled_plugins, 'indentlines')
+        nvim_set_var('doom_disabled_plugins', disabled_plugins)
+    end
+    use {
+        'lukas-reineke/indent-blankline.nvim',
+        branch = 'lua',
+        disable = (disabled_files and true or disabled_indent_lines)
+    }
     -- EditorConfig support
     disabled_editorconfig = has_value(g.doom_disabled_plugins, 'editorconfig')
     if disabled_files and (not disabled_editorconfig) then

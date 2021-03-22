@@ -61,8 +61,22 @@ function doom#default#loadGlob()
     " Set SPC as the mapleader
     let mapleader = ' '
 
-    " NOTE: most of Doom Nvim plugins are written in Lua, their configs will
-    " be loaded directly from packer.nvim configuration.
+    " Indent Lines
+    let g:indent_blankline_enabled = g:doom_show_indent
+    let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
+    " If treesitter is not disabled, then ...
+    if index(g:doom_disabled_plugins, 'treesitter') == -1
+        " When on, use treesitter to determine the current context. Then show
+        " the indent character in a different highlight. Might be slower.
+        " If this option slows your Neovim, just turn off the variable
+        " g:doom_show_indent_context
+        let g:indent_blankline_show_current_context = g:doom_show_indent_context
+        " use treesitter to calculate indentation when possible.
+        let g:indent_blankline_use_treesitter = 1
+    endif
+
+    " NOTE: most of Doom Nvim plugins are written in Lua, their configs
+    " resides in the `lua/configs/` directory.
 
     " nvim-tree.lua
     " NOTE: The rest of the tree config resides in a vim file.
@@ -77,7 +91,7 @@ function doom#default#loadGlob()
     endif
 
     " Dashboard
-    let g:dashboard_session_directory = g:doom_root . 'sessions/'
+    let g:dashboard_session_directory = g:doom_root . 'sessions'
     let g:dashboard_default_executive = 'telescope'
     let plugins_count = len(globpath('~/.local/share/nvim/site/pack/packer/start', '*', 0, 1))
     let g:dashboard_custom_footer = [
