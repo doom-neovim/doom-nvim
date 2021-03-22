@@ -94,6 +94,8 @@ including their plugins individually.
       - Use `neoformat` to disable it
     - [x] nvim-autopairs   (Autopairs)
       - Use `autopairs` to disable it
+    - [x] indent-blankline (Indent Lines Guide)
+      - Use `indentlines` to disable it
     - [x] editorconfig     (EditorConfig support)
       - Use `editorconfig` to disable it
     - [x] treesitter       (Better syntax highlight & more)
