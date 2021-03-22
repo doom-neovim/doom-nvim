@@ -46,6 +46,11 @@ function! doom#functions#quit_doom(write, force) abort
 
     let quit_cmd = ''
 
+    " Save current session if enabled
+    if g:doom_autosave_sessions ==# 1
+        exec ':SessionSave'
+    endif
+
     if a:write == 1
         let quit_cmd .= 'wa | '
     endif

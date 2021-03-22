@@ -5,7 +5,7 @@
 "================================================
 
 " Doom Nvim version
-let g:doom_version = '1.0.0'
+let g:doom_version = '1.1.0'
 lockvar g:doom_version
 
 " Force UTF-8 encoding
@@ -18,6 +18,10 @@ let g:doom_autosave = 1
 " Enable format on save
 " @default = 0
 let g:doom_fmt_on_save = 0
+
+" Autosave sessions
+" @default = 0
+let g:doom_autosave_sessions = 0
 
 " Preserve last editing position
 " @default = 0
