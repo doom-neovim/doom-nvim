@@ -71,7 +71,8 @@ return packer.startup(function()
     use {
         'sainnhe/sonokai',
         'wadackel/vim-dogrun',
-        'joshdick/onedark.vim'
+        'joshdick/onedark.vim',
+        'ajmwagar/vim-deus'
     }
     -- File tree
     -- do not use the latest commit because it is broken, at least for me 

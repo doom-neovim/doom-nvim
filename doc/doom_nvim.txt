@@ -213,6 +213,7 @@ colorschemes listed on `$HOME/.config/doom-nvim/lua/plugins.lua`:
     - `sonokai`
     - `dogrun`
     - `onedark`
+    - `deus`
 
 You can shiwtch between colorschemes by doing <Space>tc and then type the name
 of the colorscheme you want to use. You can also edit the `BFC` file located
