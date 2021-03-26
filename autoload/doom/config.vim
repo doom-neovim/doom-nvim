@@ -8,7 +8,7 @@
 autocmd BufNewFile,BufRead doomrc set ft=vim
 
 function! doom#config#checkBFC()
-    " /home/user/.doom-nvim/doomrc
+    " /home/user/.config/doom-nvim/doomrc
     if filereadable(g:doom_root . '/doomrc')
         let g:doom_bfc = 1
     else
@@ -17,7 +17,7 @@ function! doom#config#checkBFC()
 endfunction
 
 function! doom#config#loadBFC()
-    " /home/user/.doom-nvim/doomrc
+    " /home/user/.config/doom-nvim/doomrc
     if filereadable(g:doom_root . '/doomrc')
         try
             execute 'source ' . g:doom_root . '/doomrc'
