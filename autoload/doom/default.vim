@@ -60,7 +60,7 @@ endfunction
 function doom#default#loadGlob()
     " Set a custom command to update Doom Nvim
     " can be called by using :DoomUpdate
-    command DoomUpdate !git -C ~/.config/doom-nvim/ stash -q && git -C ~/.config/doom-nvim/ pull && git -C ~/.config/doom-nvim/ stash pop -q
+    command! DoomUpdate !git -C ~/.config/doom-nvim/ stash -q && git -C ~/.config/doom-nvim/ pull && git -C ~/.config/doom-nvim/ stash pop -q
 
     " Set SPC as the mapleader
     let mapleader = ' '
