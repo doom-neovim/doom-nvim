@@ -70,6 +70,8 @@ return packer.startup(function()
     -- cannot be disabled at the moment
     use {
         'sainnhe/sonokai',
+        'sainnhe/edge',
+        'sainnhe/everforest'
         'wadackel/vim-dogrun',
         'joshdick/onedark.vim',
         'ajmwagar/vim-deus'
@@ -278,6 +280,8 @@ return packer.startup(function()
     }
     -- Indent Lines,
     -- we use the lua branch for better performance on Neovim Nightly (>=0.5)
+    -- we have also disabled it until this issue is fixed to avoid visual bugs
+    -- https://github.com/neovim/neovim/issues/14050
     disabled_indent_lines = has_value(g.doom_disabled_plugins, 'indentlines')
     if disabled_files and (not disabled_indent_lines) then
         table.insert(disabled_plugins, 'indentlines')
