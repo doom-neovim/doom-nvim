@@ -65,23 +65,24 @@ function doom#default#loadGlob()
     " Set SPC as the mapleader
     let mapleader = ' '
 
-    " Indent Lines
-    let g:indent_blankline_enabled = g:doom_show_indent
-    let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
+    " Indent Lines, disabled until this issue is fixed
+    " https://github.com/neovim/neovim/issues/14050
+    " let g:indent_blankline_enabled = g:doom_show_indent
+    " let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
     " Disable indent lines on dashboard and help
-    let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'minimap']
+    " let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'NvimTree', 'minimap']
     " Disable indent line on first indent
-    let g:indent_blankline_show_first_indent_level = v:false
+    " let g:indent_blankline_show_first_indent_level = v:false
     " If treesitter is not disabled, then ...
-    if index(g:doom_disabled_plugins, 'treesitter') == -1
-        " When on, use treesitter to determine the current context. Then show
-        " the indent character in a different highlight. Might be slower.
-        " If this option slows your Neovim, just turn off the variable
-        " g:doom_show_indent_context
-        let g:indent_blankline_show_current_context = g:doom_show_indent_context
-        " use treesitter to calculate indentation when possible.
-        let g:indent_blankline_use_treesitter = 1
-    endif
+    " if index(g:doom_disabled_plugins, 'treesitter') == -1
+    "     " When on, use treesitter to determine the current context. Then show
+    "     " the indent character in a different highlight. Might be slower.
+    "     " If this option slows your Neovim, just turn off the variable
+    "     " g:doom_show_indent_context
+    "     let g:indent_blankline_show_current_context = g:doom_show_indent_context
+    "     " use treesitter to calculate indentation when possible.
+    "     let g:indent_blankline_use_treesitter = 1
+    " endif
 
     " NOTE: most of Doom Nvim plugins are written in Lua, their configs
     " resides in the `lua/configs/` directory.

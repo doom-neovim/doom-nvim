@@ -81,10 +81,10 @@ let g:doom_colorscheme_bg = 'dark'
 let g:doom_check_updates = 0
 
 " Disabled plugins
-" @default = []
+" @default = ['indentlines']
 " example:
 "   let g:doom_disabled_plugins = ['emmet-vim']
-let g:doom_disabled_plugins = []
+let g:doom_disabled_plugins = ['indentlines']
 
 " Disabled plugins modules
 " @default = ['git', 'lsp', 'web']
