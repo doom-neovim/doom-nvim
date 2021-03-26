@@ -71,7 +71,7 @@ return packer.startup(function()
     use {
         'sainnhe/sonokai',
         'sainnhe/edge',
-        'sainnhe/everforest'
+        'sainnhe/everforest',
         'wadackel/vim-dogrun',
         'joshdick/onedark.vim',
         'ajmwagar/vim-deus'
