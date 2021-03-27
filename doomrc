@@ -1,21 +1,29 @@
-"================================================
+"==================================================
 " doomrc - Doom Nvim configurations
-" For more information, see `:h doom_nvim`
-"================================================
+" For more information, see `:h doom_nvim_options`
+"==================================================
 
-" Enable autosave
+" Autosave
+" 0 : Disable autosave
+" 1 : Enable autosave
 " @default = 0
 let g:doom_autosave = 0
 
-" Enable format on save
+" Format on save
+" 0 : Disable format on save
+" 1 : Enable format on save
 " @default = 0
 let g:doom_fmt_on_save = 0
 
 " Autosave sessions
+" 0 : Disable session autosave
+" 1 : Enable session autosave
 " @default = 0
 let g:doom_autosave_sessions = 0
 
 " Preserve last editing position
+" 0 : Disable preservation of last editing position
+" 1 : Enable preservation of last editing position
 " @default = 0
 let g:doom_preserve_edit_pos = 0
 
@@ -24,6 +32,8 @@ let g:doom_preserve_edit_pos = 0
 let g:doom_indent = 4
 
 " Show indent lines
+" NOTE: unused at the moment, waiting for this to be fixed
+" https://github.com/neovim/neovim/issues/14050
 " @default = 1
 let g:doom_show_indent = 1
 
@@ -33,26 +43,35 @@ let g:doom_show_indent = 1
 let g:doom_show_indent_context = 0
 
 " Expand tabs
+" Specifies if spaces or tabs must be used
+" 0 : spaces
+" 1 : tabs
 " @default = 1
 let g:doom_expand_tabs = 1
 
 " Set numbering
+" 0 : Shows absolute number lines
+" 1 : Shows relative number lines
 " @default = 1
 let g:doom_relative_num = 1
 
 " Set max cols
+" Defines the column to show a vertical marker
 " @default = 80
 let g:doom_max_columns = 80
 
 " Enable guicolors
+" Enables gui colors on GUI versions of Neovim
 " @default = 1
 let g:doom_enable_guicolors = 1
 
 " Sidebar sizing
+" Specifies the default width of Tree Explorer and Tagbar
 " @default = 25
 let g:doom_sidebar_width = 25
 
 " Tagbar left
+" Sets Tagbar buffer to the left when enabled
 " @default = 1
 let g:doom_tagbar_left = 1
 
@@ -73,10 +92,10 @@ let g:doom_colorscheme_bg = 'dark'
 let g:doom_check_updates = 0
 
 " Disabled plugins
-" @default = []
+" @default = ['indentlines']
 " example:
 "   let g:doom_disabled_plugins = ['emmet-vim']
-let g:doom_disabled_plugins = []
+let g:doom_disabled_plugins = ['indentlines']
 
 " Disabled plugins modules
 " @default = ['git', 'lsp', 'web']
@@ -90,9 +109,13 @@ let g:doom_disabled_modules = ['git', 'lsp', 'web']
 "   let g:doom_custom_plugins = ['andweeb/presence.nvim']
 let g:doom_custom_plugins = []
 
-"Conceal level
-" 0: Disabled
-" 1: Enabled
+" Conceal level
+" Set Neovim conceal level
+" 0 : Disable indentline and show all
+" 1 : Conceal some functions and show indentlines
+" 2 : Concealed text is completely hidden unless it has a custom replacement
+"     character defined
+" 3 : Concealed text is completely hidden
 " @default = 0
 let g:doom_conceallevel = 0
 
