@@ -26,13 +26,13 @@ if index(g:doom_disabled_modules, 'git') == -1 && index(g:doom_disabled_plugins,
     endif
     if index(g:doom_disabled_plugins, 'toggleterm') == -1
         " Pull
-        nnoremap <leader>gP :TermExec git pull<CR>
+        nnoremap <leader>gP :TermExec cmd='git pull'<CR>
         let g:lmap.g.P = 'Pull'
         " Push
-        nnoremap <leader>gp :TermExec git push<CR>
+        nnoremap <leader>gp :TermExec cmd='git push'<CR>
         let g:lmap.g.p = 'Push'
         " Status
-        nnoremap <leader>gs :TermExec git status<CR>
+        nnoremap <leader>gs :TermExec cmd='git status'<CR>
         let g:lmap.g.s = 'Status'
     endif
 endif
