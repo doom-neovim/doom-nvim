@@ -22,6 +22,13 @@ function! doom#functions#get_root() abort
     return root
 endfunction
 
+" ToggleTerm custom function to avoid having
+" line numbers inside the terminal buffer
+" because that is not from God.
+function! doom#functions#toggle_terminal() abort
+    execute "ToggleTerm"
+    set nonumber norelativenumber
+endfunction
 
 function! doom#functions#quit_doom(write, force) abort
     try

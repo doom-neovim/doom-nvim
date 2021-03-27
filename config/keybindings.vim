@@ -22,9 +22,10 @@ let g:mapleader = " "
    "         ESC = Search highlighting off  "
    "          F2 = Toggle Tagbar            "
    "          F3 = Toggle Tree Explorer     "
-   "          F4 = Toggle Minimap           "
-   "          F5 = Toggle distraction-free  "
-   "          F6 = Run dot-http             "
+   "          F4 = Toggle Terminal          "
+   "          F5 = Toggle Minimap           "
+   "          F6 = Toggle distraction-free  "
+   "          F7 = Run dot-http             "
    "                                        "
    "========================================"
 
@@ -58,14 +59,18 @@ endif
 if index(g:doom_disabled_plugins, 'tree') == -1
     nnoremap <F3> :NvimTreeToggle<CR>
 endif
+if index(g:doom_disabled_plugins, 'terminal') == -1
+    nnoremap <F4> :call doom#functions#toggle_terminal()<CR>
+endif
 if index(g:doom_disabled_plugins, 'minimap') == -1
-    nnoremap <F4> :MinimapToggle<CR>
+    nnoremap <F5> :MinimapToggle<CR>
 endif
 if index(g:doom_disabled_plugins, 'goyo') == -1
-    nnoremap <F5> :Goyo<CR>
+    nnoremap <F6> :Goyo<CR>
 endif
-if index(g:doom_disabled_modules, 'web') == -1
-    nnoremap <F6> :DotHttp<CR>
+if index(g:doom_disabled_modules, 'web') == -1 \
+    && index(g:doom_disabled_plugins, 'restclient') == -1
+    nnoremap <F7> :DotHttp<CR>
 endif
 
 "====================="

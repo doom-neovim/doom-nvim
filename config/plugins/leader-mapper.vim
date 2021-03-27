@@ -204,13 +204,6 @@ function ToggleNumbers()
         set number!
     endif
 endfunction
-" ToggleTerm custom function to avoid having
-" line numbers inside the terminal buffer
-" because that is not from God.
-function ToggleTerm()
-    execute "ToggleTerm"
-    set nonumber norelativenumber
-endfunction
 " Toggle Menu
 let g:lmap.t = {'name': 'Toggler Menu'}
 " Toggle Line Numbers
@@ -239,7 +232,7 @@ if index(g:doom_disabled_plugins, 'vista') == -1
 endif
 if index(g:doom_disabled_plugins, 'toggleterm') == -1
     " Open a new terminal
-    nnoremap <leader>tt :call ToggleTerm()<CR>
+    nnoremap <leader>tt :call doom#functions#toggle_terminal()<CR>
     let g:lmap.t.t = 'Toggle terminal'
 endif
 
