@@ -21,7 +21,7 @@ if index(g:doom_disabled_modules, 'git') == -1 && index(g:doom_disabled_plugins,
     let g:lmap.g = {'name': 'Git Menu'}
     if index(g:doom_disabled_plugins, 'lazygit') == -1
         " Open LazyGit
-        nnoremap <leader>go :LazyGit
+        nnoremap <leader>go :LazyGit<CR>
         let g:lmap.g.o = 'Open LazyGit'
     endif
     if index(g:doom_disabled_plugins, 'toggleterm') == -1
