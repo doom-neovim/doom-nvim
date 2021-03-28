@@ -58,5 +58,8 @@ endif
 if doom#functions#checkplugin('nvim-treesitter')
     lua require('configs.tree-sitter')
 endif
+if doom#functions#checkplugin('gitsigns.nvim')
+    lua require('configs.nvim-gitsigns')
+endif
 
 call doom#end()

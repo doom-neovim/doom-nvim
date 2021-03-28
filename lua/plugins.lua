@@ -192,16 +192,16 @@ return packer.startup(function()
     -----[[-------------]]-----
     ---     GIT RELATED     ---
     -----]]-------------[[-----
-    -- Git gutter better alternative
+    -- Git gutter better alternative, written in Lua
     -- can be disabled to use your own git gutter plugin
-    local disabled_signify = has_value(g.doom_disabled_plugins, 'signify')
-    if disabled_git and (not disabled_signify) then
-        table.insert(disabled_plugins, 'signify')
+    local disabled_gitsigns = has_value(g.doom_disabled_plugins, 'gitsigns')
+    if disabled_git and (not disabled_gitsigns) then
+        table.insert(disabled_plugins, 'gitsigns')
         nvim_set_var('doom_local disabled_plugins', disabled_plugins)
     end
     use {
-        'mhinz/vim-signify',
-        disable = (disabled_git and true or disabled_signify)
+        'lewis6991/gitsigns.nvim',
+        disable = (disabled_git and true or disabled_gitsigns),
     }
     -- LazyGit integration
     local disabled_lazygit = has_value(g.doom_disabled_plugins, 'lazygit')
@@ -211,6 +211,7 @@ return packer.startup(function()
     end
     use {
         'kdheepak/lazygit.nvim',
+        requires = { 'nvim-lua/plenary.nvim' },
         disable = (disabled_git and true or disabled_lazygit)
     }
 
