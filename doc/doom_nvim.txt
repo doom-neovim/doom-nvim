@@ -108,11 +108,6 @@ Specifies the width of tabs and shifttabs
 default value = 1
 Show Indent Lines
 
-`g:doom_show_indent_context`
-default value = 0
-Show current context on the current indent line.
-If this option slows your Neovim, just turn it off.
-
 `g:doom_expand_tabs`
 default value = 1
 Specifies if spaces or tabs must be used

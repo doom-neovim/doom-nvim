@@ -32,15 +32,8 @@ let g:doom_preserve_edit_pos = 0
 let g:doom_indent = 4
 
 " Show indent lines
-" NOTE: unused at the moment, waiting for this to be fixed
-" https://github.com/neovim/neovim/issues/14050
 " @default = 1
 let g:doom_show_indent = 1
-
-" Show current context on the current indent line
-" If this option slows your Neovim, just turn it off.
-" @default = 0
-let g:doom_show_indent_context = 0
 
 " Expand tabs
 " Specifies if spaces or tabs must be used
@@ -92,10 +85,10 @@ let g:doom_colorscheme_bg = 'dark'
 let g:doom_check_updates = 0
 
 " Disabled plugins
-" @default = ['indentlines']
+" @default = []
 " example:
 "   let g:doom_disabled_plugins = ['emmet-vim']
-let g:doom_disabled_plugins = ['indentlines']
+let g:doom_disabled_plugins = []
 
 " Disabled plugins modules
 " @default = ['git', 'lsp', 'web']
