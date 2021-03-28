@@ -240,14 +240,24 @@ return packer.startup(function()
     use {
         'hrsh7th/nvim-compe',
         requires = {
-            {'ray-x/lsp_signature.nvim'}, {'onsails/lspkind-nvim'}, {'norcalli/snippets.nvim'}
+            {'ray-x/lsp_signature.nvim'}, {'onsails/lspkind-nvim'},
+            {'norcalli/snippets.nvim'}
         },
         disable = (disabled_completion and true or disabled_compe)
     }
+    -- provides the missing `:LspInstall` for `nvim-lspconfig`.
+    local disabled_lspinstall = has_value(g.doom_disabled_plugins, 'lspinstall')
+    if disabled_lsp and (not disabled_lspinstall) then
+        table.insert(disabled_plugins, 'lspinstall')
+        nvim_set_var('doom_disabled_plugins', disabled_plugins)
+    end
+    use 'kabouzeid/nvim-lspinstall'
+
     -----[[--------------]]-----
     ---     File Related     ---
     -----]]--------------[[-----
-    -- Write / Read files without permissions (e.g. /etc files) without having to use `sudo nvim /path/to/file`
+    -- Write / Read files without permissions (e.g. /etc files) without having
+    -- to use `sudo nvim /path/to/file`
     local disabled_suda = has_value(g.doom_disabled_plugins, 'suda')
     if disabled_files and (not disabled_suda) then
         table.insert(disabled_plugins, 'suda')
@@ -335,7 +345,7 @@ return packer.startup(function()
         'norcalli/nvim-colorizer.lua',
         disable = (disabled_web and true or disabled_colorizer)
     }
-    -- HTPP Client support
+    -- HTTP Client support
     -- Depends on bayne/dot-http to work!
     local disabled_restclient = has_value(g.doom_disabled_plugins, 'restclient')
     if disabled_web and (not disabled_restclient) then

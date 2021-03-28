@@ -1,12 +1,15 @@
 -- taken from https://github.com/neovim/nvim-lspconfig#keybindings-and-completion
 -- changed servers and ctermbg=237
 -- added buf_set_keymap('n', 'ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-nvim_lsp = require('lspconfig')
+local nvim_lsp = require('lspconfig')
+
 -- Snippets support
-capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 -- Signature help
 require('lsp_signature').on_attach()
+
 -- Vscode-like pictograms on completion
 require('lspkind').init({
     with_text = true,
@@ -34,7 +37,7 @@ require('lspkind').init({
     },
 })
 
-on_attach = function(client, bufnr)
+local on_attach = function(client, bufnr)
     function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -76,14 +79,24 @@ on_attach = function(client, bufnr)
       ]], false)
     end
 end
+
 --[[-----------------]]--
 --      LSP Setup      --
 --]]-----------------[[--
--- NOTE: Add your LSP configs here.
+-- https://github.com/kabouzeid/nvim-lspinstall#advanced-configuration-recommended
+local function setup_servers()
+    -- Provide the missing :LspInstall
+    require('lspinstall').setup()
+    local servers = require('lspinstall').installed_servers()
+    for _, server in pairs(servers) do
+        nvim_lsp[server].setup{}
+    end
+end
 
--- Use a loop to conveniently both setup defined servers 
--- and map buffer local keybindings when the language server attaches
-servers = { }
-for _, lsp in ipairs(servers) do
-nvim_lsp[lsp].setup { on_attach = on_attach }
+setup_servers()
+
+-- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+require('lspinstall').post_install_hook = function ()
+  setup_servers() -- reload installed servers
+  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
 end
