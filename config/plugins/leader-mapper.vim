@@ -17,7 +17,8 @@ endif
 
 " Git Menu
 if index(g:doom_disabled_modules, 'git') == -1 && index(g:doom_disabled_plugins, 'lazygit') == -1 ||
-            \ index(g:doom_disabled_modules, 'git') == -1 && index(g:doom_disabled_plugins, 'toggleterm') == -1
+            \ index(g:doom_disabled_modules, 'git') == -1 && index(g:doom_disabled_plugins, 'toggleterm') == -1 ||
+            \ index(g:doom_disabled_modules, 'git') == -1 && index(g:doom_disabled_plugins, 'gitsigns') == -1
     let g:lmap.g = {'name': 'Git Menu'}
     if index(g:doom_disabled_plugins, 'lazygit') == -1
         " Open LazyGit
@@ -34,6 +35,20 @@ if index(g:doom_disabled_modules, 'git') == -1 && index(g:doom_disabled_plugins,
         " Status
         nnoremap <leader>gs :TermExec cmd='git status'<CR>
         let g:lmap.g.s = 'Status'
+    endif
+    if index(g:doom_disabled_plugins, 'gitsigns') == -1
+        " Stage hunk
+        let g:lmap.g.S = 'Stage hunk'
+        " Undo stage hunk
+        let g:lmap.g.u = 'Undo stage hunk'
+        " Reset hunk
+        let g:lmap.g.r = 'Reset hunk'
+        " Reset buffer
+        let g:lmap.g.R = 'Reset buffer'
+        " Preview hunk
+        let g:lmap.g.h = 'Preview hunk'
+        " Blame line
+        let g:lmap.g.b = 'Blame line'
     endif
 endif
 
