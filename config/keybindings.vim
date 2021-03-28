@@ -68,8 +68,8 @@ endif
 if index(g:doom_disabled_plugins, 'goyo') == -1
     nnoremap <F6> :Goyo<CR>
 endif
-if index(g:doom_disabled_modules, 'web') == -1 \
-    && index(g:doom_disabled_plugins, 'restclient') == -1
+if index(g:doom_disabled_modules, 'web') == -1 &&
+            \ index(g:doom_disabled_plugins, 'restclient') == -1
     nnoremap <F7> :DotHttp<CR>
 endif
 
