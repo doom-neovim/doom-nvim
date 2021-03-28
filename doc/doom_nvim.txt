@@ -314,6 +314,52 @@ toggle it, you can enter in `NORMAL` mode:
 
 
 ==============================================================================
+MODULES                                      *doom_nvim_configuration_modules*
+
+Doom Nvim consists of around 7 modules and growing. A Doom Nvim Module is a
+bundle of plugins, configuration and commands, organized into a unit that can
+be toggled easily.
+
+To give a quick summary, the modules are as follows:
+    - Essentials (package manager, utilities for using Lua inside Neovim)
+    - UI (everything related to UI)
+    - Fuzzy (telescope.nvim, fuzzy searching)
+    - Git (everything related to Git)
+    - LSP (for using Language Server Protocols by using the built-in LSP)
+    - Files (utilities like formatter, commenter, improvements, etc)
+    - Web (for web development)
+
+You can see in a more detailed view the modules and its plugins at
+https://github.com/NTBBloodbath/doom-nvim/blob/main/docs/modules.md
+
+
+==============================================================================
+ENABLING MODULES                    *doom_nvim_configuration_modules_enabling*
+
+To enable a module, you can use the `g:doom_disabled_modules` variable on your
+`doomrc`.
+
+Example:
+    To enable all modules except web, just put only 'web' in the disabled
+    modules array and then, reboot Neovim and do `:PackerSync`.
+
+    let g:doom_disabled_modules = ['web']
+
+
+==============================================================================
+DISABLING MODULES                  *doom_nvim_configuration_modules_disabling*
+
+To disable a module, you can use the `g:doom_disabled_modules` variable on
+your `doomrc`.
+
+Example:
+    To disable only the web module, just put only 'web' in the disabled
+    modules array and then, reboot Neovim and do `:PackerSync`.
+
+    let g:doom_disabled_modules = ['web']
+
+
+==============================================================================
 LSP                                              *doom_nvim_configuration_lsp*
 
 To easily install LSPs and without having to do it system-wide or having to
