@@ -1,3 +1,5 @@
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+
 -- Empty by default
 vim.g.nvim_tree_ignore = { '.git', 'node_modules', '.cache', '__pycache__' }
 -- False by default, opens the tree when typing `vim $DIR` or `vim`
@@ -18,6 +20,10 @@ vim.g.nvim_tree_root_folder_modifier = ':~'
 vim.g.nvim_tree_tab_open = 1
 -- False by default, will not resize the tree when opening a file
 vim.g.nvim_tree_width_allow_resize = 1
+-- False by default, append a trailing slash to folder names
+vim.g.nvim_tree_add_trailing = 1
+-- False by default, compact folders that only contain a single folder into one node in the file tree
+vim.g.nvim_tree_group_empty = 1
 --- Tree icons
 -- If false, do not show the icons for one of 'git' 'folder' and 'files'
 -- true by default, notice that if 'files' is 1, it will only display
@@ -31,26 +37,33 @@ vim.g.nvim_tree_show_icons = {
 -- You don't have to define all keys.
 -- NOTE: the 'edit' key will wrap/unwrap a folder and open a file
 vim.g.nvim_tree_bindings = {
-    edit            = {"<CR>", "o"},
-    edit_vsplit     = "<C-v>",
-    edit_split      = "<C-x>",
-    edit_tab        = "<C-t>",
-    close_node      = {"<S-CR>", "<BS>"},
-    toggle_ignored  = "I",
-    toggle_dotfiles = "H",
-    refresh         = "R",
-    preview         = "<Tab>",
-    cd              = "<CR>",
-    create          = "n",
-    remove          = "d",
-    rename          = "r",
-    cut             = "x",
-    copy            = "c",
-    paste           = "p",
-    prev_git_item   = "[c",
-    next_git_item   = "]c",
-    dir_up          = "-",
-    close           = "q",
+    -- default mappings
+    ["<CR>"]           = tree_cb("edit"),
+    ["o"]              = tree_cb("edit"),
+    ["<2-LeftMouse>"]  = tree_cb("edit"),
+    ["<CR>"]           = tree_cb("cd"),
+    ["<2-RightMouse>"] = tree_cb("cd"),
+    ["<C-]>"]          = tree_cb("cd"),
+    ["<C-v>"]          = tree_cb("vsplit"),
+    ["<C-x>"]          = tree_cb("split"),
+    ["<C-t>"]          = tree_cb("tabnew"),
+    ["<BS>"]           = tree_cb("close_node"),
+    ["<S-CR>"]         = tree_cb("close_node"),
+    ["<Tab>"]          = tree_cb("preview"),
+    ["I"]              = tree_cb("toggle_ignored"),
+    ["H"]              = tree_cb("toggle_dotfiles"),
+    ["R"]              = tree_cb("refresh"),
+    ["a"]              = tree_cb("create"),
+    ["d"]              = tree_cb("remove"),
+    ["r"]              = tree_cb("rename"),
+    ["<C-r>"]          = tree_cb("full_rename"),
+    ["x"]              = tree_cb("cut"),
+    ["c"]              = tree_cb("copy"),
+    ["p"]              = tree_cb("paste"),
+    ["[c"]             = tree_cb("prev_git_item"),
+    ["]c"]             = tree_cb("next_git_item"),
+    ["-"]              = tree_cb("dir_up"),
+    ["q"]              = tree_cb("close")
 }
 
 -- default will show icon by default if no icon is provided
@@ -68,6 +81,9 @@ vim.g.nvim_tree_icons = {
     folder = {
         default = "",
         open = "",
+        empty = "",
+        empty_open = "",
         symlink = "",
+        symlink_open = "",
     }
 }
