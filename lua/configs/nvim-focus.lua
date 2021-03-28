@@ -1,4 +1,4 @@
-focus = require('focus')
+local focus = require('focus')
 
 -- Enable focus
 focus.enable = true

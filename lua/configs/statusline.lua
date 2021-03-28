@@ -1,9 +1,9 @@
 -- Extracted from https://github.com/glepnir/galaxyline.nvim/blob/main/example/eviline.lua
 -- Credits goes to its author (glepnir) :)
-gl = require('galaxyline')
-colors = require('galaxyline.theme').default
-condition = require('galaxyline.condition')
-gls = gl.section
+local gl = require('galaxyline')
+local colors = require('galaxyline.theme').default
+local condition = require('galaxyline.condition')
+local gls = gl.section
 
 gl.short_line_list = {'NvimTree','vista','dbui','packer'}
 

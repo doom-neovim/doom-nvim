@@ -1,7 +1,7 @@
 -- https://github.com/nvim-telescope/telescope.nvim#telescope-defaults
 -- Required to close with ESC in insert mode
-actions = require('telescope.actions')
-telescope = require('telescope')
+local actions = require('telescope.actions')
+local telescope = require('telescope')
 
 telescope.setup{
     defaults = {

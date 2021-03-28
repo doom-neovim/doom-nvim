@@ -1,39 +1,28 @@
----[[----------------------]]---
---    Vim-related wrappers    --
----]]----------------------[[---
--- Access to global variables
-g = vim.g
--- Vim commands like 'colorscheme X'
-cmd = vim.cmd
-
----------------------------------------------
-
-
 -- Empty by default
-g.nvim_tree_ignore = { '.git', 'node_modules', '.cache', '__pycache__' }
+vim.g.nvim_tree_ignore = { '.git', 'node_modules', '.cache', '__pycache__' }
 -- False by default, opens the tree when typing `vim $DIR` or `vim`
-g.nvim_tree_auto_open = false
+vim.g.nvim_tree_auto_open = 0
 -- False by default, closes the tree when it is the last window
-g.nvim_tree_auto_close = false
+vim.g.nvim_tree_auto_close = 0
 -- False by default, closes the tree when you open a file
-g.nvim_tree_quit_on_open = true
+vim.g.nvim_tree_quit_on_open = 1
 -- False by default, this option allows the cursor to be updated when entering a buffer
-g.nvim_tree_follow = true
+vim.g.nvim_tree_follow = 1
 -- False by default, this option shows indent markers when folders are open
-g.nvim_tree_indent_markers = true
+vim.g.nvim_tree_indent_markers = 1
 -- False by default, will enable file highlight for git attributes (can be used without the icons).
-g.nvim_tree_git_hl = true
+vim.g.nvim_tree_git_hl = 1
 -- This is the default. See :help filename-modifiers for more options
-g.nvim_tree_root_folder_modifier = ':~'
+vim.g.nvim_tree_root_folder_modifier = ':~'
 -- False by default, will open the tree when entering a new tab and the tree was previously open
-g.nvim_tree_tab_open = true
+vim.g.nvim_tree_tab_open = 1
 -- False by default, will not resize the tree when opening a file
-g.nvim_tree_width_allow_resize = true
+vim.g.nvim_tree_width_allow_resize = 1
 --- Tree icons
 -- If false, do not show the icons for one of 'git' 'folder' and 'files'
 -- true by default, notice that if 'files' is 1, it will only display
 -- if nvim-web-devicons is installed and on your runtimepath
-g.nvim_tree_show_icons = {
+vim.g.nvim_tree_show_icons = {
     git = 1,
     folders = 1,
     files = 1,
@@ -41,7 +30,7 @@ g.nvim_tree_show_icons = {
 -- You can edit keybindings be defining this variable
 -- You don't have to define all keys.
 -- NOTE: the 'edit' key will wrap/unwrap a folder and open a file
-g.nvim_tree_bindings = {
+vim.g.nvim_tree_bindings = {
     edit            = {"<CR>", "o"},
     edit_vsplit     = "<C-v>",
     edit_split      = "<C-x>",
@@ -66,7 +55,7 @@ g.nvim_tree_bindings = {
 
 -- default will show icon by default if no icon is provided
 -- default shows no icon by default
-g.nvim_tree_icons = {
+vim.g.nvim_tree_icons = {
     default = "",
     symlink = "",
     git = {

@@ -1,4 +1,4 @@
-ts = require('nvim-treesitter.configs')
+local ts = require('nvim-treesitter.configs')
 --[[
     Here you can use the maintained value which indicates that we wish to use all
     maintained languages modules instead of a list of languages. You also need to

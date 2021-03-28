@@ -1,4 +1,4 @@
-toggleterm = require('toggleterm').setup{
+require('toggleterm').setup{
     size = 10,
     open_mapping = [[<c-t>]],
     shade_filetypes = {},
