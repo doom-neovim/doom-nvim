@@ -77,7 +77,6 @@ return packer.startup(function()
         'ajmwagar/vim-deus'
     }
     -- File tree
-    -- do not use the latest commit because it is broken, at least for me 
     local disabled_tree = has_value(g.doom_disabled_plugins, 'tree')
     if disabled_tree then
         table.insert(disabled_plugins, 'tree')
@@ -86,7 +85,6 @@ return packer.startup(function()
     use {
         'kyazdani42/nvim-tree.lua',
         requires = { 'kyazdani42/nvim-web-devicons' },
-        commit = '491fd68d62cebd4a07642cc052028d9d3b55f62e',
         disabled = disabled_tree
     }
     -- Statusline
@@ -227,7 +225,6 @@ return packer.startup(function()
     end
     use {
         'neovim/nvim-lspconfig',
-        commit = '11a581d1860a7ad2b6c1ee1e0ebbb000e81b9950',
         disable = (disabled_completion and true or disabled_lspconfig)
     }
     -- Completion plugin
