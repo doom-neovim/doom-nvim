@@ -28,6 +28,7 @@
   - [Configuring Doom](#configuring-doom)
     - [Configuring settings](#configuring-settings)
     - [Configuring plugins](#configuring-plugins)
+    - [Configuring LSP](#configuring-lsp)
   - [Binding keys](#binding-keys)
 
 # Install
@@ -274,7 +275,17 @@ Do you want to change some configurations of some modules?
 Go to `lua/configs` dir and you will find the configurations for the Lua plugins,
 or go to `config/plugins` dir to change the Vimscript plugins configurations.
 
-### Binding keys
+### Configuring LSP
+
+To easily install LSPs and without having to do it system-wide or having to
+manually configure servers, Doom Nvim makes use of [kabouzeid/nvim-lspinstall](https://github.com/kabouzeid/nvim-lspinstall).
+You can see a list of currently supported languages at [bundled installers](https://github.com/kabouzeid/nvim-lspinstall#bundled-installers).
+
+> Usage example:
+- `:LspInstall python` to install Python LSP
+- `:LspUninstall python` to uninstall Python LSP
+
+## Binding keys
 
 You can set your own keybindings by modifying the `config/keybindings.vim`,
 `config/plugins/leader-mapper.vim` and `lua/configs` files.
