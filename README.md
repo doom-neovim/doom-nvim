@@ -52,8 +52,10 @@ Its design is guided by these mantras:
 # Acknowledgements
 
 - [hlissner](https://github.com/hlissner) per doing Doom Emacs :heart:.
-- [romgrk](https://github.com/romgrk) per doing a port to Vim of the Doom One
+- [romgrk](https://github.com/romgrk) per doing a port to Vim of Doom One
   colorscheme from Doom Emacs.
+- [dicci0308](https://github.com/dicci0308) per improving the romgrk's port of
+  Doom One colorscheme.
 
 # Features
 

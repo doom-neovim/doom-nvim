@@ -479,6 +479,97 @@ hi! link objcMethodName Identifier
 hi! link objcMethodArg Normal
 hi! link objcMessageName Identifier
 
+" Neovim Treesitter
+call s:_('DoomOneTSException', s:blue, '' ,'underline')
+call s:_('DoomOneTSAnnotation', s:blue, '', 'bold')
+call s:_('DoomOneTSAttribute', s:blue, '', 'bold')
+call s:_('DoomOneTSConditional', s:blue, '', 'none')
+call s:_('DoomOneTSComment', s:base5, '', 'none')
+call s:_('DoomOneTSConstructor', s:yellow, '', 'none')
+call s:_('DoomOneTSConstant', s:violet, '', 'none')
+call s:_('DoomOneTSConstBuiltin', s:magenta, '', 'none')
+call s:_('DoomOneTSConstMacro', s:blue, '', 'bold')
+call s:_('DoomOneTSError', s:red, '', 'none')
+call s:_('DoomOneTSField', s:violet, '', 'none')
+call s:_('DoomOneTSFloat', s:violet, '', 'none')
+call s:_('DoomOneTSFunction', s:magenta, '', 'none')
+call s:_('DoomOneTSFuncBuiltin', s:magenta, '', 'none')
+call s:_('DoomOneTSFuncMacro', s:blue, '', 'none')
+call s:_('DoomOneTSInclude', s:blue, '', 'bold')
+call s:_('DoomOneTSKeyword', s:blue, '', 'none')
+call s:_('DoomOneTSKeywordFunction', s:blue, '', 'none')
+call s:_('DoomOneTSLabel', s:blue, '', 'none')
+call s:_('DoomOneTSMethod', s:magenta, '', 'none')
+call s:_('DoomOneTSNamespace', s:violet, '', 'none')
+call s:_('DoomOneTSNumber', s:violet, '', 'none')
+call s:_('DoomOneTSOperator', s:blue, '', 'none')
+call s:_('DoomOneTSParameter', '#dcaeea', '', 'none')
+call s:_('DoomOneTSParameterReference', '#dcaeea', '', 'none')
+call s:_('DoomOneTSProperty', '#a9a1e1', '', 'none')
+call s:_('DoomOneTSPunctDelimiter', s:fg, '', 'none')
+call s:_('DoomOneTSPunctBracket', s:fg, '', 'none')
+call s:_('DoomOneTSPunctSpecial', s:blue, '', 'none')
+call s:_('DoomOneTSRepeat', s:magenta, '', 'none')
+call s:_('DoomOneTSString', s:green, '', 'none')
+call s:_('DoomOneTSStringRegex', '#000', '#00bfff', 'bold')
+call s:_('DoomOneTSStringEscape', s:blue, '', 'none')
+call s:_('DoomOneTSTag', s:magenta, '', 'none')
+call s:_('DoomOneTSTagDelimiter', s:yellow, '', 'none')
+call s:_('DoomOneTSStrong', '', '', 'bold')
+call s:_('DoomOneTSURI', s:blue, '', 'bold,underline')
+call s:_('DoomOneTSNote', '', '', 'underline')
+call s:_('DoomOneTSWarning', s:yellow, '', 'none')
+call s:_('DoomOneTSDanger', s:red, '', 'none')
+call s:_('DoomOneTSType', s:yellow, '', 'none')
+call s:_('DoomOneTSTypeBuiltin', s:magenta, '', 'none')
+call s:_('DoomOneTSVariable', '#dcaeea', '', 'none')
+call s:_('DoomOneTSVariableBuiltin', s:magenta, '', 'none')
+
+highlight! link TSException DoomOneTSException
+highlight! link TSAnnotation DoomOneTSAnnotation
+highlight! link TSAttribute DoomOneTSAttribute
+highlight! link TSConditional DoomOneTSConditional
+highlight! link TSComment DoomOneTSComment
+highlight! link TSConstructor DoomOneTSConstructor
+highlight! link TSConstant DoomOneTSConstant
+highlight! link TSConstBuiltin DoomOneTSConstBuiltin
+highlight! link TSConstMacro DoomOneTSConstMacro
+highlight! link TSError DoomOneTSError
+highlight! link TSField DoomOneTSField
+highlight! link TSFloat DoomOneTSFloat
+highlight! link TSFunction DoomOneTSFunction
+highlight! link TSFuncBuiltin DoomOneTSFuncBuiltin
+highlight! link TSFuncMacro DoomOneTSFuncMacro
+highlight! link TSInclude DoomOneTSInclude
+highlight! link TSKeyword DoomOneTSKeyword
+highlight! link TSKeywordFunction DoomOneTSKeywordFunction
+highlight! link TSLabel DoomOneTSLabel
+highlight! link TSMethod DoomOneTSMethod
+highlight! link TSNamespace DoomOneTSNamespace
+highlight! link TSNumber DoomOneTSNumber
+highlight! link TSOperator DoomOneTSOperator
+highlight! link TSParameter DoomOneTSParameter
+highlight! link TSParameterReference DoomOneTSParameterReference
+highlight! link TSProperty DoomOneTSProperty
+highlight! link TSPunctDelimiter DoomOneTSPunctDelimiter
+highlight! link TSPunctBracket DoomOneTSPunctBracket
+highlight! link TSPunctSpecial DoomOneTSPunctSpecial
+highlight! link TSRepeat DoomOneTSRepeat
+highlight! link TSString DoomOneTSString
+highlight! link TSStringRegex DoomOneTSStringRegex
+highlight! link TSStringEscape DoomOneTSStringEscape
+highlight! link TSTag DoomOneTSTag
+highlight! link TSTagDelimiter DoomOneTSTagDelimiter
+highlight! link TSStrong DoomOneTSStrong
+highlight! link TSURI DoomOoneTSURI
+highlight! link TSNote DoomOneTSNote
+highlight! link TSWarning DoomOneTSWarning
+highlight! link TSDanger DoomOneTSDanger
+highlight! link TSType DoomOneTSType
+highlight! link TSTypeBuiltin DoomOneTSTypeBuiltin
+highlight! link TSVariable DoomOneTSVariable
+highlight! link TSVariableBuiltin DoomOneTSVariableBuiltin
+
 " 1}}}
 
 " 1}}}
