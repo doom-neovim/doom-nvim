@@ -38,6 +38,7 @@
      7. Modules..............................|doom_nvim_configuration_modules|
        1. Enabling modules..........|doom_nvim_configuration_modules_enabling|
        2. Disabling modules........|doom_nvim_configuration_modules_disabling|
+     8. LSP......................................|doom_nvim_configuration_lsp|
    4. Commands............................................|doom_nvim_commands|
      1. Keybindings...........................|doom_nvim_commands_keybindings|
    5. Functions..........................................|doom_nvim_functions|
@@ -310,6 +311,19 @@ close it is to enter `exit` to close the shell session, or if you just want to
 toggle it, you can enter in `NORMAL` mode:
 <Space>tt for `Terminal`
 <F4> for `Terminal`
+
+
+==============================================================================
+LSP                                              *doom_nvim_configuration_lsp*
+
+To easily install LSPs and without having to do it system-wide or having to
+manually configure servers, Doom Nvim makes use of `kabouzeid/nvim-lspinstall`.
+You can see a list of currently supported languages at
+https://github.com/kabouzeid/nvim-lspinstall#bundled-installers
+
+Usage example:
+    `:LspInstall python` to install Python LSP
+    `:LspUninstall python` to uninstall Python LSP
 
 
 ==============================================================================
