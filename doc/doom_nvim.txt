@@ -165,7 +165,11 @@ List of user disabled modules
 default value = []
 List of user custom plugins
 
-`g:dom_conceallevel`
+`g:doom_ts_parsers`
+Set the parsers for TreeSitter
+default value = []
+
+`g:doom_conceallevel`
 default value = 1
 Set Neovim conceal level
 0 : Disable indentline and show all
