@@ -93,6 +93,12 @@ let g:doom_disabled_modules = ['git', 'lsp', 'web']
 "   let g:doom_custom_plugins = ['andweeb/presence.nvim']
 let g:doom_custom_plugins = []
 
+" Set the parsers for TreeSitter
+" @default = []
+" example:
+"   let g:doom_ts_parsers = ['python', 'javascript']
+let g:doom_ts_parsers = []
+
 "Conceal level
 " 0: Disabled
 " 1: Enabled

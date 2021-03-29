@@ -6,6 +6,6 @@ local ts = require('nvim-treesitter.configs')
 --]]
 ts.setup {
     -- NOTE: Place your languages here!
-    ensure_installed = { },
+    ensure_installed = vim.g.doom_ts_parsers,
     highlight = { enabled = true }
 }
