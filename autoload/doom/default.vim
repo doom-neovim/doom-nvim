@@ -68,6 +68,7 @@ function doom#default#loadGlob()
     " Indent Lines
     let g:indentLine_enabled = g:doom_show_indent
     let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+    let g:indentLine_fileTypeExclude = ['dashboard']
 
     " NOTE: most of Doom Nvim plugins are written in Lua, their configs
     " resides in the `lua/configs/` directory.
