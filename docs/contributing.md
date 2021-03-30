@@ -50,6 +50,7 @@ paste it using a [gist].
 > following if the logs are extremely long.
 >
 > [!] - Errors
+> 
 > [!!!] - Critical errors
 
 ## Create a step-by-step reproduction guide
