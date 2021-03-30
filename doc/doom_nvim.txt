@@ -494,6 +494,13 @@ your life easier!
 | <Z><Z>    | Fast exit from Doom Nvim
 | <g><c>    | Comment selected block (`VISUAL` mode)
 
+You can modify the default keybindings by modifying the following files:
+    - `config/keybindings.vim` - general keybindings
+    - `config/plugins/leader-mapper.vim` - SPC keybindings
+    - `lua/configs` - lua plugins keybindings
+
+You can also make your own keybindings by editing your `doomrc` file.
+
 
 ==============================================================================
 FUNCTIONS                                                *doom_nvim_functions*
@@ -623,8 +630,9 @@ ACKNOWLEDGEMENTS                                  *doom_nvim_acknowledgements*
 
 Doom Nvim would not have been possible had it not been for
 
-    - hlissner : Creator of Doom Emacs
-    - romgrk   : Ported doom-one colorscheme from Doom Emacs to Vim
+    - hlissner  : Creator of Doom Emacs
+    - romgrk    : Ported doom-one colorscheme from Doom Emacs to Vim
+    - dicci0308 : Improved romgrk's port of Doom One colorscheme.
 
 
 ==============================================================================
@@ -668,13 +676,29 @@ CHANGELOG                                                *doom_nvim_changelog*
 Doom Nvim follows the semantic versioning and reached its stable version in
 version 1.0.0
 
+- 1.2.0
+  - Added `g:doom_ts_parsers`,
+    see |doom_nvim_options|
+  - Added new keybinding for toggle terminal,
+    see |doom_nvim_commands_keybindings|
+  - Added a basic implementation for `:checkhealth` command
+  - Added a `doomrc` template with the default options values
+  - Improved `:DoomUpdate` command
+  - Added new plugins
+    - `gitsigns`
+    - `indentLine`
+    - `nvim-lspinstall`
+    - some new colorschemes, see |doom_colorscheme|
+  - Removed plugins
+    - `signify` in favor of `gitsigns`
+  - Squashed some bugs
+  - Some minor changes more under the hood
 - 1.1.0
   - Added `Doom` section to `vim-leader-guide` plugin,
     see |doom_nvim_commands_keybindings|
   - Added `:DoomUpdate` command,
     see |doom_nvim_commands|
   - Added `g:doom_autosave_sessions`,
-    see |doom_nvim_configuration|
-  - 
+    see |doom_nvim_options|
 - 1.0.0
   - Initial stable release
