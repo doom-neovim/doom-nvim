@@ -1,6 +1,7 @@
 # Getting Started
 
 # Table of Contents
+
 - [Install](#install)
   - [Neovim & dependencies](#neovim--dependencies)
     - [On Linux](#on-linux)
@@ -107,7 +108,6 @@ You can also download a prebuilt binary from the [Neovim](https://github.com/neo
 2. Extract: tar xzvf nvim-macos.tar.gz
 3. Run ./nvim-osx64/bin/nvim
 
-
 ### On Windows
 
 If you use Windows, please put the steps to install Neovim Nightly here!
@@ -165,6 +165,7 @@ With Neovim Nightly and Doom's dependencies installed, next is to install
 Doom Nvim itself:
 
 > **NOTES:**
+
 1. If you have not installed Neovim Nightly yet, please run the following command
    before installing Doom Nvim, it will install Neovim nightly and Doom Nvim.
 2. If you want to know all the commands of the installer, run the installer with
@@ -241,6 +242,7 @@ let g:doom_custom_plugins = ['plugin_author/plugin_repo']
 ```
 
 > **NOTES:**
+>
 > 1. Do not forget to run `:PackerInstall` to install your new plugins.
 
 ### Disabling plugins
@@ -257,6 +259,7 @@ let g:doom_disabled_modules = ['web']
 ```
 
 > **NOTES:**
+>
 > 1. Do not forget to run `:PackerSync` or your changes won't take effect.
 >
 > 2. You can see a list of the plugins that you can disable on [Modules](./modules.md#list-of-modules).
@@ -282,10 +285,15 @@ manually configure servers, Doom Nvim makes use of [kabouzeid/nvim-lspinstall](h
 You can see a list of currently supported languages at [bundled installers](https://github.com/kabouzeid/nvim-lspinstall#bundled-installers).
 
 > Usage example:
+
 - `:LspInstall python` to install Python LSP
 - `:LspUninstall python` to uninstall Python LSP
 
 ## Binding keys
 
-You can set your own keybindings by modifying the `config/keybindings.vim`,
-`config/plugins/leader-mapper.vim` and `lua/configs` files.
+You can modify the default keybindings by modifying the following files:
+    - `config/keybindings.vim` - general keybindings
+    - `config/plugins/leader-mapper.vim` - SPC keybindings
+    - `lua/configs` - lua plugins keybindings
+
+You can also make your own keybindings by editing your `doomrc` file.
