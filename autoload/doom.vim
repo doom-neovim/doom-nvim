@@ -5,7 +5,7 @@
 "================================================
 
 " Doom Nvim version
-let g:doom_version = '1.1.0'
+let g:doom_version = '1.2.0'
 lockvar g:doom_version
 
 " Force UTF-8 encoding
