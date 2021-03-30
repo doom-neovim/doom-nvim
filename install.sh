@@ -80,23 +80,20 @@ need_cmd() {
 
 check_cmd() {
 	if ! type "$1" &> /dev/null; then
-		log_error "Need '$1' (command not found)"
-		exit 1
+		log_warn "Need '$1' (command not found)"
 	fi
 }
 
 check_all() {
     # Install Doom Nvim (see also git)
-	check_cmd 'curl'
+	need_cmd 'curl'
     # Clone repositories and install Doom Nvim
-	check_cmd 'git'
+	need_cmd 'git'
     # Generate help tags
 	check_cmd 'ctags'
     # Install LanguageServerProtocols 
 	check_cmd 'npm'
 	check_cmd 'node'
-	# Plugins configurations
-	check_cmd 'lua'
 }
 
 check_requirements() {
@@ -152,7 +149,7 @@ backup_neovim() {
 			mv "$HOME/.config/nvim" "$HOME/.config/nvim_bak"
 			log_success "Neovim backup is in $HOME/.config/nvim_bak"
 			ln -s "$HOME/.config/doom-nvim" "$HOME/.config/nvim"
-			log_success "Installed Doom Nvim and some demons were released, be careful!"
+			log_success "Installed Doom Nvim and more demons were released!"
 		fi
 	else
 		mkdir -p "$HOME/.config"
