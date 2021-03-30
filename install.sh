@@ -326,6 +326,7 @@ helper() {
 	pretty_echo ${Yellow} "    -h --help                                    Displays this message"
 	pretty_echo ${Yellow} "    -c --check-requirements                      Check Doom Nvim requirements"
 	pretty_echo ${Yellow} "    -i --install                                 Install Doom Nvim"
+	pretty_echo ${Yellow} "    -n --nightly                                 Install Neovim Nightly and Doom Nvim"
 	pretty_echo ${Yellow} "    -u --update                                  Update Doom Nvim"
 	pretty_echo ${Yellow} "    -v --version                                 Echo Doom Nvim version"
 	pretty_echo ${Yellow} "    -x --uninstall                               Uninstall Doom Nvim"
