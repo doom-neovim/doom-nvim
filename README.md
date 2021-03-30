@@ -86,7 +86,7 @@ Its design is guided by these mantras:
   - [ripgrep] 11.0+ or [fd] 7.3.0+ (improves file indexing performance for some commands)
   - `nodejs` and `npm` (required to use the built-in LSP)
 
-Doom is comprised of [~35 optional modules][modules], some of which may have
+Doom is comprised of [~40 optional plugins][modules], some of which may have
 additional dependencies. [Please visit their documentation][modules].
 
 # Install
@@ -110,9 +110,9 @@ if you are not an advanced vimmer. When you do, here are some places you can loo
 
 - [Our documentation][documentation] covers many use cases.
   - [The Configuration section][configuration] covers how to configure Doom Nvim and
-    its packages.
+    its modules.
   - [The Package Management section][package-management] covers how to install
-    and disable packages.
+    and disable modules.
 - Search the [Doom Nvim's issue tracker](https://github.com/NTBBloodbath/doom-nvim/issues)
   before opening a new issue to see if your issue was already been reported and to
   avoid duplicating issues.
