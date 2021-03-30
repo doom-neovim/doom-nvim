@@ -171,13 +171,13 @@ update_repo(){
 		log_info "Updating doom-nvim ..."
 
 		cd "$HOME/.config/doom-nvim"
-		git pull origin main
+		git pull origin develop-nightly
 		cd - > /dev/null 2>&1
 
 		log_success "Successfully updated doom-nvim, more demons were released in your terminal!"
 	else
 		log_info "Trying to clone doom-nvim ..."
-		git clone -q https://github.com/NTBBloodbath/doom-nvim "$HOME/.config/doom-nvim"
+		git clone -q -b develop-nightly https://github.com/NTBBloodbath/doom-nvim "$HOME/.config/doom-nvim"
 		if [ $? -eq 0 ]; then
 			log_success "Successfully cloned doom-nvim, some demons were released in your terminal!"
 		else
