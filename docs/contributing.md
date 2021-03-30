@@ -40,7 +40,7 @@ and which code style you should use :heart:
 
 # Reporting issues
 
-##Acquite a backtrace from errors
+## Acquire a backtrace from errors
 
 All the errors ocurred in Doom Nvim are saved into a `doom.log` file inside your
 Doom Nvim root dir (`$HOME/.config/doom-nvim` by default). If the logs are very long, please
