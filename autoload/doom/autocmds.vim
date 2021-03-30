@@ -14,7 +14,7 @@ function! doom#autocmds#init() abort
     augroup END
 
     " Compile new plugins changes at save
-    autocmd BufWritePost plugins.lua PackerCompile
+    autocmd BufWritePost plugins.lua,doomrc PackerCompile
 
     " Disable tabline on Dashboard
     autocmd FileType dashboard set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2
