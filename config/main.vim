@@ -10,7 +10,6 @@ if empty(glob('~/.local/share/nvim/site/pack/packer/start/packer.nvim'))
 
     " Install plugins at startup
     autocmd VimEnter * execute "PackerInstall" | source $MYVIMRC
-    " source $MYVIMRC
 endif
 
 " Set some configurations on load
@@ -24,10 +23,10 @@ endif
 " Start Doom configs and run packer.nvim
 call doom#begin()
 
-" /home/user/.doom-nvim/lua/plugins.lua
+" /home/user/.config/doom-nvim/lua/plugins.lua
 lua require('plugins')
 " Plugins configurations, will be loaded only if the plugin is enabled!
-" /home/user/.doom-nvim/lua/configs/*.lua
+" /home/user/.config/doom-nvim/lua/configs/*.lua
 if doom#functions#checkplugin('nvim-autopairs')
     lua require('configs.autopairs')
 endif
