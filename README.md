@@ -54,8 +54,6 @@ Its design is guided by these mantras:
 - [hlissner](https://github.com/hlissner) per doing Doom Emacs :heart:.
 - [romgrk](https://github.com/romgrk) per doing a port to Vim of Doom One
   colorscheme from Doom Emacs.
-- [dicci0308](https://github.com/dicci0308) per improving the romgrk's port of
-  Doom One colorscheme.
 
 # Features
 
@@ -80,7 +78,7 @@ Its design is guided by these mantras:
 
 - Curl 7.x
 - Git 2.23+
-- Neovim Nightly 0.5.0 (for Neovim 0.4.x see the nvim-0.4 branch _coming soon_)
+- Neovim Nightly 0.5.0 (see [Doom Nvim FAQ][faq] to know why Doom Nvim don't provide support for Neovim 0.4)
 - GNU `find`
 - _OPTIONALS:_
   - [ripgrep] 11.0+ or [fd] 7.3.0+ (improves file indexing performance for some commands)
@@ -125,6 +123,7 @@ if you are not an advanced vimmer. When you do, here are some places you can loo
 
 [contribute]: docs/contributing.md
 [documentation]: docs/README.md
+[faq]: docs/faq.md
 [getting-started]: docs/getting_started.md
 [install]: docs/getting_started.md#install
 [configuration]: docs/getting_started.md#configuring-doom
