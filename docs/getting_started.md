@@ -6,7 +6,6 @@
   - [Neovim & dependencies](#neovim--dependencies)
     - [On Linux](#on-linux)
       - [Ubuntu](#ubuntu)
-      - [Fedora](#fedora)
       - [Arch Linux](#arch)
     - [On MacOS](#on-macos)
     - [On Windows](#on-windows)
@@ -38,7 +37,6 @@ This is what you will have installed by the end of this section:
 
 - Git 2.23+
 - Neovim 0.5.0 (Neovim 0.4 currently not supported, see [projects](https://github.com/NTBBloodbath/doom-nvim/projects))
-- Lua 5.1+
 - ripgrep 11.0+
 - GNU Find
 - (Optional) fd 7.3.0+ (known as `fd-find` on Debian, Ubuntu & derivates),
@@ -68,16 +66,6 @@ You can get nightly builds of git master from the
 ```sh
 add-apt-repository ppa:neovim-ppa/unstable
 apt-get update
-```
-
-#### Fedora
-
-You can get nightly builds of git master from the
-[Agriffis's Copr](https://copr.fedoraproject.org/coprs/agriffis/neovim-nightly/).
-
-```sh
-dnf copr enable agriffis/neovim-nightly
-dnf install -y neovim python{2,3}-neovim
 ```
 
 #### Arch
@@ -120,10 +108,10 @@ If you use Windows, please put the steps to install Neovim Nightly here!
 
 ```sh
 # Required dependencies
-apt-get install git lua ripgrep
+apt-get install git ripgrep
 # (Optional) Improves performance for many file indexing commands
 apt-get install fd-find
-# (Optional) Required by LanguageServerProtocols
+# (Optional) Required by Language Server Protocols
 apt-get install nodejs npm
 ```
 
@@ -131,10 +119,10 @@ apt-get install nodejs npm
 
 ```sh
 # Required dependencies
-dnf install git lua ripgrep
+dnf install git ripgrep
 # (Optional) Improves performance for many file indexing commands
-apt-get install fd-find # is 'fd' in Fedora <28
-# (Optional) Required by LanguageServerProtocols
+dnf install fd-find # is 'fd' in Fedora <28
+# (Optional) Required by Language Server Protocols
 dnf install nodejs
 ```
 
@@ -142,10 +130,10 @@ dnf install nodejs
 
 ```sh
 # Required dependencies
-pacman -S git lua ripgrep
+pacman -S git ripgrep
 # (Optional) Improves performance for many file indexing commands
 pacman -S fd
-# (Optional) Required by LanguageServerProtocols
+# (Optional) Required by Language Server Protocols
 pacman -S nodejs npm
 ```
 
@@ -263,6 +251,8 @@ let g:doom_disabled_modules = ['web']
 > 1. Do not forget to run `:PackerSync` or your changes won't take effect.
 >
 > 2. You can see a list of the plugins that you can disable on [Modules](./modules.md#list-of-modules).
+>
+> 3. You can also see how to enable/disable plugins modules on [Modules](./modules.md).
 
 ## Configuring Doom
 
