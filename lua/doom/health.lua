@@ -2,13 +2,12 @@
 --    Wrappers    --
 ---]]----------[[---
 local fn = vim.fn
-local api = vim.api
 
 -- Health status
-local health_start = vim.fn['health#report_start']
-local health_ok    = vim.fn['health#report_ok']
-local health_error = vim.fn['health#report_error']
-local health_warn  = vim.fn['health#report_warn']
+local health_start = fn['health#report_start']
+local health_ok    = fn['health#report_ok']
+local health_error = fn['health#report_error']
+local health_warn  = fn['health#report_warn']
 
 local M = {}
 
