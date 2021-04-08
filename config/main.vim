@@ -10,7 +10,6 @@ if empty(glob('~/.local/share/nvim/site/pack/packer/start/packer.nvim'))
 
     " Install plugins at startup
     autocmd VimEnter * execute "PackerInstall" | source $MYVIMRC
-    " source $MYVIMRC
 endif
 
 " Set some configurations on load
