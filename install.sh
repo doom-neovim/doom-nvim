@@ -156,7 +156,7 @@ update_repo() {
         log_info "Updating doom-nvim ..."
 
         cd "$HOME/.config/doom-nvim"
-        git pull # origin develop-nightly
+        git pull
         cd - >/dev/null 2>&1
 
         log_success "Successfully updated doom-nvim, more demons were released in your terminal!"
@@ -341,7 +341,7 @@ main() {
         --install-dev | -d)
             welcome
             check_all
-            update_repo "develop-nightly"
+            update_repo "develop"
             install_packer
             install_fonts
             backup_neovim
