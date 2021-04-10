@@ -90,10 +90,8 @@ Doom Nvim follows some code style rules like ones the mentioned below:
 
 ### Commits & PRs
 
-- Target `develop-nightly` instead of `main` when doing changes for the Neovim 0.5 branch.
+- Target `develop-nightly` instead of `main`.
   the only exception are hotfixes!
-- _NOT YET_ Target `develop-stable` instead of `nvim-0.4` when doing changes
-  for the Neovim 0.4.x branch. The only exception are hotfixes!
 
 ### Keybind conventions
 
