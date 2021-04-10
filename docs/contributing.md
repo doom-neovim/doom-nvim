@@ -40,7 +40,7 @@ and which code style you should use :heart:
 
 # Reporting issues
 
-##Acquite a backtrace from errors
+## Acquire a backtrace from errors
 
 All the errors ocurred in Doom Nvim are saved into a `doom.log` file inside your
 Doom Nvim root dir (`$HOME/.config/doom-nvim` by default). If the logs are very long, please
@@ -50,6 +50,7 @@ paste it using a [gist].
 > following if the logs are extremely long.
 >
 > [!] - Errors
+> 
 > [!!!] - Critical errors
 
 ## Create a step-by-step reproduction guide
@@ -89,10 +90,8 @@ Doom Nvim follows some code style rules like ones the mentioned below:
 
 ### Commits & PRs
 
-- Target `develop-nightly` instead of `main` when doing changes for the Neovim 0.5 branch.
+- Target `develop` instead of `main`.
   the only exception are hotfixes!
-- _NOT YET_ Target `develop-stable` instead of `nvim-0.4` when doing changes
-  for the Neovim 0.4.x branch. The only exception are hotfixes!
 
 ### Keybind conventions
 
