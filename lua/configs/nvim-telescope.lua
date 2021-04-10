@@ -3,19 +3,11 @@
 local actions = require('telescope.actions')
 local telescope = require('telescope')
 
-telescope.setup{
+telescope.setup {
     defaults = {
-        mappings = {
-            i = {
-                ['<esc>'] = actions.close
-            }
-        },
+        mappings = {i = {['<esc>'] = actions.close}},
         vimgrep_arguments = {
-            'rg',
-            '--pretty',
-            '--with-filename',
-            '--column',
-            '--smart-case'
+            'rg', '--pretty', '--with-filename', '--column', '--smart-case'
         },
         prompt_position = "bottom",
         prompt_prefix = ">",
@@ -26,9 +18,9 @@ telescope.setup{
         layout_defaults = {
             -- TODO add builtin options.
         },
-        file_sorter =  require'telescope.sorters'.get_fuzzy_file,
+        file_sorter = require'telescope.sorters'.get_fuzzy_file,
         file_ignore_patterns = {},
-        generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
+        generic_sorter = require'telescope.sorters'.get_generic_fuzzy_sorter,
         shorten_path = true,
         winblend = 0,
         width = 0.75,
@@ -36,10 +28,10 @@ telescope.setup{
         results_height = 1,
         results_width = 0.8,
         border = {},
-        borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},
+        borderchars = {'─', '│', '─', '│', '╭', '╮', '╯', '╰'},
         color_devicons = true,
         use_less = true,
-        set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
+        set_env = {['COLORTERM'] = 'truecolor'}, -- default = nil,
         file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
         grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
         qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,

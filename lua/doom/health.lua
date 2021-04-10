@@ -5,9 +5,9 @@ local fn = vim.fn
 
 -- Health status
 local health_start = fn['health#report_start']
-local health_ok    = fn['health#report_ok']
+local health_ok = fn['health#report_ok']
 local health_error = fn['health#report_error']
-local health_warn  = fn['health#report_warn']
+local health_warn = fn['health#report_warn']
 
 local M = {}
 
@@ -41,7 +41,7 @@ local function install_health()
         health_ok('`rg` executable found.')
     end
     if fn.executable('fd') == 0 then
-               health_warn('`fd` executable not found.', {
+        health_warn('`fd` executable not found.', {
             'Required to improve file indexing performance for some commands',
             'Ignore this message if you have `rg` installed.'
         })
