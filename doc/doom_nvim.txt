@@ -74,7 +74,7 @@ OPTIONS                                                    *doom_nvim_options*
 
 Doom Nvim configuration files resides in the `$HOME/.config/doom-nvim/config`
 directory. Global variables for Doom Nvim resides in
-`$HOME/.doom-nvim/autoload/doom.vim`.
+`$HOME/.config/doom-nvim/autoload/doom.vim`.
 
 All the options available in the `doom.vim` file are global variables.
 They all start with `g:doom_` followed by a description of ther nature:

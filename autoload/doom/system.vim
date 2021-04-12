@@ -8,7 +8,7 @@
 scriptencoding utf-8
 
 function! doom#system#whichos()
-    call doom#logging#message('+', 'Checking OS', 2)
+    call doom#logging#message('+', 'Checking OS ...', 2)
 
     let g:doom_os = ''
     let g:doom_separator = ''
@@ -26,10 +26,10 @@ function! doom#system#whichos()
         let g:doom_os = 'cygwin'
         let g:doom_separator = '\\'
     else
-        echo 'OS not recognized'
+        call doom#logging#message('!', 'OS not recognized', 1)
     endif
 
-    call doom#logging#message('+', 'Current OS: '.g:doom_os, 2)
+    call doom#logging#message('+', 'Current OS : ' . g:doom_os, 2)
 endfunction
 
 function! doom#system#grepconfig(folder, filename, source) abort
@@ -40,12 +40,12 @@ function! doom#system#grepconfig(folder, filename, source) abort
         if a:source ==# 1
             try
                 execute 'source ' fullpath
-                call doom#logging#message('+', 'Sourced file : '.a:filename, 2)
+                call doom#logging#message('+', 'Sourced file : ' . a:filename, 2)
             catch
-                call doom#logging#message('!', 'Failed sourcing '.a:filename, 1)
+                call doom#logging#message('!', 'Failed sourcing ' . a:filename, 1)
             endtry
         else
-            call doom#logging#message('+', 'Returned '.a:filename.' path', 2)
+            call doom#logging#message('+', 'Returned ' . a:filename . ' path', 2)
             return fullpath
         endif
     endif

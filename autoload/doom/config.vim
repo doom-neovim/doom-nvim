@@ -21,7 +21,7 @@ function! doom#config#loadBFC()
     if filereadable(g:doom_root . '/doomrc')
         try
             execute 'source ' . g:doom_root . '/doomrc'
-            call doom#logging#message('+', 'Loading the BFC', 2)
+            call doom#logging#message('+', 'Loading the BFC ...', 2)
         catch
             call doom#logging#message('!', 'Error while loading the BFC', 1)
         endtry
