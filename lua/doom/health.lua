@@ -1,8 +1,3 @@
----[[----------]]---
---    Wrappers    --
----]]----------[[---
-local fn = vim.fn
-
 -- Health status
 local health_start = fn['health#report_start']
 local health_ok = fn['health#report_ok']
