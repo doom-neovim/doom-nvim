@@ -38,7 +38,8 @@
      7. Modules..............................|doom_nvim_configuration_modules|
        1. Enabling modules..........|doom_nvim_configuration_modules_enabling|
        2. Disabling modules........|doom_nvim_configuration_modules_disabling|
-     8. LSP......................................|doom_nvim_configuration_lsp|
+     8. Custom Plugins................|doom_nvim_configuration_custom_plugins|
+     9. LSP......................................|doom_nvim_configuration_lsp|
    4. Commands............................................|doom_nvim_commands|
      1. Keybindings...........................|doom_nvim_commands_keybindings|
    5. Functions..........................................|doom_nvim_functions|
@@ -97,7 +98,7 @@ default value = 0
 1 : Enable session autosave
 
 `g:doom_preserve_edit_pos`
-default value = 0
+default value = 1
 0 : Disable preservation of last editing position
 1 : Enable preservation of last editing position
 
@@ -154,7 +155,7 @@ default value = 0
 Check updates of plugins on start
 
 `g:doom_disabled_plugins`
-default value = []
+default value = ['lazygit', 'minimap', 'restclient']
 List of user disabled plugins
 
 `g:doom_disabled_modules`
@@ -361,6 +362,35 @@ Example:
     modules array and then, reboot Neovim and do `:PackerSync`.
 
     let g:doom_disabled_modules = ['web']
+
+
+==============================================================================
+CUSTOM PLUGINS                        *doom_nvim_configuration_custom_plugins*
+
+To use your own plugins in Doom Nvim you can use the `g:doom_custom_plugins`
+variable on your `doomrc`.
+
+To add plugins without extra configurations (e.g., if a plugin does not depends
+on other plugins), you can simply set it as follow:
+
+    let g:doom_custom_plugins = ['andweeb/presence.nvim']
+
+Otherwise, if your plugin depends on other or you do not want to enable it,
+then you can do it as follow:
+
+    let g:doom_custom_plugins = [
+        \ {
+        \   'repo': 'andweeb/presence.nvim',
+        \   'enabled': 1,
+        \   'requires': ['foo', 'bar']
+        \ }
+        \ ]
+
+As you can see, the second way depends on a structure to work.
+
+    repo: the repository where the plugin resides
+    enabled: if the plugin should be enabled, not required (true by default)
+    requires: plugin dependencies, not required
 
 
 ==============================================================================
