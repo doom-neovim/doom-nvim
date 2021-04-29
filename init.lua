@@ -3,7 +3,6 @@
 --             Author: NTBBloodbath            --
 --             License: MIT                    --
 ---[[---------------------------------------]]---
-
 -- Utility functions
 require('doom.utils')
 

@@ -3,16 +3,13 @@
 --             Author: NTBBloodbath            --
 --             License: MIT                    --
 ---[[---------------------------------------]]---
-
 -- If no colorscheme was established then fallback to defauls
 if not is_empty(g.doom_colorscheme) then
     try {
         function()
             execute('set background=' .. g.doom_colorscheme_bg)
             execute('colorscheme ' .. g.doom_colorscheme)
-        end,
-
-        catch {
+        end, catch {
             function(_)
                 fn['doom#logging#message']('!', 'Colorscheme not found', 1)
                 execute('colorscheme ' .. g.doom_colorscheme)
