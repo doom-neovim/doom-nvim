@@ -146,12 +146,12 @@ return packer.startup(function()
     use {'spinks/vim-leader-guide', disabled = false}
 
     -- Distraction free environment
-    local disabled_goyo = has_value(g.doom_disabled_plugins, 'goyo')
-    if disabled_goyo then
-        table.insert(disabled_plugins, 'goyo')
+    local disabled_zen = has_value(g.doom_disabled_plugins, 'zen')
+    if disabled_zen then
+        table.insert(disabled_plugins, 'zen')
         nvim_set_var('doom_disabled_plugins', disabled_plugins)
     end
-    use {'junegunn/goyo.vim', disabled = disabled_goyo}
+    use {'kdav5758/TrueZen.nvim', disabled = disabled_zen}
 
 
     -----[[--------------]]-----
