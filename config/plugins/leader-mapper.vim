@@ -208,6 +208,9 @@ let g:lmap.d.d = 'Open Doom Nvim Documentation'
 " Check Doom Nvim Updates and update if available
 nnoremap <leader>du :DoomUpdate<CR>
 let g:lmap.d.u = 'Check Doom Nvim Updates'
+" Create a crash report
+nnoremap <leader>dr :call doom#functions#createReport()<CR>
+let g:lmap.d.r = 'Create crash report'
 
 " ToggleNumbers function,
 " toggle between relative numbers and absolute numbers
