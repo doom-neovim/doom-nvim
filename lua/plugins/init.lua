@@ -1,22 +1,14 @@
 -- Manage vim global variables
-local g = vim.g
-local nvim_set_var = vim.api.nvim_set_var
-
--- Useful function to see if the Vim variable have the value we are looking for
-local function has_value(tabl, val)
-    for _, value in ipairs(tabl) do if value == val then return true end end
-
-    return false
-end
+local nvim_set_var = api.nvim_set_var
 
 ----- Plugins modules
--- Essentials,            ! cannot be disabled (Plugin manager, vimpeccable and languages)
--- UI Related,            / can be disabled    (All look-and-feel plugins)
--- Fuzzy Search (fuzzy),  + can be disabled    (Fuzzy search & more)
--- Git Integration (git), + can be disabled    (Some git plugins, including LazyGit)
--- Completion (lsp),      + can be disabled    (Built-in LSP configurations)
--- File-related (files),  + can be disabled    (EditorConfig, formatting, Tree-sitter, etc)
--- Web-related (web),     + can be disabled    (Colorizer, emmet, rest client)
+-- Essentials         / (Plugin manager, vimpeccable, treesitter)
+-- UI Related         / (All look-and-feel plugins)
+-- Fuzzy Search       + (Fuzzy searching)
+-- Git Integration    + (Some git plugins like LazyGit)
+-- Completion         + (Built-in LSP configurations)
+-- File-related       + (EditorConfig, formatting, Tree-sitter, etc)
+-- Web-related        + (Colorizer, emmet, rest client)
 --
 -- Legend:
 --   ! : The group and its plugins cannot be disabled
@@ -37,7 +29,7 @@ local disabled_plugins = {}
 --- Disabled modules
 local disabled_fuzzy = has_value(g.doom_disabled_modules, 'fuzzy')
 local disabled_git = has_value(g.doom_disabled_modules, 'git')
-local disabled_completion = has_value(g.doom_disabled_modules, 'lsp')
+local disabled_lsp = has_value(g.doom_disabled_modules, 'lsp')
 local disabled_files = has_value(g.doom_disabled_modules, 'files')
 local disabled_web = has_value(g.doom_disabled_modules, 'web')
 
@@ -48,10 +40,22 @@ return packer.startup(function()
     -----]]------------[[-----
     -- Plugins manager
     use 'wbthomason/packer.nvim'
+
     -- Auxiliar functions for using Lua in Neovim
     use 'svermeulen/vimpeccable'
-    -- Languages support
-    use 'sheerun/vim-polyglot'
+
+    -- Tree-Sitter
+    local disabled_treesitter = has_value(g.doom_disabled_plugins, 'treesitter')
+    if disabled_files and (not disabled_treesitter) then
+        table.insert(disabled_plugins, 'treesitter')
+        nvim_set_var('doom_disabled_plugins', disabled_plugins)
+    end
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate',
+        disable = (disabled_files and true or disabled_treesitter)
+    }
+
 
     -----[[------------]]-----
     ---     UI Related     ---
@@ -59,12 +63,14 @@ return packer.startup(function()
     -- Fancy start screen
     -- cannot be disabled
     use {'glepnir/dashboard-nvim', disabled = false}
+
     -- Colorschemes
     -- cannot be disabled at the moment
     use {
         'sainnhe/sonokai', 'sainnhe/edge', 'sainnhe/everforest',
         'wadackel/vim-dogrun', 'joshdick/onedark.vim', 'ajmwagar/vim-deus'
     }
+
     -- File tree
     local disabled_tree = has_value(g.doom_disabled_plugins, 'tree')
     if disabled_tree then
@@ -76,6 +82,7 @@ return packer.startup(function()
         requires = {'kyazdani42/nvim-web-devicons'},
         disabled = disabled_tree
     }
+
     -- Statusline
     -- can be disabled to use your own statusline
     local disabled_statusline = has_value(g.doom_disabled_plugins, 'statusline')
@@ -84,6 +91,7 @@ return packer.startup(function()
         nvim_set_var('doom_disabled_plugins', disabled_plugins)
     end
     use {'glepnir/galaxyline.nvim', disabled = disabled_statusline}
+
     -- Tabline
     -- can be disabled to use your own tabline
     local disabled_tabline = has_value(g.doom_disabled_plugins, 'tabline')
@@ -92,6 +100,7 @@ return packer.startup(function()
         nvim_set_var('doom_disabled_plugins', disabled_plugins)
     end
     use {'romgrk/barbar.nvim', disabled = disabled_tabline}
+
     -- Better splits
     -- NOTE: we are using this specific branch because the main still does not have
     -- the ignore filetypes feature, thanks to its owner per adding it <3 
@@ -105,6 +114,7 @@ return packer.startup(function()
         branch = 'cust_filetypes',
         disabled = disabled_focus
     }
+
     -- Better terminal
     -- can be disabled to use your own terminal plugin
     local disabled_terminal = has_value(g.doom_disabled_plugins, 'terminal')
@@ -113,6 +123,7 @@ return packer.startup(function()
         nvim_set_var('doom_disabled_plugins', disabled_plugins)
     end
     use {'akinsho/nvim-toggleterm.lua', disabled = disabled_terminal}
+
     -- Viewer & finder for LSP symbols and tags
     local disabled_tagbar = has_value(g.doom_disabled_plugins, 'tagbar')
     if disabled_tagbar then
@@ -120,6 +131,7 @@ return packer.startup(function()
         nvim_set_var('doom_disabled_plugins', disabled_plugins)
     end
     use {'liuchengxu/vista.vim', disabled = disabled_tagbar}
+
     -- Minimap
     -- Depends on wfxr/code-minimap to work!
     local disabled_minimap = has_value(g.doom_disabled_plugins, 'minimap')
@@ -128,9 +140,11 @@ return packer.startup(function()
         nvim_set_var('doom_disabled_plugins', disabled_plugins)
     end
     use {'wfxr/minimap.vim', disabled = disabled_minimap}
+
     -- Keybindings menu like Emacs's guide-key
     -- cannot be disabled
     use {'spinks/vim-leader-guide', disabled = false}
+
     -- Distraction free environment
     local disabled_goyo = has_value(g.doom_disabled_plugins, 'goyo')
     if disabled_goyo then
@@ -139,9 +153,11 @@ return packer.startup(function()
     end
     use {'junegunn/goyo.vim', disabled = disabled_goyo}
 
+
     -----[[--------------]]-----
     ---     Fuzzy Search     ---
     -----]]--------------[[-----
+
     local disabled_telescope = has_value(g.doom_disabled_plugins, 'telescope')
     if disabled_fuzzy and (not disabled_telescope) then
         table.insert(disabled_plugins, 'telescope')
@@ -152,6 +168,7 @@ return packer.startup(function()
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
         disable = (disabled_fuzzy and true or disabled_telescope)
     }
+
 
     -----[[-------------]]-----
     ---     GIT RELATED     ---
@@ -167,6 +184,7 @@ return packer.startup(function()
         'lewis6991/gitsigns.nvim',
         disable = (disabled_git and true or disabled_gitsigns)
     }
+
     -- LazyGit integration
     local disabled_lazygit = has_value(g.doom_disabled_plugins, 'lazygit')
     if disabled_git and (not disabled_lazygit) then
@@ -178,6 +196,7 @@ return packer.startup(function()
         requires = {'nvim-lua/plenary.nvim'},
         disable = (disabled_git and true or disabled_lazygit)
     }
+
 
     -----[[------------]]-----
     ---     Completion     ---
@@ -193,6 +212,7 @@ return packer.startup(function()
         'neovim/nvim-lspconfig',
         disable = (disabled_completion and true or disabled_lspconfig)
     }
+
     -- Completion plugin
     -- can be disabled to use your own completion plugin
     local disabled_compe = has_value(g.doom_disabled_plugins, 'compe')
@@ -208,6 +228,7 @@ return packer.startup(function()
         },
         disable = (disabled_completion and true or disabled_compe)
     }
+
     -- provides the missing `:LspInstall` for `nvim-lspconfig`.
     local disabled_lspinstall = has_value(g.doom_disabled_plugins, 'lspinstall')
     if disabled_lsp and (not disabled_lspinstall) then
@@ -215,6 +236,7 @@ return packer.startup(function()
         nvim_set_var('doom_disabled_plugins', disabled_plugins)
     end
     use 'kabouzeid/nvim-lspinstall'
+
 
     -----[[--------------]]-----
     ---     File Related     ---
@@ -230,6 +252,7 @@ return packer.startup(function()
         'lambdalisue/suda.vim',
         disable = (disabled_files and true or disabled_suda)
     }
+
     -- File formatting
     -- can be disabled to use your own file formatter
     local disabled_neoformat = has_value(g.doom_disabled_plugins, 'neoformat')
@@ -241,6 +264,7 @@ return packer.startup(function()
         'sbdchd/neoformat',
         disable = (disabled_files and true or disabled_neoformat)
     }
+
     -- Autopairs
     -- can be disabled to use your own autopairs
     local disabled_autopairs = has_value(g.doom_disabled_plugins, 'autopairs')
@@ -252,6 +276,7 @@ return packer.startup(function()
         'windwp/nvim-autopairs',
         disable = (disabled_files and true or disabled_autopairs)
     }
+
     -- Indent Lines
     local disabled_indent_lines = has_value(g.doom_disabled_plugins,
                                             'indentlines')
@@ -263,6 +288,7 @@ return packer.startup(function()
         'Yggdroot/indentLine',
         disable = (disabled_files and true or disabled_indent_lines)
     }
+
     -- EditorConfig support
     local disabled_editorconfig = has_value(g.doom_disabled_plugins,
                                             'editorconfig')
@@ -274,17 +300,7 @@ return packer.startup(function()
         'editorconfig/editorconfig-vim',
         disable = (disabled_files and true or disabled_editorconfig)
     }
-    -- Tree-Sitter
-    local disabled_treesitter = has_value(g.doom_disabled_plugins, 'treesitter')
-    if disabled_files and (not disabled_treesitter) then
-        table.insert(disabled_plugins, 'treesitter')
-        nvim_set_var('doom_disabled_plugins', disabled_plugins)
-    end
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate',
-        disable = (disabled_files and true or disabled_treesitter)
-    }
+
     -- Comments
     -- can be disabled to use your own comments plugin
     local disabled_kommentary = has_value(g.doom_disabled_plugins, 'kommentary')
@@ -296,6 +312,7 @@ return packer.startup(function()
         'b3nj5m1n/kommentary',
         disable = (disabled_files and true or disabled_kommentary)
     }
+
 
     -----[[-------------]]-----
     ---     Web Related     ---
@@ -310,6 +327,7 @@ return packer.startup(function()
         'norcalli/nvim-colorizer.lua',
         disable = (disabled_web and true or disabled_colorizer)
     }
+
     -- HTTP Client support
     -- Depends on bayne/dot-http to work!
     local disabled_restclient = has_value(g.doom_disabled_plugins, 'restclient')
@@ -321,6 +339,7 @@ return packer.startup(function()
         'bayne/vim-dot-http',
         disable = (disabled_web and true or disabled_restclient)
     }
+
     -- Emmet plugin
     local disabled_emmet = has_value(g.doom_disabled_plugins, 'emmet')
     if disabled_web and (not disabled_emmet) then
@@ -328,9 +347,13 @@ return packer.startup(function()
         nvim_set_var('doom_disabled_plugins', disabled_plugins)
     end
     use {'mattn/emmet-vim', disable = (disabled_web and true or disabled_emmet)}
+
+
     -----[[----------------]]-----
     ---     Custom Plugins     ---
     -----]]----------------[[-----
-    -- If there are custom plugins
-    for _, plugin in ipairs(g.doom_custom_plugins) do packer.use(plugin) end
+    -- If there are custom plugins then also require them
+    for _, plug in pairs(g.doom_custom_plugins) do
+        custom_plugins(plug)
+    end
 end)
