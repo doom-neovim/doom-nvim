@@ -24,7 +24,7 @@ let g:mapleader = " "
    "          F3 = Toggle Tree Explorer     "
    "          F4 = Toggle Terminal          "
    "          F5 = Toggle Minimap           "
-   "          F6 = Toggle distraction-free  "
+   "          F6 = Toggle Zen mode          "
    "          F7 = Run dot-http             "
    "                                        "
    "========================================"
@@ -65,8 +65,8 @@ endif
 if index(g:doom_disabled_plugins, 'minimap') == -1
     nnoremap <F5> :MinimapToggle<CR>
 endif
-if index(g:doom_disabled_plugins, 'goyo') == -1
-    nnoremap <F6> :Goyo<CR>
+if index(g:doom_disabled_plugins, 'zen') == -1
+    nnoremap <F6> :TZAtaraxis<CR>
 endif
 if index(g:doom_disabled_modules, 'web') == -1 &&
             \ index(g:doom_disabled_plugins, 'restclient') == -1
