@@ -511,7 +511,7 @@ hi! link TSFuncBuiltin FunctionBuiltin
 hi! link TSFuncMacro Function
 hi! link TSInclude Include
 hi! link TSKeyword Keyword
-hi! link TSKeywordFunction Function
+hi! link TSKeywordFunction Keyword
 hi! link TSKeywordOperator Operator
 hi! link TSLabel Label
 hi! link TSLiteral Constant
