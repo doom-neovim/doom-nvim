@@ -107,6 +107,25 @@ let g:doom_custom_plugins = []
 "   let g:doom_ts_parsers = ['python', 'javascript']
 let g:doom_ts_parsers = []
 
+" Set the Terminal direction
+" Available directions:
+"   - vertical
+"   - horizontal
+"   - window
+"   - float
+" @default = 'vertical'
+let g:doom_terminal_direction = 'vertical'
+
+" Set the Terminal width
+" Applies only to float direction
+" @default = 70
+let g:doom_terminal_width = 70
+
+" Set the Terminal height
+" Applies to all directions except window
+" @default = 20
+let g:doom_terminal_height = 20
+
 " Conceal level
 " Set Neovim conceal level
 " 0 : Disable indentline and show all

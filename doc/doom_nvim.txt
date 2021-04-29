@@ -170,6 +170,25 @@ List of user custom plugins
 Set the parsers for TreeSitter
 default value = []
 
+`g:doom_terminal_direction`
+default value = 'vertical'
+Set the Terminal direction
+Available directions:
+  - vertical
+  - horizontal
+  - window
+  - float
+
+`g:doom_terminal_width`
+default value = 70
+Set the Terminal width
+Applies only to float direction
+
+`g:doom_terminal_height`
+default value = 20
+Set the Terminal height
+Applies to all directions except window
+
 `g:doom_conceallevel`
 default value = 1
 Set Neovim conceal level
