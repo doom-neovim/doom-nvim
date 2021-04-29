@@ -63,9 +63,12 @@ endfunction
 " Create a markdown report to use when a bug occurs,
 " useful for debugging issues.
 function! doom#functions#createReport() abort
-    exec ':silent !echo "\# doom crash report" >> $HOME/.config/doom-nvim/logs/report.md'
-    exec ':silent !echo "\#\# Begin log dump" >> $HOME/.config/doom-nvim/logs/report.md'
+    let time = strftime('%c')
+
+    exec ':silent !echo "\# doom crash report\n" >> $HOME/.config/doom-nvim/logs/report.md'
+    exec ":silent !echo \"Report date: ".time."\" >> $HOME/.config/doom-nvim/logs/report.md"
+    exec ':silent !echo "\n\#\# Begin log dump" >> $HOME/.config/doom-nvim/logs/report.md'
     exec ':silent !echo | cat $HOME/.config/doom-nvim/logs/doom.log >> $HOME/.config/doom-nvim/logs/report.md'
-    exec ':silent !echo "\#\# End log dump" >> $HOME/.config/doom-nvim/logs/report.md'
+    exec ':silent !echo "\#\# End log dump\n" >> $HOME/.config/doom-nvim/logs/report.md'
     echo "Report created at ".expand("$HOME/.config/doom-nvim/logs/report.md")
 endfunction
