@@ -60,7 +60,7 @@ if index(g:doom_disabled_plugins, 'tree') == -1
     nnoremap <F3> :NvimTreeToggle<CR>
 endif
 if index(g:doom_disabled_plugins, 'terminal') == -1
-    nnoremap <F4> :call doom#functions#toggle_terminal()<CR>
+    nnoremap <F4> :ToggleTerm<CR>
 endif
 if index(g:doom_disabled_plugins, 'minimap') == -1
     nnoremap <F5> :MinimapToggle<CR>
@@ -89,6 +89,6 @@ nnoremap q <Nop>
 nnoremap ZZ :call doom#functions#quit_doom(1,1)<CR>
 
 if index(g:doom_disabled_modules, 'fuzzy') == -1 || index(g:doom_disabled_plugins, 'telescope') == -1
-    " Set-up vim_buffer_ previewer
+    " Set-up vim_buffer_previewer
     autocmd User TelescopePreviewerLoaded setlocal wrap
 endif
