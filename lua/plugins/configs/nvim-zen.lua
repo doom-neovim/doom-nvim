@@ -18,11 +18,7 @@ require('true-zen').setup({
         shown_showcmd = false,
         shown_cmdheight = 1
     },
-    top = {
-        hidden_showtabline = 0,
-
-        shown_showtabline = 2
-    },
+    top = {hidden_showtabline = 0, shown_showtabline = 2},
     left = {
         hidden_number = false,
         hidden_relativenumber = false,
@@ -38,11 +34,9 @@ require('true-zen').setup({
         right_padding = 40,
         top_padding = 0,
         bottom_padding = 0,
+        custome_bg = "",
+        disable_bg_configuration = true,
     },
-    focus = {
-        margin_of_error = 5
-    },
-    integrations = {
-        integration_galaxyline = true,
-    }
+    focus = {margin_of_error = 5},
+    integrations = {integration_galaxyline = true}
 })
