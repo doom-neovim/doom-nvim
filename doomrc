@@ -25,7 +25,7 @@ let g:doom_autosave_sessions = 0
 " 0 : Disable preservation of last editing position
 " 1 : Enable preservation of last editing position
 " @default = 0
-let g:doom_preserve_edit_pos = 0
+let g:doom_preserve_edit_pos = 1
 
 " Default indent size
 " @default = 4
@@ -80,26 +80,34 @@ let g:doom_colorscheme = 'doom-one'
 " @default = dark
 let g:doom_colorscheme_bg = 'dark'
 
-" Checkupdates on start
+" Check updates of plugins on start
 " @default = 0
 let g:doom_check_updates = 0
 
 " Disabled plugins
-" @default = []
+" @default = ['lazygit', 'minimap', 'restclient']
 " example:
 "   let g:doom_disabled_plugins = ['emmet-vim']
-let g:doom_disabled_plugins = []
+let g:doom_disabled_plugins = ['lazygit', 'minimap', 'restclient']
 
 " Disabled plugins modules
 " @default = ['git', 'lsp', 'web']
 " example:
 "   let g:doom_disabled_modules = ['web']
-let g:doom_disabled_modules = ['git', 'lsp', 'web']
+let g:doom_disabled_modules = ['web']
 
 " Install custom plugins
 " @default = []
-" example:
-"   let g:doom_custom_plugins = ['andweeb/presence.nvim']
+" examples:
+"   plugins without options:
+"       let g:doom_custom_plugins = ['andweeb/presence.nvim']
+"   plugins with options:
+"       let g:doom_custom_plugins = [
+"           \ {
+"           \     'repo': 'andweeb/presence.nvim',
+"           \     'enabled': 1,
+"           \ }
+"           \ ]
 let g:doom_custom_plugins = []
 
 " Set the parsers for TreeSitter
@@ -115,7 +123,6 @@ let g:doom_ts_parsers = []
 " 2 : Concealed text is completely hidden unless it has a custom replacement
 "     character defined
 " 3 : Concealed text is completely hidden
-" @default = 0
 let g:doom_conceallevel = 0
 
 " Logging level

@@ -25,7 +25,7 @@ let g:doom_autosave_sessions = 0
 
 " Preserve last editing position
 " @default = 0
-let g:doom_preserve_edit_pos = 0
+let g:doom_preserve_edit_pos = 1
 
 " Default indent size
 " @default = 4
@@ -71,15 +71,15 @@ let g:doom_colorscheme = 'doom-one'
 " @default = dark
 let g:doom_colorscheme_bg = 'dark'
 
-" Checkupdates on start
+" Check updates of plugins on start
 " @default = 0
 let g:doom_check_updates = 0
 
 " Disabled plugins
-" @default = ['indentlines']
+" @default = ['lazygit', 'minimap', 'restclient']
 " example:
 "   let g:doom_disabled_plugins = ['emmet-vim']
-let g:doom_disabled_plugins = ['indentlines']
+let g:doom_disabled_plugins = ['lazygit', 'minimap', 'restclient']
 
 " Disabled plugins modules
 " @default = ['git', 'lsp', 'web']
@@ -89,8 +89,16 @@ let g:doom_disabled_modules = ['git', 'lsp', 'web']
 
 " Install custom plugins
 " @default = []
-" example:
-"   let g:doom_custom_plugins = ['andweeb/presence.nvim']
+" examples:
+"   plugins without options:
+"       let g:doom_custom_plugins = ['andweeb/presence.nvim']
+"   plugins with options:
+"       let g:doom_custom_plugins = [
+"           \ {
+"           \     'repo': 'andweeb/presence.nvim',
+"           \     'enabled': 1,
+"           \ }
+"           \ ]
 let g:doom_custom_plugins = []
 
 " Set the parsers for TreeSitter
@@ -99,10 +107,13 @@ let g:doom_custom_plugins = []
 "   let g:doom_ts_parsers = ['python', 'javascript']
 let g:doom_ts_parsers = []
 
-"Conceal level
-" 0: Disabled
-" 1: Enabled
-" @default = 0
+" Conceal level
+" Set Neovim conceal level
+" 0 : Disable indentline and show all
+" 1 : Conceal some functions and show indentlines
+" 2 : Concealed text is completely hidden unless it has a custom replacement
+"     character defined
+" 3 : Concealed text is completely hidden
 let g:doom_conceallevel = 0
 
 " Logging level
@@ -121,7 +132,7 @@ if has('nvim')
     if has('nvim-0.5')
         let g:doom_neovim = 1
     else
-        call doom#logging#message('!!!', 'Doom Nvim requires Neovim 0.5.0, please use the nvim-0.4 branch!', 2)
+        call doom#logging#message('!!!', 'Doom Nvim requires Neovim 0.5.0', 2)
     endif
 else
     call doom#logging#message('!!!', 'Doom Nvim does not have support for Vim, please use it with Neovim instead!', 2)
@@ -156,7 +167,6 @@ endfunction
 function! doom#end() abort
     call doom#default#loadGlob()
     " Test source system-based
-    call doom#system#grepconfig('config', 'gui.vim', 1)
     call doom#system#grepconfig('config', 'keybindings.vim', 1)
 
     " Plugins, configs are loaded only if the plugin is enabled.
