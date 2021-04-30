@@ -64,16 +64,16 @@ require('format').setup({
 			},
 		},
 	},
-    typescript = {
-        {
-            cmd = { 'prettier -w --parser typescript' }
-        }
-    },
-    html = {
-        {
-            cmd = { 'prettier -w --parser html' }
-        }
-    },
+	typescript = {
+		{
+			cmd = { 'prettier -w --parser typescript' },
+		},
+	},
+	html = {
+		{
+			cmd = { 'prettier -w --parser html' },
+		},
+	},
 	markdown = {
 		{
 			cmd = { 'prettier -w --parser markdown' },
@@ -87,29 +87,29 @@ require('format').setup({
 			target = 'current',
 		},
 	},
-    css = {
-        {
-            cmd = { 'prettier -w --parser css'}
-        }
-    },
-    scss = {
-        {
-            cmd = { 'prettier -w --parser scss' }
-        }
-    },
-    json = {
-        {
-            cmd = { 'prettier -w --parser json' }
-        }
-    },
-    toml = {
-        {
-            cmd = { 'prettier -w --parser toml' }
-        }
-    },
-    yaml = {
-        {
-            cmd = { 'prettier -w --parser yaml' }
-        }
-    }
+	css = {
+		{
+			cmd = { 'prettier -w --parser css' },
+		},
+	},
+	scss = {
+		{
+			cmd = { 'prettier -w --parser scss' },
+		},
+	},
+	json = {
+		{
+			cmd = { 'prettier -w --parser json' },
+		},
+	},
+	toml = {
+		{
+			cmd = { 'prettier -w --parser toml' },
+		},
+	},
+	yaml = {
+		{
+			cmd = { 'prettier -w --parser yaml' },
+		},
+	},
 })
