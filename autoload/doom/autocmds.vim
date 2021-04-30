@@ -14,7 +14,7 @@ function! doom#autocmds#init() abort
     augroup END
 
     " Compile new plugins changes at save
-    autocmd BufWritePost plugins.lua,doomrc PackerCompile
+    autocmd BufWritePost init.lua,doomrc PackerCompile profile=true
 
     " Disable tabline on Dashboard
     autocmd FileType dashboard set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2
@@ -41,5 +41,10 @@ function! doom#autocmds#init() abort
                     \ if line("'\"") > 0 && line("'\"") <= line("$") |
                     \     exe "normal! g`\"" |
                     \ endif
+    endif
+
+    " Set up vim_buffer_previewer in telescope if enabled
+    if index(g:doom_disabled_modules, 'fuzzy') == -1 || index(g:doom_disabled_plugins, 'telescope') == -1
+        autocmd User TelescopePreviewerLoaded setlocal wrap
     endif
 endfunction
