@@ -6,4 +6,4 @@ focus.enable = true
 focus.width = 60
 focus.height = 20
 -- Set which filetypes focus will not resize
-focus.excluded_filetypes = {'NvimTree', 'Vista', 'Minimap', 'terminal'}
+focus.excluded_filetypes = { 'NvimTree', 'Vista', 'Minimap', 'terminal' }
