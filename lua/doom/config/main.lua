@@ -60,5 +60,14 @@ end
 if fn['doom#functions#checkplugin']('gitsigns.nvim') == 1 then
     require('plugins.configs.nvim-gitsigns')
 end
+if fn['doom#functions#checkplugin']('which-key.nvim') == 1 then
+    require('plugins.configs.which-key')
+end
+if fn['doom#functions#checkplugin']('symbols-outline.nvim') == 1 then
+    require('plugins.configs.symbols')
+end
+if fn['doom#functions#checkplugin']('auto-session') == 1 then
+    require('plugins.configs.auto-session')
+end
 
 fn['doom#end']()

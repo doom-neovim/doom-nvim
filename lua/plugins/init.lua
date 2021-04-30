@@ -2,7 +2,7 @@
 local nvim_set_var = api.nvim_set_var
 
 ----- Plugins modules
--- Essentials         / (Plugin manager, vimpeccable, treesitter)
+-- Essentials         / (Plugin manager, vimpeccable, treesitter, sessions)
 -- UI Related         / (All look-and-feel plugins)
 -- Fuzzy Search       ! (Fuzzy searching)
 -- Git Integration    + (Some git plugins like LazyGit)
@@ -52,6 +52,8 @@ return packer.startup(function()
         disable = (disabled_files and true or disabled_treesitter)
     }
 
+    -- Sessions
+    use {'rmagatti/auto-session', requires = {'rmagatti/session-lens'}}
 
     -----[[------------]]-----
     ---     UI Related     ---
@@ -126,7 +128,7 @@ return packer.startup(function()
         table.insert(disabled_plugins, 'tagbar')
         nvim_set_var('doom_disabled_plugins', disabled_plugins)
     end
-    use {'liuchengxu/vista.vim', disabled = disabled_tagbar}
+    use {'simrat39/symbols-outline.nvim', disabled = disabled_tagbar}
 
     -- Minimap
     -- Depends on wfxr/code-minimap to work!
@@ -149,7 +151,6 @@ return packer.startup(function()
     end
     use {'kdav5758/TrueZen.nvim', disabled = disabled_zen}
 
-
     -----[[--------------]]-----
     ---     Fuzzy Search     ---
     -----]]--------------[[-----
@@ -158,7 +159,6 @@ return packer.startup(function()
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
         disable = false
     }
-
 
     -----[[-------------]]-----
     ---     GIT RELATED     ---
@@ -186,7 +186,6 @@ return packer.startup(function()
         requires = {'nvim-lua/plenary.nvim'},
         disable = (disabled_git and true or disabled_lazygit)
     }
-
 
     -----[[------------]]-----
     ---     Completion     ---
@@ -226,7 +225,6 @@ return packer.startup(function()
         nvim_set_var('doom_disabled_plugins', disabled_plugins)
     end
     use 'kabouzeid/nvim-lspinstall'
-
 
     -----[[--------------]]-----
     ---     File Related     ---
@@ -303,7 +301,6 @@ return packer.startup(function()
         disable = (disabled_files and true or disabled_kommentary)
     }
 
-
     -----[[-------------]]-----
     ---     Web Related     ---
     -----]]-------------[[-----
@@ -338,12 +335,9 @@ return packer.startup(function()
     end
     use {'mattn/emmet-vim', disable = (disabled_web and true or disabled_emmet)}
 
-
     -----[[----------------]]-----
     ---     Custom Plugins     ---
     -----]]----------------[[-----
     -- If there are custom plugins then also require them
-    for _, plug in pairs(g.doom_custom_plugins) do
-        custom_plugins(plug)
-    end
+    for _, plug in pairs(g.doom_custom_plugins) do custom_plugins(plug) end
 end)
