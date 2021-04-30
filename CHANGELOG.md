@@ -46,14 +46,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Refact changelog
 
 ### Deleted
-    - Old Vimscript configs codebase
-    - Plugins
-        - Deleted `vim-polyglot` in favour of TreeSitter based
-          syntax highlighting
+- Old Vimscript configs codebase
+- Plugins
+    - Deleted `vim-polyglot` in favour of TreeSitter based
+      syntax highlighting
 
 ### Fixed
-    - Some bugs that I don't really remember
-    - Squashed bugs on autoload functions
+- Some bugs that I don't really remember
+- Squashed bugs on autoload functions
 
 ## 1.2.1 - 2021-03-30
 ### Added
@@ -82,7 +82,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `signify` in favor of `gitsigns`
 
 ### Fixed
-    - Squashed some bugs
+- Squashed some bugs
 
 ## 1.1.0 - 2021-03-22
 ### Added
