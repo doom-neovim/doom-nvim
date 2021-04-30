@@ -124,7 +124,7 @@ wk.register({
 			['8'] = { ':BufferGoto 8<CR>', 'Buffer 8' },
 			['9'] = { ':BufferLast<CR>', 'Last buffer' },
 			c = { ':BufferClose<CR>', 'Close buffer' },
-			f = { ':Neoformat<CR>', 'Format buffer' },
+			f = { ':FormatWrite<CR>', 'Format buffer' },
 			n = { ':BufferNext<CR>', 'Next buffer' },
 			P = { ':BufferPick<CR>', 'Pick buffer' },
 			p = { ':BufferPrevious<CR>', 'Previous buffer' },
