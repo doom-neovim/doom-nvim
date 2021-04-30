@@ -47,7 +47,7 @@ function! doom#functions#quit_doom(write, force) abort
 
     " Save current session if enabled
     if g:doom_autosave_sessions ==# 1
-        exec ':SessionSave'
+        exec ':SaveSession'
     endif
 
     if a:write == 1
