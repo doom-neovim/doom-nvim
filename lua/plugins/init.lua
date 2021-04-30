@@ -4,7 +4,7 @@ local nvim_set_var = api.nvim_set_var
 ----- Plugins modules
 -- Essentials         / (Plugin manager, vimpeccable, treesitter)
 -- UI Related         / (All look-and-feel plugins)
--- Fuzzy Search       + (Fuzzy searching)
+-- Fuzzy Search       ! (Fuzzy searching)
 -- Git Integration    + (Some git plugins like LazyGit)
 -- Completion         + (Built-in LSP configurations)
 -- File-related       + (EditorConfig, formatting, Tree-sitter, etc)
@@ -18,16 +18,12 @@ local nvim_set_var = api.nvim_set_var
 -- NOTES:
 --   1. You can disable an entire group or just some or their plugins based on
 --        the legend, please refer to our documentation to learn how to do it.
---   2. The UI dashboard depends on the Fuzzy Search group for
---        providing some features, but if you do not want to use them,
---        you can safely disable the Fuzzy Search group.
---   3. We do not provide other LSP integration like coc.nvim,
+--   2. We do not provide other LSP integration like coc.nvim,
 --        please refer to our FAQ to see why.
 
 --- Set disabled plugins modules and plugins
 local disabled_plugins = {}
 --- Disabled modules
-local disabled_fuzzy = has_value(g.doom_disabled_modules, 'fuzzy')
 local disabled_git = has_value(g.doom_disabled_modules, 'git')
 local disabled_lsp = has_value(g.doom_disabled_modules, 'lsp')
 local disabled_files = has_value(g.doom_disabled_modules, 'files')
@@ -143,7 +139,7 @@ return packer.startup(function()
 
     -- Keybindings menu like Emacs's guide-key
     -- cannot be disabled
-    use {'spinks/vim-leader-guide', disabled = false}
+    use {'folke/which-key.nvim', disabled = false}
 
     -- Distraction free environment
     local disabled_zen = has_value(g.doom_disabled_plugins, 'zen')
@@ -157,16 +153,10 @@ return packer.startup(function()
     -----[[--------------]]-----
     ---     Fuzzy Search     ---
     -----]]--------------[[-----
-
-    local disabled_telescope = has_value(g.doom_disabled_plugins, 'telescope')
-    if disabled_fuzzy and (not disabled_telescope) then
-        table.insert(disabled_plugins, 'telescope')
-        nvim_set_var('doom_disabled_plugins', disabled_plugins)
-    end
     use {
         'nvim-telescope/telescope.nvim',
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
-        disable = (disabled_fuzzy and true or disabled_telescope)
+        disable = false
     }
 
 

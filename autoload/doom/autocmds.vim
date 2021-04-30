@@ -43,8 +43,6 @@ function! doom#autocmds#init() abort
                     \ endif
     endif
 
-    " Set up vim_buffer_previewer in telescope if enabled
-    if index(g:doom_disabled_modules, 'fuzzy') == -1 || index(g:doom_disabled_plugins, 'telescope') == -1
-        autocmd User TelescopePreviewerLoaded setlocal wrap
-    endif
+    " Set up vim_buffer_previewer in telescope
+    autocmd User TelescopePreviewerLoaded setlocal wrap
 endfunction
