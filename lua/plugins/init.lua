@@ -284,7 +284,7 @@ return packer.startup(function()
 		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
-		'windwp/nvim-autopairs',
+		'steelsojka/pears.nvim',
 		disable = (disabled_files and true or disabled_autopairs),
 	})
 

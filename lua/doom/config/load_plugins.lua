@@ -1,8 +1,8 @@
 -- /home/user/.config/doom-nvim/lua/plugins/init.lua
 -- /home/user/.config/doom-nvim/lua/plugins/configs/*.lua
 -- Don't load plugin config if the plugin is disabled to improve performance
-if fn['doom#functions#checkplugin']('nvim-autopairs') == 1 then
-	require('plugins.configs.autopairs')
+if fn['doom#functions#checkplugin']('pears.nvim') == 1 then
+	require('plugins.configs.nvim-pears')
 end
 if fn['doom#functions#checkplugin']('nvim-lspconfig') == 1 then
 	require('plugins.configs.lsp')
