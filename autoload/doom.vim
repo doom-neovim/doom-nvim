@@ -23,6 +23,10 @@ let g:doom_fmt_on_save = 0
 " @default = 0
 let g:doom_autosave_sessions = 0
 
+" Autoload sessions
+" @default = 0
+let g:doom_autoload_last_session = 0
+
 " Preserve last editing position
 " @default = 0
 let g:doom_preserve_edit_pos = 1

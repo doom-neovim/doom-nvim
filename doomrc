@@ -15,11 +15,16 @@ let g:doom_autosave = 0
 " @default = 0
 let g:doom_fmt_on_save = 0
 
-" Autosave sessions
+" Autosave and autoload saved sessions
 " 0 : Disable session autosave
 " 1 : Enable session autosave
 " @default = 0
 let g:doom_autosave_sessions = 0
+
+" Autoload last unsaved session
+" 0 : Disable last session autoload
+" 1 : Enable last session autosave
+let g:doom_autoload_last_session = 0
 
 " Preserve last editing position
 " 0 : Disable preservation of last editing position
