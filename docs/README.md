@@ -22,7 +22,6 @@ code design, so that there is less between you and Neovim.
 - [Community Resources](#community-resources)
   - [Asking for help](#asking-for-help)
   - [Projects](#projects)
-  - [FAQ](#faq)
 
 # Documentation
 
@@ -54,9 +53,3 @@ code design, so that there is less between you and Neovim.
 ## Projects
 
 - [Projects](https://github.com/NTBBloodbath/doom-nvim/projects)
-
-## FAQ
-
-- [General](./faq.md#general)
-  - [What type of vimmer is Doom Nvim intended for?](./faq.md#what-type-of-vimmer-is-doom-nvim-intended-for)
-  - [Why does Doom Nvim only support Neovim nightly?](./faq.md#why-does-doom-nvim-only-support-neovim-nightly)
