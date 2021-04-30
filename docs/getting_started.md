@@ -221,12 +221,25 @@ Read on to learn how to use this system to install your own plugins.
 
 ### Installing plugins
 
-To install a custom package, add it to `g:doom_custom_plugins` variable into your
+To install a custom plugin, add it to `g:doom_custom_plugins` variable into your
 `doomrc`.
 
 ```vim
 " @default = []
 let g:doom_custom_plugins = ['plugin_author/plugin_repo']
+```
+
+You can also use other method if the plugin depends on other plugins.
+
+```vim
+let g:doom_custom_plugins = [
+        \ 'plugin_author/plugin_repo',
+        \ {
+        \   'repo': 'plugin_author/second_plugin_repo',
+        \   'enabled': 1, " not required, 1 by default
+        \   'requires': ['foo', 'bar'] " not required if the plugin does not have dependencies
+        \ },
+        \ ]
 ```
 
 > **NOTES:**
@@ -265,8 +278,7 @@ You can change Doom's default settings by tweaking your `doomrc`, please see
 
 Do you want to change some configurations of some modules?
 
-Go to `lua/configs` dir and you will find the configurations for the Lua plugins,
-or go to `config/plugins` dir to change the Vimscript plugins configurations.
+Go to `lua/plugins/configs` dir and you will find the configurations for the plugins.
 
 ### Configuring LSP
 
@@ -282,8 +294,8 @@ You can see a list of currently supported languages at [bundled installers](http
 ## Binding keys
 
 You can modify the default keybindings by modifying the following files:
-    - `config/keybindings.vim` - general keybindings
-    - `config/plugins/leader-mapper.vim` - SPC keybindings
-    - `lua/configs` - lua plugins keybindings
+
+- `lua/doom/keybindings.lua` - General and SPC keybindings
+- `lua/plugins/configs` - lua plugins keybindings
 
 You can also make your own keybindings by editing your `doomrc` file.

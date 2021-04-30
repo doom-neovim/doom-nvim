@@ -1,12 +1,21 @@
 # Doom Nvim Modules
 
 # Table of Contents
+
 - [Introduction](#introduction)
 - [Tweaking Doom Nvim Modules](#tweaking-doom-nvim-modules)
   - [List of modules](#list-of-modules)
-  - [Enabling modules](#enabling-modules)
+    - [Essentials](#essentials)
+    - [UI](#ui)
+    - [Fuzzy](#fuzzy)
+    - [Git](#git)
+    - [LSP](#lsp)
+    - [Files](#files)
+    - [Web](#web)
+  - [Managing modules](#managing-modules)
+    - [Enabling modules](#enabling-modules)
     - [Enabling module plugins](#enabling-module-plugins)
-  - [Disabling modules](#disabling-modules)
+    - [Disabling modules](#disabling-modules)
     - [Disabling module plugins](#disabling-module-plugins)
 
 # Introduction
@@ -24,98 +33,108 @@ You can easily tweak Doom Nvim Modules by tweaking your doomrc
 First of all, we must know which modules we can enable and disable,
 including their plugins individually.
 
-- Essentials
-  - [x] Enabled by default
-  - [ ] Can be disabled
-  - Plugins inside
-    - [ ] packer.nvim      (Plugins manager)
-    - [ ] vimpeccable      (Helpers for Lua configs)
-    - [ ] vim-polyglot     (Support for languages)
-- UI
-  - [x] Enabled by default
-  - [ ] Can be disabled
-  - Plugins inside
-    - [ ] dashboard-nvim   (Start screen)
-    - [ ] colorschemes     (obviously, colorschemes)
-    - [x] nvim-tree        (File tree)
-      - Use `tree` to disable it
-    - [x] galaxyline.nvim  (Statusline)
-      - Use `statusline` to disable it
-    - [x] barbar.nvim      (Tabline)
-      - Use `tabline` to disable it
-    - [x] focus.nvim       (better splits)
-      - Use `focus` to disable it
-    - [x] nvim-toggleterm  (better terminal)
-      - Use `terminal` to disable it
-    - [x] vista.vim        (viewer for LSP symbols and tags)
-      - Use `vista` to disable it
-    - [x] minimap.vim      (Minimap)
-      - Use `minimap` to disable it
-      - **Depends on** [wfxr/code-minimap](htps://github.com/wfxr/code-minimap) **to work!**
-    - [ ] vim-leader-guide (Menu like Emacs's guide-key)
-    - [x] goyo.vim         (Distraction free environment)
-      - Use `goyo` to disable it
-- Fuzzy Search
-  - [x] Enabled by default
-  - [x] Can be disabled
-    - Use `fuzzy` to disable the entire module
-  - Plugins inside
-    - [x] telescope.nvim   (Fuzzy search & more)
-      - Use `telescope` to disable it
-      - **NOTE:** dashboard-nvim depends on telescope to do some things, like shortcuts!
-- Git
-  - [ ] Enabled by default
-  - [x] Can be disabled
-    - Use `git` to disable the entire module
-  - Plugins inside
-    - [x] vim-signify      (Show a diff using Vim its sign column)
-      - Use `signify` to disable it
-    - [x] lazygit          (Call lazygit from within Neovim)
-      - Use `lazygit` to disable it
-      - **Depends on** [jesseduffield/lazygit](https://github.com/jesseduffield/lazygit) **to work!**
-- LSP
-  - [ ] Enabled by default
-  - [x] Can be disabled
-    - Use `lsp` to disable the entire module
-  - Plugins inside
-    - [x] nvim-lspconfig   (Configurations for the Nvim LSP client)
-      - Use `lspconfig` to disable it
-      - **NOTE:** do not disable it if you are going to use LSP!
-    - [x] nvim-compe       (Auto completion plugin for nvim)
-      - Use `compe` to disable it
-- Files
-  - [x] Enabled by default
-  - [x] Can be disabled
-    - Use `files` to disable the entire module
-  - Plugins inside
-    - [x] suda.vim         (Write/Read files without having to use `sudo nvim`, still requires user password!)
-      - Use `suda` to disable it
-    - [x] neoformat        (File formatting)
-      - Use `neoformat` to disable it
-    - [x] nvim-autopairs   (Autopairs)
-      - Use `autopairs` to disable it
-    - [x] indent-blankline (Indent Lines Guide)
-      - Use `indentlines` to disable it
-    - [x] editorconfig     (EditorConfig support)
-      - Use `editorconfig` to disable it
-    - [x] treesitter       (Better syntax highlight & more)
-      - Use `treesitter` to disable it
-    - [x] kommentary       (Comments plugin)
-      - Use `kommentary` to disable it
-- Web
-  - [ ] Enabled by default
-  - [x] Can be disabled
-    - Use `web` to disable the entire module
-  - Plugins inside
-    - [x] nvim-colorizer   (Fastest colorizer without external dependencies)
-      - Use `colorizer` to disable it
-    - [x] vim-dot-http     (Rest HTTP Client)
-      - Use `restclient` to disable it
-      - **Depends on** [bayne/dot-http](https://github/bayne/dot-http) **to work!**
-    - [x] emmet-vim        (Emmet plugin for Vim)
-      - Use `emmet` to disable it
+### Essentials
 
-## Enabling modules
+- [x] Enabled by default
+- [ ] Can be disabled
+- Plugins inside
+  - [ ] [packer.nvim] - A use-package inspired plugin manager for Neovim.
+  - [ ] [vimpeccable] - Helpers for Lua configs.
+  - [x] [treesitter] - Nvim Treesitter configurations and abstraction layer.
+
+### UI
+
+- [x] Enabled by default
+- [ ] Can be disabled
+- Plugins inside
+  - [ ] [dashboard-nvim] - Vim dashboard.
+  - [ ] colorschemes - Obviously, colorschemes.
+  - [x] [nvim-tree.lua] - A file explorer tree for neovim written in lua.
+    - Use `tree` to disable it
+  - [x] [galaxyline.nvim] - galaxyline is a light-weight and Super Fast statusline plugin.
+    - Use `statusline` to disable it
+  - [x] [barbar.nvim] - Tabs, as understood by any other editor.
+    - Use `tabline` to disable it
+  - [x] [focus.nvim] - Auto-Focusing Splits/Windows for Neovim written in Lua
+    - Use `focus` to disable it
+  - [x] [nvim-toggleterm.lua] - A neovim plugin to persist and toggle multiple terminals during an editing session
+    - Use `terminal` to disable it
+  - [x] [symbols-outline.nvim] - A tree like view for symbols in Neovim using the Language Server Protocol.
+    - Use `tagbar` to disable it
+  - [x] [minimap.vim] - Blazing fast minimap / scrollbar for vim, powered by code-minimap written in Rust.
+    - Use `minimap` to disable it
+    - **Depends on** [wfxr/code-minimap](htps://github.com/wfxr/code-minimap) **to work!**
+  - [ ] [which-key.nvim] - WhichKey is a lua plugin for Neovim 0.5 that displays a popup with possible keybindings of the command you started typing.
+  - [x] [TrueZen.nvim] - Clean and elegant distraction-free writing for NeoVim.
+    - Use `zen` to disable it
+
+### Fuzzy
+
+- [x] Enabled by default
+- [ ] Can be disabled
+- Plugins inside
+  - [ ] [telescope.nvim] - Find, Filter, Preview, Pick. All lua, all the time.
+
+### Git
+
+- [ ] Enabled by default
+- [x] Can be disabled
+  - Use `git` to disable the entire module
+- Plugins inside
+  - [x] [gitsigns.nvim] - Git signs written in pure lua
+    - Use `gitsigns` to disable it
+  - [x] [lazygit.nvim] - Plugin for calling lazygit from within neovim.
+    - Use `lazygit` to disable it
+    - **Depends on** [jesseduffield/lazygit](https://github.com/jesseduffield/lazygit) **to work!**
+
+### LSP
+
+- [ ] Enabled by default
+- [x] Can be disabled
+  - Use `lsp` to disable the entire module
+- Plugins inside
+  - [x] [nvim-lspconfig] - Quickstart configurations for the Nvim LSP client
+    - Use `lspconfig` to disable it
+    - **NOTE:** do not disable it if you are going to use LSP!
+  - [x] [nvim-compe] - Auto completion plugin for nvim that written in Lua.
+    - Use `compe` to disable it
+
+### Files
+
+- [x] Enabled by default
+- [x] Can be disabled
+  - Use `files` to disable the entire module
+- Plugins inside
+  - [x] [suda.vim] - suda is a plugin to read or write files with sudo command.
+    - Use `suda` to disable it
+  - [x] [format.nvim] - Neovim lua plugin to format the current buffer with external executables.
+    - Use `formatter` to disable it
+  - [x] [pears.nvim] - Auto pair plugin for neovim
+    - Use `autopairs` to disable it
+  - [x] [indentLine] - A vim plugin to display the indention levels with thin vertical lines
+    - Use `indentlines` to disable it
+  - [x] [editorconfig-vim] - EditorConfig support
+    - Use `editorconfig` to disable it
+  - [x] [kommentary] - Neovim commenting plugin, written in lua.
+    - Use `kommentary` to disable it
+
+### Web
+
+- [ ] Enabled by default
+- [x] Can be disabled
+  - Use `web` to disable the entire module
+- Plugins inside
+  - [x] [nvim-colorizer.lua] - A high-performance color highlighter for Neovim which has no external dependencies written in performant Luajit.
+    - Use `colorizer` to disable it
+  - [x] [vim-dot-http] - Rest HTTP Client
+    - Use `restclient` to disable it
+    - **Depends on** [bayne/dot-http](https://github/bayne/dot-http) **to work!**
+  - [x] [emmet-vim] - Emmet for Vim
+    - Use `emmet` to disable it
+
+## Managing modules
+
+### Enabling modules
 
 To enable a module, you can use the `g:doom_disabled_modules` variable on your
 `doomrc`.
@@ -123,7 +142,7 @@ To enable a module, you can use the `g:doom_disabled_modules` variable on your
 ```vim
 " To enable all modules except web, just put only 'web' in the disabled modules
 " array and then, reboot Neovim and do :PackerSync
-" 
+"
 " @default = ['git', 'lsp', 'web']
 let g:doom_disabled_modules = ['web']
 ```
@@ -135,7 +154,7 @@ All the module plugins will be enabled by default unless the entire module is di
 > If you want to use custom plugins, please refer to
 > [Installing plugins](./getting_started.md#installing-plugins).
 
-## Disabling modules
+### Disabling modules
 
 To disable a module, you can use the `g:doom_disabled_modules` variable
 on your `doomrc`.
@@ -143,7 +162,7 @@ on your `doomrc`.
 ```vim
 " To disable only the web module, just put only 'web' in the disabled modules
 " array and then, reboot Neovim and do :PackerSync
-" 
+"
 " @default = ['git', 'lsp', 'web']
 let g:doom_disabled_modules = ['web']
 ```
@@ -157,3 +176,48 @@ on your `doomrc`.
 " @default = []
 let g:doom_disabled_plugins = ['emmet']
 ```
+
+<!-- Essentials -->
+
+[packer.nvim]: https://github.com/wbthomason/packer.nvim
+[vimpeccable]: https://github.com/svermeulen/vimpeccable
+[treesitter]: https://github.com/nvim-treesitter/nvim-treesitter
+
+<!-- UI -->
+
+[dashboard-nvim]: https://github.com/glepnir/dashboard-nvim
+[nvim-tree.lua]: https://github.com/kyazdani42/nvim-tree.lua
+[galaxyline.nvim]: https://github.com/glepnir/galaxyline.nvim
+[barbar.nvim]: https://github.com/romgrk/barbar.nvim
+[focus.nvim]: https://github.com/beauwilliams/focus.nvim
+[nvim-toggleterm.lua]: https://github.com/akinsho/nvim-toggleterm.lua
+[symbols-outline.nvim]: https://github.com/simrat39/symbols-outline.nvim
+[minimap.vim]: https://github.com/wfxr/minimap.vim
+[which-key.nvim]: https://github.com/folke/which-key.nvim
+[truezen.nvim]: https://github.com/kdav5758/TrueZen.nvim
+
+<!-- Fuzzy -->
+
+[telescope.nvim]: https://github.com/nvim-telescope/telescope.nvim
+
+<!-- Git -->
+
+[gitsigns.nvim]: https://github.com/lewis6991/gitsigns.nvim
+[lazygit]: https://github.com/kdheepak/lazygit.nvim
+
+<!-- LSP -->
+
+[nvim-lspconfig]: https://github.com/neovim/nvim-lspconfig
+[nvim-compe]: <!-- Files -->
+[suda.vim]: https://github.com/lambdalisue/suda.vim
+[format.nvim]: https://github.com/lukas-reineke/format.nvim
+[pears.nvim]: https://github.com/steelsojka/pears.nvim
+[indentline]: https://github.com/Yggdroot/indentLine
+[editorconfig-vim]: https://github.com/editorconfig/editorconfig-vim
+[kommentary]: https://github.com/b3nj5m1n/kommentary
+
+<!-- Web -->
+
+[nvim-colorizer.lua]: https://github.com/norcalli/nvim-colorizer.lua
+[vim-dot-http]: https://github.com/bayne/vim-dot-http
+[emmet-vim]: https://github.com/mattn/emmet-vim

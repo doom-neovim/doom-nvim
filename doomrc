@@ -15,17 +15,22 @@ let g:doom_autosave = 0
 " @default = 0
 let g:doom_fmt_on_save = 0
 
-" Autosave sessions
+" Autosave and autoload saved sessions
 " 0 : Disable session autosave
 " 1 : Enable session autosave
 " @default = 0
 let g:doom_autosave_sessions = 0
 
+" Autoload last unsaved session
+" 0 : Disable last session autoload
+" 1 : Enable last session autosave
+let g:doom_autoload_last_session = 0
+
 " Preserve last editing position
 " 0 : Disable preservation of last editing position
 " 1 : Enable preservation of last editing position
 " @default = 0
-let g:doom_preserve_edit_pos = 0
+let g:doom_preserve_edit_pos = 1
 
 " Default indent size
 " @default = 4
@@ -80,15 +85,15 @@ let g:doom_colorscheme = 'doom-one'
 " @default = dark
 let g:doom_colorscheme_bg = 'dark'
 
-" Checkupdates on start
+" Check updates on start
 " @default = 0
 let g:doom_check_updates = 0
 
 " Disabled plugins
-" @default = []
+" @default = ['lazygit', 'minimap', 'restclient']
 " example:
 "   let g:doom_disabled_plugins = ['emmet-vim']
-let g:doom_disabled_plugins = []
+let g:doom_disabled_plugins = ['lazygit', 'minimap', 'restclient']
 
 " Disabled plugins modules
 " @default = ['git', 'lsp', 'web']
@@ -98,8 +103,16 @@ let g:doom_disabled_modules = ['git', 'lsp', 'web']
 
 " Install custom plugins
 " @default = []
-" example:
-"   let g:doom_custom_plugins = ['andweeb/presence.nvim']
+" examples:
+"   plugins without options:
+"       let g:doom_custom_plugins = ['andweeb/presence.nvim']
+"   plugins with options:
+"       let g:doom_custom_plugins = [
+"           \ {
+"           \     'repo': 'andweeb/presence.nvim',
+"           \     'enabled': 1,
+"           \ }
+"           \ ]
 let g:doom_custom_plugins = []
 
 " Set the parsers for TreeSitter
@@ -108,6 +121,25 @@ let g:doom_custom_plugins = []
 "   let g:doom_ts_parsers = ['python', 'javascript']
 let g:doom_ts_parsers = []
 
+" Set the Terminal direction
+" Available directions:
+"   - vertical
+"   - horizontal
+"   - window
+"   - float
+" @default = 'vertical'
+let g:doom_terminal_direction = 'vertical'
+
+" Set the Terminal width
+" Applies only to float direction
+" @default = 70
+let g:doom_terminal_width = 70
+
+" Set the Terminal height
+" Applies to all directions except window
+" @default = 20
+let g:doom_terminal_height = 20
+
 " Conceal level
 " Set Neovim conceal level
 " 0 : Disable indentline and show all
@@ -115,7 +147,6 @@ let g:doom_ts_parsers = []
 " 2 : Concealed text is completely hidden unless it has a custom replacement
 "     character defined
 " 3 : Concealed text is completely hidden
-" @default = 0
 let g:doom_conceallevel = 0
 
 " Logging level

@@ -13,7 +13,7 @@ function! doom#logging#init()
                 echo boot_msg
             endif
             exec ':silent !echo " " >> $HOME/.config/doom-nvim/logs/doom.log'
-            exec ':silent !echo '.boot_msg.' >> $HOME/.config/doom-nvim/logs/doom.log'
+            exec ":silent !echo \"".boot_msg."\" >> $HOME/.config/doom-nvim/logs/doom.log"
         catch
             echo 'Cannot write on_start log message'
             exec ':!touch $HOME/.config/doom-nvim/logs/doom.log'

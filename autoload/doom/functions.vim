@@ -22,14 +22,6 @@ function! doom#functions#get_root() abort
     return root
 endfunction
 
-" ToggleTerm custom function to avoid having
-" line numbers inside the terminal buffer
-" because that is not from God.
-function! doom#functions#toggle_terminal() abort
-    execute "ToggleTerm"
-    set nonumber norelativenumber
-endfunction
-
 function! doom#functions#quit_doom(write, force) abort
     try
         call doom#logging#message('*', 'Checking if the colorscheme was changed...', 2)
@@ -55,7 +47,7 @@ function! doom#functions#quit_doom(write, force) abort
 
     " Save current session if enabled
     if g:doom_autosave_sessions ==# 1
-        exec ':SessionSave'
+        exec ':SaveSession'
     endif
 
     if a:write == 1
@@ -71,9 +63,12 @@ endfunction
 " Create a markdown report to use when a bug occurs,
 " useful for debugging issues.
 function! doom#functions#createReport() abort
-    exec ':silent !echo "# doom crash report" >> $HOME/.config/doom-nvim/logs/report.md'
-    exec ':silent !echo "## Begin log dump" >> $HOME/.config/doom-nvim/logs/report.md'
+    let time = strftime('%c')
+
+    exec ':silent !echo "\# doom crash report\n" >> $HOME/.config/doom-nvim/logs/report.md'
+    exec ":silent !echo \"Report date: ".time."\" >> $HOME/.config/doom-nvim/logs/report.md"
+    exec ':silent !echo "\n\#\# Begin log dump" >> $HOME/.config/doom-nvim/logs/report.md'
     exec ':silent !echo | cat $HOME/.config/doom-nvim/logs/doom.log >> $HOME/.config/doom-nvim/logs/report.md'
-    exec ':silent !echo "## End log dump" >> $HOME/.config/doom-nvim/logs/report.md'
-    exec ':silent echo "Report created at $HOME/.config/doom-nvim/logs/report.md"'
+    exec ':silent !echo "\#\# End log dump\n" >> $HOME/.config/doom-nvim/logs/report.md'
+    echo "Report created at ".expand("$HOME/.config/doom-nvim/logs/report.md")
 endfunction

@@ -38,20 +38,20 @@
      7. Modules..............................|doom_nvim_configuration_modules|
        1. Enabling modules..........|doom_nvim_configuration_modules_enabling|
        2. Disabling modules........|doom_nvim_configuration_modules_disabling|
-     8. LSP......................................|doom_nvim_configuration_lsp|
+     8. Custom Plugins................|doom_nvim_configuration_custom_plugins|
+     9. LSP......................................|doom_nvim_configuration_lsp|
    4. Commands............................................|doom_nvim_commands|
      1. Keybindings...........................|doom_nvim_commands_keybindings|
-   5. Functions..........................................|doom_nvim_functions|
-   6. Usage..................................................|doom_nvim_usage|
+   5. Usage..................................................|doom_nvim_usage|
      1. Moving around..........................|doom_nvim_usage_moving_around|
-   7. Known issues..........................................|doom_nvim_issues|
-   8. FAQ......................................................|doom_nvim_faq|
-   9. Hacking Doom Nvim....................................|doom_nvim_hacking|
+   6. Known issues..........................................|doom_nvim_issues|
+   7. FAQ......................................................|doom_nvim_faq|
+   8. Hacking Doom Nvim....................................|doom_nvim_hacking|
      1. Autoload..................................|doom_nvim_hacking_autoload|
-   10. Acknowledgements...........................|doom_nvim_acknowledgements|
-   11. License.............................................|doom_nvim_license|
-   12. Contributing...................................|doom_nvim_contributing|
-   13. Changelog.........................................|doom_nvim_changelog|
+   9. Acknowledgements...........................|doom_nvim_acknowledgements|
+   10. License.............................................|doom_nvim_license|
+   11. Contributing...................................|doom_nvim_contributing|
+   12. Changelog.........................................|doom_nvim_changelog|
 
 
 ==============================================================================
@@ -74,7 +74,7 @@ OPTIONS                                                    *doom_nvim_options*
 
 Doom Nvim configuration files resides in the `$HOME/.config/doom-nvim/config`
 directory. Global variables for Doom Nvim resides in
-`$HOME/.doom-nvim/autoload/doom.vim`.
+`$HOME/.config/doom-nvim/autoload/doom.vim`.
 
 All the options available in the `doom.vim` file are global variables.
 They all start with `g:doom_` followed by a description of ther nature:
@@ -95,9 +95,15 @@ default value = 0
 default value = 0
 0 : Disable session autosave
 1 : Enable session autosave
+This option will also autoload saved sessions
+
+`g:doom_autoload_last_session`
+default value = 0
+0 : Disable autoload of last unsaved session
+1 : Enable autoload of last unsaved session
 
 `g:doom_preserve_edit_pos`
-default value = 0
+default value = 1
 0 : Disable preservation of last editing position
 1 : Enable preservation of last editing position
 
@@ -154,7 +160,7 @@ default value = 0
 Check updates of plugins on start
 
 `g:doom_disabled_plugins`
-default value = []
+default value = ['lazygit', 'minimap', 'restclient']
 List of user disabled plugins
 
 `g:doom_disabled_modules`
@@ -169,8 +175,27 @@ List of user custom plugins
 Set the parsers for TreeSitter
 default value = []
 
+`g:doom_terminal_direction`
+default value = 'vertical'
+Set the Terminal direction
+Available directions:
+  - vertical
+  - horizontal
+  - window
+  - float
+
+`g:doom_terminal_width`
+default value = 70
+Set the Terminal width
+Applies only to float direction
+
+`g:doom_terminal_height`
+default value = 20
+Set the Terminal height
+Applies to all directions except window
+
 `g:doom_conceallevel`
-default value = 1
+default value = 0
 Set Neovim conceal level
 0 : Disable indentline and show all
 1 : Conceal some functions and show indentlines
@@ -250,7 +275,7 @@ following layout:
 
 
 
-'A' : The tagbar (Plugin: vista.vim)
+'A' : The tagbar (Plugin: SymbolsOutline)
 'B' : The main buffer
 'C' : The terminal (Plugin: nvim-toggleterm.lua)
 'D' : The minimap (Plugin: minimap.vim)
@@ -290,11 +315,13 @@ TAGBAR                                 *doom_nvim_configuration_layout_tagbar*
 
 Tagbar is a plugin that can show the tags and structure of the opened file,
 ordered by its scope. For this function, Doom Nvim makes use of
-`liuchengxu/vista.vim`. It can be toggled by performing the following commands:
-<Space>tT for `Tagbar`
+`simrat39/symbols-outline.nvim`. It can be toggled by performing the following
+commands:
+
+<Space>tS for `Tagbar`
 <F2> for `Tagbar`
 
-See https://github.com/liuchengxu/vista.vim for more information.
+See https://github.com/simrat39/symbols-outline.nvim for more information.
 
 
 ==============================================================================
@@ -313,6 +340,7 @@ The terminal is placed like in others editors, e.g. Visual Studio Code. The
 buffer of the terminal is automatically set to `INSERT` mode. The only way to
 close it is to enter `exit` to close the shell session, or if you just want to
 toggle it, you can enter in `NORMAL` mode:
+
 <Space>tt for `Terminal`
 <F4> for `Terminal`
 
@@ -325,12 +353,12 @@ bundle of plugins, configuration and commands, organized into a unit that can
 be toggled easily.
 
 To give a quick summary, the modules are as follows:
-    - Essentials (package manager, utilities for using Lua inside Neovim)
+    - Essentials (package manager, TreeSitter and utilities for using
+      Lua inside Neovim)
     - UI (everything related to UI)
-    - Fuzzy (telescope.nvim, fuzzy searching)
     - Git (everything related to Git)
     - LSP (for using Language Server Protocols by using the built-in LSP)
-    - Files (utilities like formatter, commenter, improvements, etc)
+    - Files (utilities like formatter, commenter, etc)
     - Web (for web development)
 
 You can see in a more detailed view the modules and its plugins at
@@ -345,7 +373,7 @@ To enable a module, you can use the `g:doom_disabled_modules` variable on your
 
 Example:
     To enable all modules except web, just put only 'web' in the disabled
-    modules array and then, reboot Neovim and do `:PackerSync`.
+    modules array and then reboot Neovim and do `:PackerSync`.
 
     let g:doom_disabled_modules = ['web']
 
@@ -358,9 +386,38 @@ your `doomrc`.
 
 Example:
     To disable only the web module, just put only 'web' in the disabled
-    modules array and then, reboot Neovim and do `:PackerSync`.
+    modules array and then reboot Neovim and do `:PackerSync`.
 
     let g:doom_disabled_modules = ['web']
+
+
+==============================================================================
+CUSTOM PLUGINS                        *doom_nvim_configuration_custom_plugins*
+
+To use your own plugins in Doom Nvim you can use the `g:doom_custom_plugins`
+variable on your `doomrc`.
+
+To add plugins without extra configurations (e.g., if a plugin does not depends
+on other plugins), you can simply set it as follow:
+
+    let g:doom_custom_plugins = ['andweeb/presence.nvim']
+
+Otherwise, if your plugin depends on other or you do not want to enable it,
+then you can do it as follow:
+
+    let g:doom_custom_plugins = [
+        \ {
+        \   'repo': 'andweeb/presence.nvim',
+        \   'enabled': 1,
+        \   'requires': ['foo', 'bar']
+        \ }
+        \ ]
+
+As you can see, the second way depends on a structure to work.
+
+    repo: the repository where the plugin resides
+    enabled: if the plugin should be enabled, not required (true by default)
+    requires: plugin dependencies, not required
 
 
 ==============================================================================
@@ -429,26 +486,33 @@ In Doom Nvim, we make use of the <Space> keystroke as the map leader.
 | <d>oom
 |           | <c> Edit your Doom Nvim configuration
 |           | <d> Open Doom Nvim docs
+|           | <r> Create crash reports, useful for debugging
 |           | <u> Check Doom Nvim updates
 | <f>ile
 |           | <b> Bookmarks
 |           | <c> Edit your Neovim Configuration
 |           | <f> Find file
-|           | <g> Find word
+|           | <W> Find word
 |           | <h> Recently opened files
 |           | <n> New unnamed buffer
 |           | <r> Re-open an unreadable file with sudo permissions
 |           | <t> Help tags
 |           | <w> Write an unwritable file with sudo permissions
 | <g>it
+|           | <b> Blame line
+|           | <h> Preview hunk
+|           | <R> Reset buffer
+|           | <r> Reset hunk
 |           | <o> Open LazyGit
-|           | <p> Push
 |           | <P> Pull
+|           | <p> Push
+|           | <S> Stage hunk
 |           | <s> Status
+|           | <u> Undo stage hunk
 | <l>sp
-|           | <D> Show type definition
-|           | <e> Show line diagnostics
-|           | <q> Diagnostics into location list
+|           | <d> Show type definition
+|           | <l> Show line diagnostics
+|           | <L> Diagnostics into location list
 | <o>rder
 |           | <d> Sort by directory
 |           | <l> Sort by language
@@ -457,21 +521,22 @@ In Doom Nvim, we make use of the <Space> keystroke as the map leader.
 | <p>lugin
 |           | <c> Clean unused plugins
 |           | <i> Install missing plugins
+|           | <p> Profile the time taken loading your plugins
 |           | <s> Sync plugins (Clean and Update)
 |           | <u> Update plugins
 | <r>unner
-|           | <h> Run rest client in the current cursor line
+|           | <h> Run restclient in the current cursor line
 | <s>ession
-|           | <s> Save session
-|           | <l> Load session
+|           | <l> Session switcher/selector
+|           | <s> Save current session
+|           | <r> Restore previously saved session
 | <t>oggler
 |           | <c> Change colorscheme
 |           | <e> Toggle Tree Explorer
 |           | <m> Toggle Minimap
-|           | <n> Toggle Line Numbers
+|           | <S> Toggle Symbols view
 |           | <s> Toggle Start Screen
 |           | <t> Toggle Terminal
-|           | <T> Toggle Tagbar
 | <w>indow
 |           | <c> Close current window
 |           | <C> Close all other windows
@@ -489,9 +554,9 @@ your life easier!
 | <F3>      | Toggle Tree Explorer
 | <F4>      | Toggle Terminal
 | <F5>      | Toggle Minimap
-| <F6>      | Toggle distraction-free mode
-| <F7>      | Run rest client
-| <Z><Z>    | Fast exit from Doom Nvim
+| <F6>      | ToggleZen mode
+| <F7>      | Run restclient
+| <Z><Z>    | Fast exit from Doom Nvim (also dumps `:messages` to logs)
 | <g><c>    | Comment selected block (`VISUAL` mode)
 
 You can modify the default keybindings by modifying the following files:
@@ -500,14 +565,6 @@ You can modify the default keybindings by modifying the following files:
     - `lua/configs` - lua plugins keybindings
 
 You can also make your own keybindings by editing your `doomrc` file.
-
-
-==============================================================================
-FUNCTIONS                                                *doom_nvim_functions*
-
-`ToggleNumbers`: Toggles the line numbers, if `g:doom_relative_num` is `1`
-then it will toggle the relative numbers, otherwise, it will toggle the
-absolute numbers.
 
 
 ==============================================================================
@@ -535,18 +592,15 @@ Use `h` go to left, `j` to go down, `k` to go up, `l` to go right.
           j        
           v
 
-See `Tutor` to know how to use Vim and its keybindings
+See `Tutor` to know how to use Vim and its keybindings.
 
 To move around buffers execute <Space>b to select the `buffers` section
-and then press the key corresponding to the buffer you want to select (`1-9`).
+and then press the key corresponding to the buffer you want to select (`1-9`)
+or press `<TAB>` to cycle buffers.
 
 
 ==============================================================================
 KNOWN ISSUES                                                *doom_nvim_issues*
-
-- When using the distraction-free mode, it will be still displaying the
-  statusbar, at the moment cannot be fixed unless you use other statusline.
-  See |doom_nvim_configuration_modules_disabling| for more information.
 
 - If you are facing an undocummented issue, feel free to open an issue at Doom
   Nvim's repository on GitHub and we will try to fix it.
@@ -578,40 +632,40 @@ Doom Nvim aims to be hackable to suit everyone's needs. Therefore
 
 This is the structure of Doom Nvim:
 
- ./
-├──  autoload/           # Files loaded at launch
-│  ├──  color.vim        # Color utilities, required by doom-one.vim
-│  ├──  doom/            # Doom Nvim core
-│  │  ├──  autocmds.vim  # Doom Nvim autocommands
-│  │  ├──  config.vim    # Doom Nvim custom config file loader
-│  │  ├──  default.vim   # Doom Nvim default configs
-│  │  ├──  functions.vim # Doom Nvim core functions
-│  │  ├──  health.vim    # Doom Nvim health
-│  │  ├──  logging.vim   # Doom Nvim logging manager
-│  │  └──  system.vim    # Doom Nvim system detection (early stage)
-│  └──  doom.vim         # Config file for various globals
-├──  colors/             # Doom Nvim colorschemes directory
-│  └──  doom-one.vim     # `romgrk` doom colorscheme ported to Nvim (`default`)
-├──  config/             # Configuration files for Doom Nvim
-│  ├──  gui.vim          # Doom Nvim GUI options
-│  ├──  keybindings.vim  # Doom Nvim keybindings
-│  ├──  main.vim         # Init file, loads packer.nvim and plugins
-│  └──  plugins/         # Vimscript plugins configs directory
-│     ├──  leader....vim # leader-mapper keybindings
-│     ├──  neoformat.vim # neoformat configs
-│     └──  vista.vim     # vista.vim configs
-├──  doc/                # Doom Nvim documentation to be used inside Nvim
-│  └──  doom_nvim.txt    # Doom Nvim help file
-├──  docs/               # Doom Nvim docs meant to be readed on GitHub
-├──  init.vim            # init.vim file
-├──  install.sh          # Doom Nvim manager
-├──  LICENSE             # Doom Nvim License
-├──  logs/               # Location of Doom Nvim log file
-├──  lua/                # Location of Lua plugins, including packer.nvim
-│  ├──  configs/         # Location of Lua plugins configurations
-│  └──  plugins.lua      # Plugin manager configurations
-└──  sessions/           # Location of Vim workspaces
-
+ .
+├──  autoload              # Files loaded at launch
+│  ├──  color.vim          # Color utilities, required by `doom-one.vim`
+│  ├──  doom               # Doom Nvim core
+│  │  ├──  autocmds.vim    # Doom Nvim autocommands
+│  │  ├──  config.vim      # Doom Nvim custom config file loader
+│  │  ├──  default.vim     # Doom Nvim default configs
+│  │  ├──  functions.vim   # Doom Nvim core functions
+│  │  ├──  logging.vim     # Doom Nvim logging manager
+│  │  └──  system.vim      # Doom Nvim system detection (early stage)
+│  ├──  doom.vim           # Config file for various globals
+│  └──  health             # Doom Nvim health add-ons for `:checkhealth`
+├──  colors                # Doom Nvim pre-installed colorschemes directory
+│  └──  doom-one.vim       # `romgrk` doom colorscheme ported to Nvim (`default`)
+├──  doc                   # Doom Nvim documentation to be used inside Nvim
+│  └──  doom_nvim.txt      # Doom Nvim help file
+├──  docs                  # Doom Nvim docs meant to be readed on GitHub
+├──  doomrc                # Doom Nvim user configurations file
+├──  init.lua              # init.lua file
+├──  install.sh            # Doom Nvim installer
+├──  LICENSE               # Doom Nvim License
+├──  logs                  # Location of Doom Nvim logs
+│  ├──  doom.log           # Doom Nvim logs
+│  └──  report.md          # Doom Nvim crash reports, does not exists by default
+├──  lua                   # Location of Doom Nvim Lua files
+│  ├──  doom               # Doom Nvim Lua core
+│  │  ├──  config          # Main configurations of Doom Nvim
+│  │  ├──  health.lua      # Doom Nvim health checking, complement for health dir
+│  │  ├──  keybindings.lua # Doom Nvim default keybindings
+│  │  └──  utils           # Doom Nvim Lua utilities
+│  └──  plugins            # Location of Doom Nvim plugins
+│     ├──  configs         # Plugins configurations
+│     └──  init.lua        # packer.nvim setup
+└──  sessions              # Location of Neovim workspaces
 
 Doom Nvim also creates the `BFC`, which serves as the user configuration file
 if it is not present on the system. It allows a fine control over the core
@@ -684,35 +738,88 @@ CONTRIBUTING                                          *doom_nvim_contributing*
 ==============================================================================
 CHANGELOG                                                *doom_nvim_changelog*
 
-Doom Nvim follows the semantic versioning and reached its stable version in
-version 1.0.0
+The format is based on Keep a Changelog (https://keepachangelog.com/en/1.0.0/),
+and this project adheres to Semantic Versioning
+(https://semver.org/spec/v2.0.0.html).
 
+- 2.0.0 (in development)
+    - Added
+        - Configurations
+            - `g:doom_autoload_last_session` variable, see |doom_nvim_options|
+            - `g:doom_terminal_direction` variable, see |doom_nvim_options|
+            - `g:doom_terminal_width` variable, see |doom_nvim_options|
+            - `g:doom_terminal_height` variable, see |doom_nvim_options|
+        - Plugins
+            - `auto-session`
+    - Changed
+        - Installation script
+            - Now you can select the branch to use (main, develop)
+        - Lua migration
+            - init
+            - configs
+            - plugins
+        - Implemented better custom plugins system,
+          see |doom_nvim_configuration_custom_plugins|
+        - Start using TreeSitter based indentation
+        - Plugins
+            - Replaced
+                - `Goyo` in favour of `TrueZen`
+                - `leader-mapper` in favour of `WhichKey`
+                - `Vista.vim` in favour of `SymbolsOutline`
+                - `Neoformat` in favour of `format.nvim`
+                - `nvim-autopairs` in favour of `pears.nvim`
+            - Updated
+                - `nvim-toggleterm` configurations
+            - Other changes
+                - `telescope.nvim` cannot be disabled anymore
+        - Keybindings
+            - Refact some `<leader>` bindings
+            - Use `:TZAtaraxis` as F6 key bind
+            - New `:dr` map, easily create crash reports
+        - Misc
+            - Cleaned some code hunk
+            - Formatted all files
+            - Refact changelog
+    - Deleted
+        - Old Vimscript configs codebase
+        - Plugins
+            - Deleted `vim-polyglot` in favour of TreeSitter based
+              syntax highlighting
+    - Fixed
+        - Some bugs that I don't really remember
+        - Squashed bugs on autoload functions
 - 1.2.1
-  - Improved installation script
-  - New branch `develop`
+    - Added
+        - New branch `develop`
+    - Changed
+        - Improved installation script
 - 1.2.0
-  - Added `g:doom_ts_parsers`,
-    see |doom_nvim_options|
-  - Added new keybinding for toggle terminal,
-    see |doom_nvim_commands_keybindings|
-  - Added a basic implementation for `:checkhealth` command
-  - Added a `doomrc` template with the default options values
-  - Improved `:DoomUpdate` command
-  - Added new plugins
-    - `gitsigns`
-    - `indentLine`
-    - `nvim-lspinstall`
-    - some new colorschemes, see |doom_colorscheme|
-  - Removed plugins
-    - `signify` in favor of `gitsigns`
-  - Squashed some bugs
-  - Some minor changes more under the hood
+    - Added
+        - Configurations
+            - `g:doom_ts_parsers`, see |doom_nvim_options|
+            - New key binding for toggle terminal,
+              see |doom_nvim_commands_keybindings|
+            - `doomrc` template with the default options values
+        - Basic implementation for `:checkhealth` command
+        - Plugins
+            - `gitsigns`
+            - `indentLine`
+            - `nvim-lspinstall`
+            - Some new colorschemes, see |doom_colorscheme|
+    - Changed
+        - Improved `:DoomUpdate` command
+        - Some minor changes more under the hood
+        - Plugins
+            - `signify` in favor of `gitsigns`
+    - Fixed
+        - Squashed some bugs
 - 1.1.0
-  - Added `Doom` section to `vim-leader-guide` plugin,
-    see |doom_nvim_commands_keybindings|
-  - Added `:DoomUpdate` command,
-    see |doom_nvim_commands|
-  - Added `g:doom_autosave_sessions`,
-    see |doom_nvim_options|
+    - Added
+        - `Doom` section to `vim-leader-guide` plugin,
+          see |doom_nvim_commands_keybindings|
+        - `:DoomUpdate` command,
+          see |doom_nvim_commands|
+        - `g:doom_autosave_sessions`,
+          see |doom_nvim_options|
 - 1.0.0
-  - Initial stable release
+    - Initial stable release

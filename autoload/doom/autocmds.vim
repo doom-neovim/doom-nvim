@@ -14,7 +14,7 @@ function! doom#autocmds#init() abort
     augroup END
 
     " Compile new plugins changes at save
-    autocmd BufWritePost plugins.lua,doomrc PackerCompile
+    autocmd BufWritePost init.lua,doomrc PackerCompile profile=true
 
     " Disable tabline on Dashboard
     autocmd FileType dashboard set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2
@@ -30,9 +30,9 @@ function! doom#autocmds#init() abort
     endif
 
     " Format on save
-    " NOTE: Requires neoformat to be enabled!
+    " NOTE: Requires formatter to be enabled!
     if g:doom_fmt_on_save ==# 1
-        autocmd BufWritePre * undojoin | Neoformat
+        autocmd BufWritePoist * FormatWrite
     endif
 
     " Preserve last editing pos
@@ -42,4 +42,7 @@ function! doom#autocmds#init() abort
                     \     exe "normal! g`\"" |
                     \ endif
     endif
+
+    " Set up vim_buffer_previewer in telescope
+    autocmd User TelescopePreviewerLoaded setlocal wrap
 endfunction
