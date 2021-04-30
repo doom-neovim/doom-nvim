@@ -186,16 +186,7 @@ endfunction
 function! doom#end() abort
     call doom#default#loadGlob()
     " Test source system-based
-    call doom#system#grepconfig('config', 'keybindings.vim', 1)
-
-    " Plugins, configs are loaded only if the plugin is enabled.
-    if index(g:doom_disabled_plugins, 'vista') == -1
-        call doom#system#grepconfig('config/plugins', 'vista.vim', 1)
-    endif
-    if index(g:doom_disabled_plugins, 'neoformat') == -1
-        call doom#system#grepconfig('config/plugins', 'neoformat.vim', 1)
-    endif
-    call doom#system#grepconfig('config/plugins', 'leader-mapper.vim', 1)
+    call doom#system#grepconfig('doom', 'keybindings', 1)
 
     " Check updates
     call doom#logging#init()

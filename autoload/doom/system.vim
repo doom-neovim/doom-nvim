@@ -34,20 +34,23 @@ endfunction
 
 function! doom#system#grepconfig(folder, filename, source) abort
     " Source file or returns the full path
-    let fullpath = g:doom_root . g:doom_separator . a:folder . g:doom_separator . a:filename
+    let fullpath = g:doom_root . g:doom_separator . 'lua' . g:doom_separator .a:folder . g:doom_separator . a:filename
+    let b:luafile = a:folder . '.' . a:filename
 
-    if filereadable(fullpath)
+    if filereadable(fullpath . '.lua')
         if a:source ==# 1
             try
-                execute 'source ' fullpath
+                lua require(vim.b.luafile)
                 call doom#logging#message('+', 'Sourced file : ' . a:filename, 2)
             catch
-                call doom#logging#message('!', 'Failed sourcing ' . a:filename, 1)
+                call doom#logging#message('!', 'Failed sourcing ' . a:filename . "\n" . v:exception, 1)
             endtry
         else
             call doom#logging#message('+', 'Returned ' . a:filename . ' path', 2)
             return fullpath
         endif
+    else
+        call doom#logging#message('!', 'Trying to source an inexistent file (' . fullpath.'.lua' . ')', 1)
     endif
 endfunction
 
