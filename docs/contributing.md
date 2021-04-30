@@ -8,7 +8,7 @@ You are welcome to contribute with anything to improve Doom Nvim, but please
 look at [contributing code](#contributing-code) to know better how to contribute
 and which code style you should use :heart:
 
-> **Working on your first Pull Request?** You can learn how from this *free* series
+> **Working on your first Pull Request?** You can learn how from this _free_ series
 > [How to Contribute to an Open Source Project on GitHub](https://kcd.im/pull-request).
 
 # Table of Contents
@@ -42,15 +42,15 @@ and which code style you should use :heart:
 
 ## Acquire a backtrace from errors
 
-All the errors ocurred in Doom Nvim are saved into a `doom.log` file inside your
-Doom Nvim root dir (`$HOME/.config/doom-nvim` by default). If the logs are very long, please
-paste it using a [gist].
+All the errors ocurred in Doom Nvim are saved into a `doom.log` file inside a `logs/`
+directory inside your Doom Nvim root dir (`$HOME/.config/doom-nvim` by default).
+If the logs are very long, please paste it using a [gist].
 
 > **NOTE:** Alternatively you can paste the most recent lines starting with the
 > following if the logs are extremely long.
 >
 > [!] - Errors
-> 
+>
 > [!!!] - Critical errors
 
 ## Create a step-by-step reproduction guide
@@ -61,6 +61,7 @@ thus reach a solution more quickly.
 ## Include information about your Doom Nvim install
 
 Some important data would be:
+
 - Your Neovim version
 - Your custom configuration if you have one (`$HOME/.config/doom-nvim/doomrc`)
 - Which branch of Doom Nvim are you using
@@ -87,6 +88,16 @@ Doom Nvim follows some code style rules like ones the mentioned below:
 - Variable names in `snake_case`, except in the BASH installation script.
 - Function names in `snake_case`, the only exception are the Vimscript functions
   which does not are from doom itself, e.g. `function ToggleTerm() ... endfunction`.
+- [stylua] is used to format lua files with the following configuration:
+
+```toml
+column_width = 80
+line_endings = "Unix"
+indent_type = "Tabs"
+indent_width = 4
+quote_style = "AutoPreferSingle"
+
+```
 
 ### Commits & PRs
 
@@ -95,12 +106,13 @@ Doom Nvim follows some code style rules like ones the mentioned below:
 
 ### Keybind conventions
 
-- The keybindings should be declared in [config/keybindings](../config/keybindings.vim),
-  except when they are keybindings of the [leader-mapper](../config/plugins/leader-mapper.vim)
-  or keybindings of [Lua plugins](../lua/configs).
+- The keybindings should be declared in [config/keybindings](../lua/doom/keybindings.lua),
+  except when they are keybindings of [Lua plugins](../lua/plugins/configs).
 
 ## Submitting pull requests
 
 After having made all your changes and having tested them locally to certify that
 they work and do not break any of the current code, you can proceed to upload
 your pull request :)
+
+[stylua]: https://github.com/JohnnyMorganz/StyLua
