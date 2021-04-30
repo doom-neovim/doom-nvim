@@ -1,13 +1,30 @@
 require('which-key').setup({
-	plugins = { marks = false, registers = false },
-	presets = {
-		operators = false,
-		motions = false,
-		text_objects = false,
-		windows = false,
-		nav = false,
-		z = false,
-		g = false,
+	plugins = {
+		marks = false,
+		registers = false,
+		presets = {
+			operators = false,
+			motions = false,
+			text_objects = false,
+			windows = false,
+			nav = false,
+			z = false,
+			g = false,
+		},
+	},
+	operators = {
+		d = 'Delete',
+		c = 'Change',
+		y = 'Yank (copy)',
+		['g~'] = 'Toggle case',
+		['gu'] = 'Lowercase',
+		['gU'] = 'Uppercase',
+		['>'] = 'Indent right',
+		['<lt>'] = 'Indent left',
+		['zf'] = 'Create fold',
+		['!'] = 'Filter though external program',
+		-- ['v'] = 'Visual Character Mode',
+		gc = 'Comments',
 	},
 	icons = {
 		breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
