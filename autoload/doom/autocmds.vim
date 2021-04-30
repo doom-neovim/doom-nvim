@@ -30,9 +30,9 @@ function! doom#autocmds#init() abort
     endif
 
     " Format on save
-    " NOTE: Requires neoformat to be enabled!
+    " NOTE: Requires formatter to be enabled!
     if g:doom_fmt_on_save ==# 1
-        autocmd BufWritePre * undojoin | Neoformat
+        autocmd BufWritePoist * FormatWrite
     endif
 
     " Preserve last editing pos
