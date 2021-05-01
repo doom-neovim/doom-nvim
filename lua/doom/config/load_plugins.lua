@@ -46,3 +46,6 @@ end
 if fn['doom#functions#checkplugin']('format.nvim') == 1 then
 	require('plugins.configs.nvim-format')
 end
+if fn['doom#functions#checkplugin']('nvim-web-devicons') == 1 then
+    require('plugins.configs.nvim-devicons')
+end
