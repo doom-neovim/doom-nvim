@@ -1,12 +1,24 @@
--- Extracted from https://github.com/glepnir/galaxyline.nvim/blob/main/example/eviline.lua
--- Credits goes to its author (glepnir) :)
+local bo = vim.bo
 local gl = require('galaxyline')
-local colors = require('galaxyline.theme').default
 local condition = require('galaxyline.condition')
 local gls = gl.section
 
-gl.short_line_list = { 'NvimTree', 'vista', 'dbui', 'packer' }
+gl.short_line_list = { 'NvimTree', 'packer', 'minimap', 'Outline' }
 
+local colors = {
+	bg = '#282c34',
+	fg = '#c8ccd4',
+	section_bg = '#373d48',
+	yellow = '#e5c07b',
+	cyan = '#56b6c2',
+	green = '#98c379',
+	orange = '#ffb86c',
+	magenta = '#c678dd',
+	blue = '#61afef',
+	red = '#e06c75',
+}
+
+-- Left side
 gls.left[1] = {
 	RainbowRed = {
 		provider = function()
@@ -31,8 +43,8 @@ gls.left[2] = {
 				S = colors.orange,
 				[''] = colors.orange,
 				ic = colors.yellow,
-				R = colors.violet,
-				Rv = colors.violet,
+				R = colors.magenta,
+				Rv = colors.magenta,
 				cv = colors.red,
 				ce = colors.red,
 				r = colors.cyan,
@@ -41,159 +53,170 @@ gls.left[2] = {
 				['!'] = colors.red,
 				t = colors.red,
 			}
-			vim.api.nvim_command(
-				'hi GalaxyViMode guifg=' .. mode_color[vim.fn.mode()]
+			api.nvim_command(
+				'hi GalaxyViMode guifg=' .. mode_color[fn.mode()]
 			)
-			return '  '
+			return ' Doom '
 		end,
 		highlight = { colors.red, colors.bg, 'bold' },
+		separator = ' ',
+		separator_highlight = { colors.bg, colors.section_bg },
 	},
 }
+
 gls.left[3] = {
-	FileSize = {
-		provider = 'FileSize',
-		condition = condition.buffer_not_empty,
-		highlight = { colors.fg, colors.bg },
-	},
-}
-gls.left[4] = {
 	FileIcon = {
 		provider = 'FileIcon',
 		condition = condition.buffer_not_empty,
 		highlight = {
 			require('galaxyline.provider_fileinfo').get_file_icon_color,
-			colors.bg,
+			colors.section_bg,
 		},
 	},
 }
-gls.left[5] = {
+gls.left[4] = {
 	FileName = {
 		provider = 'FileName',
-		condition = condition.buffer_not_empty,
-		highlight = { colors.magenta, colors.bg, 'bold' },
+		highlight = { colors.fg, colors.section_bg },
+		separator = '',
+		separator_highlight = { colors.section_bg, colors.bg },
 	},
 }
-gls.left[6] = {
-	LineInfo = {
-		provider = 'LineColumn',
-		separator = ' ',
-		separator_highlight = { 'NONE', colors.bg },
-		highlight = { colors.fg, colors.bg },
-	},
-}
-gls.left[7] = {
-	PerCent = {
-		provider = 'LinePercent',
-		separator = ' ',
-		separator_highlight = { 'NONE', colors.bg },
-		highlight = { colors.fg, colors.bg, 'bold' },
-	},
-}
-gls.left[8] = {
-	DiagnosticError = {
-		provider = 'DiagnosticError',
-		icon = '  ',
+gls.left[5] = {
+	GitIcon = {
+		provider = function()
+			return '  '
+		end,
+		condition = condition.check_git_workspace,
 		highlight = { colors.red, colors.bg },
 	},
 }
+gls.left[6] = {
+	GitBranch = {
+		provider = 'GitBranch',
+		condition = condition.check_git_workspace,
+		highlight = { colors.fg, colors.bg },
+		separator = ' ',
+	},
+}
+gls.left[7] = {
+	DiffAdd = {
+		provider = 'DiffAdd',
+		condition = condition.hide_in_width,
+		icon = ' ',
+		highlight = { colors.green, colors.bg },
+	},
+}
+gls.left[8] = {
+	DiffModified = {
+		provider = 'DiffModified',
+		condition = condition.hide_in_width,
+		icon = ' ',
+		highlight = { colors.orange, colors.bg },
+	},
+}
 gls.left[9] = {
-	DiagnosticWarn = {
-		provider = 'DiagnosticWarn',
-		icon = '  ',
-		highlight = { colors.yellow, colors.bg },
+	DiffRemove = {
+		provider = 'DiffRemove',
+		condition = condition.hide_in_width,
+		icon = ' ',
+		highlight = { colors.red, colors.bg },
 	},
 }
 gls.left[10] = {
-	DiagnosticHint = {
-		provider = 'DiagnosticHint',
-		icon = '  ',
-		highlight = { colors.cyan, colors.bg },
+	LeftEnd = {
+		provider = function()
+			return ''
+		end,
+		highlight = { colors.section_bg, colors.bg },
 	},
 }
 gls.left[11] = {
+	DiagnosticError = {
+		provider = 'DiagnosticError',
+		icon = '  ',
+		highlight = { colors.red, colors.section_bg },
+	},
+}
+gls.left[12] = {
+	Space = {
+		provider = function()
+			return ' '
+		end,
+		highlight = { colors.section_bg, colors.section_bg },
+	},
+}
+gls.left[13] = {
+	DiagnosticWarn = {
+		provider = 'DiagnosticWarn',
+		icon = '  ',
+		highlight = { colors.orange, colors.section_bg },
+	},
+}
+gls.left[14] = {
+	Space = {
+		provider = function()
+			return ' '
+		end,
+		highlight = { colors.section_bg, colors.section_bg },
+	},
+}
+gls.left[15] = {
 	DiagnosticInfo = {
 		provider = 'DiagnosticInfo',
 		icon = '  ',
-		highlight = { colors.blue, colors.bg },
+		highlight = { colors.blue, colors.section_bg },
+		separator = ' ',
+		separator_highlight = { colors.section_bg, colors.bg },
 	},
 }
 
-gls.mid[1] = {
+-- Right side
+gls.right[1] = {
+	FileFormat = {
+		provider = function()
+			return bo.filetype
+		end,
+		icon = ' ', -- add extra space between separator and text
+		highlight = { colors.fg, colors.section_bg },
+		separator = '',
+		separator_highlight = { colors.section_bg, colors.bg },
+	},
+}
+gls.right[2] = {
 	ShowLspClient = {
 		provider = 'GetLspClient',
 		condition = function()
 			local tbl = { ['dashboard'] = true, [''] = true }
-			if tbl[vim.bo.filetype] then
+			if tbl[bo.filetype] then
 				return false
 			end
 			return true
 		end,
-		icon = '  LSP: ',
-		highlight = { colors.cyan, colors.bg, 'bold' },
-	},
-}
-
-gls.right[1] = {
-	FileEncode = {
-		provider = 'FileEncode',
-		condition = condition.hide_in_width,
-		separator = ' ',
-		separator_highlight = { 'NONE', colors.bg },
-		highlight = { colors.green, colors.bg, 'bold' },
-	},
-}
-gls.right[2] = {
-	FileFormat = {
-		provider = 'FileFormat',
-		condition = condition.hide_in_width,
-		separator = ' ',
-		separator_highlight = { 'NONE', colors.bg },
-		highlight = { colors.green, colors.bg, 'bold' },
+		icon = 'LSP: ',
+		highlight = { colors.fg, colors.section_bg },
+		separator = ' | ',
+		separator_highlight = { colors.bg, colors.section_bg },
 	},
 }
 gls.right[3] = {
-	GitIcon = {
-		provider = function()
-			return '  '
-		end,
-		condition = condition.check_git_workspace,
-		separator = ' ',
-		separator_highlight = { 'NONE', colors.bg },
-		highlight = { colors.violet, colors.bg, 'bold' },
+	FileEncode = {
+		provider = 'FileEncode',
+		condition = condition.hide_in_width,
+		highlight = { colors.fg, colors.section_bg },
+		separator = ' |',
+		separator_highlight = { colors.bg, colors.section_bg },
 	},
 }
 gls.right[4] = {
-	GitBranch = {
-		provider = 'GitBranch',
-		condition = condition.check_git_workspace,
-		highlight = { colors.violet, colors.bg, 'bold' },
+	LineInfo = {
+		provider = 'LineColumn',
+		highlight = { colors.fg, colors.section_bg },
+		separator = ' | ',
+		separator_highlight = { colors.bg, colors.section_bg },
 	},
 }
 gls.right[5] = {
-	DiffAdd = {
-		provider = 'DiffAdd',
-		condition = condition.hide_in_width,
-		icon = '  ',
-		highlight = { colors.green, colors.bg },
-	},
-}
-gls.right[6] = {
-	DiffModified = {
-		provider = 'DiffModified',
-		condition = condition.hide_in_width,
-		icon = ' 柳',
-		highlight = { colors.orange, colors.bg },
-	},
-}
-gls.right[7] = {
-	DiffRemove = {
-		provider = 'DiffRemove',
-		condition = condition.hide_in_width,
-		icon = '  ',
-		highlight = { colors.red, colors.bg },
-	},
-}
-gls.right[8] = {
 	RainbowBlue = {
 		provider = function()
 			return ' ▊'
@@ -202,25 +225,21 @@ gls.right[8] = {
 	},
 }
 
+-- Short status line
 gls.short_line_left[1] = {
 	BufferType = {
 		provider = 'FileTypeName',
-		separator = ' ',
-		separator_highlight = { 'NONE', colors.bg },
-		highlight = { colors.blue, colors.bg, 'bold' },
-	},
-}
-gls.short_line_left[2] = {
-	SFileName = {
-		provider = 'SFileName',
-		condition = condition.buffer_not_empty,
-		highlight = { colors.fg, colors.bg, 'bold' },
+		highlight = { colors.fg, colors.section_bg },
+		separator = ' ',
+		separator_highlight = { colors.section_bg, colors.bg },
 	},
 }
 
 gls.short_line_right[1] = {
 	BufferIcon = {
 		provider = 'BufferIcon',
-		highlight = { colors.fg, colors.bg },
+		highlight = { colors.yellow, colors.section_bg },
+		separator = '',
+		separator_highlight = { colors.section_bg, colors.bg },
 	},
 }
