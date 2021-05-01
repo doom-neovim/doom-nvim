@@ -191,7 +191,7 @@ wk.register({
 			C = { ':only<CR>', 'Close all other windows' },
 			c = { ':close<CR>', 'Close current window' },
 			h = { ':split<CR>', 'Split horizontally' },
-			v = { 'vsplit<CR>', 'Split vertically' },
+			v = { ':vsplit<CR>', 'Split vertically' },
 		},
 	},
 })
