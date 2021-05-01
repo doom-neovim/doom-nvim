@@ -7,6 +7,7 @@ require('toggleterm').setup({
 	start_in_insert = true,
 	persist_size = true,
 	direction = g.doom_terminal_direction,
+    close_on_exit = true,
 	float_opts = {
 		border = 'curved',
 		width = g.doom_terminal_width,
