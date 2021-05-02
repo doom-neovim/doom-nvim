@@ -218,7 +218,7 @@ return packer.startup(function()
 	end
 	use({
 		'neovim/nvim-lspconfig',
-		disable = (disabled_completion and true or disabled_lspconfig),
+		disable = (disabled_lsp and true or disabled_lspconfig),
 	})
 
 	-- Completion plugin
@@ -235,7 +235,7 @@ return packer.startup(function()
 			{ 'onsails/lspkind-nvim' },
 			{ 'norcalli/snippets.nvim' },
 		},
-		disable = (disabled_completion and true or disabled_compe),
+		disable = (disabled_lsp and true or disabled_compe),
 	})
 
 	-- provides the missing `:LspInstall` for `nvim-lspconfig`.
