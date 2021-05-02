@@ -4,7 +4,7 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 -- Doom Nvim version
-Doom_version = '2.1.1'
+Doom_version = '2.1.2'
 
 -- Check if running Neovim or Vim and fails if:
 --  1. Running Vim instead of Neovim

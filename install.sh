@@ -32,7 +32,7 @@ BYellow='\033[1;33m' # Yellow
 # }}}
 
 # Doom Nvim version
-DoomNvimVersion='2.1.1'
+DoomNvimVersion='2.1.2'
 # System OS
 System="$(uname -s)"
 
@@ -219,7 +219,7 @@ install_fonts() {
 
 download_font() {
     # Download patched Nerd Fonts
-    url="https://github.com/ryanoasis/nerd-fonts/raw/2.1.1/patched-fonts/FiraCode/Regular/complete/${1// /%20}"
+    url="https://github.com/ryanoasis/nerd-fonts/raw/2.1.2/patched-fonts/FiraCode/Regular/complete/${1// /%20}"
     download_path="$HOME/.local/share/fonts/$1"
     if [[ -f "$download_path" && ! -s "$download_path" ]]; then
         rm "$download_path"
