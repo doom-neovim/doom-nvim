@@ -190,9 +190,9 @@ install_nvim_nightly() {
 }
 
 install_packer() {
-    if [[ ! -d "$HOME/.local/share/nvim/site/pack/packer/opt/packer.nvim" ]]; then
+    if [[ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]]; then
         log_info "Installing packer.nvim ..."
-        git clone -q https://github.com/wbthomason/packer.nvim $HOME/.local/share/nvim/site/pack/packer/opt/packer.nvim
+        git clone -q https://github.com/wbthomason/packer.nvim $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
         log_success "Successfully installed packer.nvim"
     fi
 }
