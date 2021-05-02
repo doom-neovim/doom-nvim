@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.2] - 2021-05-02
+
+### Removed
+
+- `Is_directory` function in `utils/`
+
+### Fixed
+
+- Squashed bugs in `Check_plugin` function
+- Installation script will install packer.nvim in `start/` and not in `opt/`
+
 ## [2.1.1] - 2021-05-02
 
 ### Fixed
