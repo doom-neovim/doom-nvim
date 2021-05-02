@@ -72,111 +72,115 @@ and Neovim.
 ==============================================================================
 OPTIONS                                                    *doom_nvim_options*
 
-Doom Nvim configuration files resides in the `$HOME/.config/doom-nvim/config`
-directory. Global variables for Doom Nvim resides in
-`$HOME/.config/doom-nvim/autoload/doom.vim`.
+NOTICE: Since version 2.1.0 Doom makes use of Lua for the doomrc instead of
+using Vimscript.
 
-All the options available in the `doom.vim` file are global variables.
-They all start with `g:doom_` followed by a description of ther nature:
-`g:doom_indent` followed by their value.
+Doom Nvim configuration files resides in the
+`$HOME/.config/doom-nvim/lua/doom/config` directory.
+Default configurations for Doom Nvim resides in
+`$HOME/.config/doom-nvim/lua/doom/config/doomrc.lua`.
+
+All the options available in the `doomrc.lua` file are global fields.
+They all start with `Doom.` followed by a description of ther nature:
+`Doom.indent` followed by their value.
 
 
-`g:doom_autosave`
-default value = 0
-0 : Disable autosave
-1 : Enable autosave
+`Doom.autosave`
+default value = false
+false : Disable autosave
+true  : Enable autosave
 
-`g:doom_fmt_on_save`
-default value = 0
-0 : Disable format on save
-1 : Enable format on save
+`Doom.fmt_on_save`
+default value = false
+false : Disable format on save
+true  : Enable format on save
 
-`g:doom_autosave_sessions`
-default value = 0
-0 : Disable session autosave
-1 : Enable session autosave
+`Doom.autosave_sessions`
+default value = false
 This option will also autoload saved sessions
+false : Disable session autosave
+true  : Enable session autosave
 
-`g:doom_autoload_last_session`
-default value = 0
-0 : Disable autoload of last unsaved session
-1 : Enable autoload of last unsaved session
+`Doom.autoload_last_session`
+default value = false
+false : Disable autoload of last unsaved session
+true  : Enable autoload of last unsaved session
 
-`g:doom_preserve_edit_pos`
-default value = 1
-0 : Disable preservation of last editing position
-1 : Enable preservation of last editing position
+`Doom.preserve_edit_pos`
+default value = false
+false : Disable preservation of last editing position
+true  : Enable preservation of last editing position
 
-`g:doom_indent`
+`Doom.indent`
 default value = 4
 Specifies the width of tabs and shifttabs
 
-`g:doom_show_indent`
-default value = 1
+`Doom.show_indent`
+default value = true
 Show Indent Lines
 
-`g:doom_expand_tabs`
-default value = 1
+`Doom.expand_tabs`
+default value = true
 Specifies if spaces or tabs must be used
-0 : spaces
-1 : tabs
+false : spaces
+true  : tabs
 
-`g:doom_relative_num`
-default value = 1
-0 : Shows absolute number lines
-1 : Shows relative number lines
+`Doom.relative_num`
+default value = true
+false : Shows absolute number lines
+true  : Shows relative number lines
 
-`g:doom_max_columns`
+`Doom.max_columns`
 default value = 80
 Defines the column to show a vertical marker
 
-`g:doom_enable_guicolors`
-default value = 1
+`Doom.enable_guicolors`
+default value = true
 Enables gui colors on GUI versions of Neovim
 
-`g:doom_sidebar_width`
+`Doom.sidebar_width`
 default value = 25
 Specifies the default width of Tree Explorer and Tagbar
 
-`g:doom_tagbar_left`
-default value = 1
+`Doom.tagbar_left`
+default value = true
 Sets Tagbar buffer to the left when enabled
 
-`g:doom_show_hidden`
-default value = 1
+`Doom.show_hidden`
+default value = true
 Show hidden files with Tree Explorer
 
-`g:doom_colorscheme`
+`Doom.colorscheme`
 default value = 'doom-one'
 Specifies the colorscheme to use
 
-`g:doom_colorscheme_bg`
+`Doom.colorscheme_bg`
 default value = 'dark'
 Specifies the background color
 Allowed values: 'dark', 'light'
 
-`g:doom_check_updates`
-default value = 0
+`Doom.check_updates`
+default value = false
 Check updates of plugins on start
 
-`g:doom_disabled_plugins`
-default value = ['lazygit', 'minimap', 'restclient']
+`Doom.disabled_plugins`
+default value = {'lazygit', 'minimap', 'restclient'}
 List of user disabled plugins
 
-`g:doom_disabled_modules`
-default value = ['git', 'lsp', 'web']
+`Doom.disabled_modules`
+default value = {'git', 'lsp', 'web'}
 List of user disabled modules
 
-`g:doom_custom_plugins`
-default value = []
+`Doom.custom_plugins`
+default value = {}
 List of user custom plugins
 
-`g:doom_ts_parsers`
+`Doom.ts_parsers`
 Set the parsers for TreeSitter
-default value = []
+default value = {}
 
-`g:doom_terminal_direction`
-default value = 'vertical'
+`Doom.terminal_direction`
+default value = 'horizontal'
 Set the Terminal direction
 Available directions:
   - vertical
@@ -184,17 +188,17 @@ Available directions:
   - window
   - float
 
-`g:doom_terminal_width`
+`Doom.terminal_width`
 default value = 70
 Set the Terminal width
 Applies only to float direction
 
-`g:doom_terminal_height`
+`Doom.terminal_height`
 default value = 20
 Set the Terminal height
 Applies to all directions except window
 
-`g:doom_conceallevel`
+`Doom.conceallevel`
 default value = 0
 Set Neovim conceal level
 0 : Disable indentline and show all
@@ -203,7 +207,7 @@ Set Neovim conceal level
     character defined
 3 : Concealed text is completely hidden
 
-`g:doom_logging`
+`Doom.logging`
 default value = 1
 Select the logging level of doomnvim
 0: Disables the logging
@@ -211,13 +215,9 @@ Select the logging level of doomnvim
 2: Logs all errors and messages in the `doom.log` file
 3: Logs all errors and messages in the `doom.log` file and echoes them
 
-`g:doom_root`
+`Doom_root`
 default value = "$HOME/.config/doom-nvim"
-Specifies the root directory of Doom Nvim, unmodifiable.
-
-`g:doom_neovim`
-Utility variables, produce errors if Doom Nvim is running on Vim
-or using it without Neovim Nightly (>=0.5)
+Specifies the root directory of Doom Nvim.
 
 
 ==============================================================================
@@ -368,50 +368,50 @@ https://github.com/NTBBloodbath/doom-nvim/blob/main/docs/modules.md
 ==============================================================================
 ENABLING MODULES                    *doom_nvim_configuration_modules_enabling*
 
-To enable a module, you can use the `g:doom_disabled_modules` variable on your
+To enable a module, you can use the `Doom.disabled_modules` field on your
 `doomrc`.
 
 Example:
     To enable all modules except web, just put only 'web' in the disabled
     modules array and then reboot Neovim and do `:PackerSync`.
 
-    let g:doom_disabled_modules = ['web']
+    Doom.disabled_modules = { 'web' }
 
 
 ==============================================================================
 DISABLING MODULES                  *doom_nvim_configuration_modules_disabling*
 
-To disable a module, you can use the `g:doom_disabled_modules` variable on
+To disable a module, you can use the `Doom.disabled_modules` field on
 your `doomrc`.
 
 Example:
     To disable only the web module, just put only 'web' in the disabled
     modules array and then reboot Neovim and do `:PackerSync`.
 
-    let g:doom_disabled_modules = ['web']
+    Doom.disabled_modules = { 'web' }
 
 
 ==============================================================================
 CUSTOM PLUGINS                        *doom_nvim_configuration_custom_plugins*
 
-To use your own plugins in Doom Nvim you can use the `g:doom_custom_plugins`
-variable on your `doomrc`.
+To use your own plugins in Doom Nvim you can use the `Doom.custom_plugins`
+field on your `doomrc`.
 
 To add plugins without extra configurations (e.g., if a plugin does not depends
 on other plugins), you can simply set it as follow:
 
-    let g:doom_custom_plugins = ['andweeb/presence.nvim']
+    Doom.custom_plugins = { 'andweeb/presence.nvim' }
 
 Otherwise, if your plugin depends on other or you do not want to enable it,
 then you can do it as follow:
 
-    let g:doom_custom_plugins = [
-        \ {
-        \   'repo': 'andweeb/presence.nvim',
-        \   'enabled': 1,
-        \   'requires': ['foo', 'bar']
-        \ }
-        \ ]
+    Doom.custom_plugins = {
+        {
+           'repo': 'andweeb/presence.nvim',
+           'enabled': true,
+           'requires': { 'foo', 'bar' }
+        }
+    }
 
 As you can see, the second way depends on a structure to work.
 
@@ -440,7 +440,7 @@ Doom Nvim have its own commands, to make your life easier when developing.
 
 | `:DoomUpdate` | Update Doom Nvim if there are updates.
 
-Doom Nvim also uses `vim-leader-guide` as a command manager, inspired by
+Doom Nvim also uses `WhichKey` as a command manager, inspired by
 emacs's guide-key. To open it, press <Space> and wait for the popup to show,
 it should not take much time. Each section has a label and is mnemonic.
 e.g:
@@ -574,7 +574,9 @@ Start Doom Nvim by typing `nvim` in a terminal emulator or by executing your
 preferred Neovim GUI.
 
 By default, if no files were opened, Doom Nvim will show the start menu
-`dashboard-nvim` where you can select files to edit.
+`dashboard-nvim` where you can select files to edit or if you have a saved
+session in the current workspace, Doom will load it automatically 
+if you want to.
 
 
 ==============================================================================
@@ -632,19 +634,11 @@ Doom Nvim aims to be hackable to suit everyone's needs. Therefore
 
 This is the structure of Doom Nvim:
 
- .
+ .                         # Doom Nvim root
 ├──  autoload              # Files loaded at launch
 │  ├──  color.vim          # Color utilities, required by `doom-one.vim`
-│  ├──  doom               # Doom Nvim core
-│  │  ├──  autocmds.vim    # Doom Nvim autocommands
-│  │  ├──  config.vim      # Doom Nvim custom config file loader
-│  │  ├──  default.vim     # Doom Nvim default configs
-│  │  ├──  functions.vim   # Doom Nvim core functions
-│  │  ├──  logging.vim     # Doom Nvim logging manager
-│  │  └──  system.vim      # Doom Nvim system detection (early stage)
-│  ├──  doom.vim           # Config file for various globals
 │  └──  health             # Doom Nvim health add-ons for `:checkhealth`
-├──  colors                # Doom Nvim pre-installed colorschemes directory
+├──  colors                # Pre-installed colorschemes directory
 │  └──  doom-one.vim       # `romgrk` doom colorscheme ported to Nvim (`default`)
 ├──  doc                   # Doom Nvim documentation to be used inside Nvim
 │  └──  doom_nvim.txt      # Doom Nvim help file
@@ -658,9 +652,14 @@ This is the structure of Doom Nvim:
 │  └──  report.md          # Doom Nvim crash reports, does not exists by default
 ├──  lua                   # Location of Doom Nvim Lua files
 │  ├──  doom               # Doom Nvim Lua core
-│  │  ├──  config          # Main configurations of Doom Nvim
-│  │  ├──  health.lua      # Doom Nvim health checking, complement for health dir
-│  │  ├──  keybindings.lua # Doom Nvim default keybindings
+│  │  ├──  autocmds        # Doom Nvim autocommands
+│  │  ├──  config          # Doom Nvim configuration files
+│  │  ├──  default         # Doom Nvim default Neovim settings
+│  │  ├──  functions       # Doom Nvim functions
+│  │  ├──  health          # Doom Nvim health checking
+│  │  ├──  keybindings     # Doom Nvim keybindings
+│  │  ├──  logging         # Doom Nvim logging system
+│  │  ├──  system          # Doom Nvim system utilities (early stage)
 │  │  └──  utils           # Doom Nvim Lua utilities
 │  └──  plugins            # Location of Doom Nvim plugins
 │     ├──  configs         # Plugins configurations
@@ -742,7 +741,39 @@ The format is based on Keep a Changelog (https://keepachangelog.com/en/1.0.0/),
 and this project adheres to Semantic Versioning
 (https://semver.org/spec/v2.0.0.html).
 
-- 2.0.0 (in development)
+- 2.1.0
+    - Added
+        - Now the `:messages` are logged automatically on exit, should provide
+          a better debugging experience
+        - Plugins
+          - Configurations
+            - `devicons` configurations, set proper icons for certain filetypes
+              (most of them related to web development)
+    - Changed
+        - Configurations
+            - Better defaults
+            - Breaking changes
+                - doomrc is not using Vimscript anymore, please see
+                  the new doomrc format
+        - Plugins
+            - Replaced
+                - `indentLine` in favour of `indent-blankline.lua`
+            - Updated
+                - New `galaxyline` appearance, should look better now :)
+                - `WhichKey` configurations, some improvements
+                - `nvim-toggleterm` configurations, some improvements
+                - Moved `dashboard` configurations to
+                  `lua/plugins/configs/nvim-dashboard.lua`
+        - Misc
+            - Refact Doom Nvim README
+    - Deleted
+        - Doom autoload files
+          (we are already _almost_ completely free from Vimscript!)
+    - Fixed
+        - Some typos
+        - Squashed some bugs
+        - Lua style (global things to Capitalize), no more warns about that
+- 2.0.0
     - Added
         - Configurations
             - `g:doom_autoload_last_session` variable, see |doom_nvim_options|

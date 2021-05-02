@@ -213,33 +213,33 @@ Doom Nvim does not use Vim-Plug in the Neovim Nightly version. Instead, it uses
 a declarative and use-package inspired package manager called
 [packer.nvim](https://github.com/wbthomason/packer.nvim).
 
-Modules and plugins are declared in `lua/plugins.lua` file, located in your doom nvim root dir.
+Modules and plugins are declared in `lua/plugins/init.lua` file, located in your Doom Nvim root dir.
 Read on to learn how to use this system to install your own plugins.
 
-> **WARNING:** Do not install plugins directly in `lua/plugins.lua`. Instead,
+> **WARNING:** Do not install plugins directly in `lua/plugins/init.lua`. Instead,
 > use your `doomrc` to modify them.
 
 ### Installing plugins
 
-To install a custom plugin, add it to `g:doom_custom_plugins` variable into your
-`doomrc`.
+To install a custom plugin, add it to `custom_plugins` field into the `Doom` table
+in your `doomrc`.
 
-```vim
-" @default = []
-let g:doom_custom_plugins = ['plugin_author/plugin_repo']
+```lua
+-- @default = {}
+custom_plugins = { 'plugin_author/plugin_repo' }
 ```
 
 You can also use other method if the plugin depends on other plugins.
 
-```vim
-let g:doom_custom_plugins = [
-        \ 'plugin_author/plugin_repo',
-        \ {
-        \   'repo': 'plugin_author/second_plugin_repo',
-        \   'enabled': 1, " not required, 1 by default
-        \   'requires': ['foo', 'bar'] " not required if the plugin does not have dependencies
-        \ },
-        \ ]
+```lua
+custom_plugins = {
+    'plugin_author/plugin_repo',
+    {
+        'repo': 'plugin_author/second_plugin_repo',
+        'enabled': true, -- not required, true by default
+        'requires': { 'foo', 'bar' } -- not required if the plugin does not have dependencies
+    },
+}
 ```
 
 > **NOTES:**
@@ -249,14 +249,14 @@ let g:doom_custom_plugins = [
 ### Disabling plugins
 
 To disable plugins from Doom Nvim Modules or disable a module itself, just use the
-`g:doom_disabled_plugins` and/or `g:doom_disabled_modules`.
+`disabled_plugins` and/or `disabled_modules` fields.
 
-```vim
-" @default = []
-let g:doom_disabled_plugins = ['terminal', 'treesitter']
+```lua
+-- @default = {}
+disabled_plugins = { 'terminal', 'treesitter' }
 
-" @default = ['git', 'lsp', 'web']
-let g:doom_disabled_modules = ['web']
+-- @default = { 'git', 'lsp', 'web' }
+let g:doom_disabled_modules = { 'web' }
 ```
 
 > **NOTES:**
@@ -295,7 +295,5 @@ You can see a list of currently supported languages at [bundled installers](http
 
 You can modify the default keybindings by modifying the following files:
 
-- `lua/doom/keybindings.lua` - General and SPC keybindings
+- `lua/doom/keybindings/init.lua` - General and SPC keybindings
 - `lua/plugins/configs` - lua plugins keybindings
-
-You can also make your own keybindings by editing your `doomrc` file.

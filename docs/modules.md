@@ -136,15 +136,15 @@ including their plugins individually.
 
 ### Enabling modules
 
-To enable a module, you can use the `g:doom_disabled_modules` variable on your
-`doomrc`.
+To enable a module, you can use the `disabled_modules` field in the `Doom` table
+on your `doomrc`.
 
-```vim
-" To enable all modules except web, just put only 'web' in the disabled modules
-" array and then, reboot Neovim and do :PackerSync
-"
-" @default = ['git', 'lsp', 'web']
-let g:doom_disabled_modules = ['web']
+```lua
+-- To enable all modules except web, just put only 'web' in the disabled modules
+-- array and then, reboot Neovim and do :PackerSync
+--
+-- @default = { 'git', 'lsp', 'web' }
+disabled_modules = { 'web' }
 ```
 
 ### Enabling module plugins
@@ -156,25 +156,25 @@ All the module plugins will be enabled by default unless the entire module is di
 
 ### Disabling modules
 
-To disable a module, you can use the `g:doom_disabled_modules` variable
+To disable a module, you can use the `disabled_modules` field in the `Doom` table
 on your `doomrc`.
 
-```vim
-" To disable only the web module, just put only 'web' in the disabled modules
-" array and then, reboot Neovim and do :PackerSync
-"
-" @default = ['git', 'lsp', 'web']
-let g:doom_disabled_modules = ['web']
+```lua
+-- To disable only the web module, just put only 'web' in the disabled modules
+-- array and then, reboot Neovim and do :PackerSync
+--
+-- @default = { 'git', 'lsp', 'web' }
+disabled_modules = { 'web' }
 ```
 
 ### Disabling module plugins
 
-To disable a module plugin, you can use the `g:doom_disabled_plugins` variable
+To disable a module plugin, you can use the `disabled_plugins` field in the `Doom` table
 on your `doomrc`.
 
 ```vim
-" @default = []
-let g:doom_disabled_plugins = ['emmet']
+-- @default = {}
+disabled_plugins = { 'emmet' }
 ```
 
 <!-- Essentials -->
