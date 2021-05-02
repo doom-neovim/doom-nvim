@@ -421,35 +421,6 @@ As you can see, the second way depends on a structure to work.
 
 
 ==============================================================================
-CUSTOM PLUGINS                        *doom_nvim_configuration_custom_plugins*
-
-To use your own plugins in Doom Nvim you can use the `g:doom_custom_plugins`
-variable on your `doomrc`.
-
-To add plugins without extra configurations (e.g., if a plugin does not depends
-on other plugins), you can simply set it as follow:
-
-    let g:doom_custom_plugins = ['andweeb/presence.nvim']
-
-Otherwise, if your plugin depends on other or you do not want to enable it,
-then you can do it as follow:
-
-    let g:doom_custom_plugins = [
-        \ {
-        \   'repo': 'andweeb/presence.nvim',
-        \   'enabled': 1,
-        \   'requires': ['foo', 'bar']
-        \ }
-        \ ]
-
-As you can see, the second way depends on a structure to work.
-
-    repo: the repository where the plugin resides
-    enabled: if the plugin should be enabled, not required (true by default)
-    requires: plugin dependencies, not required
-
-
-==============================================================================
 LSP                                              *doom_nvim_configuration_lsp*
 
 To easily install LSPs and without having to do it system-wide or having to
