@@ -25,8 +25,8 @@ require('pears').setup(function(conf)
 	conf.preset('tag_matching')
 	-- Completion integration with nvim-compe
 	conf.on_enter(function(pears_handle)
-		if fn.pumvisible() == 1 and fn.complete_info().selected ~= -1 then
-			return fn['compe#confirm']('<CR>')
+		if Fn.pumvisible() and Fn.complete_info().selected ~= -1 then
+			return Fn['compe#confirm']('<CR>')
 		else
 			pears_handle()
 		end

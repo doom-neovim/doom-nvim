@@ -1,40 +1,48 @@
 local tree_cb = require('nvim-tree.config').nvim_tree_callback
 
 -- Empty by default
-vim.g.nvim_tree_ignore = { '.git', 'node_modules', '.cache', '__pycache__' }
+G.nvim_tree_ignore = { '.git', 'node_modules', '.cache', '__pycache__' }
 -- False by default, opens the tree when typing `vim $DIR` or `vim`
-vim.g.nvim_tree_auto_open = 0
+G.nvim_tree_auto_open = 0
 -- False by default, closes the tree when it is the last window
-vim.g.nvim_tree_auto_close = 0
+G.nvim_tree_auto_close = 0
 -- False by default, closes the tree when you open a file
-vim.g.nvim_tree_quit_on_open = 1
+G.nvim_tree_quit_on_open = 1
 -- False by default, this option allows the cursor to be updated when entering a buffer
-vim.g.nvim_tree_follow = 1
+G.nvim_tree_follow = 1
+-- Show hidden files
+G.nvim_tree_hide_dotfiles = Doom.show_hidden
+-- Set tree width
+G.nvim_tree_width = Doom.sidebar_width
 -- False by default, this option shows indent markers when folders are open
-vim.g.nvim_tree_indent_markers = 1
+G.nvim_tree_indent_markers = 1
 -- False by default, will enable file highlight for git attributes (can be used without the icons).
-vim.g.nvim_tree_git_hl = 1
+G.nvim_tree_git_hl = 1
 -- This is the default. See :help filename-modifiers for more options
-vim.g.nvim_tree_root_folder_modifier = ':~'
+G.nvim_tree_root_folder_modifier = ':~'
 -- False by default, will open the tree when entering a new tab and the tree was previously open
-vim.g.nvim_tree_tab_open = 1
+G.nvim_tree_tab_open = 1
 -- False by default, will not resize the tree when opening a file
-vim.g.nvim_tree_width_allow_resize = 1
+G.nvim_tree_width_allow_resize = 1
 -- False by default, append a trailing slash to folder names
-vim.g.nvim_tree_add_trailing = 1
+G.nvim_tree_add_trailing = 1
 -- False by default, compact folders that only contain a single folder into one node in the file tree
-vim.g.nvim_tree_group_empty = 1
+G.nvim_tree_group_empty = 1
 --- Tree icons
 -- If false, do not show the icons for one of 'git' 'folder' and 'files'
 -- true by default, notice that if 'files' is 1, it will only display
 -- if nvim-web-devicons is installed and on your runtimepath
-vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1 }
+G.nvim_tree_show_icons = { git = 1, folders = 1, files = 1 }
+-- If the tagbar is set to left then set tree side to right and vice versa.
+-- left by default
+if Doom.tagbar_left == true then
+    G.nvim_tree_side = 'right'
+end
 -- You can edit keybindings be defining this variable
 -- You don't have to define all keys.
 -- NOTE: the 'edit' key will wrap/unwrap a folder and open a file
-vim.g.nvim_tree_bindings = {
+G.nvim_tree_bindings = {
 	-- default mappings
-	['<CR>'] = tree_cb('edit'),
 	['o'] = tree_cb('edit'),
 	['<2-LeftMouse>'] = tree_cb('edit'),
 	['<CR>'] = tree_cb('cd'),
@@ -64,7 +72,7 @@ vim.g.nvim_tree_bindings = {
 
 -- default will show icon by default if no icon is provided
 -- default shows no icon by default
-vim.g.nvim_tree_icons = {
+G.nvim_tree_icons = {
 	default = '',
 	symlink = '',
 	git = {

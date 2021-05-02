@@ -53,8 +53,8 @@ gls.left[2] = {
 				['!'] = colors.red,
 				t = colors.red,
 			}
-			api.nvim_command(
-				'hi GalaxyViMode guifg=' .. mode_color[fn.mode()]
+			Execute(
+				'hi GalaxyViMode guifg=' .. mode_color[Fn.mode()]
 			)
 			return ' Doom '
 		end,
