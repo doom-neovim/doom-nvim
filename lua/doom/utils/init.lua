@@ -56,21 +56,6 @@ function Is_empty(str)
 	return str == '' or str == nil
 end
 
--- Check if the provided path is a directory
-function Is_directory(path)
-	local handler, err = io.open(path .. '\\*.*', 'r')
-	if handler ~= nil then
-		io.close(handler)
-		return true
-	else
-		if string.match(err, 'No such file or directory') then
-			return false
-		else
-			return true
-		end
-	end
-end
-
 -- Search if a table have the value we are looking for,
 -- useful for plugins management
 function Has_value(tabl, val)

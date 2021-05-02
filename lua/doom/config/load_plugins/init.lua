@@ -10,14 +10,14 @@
 if Check_plugin('pears.nvim') then
 	require('plugins.configs.nvim-pears')
 end
-if Check_plugin('nvim-lspconfig') then
+if Check_plugin('nvim-lspconfig') and (Check_plugin('nvim-lspinstall')) then
 	require('plugins.configs.lsp')
-end
-if Check_plugin('nvim-colorizer.lua') then
-	require('plugins.configs.nvim-colorizer')
 end
 if Check_plugin('nvim-compe') then
 	require('plugins.configs.nvim-compe')
+end
+if Check_plugin('nvim-colorizer.lua') then
+	require('plugins.configs.nvim-colorizer')
 end
 if Check_plugin('focus.nvim') then
 	require('plugins.configs.nvim-focus')

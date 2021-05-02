@@ -6,7 +6,7 @@
 
 -- Check if the given plugin exists
 function Check_plugin(plugin_path)
-	if Is_directory(plugin_path) then
+	if Fn.isdirectory(Fn.expand('$HOME/.local/share/nvim/site/pack/packer/start/' .. plugin_path)) == 1 then
 		return true
 	else
 		return false
