@@ -3,30 +3,31 @@
 --             Author: NTBBloodbath            --
 --             License: MIT                    --
 ---[[---------------------------------------]]---
+
 -- If no colorscheme was established then fallback to defauls
-if not is_empty(g.doom_colorscheme) then
-	try({
+if not Is_empty(Doom.colorscheme) then
+	Try({
 		function()
-			execute('set background=' .. g.doom_colorscheme_bg)
-			execute('colorscheme ' .. g.doom_colorscheme)
+			Execute('set background=' .. Doom.colorscheme_bg)
+			Execute('colorscheme ' .. Doom.colorscheme)
 		end,
-		catch({
+		Catch({
 			function(_)
-				fn['doom#logging#message']('!', 'Colorscheme not found', 1)
-				execute('colorscheme ' .. g.doom_colorscheme)
+				Log_message('!', 'Colorscheme not found', 1)
+				Execute('colorscheme ' .. Doom.colorscheme)
 			end,
 		}),
 	})
 else
-	fn['doom#logging#message']('!', 'Forced default Doom colorscheme', 1)
-	execute('colorscheme doom-one')
+	Log_message('!', 'Forced default Doom colorscheme', 1)
+	Execute('colorscheme doom-one')
 end
 
--- If guicolors are enabled
-if g.doom_enable_guicolors == 1 then
-	if fn.exists('+termguicolors') then
-		opt('o', 'termguicolors', true)
-	elseif fn.exists('+guicolors') then
-		opt('o', 'guicolors', true)
+-- Set colors based on environment (GUI, TUI)
+if Doom.enable_guicolors then
+	if Fn.exists('+termguicolors') then
+		Opt('o', 'termguicolors', true)
+	elseif Fn.exists('+guicolors') then
+		Opt('o', 'guicolors', true)
 	end
 end
