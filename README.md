@@ -15,16 +15,6 @@
 
 ---
 
-### Table of Contents
-
-- [Introduction](#introduction)
-- [Acknowledgements](#acknowledgements)
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Install](#install)
-- [Getting help](#getting-help)
-- [Contribute](#contribute)
-
 # Introduction
 
 <a href="http://ultravioletbat.deviantart.com/art/Yay-Evil-111710573">
@@ -36,8 +26,14 @@
 > solution to his configuration problems. This is his configuration.
 
 Doom Nvim is a Neovim port of the [doom-emacs](https://github.com/hlissner/doom-emacs) framework.
-Its goal is to add useful functions to Neovim to start working in a stable and efficient
-development environment without spending a lot of time configuring everything.
+
+As a vimmer, I know that it's difficult to configure Vim/Neovim when you are just starting to use it,
+how time consuming it's to customize it to your needs and that's why Doom Nvim exists
+_also because I love Doom_.
+
+Its goal is to give Neovim an initial configuration to start working in a stable and efficient
+development environment without spending a lot of time configuring everything, without forgetting
+that we don't all need the same environment.
 
 Its design is guided by these mantras:
 
@@ -46,16 +42,24 @@ Its design is guided by these mantras:
   and searches for tiny but powerful plugins.
 - **Your system, your rules.** You know better than a third party what is
   convenient for you. At least, Doom hopes so! It won't _automatically_
-  install system dependencies (and will force plugins not to do so either if
-  they have any external dependencies).
+  install system dependencies, plugins that have external dependencies
+  (and will force plugins not to do so either if they have any external dependencies).
+- **What does not serve you, you throw away.** Doom Nvim is made up of a moderate number
+  of plugins (~ 40 plugins as of this writing). You more than anyone know what you need in
+  your environment and that's why Doom Nvim allows you to easily disable plugins and add new ones.
+  Also, Doom Nvim doesn't come with TreeSitter parsers or LSPs by default,
+  so you can use **only** what you need.
 
 # Acknowledgements
 
 - [hlissner](https://github.com/hlissner) per doing Doom Emacs :heart:.
 - [romgrk](https://github.com/romgrk) per doing a port to Vim of Doom One
-  colorscheme from Doom Emacs.
-- [dicci0308](https://github.com/dicci0308) per improving the romgrk's port of
-  Doom One colorscheme.
+  colorscheme from Doom Emacs (and everyone who improves the colorscheme!).
+
+# Notices
+
+- **2021-05-01**: The `doomrc` is not using Vimscript anymore, please see the
+  new [doomrc](./doomrc) file structure for use it with Lua.
 
 # Features
 
@@ -66,8 +70,6 @@ Its design is guided by these mantras:
   (powered by `packer.nvim`).
 - Opt-in LSP integration for many languages by using the new
   built-in LSP included on Neovim Nightly.
-- Support for _almost_ all programming languages with a very short startup time
-  because it automatically detects which one to load based on the filetype!
 - An Emacs which-key like plugin to manage your `keybindings`, centered around leader
   prefix key (<kbd>SPC</kbd>).
 - Per-file indentation style detection and [editorconfig] integration. Let
@@ -120,7 +122,7 @@ if you are not an advanced vimmer. When you do, here are some places you can loo
 # Contribute
 
 - I really :heart: pull requests and bug reports (please see the [Contributing Guidelines][contribute] before contributing)!
-- Don't hesitate to [tell me my Lua coding style sucks](https://github.com/NTBBloodbath/doom-emacs/issues/new),
+- Don't hesitate to [tell me my Lua coding style sucks](https://github.com/NTBBloodbath/doom-nvim/issues/new),
   but please tell me why (I am new to Lua, I may have some bad practices that can be fixed in code).
 
 [contribute]: docs/contributing.md
