@@ -242,6 +242,19 @@ custom_plugins = {
 }
 ```
 
+You can also use other method if the plugin depends on other plugins.
+
+```vim
+let g:doom_custom_plugins = [
+        \ 'plugin_author/plugin_repo',
+        \ {
+        \   'repo': 'plugin_author/second_plugin_repo',
+        \   'enabled': 1, " not required, 1 by default
+        \   'requires': ['foo', 'bar'] " not required if the plugin does not have dependencies
+        \ },
+        \ ]
+```
+
 > **NOTES:**
 >
 > 1. Do not forget to run `:PackerInstall` to install your new plugins.

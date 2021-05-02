@@ -1,0 +1,65 @@
+"================================================
+" system.vim - Retrieve useful info about the OS
+" Author: NTBBloodbath
+" License: MIT
+"================================================
+
+" Force UTF-8 encoding
+scriptencoding utf-8
+
+function! doom#system#whichos()
+    call doom#logging#message('+', 'Checking OS ...', 2)
+
+    let g:doom_os = ''
+    let g:doom_separator = ''
+
+    if has('win32') || has('win64')
+        let g:doom_os = 'windows'
+        let g:doom_separator = '\\'
+    elseif has('unix') && !has('macunix') && !has('win32unix')
+        let g:doom_os = 'linux'
+        let g:doom_separator = '/'
+    elseif has('macunix')
+        let g:doom_os = 'mac'
+        let g:doom_separator = '/'
+    elseif has('win32unix')
+        let g:doom_os = 'cygwin'
+        let g:doom_separator = '\\'
+    else
+        call doom#logging#message('!', 'OS not recognized', 1)
+    endif
+
+    call doom#logging#message('+', 'Current OS : ' . g:doom_os, 2)
+endfunction
+
+function! doom#system#grepconfig(folder, filename, source) abort
+    " Source file or returns the full path
+    let fullpath = g:doom_root . g:doom_separator . 'lua' . g:doom_separator .a:folder . g:doom_separator . a:filename
+    let b:luafile = a:folder . '.' . a:filename
+
+    if filereadable(fullpath . '.lua')
+        if a:source ==# 1
+            try
+                lua require(vim.b.luafile)
+                call doom#logging#message('+', 'Sourced file : ' . a:filename, 2)
+            catch
+                call doom#logging#message('!', 'Failed sourcing ' . a:filename . "\n" . v:exception, 1)
+            endtry
+        else
+            call doom#logging#message('+', 'Returned ' . a:filename . ' path', 2)
+            return fullpath
+        endif
+    else
+        call doom#logging#message('!', 'Trying to source an inexistent file (' . fullpath.'.lua' . ')', 1)
+    endif
+endfunction
+
+function! doom#system#checkupdates()
+    try
+        call doom#logging#message('+', 'Updating the outdated plugins ...', 2)
+        execute ':PackerSync'
+        call doom#logging#message('+', 'Done', 2)
+    catch
+        call doom#logging#message('!', 'Unable to update plugins', 1)
+    endtry
+endfunction
