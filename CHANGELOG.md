@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.1] - 2021-05-02
+
+### Fixed
+
+- Squashed a bug in packer setup
+- Stop referencing autoload in docs
+
 ## [2.1.0] - 2021-05-02
 
 ### Added
@@ -150,7 +157,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.0...HEAD
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.1...HEAD
+[2.1.1]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v0.2.0...v0.3.0

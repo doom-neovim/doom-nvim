@@ -672,22 +672,23 @@ functions of Doom Nvim. It is a copy of the doom.vim file.
 
 
 ==============================================================================
-HACKING AUTOLOAD                                  *doom_nvim_hacking_autoload*
+HACKING LUA CORE                                  *doom_nvim_hacking_lua_core*
 
-The `autoload` directory content is loaded by Neovim on_start. It is the
+The `lua/doom` directory content is loaded by Neovim on_start. It is the
 location of the Doom Nvim plugin which is loaded everytime nvim starts.
 
-The `doom.vim` file contains most of the global variables used by Doom Nvim
-and executes the init functions of Doom Nvim.
+The `doom/default/init.lua` file contains most of the global variables used by
+Doom Nvim and executes the init functions of Doom Nvim.
 
 The files inside the `doom/` directory have core functions for Doom Nvim.
 
-    - autocmds.vim  : Autocommands
-    - config.vim    : Manages the BFC
-    - functions.vim : Utility functions
+    - autocmds/     : Autocommands
+    - config/       : Manages the BFC
+    - functions/    : Utility functions
     - health/       : Used to check the health of installation
-    - logging.vim   : Logging handler
-    - system.vim    : Cross-platform support (WIP)
+    - logging/      : Logging handler
+    - system/       : Cross-platform support (WIP)
+    - utils/        : Utility Lua functions
 
 
 ==============================================================================
@@ -741,6 +742,10 @@ The format is based on Keep a Changelog (https://keepachangelog.com/en/1.0.0/),
 and this project adheres to Semantic Versioning
 (https://semver.org/spec/v2.0.0.html).
 
+- 2.1.1
+    - Fixed
+        - Squashed a bug in packer setup
+        - Stop referencing autoload in docs
 - 2.1.0
     - Added
         - Now the `:messages` are logged automatically on exit, should provide
