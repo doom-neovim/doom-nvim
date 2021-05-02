@@ -37,87 +37,87 @@ require('lspkind').init({
 
 local on_attach = function(client, bufnr)
 	local function buf_set_option(...)
-		api.nvim_buf_set_option(bufnr, ...)
+		Api.nvim_buf_set_option(bufnr, ...)
 	end
 	buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 	-- Mappings.
 	local opts = { silent = true }
-	map(
+	Map(
 		'n',
 		'ga',
 		'<Cmd>lua vim.lsp.buf.code_action()<CR>',
 		opts
 	)
-	map(
+	Map(
 		'n',
 		'gD',
 		'<Cmd>lua vim.lsp.buf.declaration()<CR>',
 		opts
 	)
-	map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-	map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-	map(
+	Map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+	Map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+	Map(
 		'n',
 		'gi',
 		'<cmd>lua vim.lsp.buf.implementation()<CR>',
 		opts
 	)
-	map(
+	Map(
 		'n',
 		'<C-k>',
 		'<cmd>lua vim.lsp.buf.signature_help()<CR>',
 		opts
 	)
-	map(
+	Map(
 		'n',
 		'<space>wa',
 		'<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>',
 		opts
 	)
-	map(
+	Map(
 		'n',
 		'<space>wr',
 		'<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>',
 		opts
 	)
-	map(
+	Map(
 		'n',
 		'<space>wl',
 		'<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
 		opts
 	)
-	map(
+	Map(
 		'n',
 		'<space>D',
 		'<cmd>lua vim.lsp.buf.type_definition()<CR>',
 		opts
 	)
-	map(
+	Map(
 		'n',
 		'<space>rn',
 		'<cmd>lua vim.lsp.buf.rename()<CR>',
 		opts
 	)
-	map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-	map(
+	Map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+	Map(
 		'n',
 		'<space>e',
 		'<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
 		opts
 	)
-	map(
+	Map(
 		'n',
 		'[d',
 		'<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',
 		opts
 	)
-	map(
+	Map(
 		'n',
 		']d',
 		'<cmd>lua vim.lsp.diagnostic.goto_next()<CR>',
 		opts
 	)
-	map(
+	Map(
 		'n',
 		'<space>q',
 		'<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',
@@ -125,14 +125,14 @@ local on_attach = function(client, bufnr)
 	)
 	-- Set some keybinds conditional on server capabilities
 	if client.resolved_capabilities.document_formatting then
-		map(
+		Map(
 			'n',
 			'<space>f',
 			'<cmd>lua vim.lsp.buf.formatting()<CR>',
 			opts
 		)
 	elseif client.resolved_capabilities.document_range_formatting then
-		map(
+		Map(
 			'n',
 			'<space>f',
 			'<cmd>lua vim.lsp.buf.range_formatting()<CR>',
@@ -141,7 +141,7 @@ local on_attach = function(client, bufnr)
 	end
 	-- Set autocommands conditional on server_capabilities
 	if client.resolved_capabilities.document_highlight then
-		api.nvim_exec(
+		Api.nvim_exec(
 			[[
         hi LspReferenceRead ctermbg=237 guibg=LightYellow
         hi LspReferenceText ctermbg=237 guibg=LightYellow
@@ -160,7 +160,7 @@ end
 --[[-----------------]]
 --
 --      LSP Setup      --
--- ]]-----------------[[--
+--]]-----------------[[--
 -- https://github.com/kabouzeid/nvim-lspinstall#advanced-configuration-recommended
 local function setup_servers()
 	-- Provide the missing :LspInstall
@@ -176,5 +176,5 @@ setup_servers()
 -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
 require('lspinstall').post_install_hook = function()
 	setup_servers() -- reload installed servers
-	cmd('bufdo e') -- this triggers the FileType autocmd that starts the server
+	Cmd('bufdo e') -- this triggers the FileType autocmd that starts the server
 end

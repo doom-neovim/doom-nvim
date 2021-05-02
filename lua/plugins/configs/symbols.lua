@@ -1,7 +1,7 @@
-g.symbols_outline = {
+G.symbols_outline = {
 	highlight_hovered_item = true,
 	show_guides = true,
-	position = 'left',
+	position = Doom.tagbar_left,
 	keymaps = {
 		close = '<Esc>',
 		goto_location = '<CR>',

@@ -1,9 +1,15 @@
+---[[---------------------------------------]]---
+--     keybindings - Doom Nvim keybindings     --
+--              Author: NTBBloodbath           --
+--              License: MIT                   --
+---[[---------------------------------------]]---
+
 local wk = require('which-key')
 
 -- Define leader key to space
 -- and call leader mapper
-map('n', '<Space>', '<Nop>')
-api.nvim_set_var('mapleader', ' ')
+Map('n', '<Space>', '<Nop>')
+Api.nvim_set_var('mapleader', ' ')
 
 -------------------------------------------------
 
@@ -40,71 +46,71 @@ local opts = { silent = true }
 -- If the LSP group is not disabled or the nvim-compe plugin is not disabled
 -- then set its mappings.
 if
-	not has_value(g.doom_disabled_modules, 'lsp')
-	and (not has_value(g.doom_disabled_plugins, 'compe'))
+	not Has_value(Doom.disabled_modules, 'lsp')
+	and (not Has_value(Doom.disabled_plugins, 'compe'))
 then
 	-- https://github.com/hrsh7th/nvim-compe#mappings
-	map('i', '<expr> <C-Space>', fn['compe#complete'](), opts)
-	map('i', '<expr> <CR>', fn['compe#confirm']('<CR>'), opts)
-	map('i', '<expr> <C-e>', fn['compe#close']('<C-e>'), opts)
-	map(
+	Map('i', '<expr> <C-Space>', Fn['compe#complete'](), opts)
+	Map('i', '<expr> <CR>', Fn['compe#confirm']('<CR>'), opts)
+	Map('i', '<expr> <C-e>', Fn['compe#close']('<C-e>'), opts)
+	Map(
 		'i',
 		'<expr> <C-f>',
-		fn['compe#scroll']({ delta = '+4' }),
+		Fn['compe#scroll']({ delta = '+4' }),
 		opts
 	)
-	map(
+	Map(
 		'i',
 		'<expr> <C-d>',
-		fn['compe#scroll']({ delta = '-4' }),
+		Fn['compe#scroll']({ delta = '-4' }),
 		opts
 	)
 end
 
 -- TAB to cycle buffers too, why not?
-map('n', '<Tab>', ':bnext<CR>', opts)
-map('n', '<S-Tab>', ':bprevious<CR>', opts)
+Map('n', '<Tab>', ':bnext<CR>', opts)
+Map('n', '<S-Tab>', ':bprevious<CR>', opts)
 
 -- ESC to turn off search highlighting
-map('n', '<esc>', ':noh<CR>', opts)
+Map('n', '<esc>', ':noh<CR>', opts)
 
 --- F<n> keybindings
-if not has_value(g.doom_disabled_plugins, 'tagbar') then
-	map('n', '<F2>', ':SymbolsOutline<CR>')
+if not Has_value(Doom.disabled_plugins, 'tagbar') then
+	Map('n', '<F2>', ':SymbolsOutline<CR>')
 end
-if not has_value(g.doom_disabled_plugins, 'tree') then
-	map('n', '<F3>', ':NvimTreeToggle<CR>')
+if not Has_value(Doom.disabled_plugins, 'tree') then
+	Map('n', '<F3>', ':NvimTreeToggle<CR>')
 end
-if not has_value(g.doom_disabled_plugins, 'terminal') then
-	map('n', '<F4>', ':ToggleTerm<CR>')
+if not Has_value(Doom.disabled_plugins, 'terminal') then
+	Map('n', '<F4>', ':ToggleTerm<CR>')
 end
-if not has_value(g.doom_disabled_plugins, 'minimap') then
-	map('n', '<F5>', ':MinimapToggle<CR>')
+if not Has_value(Doom.disabled_plugins, 'minimap') then
+	Map('n', '<F5>', ':MinimapToggle<CR>')
 end
-if not has_value(g.doom_disabled_plugins, 'zen') then
-	map('n', '<F6>', ':TZAtaraxis<CR>')
+if not Has_value(Doom.disabled_plugins, 'zen') then
+	Map('n', '<F6>', ':TZAtaraxis<CR>')
 end
 if
-	not has_value(g.doom_disabled_modules, 'web')
-	and (not has_value(g.doom_disabled_plugins, 'restclient'))
+	not Has_value(Doom.disabled_modules, 'web')
+	and (not Has_value(Doom.disabled_plugins, 'restclient'))
 then
-	map('n', '<F7>', ':DotHttp<CR>')
+	Map('n', '<F7>', ':DotHttp<CR>')
 end
 
 ---[[-----------------]]---
 --     Disable keys      --
 ---]]-----------------[[---
 -- Disable accidentally pressing ctrl-z and suspending
-map('n', '<c-z>', '<Nop>')
+Map('n', '<c-z>', '<Nop>')
 
 -- Disable ex mode
-map('n', 'Q', '<Nop>')
+Map('n', 'Q', '<Nop>')
 
 -- Disable recording
-map('n', 'q', '<Nop>')
+Map('n', 'q', '<Nop>')
 
 -- Fast exit from Doom Nvim and write messages to logs
-map('n', 'ZZ', ':call doom#functions#quit_doom(1,1)<CR>')
+Map('n', 'ZZ', ':lua Quit_doom(1, 1)<CR>')
 
 ---[[-----------------]]---
 --      Leader keys      --
@@ -191,7 +197,7 @@ wk.register({
 			C = { ':only<CR>', 'Close all other windows' },
 			c = { ':close<CR>', 'Close current window' },
 			h = { ':split<CR>', 'Split horizontally' },
-			v = { 'vsplit<CR>', 'Split vertically' },
+			v = { ':vsplit<CR>', 'Split vertically' },
 		},
 	},
 })
@@ -221,9 +227,9 @@ wk.register({
 				'Edit your Doom Nvim configuration',
 			},
 			d = { ':help doom_nvim<CR>', 'Open Doom Nvim documentation' },
-			u = { ':DoomUpdate<CR>', 'CHeck Doom Nvim udpates' },
+			u = { ':DoomUpdate<CR>', 'Check Doom Nvim udpates' },
 			r = {
-				':call doom#functions#createReport()<CR>',
+				':lua Create_report()<CR>',
 				'Create crash report',
 			},
 		},
@@ -247,8 +253,8 @@ wk.register({
 
 -- If web is enabled and restclient is enabled too
 if
-	not has_value(g.doom_disabled_modules, 'web')
-	and (not has_value(g.doom_disabled_plugins, 'restclient'))
+	not Has_value(Doom.disabled_modules, 'web')
+	and (not Has_value(Doom.disabled_plugins, 'restclient'))
 then
 	wk.register({
 		['<leader>'] = {
@@ -265,8 +271,8 @@ end
 
 -- If LSP is enabled
 if
-	not has_value(g.doom_disabled_modules, 'lsp')
-	and (not has_value(g.doom_disabled_plugins, 'compe'))
+	not Has_value(Doom.disabled_modules, 'lsp')
+	and (not Has_value(Doom.disabled_plugins, 'compe'))
 then
 	wk.register({
 		['<leader>'] = {
@@ -290,7 +296,7 @@ then
 end
 
 -- If Git is enabled
-if not has_value(g.doom_disabled_modules, 'git') then
+if not Has_value(Doom.disabled_modules, 'git') then
 	wk.register({
 		['<leader>'] = {
 			g = {
