@@ -1,6 +1,3 @@
--- Manage vim global variables
-local nvim_set_var = Api.nvim_set_var
-
 ----- Plugins modules
 -- Essentials         / (Plugin manager, vimpeccable, treesitter, sessions)
 -- UI Related         / (All look-and-feel plugins)
@@ -45,7 +42,6 @@ return packer.startup(function()
 		Has_value(Doom.disabled_plugins, 'treesitter')
 	if disabled_files and not disabled_treesitter then
 		table.insert(disabled_plugins, 'treesitter')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'nvim-treesitter/nvim-treesitter',
@@ -64,7 +60,7 @@ return packer.startup(function()
 	-----]]------------[[-----
 	-- Fancy start screen
 	-- cannot be disabled
-	use({ 'glepnir/dashboard-nvim', disabled = false })
+	use({ 'glepnir/dashboard-nvim', disable = false })
 
 	-- Colorschemes
 	-- cannot be disabled at the moment
@@ -81,12 +77,11 @@ return packer.startup(function()
 	local disabled_tree = Has_value(Doom.disabled_plugins, 'tree')
 	if disabled_tree then
 		table.insert(disabled_plugins, 'tree')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'kyazdani42/nvim-tree.lua',
 		requires = { 'kyazdani42/nvim-web-devicons' },
-		disabled = disabled_tree,
+		disable = disabled_tree,
 	})
 
 	-- Statusline
@@ -95,11 +90,10 @@ return packer.startup(function()
 		Has_value(Doom.disabled_plugins, 'statusline')
 	if disabled_statusline then
 		table.insert(disabled_plugins, 'statusline')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'glepnir/galaxyline.nvim',
-		disabled = disabled_statusline,
+		disable = disabled_statusline,
 	})
 
 	-- Tabline
@@ -107,9 +101,8 @@ return packer.startup(function()
 	local disabled_tabline = Has_value(Doom.disabled_plugins, 'tabline')
 	if disabled_tabline then
 		table.insert(disabled_plugins, 'tabline')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
-	use({ 'romgrk/barbar.nvim', disabled = disabled_tabline })
+	use({ 'romgrk/barbar.nvim', disable = disabled_tabline })
 
 	-- Better splits
 	-- NOTE: we are using this specific branch because the main still does not have
@@ -117,12 +110,11 @@ return packer.startup(function()
 	local disabled_focus = Has_value(Doom.disabled_plugins, 'focus')
 	if disabled_focus then
 		table.insert(disabled_plugins, 'focus')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'beauwilliams/focus.nvim',
 		branch = 'cust_filetypes',
-		disabled = disabled_focus,
+		disable = disabled_focus,
 	})
 
 	-- Better terminal
@@ -130,22 +122,20 @@ return packer.startup(function()
 	local disabled_terminal = Has_value(Doom.disabled_plugins, 'terminal')
 	if disabled_terminal then
 		table.insert(disabled_plugins, 'terminal')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'akinsho/nvim-toggleterm.lua',
-		disabled = disabled_terminal,
+		disable = disabled_terminal,
 	})
 
 	-- Viewer & finder for LSP symbols and tags
 	local disabled_tagbar = Has_value(Doom.disabled_plugins, 'tagbar')
 	if disabled_tagbar then
 		table.insert(disabled_plugins, 'tagbar')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'simrat39/symbols-outline.nvim',
-		disabled = disabled_tagbar,
+		disable = disabled_tagbar,
 	})
 
 	-- Minimap
@@ -153,21 +143,19 @@ return packer.startup(function()
 	local disabled_minimap = Has_value(Doom.disabled_plugins, 'minimap')
 	if disabled_minimap then
 		table.insert(disabled_plugins, 'minimap')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
-	use({ 'wfxr/minimap.vim', disabled = disabled_minimap })
+	use({ 'wfxr/minimap.vim', disable = disabled_minimap })
 
 	-- Keybindings menu like Emacs's guide-key
 	-- cannot be disabled
-	use({ 'folke/which-key.nvim', disabled = false })
+	use({ 'folke/which-key.nvim', disable = false })
 
 	-- Distraction free environment
 	local disabled_zen = Has_value(Doom.disabled_plugins, 'zen')
 	if disabled_zen then
 		table.insert(disabled_plugins, 'zen')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
-	use({ 'kdav5758/TrueZen.nvim', disabled = disabled_zen })
+	use({ 'kdav5758/TrueZen.nvim', disable = disabled_zen })
 
 	-----[[--------------]]-----
 	---     Fuzzy Search     ---
@@ -186,7 +174,6 @@ return packer.startup(function()
 	local disabled_gitsigns = Has_value(Doom.disabled_plugins, 'gitsigns')
 	if disabled_git and not disabled_gitsigns then
 		table.insert(disabled_plugins, 'gitsigns')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'lewis6991/gitsigns.nvim',
@@ -197,7 +184,6 @@ return packer.startup(function()
 	local disabled_lazygit = Has_value(Doom.disabled_plugins, 'lazygit')
 	if disabled_git and not disabled_lazygit then
 		table.insert(disabled_plugins, 'lazygit')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'kdheepak/lazygit.nvim',
@@ -210,11 +196,9 @@ return packer.startup(function()
 	-----]]------------[[-----
 	-- Built-in LSP Config
 	-- NOTE: It should not be disabled if you are going to use LSP!
-	local disabled_lspconfig =
-		Has_value(Doom.disabled_plugins, 'lspconfig')
+	local disabled_lspconfig = Has_value(Doom.disabled_plugins, 'lspconfig')
 	if disabled_lsp and not disabled_lspconfig then
 		table.insert(disabled_plugins, 'lspconfig')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'neovim/nvim-lspconfig',
@@ -226,7 +210,6 @@ return packer.startup(function()
 	local disabled_compe = Has_value(Doom.disabled_plugins, 'compe')
 	if disabled_lsp and not disabled_compe then
 		table.insert(disabled_plugins, 'compe')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'hrsh7th/nvim-compe',
@@ -243,7 +226,6 @@ return packer.startup(function()
 		Has_value(Doom.disabled_plugins, 'lspinstall')
 	if disabled_lsp and not disabled_lspinstall then
 		table.insert(disabled_plugins, 'lspinstall')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use('kabouzeid/nvim-lspinstall')
 
@@ -255,7 +237,6 @@ return packer.startup(function()
 	local disabled_suda = Has_value(Doom.disabled_plugins, 'suda')
 	if disabled_files and not disabled_suda then
 		table.insert(disabled_plugins, 'suda')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'lambdalisue/suda.vim',
@@ -264,11 +245,9 @@ return packer.startup(function()
 
 	-- File formatting
 	-- can be disabled to use your own file formatter
-	local disabled_formatter =
-		Has_value(Doom.disabled_plugins, 'formatter')
+	local disabled_formatter = Has_value(Doom.disabled_plugins, 'formatter')
 	if disabled_files and not disabled_formatter then
 		table.insert(disabled_plugins, 'formatter')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'lukas-reineke/format.nvim',
@@ -277,11 +256,9 @@ return packer.startup(function()
 
 	-- Autopairs
 	-- can be disabled to use your own autopairs
-	local disabled_autopairs =
-		Has_value(Doom.disabled_plugins, 'autopairs')
+	local disabled_autopairs = Has_value(Doom.disabled_plugins, 'autopairs')
 	if disabled_files and not disabled_autopairs then
 		table.insert(disabled_plugins, 'autopairs')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'steelsojka/pears.nvim',
@@ -293,7 +270,6 @@ return packer.startup(function()
 		Has_value(Doom.disabled_plugins, 'indentlines')
 	if disabled_files and not disabled_indent_lines then
 		table.insert(disabled_plugins, 'indentlines')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'lukas-reineke/indent-blankline.nvim',
@@ -306,7 +282,6 @@ return packer.startup(function()
 		Has_value(Doom.disabled_plugins, 'editorconfig')
 	if disabled_files and not disabled_editorconfig then
 		table.insert(disabled_plugins, 'editorconfig')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'editorconfig/editorconfig-vim',
@@ -319,7 +294,6 @@ return packer.startup(function()
 		Has_value(Doom.disabled_plugins, 'kommentary')
 	if disabled_files and not disabled_kommentary then
 		table.insert(disabled_plugins, 'kommentary')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'b3nj5m1n/kommentary',
@@ -330,11 +304,9 @@ return packer.startup(function()
 	---     Web Related     ---
 	-----]]-------------[[-----
 	-- Fastest colorizer without external dependencies!
-	local disabled_colorizer =
-		Has_value(Doom.disabled_plugins, 'colorizer')
+	local disabled_colorizer = Has_value(Doom.disabled_plugins, 'colorizer')
 	if disabled_web and not disabled_colorizer then
 		table.insert(disabled_plugins, 'colorizer')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'norcalli/nvim-colorizer.lua',
@@ -347,7 +319,6 @@ return packer.startup(function()
 		Has_value(Doom.disabled_plugins, 'restclient')
 	if disabled_web and not disabled_restclient then
 		table.insert(disabled_plugins, 'restclient')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'bayne/vim-dot-http',
@@ -358,7 +329,6 @@ return packer.startup(function()
 	local disabled_emmet = Has_value(Doom.disabled_plugins, 'emmet')
 	if disabled_web and not disabled_emmet then
 		table.insert(disabled_plugins, 'emmet')
-		nvim_set_var('doom_disabled_plugins', disabled_plugins)
 	end
 	use({
 		'mattn/emmet-vim',
