@@ -575,7 +575,7 @@ preferred Neovim GUI.
 
 By default, if no files were opened, Doom Nvim will show the start menu
 `dashboard-nvim` where you can select files to edit or if you have a saved
-session in the current workspace, Doom will load it automatically 
+session in the current workspace, Doom will load it automatically
 if you want to.
 
 
@@ -589,9 +589,9 @@ Use `h` go to left, `j` to go down, `k` to go up, `l` to go right.
           ^
           k
 
-    < h   ·   l >  
+    < h   ·   l >
 
-          j        
+          j
           v
 
 See `Tutor` to know how to use Vim and its keybindings.
@@ -742,6 +742,11 @@ The format is based on Keep a Changelog (https://keepachangelog.com/en/1.0.0/),
 and this project adheres to Semantic Versioning
 (https://semver.org/spec/v2.0.0.html).
 
+- 2.1.3
+    - Removed
+        - Unused code in packer setup
+    - Fixed
+        - Some bugs in packer setup
 - 2.1.2
     - Removed
         - `Is_directory` function in `utils/`

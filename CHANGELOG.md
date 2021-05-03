@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.3] - 2021-05-03
+
+### Removed
+
+- Unused code in packer setup
+
+### Fixed
+
+- Some bugs in packer setup
+
 ## [2.1.2] - 2021-05-02
 
 ### Removed
@@ -49,7 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `nvim-toggleterm` configurations, some improvements
     - Moved `dashboard` configurations to `lua/plugins/configs/nvim-dashboard.lua`
 - Misc
-    - Refact Doom Nvim README
+  - Refact Doom Nvim README
 
 ### Deleted
 
