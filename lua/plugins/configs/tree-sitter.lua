@@ -7,6 +7,6 @@ local ts = require('nvim-treesitter.configs')
 ts.setup({
 	-- NOTE: Place your languages here!
 	ensure_installed = Doom.ts_parsers,
-	highlight = { enabled = true },
-	indent = { enabled = true },
+	highlight = { enable = true },
+	indent = { enable = true },
 })
