@@ -15,6 +15,7 @@ Doom = {
 	-- true  : Enable format on save
 	-- @default = false
 	fmt_on_save = false,
+    
 
 	-- Autosave sessions
 	-- false : Disable session autosave
