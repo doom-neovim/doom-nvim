@@ -162,7 +162,7 @@ update_repo() {
         log_success "Successfully updated doom-nvim, more demons were released in your terminal!"
     else
         log_info "Trying to clone doom-nvim ..."
-        git clone -q -b "$1" https://github.com/NTBBloodbath/doom-nvim "$HOME/.config/doom-nvim"
+        git clone -q -b "$1" https://github.com/GustavoPrietoP/doom-nvim.git "$HOME/.config/doom-nvim"
         if [ $? -eq 0 ]; then
             log_success "Successfully cloned doom-nvim, some demons were released in your terminal!"
         else
