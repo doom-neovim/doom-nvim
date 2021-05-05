@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.5] - 2021-05-04
+
+### Changed
+
+- Installation script will not install packer anymore, it'll be installed by Doom
+  when started for the first time
+
+### Fixed
+
+- Now core plugins will be installed at first start
+
 ## [2.1.4] - 2021-05-04
 
 ### Fixed
@@ -184,7 +195,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.4...HEAD
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.5...HEAD
+[2.1.5]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.4...v2.1.5
 [2.1.4]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.3...v2.1.4
 [2.1.3]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.0...v2.1.2
