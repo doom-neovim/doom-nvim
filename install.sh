@@ -32,7 +32,7 @@ BYellow='\033[1;33m' # Yellow
 # }}}
 
 # Doom Nvim version
-DoomNvimVersion='2.1.4'
+DoomNvimVersion='2.1.5'
 # System OS
 System="$(uname -s)"
 
@@ -189,14 +189,6 @@ install_nvim_nightly() {
     log_success "Successfully installed Neovim Nightly under $HOME/.local/bin/ directory"
 }
 
-install_packer() {
-    if [[ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]]; then
-        log_info "Installing packer.nvim ..."
-        git clone -q https://github.com/wbthomason/packer.nvim $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
-        log_success "Successfully installed packer.nvim"
-    fi
-}
-
 install_fonts() {
     if [[ ! -d "$HOME/.local/share/fonts" ]]; then
         mkdir -p $HOME/.local/share/fonts
@@ -219,7 +211,7 @@ install_fonts() {
 
 download_font() {
     # Download patched Nerd Fonts
-    url="https://github.com/ryanoasis/nerd-fonts/raw/2.1.4/patched-fonts/FiraCode/Regular/complete/${1// /%20}"
+    url="https://github.com/ryanoasis/nerd-fonts/raw/2.1.5/patched-fonts/FiraCode/Regular/complete/${1// /%20}"
     download_path="$HOME/.local/share/fonts/$1"
     if [[ -f "$download_path" && ! -s "$download_path" ]]; then
         rm "$download_path"
@@ -332,7 +324,6 @@ main() {
             welcome
             check_all
             update_repo "main"
-            install_packer
             install_fonts
             backup_neovim
             install_done
@@ -342,7 +333,6 @@ main() {
             welcome
             check_all
             update_repo "develop"
-            install_packer
             install_fonts
             backup_neovim
             install_done
@@ -379,7 +369,6 @@ main() {
         check_all
         update_repo "main"
         backup_neovim
-        install_packer
         install_fonts
         check_requirements
         install_done
