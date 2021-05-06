@@ -1,22 +1,46 @@
 local bo = vim.bo
 local gl = require('galaxyline')
+local buffer = require('galaxyline.provider_buffer')
 local condition = require('galaxyline.condition')
+
 local gls = gl.section
 
 gl.short_line_list = { 'NvimTree', 'packer', 'minimap', 'Outline' }
 
 local colors = {
 	bg = '#282c34',
-	fg = '#c8ccd4',
-	section_bg = '#373d48',
-	yellow = '#e5c07b',
-	cyan = '#56b6c2',
-	green = '#98c379',
-	orange = '#ffb86c',
+	fg = '#bbc2cf',
+	section_bg = '#3E4556',
+	yellow = '#ECBE7B',
+	cyan = '#46D9FF',
+	green = '#98be65',
+	orange = '#da8548',
 	magenta = '#c678dd',
-	blue = '#61afef',
-	red = '#e06c75',
+	blue = '#51afef',
+	red = '#ff6c6b',
 }
+
+-- TODO: merge dashboard functions to get only one function for both cases
+
+-- If current buffer is not a dashboard
+local function is_not_dashboard()
+	local buftype = buffer.get_buffer_filetype()
+	if buftype == 'DASHBOARD' then
+		return false
+	else
+		return true
+	end
+end
+
+-- If current buffer is a dashboard
+local function is_dashboard()
+	local buftype = buffer.get_buffer_filetype()
+	if buftype == 'DASHBOARD' then
+		return true
+	else
+		return false
+	end
+end
 
 -- Left side
 gls.left[1] = {
@@ -59,131 +83,136 @@ gls.left[2] = {
 			return ' Doom '
 		end,
 		highlight = { colors.red, colors.bg, 'bold' },
-		separator = ' ',
-		separator_highlight = { colors.bg, colors.section_bg },
 	},
 }
-
 gls.left[3] = {
+	Separator = {
+		provider = function()
+			return ' '
+		end,
+		condition = condition.buffer_not_empty and is_not_dashboard,
+		highlight = { colors.bg, colors.section_bg },
+	},
+}
+gls.left[4] = {
 	FileIcon = {
 		provider = 'FileIcon',
-		condition = condition.buffer_not_empty,
+		condition = condition.buffer_not_empty and is_not_dashboard,
 		highlight = {
 			require('galaxyline.provider_fileinfo').get_file_icon_color,
 			colors.section_bg,
 		},
 	},
 }
-gls.left[4] = {
+gls.left[5] = {
 	FileName = {
 		provider = 'FileName',
+		condition = condition.buffer_not_empty and is_not_dashboard,
 		highlight = { colors.fg, colors.section_bg },
 		separator = '',
 		separator_highlight = { colors.section_bg, colors.bg },
 	},
 }
-gls.left[5] = {
+gls.left[6] = {
 	GitIcon = {
 		provider = function()
 			return '  '
 		end,
-		condition = condition.check_git_workspace,
+		condition = condition.check_git_workspace and is_not_dashboard,
 		highlight = { colors.red, colors.bg },
 	},
 }
-gls.left[6] = {
+gls.left[7] = {
 	GitBranch = {
 		provider = 'GitBranch',
-		condition = condition.check_git_workspace,
+		condition = condition.check_git_workspace and is_not_dashboard,
 		highlight = { colors.fg, colors.bg },
 		separator = ' ',
 	},
 }
-gls.left[7] = {
+gls.left[8] = {
 	DiffAdd = {
 		provider = 'DiffAdd',
-		condition = condition.hide_in_width,
+		condition = condition.hide_in_width and is_not_dashboard,
 		icon = ' ',
 		highlight = { colors.green, colors.bg },
 	},
 }
-gls.left[8] = {
+gls.left[9] = {
 	DiffModified = {
 		provider = 'DiffModified',
-		condition = condition.hide_in_width,
+		condition = condition.hide_in_width and is_not_dashboard,
 		icon = ' ',
 		highlight = { colors.orange, colors.bg },
 	},
 }
-gls.left[9] = {
+gls.left[10] = {
 	DiffRemove = {
 		provider = 'DiffRemove',
-		condition = condition.hide_in_width,
+		condition = condition.hide_in_width and is_not_dashboard,
 		icon = ' ',
 		highlight = { colors.red, colors.bg },
 	},
 }
-gls.left[10] = {
+gls.left[11] = {
 	LeftEnd = {
 		provider = function()
 			return ''
 		end,
+		condition = is_not_dashboard,
 		highlight = { colors.section_bg, colors.bg },
 	},
 }
-gls.left[11] = {
+gls.left[12] = {
 	DiagnosticError = {
 		provider = 'DiagnosticError',
-		icon = '  ',
+		condition = is_not_dashboard,
+		icon = '   ',
 		highlight = { colors.red, colors.section_bg },
-	},
-}
-gls.left[12] = {
-	Space = {
-		provider = function()
-			return ' '
-		end,
-		highlight = { colors.section_bg, colors.section_bg },
 	},
 }
 gls.left[13] = {
 	DiagnosticWarn = {
 		provider = 'DiagnosticWarn',
-		icon = '  ',
+		condition = is_not_dashboard,
+		icon = '   ',
 		highlight = { colors.orange, colors.section_bg },
 	},
 }
 gls.left[14] = {
-	Space = {
-		provider = function()
-			return ' '
-		end,
-		highlight = { colors.section_bg, colors.section_bg },
-	},
-}
-gls.left[15] = {
 	DiagnosticInfo = {
 		provider = 'DiagnosticInfo',
-		icon = '  ',
+		condition = is_not_dashboard,
+		icon = '   ',
 		highlight = { colors.blue, colors.section_bg },
-		separator = ' ',
+		separator = '',
 		separator_highlight = { colors.section_bg, colors.bg },
 	},
 }
 
 -- Right side
+-- alternate separator colors if the current buffer is a dashboard
 gls.right[1] = {
+	RightStart = {
+		provider = function()
+			return ''
+		end,
+		condition = is_not_dashboard,
+		highlight = { colors.section_bg, colors.bg },
+	},
+}
+gls.right[2] = {
 	FileFormat = {
 		provider = function()
 			return bo.filetype
 		end,
-		icon = ' ', -- add extra space between separator and text
+		condition = is_not_dashboard,
 		highlight = { colors.fg, colors.section_bg },
-		separator = '',
-		separator_highlight = { colors.section_bg, colors.bg },
+		separator = ' ',
+		separator_highlight = { colors.bg, colors.section_bg },
 	},
 }
-gls.right[2] = {
+gls.right[3] = {
 	ShowLspClient = {
 		provider = 'GetLspClient',
 		condition = function()
@@ -199,24 +228,48 @@ gls.right[2] = {
 		separator_highlight = { colors.bg, colors.section_bg },
 	},
 }
-gls.right[3] = {
+gls.right[4] = {
 	FileEncode = {
 		provider = 'FileEncode',
-		condition = condition.hide_in_width,
+		condition = condition.hide_in_width and is_not_dashboard,
 		highlight = { colors.fg, colors.section_bg },
 		separator = ' |',
 		separator_highlight = { colors.bg, colors.section_bg },
 	},
 }
-gls.right[4] = {
+gls.right[5] = {
 	LineInfo = {
 		provider = 'LineColumn',
+		condition = is_not_dashboard,
 		highlight = { colors.fg, colors.section_bg },
 		separator = ' | ',
 		separator_highlight = { colors.bg, colors.section_bg },
 	},
 }
-gls.right[5] = {
+-- If the current buffer is the dashboard then show Doom Nvim version
+if is_dashboard then
+	gls.right[6] = {
+		DoomVersion = {
+			provider = function()
+				return 'DOOM v' .. Doom_version
+			end,
+			condition = is_dashboard,
+			highlight = { colors.blue, colors.bg, 'bold' },
+			separator = ' ',
+			separator_highlight = { colors.section_bg, colors.bg },
+		},
+	}
+	gls.right[7] = {
+		Space = {
+			provider = function()
+				return ' '
+			end,
+			condition = is_dashboard,
+			highlight = { colors.section_bg, colors.bg },
+		},
+	}
+end
+gls.right[8] = {
 	RainbowBlue = {
 		provider = function()
 			return ' ▊'
@@ -229,8 +282,9 @@ gls.right[5] = {
 gls.short_line_left[1] = {
 	BufferType = {
 		provider = 'FileTypeName',
+		condition = is_not_dashboard,
 		highlight = { colors.fg, colors.section_bg },
-		separator = ' ',
+		separator = '',
 		separator_highlight = { colors.section_bg, colors.bg },
 	},
 }
@@ -238,6 +292,7 @@ gls.short_line_left[1] = {
 gls.short_line_right[1] = {
 	BufferIcon = {
 		provider = 'BufferIcon',
+		condition = is_not_dashboard,
 		highlight = { colors.yellow, colors.section_bg },
 		separator = '',
 		separator_highlight = { colors.section_bg, colors.bg },
