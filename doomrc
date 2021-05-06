@@ -170,7 +170,7 @@ Doom = {
 	-- Tagbar left
 	-- Sets Tagbar buffer to the left when enabled
 	-- @default = true
-	tagbar_left = false,
+	tagbar_left = true,
 
 	-- Show hidden files
 	-- @default = true
@@ -198,7 +198,7 @@ Doom = {
 	-- @default = {'git', 'lsp', 'web'}
 	-- example:
 	--   disabled_modules = {'web'}
-	disabled_modules = { 'git', 'web' },
+	disabled_modules = { 'git', 'lsp', 'web' },
 
 	-- Install custom plugins
 	-- @default = {}
@@ -212,7 +212,7 @@ Doom = {
 	--              'enabled': true,
 	--           }
 	--       }
-	custom_plugins = {'andweeb/presence.nvim', 'GustavoPrietoP/lua-dashboard'},
+	custom_plugins = {},
 
 	-- Set the parsers for TreeSitter
 	-- @default = {}
