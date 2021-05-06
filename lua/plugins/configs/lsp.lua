@@ -1,9 +1,34 @@
 -- taken from https://github.com/neovim/nvim-lspconfig#keybindings-and-completion
 local nvim_lsp = require('lspconfig')
-
 -- Snippets support
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+-- Lsp Symbols
+Fn.sign_define(
+    "LspDiagnosticsSignError",
+    {texthl = "LspDiagnosticsSignError", text = "", numhl = "LspDiagnosticsSignError"}
+)
+Fn.sign_define(
+    "LspDiagnosticsSignWarning",
+    {texthl = "LspDiagnosticsSignWarning", text = "", numhl = "LspDiagnosticsSignWarning"}
+)
+Fn.sign_define(
+    "LspDiagnosticsSignHint",
+    {texthl = "LspDiagnosticsSignHint", text = "", numhl = "LspDiagnosticsSignHint"}
+)
+Fn.sign_define(
+    "LspDiagnosticsSignInformation",
+    {texthl = "LspDiagnosticsSignInformation", text = "", numhl = "LspDiagnosticsSignInformation"}
+)
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+ vim.lsp.diagnostic.on_publish_diagnostics, {
+   virtual_text = {
+     prefix = " ", -- change this to whatever you want your diagnostic icons to be
+   },
+ }
+)
 
 -- Signature help
 require('lsp_signature').on_attach()
@@ -39,90 +64,28 @@ local on_attach = function(client, bufnr)
 	local function buf_set_option(...)
 		Api.nvim_buf_set_option(bufnr, ...)
 	end
+
 	buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 	-- Mappings.
 	local opts = { silent = true }
-	Map(
-		'n',
-		'ga',
-		'<Cmd>lua vim.lsp.buf.code_action()<CR>',
-		opts
-	)
-	Map(
-		'n',
-		'gD',
-		'<Cmd>lua vim.lsp.buf.declaration()<CR>',
-		opts
-	)
-	Map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-	Map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-	Map(
-		'n',
-		'gi',
-		'<cmd>lua vim.lsp.buf.implementation()<CR>',
-		opts
-	)
-	Map(
-		'n',
-		'<C-k>',
-		'<cmd>lua vim.lsp.buf.signature_help()<CR>',
-		opts
-	)
-	Map(
-		'n',
-		'<space>wa',
-		'<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>',
-		opts
-	)
-	Map(
-		'n',
-		'<space>wr',
-		'<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>',
-		opts
-	)
-	Map(
-		'n',
-		'<space>wl',
-		'<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
-		opts
-	)
-	Map(
-		'n',
-		'<space>D',
-		'<cmd>lua vim.lsp.buf.type_definition()<CR>',
-		opts
-	)
-	Map(
-		'n',
-		'<space>rn',
-		'<cmd>lua vim.lsp.buf.rename()<CR>',
-		opts
-	)
-	Map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-	Map(
-		'n',
-		'<space>e',
-		'<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
-		opts
-	)
-	Map(
-		'n',
-		'[d',
-		'<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',
-		opts
-	)
-	Map(
-		'n',
-		']d',
-		'<cmd>lua vim.lsp.diagnostic.goto_next()<CR>',
-		opts
-	)
-	Map(
-		'n',
-		'<space>q',
-		'<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',
-		opts
-	)
+    Map("n", "<leader>gt", "<cmd>LspTroubleToggle<cr>",
+      opts
+    )
+    Map("n", "<leader>xw", "<cmd>LspTroubleToggle lsp_workspace_diagnostics<cr>",
+      opts
+    )
+    Map("n", "<leader>xd", "<cmd>LspTroubleToggle lsp_document_diagnostics<cr>",
+      opts
+    )
+    Map("n", "<leader>xl", "<cmd>LspTroubleToggle loclist<cr>",
+      opts
+    )
+    Map("n", "<leader>xq", "<cmd>LspTroubleToggle quickfix<cr>",
+      opts
+    )
+    Map("n", "gr", "<cmd>LspTrouble lsp_references<cr>",
+      opts
+    )
 	-- Set some keybinds conditional on server capabilities
 	if client.resolved_capabilities.document_formatting then
 		Map(

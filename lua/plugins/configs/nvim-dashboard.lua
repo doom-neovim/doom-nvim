@@ -3,19 +3,24 @@ local plugins_count =
 
 G.dashboard_session_directory = Doom_root .. '/sessions'
 G.dashboard_default_executive = 'telescope'
-G.dashboard_custom_shortcut = {
-	['last_session'] = 'SPC s l',
-	['find_history'] = 'SPC f h',
-	['find_file'] = 'SPC f f',
-	['new_file'] = 'SPC f n',
-	['change_colorscheme'] = 'SPC t c',
-	['find_word'] = 'SPC f W',
-	['book_marks'] = 'SPC f b',
+
+G.dashboard_custom_section = {
+    a = {description = {'  Reload Last Session            SPC s r'}, command = 'SessionLoad'},
+    b = {description = {'  Recently Opened Files          SPC f h'}, command = 'Telescope oldfiles'},
+    c = {description = {'  Jump to Bookmark               SPC f b'}, command = 'Telescope marks'},
+    d = {description = {'  Find File                      SPC f f'}, command = 'Telescope find_files'},
+    e = {description = {'  Find Word                      SPC f g'}, command = 'Telescope live_grep'},
+    f = {description = {'  Open Private Configuration     SPC d c'}, command = ':e ~/.config/nvim/doomrc'},
+    g = {description = {'  Open Documentation             SPC d d'}, command = ':h doom_nvim'},
 }
 
 G.dashboard_custom_footer = {
 	'Doom Nvim loaded ' .. plugins_count .. ' plugins',
 }
+
+if not Doom.dashboard_statline then
+    G.dashboard_disable_statusline = 1
+end
 
 G.dashboard_custom_header = {
 	'=================     ===============     ===============   ========  ========',

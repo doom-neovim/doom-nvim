@@ -204,7 +204,6 @@ return packer.startup(function()
 		'neovim/nvim-lspconfig',
 		disable = (disabled_lsp and true or disabled_lspconfig),
 	})
-
 	-- Completion plugin
 	-- can be disabled to use your own completion plugin
 	local disabled_compe = Has_value(Doom.disabled_plugins, 'compe')

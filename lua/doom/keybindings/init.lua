@@ -48,6 +48,7 @@ local opts = { silent = true }
 if
 	not Has_value(Doom.disabled_modules, 'lsp')
 	and (not Has_value(Doom.disabled_plugins, 'compe'))
+    and Check_plugin('nvim-compe')
 then
 	-- https://github.com/hrsh7th/nvim-compe#mappings
 	Map('i', '<expr> <C-Space>', Fn['compe#complete'](), opts)
@@ -96,6 +97,37 @@ if
 then
 	Map('n', '<F7>', ':DotHttp<CR>')
 end
+---[[------------------------------]]
+--     Window Movements keys      --
+---]]------------------------------]]
+
+Map('n', '<C-h>', '<C-w>h', opts)
+Map('n', '<C-j>', '<C-w>j', opts)
+Map('n', '<C-k>', '<C-w>k', opts)
+Map('n', '<C-l>', '<C-w>l', opts)
+
+---[[-----------------]]---
+--     Escape Remaps     --
+---]]-----------------[[---
+Map('i', 'jk', '<ESC>', opts)
+
+---[[-----------------]]---
+--     Select Movement   --
+---]]-----------------[[---
+Map ('x', 'K', ':move \'<-2<CR>gv-gv', opts)
+Map ('x', 'J', ':move \'>+1<CR>gv-gv', opts)
+
+Cmd('tnoremap <Esc> <C-\\><C-n>') -- get out of terminal insert mode into normal mode with Esc
+
+---[[-----------------]]---
+--     Resizing Splits   --
+---]]-----------------[[---
+Cmd([[
+  nnoremap <silent> <C-Up>    :resize -2<CR>
+  nnoremap <silent> <C-Down>  :resize +2<CR>
+  nnoremap <silent> <C-Right>  :vertical resize -2<CR>
+  nnoremap <silent> <C-Left>  :vertical resize +2<CR>
+]])
 
 ---[[-----------------]]---
 --     Disable keys      --
