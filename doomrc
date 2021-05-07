@@ -22,6 +22,13 @@ Doom = {
 	-- @default = false
 	autosave_sessions = false,
 
+    -- set your custom lsp diagnostic symbols below
+    lsp_error = '',
+    lsp_warning = '',
+    lsp_hint = '',
+    lsp_information = '',
+    lsp_virtual_text = ' ',
+
 	-- Autoload sessions
 	-- false : Disable session autoload
 	-- true  : Enable session autosave
@@ -40,12 +47,12 @@ Doom = {
     -- true  : enable undo files/undo dirs.
     -- @default = false
     backup = false, -- WARNING: if you change this to false and you have an undo dir already, it will REMOVE the undodir (loss of data might take place)
-    -- WARNING: if you change this to false and you have an u
+    
     -- NOTE: This will only be activated if 'backup' is true.
     -- We don'recommend you put this outside of neovim so we've restricted to the path: ~/.config/nvim
-    -- WARNING: only put the folder name that you want. (eg: undo_dir = 'undodir')
+    -- WARNING: only put the folder name that you want. (eg: undo_dir = '/undodir')
     -- @default_directory = '~/.config/nvim/undodir'
-    undo_dir = '/wwwww',
+    undo_dir = '/undodir',
 
     -- Enable Line wrapping 
     -- false : disables line wrapping 
@@ -82,6 +89,12 @@ Doom = {
 	-- @default = 4
 	indent = 4,
 
+    -- horizontal split on creating a new file (<Leader>fn)
+    -- false : doesn't split the window when creating a new file
+    -- true  : horizontal split on creating a new file
+    -- @default = true
+    new_file_split = true,
+
     -- enable current line highlight
     -- false : disables current line highlight
     -- true  : enables current line highlight
@@ -93,6 +106,12 @@ Doom = {
     -- true  : splits left (vertically)
     -- @default = true
     split_right = true,
+
+    -- Automatically split right 
+    -- false : splits above (horizontally)
+    -- true  : splits below (horizontally)
+    -- @default = true
+    split_below = true,
 
     -- Use clipboard outside of vim 
     -- false : won't use third party clipboard 
@@ -106,23 +125,11 @@ Doom = {
     guifont = 'FiraCode Nerd Font',
     guifont_size = '15',
 
-    -- Automatically split right 
-    -- false : splits below (horizontally)
-    -- true  : splits below (horizontally)
-    -- @default = true
-    split_below = true,
-
     -- Enable auto comment (current line must be commented)
     -- false : disables auto comment
     -- true  : enables auto comment
     -- @default = false
     auto_comment = false,
-
-    -- Disable dashboard status line (does not work perfectly)
-    -- false : disables dashboard status line
-    -- true  : enables dashboard status line
-    -- @default = false
-    dashboard_statline = false,
 
 	-- Show indent lines
 	-- @default = true
@@ -169,8 +176,8 @@ Doom = {
 
 	-- Tagbar left
 	-- Sets Tagbar buffer to the left when enabled
-	-- @default = true
-	tagbar_left = true,
+	-- @default = false
+	tagbar_left = false,
 
 	-- Show hidden files
 	-- @default = true
@@ -187,38 +194,6 @@ Doom = {
 	-- Checkupdates on start
 	-- @default = false
 	check_updates = false,
-
-	-- Disabled plugins
-	-- @default = {'lazygit', 'minimap', 'restclient'}
-	-- example:
-	--   disabled_plugins = {'emmet-vim'}
-	disabled_plugins = { 'lazygit', 'minimap', 'restclient' },
-
-	-- Disabled plugins modules
-	-- @default = {'git', 'lsp', 'web'}
-	-- example:
-	--   disabled_modules = {'web'}
-	disabled_modules = { 'git', 'lsp', 'web' },
-
-	-- Install custom plugins
-	-- @default = {}
-	-- examples:
-	--   plugins without options:
-	--       custom_plugins = {'andweeb/presence.nvim'}
-	--   plugins with options:
-	--       custom_plugins = {
-	--           {
-	--              'repo': 'andweeb/presence.nvim',
-	--              'enabled': true,
-	--           }
-	--       }
-	custom_plugins = {},
-
-	-- Set the parsers for TreeSitter
-	-- @default = {}
-	-- example:
-	--   ts_parsers = {'python', 'javascript'}
-	ts_parsers = {},
 
 	-- Set the Terminal direction
 	-- Available directions:
@@ -255,4 +230,77 @@ Doom = {
 	-- 3 : All errors and messages, echo
 	-- @default = 1
 	logging = 1,
+
+    -- Disable dashboard status line (does not work perfectly)
+    -- false : disables dashboard status line
+    -- true  : enables dashboard status line
+    -- @default = true
+    dashboard_statline = true,
+
+    -- Set your custom dashboard header below
+    -- @default = doom emacs' default dashboard header
+    dashboard_custom_header = {
+	'=================     ===============     ===============   ========  ========',
+	'\\\\ . . . . . . .\\\\   //. . . . . . .\\\\   //. . . . . . .\\\\  \\\\. . .\\\\// . . //',
+	'||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||',
+	'|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||',
+	'||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||',
+	'|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\\ . . . . ||',
+	"||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\\_ . .|. .||",
+	'|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\\ `-_/| . ||',
+	"||_-' ||  .|/    || ||    \\|.  || `-_|| ||_-' ||  .|/    || ||   | \\  / |-_.||",
+	"||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \\  / |  `||",
+	"||    `'         || ||         `'    || ||    `'         || ||   | \\  / |   ||",
+	"||            .===' `===.         .==='.`===.         .===' /==. |  \\/  |   ||",
+	"||         .=='   \\_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \\/  |   ||",
+	"||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \\/  |   ||",
+	"||   .=='    _-'          `-__\\._-'         `-_./__-'         `' |. /|  |   ||",
+	"||.=='    _-'                                                     `' |  /==.||",
+	"=='    _-'                        N E O V I M                         \\/   `==",
+	"\\   _-'                                                                `-_   /",
+	" `''                                                                      ``'  ",
+	'                                                                               ',
+    },
+
+    -- Set your dashboard custom colors below
+    -- @default = doom emacs' default dashboard colors
+    dashboard_custom_colors = {
+        header_color = '#586268',
+        center_color = '#51afef',
+        shortcut_color = '#9788b9',
+        footer_color = '#586268',
+    },
+
+	-- Disabled plugins
+	-- @default = {'lazygit', 'minimap', 'restclient'}
+	-- example:
+	--   disabled_plugins = {'emmet-vim'}
+	disabled_plugins = { 'lazygit', 'minimap', 'restclient' },
+
+	-- Disabled plugins modules
+	-- @default = {'git', 'lsp', 'web'}
+	-- example:
+	--   disabled_modules = {'web'}
+	disabled_modules = { 'git', 'lsp', 'web'},
+
+	-- Install custom plugins
+	-- @default = {}
+	-- examples:
+	--   plugins without options:
+	--       custom_plugins = {'andweeb/presence.nvim'}
+	--   plugins with options:
+	--       custom_plugins = {
+	--           {
+	--              'repo': 'andweeb/presence.nvim',
+	--              'enabled': true,
+	--           }
+	--       }
+	custom_plugins = {},
+
+	-- Set the parsers for TreeSitter
+	-- @default = {}
+	-- example:
+	--   ts_parsers = {'python', 'javascript'}
+	ts_parsers = {},
+
 }

@@ -22,31 +22,10 @@ if not Doom.dashboard_statline then
     G.dashboard_disable_statusline = 1
 end
 
-G.dashboard_custom_header = {
-	'=================     ===============     ===============   ========  ========',
-	'\\\\ . . . . . . .\\\\   //. . . . . . .\\\\   //. . . . . . .\\\\  \\\\. . .\\\\// . . //',
-	'||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||',
-	'|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||',
-	'||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||',
-	'|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\\ . . . . ||',
-	"||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\\_ . .|. .||",
-	'|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\\ `-_/| . ||',
-	"||_-' ||  .|/    || ||    \\|.  || `-_|| ||_-' ||  .|/    || ||   | \\  / |-_.||",
-	"||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \\  / |  `||",
-	"||    `'         || ||         `'    || ||    `'         || ||   | \\  / |   ||",
-	"||            .===' `===.         .==='.`===.         .===' /==. |  \\/  |   ||",
-	"||         .=='   \\_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \\/  |   ||",
-	"||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \\/  |   ||",
-	"||   .=='    _-'          `-__\\._-'         `-_./__-'         `' |. /|  |   ||",
-	"||.=='    _-'                                                     `' |  /==.||",
-	"=='    _-'                        N E O V I M                         \\/   `==",
-	"\\   _-'                                                                `-_   /",
-	" `''                                                                      ``'  ",
-	'                                                                               ',
-}
+G.dashboard_custom_header = Doom.dashboard_custom_header,
 
 -- Header color
-Cmd('hi! dashboardHeader   guifg=#586268')
-Cmd('hi! dashboardCenter   guifg=#51afef')
-Cmd('hi! dashboardShortcut guifg=#9788b9')
-Cmd('hi! dashboardFooter   guifg=#586268')
+Cmd('hi! dashboardHeader   guifg='..Doom.dashboard_custom_colors.header_color)
+Cmd('hi! dashboardCenter   guifg='..Doom.dashboard_custom_colors.center_color)
+Cmd('hi! dashboardShortcut guifg='..Doom.dashboard_custom_colors.shortcut_color)
+Cmd('hi! dashboardFooter   guifg='..Doom.dashboard_custom_colors.footer_color)

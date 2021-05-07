@@ -66,6 +66,22 @@ then
 		Fn['compe#scroll']({ delta = '-4' }),
 		opts
 	)
+    Map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definitionA
+    Map('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts) -- gr: go to reference
+    Map('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts) -- gi: buf implementation
+    Map('n', 'ca', ':Lspsaga code_action<CR>', opts) -- ca: code actions
+    Map('n', 'K', ':Lspsaga hover_doc<CR>', opts) -- K: hover doc
+    Map('n', '<C-p>', ':Lspsaga diagnostic_jump_prev<CR>', opts) -- Control+p: Jump to previous diagnostic
+    Map('n', '<C-n>', ':Lspsaga diagnostic_jump_next<CR>', opts) -- Control+n: Jump to next diagnostic
+    Map('n', '<C-f>', ':lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>', opts) -- Control+f: Scroll down documents
+    Map('n', '<C-b>', "lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>") -- Control+b: Scroll up documents
+    Cmd('command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()')
+end
+
+if Doom.new_file_split then
+    Map('n', '<Leader>fn', ':new<CR>', opts)
+else
+    Map('n', '<Leader>fn', ':enew<CR>', opts)
 end
 
 -- TAB to cycle buffers too, why not?
@@ -209,7 +225,7 @@ wk.register({
 		f = {
 			name = '+file',
 			c = { ':e $MYVIMRC<CR>', 'Edit Neovim configuration' },
-			n = { ':new<CR>', 'Create a new unnamed buffer' },
+			n = { 'Create a new unnamed buffer' },
 			f = { ':Telescope find_files<CR>', 'Find files' },
 			b = { ':Telescope marks<CR>', 'Bookmarks' },
 			W = { ':Telescope live_grep<CR>', 'Find word' },

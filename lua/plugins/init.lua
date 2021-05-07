@@ -73,6 +73,8 @@ return packer.startup(function()
 		'ajmwagar/vim-deus',
 	})
 
+    use({'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'})
+
 	-- File tree
 	local disabled_tree = Has_value(Doom.disabled_plugins, 'tree')
 	if disabled_tree then
@@ -219,6 +221,14 @@ return packer.startup(function()
 		},
 		disable = (disabled_lsp and true or disabled_compe),
 	})
+
+    -- install lsp saga
+	local disabled_lspsaga =
+		Has_value(Doom.disabled_plugins, 'lspsaga')
+	if disabled_lsp and not disabled_lspsaga then
+		table.insert(disabled_plugins, 'lspsaga')
+	end
+    use({'glepnir/lspsaga.nvim', disable = (disabled_lsp and true or disabled_lspsaga) })
 
 	-- provides the missing `:LspInstall` for `nvim-lspconfig`.
 	local disabled_lspinstall =
