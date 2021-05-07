@@ -204,7 +204,6 @@ return packer.startup(function()
 		'neovim/nvim-lspconfig',
 		disable = (disabled_lsp and true or disabled_lspconfig),
 	})
-
 	-- Completion plugin
 	-- can be disabled to use your own completion plugin
 	local disabled_compe = Has_value(Doom.disabled_plugins, 'compe')
@@ -220,6 +219,14 @@ return packer.startup(function()
 		},
 		disable = (disabled_lsp and true or disabled_compe),
 	})
+
+    -- install lsp saga
+	local disabled_lspsaga =
+		Has_value(Doom.disabled_plugins, 'lspsaga')
+	if disabled_lsp and not disabled_lspsaga then
+		table.insert(disabled_plugins, 'lspsaga')
+	end
+    use({'glepnir/lspsaga.nvim', disable = (disabled_lsp and true or disabled_lspsaga) })
 
 	-- provides the missing `:LspInstall` for `nvim-lspconfig`.
 	local disabled_lspinstall =
