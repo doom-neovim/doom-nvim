@@ -73,8 +73,6 @@ return packer.startup(function()
 		'ajmwagar/vim-deus',
 	})
 
-    use({'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'})
-
 	-- File tree
 	local disabled_tree = Has_value(Doom.disabled_plugins, 'tree')
 	if disabled_tree then
