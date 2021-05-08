@@ -7,34 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.2.0] - 2021-05-07
-
-### Changed
-- Plugins
-  - Whichkey
-    - now appears as a small window at the bottom (increase in screen real estate)
-    - *NOTE: you can change the background color by tweaking `whichkey_bg` in `doomrc`*
-  - Dashboard
-    - Changed icons and Option names  
-    - You now set your header/colors through `doomrc`
-  - Tagbar / Nvim-tree
-    - Default positions have changed (Nvim-tree will now open to the left by default)
-
-### Fixed
-
-- Telescope grep returning `nil`
-- Whichkey triggering when pressing certain keys
-- Minor bug fixes
-
-### Removed
-
-- Many hard coded config options
-- Dashboard: removed messy code
-- Telescope: `vimgrep_arguments` (returning `nil` on some machines)
-- Whichkey: `Window: border, position. Layout: spacing`
+## [2.2.0] - 2021-05-08
 
 ### Added
-- LSP symbol diagnostics (*check `doomrc`*) 
+
+- LSP symbol diagnostics (_check `doomrc`_)
 - Lspsaga (go to definition, references, hover_doc, etc)
 - Better keybindings
 - Tab completion
@@ -42,8 +19,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - You can now easily add an `undodir` in `doomrc` (default = `false`)
 - You now can change `new_file_split` to `false` in `doomrc` so `<Leader>fn` doesn't create a split
 
+### Changed
 
-## [2.1.4] - 2021-05-04
+- Plugins
+  - Whichkey
+    - now appears as a small window at the bottom (increase in screen real estate)
+    - _NOTE: you can change the background color by tweaking `whichkey_bg` in `doomrc`_
+  - Dashboard
+    - Changed icons and Option names
+    - You now set your header/colors through `doomrc`
+  - Tagbar / Nvim-tree
+    - Default positions have changed (Nvim-tree will now open to the left by default)
+- Improvements to loading optional doom plugins
+
+### Deleted
+
+- Many hard coded config options
+- Dashboard: removed messy code
+- Telescope: `vimgrep_arguments` (returning `nil` on some machines)
+- Whichkey: `Window: border, position. Layout: spacing`
+
+### Fixed
+
+- Telescope grep returning `nil`
+- Whichkey triggering when pressing certain keys
+- Minor bug fixes
+
+## [2.1.5] - 2021-05-04
+
+### Changed
+
+- Installation script will not install packer anymore, it'll be installed by Doom
+  when started for the first time
+
+### Fixed
+
+- Now core plugins will be installed at first start
+
+## [2.1.4] - 2021-05-03
 
 ### Fixed
 
@@ -51,7 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.1.3] - 2021-05-03
 
-### Removed
+### Deleted
 
 - Unused code in packer setup
 
@@ -61,7 +74,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.1.2] - 2021-05-02
 
-### Removed
+### Deleted
 
 - `Is_directory` function in `utils/`
 
@@ -220,7 +233,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.4...HEAD
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.5...v2.2.0
+[2.1.5]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.4...v2.1.5
 [2.1.4]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.3...v2.1.4
 [2.1.3]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.0...v2.1.2
