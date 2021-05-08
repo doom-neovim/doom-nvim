@@ -32,16 +32,15 @@ require('which-key').setup({
 		group = '+', -- symbol prepended to a group
 	},
 	window = {
-		border = 'none', -- none, single, double, shadow
-		position = 'bottom', -- bottom, top
-		margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
-		padding = { 1, 1, 1, 1 }, -- extra window padding [top, right, bottom, left]
+		padding = { 0, 0, 0, 0 }, -- extra window padding [top, right, bottom, left]
 	},
 	layout = {
-		height = { min = 4, max = 25 }, -- min and max height of the columns
-		width = { min = 20, max = 80 }, -- min and max width of the columns
-		spacing = 20, -- spacing between columns
+		height = { min = 1, max = 10 }, -- min and max height of the columns
 	},
 	hidden = { '<silent>', '^:', '^ ' }, -- hide mapping boilerplate
 	show_help = true, -- show help message on the command line when the popup is visible
+    triggers = {"<leader>"}, -- automatically setup triggers
+  -- triggers = {"<leader>"} -- or specifiy a list manually
 })
+--Cmd('highlight WhichKeyFloat guibg='..Doom.whichkey_bg')
+

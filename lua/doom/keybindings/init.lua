@@ -48,6 +48,7 @@ local opts = { silent = true }
 if
 	not Has_value(Doom.disabled_modules, 'lsp')
 	and (not Has_value(Doom.disabled_plugins, 'compe'))
+    and Check_plugin('nvim-compe')
 then
 	-- https://github.com/hrsh7th/nvim-compe#mappings
 	Map('i', '<expr> <C-Space>', Fn['compe#complete'](), opts)
@@ -65,6 +66,22 @@ then
 		Fn['compe#scroll']({ delta = '-4' }),
 		opts
 	)
+    Map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definitionA
+    Map('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts) -- gr: go to reference
+    Map('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts) -- gi: buf implementation
+    Map('n', 'ca', ':Lspsaga code_action<CR>', opts) -- ca: code actions
+    Map('n', 'K', ':Lspsaga hover_doc<CR>', opts) -- K: hover doc
+    Map('n', '<C-p>', ':Lspsaga diagnostic_jump_prev<CR>', opts) -- Control+p: Jump to previous diagnostic
+    Map('n', '<C-n>', ':Lspsaga diagnostic_jump_next<CR>', opts) -- Control+n: Jump to next diagnostic
+    Map('n', '<C-f>', ':lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>', opts) -- Control+f: Scroll down documents
+    Map('n', '<C-b>', "lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>") -- Control+b: Scroll up documents
+    Cmd('command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()')
+end
+
+if Doom.new_file_split then
+    Map('n', '<Leader>fn', ':new<CR>', opts)
+else
+    Map('n', '<Leader>fn', ':enew<CR>', opts)
 end
 
 -- TAB to cycle buffers too, why not?
@@ -96,6 +113,37 @@ if
 then
 	Map('n', '<F7>', ':DotHttp<CR>')
 end
+---[[------------------------------]]
+--     Window Movements keys      --
+---]]------------------------------]]
+
+Map('n', '<C-h>', '<C-w>h', opts)
+Map('n', '<C-j>', '<C-w>j', opts)
+Map('n', '<C-k>', '<C-w>k', opts)
+Map('n', '<C-l>', '<C-w>l', opts)
+
+---[[-----------------]]---
+--     Escape Remaps     --
+---]]-----------------[[---
+Map('i', 'jk', '<ESC>', opts)
+
+---[[-----------------]]---
+--     Select Movement   --
+---]]-----------------[[---
+Map ('x', 'K', ':move \'<-2<CR>gv-gv', opts)
+Map ('x', 'J', ':move \'>+1<CR>gv-gv', opts)
+
+Cmd('tnoremap <Esc> <C-\\><C-n>') -- get out of terminal insert mode into normal mode with Esc
+
+---[[-----------------]]---
+--     Resizing Splits   --
+---]]-----------------[[---
+Cmd([[
+  nnoremap <silent> <C-Up>    :resize -2<CR>
+  nnoremap <silent> <C-Down>  :resize +2<CR>
+  nnoremap <silent> <C-Right>  :vertical resize -2<CR>
+  nnoremap <silent> <C-Left>  :vertical resize +2<CR>
+]])
 
 ---[[-----------------]]---
 --     Disable keys      --
@@ -177,7 +225,7 @@ wk.register({
 		f = {
 			name = '+file',
 			c = { ':e $MYVIMRC<CR>', 'Edit Neovim configuration' },
-			n = { ':new<CR>', 'Create a new unnamed buffer' },
+			n = { 'Create a new unnamed buffer' },
 			f = { ':Telescope find_files<CR>', 'Find files' },
 			b = { ':Telescope marks<CR>', 'Bookmarks' },
 			W = { ':Telescope live_grep<CR>', 'Find word' },
