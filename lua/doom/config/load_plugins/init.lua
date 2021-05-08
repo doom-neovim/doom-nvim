@@ -7,57 +7,56 @@
 -- /home/user/.config/doom-nvim/lua/plugins/init.lua
 -- /home/user/.config/doom-nvim/lua/plugins/configs/*.lua
 -- Don't load plugin config if the plugin is disabled to improve performance
-if Check_plugin('pears.nvim') then
-	require('plugins.configs.nvim-pears')
-end
-if Check_plugin('nvim-lspconfig') and (Check_plugin('nvim-lspinstall')) then
-	require('plugins.configs.lsp')
-end
-if Check_plugin('nvim-compe') then
-	require('plugins.configs.nvim-compe')
-end
-if Check_plugin('nvim-colorizer.lua') then
-	require('plugins.configs.nvim-colorizer')
-end
-if Check_plugin('focus.nvim') then
-	require('plugins.configs.nvim-focus')
-end
-if Check_plugin('telescope.nvim') then
-	require('plugins.configs.nvim-telescope')
-end
-if Check_plugin('nvim-toggleterm.lua') then
-	require('plugins.configs.nvim-toggleterm')
-end
-if Check_plugin('nvim-tree.lua') then
-	require('plugins.configs.nvim-tree')
-end
-if Check_plugin('galaxyline.nvim') then
-	require('plugins.configs.statusline')
-end
-if Check_plugin('nvim-treesitter') then
-	require('plugins.configs.tree-sitter')
-end
-if Check_plugin('gitsigns.nvim') then
-	require('plugins.configs.nvim-gitsigns')
-end
-if Check_plugin('which-key.nvim') then
-	require('plugins.configs.which-key')
-end
-if Check_plugin('symbols-outline.nvim') then
-	require('plugins.configs.symbols')
-end
-if Check_plugin('auto-session') then
-	require('plugins.configs.auto-session')
-end
-if Check_plugin('format.nvim') then
-	require('plugins.configs.nvim-format')
-end
-if Check_plugin('nvim-web-devicons') then
-	require('plugins.configs.nvim-devicons')
-end
-if Check_plugin('dashboard-nvim') then
-	require('plugins.configs.nvim-dashboard')
-end
-if Check_plugin('indent-blankline.nvim') then
-	require('plugins.configs.blankline')
+
+-- Defines the list of plugins to conditionally load
+local conditional_plugins = {
+
+	-- Format: ['file-to-require'] = 'plugin-to-check' OR ['file-to-require'] = { 'plugins', 'to', 'check' }
+	['nvim-pears'] = 'pears.nvim',
+	['lsp'] = { 'nvim-lspconfig', 'nvim-lspinstall' },
+	['nvim-compe'] = 'nvim-compe',
+	['nvim-colorizer'] = 'nvim-colorizer.lua',
+	['nvim-focus'] = 'focus.nvim',
+	['nvim-telescope'] = 'telescope.nvim',
+	['nvim-toggleterm'] = 'nvim-toggleterm.lua',
+	['nvim-tree'] = 'nvim-tree.lua',
+	['statusline'] = 'galaxyline.nvim',
+	['tree-sitter'] = 'nvim-treesitter',
+	['nvim-gitsigns'] = 'gitsigns.nvim',
+	['which-key'] = 'which-key.nvim',
+	['symbols'] = 'symbols-outline.nvim',
+	['auto-session'] = 'auto-session',
+	['nvim-format'] = 'format.nvim',
+	['nvim-devicons'] = 'nvim-web-devicons',
+	['nvim-dashboard'] = 'dashboard-nvim',
+	['blankline'] = 'indent-blankline.nvim'
+
+}
+
+-- Loop through all conditional plugins and see whether we need to load them
+for file_to_require, plugins_to_check in pairs(conditional_plugins) do
+
+	-- The plugins_to_check value can be either an array of strings or a single string
+	local type_of_plugin = type(plugins_to_check)
+
+	if type_of_plugin == 'string' then
+		if Check_plugin(plugins_to_check) then
+			require('plugins.configs.' .. file_to_require)
+		end
+	elseif type_of_plugin == 'table' then
+
+		-- If we're dealing with a table then loop through it and see if all plugins want to be loaded
+		local success = true
+
+		for _, plugin in ipairs(plugins_to_check) do
+			if not Check_plugin(plugin) then -- If even one of those plugins isn't loaded do not load our file
+				success = false
+				break
+			end
+		end
+
+		if success then
+			require('plugins.configs.' .. file_to_require)
+		end
+	end
 end

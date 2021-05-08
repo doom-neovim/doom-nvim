@@ -6,11 +6,7 @@
 
 -- Check if the given plugin exists
 function Check_plugin(plugin_path)
-	if Fn.isdirectory(Fn.expand('$HOME/.local/share/nvim/site/pack/packer/start/' .. plugin_path)) == 1 then
-		return true
-	else
-		return false
-	end
+	return Fn.isdirectory(Fn.expand('$HOME/.local/share/nvim/site/pack/packer/start/' .. plugin_path)) == 1
 end
 
 -- Quit Neovim and change the colorscheme at doomrc if the colorscheme is not the same,
