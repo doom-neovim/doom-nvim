@@ -31,7 +31,7 @@ Doom = {
 
 	-- Autoload sessions
 	-- false : Disable session autoload
-	-- true  : Enable session autosave
+	-- true  : Enable session autoload
 	-- @default = false
 	autoload_last_session = false,
 
