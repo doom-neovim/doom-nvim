@@ -49,7 +49,7 @@ for file_to_require, plugins_to_check in pairs(conditional_plugins) do
 		local success = true
 
 		for _, plugin in ipairs(plugins_to_check) do
-			if not Check_plugin(plugin) then -- If even one of those plugins isn't loaded do not load our file
+			if not Check_plugin(plugin) then -- If even one of those plugins isn't wanted do not load our file
 				success = false
 				break
 			end
