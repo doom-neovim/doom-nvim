@@ -4,7 +4,7 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 -- Doom Nvim version
-Doom_version = '2.1.4'
+Doom_version = '2.1.5'
 
 -- Check if running Neovim or Vim and fails if:
 --  1. Running Vim instead of Neovim
@@ -21,7 +21,7 @@ else
 	)
 end
 
--- If packer.nvim is not installed then install it
+-- If packer.nvim is not installed then install it and install core plugins after that
 local packer_install_path = Fn.stdpath('data')
 	.. '/site/pack/packer/start/packer.nvim'
 if Fn.empty(Fn.glob(packer_install_path)) > 0 then
@@ -30,6 +30,10 @@ if Fn.empty(Fn.glob(packer_install_path)) > 0 then
 			.. packer_install_path
 	)
 	Execute('packadd packer.nvim')
+
+	-- Install plugins and then reload configs
+	Execute('PackerInstall')
+	Execute('luafile $MYVIMRC')
 end
 
 -- Set some configs on load
@@ -44,7 +48,7 @@ end
 -- Search for a configuration file (doomrc)
 Check_BFC()
 if Doom_bfc then
-    Load_BFC()
+	Load_BFC()
 end
 -- Set which separator should be used for paths
 Which_os()
@@ -57,5 +61,5 @@ require('doom.config.load_plugins')
 
 Custom_commands()
 if Doom.check_updates then
-    Check_updates()
+	Check_updates()
 end
