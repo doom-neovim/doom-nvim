@@ -36,7 +36,7 @@ G.nvim_tree_show_icons = { git = 1, folders = 1, files = 1 }
 -- If the tagbar is set to left then set tree side to right and vice versa.
 -- left by default
 if Doom.tagbar_left then
-    G.nvim_tree_side = 'right'
+	G.nvim_tree_side = 'right'
 end
 -- You can edit keybindings be defining this variable
 -- You don't have to define all keys.

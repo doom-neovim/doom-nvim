@@ -10,7 +10,7 @@ local autocmds = {
 		{ 'BufNewFile,BufRead', 'doomrc', 'set ft=lua' },
 		-- Ensure every file does full syntax highlight
 		{ 'BufEnter', '*', ':syntax sync fromstart' },
-        { 'BufEnter', '*', ':set signcolumn=yes'},
+		{ 'BufEnter', '*', ':set signcolumn=yes' },
 		-- Compile new plugins changes at save
 		{
 			'BufWritePost',
@@ -56,14 +56,22 @@ end
 -- Enable auto comment
 if not Doom.auto_comment then
 	table.insert(autocmds['doom_core'], {
-        {'BufWinEnter', '*', 'setlocal formatoptions-=c formatoptions-=r formatoptions-=o'},
+		{
+			'BufWinEnter',
+			'*',
+			'setlocal formatoptions-=c formatoptions-=r formatoptions-=o',
+		},
 	})
 end
 
 -- Enable highlight on yank
 if Doom.highlight_yank then
 	table.insert(autocmds['doom_core'], {
-        {'TextYankPost', '*', 'lua require(\'vim.highlight\').on_yank({higroup = \'Search\', timeout = 200})'},
+		{
+			'TextYankPost',
+			'*',
+			"lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})",
+		},
 	})
 end
 

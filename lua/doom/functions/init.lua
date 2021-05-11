@@ -6,7 +6,9 @@
 
 -- Check if the given plugin exists
 function Check_plugin(plugin_path)
-	return Fn.isdirectory(Fn.expand('$HOME/.local/share/nvim/site/pack/packer/start/' .. plugin_path)) == 1
+	return Fn.isdirectory(Fn.expand(
+		'$HOME/.local/share/nvim/site/pack/packer/start/' .. plugin_path
+	)) == 1
 end
 
 -- Quit Neovim and change the colorscheme at doomrc if the colorscheme is not the same,
@@ -97,7 +99,8 @@ function Create_report()
 
 	Cmd(
 		'silent !echo "'
-			.. Fn.fnameescape('#') .. ' doom crash report" >> '
+			.. Fn.fnameescape('#')
+			.. ' doom crash report" >> '
 			.. Doom_report
 	)
 	Cmd(
@@ -105,7 +108,8 @@ function Create_report()
 	)
 	Cmd(
 		'silent !echo "'
-			.. Fn.fnameescape('##') .. ' Begin log dump" >> '
+			.. Fn.fnameescape('##')
+			.. ' Begin log dump" >> '
 			.. Doom_report
 	)
 	Cmd(
@@ -113,7 +117,8 @@ function Create_report()
 	)
 	Cmd(
 		'silent !echo "'
-			.. Fn.fnameescape('##') .. ' End log dump" >> '
+			.. Fn.fnameescape('##')
+			.. ' End log dump" >> '
 			.. Doom_report
 	)
 	print('Report created at ' .. Doom_report)

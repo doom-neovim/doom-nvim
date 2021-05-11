@@ -29,13 +29,11 @@ local conditional_plugins = {
 	['nvim-format'] = 'format.nvim',
 	['nvim-devicons'] = 'nvim-web-devicons',
 	['nvim-dashboard'] = 'dashboard-nvim',
-	['blankline'] = 'indent-blankline.nvim'
-
+	['blankline'] = 'indent-blankline.nvim',
 }
 
 -- Loop through all conditional plugins and see whether we need to load them
 for file_to_require, plugins_to_check in pairs(conditional_plugins) do
-
 	-- The plugins_to_check value can be either an array of strings or a single string
 	local type_of_plugin = type(plugins_to_check)
 
@@ -44,7 +42,6 @@ for file_to_require, plugins_to_check in pairs(conditional_plugins) do
 			require('plugins.configs.' .. file_to_require)
 		end
 	elseif type_of_plugin == 'table' then
-
 		-- If we're dealing with a table then loop through it and see if all plugins want to be loaded
 		local success = true
 

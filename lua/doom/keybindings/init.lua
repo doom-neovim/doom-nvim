@@ -48,7 +48,7 @@ local opts = { silent = true }
 if
 	not Has_value(Doom.disabled_modules, 'lsp')
 	and (not Has_value(Doom.disabled_plugins, 'compe'))
-    and Check_plugin('nvim-compe')
+	and Check_plugin('nvim-compe')
 then
 	-- https://github.com/hrsh7th/nvim-compe#mappings
 	Map('i', '<expr> <C-Space>', Fn['compe#complete'](), opts)
@@ -66,22 +66,31 @@ then
 		Fn['compe#scroll']({ delta = '-4' }),
 		opts
 	)
-    Map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definitionA
-    Map('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts) -- gr: go to reference
-    Map('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts) -- gi: buf implementation
-    Map('n', 'ca', ':Lspsaga code_action<CR>', opts) -- ca: code actions
-    Map('n', 'K', ':Lspsaga hover_doc<CR>', opts) -- K: hover doc
-    Map('n', '<C-p>', ':Lspsaga diagnostic_jump_prev<CR>', opts) -- Control+p: Jump to previous diagnostic
-    Map('n', '<C-n>', ':Lspsaga diagnostic_jump_next<CR>', opts) -- Control+n: Jump to next diagnostic
-    Map('n', '<C-f>', ':lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>', opts) -- Control+f: Scroll down documents
-    Map('n', '<C-b>', "lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>") -- Control+b: Scroll up documents
-    Cmd('command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()')
+	Map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definitionA
+	Map('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts) -- gr: go to reference
+	Map('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts) -- gi: buf implementation
+	Map('n', 'ca', ':Lspsaga code_action<CR>', opts) -- ca: code actions
+	Map('n', 'K', ':Lspsaga hover_doc<CR>', opts) -- K: hover doc
+	Map('n', '<C-p>', ':Lspsaga diagnostic_jump_prev<CR>', opts) -- Control+p: Jump to previous diagnostic
+	Map('n', '<C-n>', ':Lspsaga diagnostic_jump_next<CR>', opts) -- Control+n: Jump to next diagnostic
+	Map(
+		'n',
+		'<C-f>',
+		':lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
+		opts
+	) -- Control+f: Scroll down documents
+	Map(
+		'n',
+		'<C-b>',
+		"lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>"
+	) -- Control+b: Scroll up documents
+	Cmd('command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()')
 end
 
 if Doom.new_file_split then
-    Map('n', '<Leader>fn', ':new<CR>', opts)
+	Map('n', '<Leader>fn', ':new<CR>', opts)
 else
-    Map('n', '<Leader>fn', ':enew<CR>', opts)
+	Map('n', '<Leader>fn', ':enew<CR>', opts)
 end
 
 -- TAB to cycle buffers too, why not?
@@ -130,8 +139,8 @@ Map('i', 'jk', '<ESC>', opts)
 ---[[-----------------]]---
 --     Select Movement   --
 ---]]-----------------[[---
-Map ('x', 'K', ':move \'<-2<CR>gv-gv', opts)
-Map ('x', 'J', ':move \'>+1<CR>gv-gv', opts)
+Map('x', 'K', ":move '<-2<CR>gv-gv", opts)
+Map('x', 'J', ":move '>+1<CR>gv-gv", opts)
 
 Cmd('tnoremap <Esc> <C-\\><C-n>') -- get out of terminal insert mode into normal mode with Esc
 

@@ -5,7 +5,14 @@ local telescope = require('telescope')
 
 telescope.setup({
 	defaults = {
-        find_command = {'rg', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case'},
+		find_command = {
+			'rg',
+			'--no-heading',
+			'--with-filename',
+			'--line-number',
+			'--column',
+			'--smart-case',
+		},
 		prompt_position = 'bottom',
 		prompt_prefix = '>',
 		initial_mode = 'insert',
@@ -35,19 +42,19 @@ telescope.setup({
 
 		-- Developer configurations: Not meant for general override
 		buffer_previewer_maker = require('telescope.previewers').buffer_previewer_maker,
-         mappings = {
-            i = {
-                ["<C-j>"] = actions.move_selection_next,
-                ["<C-k>"] = actions.move_selection_previous,
-                ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-                ["<Leader>f"] = actions.close, -- works like a toggle, sometimes can be buggy
-                ["<CR>"] = actions.select_default + actions.center
-            },
-            n = {
-                ["<C-j>"] = actions.move_selection_next,
-                ["<C-k>"] = actions.move_selection_previous,
-                ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-            }
-        }
+		mappings = {
+			i = {
+				['<C-j>'] = actions.move_selection_next,
+				['<C-k>'] = actions.move_selection_previous,
+				['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
+				['<Leader>f'] = actions.close, -- works like a toggle, sometimes can be buggy
+				['<CR>'] = actions.select_default + actions.center,
+			},
+			n = {
+				['<C-j>'] = actions.move_selection_next,
+				['<C-k>'] = actions.move_selection_previous,
+				['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
+			},
+		},
 	},
 })
