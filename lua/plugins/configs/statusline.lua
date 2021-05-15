@@ -128,6 +128,7 @@ gls.left[7] = {
 		condition = condition.check_git_workspace and is_not_dashboard,
 		highlight = { colors.fg, colors.bg },
 		separator = ' ',
+		separator_highlight = { colors.section_bg, colors.bg },
 	},
 }
 gls.left[8] = {
