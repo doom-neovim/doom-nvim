@@ -43,10 +43,10 @@ if not Doom.dashboard_statline then
 	G.dashboard_disable_statusline = 1
 end
 
-G.dashboard_custom_header =	Doom.dashboard_custom_header
+G.dashboard_custom_header = Doom.dashboard_custom_header
 -- Header color
 Cmd(
-    'hi! dashboardHeader   guifg='
+	'hi! dashboardHeader   guifg='
 		.. Doom.dashboard_custom_colors.header_color
 )
 Cmd(

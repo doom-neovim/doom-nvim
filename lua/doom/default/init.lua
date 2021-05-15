@@ -135,12 +135,12 @@ end
 
 -- Custom Doom Nvim commands
 function Custom_options()
-    -- Set a custom command to update Doom Nvim
+	-- Set a custom command to update Doom Nvim
 	-- can be called by using :DoomUpdate
 	Cmd('command! DoomUpdate !git -C ~/.config/doom-nvim/ stash -q && git -C ~/.config/doom-nvim/ pull && git -C ~/.config/doom-nvim/ stash pop -q')
 
-    -- Load user-defined settings from the Neovim field in the doomrc file
-    Load_custom_settings(Neovim.global_variables, 'variables')
-    Load_custom_settings(Neovim.autocmds, 'autocmds')
-    Load_custom_settings(Neovim.mappings, 'mappings')
+	-- Load user-defined settings from the Neovim field in the doomrc file
+	Load_custom_settings(Neovim.global_variables, 'variables')
+	Load_custom_settings(Neovim.autocmds, 'autocmds')
+	Load_custom_settings(Neovim.mappings, 'mappings')
 end

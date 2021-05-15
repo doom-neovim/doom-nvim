@@ -171,34 +171,34 @@ local function default_BFC_values()
 		logging = 3,
 	}
 
-    Neovim = {
-        -- Set custom Neovim global variables
-        -- @default = {}
-        -- example:
-        --   { ['sonokai_style'] = 'andromeda' }
-        global_variables = {},
+	Neovim = {
+		-- Set custom Neovim global variables
+		-- @default = {}
+		-- example:
+		--   { ['sonokai_style'] = 'andromeda' }
+		global_variables = {},
 
-        -- Set custom autocommands
-        -- @default = {}
-        -- example:
-        --   augroup_name = {
-        --      { 'BufNewFile,BufRead', 'doomrc', 'set ft=lua'}
-        --   }
-        autocmds = {},
+		-- Set custom autocommands
+		-- @default = {}
+		-- example:
+		--   augroup_name = {
+		--      { 'BufNewFile,BufRead', 'doomrc', 'set ft=lua'}
+		--   }
+		autocmds = {},
 
-        -- Set custom key bindings
-        -- @default = {}
-        -- example:
-        --   {
-        --      {'n', 'ca', ':Lspsaga code_action<CR>'}
-        --   }
-        --
-        --   where
-        --     'n' is the map scope
-        --     'ca' is the map activator
-        --     ':Lspsaga ...' is the command to be executed
-        mappings = {}
-    }
+		-- Set custom key bindings
+		-- @default = {}
+		-- example:
+		--   {
+		--      {'n', 'ca', ':Lspsaga code_action<CR>'}
+		--   }
+		--
+		--   where
+		--     'n' is the map scope
+		--     'ca' is the map activator
+		--     ':Lspsaga ...' is the command to be executed
+		mappings = {},
+	}
 end
 
 function Load_BFC()
