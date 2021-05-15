@@ -59,7 +59,9 @@ Default_options()
 require('plugins')
 require('doom.config.load_plugins')
 
-Custom_commands()
+-- Load the user-defined settings (global variables, autocmds, mappings)
+Custom_options()
+
 if Doom.check_updates then
 	Check_updates()
 end
