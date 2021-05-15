@@ -11,6 +11,28 @@ function Check_plugin(plugin_path)
 	)) == 1
 end
 
+-- Load user-defined settings from the Neovim field in the doomrc
+-- @param settings_tbl The settings table to iterate over
+-- @param scope The settings scope, e.g. autocmds
+function Load_custom_settings(settings_tbl, scope)
+    -- If the provided settings table is not empty
+    if next(settings_tbl) ~= nil then
+        if scope == 'autocmds' then
+            Create_augroups(settings_tbl)
+        elseif scope == 'mappings' then
+            local opts = {silent = true}
+            for _, map in ipairs(settings_tbl) do
+                -- scope, lhs, rhs, options
+                Map(map[1], map[2], map[3], opts)
+            end
+        elseif scope == 'variables' then
+            for var, val in pairs(settings_tbl) do
+                G[var] = val
+            end
+        end
+    end
+end
+
 -- Quit Neovim and change the colorscheme at doomrc if the colorscheme is not the same,
 -- dump all messages to doom.log file
 function Quit_doom(write, force)
