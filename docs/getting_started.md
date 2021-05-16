@@ -41,7 +41,7 @@ This is what you will have installed by the end of this section:
 - GNU Find
 - (Optional) fd 7.3.0+ (known as `fd-find` on Debian, Ubuntu & derivates),
   improves performance for many file indexing commands
-- (Optional) node & npm, required to use LanguageServerProtocols (LSP).
+- (Optional) node & npm, required to use LanguageServerProtocols (LSP) and the plugins using LSP, like the symbols-outline plugin.
 
 These packages ought to be available through the package managers of your OS;
 i.e. pacman/aptitude/rpm/etc on the various Linux distributions.
@@ -196,6 +196,10 @@ You can configure Doom Nvim by tweaking the file `doomrc` in your Doom Nvim root
 dir (`$HOME/.config/doom-nvim/` by default), please see
 <kbd>:h doom_nvim</kbd> for more information.
 
+> **IMPORTANT:** any changes to your Doom Nvim configuration occassionally
+> need a run of `:PackerSync` inside Neovim. For instance, when you enable
+> a disabled plugin.
+
 ## Modules
 
 Doom Nvim consists of around 7 modules and growing. A Doom Nvim Module is a bundle of plugins,
@@ -280,10 +284,15 @@ Do you want to change some configurations of some modules?
 
 Go to `lua/plugins/configs` dir and you will find the configurations for the plugins.
 
-### Configuring LSP
+#### Configuring LSP
+
+[LSP](https://microsoft.github.io/language-server-protocol/) is installed as a plugin.
+Be aware that this plugin is disabled per default. To enable it, remove it from the
+`Disabled plugins` section in your `doomrc`.
 
 To easily install LSPs and without having to do it system-wide or having to
 manually configure servers, Doom Nvim makes use of [kabouzeid/nvim-lspinstall](https://github.com/kabouzeid/nvim-lspinstall).
+
 You can see a list of currently supported languages at [bundled installers](https://github.com/kabouzeid/nvim-lspinstall#bundled-installers).
 
 > Usage example:
