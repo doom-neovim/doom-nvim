@@ -60,7 +60,7 @@ including their plugins individually.
   - [x] [nvim-toggleterm.lua] - A neovim plugin to persist and toggle multiple terminals during an editing session
     - Use `terminal` to disable it
   - [x] [symbols-outline.nvim] - A tree like view for symbols in Neovim using the Language Server Protocol.
-    - Use `tagbar` to disable it
+    - Use `outline` to disable it
   - [x] [minimap.vim] - Blazing fast minimap / scrollbar for vim, powered by code-minimap written in Rust.
     - Use `minimap` to disable it
     - **Depends on** [wfxr/code-minimap](htps://github.com/wfxr/code-minimap) **to work!**

@@ -33,9 +33,9 @@ G.nvim_tree_group_empty = 1
 -- true by default, notice that if 'files' is 1, it will only display
 -- if nvim-web-devicons is installed and on your runtimepath
 G.nvim_tree_show_icons = { git = 1, folders = 1, files = 1 }
--- If the tagbar is set to left then set tree side to right and vice versa.
+-- If the symbols outline is set to left then set tree side to right and vice versa.
 -- left by default
-if Doom.tagbar_left then
+if Doom.symbols_outline_left then
 	G.nvim_tree_side = 'right'
 end
 -- You can edit keybindings be defining this variable

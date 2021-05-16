@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Dashboard
     - Changed icons and Option names
     - You now set your header/colors through `doomrc`
-  - Tagbar / Nvim-tree
+  - Symbols-Outline / Nvim-tree
     - Default positions have changed (Nvim-tree will now open to the left by default)
 - Improvements to loading optional doom plugins
 

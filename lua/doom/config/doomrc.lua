@@ -77,14 +77,14 @@ local function default_BFC_values()
 		enable_guicolors = true,
 
 		-- Sidebar sizing
-		-- Specifies the default width of Tree Explorer and Tagbar
+		-- Specifies the default width of Tree Explorer and Symbols-Outline
 		-- @default = 25
 		sidebar_width = 25,
 
-		-- Tagbar left
-		-- Sets Tagbar buffer to the left when enabled
+		-- Symbols-Outline left
+		-- Sets Symbols-Outline buffer to the left when enabled
 		-- @default = true
-		tagbar_left = true,
+		symbols_outline_left = true,
 
 		-- Show hidden files
 		-- @default = true
