@@ -27,7 +27,7 @@ Api.nvim_set_var('mapleader', ' ')
 --                                     --
 --          TAB = Cycle buffers        --
 --          ESC = Search highlight off --
---           F2 = Toggle Tagbar        --
+--           F2 = Toggle Symbols-Outline        --
 --           F3 = Toggle Tree Explorer --
 --           F4 = Toggle Terminal      --
 --           F5 = Toggle Minimap       --
@@ -101,7 +101,7 @@ Map('n', '<S-Tab>', ':bprevious<CR>', opts)
 Map('n', '<esc>', ':noh<CR>', opts)
 
 --- F<n> keybindings
-if not Has_value(Doom.disabled_plugins, 'tagbar') then
+if not Has_value(Doom.disabled_plugins, 'outline') then
 	Map('n', '<F2>', ':SymbolsOutline<CR>')
 end
 if not Has_value(Doom.disabled_plugins, 'tree') then

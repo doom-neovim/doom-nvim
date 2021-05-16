@@ -165,7 +165,7 @@ Doom = {
 	enable_guicolors = true,
 
 	-- Sidebar sizing
-	-- Specifies the default width of Tree Explorer and Tagbar
+	-- Specifies the default width of Tree Explorer and the Symbols Outline
 	-- @default = 25
 	sidebar_width = 25,
 
@@ -174,10 +174,10 @@ Doom = {
     -- @default = #202328
     whichkey_bg = "#202328",
 
-	-- Tagbar left
-	-- Sets Tagbar buffer to the left when enabled
+	-- Symbols-Outline on the left
+	-- Places the Symbols-Outline buffer to the left when enabled
 	-- @default = false
-	tagbar_left = false,
+	symbols_outline_left = false,
 
 	-- Show hidden files
 	-- @default = true

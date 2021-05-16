@@ -1,7 +1,7 @@
 G.symbols_outline = {
 	highlight_hovered_item = true,
 	show_guides = true,
-	position = Doom.tagbar_left,
+	position = Doom.symbols_outline_left,
 	keymaps = {
 		close = '<Esc>',
 		goto_location = '<CR>',

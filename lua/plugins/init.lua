@@ -129,13 +129,13 @@ return packer.startup(function()
 	})
 
 	-- Viewer & finder for LSP symbols and tags
-	local disabled_tagbar = Has_value(Doom.disabled_plugins, 'tagbar')
-	if disabled_tagbar then
-		table.insert(disabled_plugins, 'tagbar')
+	local disabled_outline = Has_value(Doom.disabled_plugins, 'outline')
+	if disabled_outline then
+		table.insert(disabled_plugins, 'outline')
 	end
 	use({
 		'simrat39/symbols-outline.nvim',
-		disable = disabled_tagbar,
+		disable = disabled_outline,
 	})
 
 	-- Minimap
