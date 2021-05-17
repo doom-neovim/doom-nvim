@@ -4,6 +4,10 @@
 ---[[--------------------------------------------------]]---
 
 Doom = {
+    ---[[--------------------------------------------------]]---
+    --                  Boolean Options                       --
+    ---[[--------------------------------------------------]]---
+
 	-- Autosave
 	-- false : Disable autosave
 	-- true  : Enable autosave
@@ -21,13 +25,6 @@ Doom = {
 	-- true  : Enable session autosave
 	-- @default = false
 	autosave_sessions = false,
-
-    -- set your custom lsp diagnostic symbols below
-    lsp_error = '',
-    lsp_warning = '',
-    lsp_hint = '',
-    lsp_information = '',
-    lsp_virtual_text = ' ',
 
 	-- Autoload sessions
 	-- false : Disable session autoload
@@ -47,12 +44,6 @@ Doom = {
     -- true  : enable undo files/undo dirs.
     -- @default = false
     backup = false, -- WARNING: if you change this to false and you have an undo dir already, it will REMOVE the undodir (loss of data might take place)
-    
-    -- NOTE: This will only be activated if 'backup' is true.
-    -- We don'recommend you put this outside of neovim so we've restricted to the path: ~/.config/nvim
-    -- WARNING: only put the folder name that you want. (eg: undo_dir = '/undodir')
-    -- @default_directory = '~/.config/nvim/undodir'
-    undo_dir = '/undodir',
 
     -- Enable Line wrapping 
     -- false : disables line wrapping 
@@ -85,10 +76,6 @@ Doom = {
 	-- @default = false
 	preserve_edit_pos = false,
 
-	-- Default indent size
-	-- @default = 4
-	indent = 4,
-
     -- horizontal split on creating a new file (<Leader>fn)
     -- false : doesn't split the window when creating a new file
     -- true  : horizontal split on creating a new file
@@ -119,12 +106,6 @@ Doom = {
     -- @default = true
     clipboard = true,
 
-    -- Set gui fonts here 
-    -- @default = "FiraCode Nerd Font", @default font size = 15,
-    -- WARNING: Font sizes must be in string format!
-    guifont = 'FiraCode Nerd Font',
-    guifont_size = '15',
-
     -- Enable auto comment (current line must be commented)
     -- false : disables auto comment
     -- true  : enables auto comment
@@ -147,11 +128,6 @@ Doom = {
 	-- true  : Shows relative number lines
 	-- @default = true
 	relative_num = true,
-
-	-- Set max cols
-	-- Defines the column to show a vertical marker
-	-- @default = 80
-	max_columns = 80,
 
     -- Enable Highlight on yank
     -- false : disables highligh on yank
@@ -183,26 +159,51 @@ Doom = {
 	-- @default = true
 	show_hidden = true,
 
-	-- Default colorscheme
-	-- @default = doom-one
-	colorscheme = 'doom-one',
-
-	-- Background color
-	-- @default = dark
-	colorscheme_bg = 'dark',
-
 	-- Checkupdates on start
 	-- @default = false
 	check_updates = false,
 
-	-- Set the Terminal direction
-	-- Available directions:
-	--   - vertical
-	--   - horizontal
-	--   - window
-	--   - float
-	-- @default = 'horizontal'
-	terminal_direction = 'horizontal',
+    -- Disable dashboard status line (does not work perfectly)
+    -- false : disables dashboard status line
+    -- true  : enables dashboard status line
+    -- @default = true
+    dashboard_statline = true,
+
+    ---[[--------------------------------------------------]]---
+    --                   Number Options                       --
+    ---[[--------------------------------------------------]]---
+
+	-- Default indent size
+	-- @default = 4
+	indent = 4,
+
+	-- Set max cols
+	-- Defines the column to show a vertical marker
+	-- @default = 80
+	max_columns = 80,
+
+    -- Completion box height
+	-- @default = 10
+	complete_size = 10, 
+    
+    -- Completion box transparency 
+    -- 0 = no transparency
+    -- 100 = fully transparent
+    -- @default = 25
+    complete_transparency = 25,
+
+	-- Sidebar sizing
+	-- Specifies the default width of Tree Explorer and Tagbar
+	-- @default = 25
+	sidebar_width = 25,
+
+	-- Logging level
+	-- 0 : No logging
+	-- 1 : All errors, no echo (default)
+	-- 2 : All errors and messages, no echo
+	-- 3 : All errors and messages, echo
+	-- @default = 1
+	logging = 1,
 
 	-- Set the Terminal width
 	-- Applies only to float direction
@@ -223,19 +224,91 @@ Doom = {
 	-- 3 : Concealed text is completely hidden
 	conceallevel = 0,
 
-	-- Logging level
-	-- 0 : No logging
-	-- 1 : All errors, no echo (default)
-	-- 2 : All errors and messages, no echo
-	-- 3 : All errors and messages, echo
-	-- @default = 1
-	logging = 1,
+    ---[[--------------------------------------------------]]---
+    --                   String Options                       --
+    ---[[--------------------------------------------------]]---
 
-    -- Disable dashboard status line (does not work perfectly)
-    -- false : disables dashboard status line
-    -- true  : enables dashboard status line
-    -- @default = true
-    dashboard_statline = true,
+	-- Set the Terminal direction
+	-- Available directions:
+	--   - vertical
+	--   - horizontal
+	--   - window
+	--   - float
+	-- @default = 'horizontal'
+	terminal_direction = 'horizontal',
+    
+    -- NOTE: This will only be activated if 'backup' is true.
+    -- We don'recommend you put this outside of neovim so we've restricted to the path: ~/.config/nvim
+    -- WARNING: only put the folder name that you want. (eg: undo_dir = '/undodir')
+    -- @default_directory = '~/.config/nvim/undodir'
+    undo_dir = '/undodir',
+
+	-- Default colorscheme
+	-- @default = doom-one
+	colorscheme = 'doom-one',
+
+	-- Background color
+	-- @default = dark
+	colorscheme_bg = 'dark',
+
+    -- Set gui fonts here 
+    -- @default = "FiraCode Nerd Font", @default font size = 15,
+    -- WARNING: Font sizes must be in string format!
+    guifont = 'FiraCode Nerd Font',
+    guifont_size = '15',
+
+    -- change Which Key background color
+    -- can use hex, or normal color names (eg: Red, Gree, Blue)
+    -- @default = #202328
+    whichkey_bg = "#202328",
+
+    -- set your custom lsp diagnostic symbols below
+    lsp_error = '',
+    lsp_warning = '',
+    lsp_hint = '',
+    lsp_information = '',
+    lsp_virtual_text = ' ',
+
+    -- Set your dashboard custom colors below
+    -- @default = doom emacs' default dashboard colors
+    dashboard_custom_colors = {
+        header_color = '#586268',
+        center_color = '#51afef',
+        shortcut_color = '#9788b9',
+        footer_color = '#586268',
+    },
+
+	-- Disabled plugins
+	-- @default = {'lazygit', 'minimap', 'restclient'}
+	-- example:
+	--   disabled_plugins = {'emmet-vim'}
+	disabled_plugins = { 'lazygit', 'minimap', 'restclient' },
+
+	-- Disabled plugins modules
+	-- @default = {'git', 'lsp', 'web'}
+	-- example:
+	--   disabled_modules = {'web'}
+	disabled_modules = { 'git', 'lsp', 'web' },
+
+	-- Install custom plugins
+	-- @default = {}
+	-- examples:
+	--   plugins without options:
+	--       custom_plugins = {'andweeb/presence.nvim'}
+	--   plugins with options:
+	--       custom_plugins = {
+	--           {
+	--              'repo': 'andweeb/presence.nvim',
+	--              'enabled': true,
+	--           }
+	--       }
+	custom_plugins = {},
+
+	-- Set the parsers for TreeSitter
+	-- @default = {}
+	-- example:
+	--   ts_parsers = {'python', 'javascript'}
+	ts_parsers = {},
 
     -- Set your custom dashboard header below
     -- @default = doom emacs' default dashboard header
@@ -261,48 +334,6 @@ Doom = {
 	" `''                                                                      ``'  ",
 	'                                                                               ',
     },
-
-    -- Set your dashboard custom colors below
-    -- @default = doom emacs' default dashboard colors
-    dashboard_custom_colors = {
-        header_color = '#586268',
-        center_color = '#51afef',
-        shortcut_color = '#9788b9',
-        footer_color = '#586268',
-    },
-
-	-- Disabled plugins
-	-- @default = {'lazygit', 'minimap', 'restclient'}
-	-- example:
-	--   disabled_plugins = {'emmet-vim'}
-	disabled_plugins = { 'lazygit', 'minimap', 'restclient' },
-
-	-- Disabled plugins modules
-	-- @default = {'git', 'lsp', 'web'}
-	-- example:
-	--   disabled_modules = {'web'}
-	disabled_modules = { 'git', 'lsp', 'web'},
-
-	-- Install custom plugins
-	-- @default = {}
-	-- examples:
-	--   plugins without options:
-	--       custom_plugins = {'andweeb/presence.nvim'}
-	--   plugins with options:
-	--       custom_plugins = {
-	--           {
-	--              'repo': 'andweeb/presence.nvim',
-	--              'enabled': true,
-	--           }
-	--       }
-	custom_plugins = {},
-
-	-- Set the parsers for TreeSitter
-	-- @default = {}
-	-- example:
-	--   ts_parsers = {'python', 'javascript'}
-	ts_parsers = {},
-
 }
 
 Neovim = {

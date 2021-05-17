@@ -104,19 +104,6 @@ return packer.startup(function()
 	end
 	use({ 'romgrk/barbar.nvim', disable = disabled_tabline })
 
-	-- Better splits
-	-- NOTE: we are using this specific branch because the main still does not have
-	-- the ignore filetypes feature, thanks to its owner per adding it <3
-	local disabled_focus = Has_value(Doom.disabled_plugins, 'focus')
-	if disabled_focus then
-		table.insert(disabled_plugins, 'focus')
-	end
-	use({
-		'beauwilliams/focus.nvim',
-		branch = 'cust_filetypes',
-		disable = disabled_focus,
-	})
-
 	-- Better terminal
 	-- can be disabled to use your own terminal plugin
 	local disabled_terminal = Has_value(Doom.disabled_plugins, 'terminal')
