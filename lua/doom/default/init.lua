@@ -140,7 +140,9 @@ function Custom_options()
 	Cmd('command! DoomUpdate !git -C ~/.config/doom-nvim/ stash -q && git -C ~/.config/doom-nvim/ pull && git -C ~/.config/doom-nvim/ stash pop -q')
 
 	-- Load user-defined settings from the Neovim field in the doomrc file
-	Load_custom_settings(Neovim.global_variables, 'variables')
 	Load_custom_settings(Neovim.autocmds, 'autocmds')
+    Load_custom_settings(Neovim.commands, 'commands')
+    Load_custom_settings(Neovim.functions, 'functions')
 	Load_custom_settings(Neovim.mappings, 'mappings')
+    Load_custom_settings(Neovim.global_variables, 'variables')
 end

@@ -19,6 +19,14 @@ function Load_custom_settings(settings_tbl, scope)
 	if next(settings_tbl) ~= nil then
 		if scope == 'autocmds' then
 			Create_augroups(settings_tbl)
+        elseif scope == 'commands' then
+            for _, cmd in ipairs(settings_tbl) do
+                Cmd(cmd)
+            end
+        elseif scope == 'functions' then
+            for _, func_body in pairs(settings_tbl) do
+                func_body()
+            end
 		elseif scope == 'mappings' then
 			local opts = { silent = true }
 			for _, map in ipairs(settings_tbl) do

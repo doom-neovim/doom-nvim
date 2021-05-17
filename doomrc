@@ -362,5 +362,23 @@ Neovim = {
     --     'n' is the map scope
     --     'ca' is the map activator
     --     ':Lspsaga ...' is the command to be executed
-    mappings = {}
+    mappings = {},
+
+    -- Set custom commands
+    -- @default = {}
+    -- example:
+    --   {
+    --      'echo "Hello, custom commands!"'
+    --   }
+    commands = {},
+
+    -- Set custom functions
+    -- @default = {}
+    -- example:
+    --   {
+    --      hello_custom_func = function()
+    --        print("Hello, custom functions!")
+    --      end
+    --   }
+    functions = {}
 }
