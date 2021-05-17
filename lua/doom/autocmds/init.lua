@@ -11,6 +11,7 @@ local autocmds = {
 		-- Ensure every file does full syntax highlight
 		{ 'BufEnter', '*', ':syntax sync fromstart' },
         { 'BufEnter', '*', ':set signcolumn=yes'},
+        { 'BufEnter', '*', ':set pumblend='..Doom.complete_transparency},
 		-- Compile new plugins changes at save
 		{
 			'BufWritePost',

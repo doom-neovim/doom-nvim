@@ -16,7 +16,6 @@ local conditional_plugins = {
 	['lsp'] = { 'nvim-lspconfig', 'nvim-lspinstall' },
 	['nvim-compe'] = 'nvim-compe',
 	['nvim-colorizer'] = 'nvim-colorizer.lua',
-	['nvim-focus'] = 'focus.nvim',
 	['nvim-telescope'] = 'telescope.nvim',
 	['nvim-toggleterm'] = 'nvim-toggleterm.lua',
 	['nvim-tree'] = 'nvim-tree.lua',

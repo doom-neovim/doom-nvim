@@ -41,6 +41,8 @@ function Default_options()
 	Opt('b', 'autoindent', true)
 	Opt('b', 'smartindent', true)
 
+    Cmd('set pumheight='..Doom.complete_size)
+
     -- set Gui Fonts
     --Opt('o', 'guifont='..Doom.guifont..':h'..Doom.guifont_size)
     o.guifont =  Doom.guifont..':h'..Doom.guifont_size
