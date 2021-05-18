@@ -288,8 +288,8 @@ Doom = {
 	--   plugins with options:
 	--       custom_plugins = {
 	--           {
-	--              'repo': 'andweeb/presence.nvim',
-	--              'enabled': true,
+	--              ['repo'] = 'andweeb/presence.nvim',
+	--              ['enabled'] = true,
 	--           }
 	--       }
 	custom_plugins = {},
