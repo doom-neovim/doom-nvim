@@ -41,6 +41,7 @@ including their plugins individually.
   - [ ] [packer.nvim] - A use-package inspired plugin manager for Neovim.
   - [ ] [vimpeccable] - Helpers for Lua configs.
   - [x] [treesitter] - Nvim Treesitter configurations and abstraction layer.
+    - Use `treesitter` to disable it
 
 ### UI
 
@@ -55,8 +56,6 @@ including their plugins individually.
     - Use `statusline` to disable it
   - [x] [barbar.nvim] - Tabs, as understood by any other editor.
     - Use `tabline` to disable it
-  - [x] [focus.nvim] - Auto-Focusing Splits/Windows for Neovim written in Lua
-    - Use `focus` to disable it
   - [x] [nvim-toggleterm.lua] - A neovim plugin to persist and toggle multiple terminals during an editing session
     - Use `terminal` to disable it
   - [x] [symbols-outline.nvim] - A tree like view for symbols in Neovim using the Language Server Protocol.
@@ -203,7 +202,7 @@ disabled_plugins = { 'emmet' }
 <!-- Git -->
 
 [gitsigns.nvim]: https://github.com/lewis6991/gitsigns.nvim
-[lazygit]: https://github.com/kdheepak/lazygit.nvim
+[lazygit.nvim]: https://github.com/kdheepak/lazygit.nvim
 
 <!-- LSP -->
 

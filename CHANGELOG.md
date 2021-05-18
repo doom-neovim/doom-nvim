@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2021-05-18
+
+### Added
+
+- Configurations
+  - `complete_size` option
+  - `complete_transparency` option
+
+### Changed
+
+- Organized doomrc
+
+### Deleted
+
+- Plugins
+  - `focus`
+
 ## [2.2.0] - 2021-05-08
 
 ### Added
@@ -233,7 +250,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.2.0...HEAD
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.5...v2.2.0
 [2.1.5]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.4...v2.1.5
 [2.1.4]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.3...v2.1.4
