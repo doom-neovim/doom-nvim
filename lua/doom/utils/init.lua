@@ -102,9 +102,9 @@ function Custom_plugins(plugins)
 
 			if idx == 'enabled' then
 				if val then
-					plugin_with_configs['enabled'] = true
+					plugin_with_configs['disable'] = false
 				else
-					plugin_with_configs['enabled'] = false
+					plugin_with_configs['disable'] = true
 				end
 			end
 
