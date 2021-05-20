@@ -51,8 +51,8 @@ return packer.startup(function(use)
 		Has_value(Doom.disabled_plugins, 'treesitter')
 	use({
 		'nvim-treesitter/nvim-treesitter',
-		after = 'telescope.nvim',
 		run = ':TSUpdate',
+		event = 'BufEnter',
 		config = require('plugins.configs.tree-sitter'),
 		disable = (disabled_files and true or disabled_treesitter),
 	})
@@ -60,7 +60,7 @@ return packer.startup(function(use)
 	-- Sessions
 	use({
 		'rmagatti/auto-session',
-        config = require('plugins.configs.auto-session'),
+		config = require('plugins.configs.auto-session'),
 		requires = { { 'rmagatti/session-lens', after = 'telescope.nvim' } },
 	})
 
@@ -104,7 +104,10 @@ return packer.startup(function(use)
 	-- Tabline
 	-- can be disabled to use your own tabline
 	local disabled_tabline = Has_value(Doom.disabled_plugins, 'tabline')
-	use({ 'romgrk/barbar.nvim', disable = disabled_tabline })
+	use({
+		'romgrk/barbar.nvim',
+		disable = disabled_tabline,
+	})
 
 	-- Better terminal
 	-- can be disabled to use your own terminal plugin
