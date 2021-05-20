@@ -42,7 +42,6 @@ Default_options()
 
 -- Load packer.nvim and load plugins settings
 require('plugins')
-require('doom.config.load_plugins')
 
 -- Load the user-defined settings (global variables, autocmds, mappings)
 Custom_options()

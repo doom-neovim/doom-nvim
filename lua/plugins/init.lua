@@ -25,7 +25,17 @@ local disabled_files = Has_value(Doom.disabled_modules, 'files')
 local disabled_web = Has_value(Doom.disabled_modules, 'web')
 
 local packer = require('packer')
-return packer.startup(function()
+-- Change some defaults
+packer.init({
+	git = {
+		clone_timeout = 300, -- 5 mins
+	},
+	profile = {
+		enable = true,
+	},
+})
+
+return packer.startup(function(use)
 	-----[[------------]]-----
 	---     Essentials     ---
 	-----]]------------[[-----
@@ -36,22 +46,22 @@ return packer.startup(function()
 		branch = 'fix/premature-display-opening',
 	})
 
-	-- Auxiliar functions for using Lua in Neovim
-	use('svermeulen/vimpeccable')
-
 	-- Tree-Sitter
 	local disabled_treesitter =
 		Has_value(Doom.disabled_plugins, 'treesitter')
 	use({
 		'nvim-treesitter/nvim-treesitter',
+		after = 'telescope.nvim',
 		run = ':TSUpdate',
+		config = require('plugins.configs.tree-sitter'),
 		disable = (disabled_files and true or disabled_treesitter),
 	})
 
 	-- Sessions
 	use({
 		'rmagatti/auto-session',
-		requires = { 'rmagatti/session-lens' },
+        config = require('plugins.configs.auto-session'),
+		requires = { { 'rmagatti/session-lens', after = 'telescope.nvim' } },
 	})
 
 	-----[[------------]]-----
@@ -59,24 +69,25 @@ return packer.startup(function()
 	-----]]------------[[-----
 	-- Fancy start screen
 	-- cannot be disabled
-	use({ 'glepnir/dashboard-nvim', disable = false })
+	use({
+		'glepnir/dashboard-nvim',
+		config = require('plugins.configs.nvim-dashboard'),
+	})
 
-	-- Colorschemes
-	local disabled_colorschemes =
-		Has_value(Doom.disabled_plugins, 'colorschemes')
-	if disabled_colorschemes then
-		table.insert(disabled_plugins, 'colorschemes')
-	end
+	-- Doom Colorschemes
+	local disabled_doom_themes =
+		Has_value(Doom.disabled_plugins, 'doom-themes')
 	use({
 		'GustavoPrietoP/doom-themes.nvim',
-		disable = disabled_theme,
+		disable = disabled_doom_themes,
 	})
-    
+
 	-- File tree
 	local disabled_tree = Has_value(Doom.disabled_plugins, 'tree')
 	use({
 		'kyazdani42/nvim-tree.lua',
 		requires = { 'kyazdani42/nvim-web-devicons' },
+		config = require('plugins.configs.nvim-tree'),
 		disable = disabled_tree,
 	})
 
@@ -86,6 +97,7 @@ return packer.startup(function()
 		Has_value(Doom.disabled_plugins, 'statusline')
 	use({
 		'glepnir/galaxyline.nvim',
+		config = require('plugins.configs.statusline'),
 		disable = disabled_statusline,
 	})
 
@@ -99,6 +111,7 @@ return packer.startup(function()
 	local disabled_terminal = Has_value(Doom.disabled_plugins, 'terminal')
 	use({
 		'akinsho/nvim-toggleterm.lua',
+		config = require('plugins.configs.nvim-toggleterm'),
 		disable = disabled_terminal,
 	})
 
@@ -106,6 +119,7 @@ return packer.startup(function()
 	local disabled_outline = Has_value(Doom.disabled_plugins, 'outline')
 	use({
 		'simrat39/symbols-outline.nvim',
+		config = require('plugins.configs.symbols'),
 		disable = disabled_outline,
 	})
 
@@ -116,19 +130,27 @@ return packer.startup(function()
 
 	-- Keybindings menu like Emacs's guide-key
 	-- cannot be disabled
-	use({ 'folke/which-key.nvim', disable = false })
+	use({
+		'folke/which-key.nvim',
+		config = require('plugins.configs.which-key'),
+	})
 
 	-- Distraction free environment
 	local disabled_zen = Has_value(Doom.disabled_plugins, 'zen')
-	use({ 'kdav5758/TrueZen.nvim', disable = disabled_zen })
+	use({
+		'kdav5758/TrueZen.nvim',
+		config = require('plugins.configs.nvim-zen'),
+		disable = disabled_zen,
+	})
 
 	-----[[--------------]]-----
 	---     Fuzzy Search     ---
 	-----]]--------------[[-----
 	use({
 		'nvim-telescope/telescope.nvim',
+		cmd = 'Telescope',
 		requires = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } },
-		disable = false,
+		config = require('plugins.configs.nvim-telescope'),
 	})
 
 	-----[[-------------]]-----
@@ -139,6 +161,7 @@ return packer.startup(function()
 	local disabled_gitsigns = Has_value(Doom.disabled_plugins, 'gitsigns')
 	use({
 		'lewis6991/gitsigns.nvim',
+		config = require('plugins.configs.nvim-gitsigns'),
 		disable = (disabled_git and true or disabled_gitsigns),
 	})
 
@@ -158,8 +181,10 @@ return packer.startup(function()
 	local disabled_lspconfig = Has_value(Doom.disabled_plugins, 'lspconfig')
 	use({
 		'neovim/nvim-lspconfig',
+		config = require('plugins.configs.lsp'),
 		disable = (disabled_lsp and true or disabled_lspconfig),
 	})
+
 	-- Completion plugin
 	-- can be disabled to use your own completion plugin
 	local disabled_compe = Has_value(Doom.disabled_plugins, 'compe')
@@ -170,6 +195,7 @@ return packer.startup(function()
 			{ 'onsails/lspkind-nvim' },
 			{ 'norcalli/snippets.nvim' },
 		},
+		config = require('plugins.configs.nvim-compe'),
 		disable = (disabled_lsp and true or disabled_compe),
 	})
 
@@ -204,6 +230,7 @@ return packer.startup(function()
 	local disabled_formatter = Has_value(Doom.disabled_plugins, 'formatter')
 	use({
 		'lukas-reineke/format.nvim',
+		config = require('plugins.configs.nvim-format'),
 		disable = (disabled_files and true or disabled_formatter),
 	})
 
@@ -212,6 +239,7 @@ return packer.startup(function()
 	local disabled_autopairs = Has_value(Doom.disabled_plugins, 'autopairs')
 	use({
 		'steelsojka/pears.nvim',
+		config = require('plugins.configs.nvim-pears'),
 		disable = (disabled_files and true or disabled_autopairs),
 	})
 
@@ -221,6 +249,7 @@ return packer.startup(function()
 	use({
 		'lukas-reineke/indent-blankline.nvim',
 		branch = 'lua',
+		config = require('plugins.configs.blankline'),
 		disable = (disabled_files and true or disabled_indent_lines),
 	})
 
@@ -248,6 +277,7 @@ return packer.startup(function()
 	local disabled_colorizer = Has_value(Doom.disabled_plugins, 'colorizer')
 	use({
 		'norcalli/nvim-colorizer.lua',
+		config = require('plugins.configs.nvim-colorizer'),
 		disable = (disabled_web and true or disabled_colorizer),
 	})
 
