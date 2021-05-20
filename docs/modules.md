@@ -49,7 +49,8 @@ including their plugins individually.
 - [ ] Can be disabled
 - Plugins inside
   - [ ] [dashboard-nvim] - Vim dashboard.
-  - [ ] colorschemes - Obviously, colorschemes.
+  - [x] colorschemes - Obviously, colorschemes.
+    - Use `colorschemes` to disable it
   - [x] [nvim-tree.lua] - A file explorer tree for neovim written in lua.
     - Use `tree` to disable it
   - [x] [galaxyline.nvim] - galaxyline is a light-weight and Super Fast statusline plugin.
@@ -188,7 +189,6 @@ disabled_plugins = { 'emmet' }
 [nvim-tree.lua]: https://github.com/kyazdani42/nvim-tree.lua
 [galaxyline.nvim]: https://github.com/glepnir/galaxyline.nvim
 [barbar.nvim]: https://github.com/romgrk/barbar.nvim
-[focus.nvim]: https://github.com/beauwilliams/focus.nvim
 [nvim-toggleterm.lua]: https://github.com/akinsho/nvim-toggleterm.lua
 [symbols-outline.nvim]: https://github.com/simrat39/symbols-outline.nvim
 [minimap.vim]: https://github.com/wfxr/minimap.vim

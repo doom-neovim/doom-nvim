@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.2] - 2021-05-20
+
+### Added
+
+- Configurations
+  - `auto_install_plugins` option
+
+### Changed
+
+- Use `fix/premature-display-opening` branch in packer (temporal)
+- Cleaned `plugins/init.lua` code
+- Reverted [2.1.5] changes related to how packer is installed
+
+### Fixed
+
+- Plugins installation on fresh installation
+
 ## [2.3.1] - 2021-05-18
 
 ### Fixed
@@ -257,7 +274,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.1...HEAD
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.2...HEAD
+[2.3.2]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.1...v2.3.2
 [2.3.1]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.5...v2.2.0
