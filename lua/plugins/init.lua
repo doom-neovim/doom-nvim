@@ -62,17 +62,12 @@ return packer.startup(function()
 	use({ 'glepnir/dashboard-nvim', disable = false })
 
 	-- Colorschemes
-	local disabled_colorschemes =
-		Has_value(Doom.disabled_plugins, 'colorschemes')
+	local disabled_theme = Has_value(Doom.disabled_plugins, 'doom-themes')
 	use({
-		{ 'sainnhe/sonokai', disable = disabled_colorschemes },
-		{ 'sainnhe/edge', disable = disabled_colorschemes },
-		{ 'sainnhe/everforest', disable = disabled_colorschemes },
-		{ 'wadackel/vim-dogrun', disable = disabled_colorschemes },
-		{ 'joshdick/onedark.vim', disable = disabled_colorschemes },
-		{ 'ajmwagar/vim-deus', disable = disabled_colorschemes },
+		'GustavoPrietoP/doom-themes.nvim',
+		disable = disabled_theme,
 	})
-
+    
 	-- File tree
 	local disabled_tree = Has_value(Doom.disabled_plugins, 'tree')
 	use({

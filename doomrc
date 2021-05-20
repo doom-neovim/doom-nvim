@@ -274,10 +274,10 @@ Doom = {
     },
 
 	-- Disabled plugins
-	-- @default = {'lazygit', 'minimap', 'restclient'}
+	-- @default = {'lazygit', 'minimap', 'restclient', 'doom-themes'}
 	-- example:
 	--   disabled_plugins = {'emmet-vim'}
-	disabled_plugins = { 'lazygit', 'minimap', 'restclient' },
+	disabled_plugins = { 'lazygit', 'minimap', 'restclient', 'doom-themes'},
 
 	-- Disabled plugins modules
 	-- @default = {'git', 'lsp', 'web'}
