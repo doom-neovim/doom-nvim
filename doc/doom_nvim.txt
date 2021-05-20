@@ -163,6 +163,10 @@ Allowed values: 'dark', 'light'
 default value = false
 Check updates of plugins on start
 
+`Doom.auto_install_plugins`
+default value = true
+Automatically install missing plugins on launch
+
 `Doom.disabled_plugins`
 default value = {'lazygit', 'minimap', 'restclient'}
 List of user disabled plugins
@@ -302,9 +306,7 @@ Check `nvim-tree.lua` for more info.
 ==============================================================================
 MAIN BUFFER                        *doom_nvim_configuration_layout_mainbuffer*
 
-The main buffer is the buffer where the code is opened. It can be split into
-multiple buffers which can be resized individually and automatically when the
-plugin `focus.nvim` is enabled.
+The main buffer is the buffer where the code is opened.
 
 To split the main buffer, do <Space>w and then select the split method you
 want to use horizontally `h`, or vertically `v`.
@@ -407,9 +409,9 @@ then you can do it as follow:
 
     Doom.custom_plugins = {
         {
-           'repo': 'andweeb/presence.nvim',
-           'enabled': true,
-           'requires': { 'foo', 'bar' }
+           ['repo'] = 'andweeb/presence.nvim',
+           ['enabled'] = true,
+           ['requires'] = { 'foo', 'bar' }
         }
     }
 

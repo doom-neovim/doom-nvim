@@ -44,6 +44,15 @@ if Doom.relative_num then
 	})
 end
 
+-- Install plugins on launch
+if Doom.auto_install_plugins then
+	table.insert(autocmds['doom_core'], {
+		'VimEnter',
+		'*',
+		'PackerInstall',
+	})
+end
+
 -- Set autosave
 if Doom.autosave then
 	table.insert(autocmds['doom_core'], {
