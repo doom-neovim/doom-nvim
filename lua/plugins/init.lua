@@ -69,10 +69,7 @@ return packer.startup(function()
 		{ 'sainnhe/edge', disable = disabled_colorschemes },
 		{ 'sainnhe/everforest', disable = disabled_colorschemes },
 		{ 'wadackel/vim-dogrun', disable = disabled_colorschemes },
-		{
-			'joshdick/onedark.vim',
-			disable = disabled_colorschemes,
-		},
+		{ 'joshdick/onedark.vim', disable = disabled_colorschemes },
 		{ 'ajmwagar/vim-deus', disable = disabled_colorschemes },
 	})
 
