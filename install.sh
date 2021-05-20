@@ -190,7 +190,7 @@ install_nvim_nightly() {
 }
 
 install_packer() {
-    if [[ -d "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]]; then
+    if [[ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]]; then
         log_info "Installing packer plugin manager ..."
         # NOTE: stop installing that branch when merged into the main branch
         git clone -q -b fix/premature-display-opening https://github.com/wbthomason/packer.nvim \
