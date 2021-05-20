@@ -108,9 +108,6 @@ return packer.startup(function()
 
 	-- Viewer & finder for LSP symbols and tags
 	local disabled_outline = Has_value(Doom.disabled_plugins, 'outline')
-	if disabled_outline then
-		table.insert(disabled_plugins, 'outline')
-	end
 	use({
 		'simrat39/symbols-outline.nvim',
 		disable = disabled_outline,
@@ -182,9 +179,6 @@ return packer.startup(function()
 
 	-- install lsp saga
 	local disabled_lspsaga = Has_value(Doom.disabled_plugins, 'lspsaga')
-	if disabled_lsp and not disabled_lspsaga then
-		table.insert(disabled_plugins, 'lspsaga')
-	end
 	use({
 		'glepnir/lspsaga.nvim',
 		disable = (disabled_lsp and true or disabled_lspsaga),
