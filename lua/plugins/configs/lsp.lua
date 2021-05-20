@@ -186,8 +186,7 @@ local on_attach = function(client, bufnr)
 	end
 end
 
---[[-----------------]]
---
+--[[-----------------]]--
 --      LSP Setup      --
 --]]-----------------[[--
 -- https://github.com/kabouzeid/nvim-lspinstall#advanced-configuration-recommended
