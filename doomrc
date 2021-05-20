@@ -19,7 +19,7 @@ Doom = {
 	-- true  : Enable format on save
 	-- @default = false
 	fmt_on_save = false,
-    
+
 	-- Autosave sessions
 	-- false : Disable session autosave
 	-- true  : Enable session autosave
@@ -45,28 +45,28 @@ Doom = {
     -- @default = false
     backup = false, -- WARNING: if you change this to false and you have an undo dir already, it will REMOVE the undodir (loss of data might take place)
 
-    -- Enable Line wrapping 
-    -- false : disables line wrapping 
-    -- true  : enables line wrapping 
+    -- Enable Line wrapping
+    -- false : disables line wrapping
+    -- true  : enables line wrapping
     -- @default = false
     line_wrap = false,
 
     -- Enable Show mode ( -- INSERT --, -- NORMAL --, -- VISUAL -- )
-    -- false : disables show mode 
-    -- true  : enables show mode 
+    -- false : disables show mode
+    -- true  : enables show mode
     -- @default = false
     show_mode = false,
 
     -- Enable scroll off
-    -- false : disables scroll off 
-    -- true  : enables scroll off 
+    -- false : disables scroll off
+    -- true  : enables scroll off
     -- @default = true, @default scrolloff_amount = 4,
     scrolloff = true,
     scrolloff_amount = 4,
 
-    -- Enable mouse 
+    -- Enable mouse
     -- false : disables mouse
-    -- true  : enables mouse 
+    -- true  : enables mouse
     -- @default = true
     mouse = true,
 
@@ -88,21 +88,21 @@ Doom = {
     -- @default = true
     line_highlight = true,
 
-    -- Automatically split right 
+    -- Automatically split right
     -- false : splits right (vertically)
     -- true  : splits left (vertically)
     -- @default = true
     split_right = true,
 
-    -- Automatically split right 
+    -- Automatically split above
     -- false : splits above (horizontally)
     -- true  : splits below (horizontally)
     -- @default = true
     split_below = true,
 
-    -- Use clipboard outside of vim 
-    -- false : won't use third party clipboard 
-    -- true  : enables third part clipboard 
+    -- Use clipboard outside of vim
+    -- false : won't use third party clipboard
+    -- true  : enables third part clipboard
     -- @default = true
     clipboard = true,
 
@@ -153,6 +153,11 @@ Doom = {
 	-- @default = false
 	check_updates = false,
 
+    -- Auto install plugins on launch, useful if you don't want to run
+    -- PackerInstall every time you add a new plugin
+    -- @default = true
+    auto_install_plugins = true,
+
     -- Disable dashboard status line (does not work perfectly)
     -- false : disables dashboard status line
     -- true  : enables dashboard status line
@@ -174,9 +179,9 @@ Doom = {
 
     -- Completion box height
 	-- @default = 10
-	complete_size = 10, 
-    
-    -- Completion box transparency 
+	complete_size = 10,
+
+    -- Completion box transparency
     -- 0 = no transparency
     -- 100 = fully transparent
     -- @default = 25
@@ -226,7 +231,7 @@ Doom = {
 	--   - float
 	-- @default = 'horizontal'
 	terminal_direction = 'horizontal',
-    
+
     -- NOTE: This will only be activated if 'backup' is true.
     -- We don'recommend you put this outside of neovim so we've restricted to the path: ~/.config/nvim
     -- WARNING: only put the folder name that you want. (eg: undo_dir = '/undodir')
@@ -241,7 +246,7 @@ Doom = {
 	-- @default = dark
 	colorscheme_bg = 'dark',
 
-    -- Set gui fonts here 
+    -- Set gui fonts here
     -- @default = "FiraCode Nerd Font", @default font size = 15,
     -- WARNING: Font sizes must be in string format!
     guifont = 'FiraCode Nerd Font',
