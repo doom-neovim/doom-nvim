@@ -225,8 +225,6 @@ vim.defer_fn(function()
         use({
             'kabouzeid/nvim-lspinstall',
             disable = (disabled_lsp and true or disabled_lspinstall),
-            cmd = { 'LspInstall', 'LspUninstall' },
-            module = 'lspinstall',
         })
 
         -----[[--------------]]-----
@@ -257,7 +255,6 @@ vim.defer_fn(function()
             'steelsojka/pears.nvim',
             config = require('plugins.configs.nvim-pears'),
             disable = (disabled_files and true or disabled_autopairs),
-            event = 'InsertEnter',
         })
 
         -- Indent Lines
