@@ -1,7 +1,7 @@
 return function()
     require('toggleterm').setup({
         size = Doom.terminal_height,
-        open_mapping = [[<c-t>]],
+        open_mapping = [[<F4>]],
         hide_numbers = true,
         shade_filetypes = {},
         shade_terminals = true,

@@ -119,6 +119,8 @@ return packer.startup(function(use)
 		config = require('plugins.configs.nvim-toggleterm'),
 		disable = disabled_terminal,
 		module = 'toggleterm.terminal',
+		cmd = { 'ToggleTerm', 'TermExec' },
+		keys = { { 'n', '<C-t>' }, { 'n', '<F4>' } }
 	})
 
 	-- Viewer & finder for LSP symbols and tags
