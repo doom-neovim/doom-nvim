@@ -41,6 +41,7 @@ including their plugins individually.
   - [ ] [packer.nvim] - A use-package inspired plugin manager for Neovim.
   - [ ] [vimpeccable] - Helpers for Lua configs.
   - [x] [treesitter] - Nvim Treesitter configurations and abstraction layer.
+    - Use `treesitter` to disable it
 
 ### UI
 
@@ -48,19 +49,18 @@ including their plugins individually.
 - [ ] Can be disabled
 - Plugins inside
   - [ ] [dashboard-nvim] - Vim dashboard.
-  - [ ] colorschemes - Obviously, colorschemes.
+  - [x] colorschemes - Obviously, colorschemes.
+    - Use `colorschemes` to disable it
   - [x] [nvim-tree.lua] - A file explorer tree for neovim written in lua.
     - Use `tree` to disable it
   - [x] [galaxyline.nvim] - galaxyline is a light-weight and Super Fast statusline plugin.
     - Use `statusline` to disable it
   - [x] [barbar.nvim] - Tabs, as understood by any other editor.
     - Use `tabline` to disable it
-  - [x] [focus.nvim] - Auto-Focusing Splits/Windows for Neovim written in Lua
-    - Use `focus` to disable it
   - [x] [nvim-toggleterm.lua] - A neovim plugin to persist and toggle multiple terminals during an editing session
     - Use `terminal` to disable it
   - [x] [symbols-outline.nvim] - A tree like view for symbols in Neovim using the Language Server Protocol.
-    - Use `tagbar` to disable it
+    - Use `outline` to disable it
   - [x] [minimap.vim] - Blazing fast minimap / scrollbar for vim, powered by code-minimap written in Rust.
     - Use `minimap` to disable it
     - **Depends on** [wfxr/code-minimap](htps://github.com/wfxr/code-minimap) **to work!**
@@ -189,7 +189,6 @@ disabled_plugins = { 'emmet' }
 [nvim-tree.lua]: https://github.com/kyazdani42/nvim-tree.lua
 [galaxyline.nvim]: https://github.com/glepnir/galaxyline.nvim
 [barbar.nvim]: https://github.com/romgrk/barbar.nvim
-[focus.nvim]: https://github.com/beauwilliams/focus.nvim
 [nvim-toggleterm.lua]: https://github.com/akinsho/nvim-toggleterm.lua
 [symbols-outline.nvim]: https://github.com/simrat39/symbols-outline.nvim
 [minimap.vim]: https://github.com/wfxr/minimap.vim
@@ -203,7 +202,7 @@ disabled_plugins = { 'emmet' }
 <!-- Git -->
 
 [gitsigns.nvim]: https://github.com/lewis6991/gitsigns.nvim
-[lazygit]: https://github.com/kdheepak/lazygit.nvim
+[lazygit.nvim]: https://github.com/kdheepak/lazygit.nvim
 
 <!-- LSP -->
 

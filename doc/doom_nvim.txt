@@ -32,7 +32,7 @@
      1. Layout................................|doom_nvim_configuration_layout|
      2. File Explorer................|doom_nvim_configuration_layout_explorer|
      3. Main Buffer................|doom_nvim_configuration_layout_mainbuffer|
-     4. Tagbar.........................|doom_nvim_configuration_layout_tagbar|
+     4. Outline.......................|doom_nvim_configuration_layout_outline|
      5. Minimap.......................|doom_nvim_configuration_layout_minimap|
      6. Terminal.....................|doom_nvim_configuration_layout_terminal|
      7. Modules..............................|doom_nvim_configuration_modules|
@@ -140,11 +140,11 @@ Enables gui colors on GUI versions of Neovim
 
 `Doom.sidebar_width`
 default value = 25
-Specifies the default width of Tree Explorer and Tagbar
+Specifies the default width of Tree Explorer and Symbols-Outline
 
-`Doom.tagbar_left`
+`Doom.symbols_outline_left`
 default value = true
-Sets Tagbar buffer to the left when enabled
+Sets Symbols-Outline buffer to the left when enabled
 
 `Doom.show_hidden`
 default value = true
@@ -162,6 +162,10 @@ Allowed values: 'dark', 'light'
 `Doom.check_updates`
 default value = false
 Check updates of plugins on start
+
+`Doom.auto_install_plugins`
+default value = true
+Automatically install missing plugins on launch
 
 `Doom.disabled_plugins`
 default value = {'lazygit', 'minimap', 'restclient'}
@@ -275,11 +279,11 @@ following layout:
 
 
 
-'A' : The tagbar (Plugin: SymbolsOutline)
+'A' : The file explorer (Plugin: nvim-tree.lua)
 'B' : The main buffer
 'C' : The terminal (Plugin: nvim-toggleterm.lua)
 'D' : The minimap (Plugin: minimap.vim)
-'E' : The file explorer (Plugin: nvim-tree.lua)
+'E' : The symbol outline (Plugin: SymbolsOutline)
 
 Sections with `*` are not opened by default but can be toggled.
 See |doom_nvim_commands| for more information.
@@ -302,24 +306,22 @@ Check `nvim-tree.lua` for more info.
 ==============================================================================
 MAIN BUFFER                        *doom_nvim_configuration_layout_mainbuffer*
 
-The main buffer is the buffer where the code is opened. It can be split into
-multiple buffers which can be resized individually and automatically when the
-plugin `focus.nvim` is enabled.
+The main buffer is the buffer where the code is opened.
 
 To split the main buffer, do <Space>w and then select the split method you
 want to use horizontally `h`, or vertically `v`.
 
 
 ==============================================================================
-TAGBAR                                 *doom_nvim_configuration_layout_tagbar*
+OUTLINE                               *doom_nvim_configuration_layout_outline*
 
-Tagbar is a plugin that can show the tags and structure of the opened file,
-ordered by its scope. For this function, Doom Nvim makes use of
+Symbols-Outline is a plugin that can show the tags and structure of the opened
+file, ordered by its scope. For this function, Doom Nvim makes use of
 `simrat39/symbols-outline.nvim`. It can be toggled by performing the following
 commands:
 
-<Space>tS for `Tagbar`
-<F2> for `Tagbar`
+<Space>tS for `Symbols-Outline`
+<F2> for `Symbols-Outline`
 
 See https://github.com/simrat39/symbols-outline.nvim for more information.
 
@@ -407,9 +409,9 @@ then you can do it as follow:
 
     Doom.custom_plugins = {
         {
-           'repo': 'andweeb/presence.nvim',
-           'enabled': true,
-           'requires': { 'foo', 'bar' }
+           ['repo'] = 'andweeb/presence.nvim',
+           ['enabled'] = true,
+           ['requires'] = { 'foo', 'bar' }
         }
     }
 
@@ -550,7 +552,7 @@ your life easier!
 | <TAB>     | Cycle buffers (next buffer)
 | <S-TAB>   | Cycle buffers (prev buffer)
 | <ESC>     | Search highlighting off
-| <F2>      | Toggle Tagbar
+| <F2>      | Toggle Symbols-Outline
 | <F3>      | Toggle Tree Explorer
 | <F4>      | Toggle Terminal
 | <F5>      | Toggle Minimap
@@ -742,6 +744,12 @@ The format is based on Keep a Changelog (https://keepachangelog.com/en/1.0.0/),
 and this project adheres to Semantic Versioning
 (https://semver.org/spec/v2.0.0.html).
 
+- 2.1.5
+    - Changed
+        - Installation script will not install packer anymore, it'll be installed by Doom
+          when started for the first time
+    - Fixed
+        - Now core plugins will be installed at first start
 - 2.1.4
     - Fixed
         - TreeSitter syntax highlighting and indentation

@@ -88,29 +88,50 @@ function Custom_plugins(plugins)
 	-- store them in that table
 	local plugin_with_configs = {}
 
+    -- Valid fields for the plugin table (not the boolean ones), see
+    -- https://github.com/wbthomason/packer.nvim#specifying-plugins
+    local plugin_valid_fields = {'branch', 'requires', 'config', 'run'}
+
 	if type(plugins) ~= 'string' then
-		for idx, val in pairs(plugins) do
+		for key, val in pairs(plugins) do
 			-- Create the correct plugin structure to packer
 			-- use {
-			--  url,
-			--  enabled,
-			--  requires
+			--   url,
+            --   branch,
+			--   disable,
+			--   requires,
+            --   config,
+            --   run
 			-- }
-			if idx == 'repo' then
+
+            -- Plugin repository
+			if key == 'repo' then
 				table.insert(plugin_with_configs, val)
 			end
 
-			if idx == 'enabled' then
+            -- Plugin branch, dependencies, config and post-install/update hooks
+            if Has_value(plugin_valid_fields, key) then
+                plugin_with_configs[key] = val
+            end
+
+            -- If the plugin is enabled or not, false by default
+			if key == 'enabled' then
 				if val then
-					plugin_with_configs['enabled'] = true
+					plugin_with_configs['disable'] = false
 				else
-					plugin_with_configs['enabled'] = false
+					plugin_with_configs['disable'] = true
 				end
 			end
 
-			if idx == 'requires' then
-				plugin_with_configs['requires'] = val
-			end
+            -- If the plugin should be skipped in the updates/syncs,
+            -- false by default
+            if key == 'lock' then
+                if val then
+                    plugin_with_configs['lock'] = true
+                else
+                    plugin_with_configs['lock'] = false
+                end
+            end
 		end
 		-- Send the configured plugin to packer
 		packer.use(plugin_with_configs)

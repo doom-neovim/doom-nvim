@@ -6,7 +6,39 @@
 
 -- Check if the given plugin exists
 function Check_plugin(plugin_path)
-	return Fn.isdirectory(Fn.expand('$HOME/.local/share/nvim/site/pack/packer/start/' .. plugin_path)) == 1
+	return Fn.isdirectory(Fn.expand(
+		'$HOME/.local/share/nvim/site/pack/packer/start/' .. plugin_path
+	)) == 1
+end
+
+-- Load user-defined settings from the Neovim field in the doomrc
+-- @param settings_tbl The settings table to iterate over
+-- @param scope The settings scope, e.g. autocmds
+function Load_custom_settings(settings_tbl, scope)
+	-- If the provided settings table is not empty
+	if next(settings_tbl) ~= nil then
+		if scope == 'autocmds' then
+			Create_augroups(settings_tbl)
+        elseif scope == 'commands' then
+            for _, cmd in ipairs(settings_tbl) do
+                Cmd(cmd)
+            end
+        elseif scope == 'functions' then
+            for _, func_body in pairs(settings_tbl) do
+                func_body()
+            end
+		elseif scope == 'mappings' then
+			local opts = { silent = true }
+			for _, map in ipairs(settings_tbl) do
+				-- scope, lhs, rhs, options
+				Map(map[1], map[2], map[3], opts)
+			end
+		elseif scope == 'variables' then
+			for var, val in pairs(settings_tbl) do
+				G[var] = val
+			end
+		end
+	end
 end
 
 -- Quit Neovim and change the colorscheme at doomrc if the colorscheme is not the same,
@@ -97,7 +129,8 @@ function Create_report()
 
 	Cmd(
 		'silent !echo "'
-			.. Fn.fnameescape('#') .. ' doom crash report" >> '
+			.. Fn.fnameescape('#')
+			.. ' doom crash report" >> '
 			.. Doom_report
 	)
 	Cmd(
@@ -105,7 +138,8 @@ function Create_report()
 	)
 	Cmd(
 		'silent !echo "'
-			.. Fn.fnameescape('##') .. ' Begin log dump" >> '
+			.. Fn.fnameescape('##')
+			.. ' Begin log dump" >> '
 			.. Doom_report
 	)
 	Cmd(
@@ -113,7 +147,8 @@ function Create_report()
 	)
 	Cmd(
 		'silent !echo "'
-			.. Fn.fnameescape('##') .. ' End log dump" >> '
+			.. Fn.fnameescape('##')
+			.. ' End log dump" >> '
 			.. Doom_report
 	)
 	print('Report created at ' .. Doom_report)
