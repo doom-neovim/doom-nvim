@@ -82,7 +82,7 @@ then
 	Map(
 		'n',
 		'<C-b>',
-		"lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>"
+		":lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>"
 	) -- Control+b: Scroll up documents
 	Cmd('command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()')
 end
