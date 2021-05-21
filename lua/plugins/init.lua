@@ -62,6 +62,7 @@ return packer.startup(function(use)
 		'rmagatti/auto-session',
 		config = require('plugins.configs.auto-session'),
 		requires = { { 'rmagatti/session-lens', after = 'telescope.nvim' } },
+		cmd = { 'SaveSession', 'RestoreSession', 'DeleteSession' },
 	})
 
 	-----[[------------]]-----
@@ -89,6 +90,7 @@ return packer.startup(function(use)
 		requires = { 'kyazdani42/nvim-web-devicons' },
 		config = require('plugins.configs.nvim-tree'),
 		disable = disabled_tree,
+		cmd = { 'NvimTreeClipboard', 'NvimTreeClose', 'NvimTreeFindFile', 'NvimTreeOpen', 'NvimTreeRefresh', 'NvimTreeToggle' },
 	})
 
 	-- Statusline
@@ -116,6 +118,7 @@ return packer.startup(function(use)
 		'akinsho/nvim-toggleterm.lua',
 		config = require('plugins.configs.nvim-toggleterm'),
 		disable = disabled_terminal,
+		module = 'toggleterm.terminal',
 	})
 
 	-- Viewer & finder for LSP symbols and tags
@@ -124,6 +127,7 @@ return packer.startup(function(use)
 		'simrat39/symbols-outline.nvim',
 		config = require('plugins.configs.symbols'),
 		disable = disabled_outline,
+		cmd = { 'SymbolsOutline', 'SymbolsOutlineOpen', 'SymbolsOutlineClose' },
 	})
 
 	-- Minimap
@@ -144,6 +148,7 @@ return packer.startup(function(use)
 		'kdav5758/TrueZen.nvim',
 		config = require('plugins.configs.nvim-zen'),
 		disable = disabled_zen,
+		module = 'true-zen',
 	})
 
 	-----[[--------------]]-----
@@ -174,6 +179,7 @@ return packer.startup(function(use)
 		'kdheepak/lazygit.nvim',
 		requires = { 'nvim-lua/plenary.nvim' },
 		disable = (disabled_git and true or disabled_lazygit),
+		cmd = { 'LazyGit', 'LazyGitConfig' },
 	})
 
 	-----[[------------]]-----
@@ -215,6 +221,8 @@ return packer.startup(function(use)
 	use({
 		'kabouzeid/nvim-lspinstall',
 		disable = (disabled_lsp and true or disabled_lspinstall),
+		cmd = { 'LspInstall', 'LspUninstall' },
+		module = 'lspinstall',
 	})
 
 	-----[[--------------]]-----
@@ -226,6 +234,7 @@ return packer.startup(function(use)
 	use({
 		'lambdalisue/suda.vim',
 		disable = (disabled_files and true or disabled_suda),
+		cmd = { 'SudaRead', 'SudaWrite' },
 	})
 
 	-- File formatting
@@ -244,6 +253,7 @@ return packer.startup(function(use)
 		'steelsojka/pears.nvim',
 		config = require('plugins.configs.nvim-pears'),
 		disable = (disabled_files and true or disabled_autopairs),
+		event = 'InsertEnter',
 	})
 
 	-- Indent Lines
@@ -291,6 +301,7 @@ return packer.startup(function(use)
 	use({
 		'bayne/vim-dot-http',
 		disable = (disabled_web and true or disabled_restclient),
+		cmd = 'DotHttp',
 	})
 
 	-- Emmet plugin

@@ -92,4 +92,7 @@ return function()
             symlink_open = '',
         },
     }
+
+    -- Make sure nvim-tree loads itself when lazy loaded
+    require('nvim-tree').on_enter()
 end
