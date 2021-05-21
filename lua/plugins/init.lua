@@ -120,7 +120,7 @@ return packer.startup(function(use)
 		disable = disabled_terminal,
 		module = 'toggleterm.terminal',
 		cmd = { 'ToggleTerm', 'TermExec' },
-		keys = { { 'n', '<C-t>' }, { 'n', '<F4>' } }
+		keys = { 'n', '<F4>' }
 	})
 
 	-- Viewer & finder for LSP symbols and tags
