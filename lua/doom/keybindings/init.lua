@@ -107,9 +107,6 @@ end
 if not Has_value(Doom.disabled_plugins, 'tree') then
 	Map('n', '<F3>', ':NvimTreeToggle<CR>')
 end
-if not Has_value(Doom.disabled_plugins, 'terminal') then
-	Map('n', '<F4>', ':ToggleTerm<CR>')
-end
 if not Has_value(Doom.disabled_plugins, 'minimap') then
 	Map('n', '<F5>', ':MinimapToggle<CR>')
 end
