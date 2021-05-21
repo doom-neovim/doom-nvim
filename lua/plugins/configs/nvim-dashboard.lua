@@ -1,4 +1,5 @@
 return function()
+
     local plugins_count =
         Fn.len(Fn.globpath('~/.local/share/nvim/site/pack/packer/start', '*', 0, 1))
 

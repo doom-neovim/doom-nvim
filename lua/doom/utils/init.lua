@@ -4,13 +4,11 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
---- Require packer so we can use `packer.use` function in `custom_plugins` function
-local packer = require('packer')
-
 -------------------- HELPERS --------------------
 Api, Cmd, Fn = vim.api, vim.cmd, vim.fn
 Keymap, Execute, G = Api.nvim_set_keymap, Api.nvim_command, vim.g
 Scopes = { o = vim.o, b = vim.bo, w = vim.wo }
+Doom = {}
 
 -- Local files
 Doom_root = Fn.expand('$HOME/.config/doom-nvim')
@@ -84,6 +82,9 @@ end
 
 -- A better and less primitive implementation of custom plugins in Doom Nvim
 function Custom_plugins(plugins)
+
+	local packer = require('packer')
+
 	-- if a plugin have some configs like enabled or requires then we will
 	-- store them in that table
 	local plugin_with_configs = {}
