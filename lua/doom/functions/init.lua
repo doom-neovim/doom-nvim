@@ -64,7 +64,7 @@ function Doom_update()
 			-- Pull remote changes
 			exec(string.format('%s pull', git_base))
 			-- Restore the stashed files
-			exec(string.format('%s stash pop stash@{1}', git_base))
+			exec(string.format('%s stash pop', git_base))
 			-- Apply doomrc patch with user saved configurations
 			exec(string.format('%s apply %s', git_base, doomrc_patch_path))
 			-- Delete doomrc patch because it's not needed anymore
