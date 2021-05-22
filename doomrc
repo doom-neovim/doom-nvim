@@ -140,16 +140,6 @@ Doom = {
 	-- @default = true
 	enable_guicolors = true,
 
-	-- Sidebar sizing
-	-- Specifies the default width of Tree Explorer and the Symbols Outline
-	-- @default = 25
-	sidebar_width = 25,
-
-    -- change Which Key background color
-    -- can use hex, or normal color names (eg: Red, Gree, Blue)
-    -- @default = #202328
-    whichkey_bg = "#202328",
-
 	-- Symbols-Outline on the left
 	-- Places the Symbols-Outline buffer to the left when enabled
 	-- @default = false
@@ -295,7 +285,7 @@ Doom = {
 	--   disabled_modules = {'web'}
 	disabled_modules = { 'git', 'lsp', 'web' },
 
-	-- Install custom plugins
+	-- Install custom plugins, using the same syntax as packer
 	-- @default = {}
 	-- examples:
 	--   plugins without options:
@@ -303,8 +293,8 @@ Doom = {
 	--   plugins with options:
 	--       custom_plugins = {
 	--           {
-	--              ['repo'] = 'andweeb/presence.nvim',
-	--              ['enabled'] = true,
+	--              'andweeb/presence.nvim',
+	--              disable = true,
 	--           }
 	--       }
 	custom_plugins = {},
