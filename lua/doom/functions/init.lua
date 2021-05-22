@@ -45,7 +45,7 @@ end
 function Doom_update()
 	local exec = os.execute
 	local git_base = 'git -C ' .. Doom_root
-	local doomrc_patch_path = Doom_root .. '/doomrc_bak.patch'
+	local doomrc_patch = 'doomrc_bak.patch'
 
 	Try({
 		function()
@@ -54,21 +54,26 @@ function Doom_update()
 			exec(string.format(
 				'%s diff doomrc > %s',
 				git_base,
-				doomrc_patch_path
+				doomrc_patch
 			))
 			-- Restore doomrc to defaults so we can pull it
-			exec(string.format('%s restore doomrc ', git_base))
+			exec(string.format('%s restore doomrc', git_base))
 			-- Stash all untracked and modified tracked files
-			exec(string.format('%s stash -q', git_base))
 			exec(string.format('%s stash -u -q', git_base))
 			-- Pull remote changes
-			exec(string.format('%s pull', git_base))
+			exec(string.format('%s pull -q', git_base))
 			-- Restore the stashed files
 			exec(string.format('%s stash pop', git_base))
-			-- Apply doomrc patch with user saved configurations
-			exec(string.format('%s apply %s', git_base, doomrc_patch_path))
+			-- Apply doomrc patch with user saved configurations if the patch
+            -- is not empty (if the doomrc had changes before restoring it)
+            exec([[
+                patch_changes="$(wc -l ~/.config/doom-nvim/doomrc_bak.patch | sed 's/\s\+.*//')"
+                if [ "$patch_changes" -eq 0 ]; then
+                    git -C ~/.config/doom-nvim apply doomrc_bak.patch
+                fi
+            ]])
 			-- Delete doomrc patch because it's not needed anymore
-			exec(string.format('rm %s', doomrc_patch_path))
+			exec(string.format('rm %s', Doom_root .. '/' .. doomrc_patch))
 			Log_message(
 				'+',
 				'Successfully updated Doom Nvim, please restart Neovim '
