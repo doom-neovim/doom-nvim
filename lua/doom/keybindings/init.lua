@@ -284,7 +284,7 @@ wk.register({
 				'Edit your Doom Nvim configuration',
 			},
 			d = { ':help doom_nvim<CR>', 'Open Doom Nvim documentation' },
-			u = { ':DoomUpdate<CR>', 'Check Doom Nvim udpates' },
+			u = { ':lua Doom_update()<CR>', 'Check Doom Nvim updates' },
 			r = {
 				':lua Create_report()<CR>',
 				'Create crash report',

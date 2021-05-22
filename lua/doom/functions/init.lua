@@ -19,14 +19,14 @@ function Load_custom_settings(settings_tbl, scope)
 	if next(settings_tbl) ~= nil then
 		if scope == 'autocmds' then
 			Create_augroups(settings_tbl)
-        elseif scope == 'commands' then
-            for _, cmd in ipairs(settings_tbl) do
-                Cmd(cmd)
-            end
-        elseif scope == 'functions' then
-            for _, func_body in pairs(settings_tbl) do
-                func_body()
-            end
+		elseif scope == 'commands' then
+			for _, cmd in ipairs(settings_tbl) do
+				Cmd(cmd)
+			end
+		elseif scope == 'functions' then
+			for _, func_body in pairs(settings_tbl) do
+				func_body()
+			end
 		elseif scope == 'mappings' then
 			local opts = { silent = true }
 			for _, map in ipairs(settings_tbl) do
@@ -39,6 +39,53 @@ function Load_custom_settings(settings_tbl, scope)
 			end
 		end
 	end
+end
+
+-- Doom_update updates Doom Nvim and patches doomrc to keep the user changes
+function Doom_update()
+	local exec = os.execute
+	local git_base = 'git -C ' .. Doom_root
+	local doomrc_patch_path = Doom_root .. '/doomrc_bak.patch'
+
+	Try({
+		function()
+			Log_message('+', 'Updating Doom Nvim ...', 2)
+			-- Create the patch file for the doomrc
+			exec(string.format(
+				'%s diff doomrc > %s',
+				git_base,
+				doomrc_patch_path
+			))
+			-- Restore doomrc to defaults so we can pull it
+			exec(string.format('%s restore doomrc ', git_base))
+			-- Stash all untracked and modified tracked files
+			exec(string.format('%s stash -q', git_base))
+			exec(string.format('%s stash -u -q', git_base))
+			-- Pull remote changes
+			exec(string.format('%s pull', git_base))
+			-- Restore the stashed files
+			exec(string.format('%s stash pop stash@{1}', git_base))
+			-- Apply doomrc patch with user saved configurations
+			exec(string.format('%s apply %s', git_base, doomrc_patch_path))
+			-- Delete doomrc patch because it's not needed anymore
+			exec(string.format('rm %s', doomrc_patch_path))
+			Log_message(
+				'+',
+				'Successfully updated Doom Nvim, please restart Neovim '
+					.. 'for the changes to take effect',
+				2
+			)
+		end,
+		Catch({
+			function(err)
+				Log_message(
+					'!',
+					string.format('Unable to update Doom Nvim,\n%s', err),
+					1
+				)
+			end,
+		}),
+	})
 end
 
 -- Quit Neovim and change the colorscheme at doomrc if the colorscheme is not the same,
