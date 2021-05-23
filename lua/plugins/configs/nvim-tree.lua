@@ -94,5 +94,5 @@ return function()
     }
 
     -- Make sure nvim-tree loads itself when lazy loaded
-    require('nvim-tree').on_enter()
+    vim.defer_fn(require('nvim-tree').refresh, 25)
 end
