@@ -201,9 +201,9 @@ packer.startup(function(use)
     local disabled_lspconfig = Has_value(Doom.disabled_plugins, 'lspconfig')
     use({
         'neovim/nvim-lspconfig',
-        config = require('plugins.configs.lsp'),
+        config = require('plugins.configs.nvim-lspconfig'),
         disable = (disabled_lsp and true or disabled_lspconfig),
-        event = 'BufReadPost',
+        event = 'ColorScheme',
     })
 
     -- Completion plugin
@@ -211,14 +211,16 @@ packer.startup(function(use)
     local disabled_compe = Has_value(Doom.disabled_plugins, 'compe')
     use({
         'hrsh7th/nvim-compe',
-        requires = {
-            { 'ray-x/lsp_signature.nvim' },
-            { 'onsails/lspkind-nvim' },
+         requires = {
+            { 'ray-x/lsp_signature.nvim', config = require('plugins.configs.lsp-signature') },
+            { 'onsails/lspkind-nvim', config = require('plugins.configs.lspkind-nvim') },
             { 'norcalli/snippets.nvim' },
         },
+
         config = require('plugins.configs.nvim-compe'),
         disable = (disabled_lsp and true or disabled_compe),
-        event = 'BufReadPost',
+        opt = true,
+        after = 'nvim-lspconfig',
     })
 
     -- install lsp saga
@@ -226,7 +228,8 @@ packer.startup(function(use)
     use({
         'glepnir/lspsaga.nvim',
         disable = (disabled_lsp and true or disabled_lspsaga),
-        event = 'BufReadPost',
+        opt = true,
+        after = 'nvim-lspconfig',
     })
 
     -- provides the missing `:LspInstall` for `nvim-lspconfig`.
@@ -234,8 +237,10 @@ packer.startup(function(use)
         Has_value(Doom.disabled_plugins, 'lspinstall')
     use({
         'kabouzeid/nvim-lspinstall',
+        config = require('plugins.configs.nvim-lspinstall'),
         disable = (disabled_lsp and true or disabled_lspinstall),
-        event = 'BufReadPost',
+        opt = true,
+        after = 'nvim-lspconfig',
     })
 
     -----[[--------------]]-----
@@ -309,7 +314,7 @@ packer.startup(function(use)
         'norcalli/nvim-colorizer.lua',
         config = require('plugins.configs.nvim-colorizer'),
         disable = (disabled_web and true or disabled_colorizer),
-        event = 'BufReadPost',
+        event = 'ColorScheme',
     })
 
     -- HTTP Client support
@@ -327,7 +332,7 @@ packer.startup(function(use)
     use({
         'mattn/emmet-vim',
         disable = (disabled_web and true or disabled_emmet),
-        event = 'BufReadPost',
+        event = 'ColorScheme',
     })
 
     -----[[----------------]]-----
@@ -336,6 +341,10 @@ packer.startup(function(use)
     -- If there are custom plugins then also require them
     for _, plug in pairs(Doom.custom_plugins) do
         Custom_plugins(plug)
+    end
+
+    if not disabled_lsp then
+        vim.cmd [[ LspStart ]]
     end
 
 end)
