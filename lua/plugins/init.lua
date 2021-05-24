@@ -149,7 +149,7 @@ packer.startup(function(use)
     use({
         'folke/which-key.nvim',
         config = require('plugins.configs.which-key'),
-        event = 'BufRead',
+        event = 'BufEnter',
     })
 
     -- Distraction free environment

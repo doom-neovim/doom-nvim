@@ -31,13 +31,13 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
     require('doom.config')
     -- UI settings
     require('doom.config.ui')
-    -- Doom autocommands
-    require('doom.autocmds')
     -- Doom keybindings
     require('doom.keybindings')
+    -- Doom autocommands
+    require('doom.autocmds')
 
     if vim.api.nvim_buf_get_name(0):len() == 0 then 
-        vim.cmd("Dashboard") 
+        vim.cmd("Dashboard")
     end
 
     async:close()

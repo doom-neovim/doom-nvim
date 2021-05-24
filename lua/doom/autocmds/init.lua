@@ -46,11 +46,7 @@ end
 
 -- Install plugins on launch
 if Doom.auto_install_plugins then
-	table.insert(autocmds['doom_core'], {
-		'VimEnter',
-		'*',
-		'PackerInstall',
-	})
+    vim.defer_fn(function() vim.cmd("PackerInstall") end, 200)
 end
 
 -- Set autosave
@@ -66,7 +62,7 @@ end
 if not Doom.auto_comment then
 	table.insert(autocmds['doom_core'], {
 		{
-			'BufWinEnter',
+			'BufEnter',
 			'*',
 			'setlocal formatoptions-=c formatoptions-=r formatoptions-=o',
 		},
