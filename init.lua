@@ -12,7 +12,9 @@ require('doom.utils')
 -- Load default settings
 require('doom.default')
 
-vim.defer_fn(vim.schedule_wrap(function()
+local async
+
+async = vim.loop.new_async(vim.schedule_wrap(function()
 
     -- Logging system
     require('doom.logging')
@@ -38,4 +40,8 @@ vim.defer_fn(vim.schedule_wrap(function()
         vim.cmd("Dashboard") 
     end
 
-end), 0)
+    async:close()
+
+end))
+
+async:send()

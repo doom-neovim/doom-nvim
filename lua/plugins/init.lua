@@ -45,6 +45,7 @@ packer.startup(function(use)
     use({
         'wbthomason/packer.nvim',
         branch = 'fix/premature-display-opening',
+        opt = true
     })
 
     -- Tree-Sitter
@@ -55,7 +56,7 @@ packer.startup(function(use)
         run = ':TSUpdate',
         config = require('plugins.configs.tree-sitter'),
         disable = (disabled_files and true or disabled_treesitter),
-        event = 'BufReadPost',
+        event = 'TabNewEntered',
     })
 
     -- Sessions
@@ -64,7 +65,7 @@ packer.startup(function(use)
         config = require('plugins.configs.auto-session'),
         requires = { { 'rmagatti/session-lens', after = 'telescope.nvim' } },
         cmd = { 'SaveSession', 'RestoreSession', 'DeleteSession' },
-        event = 'BufReadPost',
+        event = 'TabNewEntered',
     })
 
     -----[[------------]]-----
@@ -84,7 +85,7 @@ packer.startup(function(use)
     use({
         'GustavoPrietoP/doom-themes.nvim',
         disable = disabled_doom_themes,
-        event = 'BufReadPost',
+        event = 'TabNewEntered',
     })
 
     -- File tree
@@ -114,7 +115,7 @@ packer.startup(function(use)
     use({
         'romgrk/barbar.nvim',
         disable = disabled_tabline,
-        event = 'BufReadPost',
+        event = 'ColorScheme',
     })
 
     -- Better terminal
@@ -148,7 +149,7 @@ packer.startup(function(use)
     use({
         'folke/which-key.nvim',
         config = require('plugins.configs.which-key'),
-        event = 'BufWinEnter',
+        event = 'BufRead',
     })
 
     -- Distraction free environment
@@ -158,7 +159,7 @@ packer.startup(function(use)
         config = require('plugins.configs.nvim-zen'),
         disable = disabled_zen,
         module = 'true-zen',
-        event = 'BufReadPost',
+        event = 'TabNewEntered',
     })
 
     -----[[--------------]]-----
@@ -262,7 +263,7 @@ packer.startup(function(use)
         'lukas-reineke/format.nvim',
         config = require('plugins.configs.nvim-format'),
         disable = (disabled_files and true or disabled_formatter),
-        event = 'BufReadPost',
+        event = 'TabNewEntered',
     })
 
     -- Autopairs
@@ -272,7 +273,7 @@ packer.startup(function(use)
         'steelsojka/pears.nvim',
         config = require('plugins.configs.nvim-pears'),
         disable = (disabled_files and true or disabled_autopairs),
-        event = 'BufReadPost',
+        event = 'ColorScheme',
     })
 
     -- Indent Lines
@@ -292,7 +293,7 @@ packer.startup(function(use)
     use({
         'editorconfig/editorconfig-vim',
         disable = (disabled_files and true or disabled_editorconfig),
-        event = 'BufReadPost',
+        event = 'TabNewEntered',
     })
 
     -- Comments
@@ -302,7 +303,7 @@ packer.startup(function(use)
     use({
         'b3nj5m1n/kommentary',
         disable = (disabled_files and true or disabled_kommentary),
-        event = 'BufReadPost',
+        event = 'BufRead',
     })
 
     -----[[-------------]]-----
