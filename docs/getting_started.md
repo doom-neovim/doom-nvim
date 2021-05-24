@@ -98,7 +98,22 @@ You can also download a prebuilt binary from the [Neovim](https://github.com/neo
 
 ### On Windows
 
-If you use Windows, please put the steps to install Neovim Nightly here!
+#### [Chocolatey](https://community.chocolatey.org/)
+
+```
+choco install neovim --pre
+```
+
+#### [Scoop](https://scoop.sh/)
+
+```
+scoop bucket add versions
+scoop install neovim-nightly
+```
+
+#### Manual
+
+You can also download a prebuilt binary from the [Neovim](https://github.com/neovim/neovim/releases) releases page.
 
 ## External dependencies
 
