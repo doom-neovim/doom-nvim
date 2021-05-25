@@ -6,8 +6,7 @@
 
 local autocmds = {
 	doom_core = {
-		-- Set proper syntax highlight for our doomrc
-		{ 'BufNewFile,BufRead', 'doomrc', 'set ft=lua' },
+        { 'BufEnter', 'doomrc', ':set ft=lua' },
 		-- Ensure every file does full syntax highlight
 		{ 'BufEnter', '*', ':syntax sync fromstart' },
 		{ 'BufEnter', '*', ':set signcolumn=yes' },
@@ -29,6 +28,11 @@ local autocmds = {
 		},
 	},
 }
+
+-- Set proper syntax highlight for our doomrc
+if vim.api.nvim_buf_get_name(0):find("doomrc", 0, true) then
+    vim.cmd [[ set ft=lua ]]
+end
 
 -- Set relative numbers
 if Doom.relative_num then
@@ -67,6 +71,8 @@ if not Doom.auto_comment then
 			'setlocal formatoptions-=c formatoptions-=r formatoptions-=o',
 		},
 	})
+
+    vim.cmd [[ setlocal formatoptions-=c formatoptions-=r formatoptions-=o ]]
 end
 
 -- Enable highlight on yank
@@ -96,11 +102,17 @@ if Doom.preserve_edit_pos then
 		'BufReadPost',
 		'*',
 		[[
+            if line("'\"") > 1 && line("'\"") <= line("$") |
+                exe "normal! g'\"" |
+            endif
+        ]],
+	})
+
+    vim.cmd [[
         if line("'\"") > 1 && line("'\"") <= line("$") |
             exe "normal! g'\"" |
         endif
-        ]],
-	})
+    ]]
 end
 
 -- If logging level is greater than 0 then dump :messages to doom.log on exit
