@@ -24,6 +24,8 @@ local disabled_lsp = Has_value(Doom.disabled_modules, 'lsp')
 local disabled_files = Has_value(Doom.disabled_modules, 'files')
 local disabled_web = Has_value(Doom.disabled_modules, 'web')
 
+vim.cmd [[ packadd packer.nvim ]]
+
 local packer = require('packer')
 
 -- Change some defaults
