@@ -5,8 +5,8 @@
 local vim = vim
 
 -------------------------------------------------------------------------------
---Functions:
---{{{1
+-- Functions:
+-- {{{1
 
 -- Convert RGB to Hex color.
 -- @param r Red value
@@ -194,7 +194,7 @@ function Mix(first, second, percentage)
 
 	local r = interpolate(first_rgb[1], second_rgb[1], amount)
 	local g = interpolate(first_rgb[2], second_rgb[2], amount)
-	b = interpolate(first_rgb[3], second_rgb[3], amount)
+	local b = interpolate(first_rgb[3], second_rgb[3], amount)
 
 	return RGB_to_Hex(r, g, b)
 end
