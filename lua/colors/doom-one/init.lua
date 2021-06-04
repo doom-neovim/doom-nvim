@@ -17,6 +17,7 @@ local api = vim.api
 
 -- Customization variables {{{
 
+local cursor_coloring = g['doom_one_cursor_coloring'] or false
 local terminal_colors = g['doom_one_terminal_colors'] or false
 local enable_treesitter = g['doom_one_enable_treesitter'] or true
 local transparent_bg = g['doom_one_transparent_background'] or false
@@ -105,6 +106,10 @@ local gh_danger_fg0 = Mix(red, fg, 0.6)
 local gh_danger_bg0 = Mix('#ffdce0', bg, 0.6)
 local gh_danger_bg1 = Mix('#ffdce0', bg, 0.8)
 local gh_danger_bg2 = Mix('#ffdce0', bg, 0.9)
+
+if cursor_coloring then
+    vim.opt.guicursor = 'n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor25-Cursor'
+end
 
 -- }}}
 
@@ -312,9 +317,11 @@ local main_syntax = {
 	Special = { fg = violet },
 	SpecialBold = { fg = violet, gui = 'bold' },
 
+    Field = { fg = violet },
 	Argument = { fg = light_magenta },
-	Field = { fg = violet },
+    Attribute = { fg = light_magenta },
 	Identifier = { fg = light_magenta },
+    Property = { fg = orange },
 	Function = { fg = magenta },
 	FunctionBuiltin = { fg = magenta, gui = 'bold' },
 	Method = { fg = violet },
