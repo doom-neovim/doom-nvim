@@ -6,8 +6,7 @@
 
 -------------------- HELPERS --------------------
 Api, Cmd, Fn = vim.api, vim.cmd, vim.fn
-Keymap, Execute, G = Api.nvim_set_keymap, Api.nvim_command, vim.g
-Scopes = { o = vim.o, b = vim.bo, w = vim.wo }
+Execute, G = Api.nvim_command, vim.g
 Doom = {}
 
 -- Local files
@@ -22,16 +21,7 @@ function Map(mode, lhs, rhs, opts)
 	if opts then
 		options = vim.tbl_extend('force', options, opts)
 	end
-	Keymap(mode, lhs, rhs, options)
-end
-
--- Options wrapper, extracted from
--- https://github.com/ojroques/dotfiles/blob/master/nvim/init.lua#L14-L17
-function Opt(scope, key, value)
-	Scopes[scope][key] = value
-	if scope ~= 'o' then
-		Scopes['o'][key] = value
-	end
+	Api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 -- For autocommands, extracted from

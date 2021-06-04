@@ -24,9 +24,9 @@ end
 -- Set some configs on load
 if Fn.has('vim_starting') then
 	-- Set encoding
-	Opt('o', 'encoding', 'utf-8')
+	vim.opt.encoding = 'utf-8'
 	-- Required to use some colorschemes and improve colors
-	Opt('o', 'termguicolors', true)
+	vim.opt.termguicolors = true
 end
 
 ----- Start Doom and run packer.nvim

@@ -9,128 +9,123 @@ function Default_options()
 	----- Default Neovim configurations
 	-- Set colorscheme
 	Cmd('colorscheme ' .. Doom.colorscheme)
-	Cmd('set background=' .. Doom.colorscheme_bg)
+	vim.opt.background = Doom.colorscheme_bg
 	Cmd('highlight WhichKeyFloat guibg=' .. Doom.whichkey_bg)
 
-	-- Set default options
-	Cmd('syntax on')
-	Cmd('filetype plugin indent on')
-	Opt('o', 'encoding', 'utf-8')
+	--- Set default options
+	vim.opt.encoding = 'utf-8'
 
 	-- Global options
-	Opt('o', 'wildmenu', true)
-	Opt('o', 'autoread', true)
-	Opt('o', 'smarttab', true)
-	Opt('o', 'hidden', true)
-	Opt('o', 'hlsearch', true)
-	Opt('o', 'laststatus', 2)
-	Opt('o', 'backspace', 'indent,eol,start')
-	Opt('o', 'updatetime', 100)
-	Opt('o', 'timeoutlen', 200)
-	Opt(
-		'o',
-		'completeopt',
-		'menu,menuone,preview,noinsert,noselect'
-	)
-	Cmd('set shortmess += "atsc"')
-	Opt('o', 'inccommand', 'split')
-	Opt('o', 'path', '**')
-	--Cmd('set signcolumn=yes')
+	vim.opt.wildmenu = true
+	vim.opt.autoread = true
+	vim.opt.smarttab = true
+	vim.opt.hidden = true
+	vim.opt.hlsearch = true
+	vim.opt.laststatus = 2
+	vim.opt.backspace = { 'indent', 'eol', 'start' }
+	vim.opt.updatetime = 100
+	vim.opt.timeoutlen = 200
+	vim.opt.completeopt =
+		{ 'menu', 'menuone', 'preview', 'noinsert', 'noselect' }
+	vim.opt.shortmess:append('atsc')
+	vim.opt.inccommand = 'split'
+	vim.opt.path = '**'
+    vim.opt.signcolumn = 'yes'
 
 	-- Buffer options
-	Opt('b', 'autoindent', true)
-	Opt('b', 'smartindent', true)
+	vim.opt.autoindent = true
+	vim.opt.smartindent = true
 
 	-- set Gui Fonts
-	--Opt('o', 'guifont='..Doom.guifont..':h'..Doom.guifont_size)
-	o.guifont = Doom.guifont .. ':h' .. Doom.guifont_size
+	vim.opt.guifont = Doom.guifont .. ':h' .. Doom.guifont_size
 
 	-- Use clipboard outside vim
 	if Doom.clipboard then
-		Opt('o', 'clipboard', 'unnamedplus')
+		vim.opt.clipboard = 'unnamedplus'
 	end
 
 	if Doom.line_highlight then
-		Cmd('set cursorline')
+		vim.opt.cursorline = true
 	else
-		Cmd('set nocursorline')
+		vim.opt.cursorline = false
 	end
 
 	-- Automatic split locations
 	if Doom.split_right then
-		Opt('o', 'splitright', true)
+		vim.opt.splitright = true
 	else
-		Opt('o', 'splitright', false)
+		vim.opt.splitright = false
 	end
 
 	if Doom.split_below then
-		Opt('o', 'splitbelow', true)
+		vim.opt.splitbelow = true
 	else
-		Opt('o', 'splitbelow', false)
+		vim.opt.splitbelow = false
 	end
 
 	-- Enable scroll off
 	if Doom.scrolloff then
-		Opt('o', 'scrolloff', Doom.scrolloff_amount)
+		vim.opt.scrolloff = Doom.scrolloff_amount
 	end
 
 	-- Enable showmode
 	if not Doom.show_mode then
-		Cmd('set noshowmode')
+		vim.opt.showmode = false
 	else
-		Cmd('set showmode')
+		vim.opt.showmode = true
 	end
 
 	-- Enable mouse input
 	if Doom.mouse then
-		Opt('o', 'mouse', 'a')
+		vim.opt.mouse = 'a'
 	end
 
 	-- Enable wrapping
 	if not Doom.line_wrap then
-		Cmd('set nowrap')
+		vim.opt.wrap = false
 	else
-		Cmd('set wrap')
+		vim.opt.wrap = true
 	end
 
 	-- Enable swap files
 	if not Doom.swap_files then
-		Cmd('set noswapfile')
+		vim.opt.swapfile = false
 	else
-		Cmd('set swapfile')
+		vim.opt.swapfile = true
 	end
 
 	-- Set numbering
 	if Doom.relative_num then
-		Cmd('set nu rnu')
+		vim.opt.number = true
+		vim.opt.relativenumber = true
 	else
-		Cmd('set nu')
+		vim.opt.number = true
 	end
 
 	-- Checks to see if undo_dir does not exist. If it doesn't, it will create a undo folder
 	local undo_dir = Fn.stdpath('config') .. Doom.undo_dir
 	if Doom.backup and Fn.empty(Fn.glob(undo_dir)) > 0 then
 		Execute('!mkdir ' .. undo_dir .. ' -p')
-		Cmd('set undofile')
+		vim.opt.undofile = true
 	end
 
 	-- If backup is false but `undo_dir` still exists then it will delete it.
 	if not Doom.backup and Fn.empty(Fn.glob(undo_dir)) == 0 then
 		Execute('!rm -rf ' .. undo_dir)
-		Cmd('set noundofile')
+		vim.opt.undofile = false
 	end
 
 	-- Set local-buffer options
 	if Doom.expand_tabs then
-		Execute('let &expandtab = 1')
+		vim.opt.expandtab = true
 	else
-		Execute('let &expandtab = 0')
+		vim.opt.expandtab = false
 	end
-	Execute('let &tabstop = ' .. Doom.indent)
-	Execute('let &shiftwidth = ' .. Doom.indent)
-	Execute('let &softtabstop = ' .. Doom.indent)
-	Execute('let &colorcolumn = ' .. Doom.max_columns)
-	Execute('let &conceallevel = ' .. Doom.conceallevel)
+	vim.opt.tabstop = Doom.indent
+	vim.opt.shiftwidth = Doom.indent
+	vim.opt.softtabstop = Doom.indent
+	vim.opt.colorcolumn = tostring(Doom.max_columns)
+	vim.opt.conceallevel = Doom.conceallevel
 end
 
 -- Custom Doom Nvim commands
@@ -141,8 +136,8 @@ function Custom_options()
 
 	-- Load user-defined settings from the Neovim field in the doomrc file
 	Load_custom_settings(Neovim.autocmds, 'autocmds')
-    Load_custom_settings(Neovim.commands, 'commands')
-    Load_custom_settings(Neovim.functions, 'functions')
+	Load_custom_settings(Neovim.commands, 'commands')
+	Load_custom_settings(Neovim.functions, 'functions')
 	Load_custom_settings(Neovim.mappings, 'mappings')
-    Load_custom_settings(Neovim.global_variables, 'variables')
+	Load_custom_settings(Neovim.global_variables, 'variables')
 end

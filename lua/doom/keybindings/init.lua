@@ -6,11 +6,6 @@
 
 local wk = require('which-key')
 
--- Define leader key to space
--- and call leader mapper
-Map('n', '<Space>', '<Nop>')
-Api.nvim_set_var('mapleader', ' ')
-
 -------------------------------------------------
 
 ---[[-------------------------------]]---
@@ -82,7 +77,8 @@ then
 	Map(
 		'n',
 		'<C-b>',
-		":lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>"
+		":lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>",
+        opts
 	) -- Control+b: Scroll up documents
 	Cmd('command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()')
 end
@@ -102,22 +98,22 @@ Map('n', '<esc>', ':noh<CR>', opts)
 
 --- F<n> keybindings
 if not Has_value(Doom.disabled_plugins, 'outline') then
-	Map('n', '<F2>', ':SymbolsOutline<CR>')
+	Map('n', '<F2>', ':SymbolsOutline<CR>', opts)
 end
 if not Has_value(Doom.disabled_plugins, 'tree') then
-	Map('n', '<F3>', ':NvimTreeToggle<CR>')
+	Map('n', '<F3>', ':NvimTreeToggle<CR>', opts)
 end
 if not Has_value(Doom.disabled_plugins, 'minimap') then
-	Map('n', '<F5>', ':MinimapToggle<CR>')
+	Map('n', '<F5>', ':MinimapToggle<CR>', opts)
 end
 if not Has_value(Doom.disabled_plugins, 'zen') then
-	Map('n', '<F6>', ':TZAtaraxis<CR>')
+	Map('n', '<F6>', ':TZAtaraxis<CR>', opts)
 end
 if
 	not Has_value(Doom.disabled_modules, 'web')
 	and (not Has_value(Doom.disabled_plugins, 'restclient'))
 then
-	Map('n', '<F7>', ':DotHttp<CR>')
+	Map('n', '<F7>', ':DotHttp<CR>', opts)
 end
 ---[[------------------------------]]
 --     Window Movements keys      --
@@ -155,16 +151,16 @@ Cmd([[
 --     Disable keys      --
 ---]]-----------------[[---
 -- Disable accidentally pressing ctrl-z and suspending
-Map('n', '<c-z>', '<Nop>')
+Map('n', '<c-z>', '<Nop>', opts)
 
 -- Disable ex mode
-Map('n', 'Q', '<Nop>')
+Map('n', 'Q', '<Nop>', opts)
 
 -- Disable recording
-Map('n', 'q', '<Nop>')
+Map('n', 'q', '<Nop>', opts)
 
 -- Fast exit from Doom Nvim and write messages to logs
-Map('n', 'ZZ', ':lua Quit_doom(1, 1)<CR>')
+Map('n', 'ZZ', ':lua Quit_doom(1, 1)<CR>', opts)
 
 ---[[-----------------]]---
 --      Leader keys      --
