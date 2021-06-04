@@ -85,63 +85,7 @@ function Custom_plugins(plugins)
 
 	local packer = require('packer')
 
-	-- if a plugin have some configs like enabled or requires then we will
-	-- store them in that table
-	local plugin_with_configs = {}
-
-    -- Valid fields for the plugin table (not the boolean ones), see
-    -- https://github.com/wbthomason/packer.nvim#specifying-plugins
-    local plugin_valid_fields = {'branch', 'requires', 'config', 'run'}
-
-	if type(plugins) ~= 'string' then
-		for key, val in pairs(plugins) do
-			-- Create the correct plugin structure to packer
-			-- use {
-			--   url,
-            --   branch,
-			--   disable,
-			--   requires,
-            --   config,
-            --   run
-			-- }
-
-            -- Plugin repository
-			if key == 'repo' then
-				table.insert(plugin_with_configs, val)
-			end
-
-            -- Plugin branch, dependencies, config and post-install/update hooks
-            if Has_value(plugin_valid_fields, key) then
-                plugin_with_configs[key] = val
-            end
-
-            -- If the plugin is enabled or not, false by default
-			if key == 'enabled' then
-				if val then
-					plugin_with_configs['disable'] = false
-				else
-					plugin_with_configs['disable'] = true
-				end
-			end
-
-            -- If the plugin should be skipped in the updates/syncs,
-            -- false by default
-            if key == 'lock' then
-                if val then
-                    plugin_with_configs['lock'] = true
-                else
-                    plugin_with_configs['lock'] = false
-                end
-            end
-		end
-		-- Send the configured plugin to packer
-		packer.use(plugin_with_configs)
-	else
-		-- Send the simple plugins, e.G. those who have not declared with configs
-		-- 'user/repo' ← simple plugin
-		-- { 'user/repo', opts } ← configured plugin
-		packer.use(plugins)
-	end
+	packer.use(plugins)
 end
 
 -- Get current OS, returns 'Other' if the current OS is not recognized
