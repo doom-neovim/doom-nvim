@@ -24,7 +24,7 @@ local disabled_lsp = Has_value(Doom.disabled_modules, 'lsp')
 local disabled_files = Has_value(Doom.disabled_modules, 'files')
 local disabled_web = Has_value(Doom.disabled_modules, 'web')
 
-vim.cmd [[ packadd packer.nvim ]]
+Cmd [[ packadd packer.nvim ]]
 
 local packer = require('packer')
 
@@ -46,7 +46,6 @@ packer.startup(function(use)
     -- in the main branch.
     use({
         'wbthomason/packer.nvim',
-        branch = 'fix/premature-display-opening',
         opt = true
     })
 
@@ -58,7 +57,7 @@ packer.startup(function(use)
         run = ':TSUpdate',
         config = require('plugins.configs.tree-sitter'),
         disable = (disabled_files and true or disabled_treesitter),
-        event = 'TabNewEntered',
+        -- event = 'TabNewEntered',
     })
 
     -- Sessions
@@ -347,7 +346,6 @@ packer.startup(function(use)
     end
 
     if not disabled_lsp then
-        vim.cmd [[ LspStart ]]
+        Cmd [[ LspStart ]]
     end
-
 end)
