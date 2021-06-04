@@ -6,7 +6,8 @@
 
 ---- Doom Utilities -----------------------------
 -------------------------------------------------
-
+-- Store startup time in seconds
+vim.g.start_time = vim.fn.reltime()
 -- Utility functions
 require('doom.utils')
 -- Load default settings
@@ -15,7 +16,6 @@ require('doom.default')
 local async
 
 async = vim.loop.new_async(vim.schedule_wrap(function()
-
     -- Logging system
     require('doom.logging')
     -- Doom system detection
@@ -27,7 +27,7 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
     -------------------------------------------------
     -- Load doomrc (user-defined configurations)
     require('doom.config.doomrc')
-    -- Load main configurations
+    -- Load main configurations and plugins
     require('doom.config')
     -- UI settings
     require('doom.config.ui')
