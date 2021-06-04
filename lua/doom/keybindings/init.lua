@@ -5,6 +5,7 @@
 ---[[---------------------------------------]]---
 
 local wk = require('which-key')
+Map('n', '<Space>', ':WhichKey <leader><CR>')
 
 -------------------------------------------------
 
@@ -113,7 +114,7 @@ if
 	not Has_value(Doom.disabled_modules, 'web')
 	and (not Has_value(Doom.disabled_plugins, 'restclient'))
 then
-	Map('n', '<F7>', ':DotHttp<CR>', opts)
+	Map('n', '<F7>', '<Plug>RestNvim<CR>', opts)
 end
 ---[[------------------------------]]
 --     Window Movements keys      --
@@ -311,7 +312,7 @@ then
 			r = {
 				name = '+runner',
 				r = {
-					':DotHttp<CR>',
+					'<Plug>RestNvim<CR>',
 					'Run restclient on the line that the cursor is currently on',
 				},
 			},
