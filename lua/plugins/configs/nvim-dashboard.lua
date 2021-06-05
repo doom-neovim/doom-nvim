@@ -25,7 +25,7 @@ return function()
 		},
 		f = {
 			description = { '  Open Private Configuration     SPC d c' },
-			command = ':e ~/.config/nvim/doomrc',
+			command = ':e ~/.config/doom-nvim/doomrc',
 		},
 		g = {
 			description = { '  Open Documentation             SPC d d' },
