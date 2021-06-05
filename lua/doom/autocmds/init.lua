@@ -6,8 +6,6 @@
 
 local autocmds = {
 	doom_core = {
-		-- Ensure every file does full syntax highlight
-		{ 'BufEnter', '*', ':syntax sync fromstart' },
 		-- Compile new plugins changes at save
 		{
 			'BufWritePost',

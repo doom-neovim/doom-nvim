@@ -8,6 +8,15 @@
 -------------------------------------------------
 -- Store startup time in seconds
 vim.g.start_time = vim.fn.reltime()
+
+
+-- Disable these for very fast startup time
+vim.cmd [[ 
+	syntax off
+	filetype plugin indent off
+	set nospell
+]]
+
 -- Utility functions
 require('doom.utils')
 -- Load default settings
@@ -36,9 +45,17 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
     -- Doom autocommands
     require('doom.autocmds')
 
+    -- If the current buffer name is empty then trigger Dashboard
     if vim.api.nvim_buf_get_name(0):len() == 0 then
         vim.cmd("Dashboard")
     end
+
+    vim.opt.syntax = "on"
+
+    -- After 250ms enable syntax highlighting
+    vim.defer_fn(function() 
+        vim.cmd [[ syntax on ]]
+    end, 100)
 
     async:close()
 

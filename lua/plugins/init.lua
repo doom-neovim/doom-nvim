@@ -57,7 +57,7 @@ packer.startup(function(use)
         run = ':TSUpdate',
         config = require('plugins.configs.tree-sitter'),
         disable = (disabled_files and true or disabled_treesitter),
-        -- event = 'TabNewEntered',
+        event = 'BufEnter',
     })
 
     -- Sessions
