@@ -114,7 +114,8 @@ packer.startup(function(use)
     -- can be disabled to use your own tabline
     local disabled_tabline = Has_value(Doom.disabled_plugins, 'tabline')
     use({
-        'romgrk/barbar.nvim',
+        'akinsho/nvim-bufferline.lua',
+        config = require('plugins.configs.nvim-bufferline'),
         disable = disabled_tabline,
         event = 'ColorScheme',
     })
