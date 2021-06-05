@@ -14,7 +14,6 @@ vim.g.start_time = vim.fn.reltime()
 vim.cmd [[ 
 	syntax off
 	filetype plugin indent off
-	set nospell
 ]]
 
 -- Utility functions
@@ -50,9 +49,10 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
         vim.cmd("Dashboard")
     end
 
+	-- Enable basic syntax highlight
     vim.opt.syntax = "on"
 
-    -- After 250ms enable syntax highlighting
+    -- After 100ms fully reenable syntax highlighting
     vim.defer_fn(function() 
         vim.cmd [[ syntax on ]]
     end, 100)
