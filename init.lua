@@ -52,10 +52,9 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
 	-- Enable basic syntax highlight
     vim.opt.syntax = "on"
 
-    -- After 100ms fully reenable syntax highlighting
     vim.defer_fn(function() 
         vim.cmd [[ syntax on ]]
-    end, 100)
+    end, 0)
 
     async:close()
 
