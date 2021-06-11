@@ -60,7 +60,7 @@ end
 
 local base0 = '#1B2229'
 local base1 = '#1c1f24'
--- local base2 = '#202328'
+local base2 = '#202328'
 -- local base3 = '#23272e'
 local base4 = '#3f444a'
 local base5 = '#5B6268'
@@ -468,6 +468,34 @@ high_link('NvimTreeGitDeleted', 'DiffRemovedGutter')
 
 high_link('NvimTreeIndentMarker', 'IndentGuide')
 high_link('NvimTreeOpenedFolderName', 'NvimTreeFolderName')
+
+-- }}}
+
+-- Dashboard {{{
+
+local dashboard = {
+    dashboardHeader = { fg = '#586268' },
+    dashboardCenter = { fg = blue },
+    dashboardShortcut = { fg = '#9788b9' },
+}
+
+apply_highlight(dashboard)
+high_link('dashboardFooter', 'dashboardHeader')
+
+-- }}}
+
+-- WhichKey {{{
+
+local whichkey = {
+    WhichKey = { fg = blue },
+    WhichKeyGroup = { fg = magenta },
+    WhichKeyDesc = { fg = magenta },
+    WhichKeySeparator = { fg = base5 },
+    WhichKeyFloat = { bg = base2 },
+    WhichKeyValue = { fg = grey },
+}
+
+apply_highlight(whichkey)
 
 -- }}}
 
