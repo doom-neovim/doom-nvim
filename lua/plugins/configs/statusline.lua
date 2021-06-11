@@ -6,7 +6,7 @@ return function()
 
     local gls = gl.section
 
-    gl.short_line_list = { 'NvimTree', 'packer', 'minimap', 'Outline' }
+    gl.short_line_list = { 'NvimTree', 'packer', 'minimap', 'Outline', 'toggleterm' }
 
     local colors = {
         bg = '#282c34',
