@@ -265,7 +265,7 @@ packer.startup(function(use)
         'lukas-reineke/format.nvim',
         config = require('plugins.configs.nvim-format'),
         disable = (disabled_files and true or disabled_formatter),
-        event = 'TabNewEntered',
+        event = 'BufEnter',
     })
 
     -- Autopairs
