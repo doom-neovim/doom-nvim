@@ -10,9 +10,9 @@ return function()
 			close_icon = '',
 			left_trunc_marker = '',
 			right_trunc_marker = '',
-			max_name_length = 18,
+			max_name_length = 20,
 			max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
-			tab_size = 20,
+			tab_size = 25,
 			diagnostics = 'nvim_lsp',
 			diagnostics_indicator = function(_, _, diagnostics_dict, _)
 				local s = ' '
@@ -40,6 +40,16 @@ return function()
 					text = 'Minimap',
 					text_align = 'center',
 				},
+                {
+                    filetype = 'Outline',
+                    text = 'Symbols',
+                    text_align = 'center',
+                },
+                {
+                    filetype = 'packer',
+                    text = 'Plugins manager',
+                    text_align = 'center',
+                },
 			},
 			show_buffer_icons = true,
 			show_buffer_close_icons = true,
