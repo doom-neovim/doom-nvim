@@ -9,29 +9,36 @@
 
 require('colors.utils')
 
-local g = vim.g
-local fn = vim.fn
-local api = vim.api
-
 -- }}}
 
 -- Customization variables {{{
 
-local cursor_coloring = g['doom_one_cursor_coloring'] or false
-local terminal_colors = g['doom_one_terminal_colors'] or false
-local enable_treesitter = g['doom_one_enable_treesitter'] or true
-local transparent_bg = g['doom_one_transparent_background'] or false
+-- Set default values for doom_one variables if they don't exists
+if vim.g.doom_one_cursor_coloring == nil then
+	vim.g.doom_one_cursor_coloring = false
+end
+if vim.g.doom_one_terminal_colors == nil then
+	vim.g.doom_one_terminal_colors = false
+end
+if vim.g.doom_one_enable_treesitter == nil then
+	vim.g.doom_one_enable_treesitter = true
+end
+if vim.g.doom_one_transparent_background == nil then
+	vim.g.doom_one_transparent_background = false
+end
+
+local transparent_bg = vim.g.doom_one_transparent_background
 
 -- }}}
 
 -- Highlight Functions and Color definitions {{{
 
-local function high_link(group, link)
-	api.nvim_command('hi! link ' .. group .. ' ' .. link)
+local function high_clear(group)
+	vim.api.nvim_command('hi! clear ' .. group)
 end
 
-local function high_clear(group)
-	api.nvim_command('hi! clear ' .. group)
+local function high_link(group, link)
+	vim.api.nvim_command('hi! link ' .. group .. ' ' .. link)
 end
 
 local function highlight(group, styles)
@@ -40,7 +47,7 @@ local function highlight(group, styles)
 	local sp = styles.sp and 'guisp=' .. styles.sp or 'guisp=NONE'
 	local gui = styles.gui and 'gui=' .. styles.gui or 'gui=NONE'
 
-	api.nvim_command(
+	vim.api.nvim_command(
 		'hi! ' .. group .. ' ' .. bg .. ' ' .. fg .. ' ' .. sp .. ' ' .. gui
 	)
 end
@@ -53,8 +60,8 @@ end
 
 local base0 = '#1B2229'
 local base1 = '#1c1f24'
-local base2 = '#202328'
-local base3 = '#23272e'
+-- local base2 = '#202328'
+-- local base3 = '#23272e'
 local base4 = '#3f444a'
 local base5 = '#5B6268'
 local base6 = '#73797e'
@@ -66,7 +73,6 @@ local grey = base4
 local red = '#ff6c6b'
 local orange = '#da8548'
 local green = '#98be65'
-local teal = '#4db5bd'
 local yellow = '#ECBE7B'
 local blue = '#51afef'
 local dark_blue = '#2257A0'
@@ -74,7 +80,6 @@ local magenta = '#c678dd'
 local light_magenta = Lighten(magenta, 0.4)
 local violet = '#a9a1e1'
 local cyan = '#46D9FF'
-local dark_cyan = '#5699AF'
 local white = '#efefef'
 
 local bg = '#282c34'
@@ -82,7 +87,6 @@ local bg_alt = '#21242b'
 local bg_highlight = '#21252a'
 local bg_popup = '#3E4556'
 local bg_statusline = bg_popup
-local bg_selection = dark_blue
 local bg_highlighted = '#4A4A45'
 
 local fg = '#bbc2cf'
@@ -98,17 +102,18 @@ local diff_info_bg1 = Mix('#D8EEFD', bg, 0.8)
 local diff_add_fg = green
 local diff_add_fg0 = Mix(green, fg, 0.4)
 local diff_add_bg0 = Mix('#506d5b', bg, 0.4)
-local diff_add_bg1 = Mix('#acf2bd', bg, 0.6)
+-- local diff_add_bg1 = Mix('#acf2bd', bg, 0.6)
 local diff_add_bg2 = Mix('#acf2bd', bg, 0.8)
 
 local gh_danger_fg = red
 local gh_danger_fg0 = Mix(red, fg, 0.6)
-local gh_danger_bg0 = Mix('#ffdce0', bg, 0.6)
+-- local gh_danger_bg0 = Mix('#ffdce0', bg, 0.6)
 local gh_danger_bg1 = Mix('#ffdce0', bg, 0.8)
 local gh_danger_bg2 = Mix('#ffdce0', bg, 0.9)
 
-if cursor_coloring then
-    vim.opt.guicursor = 'n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor25-Cursor'
+if vim.g.doom_one_cursor_coloring then
+	vim.opt.guicursor =
+		'n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor25-Cursor'
 end
 
 -- }}}
@@ -117,9 +122,19 @@ end
 
 local general_ui = {
 	Normal = { fg = fg, bg = transparent_bg and 'NONE' or bg },
-	NormalPopup = { fg = fg_highlight, bg = transparent_bg and 'NONE' or bg_popup },
-	NormalPopover = { fg = fg_highlight, bg = transparent_bg and 'NONE' or bg_popup },
-	NormalPopupPrompt = { fg = base7, bg = transparent_bg and 'NONE' or Darken(bg_popup, 0.3), gui = 'bold' },
+	NormalPopup = {
+		fg = fg_highlight,
+		bg = transparent_bg and 'NONE' or bg_popup,
+	},
+	NormalPopover = {
+		fg = fg_highlight,
+		bg = transparent_bg and 'NONE' or bg_popup,
+	},
+	NormalPopupPrompt = {
+		fg = base7,
+		bg = transparent_bg and 'NONE' or Darken(bg_popup, 0.3),
+		gui = 'bold',
+	},
 	NormalPopupSubtle = { fg = base6, bg = transparent_bg and 'NONE' or bg_popup },
 	EndOfBuffer = { fg = bg, bg = transparent_bg and 'NONE' or bg },
 
@@ -150,7 +165,11 @@ local general_ui = {
 	Separator = { fg = fg_alt },
 	VertSplit = { fg = grey, bg = bg },
 
-	TabLine = { fg = base7, bg = transparent_bg and 'NONE' or bg_alt, gui = 'bold' },
+	TabLine = {
+		fg = base7,
+		bg = transparent_bg and 'NONE' or bg_alt,
+		gui = 'bold',
+	},
 	TabLineSel = { fg = blue, bg = bg, gui = 'bold' },
 	TabLineFill = { bg = transparent_bg and 'NONE' or base1, gui = 'bold' },
 
@@ -166,7 +185,7 @@ local general_ui = {
 	PmenuThumb = { bg = fg },
 }
 
-if fn.exists('&pumblend') == 1 then
+if vim.fn.exists('&pumblend') == 1 then
 	vim.cmd('set pumblend=20')
 end
 
@@ -250,15 +269,15 @@ local text_colors = {
 
 for key, _ in pairs(text_colors) do
 	apply_highlight({
-        ['Text' .. key] = {
-            fg = text_colors[key],
-        }
-    })
+		['Text' .. key] = {
+			fg = text_colors[key],
+		},
+	})
 	apply_highlight({
 		['Text' .. key .. 'Bold'] = {
-		    fg = text_colors[key],
-		    gui = 'bold',
-        }
+			fg = text_colors[key],
+			gui = 'bold',
+		},
 	})
 end
 
@@ -305,7 +324,7 @@ local main_syntax = {
 
 	Number = { fg = orange },
 	Float = { fg = orange },
-	Boolean = { fg = orange },
+	Boolean = { fg = orange, gui = 'bold' },
 	Enum = { fg = orange },
 
 	Character = { fg = violet, gui = 'bold' },
@@ -317,13 +336,14 @@ local main_syntax = {
 	Special = { fg = violet },
 	SpecialBold = { fg = violet, gui = 'bold' },
 
-    Field = { fg = violet },
+	Field = { fg = violet },
 	Argument = { fg = light_magenta },
-    Attribute = { fg = light_magenta },
+	Attribute = { fg = light_magenta },
 	Identifier = { fg = light_magenta },
-    Property = { fg = orange },
+	Property = { fg = orange },
 	Function = { fg = magenta },
-	FunctionBuiltin = { fg = magenta, gui = 'bold' },
+	FunctionBuiltin = { fg = light_magenta, gui = 'bold' },
+	KeywordFunction = { fg = blue },
 	Method = { fg = violet },
 
 	Type = { fg = yellow },
@@ -427,15 +447,15 @@ high_link('TelescopePrompt', 'TelescopeNormal')
 -- NvimTree {{{
 
 local nvim_tree = {
-    NvimTreeFolderName = { fg = blue, gui = 'bold' },
-    NvimTreeRootFolder = { fg = green },
-    NvimTreeEmptyFolderName = { fg = fg_alt, gui = 'bold' },
-    NvimTreeSymlink = { fg = fg, sp = 'underline' },
-    NvimTreeExecFile = { fg = green, gui = 'bold' },
-    NvimTreeImageFile = { fg = blue },
-    NvimTreeOpenedFile = { fg = fg_alt },
-    NvimTreeSpecialFile = { fg = fg, sp = 'underline' },
-    NvimTreeMarkdownFile = { fg = fg, sp = 'underline' },
+	NvimTreeFolderName = { fg = blue, gui = 'bold' },
+	NvimTreeRootFolder = { fg = green },
+	NvimTreeEmptyFolderName = { fg = fg_alt, gui = 'bold' },
+	NvimTreeSymlink = { fg = fg, sp = 'underline' },
+	NvimTreeExecFile = { fg = green, gui = 'bold' },
+	NvimTreeImageFile = { fg = blue },
+	NvimTreeOpenedFile = { fg = fg_alt },
+	NvimTreeSpecialFile = { fg = fg, sp = 'underline' },
+	NvimTreeMarkdownFile = { fg = fg, sp = 'underline' },
 }
 
 apply_highlight(nvim_tree)
@@ -537,47 +557,46 @@ high_link('LspLinesDiagBorder', 'Bold')
 
 -- TreeSitter {{{
 
-if enable_treesitter then
+if vim.g.doom_one_enable_treesitter then
 	high_link('TSException', 'Exception')
-	high_link('TSAnnotation', 'Annotation')
+	high_link('TSAnnotation', 'PreProc')
 	high_link('TSAttribute', 'Attribute')
 	high_link('TSConditional', 'Conditional')
 	high_link('TSComment', 'Comment')
-	high_link('TSConstructor', 'Constructor')
+	high_link('TSConstructor', 'Structure')
 	high_link('TSConstant', 'Constant')
-	high_link('TSConstBuiltin', 'ConstBuiltin')
-	high_link('TSConstMacro', 'ConstMacro')
+	high_link('TSConstBuiltin', 'Constant')
+	high_link('TSConstMacro', 'Macro')
 	high_link('TSError', 'Error')
 	high_link('TSField', 'Field')
 	high_link('TSFloat', 'Float')
 	high_link('TSFunction', 'Function')
-	high_link('TSFuncBuiltin', 'FuncBuiltin')
-	high_link('TSFuncMacro', 'FuncMacro')
+	high_link('TSFuncBuiltin', 'FunctionBuiltin')
+	high_link('TSFuncMacro', 'Macro')
 	high_link('TSInclude', 'Include')
 	high_link('TSKeyword', 'Keyword')
 	high_link('TSKeywordFunction', 'KeywordFunction')
 	high_link('TSLabel', 'Label')
 	high_link('TSMethod', 'Method')
-	high_link('TSNamespace', 'Namespace')
+	high_link('TSNamespace', 'Directory')
 	high_link('TSNumber', 'Number')
 	high_link('TSOperator', 'Operator')
-	high_link('TSParameter', 'Parameter')
-	high_link('TSParameterReference', 'ParameterReference')
+	high_link('TSParameter', 'Argument')
+	high_link('TSParameterReference', 'Argument')
 	high_link('TSProperty', 'Property')
-	high_link('TSPunctDelimiter', 'PunctDelimiter')
-	high_link('TSPunctBracket', 'PunctBracket')
-	high_link('TSPunctSpecial', 'PunctSpecial')
+	high_link('TSPunctDelimiter', 'Delimiter')
+	high_link('TSPunctBracket', 'Delimiter')
+	high_link('TSPunctSpecial', 'Delimiter')
 	high_link('TSRepeat', 'Repeat')
 	high_link('TSString', 'String')
-	high_link('TSStringRegex', 'StringRegex')
-	high_link('TSStringEscape', 'StringEscape')
+	high_link('TSStringRegex', 'StringDelimiter')
+	high_link('TSStringEscape', 'StringDelimiter')
 	high_link('TSTag', 'Tag')
-	high_link('TSTagDelimiter', 'TagDelimiter')
-	high_link('TSStrong', 'Strong')
-	high_link('TSURI', 'URI')
-	high_link('TSNote', 'Note')
+	high_link('TSTagDelimiter', 'Delimiter')
+	high_link('TSStrong', 'Bold')
+	high_link('TSURI', 'URL')
 	high_link('TSWarning', 'Warning')
-	high_link('TSDanger', 'Danger')
+	high_link('TSDanger', 'Error')
 	high_link('TSType', 'Type')
 	high_link('TSTypeBuiltin', 'TypeBuiltin')
 	high_link('TSVariable', 'Variable')
@@ -588,25 +607,25 @@ end
 
 -- Neovim Terminal Colors {{{
 
-if terminal_colors then
-	g.terminal_color_0 = bg
-	g.terminal_color_1 = red
-	g.terminal_color_2 = green
-	g.terminal_color_3 = yellow
-	g.terminal_color_4 = blue
-	g.terminal_color_5 = violet
-	g.terminal_color_6 = cyan
-	g.terminal_color_7 = fg
-	g.terminal_color_8 = grey
-	g.terminal_color_9 = red
-	g.terminal_color_10 = green
-	g.terminal_color_11 = orange
-	g.terminal_color_12 = blue
-	g.terminal_color_13 = violet
-	g.terminal_color_14 = cyan
-	g.terminal_color_15 = white
-	g.terminal_color_background = bg_alt
-	g.terminal_color_foreground = fg_alt
+if vim.g.doom_one_terminal_colors then
+	vim.g.terminal_color_0 = bg
+	vim.g.terminal_color_1 = red
+	vim.g.terminal_color_2 = green
+	vim.g.terminal_color_3 = yellow
+	vim.g.terminal_color_4 = blue
+	vim.g.terminal_color_5 = violet
+	vim.g.terminal_color_6 = cyan
+	vim.g.terminal_color_7 = fg
+	vim.g.terminal_color_8 = grey
+	vim.g.terminal_color_9 = red
+	vim.g.terminal_color_10 = green
+	vim.g.terminal_color_11 = orange
+	vim.g.terminal_color_12 = blue
+	vim.g.terminal_color_13 = violet
+	vim.g.terminal_color_14 = cyan
+	vim.g.terminal_color_15 = white
+	vim.g.terminal_color_background = bg_alt
+	vim.g.terminal_color_foreground = fg_alt
 end
 
 -- }}}
