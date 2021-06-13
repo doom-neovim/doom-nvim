@@ -48,10 +48,12 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
         vim.cmd("Dashboard")
     end
 
-    vim.cmd [[ 
-    	syntax on
-    	bufdo e
-    ]]
+    vim.defer_fn(function()
+    	vim.cmd [[ 
+    		syntax on
+    		bufdo e
+    	]]
+	end, 0)
 
     async:close()
 
