@@ -5,7 +5,10 @@
 ---[[---------------------------------------]]---
 
 local wk = require('which-key')
-Map('n', '<Space>', ':WhichKey <leader><CR>')
+-- Additional options for mappings
+local opts = { silent = true }
+
+Map('n', '<Space>', ':WhichKey <leader><CR>', opts)
 
 -------------------------------------------------
 
@@ -32,9 +35,6 @@ Map('n', '<Space>', ':WhichKey <leader><CR>')
 ---]]-------------------------------[[---
 
 -------------------------------------------------
-
--- Additional options for mappings
-local opts = { silent = true }
 
 ---[[-----------------]]---
 --    LSP Keybindings    --
@@ -79,7 +79,7 @@ then
 		'n',
 		'<C-b>',
 		":lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>",
-        opts
+		opts
 	) -- Control+b: Scroll up documents
 	Cmd('command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()')
 end
@@ -171,20 +171,60 @@ wk.register({
 	['<leader>'] = {
 		b = {
 			name = '+buffer',
-			['1'] = { ':BufferGoto 1<CR>', 'Buffer 1' },
-			['2'] = { ':BufferGoto 2<CR>', 'Buffer 2' },
-			['3'] = { ':BufferGoto 3<CR>', 'Buffer 3' },
-			['4'] = { ':BufferGoto 4<CR>', 'Buffer 4' },
-			['5'] = { ':BufferGoto 5<CR>', 'Buffer 5' },
-			['6'] = { ':BufferGoto 6<CR>', 'Buffer 6' },
-			['7'] = { ':BufferGoto 7<CR>', 'Buffer 7' },
-			['8'] = { ':BufferGoto 8<CR>', 'Buffer 8' },
-			['9'] = { ':BufferLast<CR>', 'Last buffer' },
-			c = { ':BufferClose<CR>', 'Close buffer' },
-			f = { ':FormatWrite<CR>', 'Format buffer' },
-			n = { ':BufferNext<CR>', 'Next buffer' },
-			P = { ':BufferPick<CR>', 'Pick buffer' },
-			p = { ':BufferPrevious<CR>', 'Previous buffer' },
+			['1'] = {
+				':lua require("bufferline").go_to_buffer(1)<CR>',
+				'Buffer 1',
+			},
+			['2'] = {
+				':lua require("bufferline").go_to_buffer(2)<CR>',
+				'Buffer 2',
+			},
+			['3'] = {
+				':lua require("bufferline").go_to_buffer(3)<CR>',
+				'Buffer 3',
+			},
+			['4'] = {
+				':lua require("bufferline").go_to_buffer(4)<CR>',
+				'Buffer 4',
+			},
+			['5'] = {
+				':lua require("bufferline").go_to_buffer(5)<CR>',
+				'Buffer 5',
+			},
+			['6'] = {
+				':lua require("bufferline").go_to_buffer(6)<CR>',
+				'Buffer 6',
+			},
+			['7'] = {
+				':lua require("bufferline").go_to_buffer(7)<CR>',
+				'Buffer 7',
+			},
+			['8'] = {
+				':lua require("bufferline").go_to_buffer(8)<CR>',
+				'Buffer 8',
+			},
+			['9'] = {
+				':lua require("bufferline").go_to_buffer(9)<CR>',
+				'Buffer 9',
+			},
+			c = {
+				':lua require("bufferline").handle_close_buffer(vim.fn.bufnr("%"))<CR>',
+				'Close current buffer',
+			},
+			f = {
+				-- This is equal to :FormatWrite
+				':lua require("format").format("!", true, 1, vim.fn.line("$"))<CR>',
+				'Format buffer',
+			},
+			n = { ':lua require("bufferline").cycle(1)<CR>', 'Next buffer' },
+			P = {
+				':lua require("bufferline").pick_buffer()<CR>',
+				'Pick buffer',
+			},
+			p = {
+				':lua require("bufferline").cycle(-1)<CR>',
+				'Previous buffer',
+			},
 		},
 	},
 })
@@ -194,17 +234,26 @@ wk.register({
 	['<leader>'] = {
 		p = {
 			name = '+plugins',
-			c = { ':PackerClean<CR>', 'Clean disabled or unused plugins' },
-			i = { ':PackerInstall<CR>', 'Install missing plugins' },
+			c = {
+				':lua require("packer").clean()<CR>',
+				'Clean disabled or unused plugins',
+			},
+			i = {
+				':lua require("packer").install()<CR>',
+				'Install missing plugins',
+			},
 			p = {
-				':PackerProfile<CR>',
+				':lua require("packer").profile_output()<CR>',
 				'Profile the time taken loading your plugins',
 			},
 			s = {
-				':PackerSync<CR>',
+				':lua require("packer").sync()<CR>',
 				'Performs PackerClean and then PackerUpdate',
 			},
-			u = { ':PackerUpdate<CR>', 'Update your plugins' },
+			u = {
+				':lua require("packer").update()<CR>',
+				'Update your plugins',
+			},
 		},
 	},
 })
@@ -214,10 +263,22 @@ wk.register({
 	['<leader>'] = {
 		o = {
 			name = '+order',
-			d = { ':BufferOrderByDirectory<CR>', 'Sort by directory' },
-			l = { ':BufferOrderByLanguage<CR>', 'Sort by language' },
-			n = { ':BufferMoveNext<CR>', 'Re-order buffer to next' },
-			p = { ':BufferMovePrevious<CR>', 'Re-order buffer to previous' },
+			d = {
+				':lua require("bufferline").sort_buffers_by("directory")<CR>',
+				'Sort by directory',
+			},
+			l = {
+				':lua require("bufferline").sort_buffers_by("extension")<CR>',
+				'Sort by language',
+			},
+			n = {
+				':lua require("bufferline").move(1)<CR>',
+				'Re-order buffer to next',
+			},
+			p = {
+				':lua require("bufferline").move(-1)<CR>',
+				'Re-order buffer to previous',
+			},
 		},
 	},
 })
