@@ -53,7 +53,7 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
     		syntax on
     		bufdo e
     	]]
-	end, 0)
+	end, 15)
 
     async:close()
 
