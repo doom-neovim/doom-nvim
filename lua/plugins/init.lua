@@ -206,7 +206,7 @@ packer.startup(function(use)
         'neovim/nvim-lspconfig',
         config = require('plugins.configs.nvim-lspconfig'),
         disable = (disabled_lsp and true or disabled_lspconfig),
-        event = 'ColorScheme',
+        event = 'Syntax',
     })
 
     -- Completion plugin
@@ -242,7 +242,6 @@ packer.startup(function(use)
         'kabouzeid/nvim-lspinstall',
         config = require('plugins.configs.nvim-lspinstall'),
         disable = (disabled_lsp and true or disabled_lspinstall),
-        opt = true,
         after = 'nvim-lspconfig',
     })
 
@@ -305,7 +304,7 @@ packer.startup(function(use)
     use({
         'b3nj5m1n/kommentary',
         disable = (disabled_files and true or disabled_kommentary),
-        event = 'BufRead',
+        after = 'nvim-lspconfig'
     })
 
     -----[[-------------]]-----
@@ -346,7 +345,4 @@ packer.startup(function(use)
         Custom_plugins(plug)
     end
 
-    if not disabled_lsp then
-        Cmd [[ LspStart ]]
-    end
 end)

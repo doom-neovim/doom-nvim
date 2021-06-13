@@ -9,7 +9,6 @@
 -- Store startup time in seconds
 vim.g.start_time = vim.fn.reltime()
 
-
 -- Disable these for very fast startup time
 vim.cmd [[ 
 	syntax off
@@ -49,12 +48,10 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
         vim.cmd("Dashboard")
     end
 
-	-- Enable basic syntax highlight
-    vim.opt.syntax = "on"
-
-    vim.defer_fn(function() 
-        vim.cmd [[ syntax on ]]
-    end, 0)
+    vim.cmd [[ 
+    	syntax on
+    	bufdo e
+    ]]
 
     async:close()
 
