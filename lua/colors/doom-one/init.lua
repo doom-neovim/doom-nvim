@@ -340,7 +340,7 @@ local main_syntax = {
 	Argument = { fg = light_magenta },
 	Attribute = { fg = light_magenta },
 	Identifier = { fg = light_magenta },
-	Property = { fg = orange },
+	Property = { fg = violet },
 	Function = { fg = magenta },
 	FunctionBuiltin = { fg = light_magenta, gui = 'bold' },
 	KeywordFunction = { fg = blue },
