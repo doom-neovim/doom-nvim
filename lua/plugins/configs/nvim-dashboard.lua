@@ -1,8 +1,8 @@
 return function()
-    G.dashboard_session_directory = Doom_root .. '/sessions'
-	G.dashboard_default_executive = 'telescope'
+	vim.g.dashboard_session_directory = Doom_root .. '/sessions'
+	vim.g.dashboard_default_executive = 'telescope'
 
-	G.dashboard_custom_section = {
+	vim.g.dashboard_custom_section = {
 		a = {
 			description = { '  Reload Last Session            SPC s r' },
 			command = 'SessionLoad',
@@ -33,29 +33,32 @@ return function()
 		},
 	}
 
-	G.dashboard_custom_footer = {
-		'Doom Nvim loaded in ' .. Fn.printf('%.3f', Fn.reltimefloat(Fn.reltime(G.start_time))) .. ' seconds.',
+	vim.g.dashboard_custom_footer = {
+		'Doom Nvim loaded in ' .. vim.fn.printf(
+			'%.3f',
+			vim.fn.reltimefloat(vim.fn.reltime(vim.g.start_time))
+		) .. ' seconds.',
 	}
 
 	if not Doom.dashboard_statline then
-		G.dashboard_disable_statusline = 1
+		vim.g.dashboard_disable_statusline = 1
 	end
 
-	G.dashboard_custom_header = Doom.dashboard_custom_header
+	vim.g.dashboard_custom_header = Doom.dashboard_custom_header
 	-- Header color
-	Cmd(
+	vim.cmd(
 		'hi! dashboardHeader   guifg='
 			.. Doom.dashboard_custom_colors.header_color
 	)
-	Cmd(
+	vim.cmd(
 		'hi! dashboardCenter   guifg='
 			.. Doom.dashboard_custom_colors.center_color
 	)
-	Cmd(
+	vim.cmd(
 		'hi! dashboardShortcut guifg='
 			.. Doom.dashboard_custom_colors.shortcut_color
 	)
-	Cmd(
+	vim.cmd(
 		'hi! dashboardFooter   guifg='
 			.. Doom.dashboard_custom_colors.footer_color
 	)

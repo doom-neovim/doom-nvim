@@ -4,24 +4,23 @@ return function()
 	capabilities.textDocument.completion.completionItem.snippetSupport =
 		true
 
-
 	-- Lsp Symbols
-	Fn.sign_define('LspDiagnosticsSignError', {
+	vim.fn.sign_define('LspDiagnosticsSignError', {
 		texthl = 'LspDiagnosticsSignError',
 		text = Doom.lsp_error,
 		numhl = 'LspDiagnosticsSignError',
 	})
-	Fn.sign_define('LspDiagnosticsSignWarning', {
+	vim.fn.sign_define('LspDiagnosticsSignWarning', {
 		texthl = 'LspDiagnosticsSignWarning',
 		text = Doom.lsp_warning,
 		numhl = 'LspDiagnosticsSignWarning',
 	})
-	Fn.sign_define('LspDiagnosticsSignHint', {
+	vim.fn.sign_define('LspDiagnosticsSignHint', {
 		texthl = 'LspDiagnosticsSignHint',
 		text = Doom.lsp_hint,
 		numhl = 'LspDiagnosticsSignHint',
 	})
-	Fn.sign_define('LspDiagnosticsSignInformation', {
+	vim.fn.sign_define('LspDiagnosticsSignInformation', {
 		texthl = 'LspDiagnosticsSignInformation',
 		text = Doom.lsp_information,
 		numhl = 'LspDiagnosticsSignInformation',
@@ -33,5 +32,4 @@ return function()
 				prefix = Doom.lsp_virtual_text, -- change this to whatever you want your diagnostic icons to be
 			},
 		})
-
 end

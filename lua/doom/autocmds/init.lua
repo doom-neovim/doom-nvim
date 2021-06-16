@@ -4,6 +4,8 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
+log.debug('Loading Doom autocmds module ...')
+
 local autocmds = {
 	doom_core = {
 		-- Compile new plugins changes at save
@@ -26,8 +28,8 @@ local autocmds = {
 }
 
 -- Set proper syntax highlight for our doomrc
-if vim.api.nvim_buf_get_name(0):find("doomrc", 0, true) then
-    vim.cmd [[ set ft=lua ]]
+if vim.api.nvim_buf_get_name(0):find('doomrc', 0, true) then
+	vim.cmd([[ set ft=lua ]])
 end
 
 -- Set relative numbers
@@ -46,7 +48,9 @@ end
 
 -- Install plugins on launch
 if Doom.auto_install_plugins then
-    vim.defer_fn(function() vim.cmd("PackerInstall") end, 200)
+	vim.defer_fn(function()
+		vim.cmd('PackerInstall')
+	end, 200)
 end
 
 -- Set autosave
@@ -68,7 +72,7 @@ if not Doom.auto_comment then
 		},
 	})
 
-    vim.cmd [[ setlocal formatoptions-=c formatoptions-=r formatoptions-=o ]]
+	vim.cmd([[ setlocal formatoptions-=c formatoptions-=r formatoptions-=o ]])
 end
 
 -- Enable highlight on yank
@@ -104,21 +108,12 @@ if Doom.preserve_edit_pos then
         ]],
 	})
 
-    vim.cmd [[
+	vim.cmd([[
         if line("'\"") > 1 && line("'\"") <= line("$") |
             exe "normal! g'\"" |
         endif
-    ]]
-end
-
--- If logging level is greater than 0 then dump :messages to doom.log on exit
-if Doom.logging >= 1 then
-	table.insert(autocmds['doom_core'], {
-		'VimLeave',
-		'*',
-		':lua Dump_messages()',
-	})
+    ]])
 end
 
 -- Create augroups
-Create_augroups(autocmds)
+create_augroups(autocmds)

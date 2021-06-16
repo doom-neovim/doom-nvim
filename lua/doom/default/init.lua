@@ -5,12 +5,11 @@
 ---[[---------------------------------------]]---
 -- Set and load default options
 function Default_options()
-	local o = vim.o
 	----- Default Neovim configurations
 	-- Set colorscheme
-	Cmd('colorscheme ' .. Doom.colorscheme)
+	vim.cmd('colorscheme ' .. Doom.colorscheme)
 	vim.opt.background = Doom.colorscheme_bg
-	Cmd('highlight WhichKeyFloat guibg=' .. Doom.whichkey_bg)
+	vim.cmd('highlight WhichKeyFloat guibg=' .. Doom.whichkey_bg)
 
 	--- Set default options
 	vim.opt.encoding = 'utf-8'
@@ -30,7 +29,7 @@ function Default_options()
 	vim.opt.shortmess:append('atsc')
 	vim.opt.inccommand = 'split'
 	vim.opt.path = '**'
-    vim.opt.signcolumn = 'yes'
+	vim.opt.signcolumn = 'yes'
 
 	-- Buffer options
 	vim.opt.autoindent = true
@@ -103,15 +102,15 @@ function Default_options()
 	end
 
 	-- Checks to see if undo_dir does not exist. If it doesn't, it will create a undo folder
-	local undo_dir = Fn.stdpath('config') .. Doom.undo_dir
-	if Doom.backup and Fn.empty(Fn.glob(undo_dir)) > 0 then
-		Execute('!mkdir ' .. undo_dir .. ' -p')
+	local undo_dir = vim.fn.stdpath('config') .. Doom.undo_dir
+	if Doom.backup and vim.fn.empty(vim.fn.glob(undo_dir)) > 0 then
+		vim.api.nvim_command('!mkdir ' .. undo_dir .. ' -p')
 		vim.opt.undofile = true
 	end
 
 	-- If backup is false but `undo_dir` still exists then it will delete it.
-	if not Doom.backup and Fn.empty(Fn.glob(undo_dir)) == 0 then
-		Execute('!rm -rf ' .. undo_dir)
+	if not Doom.backup and vim.fn.empty(vim.fn.glob(undo_dir)) == 0 then
+		vim.api.nvim_command('!rm -rf ' .. undo_dir)
 		vim.opt.undofile = false
 	end
 
@@ -132,7 +131,7 @@ end
 function Custom_options()
 	-- Set a custom command to update Doom Nvim
 	-- can be called by using :DoomUpdate
-	Cmd('command! DoomUpdate !git -C ~/.config/doom-nvim/ stash -q && git -C ~/.config/doom-nvim/ pull && git -C ~/.config/doom-nvim/ stash pop -q')
+	vim.cmd('command! DoomUpdate !git -C ~/.config/doom-nvim/ stash -q && git -C ~/.config/doom-nvim/ pull && git -C ~/.config/doom-nvim/ stash pop -q')
 
 	-- Load user-defined settings from the Neovim field in the doomrc file
 	Load_custom_settings(Neovim.autocmds, 'autocmds')

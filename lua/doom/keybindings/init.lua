@@ -4,16 +4,18 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
+log.debug('Loading Doom keybindings module ...')
+
 local wk = require('which-key')
 -- Additional options for mappings
 local opts = { silent = true }
 
-Map('n', '<Space>', ':WhichKey <leader><CR>', opts)
+--map('n', '<Space>', ':WhichKey <leader><CR>', opts)
 
 -------------------------------------------------
 
 ---[[-------------------------------]]---
---          Custom Key Mappings        --
+--          Custom Key mappings        --
 --                                     --
 --    <leader>b = Buffer Menu          --
 --    <leader>f = File Menu            --
@@ -42,106 +44,121 @@ Map('n', '<Space>', ':WhichKey <leader><CR>', opts)
 -- If the LSP group is not disabled or the nvim-compe plugin is not disabled
 -- then set its mappings.
 if
-	not Has_value(Doom.disabled_modules, 'lsp')
-	and (not Has_value(Doom.disabled_plugins, 'compe'))
+	not has_value(Doom.disabled_modules, 'lsp')
+	and (not has_value(Doom.disabled_plugins, 'compe'))
 	and Check_plugin('nvim-compe')
 then
 	-- https://github.com/hrsh7th/nvim-compe#mappings
-	Map('i', '<expr> <C-Space>', Fn['compe#complete'](), opts)
-	Map('i', '<expr> <CR>', Fn['compe#confirm']('<CR>'), opts)
-	Map('i', '<expr> <C-e>', Fn['compe#close']('<C-e>'), opts)
-	Map(
+	map(
+		'i',
+		'<expr> <C-Space>',
+		vim.fn['compe#complete'](),
+		opts
+	)
+	map(
+		'i',
+		'<expr> <CR>',
+		vim.fn['compe#confirm']('<CR>'),
+		opts
+	)
+	map(
+		'i',
+		'<expr> <C-e>',
+		vim.fn['compe#close']('<C-e>'),
+		opts
+	)
+	map(
 		'i',
 		'<expr> <C-f>',
-		Fn['compe#scroll']({ delta = '+4' }),
+		vim.fn['compe#scroll']({ delta = '+4' }),
 		opts
 	)
-	Map(
+	map(
 		'i',
 		'<expr> <C-d>',
-		Fn['compe#scroll']({ delta = '-4' }),
+		vim.fn['compe#scroll']({ delta = '-4' }),
 		opts
 	)
-	Map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definitionA
-	Map('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts) -- gr: go to reference
-	Map('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts) -- gi: buf implementation
-	Map('n', 'ca', ':Lspsaga code_action<CR>', opts) -- ca: code actions
-	Map('n', 'K', ':Lspsaga hover_doc<CR>', opts) -- K: hover doc
-	Map('n', '<C-p>', ':Lspsaga diagnostic_jump_prev<CR>', opts) -- Control+p: Jump to previous diagnostic
-	Map('n', '<C-n>', ':Lspsaga diagnostic_jump_next<CR>', opts) -- Control+n: Jump to next diagnostic
-	Map(
+	map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definitionA
+	map('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts) -- gr: go to reference
+	map('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts) -- gi: buf implementation
+	map('n', 'ca', ':Lspsaga code_action<CR>', opts) -- ca: code actions
+	map('n', 'K', ':Lspsaga hover_doc<CR>', opts) -- K: hover doc
+	map('n', '<C-p>', ':Lspsaga diagnostic_jump_prev<CR>', opts) -- Control+p: Jump to previous diagnostic
+	map('n', '<C-n>', ':Lspsaga diagnostic_jump_next<CR>', opts) -- Control+n: Jump to next diagnostic
+	map(
 		'n',
 		'<C-f>',
 		':lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
 		opts
 	) -- Control+f: Scroll down documents
-	Map(
+	map(
 		'n',
 		'<C-b>',
 		":lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>",
 		opts
 	) -- Control+b: Scroll up documents
-	Cmd('command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()')
+	vim.cmd('command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()')
 end
 
 if Doom.new_file_split then
-	Map('n', '<Leader>fn', ':new<CR>', opts)
+	map('n', '<Leader>fn', ':new<CR>', opts)
 else
-	Map('n', '<Leader>fn', ':enew<CR>', opts)
+	map('n', '<Leader>fn', ':enew<CR>', opts)
 end
 
 -- TAB to cycle buffers too, why not?
-Map('n', '<Tab>', ':bnext<CR>', opts)
-Map('n', '<S-Tab>', ':bprevious<CR>', opts)
+map('n', '<Tab>', ':bnext<CR>', opts)
+map('n', '<S-Tab>', ':bprevious<CR>', opts)
 
 -- ESC to turn off search highlighting
-Map('n', '<esc>', ':noh<CR>', opts)
+map('n', '<esc>', ':noh<CR>', opts)
 
 --- F<n> keybindings
-if not Has_value(Doom.disabled_plugins, 'outline') then
-	Map('n', '<F2>', ':SymbolsOutline<CR>', opts)
+if not has_value(Doom.disabled_plugins, 'outline') then
+	map('n', '<F2>', ':SymbolsOutline<CR>', opts)
 end
-if not Has_value(Doom.disabled_plugins, 'tree') then
-	Map('n', '<F3>', ':NvimTreeToggle<CR>', opts)
+if not has_value(Doom.disabled_plugins, 'tree') then
+	map('n', '<F3>', ':NvimTreeToggle<CR>', opts)
 end
-if not Has_value(Doom.disabled_plugins, 'minimap') then
-	Map('n', '<F5>', ':MinimapToggle<CR>', opts)
+if not has_value(Doom.disabled_plugins, 'minimap') then
+	map('n', '<F5>', ':MinimapToggle<CR>', opts)
 end
-if not Has_value(Doom.disabled_plugins, 'zen') then
-	Map('n', '<F6>', ':TZAtaraxis<CR>', opts)
+if not has_value(Doom.disabled_plugins, 'zen') then
+	map('n', '<F6>', ':TZAtaraxis<CR>', opts)
 end
 if
-	not Has_value(Doom.disabled_modules, 'web')
-	and (not Has_value(Doom.disabled_plugins, 'restclient'))
+	not has_value(Doom.disabled_modules, 'web')
+	and (not has_value(Doom.disabled_plugins, 'restclient'))
 then
-	Map('n', '<F7>', ':DotHttp<CR>', opts)
+	map('n', '<F7>', ':DotHttp<CR>', opts)
 end
 ---[[------------------------------]]
 --     Window Movements keys      --
 ---]]------------------------------]]
 
-Map('n', '<C-h>', '<C-w>h', opts)
-Map('n', '<C-j>', '<C-w>j', opts)
-Map('n', '<C-k>', '<C-w>k', opts)
-Map('n', '<C-l>', '<C-w>l', opts)
+map('n', '<C-h>', '<C-w>h', opts)
+map('n', '<C-j>', '<C-w>j', opts)
+map('n', '<C-k>', '<C-w>k', opts)
+map('n', '<C-l>', '<C-w>l', opts)
 
 ---[[-----------------]]---
 --     Escape Remaps     --
 ---]]-----------------[[---
-Map('i', 'jk', '<ESC>', opts)
+map('i', 'jk', '<ESC>', opts)
 
 ---[[-----------------]]---
 --     Select Movement   --
 ---]]-----------------[[---
-Map('x', 'K', ":move '<-2<CR>gv-gv", opts)
-Map('x', 'J', ":move '>+1<CR>gv-gv", opts)
+map('x', 'K', ":move '<-2<CR>gv-gv", opts)
+map('x', 'J', ":move '>+1<CR>gv-gv", opts)
 
-Cmd('tnoremap <Esc> <C-\\><C-n>') -- get out of terminal insert mode into normal mode with Esc
+vim.cmd('tnoremap <Esc> <C-\\><C-n>') -- get out of terminal insert mode into normal mode with Esc
 
 ---[[-----------------]]---
 --     Resizing Splits   --
 ---]]-----------------[[---
-Cmd([[
+vim.cmd([[
   nnoremap <silent> <C-Up>    :resize -2<CR>
   nnoremap <silent> <C-Down>  :resize +2<CR>
   nnoremap <silent> <C-Right>  :vertical resize -2<CR>
@@ -152,16 +169,16 @@ Cmd([[
 --     Disable keys      --
 ---]]-----------------[[---
 -- Disable accidentally pressing ctrl-z and suspending
-Map('n', '<c-z>', '<Nop>', opts)
+map('n', '<c-z>', '<Nop>', opts)
 
 -- Disable ex mode
-Map('n', 'Q', '<Nop>', opts)
+map('n', 'Q', '<Nop>', opts)
 
 -- Disable recording
-Map('n', 'q', '<Nop>', opts)
+map('n', 'q', '<Nop>', opts)
 
 -- Fast exit from Doom Nvim and write messages to logs
-Map('n', 'ZZ', ':lua Quit_doom(1, 1)<CR>', opts)
+map('n', 'ZZ', ':lua Quit_doom(1, 1)<CR>', opts)
 
 ---[[-----------------]]---
 --      Leader keys      --
@@ -365,8 +382,8 @@ wk.register({
 
 -- If web is enabled and restclient is enabled too
 if
-	not Has_value(Doom.disabled_modules, 'web')
-	and (not Has_value(Doom.disabled_plugins, 'restclient'))
+	not has_value(Doom.disabled_modules, 'web')
+	and (not has_value(Doom.disabled_plugins, 'restclient'))
 then
 	wk.register({
 		['<leader>'] = {
@@ -383,8 +400,8 @@ end
 
 -- If LSP is enabled
 if
-	not Has_value(Doom.disabled_modules, 'lsp')
-	and (not Has_value(Doom.disabled_plugins, 'compe'))
+	not has_value(Doom.disabled_modules, 'lsp')
+	and (not has_value(Doom.disabled_plugins, 'compe'))
 then
 	wk.register({
 		['<leader>'] = {
@@ -408,7 +425,7 @@ then
 end
 
 -- If Git is enabled
-if not Has_value(Doom.disabled_modules, 'git') then
+if not has_value(Doom.disabled_modules, 'git') then
 	wk.register({
 		['<leader>'] = {
 			g = {

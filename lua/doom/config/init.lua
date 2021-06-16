@@ -3,26 +3,24 @@
 --              Author: NTBBloodbath           --
 --              License: MIT                   --
 ---[[---------------------------------------]]---
+
+log.debug('Loading Doom core config module ...')
 -- Doom Nvim version
 Doom_version = '2.3.2'
 
 -- Check if running Neovim or Vim and fails if:
 --  1. Running Vim instead of Neovim
 --  2. Running Neovim 0.4 or below
-if Fn.has('nvim') then
-	if Fn.has('nvim-0.5') ~= 1 then
-		Log_message('!!!', 'Doom Nvim requires Neovim 0.5.0', 2)
+if vim.fn.has('nvim') then
+	if vim.fn.has('nvim-0.5') ~= 1 then
+		log.fatal('Doom Nvim requires Neovim 0.5.0')
 	end
 else
-	Log_message(
-		'!!!',
-		'Doom Nvim does not have support for Vim, please use it with Neovim instead',
-		2
-	)
+	log.fatal('Doom Nvim does not have support for Vim, please use it with Neovim instead')
 end
 
 -- Set some configs on load
-if Fn.has('vim_starting') then
+if vim.fn.has('vim_starting') then
 	-- Set encoding
 	vim.opt.encoding = 'utf-8'
 	-- Required to use some colorschemes and improve colors
@@ -31,12 +29,14 @@ end
 
 ----- Start Doom and run packer.nvim
 -- Search for a configuration file (doomrc)
-Check_BFC()
-if Doom_bfc then
+local doomrc_exists = Check_BFC()
+if doomrc_exists then
 	Load_BFC()
 end
--- Set which separator should be used for paths
-Which_os()
+
+-- Set which separator should be used for paths, unused at the moment
+-- Which_os()
+
 -- Load the default Neovim settings, e.g. tabs width
 Default_options()
 

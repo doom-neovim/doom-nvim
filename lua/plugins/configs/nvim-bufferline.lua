@@ -40,16 +40,16 @@ return function()
 					text = 'Minimap',
 					text_align = 'center',
 				},
-                {
-                    filetype = 'Outline',
-                    text = 'Symbols',
-                    text_align = 'center',
-                },
-                {
-                    filetype = 'packer',
-                    text = 'Plugins manager',
-                    text_align = 'center',
-                },
+				{
+					filetype = 'Outline',
+					text = 'Symbols',
+					text_align = 'center',
+				},
+				{
+					filetype = 'packer',
+					text = 'Plugins manager',
+					text_align = 'center',
+				},
 			},
 			show_buffer_icons = true,
 			show_buffer_close_icons = true,

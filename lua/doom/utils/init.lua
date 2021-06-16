@@ -5,48 +5,46 @@
 ---[[---------------------------------------]]---
 
 -------------------- HELPERS --------------------
-Api, Cmd, Fn = vim.api, vim.cmd, vim.fn
-Execute, G = Api.nvim_command, vim.g
 Doom = {}
 
 -- Local files
-Doom_root = Fn.expand('$HOME/.config/doom-nvim')
+Doom_root = vim.fn.expand('$HOME/.config/doom-nvim')
 Doom_logs = Doom_root .. '/logs/doom.log'
 Doom_report = Doom_root .. '/logs/report.md'
 
--- Mappings wrapper, extracted from
+-- mappings wrapper, extracted from
 -- https://github.com/ojroques/dotfiles/blob/master/nvim/init.lua#L8-L12
-function Map(mode, lhs, rhs, opts)
+function map(mode, lhs, rhs, opts)
 	local options = { noremap = true }
 	if opts then
 		options = vim.tbl_extend('force', options, opts)
 	end
-	Api.nvim_set_keymap(mode, lhs, rhs, options)
+	vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 -- For autocommands, extracted from
 -- https://github.com/norcalli/nvim_utils
-function Create_augroups(definitions)
+function create_augroups(definitions)
 	for group_name, definition in pairs(definitions) do
-		Execute('augroup ' .. group_name)
-		Execute('autocmd!')
+		vim.api.nvim_command('augroup ' .. group_name)
+		vim.api.nvim_command('autocmd!')
 		for _, def in ipairs(definition) do
 			local command =
 				table.concat(vim.tbl_flatten({ 'autocmd', def }), ' ')
-			Execute(command)
+			vim.api.nvim_command(command)
 		end
-		Execute('augroup END')
+		vim.api.nvim_command('augroup END')
 	end
 end
 
 -- Check if string is empty or if it's nil
-function Is_empty(str)
+function is_empty(str)
 	return str == '' or str == nil
 end
 
 -- Search if a table have the value we are looking for,
 -- useful for plugins management
-function Has_value(tabl, val)
+function has_value(tabl, val)
 	for _, value in ipairs(tabl) do
 		if value == val then
 			return true
@@ -58,11 +56,11 @@ end
 
 -- try/catch statements, see
 -- https://gist.github.com/cwarden/1207556
-function Catch(err)
+function catch(err)
 	return err[1]
 end
 
-function Try(block)
+function try(block)
 	local status, result = pcall(block[1])
 	if not status then
 		block[2](result)
@@ -71,15 +69,12 @@ function Try(block)
 end
 
 -- A better and less primitive implementation of custom plugins in Doom Nvim
-function Custom_plugins(plugins)
-
-	local packer = require('packer')
-
-	packer.use(plugins)
+function custom_plugins(plugins)
+	require('packer').use(plugins)
 end
 
 -- Get current OS, returns 'Other' if the current OS is not recognized
-function Get_OS()
+function get_os()
 	--[[
 	--	 Target OS names:
 	--	 	- Windows

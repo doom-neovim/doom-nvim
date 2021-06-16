@@ -4,30 +4,32 @@
 --             License: MIT                    --
 ---[[---------------------------------------]]---
 
+log.debug('Loading Doom UI module ...')
+
 -- If no colorscheme was established then fallback to defauls
-if not Is_empty(Doom.colorscheme) then
-	Try({
+if not is_empty(Doom.colorscheme) then
+	try({
 		function()
 			vim.opt.background = Doom.colorscheme_bg
-			Execute('colorscheme ' .. Doom.colorscheme)
+			vim.api.nvim_command('colorscheme ' .. Doom.colorscheme)
 		end,
-		Catch({
+		catch({
 			function(_)
-				Log_message('!', 'Colorscheme not found, falling to doom-one', 1)
-				Execute('colorscheme ' .. Doom.colorscheme)
+				log.error('Colorscheme not found, falling to doom-one')
+				vim.api.nvim_command('colorscheme ' .. Doom.colorscheme)
 			end,
 		}),
 	})
 else
-	Log_message('!', 'Forced default Doom colorscheme', 1)
-	Execute('colorscheme doom-one')
+	log.warn('Forced default Doom colorscheme')
+	vim.api.nvim_command('colorscheme doom-one')
 end
 
 -- Set colors based on environment (GUI, TUI)
 if Doom.enable_guicolors then
-	if Fn.exists('+termguicolors') == 1 then
+	if vim.fn.exists('+termguicolors') == 1 then
 		vim.opt.termguicolors = true
-	elseif Fn.exists('+guicolors') == 1 then
+	elseif vim.fn.exists('+guicolors') == 1 then
 		vim.opt.guicolors = true
 	end
 end

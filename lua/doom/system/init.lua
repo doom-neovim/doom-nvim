@@ -5,14 +5,15 @@
 ---[[---------------------------------------]]---
 
 function Which_os()
-	Log_message('+', 'Checking OS ...', 2)
+	log.debug('Checking OS ...')
 
-	local doom_os = Get_OS()
+	local doom_os = get_os()
 	if doom_os == 'Windows' then
 		Doom.separator = '\\'
 	elseif doom_os == 'Linux' or doom_os == 'OSX' then
 		Doom.separator = '/'
 	else
-		Log_message('!', 'OS not recognized', 1)
+		log.warn('OS not recognized, falling to Unix separator')
+		Doom.separator = '/'
 	end
 end

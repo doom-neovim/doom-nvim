@@ -4,13 +4,16 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
+log.debug('Loading Doom doomrc module ...')
+
 function Check_BFC()
 	-- /home/user/.config/doom-nvim/doomrc
-	if Fn.filereadable(Doom_root .. '/doomrc') then
-		Doom_bfc = true
-	else
-		Doom_bfc = false
-	end
+	log.debug('Looking for a doomrc file in Doom root ...')
+	if vim.fn.filereadable(Doom_root .. '/doomrc') then
+	    return true
+    end
+
+	return false
 end
 
 local function default_BFC_values()
@@ -98,7 +101,7 @@ local function default_BFC_values()
 		-- @default = dark
 		colorscheme_bg = 'dark',
 
-		-- Checkupdates on start
+		-- Check updates on start
 		-- @default = false
 		check_updates = false,
 
@@ -160,15 +163,20 @@ local function default_BFC_values()
 		-- 2 : Concealed text is completely hidden unless it has a custom replacement
 		--     character defined
 		-- 3 : Concealed text is completely hidden
+        -- @default = 0
 		conceallevel = 0,
 
-		-- Logging level
-		-- 0 : No logging
-		-- 1 : All errors, no echo (default)
-		-- 2 : All errors and messages, no echo
-		-- 3 : All errors and messages, echo
-		-- @default = 1
-		logging = 3,
+        -- Logging level
+        -- Set Doom logging level
+        -- Available levels:
+        --   · trace
+        --   · debug
+        --   · info
+        --   · warn
+        --   · error
+        --   · fatal
+        -- @default = 'info'
+        logging = 'info',
 	}
 
 	Neovim = {
@@ -203,20 +211,20 @@ end
 
 function Load_BFC()
 	-- /home/user/.config/doom-nvim/doomrc
-	if Fn.filereadable(Doom_root .. '/doomrc') then
-		Try({
+	if vim.fn.filereadable(Doom_root .. '/doomrc') then
+		try({
 			function()
-				Cmd('luafile ' .. Doom_root .. '/doomrc')
-				Log_message('+', 'Loading the BFC ...', 2)
+				log.debug('Loading the BFC ...')
+				vim.cmd('luafile ' .. Doom_root .. '/doomrc')
 			end,
-			Catch({
+			catch({
 				function(_)
-					Log_message('!', 'Error while loading the BFC', 1)
+					log.error('Error while loading the BFC')
 				end,
 			}),
 		})
 	else
-		Log_message('+', 'No BFC file found, falling to defaults', 2)
+		log.warn('No BFC file found, falling to defaults')
 		default_BFC_values()
 	end
 end
