@@ -38,7 +38,7 @@ function Load_custom_settings(settings_tbl, scope)
 			end
 		elseif scope == 'variables' then
 			for var, val in pairs(settings_tbl) do
-				G[var] = val
+				vim.g[var] = val
 			end
 		end
 	end
