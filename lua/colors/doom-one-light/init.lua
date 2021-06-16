@@ -1,9 +1,9 @@
 -- vim:fdm=marker
 -- Vim Color File
--- Name:       doom-one
+-- Name:       doom-one-light
 -- Maintainer: http//github.com/NTBBloodbath
 -- License:    The MIT License (MIT)
--- Based On:   http//github.com/romgrk/doom-one.vim and the original Doom Emacs one
+-- Based On:   Doom Emacs one light
 
 -- Helpers {{{
 
@@ -61,44 +61,43 @@ local function apply_highlight(groups)
 	end
 end
 
-local base0 = '#1B2229'
-local base1 = '#1c1f24'
-local base2 = '#202328'
--- local base3 = '#23272e'
-local base4 = '#3f444a'
-local base5 = '#5B6268'
-local base6 = '#73797e'
-local base7 = '#9ca0a4'
-local base8 = '#DFDFDF'
-local base9 = '#E6E6E6'
+local base0 = '#f0f0f0'
+local base1 = '#e7e7e7'
+local base2 = '#dfdfdf'
+local base3 = '#c6c7c7'
+local base4 = '#9ca0a4'
+local base5 = '#383a42'
+local base6 = '#202328'
+local base7 = '#23272e'
+local base8 = '#1c1f24'
+local base9 = '#1B2229'
 
 local grey = base4
-local red = '#ff6c6b'
+local red = '#e45649'
 local orange = '#da8548'
-local green = '#98be65'
-local yellow = '#ECBE7B'
-local blue = '#51afef'
-local dark_blue = '#2257A0'
-local magenta = '#c678dd'
-local light_magenta = Lighten(magenta, 0.4)
-local violet = '#a9a1e1'
-local cyan = '#46D9FF'
+local green = '#50a14f'
+local yellow = '#986801'
+local blue = '#4078f2'
+local dark_blue = '#a0bcf8'
+local magenta = '#a626a4'
+local dark_magenta = Darken(magenta, 0.36)
+local violet = '#b751b6'
+local cyan = '#0184bc'
 local white = '#efefef'
 
-local bg = '#282c34'
-local bg_alt = '#21242b'
-local bg_highlight = '#21252a'
-local bg_popup = '#3E4556'
+local bg = '#fafafa'
+local bg_alt = '#f0f0f0'
+local bg_highlight = Darken(bg, 0.2)
+local bg_popup = bg_alt
 local bg_statusline = bg_popup
-local bg_highlighted = '#4A4A45'
 
-local fg = '#bbc2cf'
-local fg_alt = '#5B6268'
+local fg = base5
+local fg_alt = base3
 local fg_highlight = Lighten(fg, 0.2)
 
 local tag = Mix(blue, cyan, 0.5)
 
-local diff_info_fg = blue
+local diff_info_fg = orange
 local diff_info_bg0 = Mix('#D8EEFD', bg, 0.6)
 local diff_info_bg1 = Mix('#D8EEFD', bg, 0.8)
 
@@ -150,7 +149,7 @@ local general_ui = {
 	CursorLineNr = { fg = fg, bg = bg_highlight },
 	CursorColumn = { bg = bg_highlight },
 
-	Folded = { fg = base5, bg = bg_highlight },
+	Folded = { fg = base7, bg = bg_highlight },
 	FoldColumn = { fg = fg_alt, bg = bg },
 	SignColumn = { bg = transparent_bg and 'NONE' or bg },
 	ColorColumn = { bg = bg_highlight },
@@ -227,7 +226,7 @@ apply_highlight(buffers_ui)
 
 -- }}}
 
--- Search, Highlight. Conceal, Messgaes {{{
+-- Search, Highlight. Conceal, Messages {{{
 
 local search_high_ui = {
 	Search = { fg = fg, bg = dark_blue, gui = 'bold' },
@@ -240,8 +239,8 @@ local search_high_ui = {
 	MatchParen = { fg = red, gui = 'bold' },
 	Whitespace = { fg = grey },
 
-	Highlight = { bg = bg_highlighted },
-	HighlightSubtle = { bg = bg_highlighted },
+	Highlight = { bg = bg_highlight },
+	HighlightSubtle = { bg = bg_highlight },
 
 	Question = { fg = green, gui = 'bold' },
 
@@ -302,9 +301,9 @@ local main_syntax = {
 	URL = { fg = tag, sp = 'undercurl' },
 	Underlined = { fg = tag, sp = 'underline' },
 
-	Comment = { fg = base5, gui = vim.g.doom_one_italic_comments and 'italic' or 'NONE' },
-	CommentBold = { fg = base5, gui = 'bold' },
-	SpecialComment = { fg = base7, gui = 'bold' },
+	Comment = { fg = base4, gui = vim.g.doom_one_italic_comments and 'italic' or 'NONE' },
+	CommentBold = { fg = base4, gui = 'bold' },
+	SpecialComment = { fg = base5, gui = 'bold' },
 
 	Macro = { fg = violet },
 	Define = { fg = violet, gui = 'bold' },
@@ -322,7 +321,7 @@ local main_syntax = {
 	Conditional = { fg = blue },
 
 	Variable = { fg = '#8B93E6' },
-	VariableBuiltin = { fg = '8B93E6', gui = 'bold' },
+	VariableBuiltin = { fg = '#8B93E6', gui = 'bold' },
 	Constant = { fg = violet, gui = 'bold' },
 
 	Number = { fg = orange },
@@ -340,12 +339,12 @@ local main_syntax = {
 	SpecialBold = { fg = violet, gui = 'bold' },
 
 	Field = { fg = violet },
-	Argument = { fg = light_magenta },
-	Attribute = { fg = light_magenta },
-	Identifier = { fg = light_magenta },
-	Property = { fg =violet },
+	Argument = { fg = dark_magenta },
+	Attribute = { fg = dark_magenta },
+	Identifier = { fg = dark_magenta },
+	Property = { fg = violet },
 	Function = { fg = magenta },
-	FunctionBuiltin = { fg = light_magenta, gui = 'bold' },
+	FunctionBuiltin = { fg = dark_magenta, gui = 'bold' },
 	KeywordFunction = { fg = blue },
 	Method = { fg = violet },
 
@@ -450,6 +449,9 @@ high_link('TelescopePrompt', 'TelescopeNormal')
 -- NvimTree {{{
 
 local nvim_tree = {
+    NvimTreeNormal = { bg = bg_alt },
+    NvimTreeCursorLine = { bg = bg_alt },
+    NvimTreeEndOfBuffer = { fg = bg_alt, bg = bg_alt },
 	NvimTreeFolderName = { fg = blue, gui = 'bold' },
 	NvimTreeRootFolder = { fg = green },
 	NvimTreeEmptyFolderName = { fg = fg_alt, gui = 'bold' },
@@ -486,7 +488,7 @@ apply_highlight(dashboard)
 high_link('dashboardFooter', 'dashboardHeader')
 
 -- }}}
-        
+
 -- WhichKey {{{
 
 local whichkey = {
@@ -501,7 +503,7 @@ local whichkey = {
 apply_highlight(whichkey)
 
 -- }}}
-        
+
 -- }}}
 
 -- LSP {{{
