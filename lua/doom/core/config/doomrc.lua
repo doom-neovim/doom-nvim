@@ -6,6 +6,7 @@
 
 log.debug('Loading Doom doomrc module ...')
 
+
 function Check_BFC()
 	-- /home/user/.config/doom-nvim/doomrc
 	log.debug('Looking for a doomrc file in Doom root ...')
