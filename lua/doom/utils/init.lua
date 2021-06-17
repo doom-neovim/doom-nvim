@@ -4,17 +4,19 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
+local M = {}
+
 -------------------- HELPERS --------------------
 Doom = {}
 
 -- Local files
-Doom_root = vim.fn.expand('$HOME/.config/doom-nvim')
-Doom_logs = Doom_root .. '/logs/doom.log'
-Doom_report = Doom_root .. '/logs/report.md'
+M.doom_root = vim.fn.expand('$HOME/.config/doom-nvim')
+M.doom_logs = vim.fn.stdpath('data') .. '/doom.log'
+M.doom_report = vim.fn.stdpath('data') .. '/doom_report.md'
 
 -- mappings wrapper, extracted from
 -- https://github.com/ojroques/dotfiles/blob/master/nvim/init.lua#L8-L12
-function map(mode, lhs, rhs, opts)
+M.map = function(mode, lhs, rhs, opts)
 	local options = { noremap = true }
 	if opts then
 		options = vim.tbl_extend('force', options, opts)
@@ -24,7 +26,7 @@ end
 
 -- For autocommands, extracted from
 -- https://github.com/norcalli/nvim_utils
-function create_augroups(definitions)
+M.create_augroups = function(definitions)
 	for group_name, definition in pairs(definitions) do
 		vim.api.nvim_command('augroup ' .. group_name)
 		vim.api.nvim_command('autocmd!')
@@ -38,13 +40,14 @@ function create_augroups(definitions)
 end
 
 -- Check if string is empty or if it's nil
-function is_empty(str)
+-- @return bool
+M.is_empty = function(str)
 	return str == '' or str == nil
 end
 
 -- Search if a table have the value we are looking for,
 -- useful for plugins management
-function has_value(tabl, val)
+M.has_value = function(tabl, val)
 	for _, value in ipairs(tabl) do
 		if value == val then
 			return true
@@ -56,11 +59,11 @@ end
 
 -- try/catch statements, see
 -- https://gist.github.com/cwarden/1207556
-function catch(err)
+M.catch = function(err)
 	return err[1]
 end
 
-function try(block)
+M.try = function(block)
 	local status, result = pcall(block[1])
 	if not status then
 		block[2](result)
@@ -69,12 +72,12 @@ function try(block)
 end
 
 -- A better and less primitive implementation of custom plugins in Doom Nvim
-function custom_plugins(plugins)
+M.custom_plugins = function(plugins)
 	require('packer').use(plugins)
 end
 
 -- Get current OS, returns 'Other' if the current OS is not recognized
-function get_os()
+M.get_os = function()
 	--[[
 	--	 Target OS names:
 	--	 	- Windows
@@ -88,3 +91,5 @@ function get_os()
 	-- We make use of JIT because LuaJIT is bundled in Neovim
 	return jit.os
 end
+
+return M
