@@ -4,6 +4,9 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
+local utils = require('doom.utils')
+local log = require('doom.core.logging')
+
 log.debug('Loading Doom autocmds module ...')
 
 local autocmds = {
@@ -116,4 +119,4 @@ if Doom.preserve_edit_pos then
 end
 
 -- Create augroups
-create_augroups(autocmds)
+utils.create_augroups(autocmds)

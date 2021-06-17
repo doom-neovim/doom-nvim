@@ -3,8 +3,16 @@
 --              Author: NTBBloodbath           --
 --              License: MIT                   --
 ---[[---------------------------------------]]---
--- Set and load default options
-function Default_options()
+
+local functions = require('doom.core.functions')
+local log = require('doom.core.logging')
+
+local M = {}
+
+log.debug('Loading Doom defaults module ...')
+
+-- load_default_options sets and loads default Doom options based on doomrc values
+M.load_default_options = function()
 	----- Default Neovim configurations
 	-- Set colorscheme
 	vim.cmd('colorscheme ' .. Doom.colorscheme)
@@ -128,15 +136,17 @@ function Default_options()
 end
 
 -- Custom Doom Nvim commands
-function Custom_options()
+M.custom_options = function()
 	-- Set a custom command to update Doom Nvim
 	-- can be called by using :DoomUpdate
 	vim.cmd('command! DoomUpdate !git -C ~/.config/doom-nvim/ stash -q && git -C ~/.config/doom-nvim/ pull && git -C ~/.config/doom-nvim/ stash pop -q')
 
 	-- Load user-defined settings from the Neovim field in the doomrc file
-	Load_custom_settings(Neovim.autocmds, 'autocmds')
-	Load_custom_settings(Neovim.commands, 'commands')
-	Load_custom_settings(Neovim.functions, 'functions')
-	Load_custom_settings(Neovim.mappings, 'mappings')
-	Load_custom_settings(Neovim.global_variables, 'variables')
+	functions.load_custom_settings(Neovim.autocmds, 'autocmds')
+	functions.load_custom_settings(Neovim.commands, 'commands')
+	functions.load_custom_settings(Neovim.functions, 'functions')
+	functions.load_custom_settings(Neovim.mappings, 'mappings')
+    functions.load_custom_settings(Neovim.global_variables, 'variables')
 end
+
+return M

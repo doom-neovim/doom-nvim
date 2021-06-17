@@ -4,16 +4,19 @@
 --             License: MIT                    --
 ---[[---------------------------------------]]---
 
+local utils = require('doom.utils')
+local log = require('doom.core.logging')
+
 log.debug('Loading Doom UI module ...')
 
 -- If no colorscheme was established then fallback to defauls
-if not is_empty(Doom.colorscheme) then
-	try({
+if not utils.is_empty(Doom.colorscheme) then
+	utils.try({
 		function()
 			vim.opt.background = Doom.colorscheme_bg
 			vim.api.nvim_command('colorscheme ' .. Doom.colorscheme)
 		end,
-		catch({
+		utils.catch({
 			function(_)
 				log.error('Colorscheme not found, falling to doom-one')
 				vim.api.nvim_command('colorscheme ' .. Doom.colorscheme)

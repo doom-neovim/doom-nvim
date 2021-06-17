@@ -4,19 +4,34 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
+local log = require('doom.core.logging')
+
+local M = {}
+
 log.debug('Loading Doom functions module ...')
 
--- Check if the given plugin exists
-function Check_plugin(plugin_path)
-	return vim.fn.isdirectory(vim.fn.expand(
-		'$HOME/.local/share/nvim/site/pack/packer/start/' .. plugin_path
-	)) == 1
+-- check_plugin checks if the given plugin exists
+-- @tparam string plugin_path The plugin name
+-- @tparam bool opt If the plugin should be searched in packer's opt dir
+-- @return bool
+M.check_plugin = function(plugin_path, opt)
+	if opt then
+		return vim.fn.isdirectory(
+			vim.fn.stdpath('data')
+				.. '/site/pack/packer/opt/'
+				.. plugin_path
+		) == 1
+	end
+
+	return vim.fn.isdirectory(
+		vim.fn.stdpath('data') .. '/site/pack/packer/start/' .. plugin_path
+	) == 1
 end
 
 -- Load user-defined settings from the Neovim field in the doomrc
 -- @param settings_tbl The settings table to iterate over
 -- @param scope The settings scope, e.g. autocmds
-function Load_custom_settings(settings_tbl, scope)
+M.load_custom_settings = function(settings_tbl, scope)
 	-- If the provided settings table is not empty
 	if next(settings_tbl) ~= nil then
 		log.debug('Loading custom ' .. scope .. ' ...')
@@ -46,7 +61,9 @@ end
 
 -- Quit Neovim and change the colorscheme at doomrc if the colorscheme is not the same,
 -- dump all messages to doom.log file
-function Quit_doom(write, force)
+-- @tparam bool write If doom should save before exiting
+-- @tparam bool force If doom should force the exiting
+M.quit_doom = function(write, force)
 	try({
 		function()
 			log.info('Checking if the colorscheme was changed ...')
@@ -65,20 +82,11 @@ function Quit_doom(write, force)
 			end
 		end,
 		catch({
-			function(_)
-				log.error('Unable to write to the doomrc')
+			function(err)
+				log.error('Unable to write to the doomrc. Traceback:\n' .. err)
 			end,
 		}),
 	})
-
-	vim.cmd(
-		'silent !echo "[---] - Dumping :messages" >>  ' .. Doom_logs
-	)
-	vim.cmd('redir >>  ' .. Doom_logs)
-	vim.cmd('silent messages')
-	vim.cmd('redir END')
-	vim.cmd('silent !echo " " >>  ' .. Doom_logs)
-	vim.cmd('silent !echo "[---] - End of dump" >>  ' .. Doom_logs)
 
 	local quit_cmd = ''
 
@@ -90,56 +98,67 @@ function Quit_doom(write, force)
 	if write then
 		quit_cmd = 'wa | '
 	end
-	if force == false then
+	if force then
+        vim.cmd(quit_cmd .. 'qa!')
+    else
 		vim.cmd(quit_cmd .. 'q!')
-	else
-		vim.cmd(quit_cmd .. 'qa!')
 	end
 end
 
--- Check for plugins updates
-function Check_updates()
+-- check_updates checks for plugins updates
+M.check_updates = function()
 	try({
 		function()
 			log.info('Updating the outdated plugins ...')
 			vim.cmd('PackerSync')
 		end,
 		catch({
-			function(_)
-				log.error('Unable to update plugins')
+			function(err)
+				log.error('Unable to update plugins. Traceback:\n' .. err)
 			end,
 		}),
 	})
 end
 
--- Create a markdown report to use when a bug occurs,
--- useful for debugging issues.
-function Create_report()
-	local today = os.date('%Y-%m-%d %H:%M:%S')
+-- create_report creates a markdown report. It's meant to be used when a bug
+-- occurs, useful for debugging issues.
+M.create_report = function()
+	local date = os.date('%Y-%m-%d %H:%M:%S')
 
-	vim.cmd(
-		'silent !echo "'
-			.. vim.fn.fnameescape('#')
-			.. ' doom crash report" >> '
-			.. Doom_report
-	)
-	vim.cmd(
-		'silent !echo "Report date: ' .. today .. '" >> ' .. Doom_report
-	)
-	vim.cmd(
-		'silent !echo "'
-			.. vim.fn.fnameescape('##')
-			.. ' Begin log dump" >> '
-			.. Doom_report
-	)
-	vim.cmd(
-		'silent !echo | cat  ' .. Doom_logs .. ' >> ' .. Doom_report
-	)
-	vim.cmd(
-		'silent !echo "'
-			.. vim.fn.fnameescape('##')
-			.. ' End log dump" >> '
-			.. Doom_report
-	)
-	log.info('Report created at ' .. Doom_report)
+    try({
+        function()
+            vim.cmd(
+                'silent !echo "'
+                    .. vim.fn.fnameescape('#')
+                    .. ' doom crash report" >> '
+                    .. Doom_report
+            )
+            vim.cmd(
+                'silent !echo "Report date: ' .. date .. '" >> ' .. Doom_report
+            )
+            vim.cmd(
+                'silent !echo "'
+                    .. vim.fn.fnameescape('##')
+                    .. ' Begin log dump" >> '
+                    .. Doom_report
+            )
+            vim.cmd(
+                'silent !cat ' .. Doom_logs .. ' | grep "$(date +%a %d %b %Y)" >> ' .. Doom_report
+            )
+            vim.cmd(
+                'silent !echo "'
+                    .. vim.fn.fnameescape('##')
+                    .. ' End log dump" >> '
+                    .. Doom_report
+            )
+            log.info('Report created at ' .. Doom_report)
+        end,
+        catch({
+            function(err)
+                log.error('Error while writing report. Traceback:\n' .. err)
+            end
+        })
+    })
 end
+
+return M

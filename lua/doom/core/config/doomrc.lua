@@ -4,20 +4,26 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
+local utils = require('doom.utils')
+local log = require('doom.core.logging')
+
+local M = {}
+
 log.debug('Loading Doom doomrc module ...')
 
-
-function Check_BFC()
+-- check_doomrc checks if there is a doomrc file in the Doom root
+-- @return bool
+M.check_doomrc = function()
 	-- /home/user/.config/doom-nvim/doomrc
 	log.debug('Looking for a doomrc file in Doom root ...')
-	if vim.fn.filereadable(Doom_root .. '/doomrc') then
+	if vim.fn.filereadable(utils.doom_root .. '/doomrc') then
 	    return true
     end
 
 	return false
 end
 
-local function default_BFC_values()
+local function default_doomrc_values()
 	Doom = {
 		-- Autosave
 		-- false : Disable autosave
@@ -210,22 +216,26 @@ local function default_BFC_values()
 	}
 end
 
-function Load_BFC()
+-- load_doomrc Loads the doomrc if it exists, otherwise it'll fallback to doom
+-- default configs
+M.load_doomrc = function()
 	-- /home/user/.config/doom-nvim/doomrc
-	if vim.fn.filereadable(Doom_root .. '/doomrc') then
-		try({
+	if vim.fn.filereadable(utils.doom_root .. '/doomrc') then
+		utils.try({
 			function()
-				log.debug('Loading the BFC ...')
-				vim.cmd('luafile ' .. Doom_root .. '/doomrc')
+				log.debug('Loading the doomrc ...')
+				vim.cmd('luafile ' .. utils.doom_root .. '/doomrc')
 			end,
-			catch({
+			utils.catch({
 				function(_)
-					log.error('Error while loading the BFC')
+					log.error('Error while loading the doomrc')
 				end,
 			}),
 		})
 	else
-		log.warn('No BFC file found, falling to defaults')
-		default_BFC_values()
+		log.warn('No doomrc file found, falling to defaults')
+		default_doomrc_values()
 	end
 end
+
+return M

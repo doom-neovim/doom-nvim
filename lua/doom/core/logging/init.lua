@@ -6,6 +6,19 @@
 -- This library is free software; you can redistribute it and/or modify it
 -- under the terms of the MIT license. See LICENSE for details.
 
+----- CUSTOM SECTION --------------------------------------
+-----------------------------------------------------------
+local utils = require('doom.utils')
+
+-- Do the same as `doom.core.config.doomrc` so we can use
+-- all the debugging levels when sourcing that module
+if vim.fn.filereadable(utils.doom_root .. '/doomrc') then
+    vim.cmd('silent! luafile ' .. utils.doom_root .. '/doomrc')
+end
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+
 -- User configuration section
 local default_config = {
 	-- Name of the plugin. Prepended to log messages

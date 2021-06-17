@@ -4,16 +4,28 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
-function Which_os()
+local utils = require('doom.utils')
+local log = require('doom.core.logging')
+
+local M = {}
+
+log.debug('Loading doom system module ...')
+
+-- which_os identifies the current OS to determine which separator should be used
+-- and then return it
+-- @return string
+M.which_os = function()
 	log.debug('Checking OS ...')
 
-	local doom_os = get_os()
+	local doom_os = utils.get_os()
 	if doom_os == 'Windows' then
-		Doom.separator = '\\'
+		return '\\'
 	elseif doom_os == 'Linux' or doom_os == 'OSX' then
-		Doom.separator = '/'
+		return '/'
 	else
 		log.warn('OS not recognized, falling to Unix separator')
-		Doom.separator = '/'
+		return '/'
 	end
 end
+
+return M

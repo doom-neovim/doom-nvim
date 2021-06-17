@@ -4,6 +4,10 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
+local log = require('doom.core.logging')
+
+local M = {}
+
 log.debug('Loading Doom health module ...')
 
 -- Health status
@@ -11,8 +15,6 @@ local health_start = vim.fn['health#report_start']
 local health_ok = vim.fn['health#report_ok']
 local health_error = vim.fn['health#report_error']
 local health_warn = vim.fn['health#report_warn']
-
-local M = {}
 
 -- Installation health
 local function install_health()

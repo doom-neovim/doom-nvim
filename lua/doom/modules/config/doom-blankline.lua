@@ -4,7 +4,7 @@ return function()
 	vim.g.indent_blankline_char_list = { '|', '¦', '┆', '┊' }
 
 	-- If treesitter plugin is enabled then use its indentation
-	if Check_plugin('nvim-treesitter') then
+	if require('doom.core.functions').check_plugin('nvim-treesitter') then
 		vim.g.indent_blankline_use_treesitter = true
 	end
 	vim.g.indent_blankline_show_first_indent_level = false

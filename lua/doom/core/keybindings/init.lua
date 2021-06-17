@@ -4,37 +4,41 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
+local utils = require('doom.utils')
+local log = require('doom.core.logging')
+local functions = require('doom.core.functions')
+
 log.debug('Loading Doom keybindings module ...')
 
 local wk = require('which-key')
 -- Additional options for mappings
 local opts = { silent = true }
 
---map('n', '<Space>', ':WhichKey <leader><CR>', opts)
+utils.map('n', '<Space>', ':WhichKey <leader><CR>', opts)
 
 -------------------------------------------------
 
----[[-------------------------------]]---
---          Custom Key mappings        --
---                                     --
---    <leader>b = Buffer Menu          --
---    <leader>f = File Menu            --
---    <leader>g = Git Menu             --
---    <leader>p = Plugin Menu          --
---    <leader>r = Runner Menu          --
---    <leader>s = Session Menu         --
---    <leader>t = Toggle Menu          --
---    <leader>w = Window Menu          --
---                                     --
---          TAB = Cycle buffers        --
---          ESC = Search highlight off --
---           F2 = Toggle Symbols-Outline        --
---           F3 = Toggle Tree Explorer --
---           F4 = Toggle Terminal      --
---           F5 = Toggle Minimap       --
---           F6 = Toggle Zen Mode      --
---           F7 = Run restclient       --
----]]-------------------------------[[---
+---[[---------------------------------]]---
+--          Custom Key mappings          --
+--                                       --
+--    <leader>b = Buffer Menu            --
+--    <leader>f = File Menu              --
+--    <leader>g = Git Menu               --
+--    <leader>p = Plugin Menu            --
+--    <leader>r = Runner Menu            --
+--    <leader>s = Session Menu           --
+--    <leader>t = Toggle Menu            --
+--    <leader>w = Window Menu            --
+--                                       --
+--          TAB = Cycle buffers          --
+--          ESC = Search highlight off   --
+--           F2 = Toggle Symbols-Outline --
+--           F3 = Toggle Tree Explorer   --
+--           F4 = Toggle Terminal        --
+--           F5 = Toggle Minimap         --
+--           F6 = Toggle Zen Mode        --
+--           F7 = Run restclient         --
+---]]---------------------------------[[---
 
 -------------------------------------------------
 
@@ -44,55 +48,55 @@ local opts = { silent = true }
 -- If the LSP group is not disabled or the nvim-compe plugin is not disabled
 -- then set its mappings.
 if
-	not has_value(Doom.disabled_modules, 'lsp')
-	and (not has_value(Doom.disabled_plugins, 'compe'))
-	and Check_plugin('nvim-compe')
+	not utils.has_value(Doom.disabled_modules, 'lsp')
+	and (not utils.has_value(Doom.disabled_plugins, 'compe'))
+	and functions.check_plugin('nvim-compe')
 then
 	-- https://github.com/hrsh7th/nvim-compe#mappings
-	map(
+	utils.map(
 		'i',
 		'<expr> <C-Space>',
 		vim.fn['compe#complete'](),
 		opts
 	)
-	map(
+	utils.map(
 		'i',
 		'<expr> <CR>',
 		vim.fn['compe#confirm']('<CR>'),
 		opts
 	)
-	map(
+	utils.map(
 		'i',
 		'<expr> <C-e>',
 		vim.fn['compe#close']('<C-e>'),
 		opts
 	)
-	map(
+	utils.map(
 		'i',
 		'<expr> <C-f>',
 		vim.fn['compe#scroll']({ delta = '+4' }),
 		opts
 	)
-	map(
+	utils.map(
 		'i',
 		'<expr> <C-d>',
 		vim.fn['compe#scroll']({ delta = '-4' }),
 		opts
 	)
-	map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definitionA
-	map('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts) -- gr: go to reference
-	map('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts) -- gi: buf implementation
-	map('n', 'ca', ':Lspsaga code_action<CR>', opts) -- ca: code actions
-	map('n', 'K', ':Lspsaga hover_doc<CR>', opts) -- K: hover doc
-	map('n', '<C-p>', ':Lspsaga diagnostic_jump_prev<CR>', opts) -- Control+p: Jump to previous diagnostic
-	map('n', '<C-n>', ':Lspsaga diagnostic_jump_next<CR>', opts) -- Control+n: Jump to next diagnostic
-	map(
+	utils.map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definitionA
+	utils.map('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts) -- gr: go to reference
+	utils.map('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts) -- gi: buf implementation
+	utils.map('n', 'ca', ':Lspsaga code_action<CR>', opts) -- ca: code actions
+	utils.map('n', 'K', ':Lspsaga hover_doc<CR>', opts) -- K: hover doc
+	utils.map('n', '<C-p>', ':Lspsaga diagnostic_jump_prev<CR>', opts) -- Control+p: Jump to previous diagnostic
+	utils.map('n', '<C-n>', ':Lspsaga diagnostic_jump_next<CR>', opts) -- Control+n: Jump to next diagnostic
+	utils.map(
 		'n',
 		'<C-f>',
 		':lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
 		opts
 	) -- Control+f: Scroll down documents
-	map(
+	utils.map(
 		'n',
 		'<C-b>',
 		":lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>",
@@ -102,56 +106,56 @@ then
 end
 
 if Doom.new_file_split then
-	map('n', '<Leader>fn', ':new<CR>', opts)
+	utils.map('n', '<Leader>fn', ':new<CR>', opts)
 else
-	map('n', '<Leader>fn', ':enew<CR>', opts)
+	utils.map('n', '<Leader>fn', ':enew<CR>', opts)
 end
 
 -- TAB to cycle buffers too, why not?
-map('n', '<Tab>', ':bnext<CR>', opts)
-map('n', '<S-Tab>', ':bprevious<CR>', opts)
+utils.map('n', '<Tab>', ':bnext<CR>', opts)
+utils.map('n', '<S-Tab>', ':bprevious<CR>', opts)
 
 -- ESC to turn off search highlighting
-map('n', '<esc>', ':noh<CR>', opts)
+utils.map('n', '<esc>', ':noh<CR>', opts)
 
 --- F<n> keybindings
-if not has_value(Doom.disabled_plugins, 'outline') then
-	map('n', '<F2>', ':SymbolsOutline<CR>', opts)
+if not utils.has_value(Doom.disabled_plugins, 'outline') then
+	utils.map('n', '<F2>', ':SymbolsOutline<CR>', opts)
 end
-if not has_value(Doom.disabled_plugins, 'tree') then
-	map('n', '<F3>', ':NvimTreeToggle<CR>', opts)
+if not utils.has_value(Doom.disabled_plugins, 'tree') then
+	utils.map('n', '<F3>', ':NvimTreeToggle<CR>', opts)
 end
-if not has_value(Doom.disabled_plugins, 'minimap') then
-	map('n', '<F5>', ':MinimapToggle<CR>', opts)
+if not utils.has_value(Doom.disabled_plugins, 'minimap') then
+	utils.map('n', '<F5>', ':MinimapToggle<CR>', opts)
 end
-if not has_value(Doom.disabled_plugins, 'zen') then
-	map('n', '<F6>', ':TZAtaraxis<CR>', opts)
+if not utils.has_value(Doom.disabled_plugins, 'zen') then
+	utils.map('n', '<F6>', ':TZAtaraxis<CR>', opts)
 end
 if
-	not has_value(Doom.disabled_modules, 'web')
-	and (not has_value(Doom.disabled_plugins, 'restclient'))
+	not utils.has_value(Doom.disabled_modules, 'web')
+	and (not utils.has_value(Doom.disabled_plugins, 'restclient'))
 then
-	map('n', '<F7>', ':DotHttp<CR>', opts)
+	utils.map('n', '<F7>', ':DotHttp<CR>', opts)
 end
----[[------------------------------]]
---     Window Movements keys      --
----]]------------------------------]]
+---[[------------------------------]]---
+--     Window Movements keys          --
+---]]------------------------------]]---
 
-map('n', '<C-h>', '<C-w>h', opts)
-map('n', '<C-j>', '<C-w>j', opts)
-map('n', '<C-k>', '<C-w>k', opts)
-map('n', '<C-l>', '<C-w>l', opts)
+utils.map('n', '<C-h>', '<C-w>h', opts)
+utils.map('n', '<C-j>', '<C-w>j', opts)
+utils.map('n', '<C-k>', '<C-w>k', opts)
+utils.map('n', '<C-l>', '<C-w>l', opts)
 
 ---[[-----------------]]---
 --     Escape Remaps     --
 ---]]-----------------[[---
-map('i', 'jk', '<ESC>', opts)
+utils.map('i', 'jk', '<ESC>', opts)
 
 ---[[-----------------]]---
 --     Select Movement   --
 ---]]-----------------[[---
-map('x', 'K', ":move '<-2<CR>gv-gv", opts)
-map('x', 'J', ":move '>+1<CR>gv-gv", opts)
+utils.map('x', 'K', ":move '<-2<CR>gv-gv", opts)
+utils.map('x', 'J', ":move '>+1<CR>gv-gv", opts)
 
 vim.cmd('tnoremap <Esc> <C-\\><C-n>') -- get out of terminal insert mode into normal mode with Esc
 
@@ -169,16 +173,16 @@ vim.cmd([[
 --     Disable keys      --
 ---]]-----------------[[---
 -- Disable accidentally pressing ctrl-z and suspending
-map('n', '<c-z>', '<Nop>', opts)
+utils.map('n', '<c-z>', '<Nop>', opts)
 
 -- Disable ex mode
-map('n', 'Q', '<Nop>', opts)
+utils.map('n', 'Q', '<Nop>', opts)
 
 -- Disable recording
-map('n', 'q', '<Nop>', opts)
+utils.map('n', 'q', '<Nop>', opts)
 
 -- Fast exit from Doom Nvim and write messages to logs
-map('n', 'ZZ', ':lua Quit_doom(1, 1)<CR>', opts)
+utils.map('n', 'ZZ', ':lua require("doom.core.functions").quit_doom(1, 1)<CR>', opts)
 
 ---[[-----------------]]---
 --      Leader keys      --
@@ -358,7 +362,7 @@ wk.register({
 			d = { ':help doom_nvim<CR>', 'Open Doom Nvim documentation' },
 			u = { ':DoomUpdate<CR>', 'Check Doom Nvim udpates' },
 			r = {
-				':lua Create_report()<CR>',
+				':lua require("doom.core.functions").create_report()<CR>',
 				'Create crash report',
 			},
 		},
@@ -382,8 +386,8 @@ wk.register({
 
 -- If web is enabled and restclient is enabled too
 if
-	not has_value(Doom.disabled_modules, 'web')
-	and (not has_value(Doom.disabled_plugins, 'restclient'))
+	not utils.has_value(Doom.disabled_modules, 'web')
+	and (not utils.has_value(Doom.disabled_plugins, 'restclient'))
 then
 	wk.register({
 		['<leader>'] = {
@@ -400,8 +404,8 @@ end
 
 -- If LSP is enabled
 if
-	not has_value(Doom.disabled_modules, 'lsp')
-	and (not has_value(Doom.disabled_plugins, 'compe'))
+	not utils.has_value(Doom.disabled_modules, 'lsp')
+	and (not utils.has_value(Doom.disabled_plugins, 'compe'))
 then
 	wk.register({
 		['<leader>'] = {
@@ -425,7 +429,7 @@ then
 end
 
 -- If Git is enabled
-if not has_value(Doom.disabled_modules, 'git') then
+if not utils.has_value(Doom.disabled_modules, 'git') then
 	wk.register({
 		['<leader>'] = {
 			g = {

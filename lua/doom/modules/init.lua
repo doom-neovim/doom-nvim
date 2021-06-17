@@ -18,11 +18,13 @@
 --   2. We do not provide other LSP integration like coc.nvim,
 --        please refer to our FAQ to see why.
 
+local utils = require('doom.utils')
+
 --- Disabled modules
-local disabled_git = has_value(Doom.disabled_modules, 'git')
-local disabled_lsp = has_value(Doom.disabled_modules, 'lsp')
-local disabled_files = has_value(Doom.disabled_modules, 'files')
-local disabled_web = has_value(Doom.disabled_modules, 'web')
+local disabled_git = utils.has_value(Doom.disabled_modules, 'git')
+local disabled_lsp = utils.has_value(Doom.disabled_modules, 'lsp')
+local disabled_files = utils.has_value(Doom.disabled_modules, 'files')
+local disabled_web = utils.has_value(Doom.disabled_modules, 'web')
 
 vim.cmd([[ packadd packer.nvim ]])
 
@@ -51,7 +53,7 @@ packer.startup(function(use)
 
 	-- Tree-Sitter
 	local disabled_treesitter =
-		has_value(Doom.disabled_plugins, 'treesitter')
+		utils.has_value(Doom.disabled_plugins, 'treesitter')
 	use({
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate',
@@ -82,7 +84,7 @@ packer.startup(function(use)
 
 	-- Doom Colorschemes
 	local disabled_doom_themes =
-		has_value(Doom.disabled_plugins, 'doom-themes')
+		utils.has_value(Doom.disabled_plugins, 'doom-themes')
 	use({
 		'GustavoPrietoP/doom-themes.nvim',
 		disable = disabled_doom_themes,
@@ -90,7 +92,7 @@ packer.startup(function(use)
 	})
 
 	-- File tree
-	local disabled_tree = has_value(Doom.disabled_plugins, 'tree')
+	local disabled_tree = utils.has_value(Doom.disabled_plugins, 'tree')
 	use({
 		'kyazdani42/nvim-tree.lua',
 		requires = { 'kyazdani42/nvim-web-devicons' },
@@ -109,7 +111,7 @@ packer.startup(function(use)
 	-- Statusline
 	-- can be disabled to use your own statusline
 	local disabled_statusline =
-		has_value(Doom.disabled_plugins, 'statusline')
+		utils.has_value(Doom.disabled_plugins, 'statusline')
 	use({
 		'glepnir/galaxyline.nvim',
 		config = require('doom.modules.config.doom-eviline'),
@@ -119,7 +121,7 @@ packer.startup(function(use)
 
 	-- Tabline
 	-- can be disabled to use your own tabline
-	local disabled_tabline = has_value(Doom.disabled_plugins, 'tabline')
+	local disabled_tabline = utils.has_value(Doom.disabled_plugins, 'tabline')
 	use({
 		'akinsho/nvim-bufferline.lua',
 		config = require('doom.modules.config.doom-bufferline'),
@@ -129,7 +131,7 @@ packer.startup(function(use)
 
 	-- Better terminal
 	-- can be disabled to use your own terminal plugin
-	local disabled_terminal = has_value(Doom.disabled_plugins, 'terminal')
+	local disabled_terminal = utils.has_value(Doom.disabled_plugins, 'terminal')
 	use({
 		'akinsho/nvim-toggleterm.lua',
 		config = require('doom.modules.config.doom-toggleterm'),
@@ -140,7 +142,7 @@ packer.startup(function(use)
 	})
 
 	-- Viewer & finder for LSP symbols and tags
-	local disabled_outline = has_value(Doom.disabled_plugins, 'outline')
+	local disabled_outline = utils.has_value(Doom.disabled_plugins, 'outline')
 	use({
 		'simrat39/symbols-outline.nvim',
 		config = require('doom.modules.config.doom-symbols'),
@@ -154,7 +156,7 @@ packer.startup(function(use)
 
 	-- Minimap
 	-- Depends on wfxr/code-minimap to work!
-	local disabled_minimap = has_value(Doom.disabled_plugins, 'minimap')
+	local disabled_minimap = utils.has_value(Doom.disabled_plugins, 'minimap')
 	use({
 		'wfxr/minimap.vim',
 		disable = disabled_minimap,
@@ -172,11 +174,11 @@ packer.startup(function(use)
 	use({
 		'folke/which-key.nvim',
 		config = require('doom.modules.config.doom-whichkey'),
-        event = 'BufEnter',
+        event = 'VimEnter',
 	})
 
 	-- Distraction free environment
-	local disabled_zen = has_value(Doom.disabled_plugins, 'zen')
+	local disabled_zen = utils.has_value(Doom.disabled_plugins, 'zen')
 	use({
 		'kdav5758/TrueZen.nvim',
 		config = require('doom.modules.config.doom-zen'),
@@ -200,7 +202,7 @@ packer.startup(function(use)
 	-----]]-------------[[-----
 	-- Git gutter better alternative, written in Lua
 	-- can be disabled to use your own git gutter plugin
-	local disabled_gitsigns = has_value(Doom.disabled_plugins, 'gitsigns')
+	local disabled_gitsigns = utils.has_value(Doom.disabled_plugins, 'gitsigns')
 	use({
 		'lewis6991/gitsigns.nvim',
 		config = require('doom.modules.config.doom-gitsigns'),
@@ -209,7 +211,7 @@ packer.startup(function(use)
 	})
 
 	-- LazyGit integration
-	local disabled_lazygit = has_value(Doom.disabled_plugins, 'lazygit')
+	local disabled_lazygit = utils.has_value(Doom.disabled_plugins, 'lazygit')
 	use({
 		'kdheepak/lazygit.nvim',
 		requires = { 'nvim-lua/plenary.nvim' },
@@ -222,7 +224,7 @@ packer.startup(function(use)
 	-----]]------------[[-----
 	-- Built-in LSP Config
 	-- NOTE: It should not be disabled if you are going to use LSP!
-	local disabled_lspconfig = has_value(Doom.disabled_plugins, 'lspconfig')
+	local disabled_lspconfig = utils.has_value(Doom.disabled_plugins, 'lspconfig')
 	use({
 		'neovim/nvim-lspconfig',
 		config = require('doom.modules.config.doom-lspconfig'),
@@ -232,7 +234,7 @@ packer.startup(function(use)
 
 	-- Completion plugin
 	-- can be disabled to use your own completion plugin
-	local disabled_compe = has_value(Doom.disabled_plugins, 'compe')
+	local disabled_compe = utils.has_value(Doom.disabled_plugins, 'compe')
 	use({
 		'hrsh7th/nvim-compe',
 		requires = {
@@ -254,7 +256,7 @@ packer.startup(function(use)
 	})
 
 	-- install lsp saga
-	local disabled_lspsaga = has_value(Doom.disabled_plugins, 'lspsaga')
+	local disabled_lspsaga = utils.has_value(Doom.disabled_plugins, 'lspsaga')
 	use({
 		'glepnir/lspsaga.nvim',
 		disable = (disabled_lsp and true or disabled_lspsaga),
@@ -264,7 +266,7 @@ packer.startup(function(use)
 
 	-- provides the missing `:LspInstall` for `nvim-lspconfig`.
 	local disabled_lspinstall =
-		has_value(Doom.disabled_plugins, 'lspinstall')
+		utils.has_value(Doom.disabled_plugins, 'lspinstall')
 	use({
 		'kabouzeid/nvim-lspinstall',
 		config = require('doom.modules.config.doom-lspinstall'),
@@ -277,7 +279,7 @@ packer.startup(function(use)
 	-----]]--------------[[-----
 	-- Write / Read files without permissions (e.vim.g. /etc files) without having
 	-- to use `sudo nvim /path/to/file`
-	local disabled_suda = has_value(Doom.disabled_plugins, 'suda')
+	local disabled_suda = utils.has_value(Doom.disabled_plugins, 'suda')
 	use({
 		'lambdalisue/suda.vim',
 		disable = (disabled_files and true or disabled_suda),
@@ -286,7 +288,7 @@ packer.startup(function(use)
 
 	-- File formatting
 	-- can be disabled to use your own file formatter
-	local disabled_formatter = has_value(Doom.disabled_plugins, 'formatter')
+	local disabled_formatter = utils.has_value(Doom.disabled_plugins, 'formatter')
 	use({
 		'lukas-reineke/format.nvim',
 		config = require('doom.modules.config.doom-format'),
@@ -296,7 +298,7 @@ packer.startup(function(use)
 
 	-- Autopairs
 	-- can be disabled to use your own autopairs
-	local disabled_autopairs = has_value(Doom.disabled_plugins, 'autopairs')
+	local disabled_autopairs = utils.has_value(Doom.disabled_plugins, 'autopairs')
 	use({
 		'windwp/nvim-autopairs',
 		config = require('doom.modules.config.doom-autopairs'),
@@ -306,7 +308,7 @@ packer.startup(function(use)
 
 	-- Indent Lines
 	local disabled_indent_lines =
-		has_value(Doom.disabled_plugins, 'indentlines')
+		utils.has_value(Doom.disabled_plugins, 'indentlines')
 	use({
 		'lukas-reineke/indent-blankline.nvim',
 		branch = 'lua',
@@ -317,7 +319,7 @@ packer.startup(function(use)
 
 	-- EditorConfig support
 	local disabled_editorconfig =
-		has_value(Doom.disabled_plugins, 'editorconfig')
+		utils.has_value(Doom.disabled_plugins, 'editorconfig')
 	use({
 		'editorconfig/editorconfig-vim',
 		disable = (disabled_files and true or disabled_editorconfig),
@@ -327,7 +329,7 @@ packer.startup(function(use)
 	-- Comments
 	-- can be disabled to use your own comments plugin
 	local disabled_kommentary =
-		has_value(Doom.disabled_plugins, 'kommentary')
+		utils.has_value(Doom.disabled_plugins, 'kommentary')
 	use({
 		'b3nj5m1n/kommentary',
 		disable = (disabled_files and true or disabled_kommentary),
@@ -338,7 +340,7 @@ packer.startup(function(use)
 	---     Web Related     ---
 	-----]]-------------[[-----
 	-- Fastest colorizer without external dependencies!
-	local disabled_colorizer = has_value(Doom.disabled_plugins, 'colorizer')
+	local disabled_colorizer = utils.has_value(Doom.disabled_plugins, 'colorizer')
 	use({
 		'norcalli/nvim-colorizer.lua',
 		config = require('doom.modules.config.doom-colorizer'),
@@ -349,7 +351,7 @@ packer.startup(function(use)
 	-- HTTP Client support
 	-- Depends on bayne/dot-http to work!
 	local disabled_restclient =
-		has_value(Doom.disabled_plugins, 'restclient')
+		utils.has_value(Doom.disabled_plugins, 'restclient')
 	use({
 		'bayne/vim-dot-http',
 		disable = (disabled_web and true or disabled_restclient),
@@ -357,7 +359,7 @@ packer.startup(function(use)
 	})
 
 	-- Emmet plugin
-	local disabled_emmet = has_value(Doom.disabled_plugins, 'emmet')
+	local disabled_emmet = utils.has_value(Doom.disabled_plugins, 'emmet')
 	use({
 		'mattn/emmet-vim',
 		disable = (disabled_web and true or disabled_emmet),
@@ -369,6 +371,6 @@ packer.startup(function(use)
 	-----]]----------------[[-----
 	-- If there are custom plugins then also require them
 	for _, plug in pairs(Doom.custom_plugins) do
-		custom_plugins(plug)
+		utils.custom_plugins(plug)
 	end
 end)

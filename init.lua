@@ -24,33 +24,19 @@ vim.g.loaded_tarPlugin = false
 vim.g.loaded_netrwPlugin = false
 vim.g.loaded_2html_plugin = false
 
--- Utility functions
-require('doom.utils')
--- Load default settings
-require('doom.default')
-
 local async
 
 async = vim.loop.new_async(vim.schedule_wrap(function()
-    -- Doom logging system
-    log = require('doom.logging')
-	-- Doom system detection (unused at the moment)
-	-- require('doom.system')
-	-- Doom functions
-	require('doom.functions')
-
-	---- Doom Configurations ------------------------
+    ---- Doom Configurations ------------------------
 	-------------------------------------------------
-	-- Load doomrc (user-defined configurations)
-	require('doom.config.doomrc')
-	-- Load main configurations and plugins
-	require('doom.config')
+	-- Load configurations and plugins
+	require('doom.core.config')
 	-- UI settings
-	require('doom.config.ui')
+	require('doom.core.config.ui')
 	-- Doom keybindings
-	require('doom.keybindings')
+	require('doom.core.keybindings')
 	-- Doom autocommands
-	require('doom.autocmds')
+	require('doom.core.autocmds')
 
 	-- If the current buffer name is empty then trigger Dashboard
 	if vim.api.nvim_buf_get_name(0):len() == 0 then

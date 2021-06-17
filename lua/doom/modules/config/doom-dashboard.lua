@@ -1,5 +1,5 @@
 return function()
-	vim.g.dashboard_session_directory = Doom_root .. '/sessions'
+	vim.g.dashboard_session_directory = require('doom.utils').doom_root .. '/sessions'
 	vim.g.dashboard_default_executive = 'telescope'
 
 	vim.g.dashboard_custom_section = {
