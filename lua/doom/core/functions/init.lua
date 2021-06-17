@@ -4,6 +4,7 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
+local utils = require('doom.utils')
 local log = require('doom.core.logging')
 
 local M = {}
@@ -36,7 +37,7 @@ M.load_custom_settings = function(settings_tbl, scope)
 	if next(settings_tbl) ~= nil then
 		log.debug('Loading custom ' .. scope .. ' ...')
 		if scope == 'autocmds' then
-			create_augroups(settings_tbl)
+			utils.create_augroups(settings_tbl)
 		elseif scope == 'commands' then
 			for _, cmd in ipairs(settings_tbl) do
 				vim.cmd(cmd)
@@ -64,7 +65,7 @@ end
 -- @tparam bool write If doom should save before exiting
 -- @tparam bool force If doom should force the exiting
 M.quit_doom = function(write, force)
-	try({
+	utils.try({
 		function()
 			log.info('Checking if the colorscheme was changed ...')
 			local target = vim.g.colors_name
@@ -81,7 +82,7 @@ M.quit_doom = function(write, force)
 				)
 			end
 		end,
-		catch({
+		utils.catch({
 			function(err)
 				log.error('Unable to write to the doomrc. Traceback:\n' .. err)
 			end,
@@ -107,12 +108,12 @@ end
 
 -- check_updates checks for plugins updates
 M.check_updates = function()
-	try({
+	utils.try({
 		function()
 			log.info('Updating the outdated plugins ...')
 			vim.cmd('PackerSync')
 		end,
-		catch({
+		utils.catch({
 			function(err)
 				log.error('Unable to update plugins. Traceback:\n' .. err)
 			end,
@@ -125,35 +126,35 @@ end
 M.create_report = function()
 	local date = os.date('%Y-%m-%d %H:%M:%S')
 
-    try({
+    utils.try({
         function()
             vim.cmd(
                 'silent !echo "'
                     .. vim.fn.fnameescape('#')
                     .. ' doom crash report" >> '
-                    .. Doom_report
+                    .. utils.doom_report
             )
             vim.cmd(
-                'silent !echo "Report date: ' .. date .. '" >> ' .. Doom_report
+                'silent !echo "Report date: ' .. date .. '" >> ' .. utils.doom_report
             )
             vim.cmd(
                 'silent !echo "'
                     .. vim.fn.fnameescape('##')
                     .. ' Begin log dump" >> '
-                    .. Doom_report
+                    .. utils.doom_report
             )
             vim.cmd(
-                'silent !cat ' .. Doom_logs .. ' | grep "$(date +%a %d %b %Y)" >> ' .. Doom_report
+                'silent !cat ' .. utils.doom_logs .. ' | grep "$(date +%a %d %b %Y)" >> ' .. utils.doom_report
             )
             vim.cmd(
                 'silent !echo "'
                     .. vim.fn.fnameescape('##')
                     .. ' End log dump" >> '
-                    .. Doom_report
+                    .. utils.doom_report
             )
-            log.info('Report created at ' .. Doom_report)
+            log.info('Report created at ' .. utils.doom_report)
         end,
-        catch({
+        utils.catch({
             function(err)
                 log.error('Error while writing report. Traceback:\n' .. err)
             end
