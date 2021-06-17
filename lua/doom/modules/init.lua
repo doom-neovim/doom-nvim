@@ -55,7 +55,7 @@ packer.startup(function(use)
 	use({
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate',
-		config = require('plugins.configs.tree-sitter'),
+		config = require('doom.modules.doom-treesitter'),
 		disable = (disabled_files and true or disabled_treesitter),
 		event = 'BufEnter',
 	})
@@ -63,7 +63,7 @@ packer.startup(function(use)
 	-- Sessions
 	use({
 		'rmagatti/auto-session',
-		config = require('plugins.configs.auto-session'),
+		config = require('doom.modules.doom-autosession'),
 		requires = { { 'rmagatti/session-lens', after = 'telescope.nvim' } },
 		cmd = { 'SaveSession', 'RestoreSession', 'DeleteSession' },
 		event = 'TabNewEntered',
@@ -76,7 +76,7 @@ packer.startup(function(use)
 	-- cannot be disabled
 	use({
 		'glepnir/dashboard-nvim',
-		config = require('plugins.configs.nvim-dashboard'),
+		config = require('doom.modules.doom-dashboard'),
 		cmd = 'Dashboard',
 	})
 
@@ -94,7 +94,7 @@ packer.startup(function(use)
 	use({
 		'kyazdani42/nvim-tree.lua',
 		requires = { 'kyazdani42/nvim-web-devicons' },
-		config = require('plugins.configs.nvim-tree'),
+		config = require('doom.modules.doom-tree'),
 		disable = disabled_tree,
 		cmd = {
 			'NvimTreeClipboard',
@@ -112,7 +112,7 @@ packer.startup(function(use)
 		has_value(Doom.disabled_plugins, 'statusline')
 	use({
 		'glepnir/galaxyline.nvim',
-		config = require('plugins.configs.statusline'),
+		config = require('doom.modules.doom-eviline'),
 		disable = disabled_statusline,
 		event = 'ColorScheme',
 	})
@@ -122,7 +122,7 @@ packer.startup(function(use)
 	local disabled_tabline = has_value(Doom.disabled_plugins, 'tabline')
 	use({
 		'akinsho/nvim-bufferline.lua',
-		config = require('plugins.configs.nvim-bufferline'),
+		config = require('doom.modules.doom-bufferline'),
 		disable = disabled_tabline,
 		event = 'ColorScheme',
 	})
@@ -132,7 +132,7 @@ packer.startup(function(use)
 	local disabled_terminal = has_value(Doom.disabled_plugins, 'terminal')
 	use({
 		'akinsho/nvim-toggleterm.lua',
-		config = require('plugins.configs.nvim-toggleterm'),
+		config = require('doom.modules.doom-toggleterm'),
 		disable = disabled_terminal,
 		module = 'toggleterm.terminal',
 		cmd = { 'ToggleTerm', 'TermExec' },
@@ -143,7 +143,7 @@ packer.startup(function(use)
 	local disabled_outline = has_value(Doom.disabled_plugins, 'outline')
 	use({
 		'simrat39/symbols-outline.nvim',
-		config = require('plugins.configs.symbols'),
+		config = require('doom.modules.doom-symbols'),
 		disable = disabled_outline,
 		cmd = {
 			'SymbolsOutline',
@@ -171,15 +171,15 @@ packer.startup(function(use)
 	-- cannot be disabled
 	use({
 		'folke/which-key.nvim',
-		config = require('plugins.configs.which-key'),
-		event = 'BufEnter',
+		config = require('doom.modules.doom-whichkey'),
+        event = 'BufEnter',
 	})
 
 	-- Distraction free environment
 	local disabled_zen = has_value(Doom.disabled_plugins, 'zen')
 	use({
 		'kdav5758/TrueZen.nvim',
-		config = require('plugins.configs.nvim-zen'),
+		config = require('doom.modules.doom-zen'),
 		disable = disabled_zen,
 		module = 'true-zen',
 		event = 'TabNewEntered',
@@ -192,7 +192,7 @@ packer.startup(function(use)
 		'nvim-telescope/telescope.nvim',
 		cmd = 'Telescope',
 		requires = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } },
-		config = require('plugins.configs.nvim-telescope'),
+		config = require('doom.modules.doom-telescope'),
 	})
 
 	-----[[-------------]]-----
@@ -203,7 +203,7 @@ packer.startup(function(use)
 	local disabled_gitsigns = has_value(Doom.disabled_plugins, 'gitsigns')
 	use({
 		'lewis6991/gitsigns.nvim',
-		config = require('plugins.configs.nvim-gitsigns'),
+		config = require('doom.modules.doom-gitsigns'),
 		disable = (disabled_git and true or disabled_gitsigns),
 		event = 'ColorScheme',
 	})
@@ -225,7 +225,7 @@ packer.startup(function(use)
 	local disabled_lspconfig = has_value(Doom.disabled_plugins, 'lspconfig')
 	use({
 		'neovim/nvim-lspconfig',
-		config = require('plugins.configs.nvim-lspconfig'),
+		config = require('doom.modules.doom-lspconfig'),
 		disable = (disabled_lsp and true or disabled_lspconfig),
 		event = 'ColorScheme',
 	})
@@ -238,16 +238,16 @@ packer.startup(function(use)
 		requires = {
 			{
 				'ray-x/lsp_signature.nvim',
-				config = require('plugins.configs.lsp-signature'),
+				config = require('doom.modules.doom-lsp-signature'),
 			},
 			{
 				'onsails/lspkind-nvim',
-				config = require('plugins.configs.lspkind-nvim'),
+				config = require('doom.modules.doom-lspkind'),
 			},
 			{ 'norcalli/snippets.nvim' },
 		},
 
-		config = require('plugins.configs.nvim-compe'),
+		config = require('doom.modules.doom-compe'),
 		disable = (disabled_lsp and true or disabled_compe),
 		opt = true,
 		after = 'nvim-lspconfig',
@@ -267,7 +267,7 @@ packer.startup(function(use)
 		has_value(Doom.disabled_plugins, 'lspinstall')
 	use({
 		'kabouzeid/nvim-lspinstall',
-		config = require('plugins.configs.nvim-lspinstall'),
+		config = require('doom.modules.doom-lspinstall'),
 		disable = (disabled_lsp and true or disabled_lspinstall),
 		after = 'nvim-lspconfig',
 	})
@@ -289,7 +289,7 @@ packer.startup(function(use)
 	local disabled_formatter = has_value(Doom.disabled_plugins, 'formatter')
 	use({
 		'lukas-reineke/format.nvim',
-		config = require('plugins.configs.nvim-format'),
+		config = require('doom.modules.doom-format'),
 		disable = (disabled_files and true or disabled_formatter),
 		event = 'BufEnter',
 	})
@@ -299,7 +299,7 @@ packer.startup(function(use)
 	local disabled_autopairs = has_value(Doom.disabled_plugins, 'autopairs')
 	use({
 		'windwp/nvim-autopairs',
-		config = require('plugins.configs.doom-autopairs'),
+		config = require('doom.modules.doom-autopairs'),
 		disable = (disabled_files and true or disabled_autopairs),
 		event = 'InsertEnter',
 	})
@@ -310,7 +310,7 @@ packer.startup(function(use)
 	use({
 		'lukas-reineke/indent-blankline.nvim',
 		branch = 'lua',
-		config = require('plugins.configs.blankline'),
+		config = require('doom.modules.doom-blankline'),
 		disable = (disabled_files and true or disabled_indent_lines),
 		event = 'ColorScheme',
 	})
@@ -341,7 +341,7 @@ packer.startup(function(use)
 	local disabled_colorizer = has_value(Doom.disabled_plugins, 'colorizer')
 	use({
 		'norcalli/nvim-colorizer.lua',
-		config = require('plugins.configs.nvim-colorizer'),
+		config = require('doom.modules.doom-colorizer'),
 		disable = (disabled_web and true or disabled_colorizer),
 		event = 'ColorScheme',
 	})
