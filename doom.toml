@@ -1,0 +1,19 @@
+[selene]
+base = 'lua51'
+name = 'doom'
+
+# for Neovim development
+[vim]
+any = true
+
+# for LuaJIT
+[jit]
+any = true
+
+# for Doom field from doomrc
+[Doom]
+any = true
+
+# for Neovim field from doomrc
+[Neovim]
+any = true
