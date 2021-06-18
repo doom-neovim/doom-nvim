@@ -7,7 +7,7 @@
 
 -- Helpers {{{
 
-require('colors.utils')
+local utils = require('colors.utils')
 
 -- }}}
 
@@ -88,7 +88,7 @@ local yellow = '#ECBE7B'
 local blue = '#51afef'
 local dark_blue = '#2257A0'
 local magenta = '#c678dd'
-local light_magenta = Lighten(magenta, 0.4)
+local light_magenta = utils.Lighten(magenta, 0.4)
 local violet = '#a9a1e1'
 local cyan = '#46D9FF'
 local white = '#efefef'
@@ -102,23 +102,23 @@ local bg_highlighted = '#4A4A45'
 
 local fg = '#bbc2cf'
 local fg_alt = '#5B6268'
-local fg_highlight = Lighten(fg, 0.2)
+local fg_highlight = utils.Lighten(fg, 0.2)
 
-local tag = Mix(blue, cyan, 0.5)
+local tag = utils.Mix(blue, cyan, 0.5)
 
 local diff_info_fg = orange
-local diff_info_bg0 = Mix('#D8EEFD', bg, 0.6)
-local diff_info_bg1 = Mix('#D8EEFD', bg, 0.8)
+local diff_info_bg0 = utils.Mix('#D8EEFD', bg, 0.6)
+local diff_info_bg1 = utils.Mix('#D8EEFD', bg, 0.8)
 
 local diff_add_fg = green
-local diff_add_fg0 = Mix(green, fg, 0.4)
-local diff_add_bg0 = Mix('#506d5b', bg, 0.6)
-local diff_add_bg1 = Mix('#acf2bd', bg, 0.8)
+local diff_add_fg0 = utils.Mix(green, fg, 0.4)
+local diff_add_bg0 = utils.Mix('#506d5b', bg, 0.6)
+local diff_add_bg1 = utils.Mix('#acf2bd', bg, 0.8)
 
 local gh_danger_fg = red
-local gh_danger_fg0 = Mix(red, fg, 0.6)
-local gh_danger_bg0 = Mix('#ffdce0', bg, 0.6)
-local gh_danger_bg1 = Mix('#ffdce0', bg, 0.8)
+local gh_danger_fg0 = utils.Mix(red, fg, 0.6)
+local gh_danger_bg0 = utils.Mix('#ffdce0', bg, 0.6)
+local gh_danger_bg1 = utils.Mix('#ffdce0', bg, 0.8)
 
 if current_bg == 'light' then
 	light_bg = true
@@ -142,36 +142,36 @@ if current_bg == 'light' then
 	blue = '#4078f2'
 	dark_blue = '#a0bcf8'
 	magenta = '#a626a4'
-	light_magenta = Darken(magenta, 0.36)
+	light_magenta = utils.Darken(magenta, 0.36)
 	violet = '#b751b6'
 	cyan = '#0184bc'
 	white = '#efefef'
 
 	bg = '#fafafa'
 	bg_alt = '#f0f0f0'
-	bg_highlight = Darken(bg, 0.2)
+	bg_highlight = utils.Darken(bg, 0.2)
 	bg_popup = bg_alt
 	bg_statusline = bg_popup
 
 	fg = base5
 	fg_alt = base3
-	fg_highlight = Lighten(fg, 0.2)
+	fg_highlight = utils.Lighten(fg, 0.2)
 
-	tag = Mix(blue, cyan, 0.5)
+	tag = utils.Mix(blue, cyan, 0.5)
 
 	diff_info_fg = orange
-	diff_info_bg0 = Mix('#D8EEFD', bg, 0.6)
-	diff_info_bg1 = Mix('#D8EEFD', bg, 0.8)
+	diff_info_bg0 = utils.Mix('#D8EEFD', bg, 0.6)
+	diff_info_bg1 = utils.Mix('#D8EEFD', bg, 0.8)
 
 	diff_add_fg = green
-	diff_add_fg0 = Mix(green, fg, 0.4)
-	diff_add_bg0 = Mix('#506d5b', bg, 0.4)
-	diff_add_bg1 = Mix('#acf2bd', bg, 0.8)
+	diff_add_fg0 = utils.Mix(green, fg, 0.4)
+	diff_add_bg0 = utils.Mix('#506d5b', bg, 0.4)
+	diff_add_bg1 = utils.Mix('#acf2bd', bg, 0.8)
 
 	gh_danger_fg = red
-	gh_danger_fg0 = Mix(red, fg, 0.6)
-	gh_danger_bg0 = Mix('#ffdce0', bg, 0.8)
-	gh_danger_bg1 = Mix('#ffdce0', bg, 0.9)
+	gh_danger_fg0 = utils.Mix(red, fg, 0.6)
+	gh_danger_bg0 = utils.Mix('#ffdce0', bg, 0.8)
+	gh_danger_bg1 = utils.Mix('#ffdce0', bg, 0.9)
 end
 
 if vim.g.doom_one_cursor_coloring then
@@ -195,7 +195,7 @@ local general_ui = {
 	},
 	NormalPopupPrompt = {
 		fg = base7,
-		bg = transparent_bg and 'NONE' or Darken(bg_popup, 0.3),
+		bg = transparent_bg and 'NONE' or utils.Darken(bg_popup, 0.3),
 		gui = 'bold',
 	},
 	NormalPopupSubtle = {
