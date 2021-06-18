@@ -54,6 +54,7 @@ local default_config = {
 -- {{{ NO NEED TO CHANGE
 local log = {}
 
+-- selene: allow(incorrect_standard_library_use)
 local unpack = unpack or table.unpack
 
 log.new = function(config, standalone)

@@ -1,4 +1,6 @@
 return function()
+    local utils = require('doom.utils')
+
 	local bo = vim.bo
 	local gl = require('galaxyline')
 	local buffer = require('galaxyline.provider_buffer')
@@ -289,7 +291,7 @@ return function()
 		gls.right[6] = {
 			DoomVersion = {
 				provider = function()
-					return 'DOOM v' .. Doom_version
+					return 'DOOM v' .. utils.doom_version
 				end,
 				condition = is_dashboard,
 				highlight = { get_color('blue'), get_color('bg'), 'bold' },

@@ -1,3 +1,5 @@
+--# selene: allow(global_usage)
+
 --- nvim-compe configuration
 -- https://github.com/hrsh7th/nvim-compe#lua-config
 return function()

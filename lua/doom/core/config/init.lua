@@ -11,9 +11,6 @@ local functions = require('doom.core.functions')
 
 log.debug('Loading Doom core config module ...')
 
--- Doom Nvim version
-Doom_version = '2.3.2'
-
 -- Check if running Neovim or Vim and fails if:
 --  1. Running Vim instead of Neovim
 --  2. Running Neovim 0.4 or below
