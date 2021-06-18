@@ -5,6 +5,6 @@
 "================================================
 
 function! health#doom#check() abort
-    lua log.info('Checking Doom health ...')
-    lua require('doom.health').checkhealth()
+    lua require('doom.core.logging').info('Checking Doom health ...')
+    lua require('doom.core.health').checkhealth()
 endfunction
