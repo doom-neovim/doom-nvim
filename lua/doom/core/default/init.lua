@@ -32,8 +32,13 @@ M.load_default_options = function()
 	vim.opt.backspace = { 'indent', 'eol', 'start' }
 	vim.opt.updatetime = 100
 	vim.opt.timeoutlen = 200
-	vim.opt.completeopt =
-		{ 'menu', 'menuone', 'preview', 'noinsert', 'noselect' }
+	vim.opt.completeopt = {
+		'menu',
+		'menuone',
+		'preview',
+		'noinsert',
+		'noselect',
+	}
 	vim.opt.shortmess:append('atsc')
 	vim.opt.inccommand = 'split'
 	vim.opt.path = '**'
@@ -139,14 +144,16 @@ end
 M.custom_options = function()
 	-- Set a custom command to update Doom Nvim
 	-- can be called by using :DoomUpdate
-	vim.cmd('command! DoomUpdate !git -C ~/.config/doom-nvim/ stash -q && git -C ~/.config/doom-nvim/ pull && git -C ~/.config/doom-nvim/ stash pop -q')
+	vim.cmd(
+		'command! DoomUpdate !git -C ~/.config/doom-nvim/ stash -q && git -C ~/.config/doom-nvim/ pull && git -C ~/.config/doom-nvim/ stash pop -q'
+	)
 
 	-- Load user-defined settings from the Neovim field in the doomrc file
 	functions.load_custom_settings(Neovim.autocmds, 'autocmds')
 	functions.load_custom_settings(Neovim.commands, 'commands')
 	functions.load_custom_settings(Neovim.functions, 'functions')
 	functions.load_custom_settings(Neovim.mappings, 'mappings')
-    functions.load_custom_settings(Neovim.global_variables, 'variables')
+	functions.load_custom_settings(Neovim.global_variables, 'variables')
 end
 
 return M

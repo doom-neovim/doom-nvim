@@ -14,44 +14,47 @@ return function()
 		'toggleterm',
 	}
 
-    -- Dynamically change statusline colors,
-    -- defaults to doom-one dark variant colors.
-    --
-    -- @tparam string name The color name to be returned
-    -- @return string
-    local function get_color(name)
-        return function()
-            local colors = {
-                bg = '#282c34',
-                fg = '#bbc2cf',
-                section_bg = '#3E4556',
-                yellow = '#ECBE7B',
-                cyan = '#46D9FF',
-                green = '#98be65',
-                orange = '#da8548',
-                magenta = '#c678dd',
-                blue = '#51afef',
-                red = '#ff6c6b',
-            }
+	-- Dynamically change statusline colors,
+	-- defaults to doom-one dark variant colors.
+	--
+	-- @tparam string name The color name to be returned
+	-- @return string
+	local function get_color(name)
+		return function()
+			local colors = {
+				bg = '#282c34',
+				fg = '#bbc2cf',
+				section_bg = '#3E4556',
+				yellow = '#ECBE7B',
+				cyan = '#46D9FF',
+				green = '#98be65',
+				orange = '#da8548',
+				magenta = '#c678dd',
+				blue = '#51afef',
+				red = '#ff6c6b',
+			}
 
-            if vim.g.colors_name == 'doom-one' and vim.opt.background:get() == 'light' then
-                colors = {
-                    bg = '#fafafa',
-                    fg = '#383a42',
-                    section_bg = '#c6c7c7',
-                    yellow = '#986801',
-                    cyan = '#0184bc',
-                    green = '#50a14f',
-                    orange = '#da8548',
-                    magenta = '#a626a4',
-                    blue = '#4078f2',
-                    red = '#e45649',
-                }
-            end
+			if
+				vim.g.colors_name == 'doom-one'
+				and vim.opt.background:get() == 'light'
+			then
+				colors = {
+					bg = '#fafafa',
+					fg = '#383a42',
+					section_bg = '#c6c7c7',
+					yellow = '#986801',
+					cyan = '#0184bc',
+					green = '#50a14f',
+					orange = '#da8548',
+					magenta = '#a626a4',
+					blue = '#4078f2',
+					red = '#e45649',
+				}
+			end
 
-            return colors[name]
-        end
-    end
+			return colors[name]
+		end
+	end
 
 	-- TODO: merge dashboard functions to get only one function for both cases
 
@@ -88,7 +91,7 @@ return function()
 		ViMode = {
 			provider = function()
 				-- auto change color according the vim mode
-                -- TODO: find a less dirty way to set ViMode colors
+				-- TODO: find a less dirty way to set ViMode colors
 				local mode_color = {
 					n = get_color('red')(),
 					i = get_color('green')(),
@@ -291,7 +294,10 @@ return function()
 				condition = is_dashboard,
 				highlight = { get_color('blue'), get_color('bg'), 'bold' },
 				separator = ' ',
-				separator_highlight = { get_color('section_bg'), get_color('bg') },
+				separator_highlight = {
+					get_color('section_bg'),
+					get_color('bg'),
+				},
 			},
 		}
 		gls.right[7] = {

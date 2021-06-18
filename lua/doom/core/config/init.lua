@@ -22,7 +22,9 @@ if vim.fn.has('nvim') == 1 then
 		log.fatal('Doom Nvim requires Neovim 0.5.0')
 	end
 else
-	log.fatal('Doom Nvim does not have support for Vim, please use it with Neovim instead')
+	log.fatal(
+		'Doom Nvim does not have support for Vim, please use it with Neovim instead'
+	)
 end
 
 -- Set some configs on load

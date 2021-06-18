@@ -13,7 +13,7 @@ local utils = require('doom.utils')
 -- Do the same as `doom.core.config.doomrc` so we can use
 -- all the debugging levels when sourcing that module
 if vim.fn.filereadable(utils.doom_root .. '/doomrc') then
-    vim.cmd('silent! luafile ' .. utils.doom_root .. '/doomrc')
+	vim.cmd('silent! luafile ' .. utils.doom_root .. '/doomrc')
 end
 
 -----------------------------------------------------------
@@ -80,8 +80,7 @@ log.new = function(config, standalone)
 	local round = function(x, increment)
 		increment = increment or 1
 		x = x / increment
-		return (x > 0 and math.floor(x + 0.5) or math.ceil(x - 0.5))
-			* increment
+		return (x > 0 and math.floor(x + 0.5) or math.ceil(x - 0.5)) * increment
 	end
 
 	local make_string = function(...)
@@ -102,8 +101,8 @@ log.new = function(config, standalone)
 		return table.concat(t, ' ')
 	end
 
-	local console_output =
-		vim.schedule_wrap(function(level_config, info, nameupper, msg)
+	local console_output = vim.schedule_wrap(
+		function(level_config, info, nameupper, msg)
 			local console_lineinfo = vim.fn.fnamemodify(info.short_src, ':t')
 				.. ':'
 				.. info.currentline
@@ -121,17 +120,20 @@ log.new = function(config, standalone)
 
 			local split_console = vim.split(console_string, '\n')
 			for _, v in ipairs(split_console) do
-				vim.cmd(string.format(
-					[[echom "[%s] %s"]],
-					config.plugin,
-					vim.fn.escape(v, '"')
-				))
+				vim.cmd(
+					string.format(
+						[[echom "[%s] %s"]],
+						config.plugin,
+						vim.fn.escape(v, '"')
+					)
+				)
 			end
 
 			if config.highlights and level_config.hl then
 				vim.cmd('echohl NONE')
 			end
-		end)
+		end
+	)
 
 	local log_at_level = function(level, level_config, message_maker, ...)
 		-- Return early if we're below the config.level

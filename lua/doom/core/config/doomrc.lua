@@ -17,8 +17,8 @@ M.check_doomrc = function()
 	-- /home/user/.config/doom-nvim/doomrc
 	log.debug('Looking for a doomrc file in Doom root ...')
 	if vim.fn.filereadable(utils.doom_root .. '/doomrc') then
-	    return true
-    end
+		return true
+	end
 
 	return false
 end
@@ -170,20 +170,20 @@ local function default_doomrc_values()
 		-- 2 : Concealed text is completely hidden unless it has a custom replacement
 		--     character defined
 		-- 3 : Concealed text is completely hidden
-        -- @default = 0
+		-- @default = 0
 		conceallevel = 0,
 
-        -- Logging level
-        -- Set Doom logging level
-        -- Available levels:
-        --   · trace
-        --   · debug
-        --   · info
-        --   · warn
-        --   · error
-        --   · fatal
-        -- @default = 'info'
-        logging = 'info',
+		-- Logging level
+		-- Set Doom logging level
+		-- Available levels:
+		--   · trace
+		--   · debug
+		--   · info
+		--   · warn
+		--   · error
+		--   · fatal
+		-- @default = 'info'
+		logging = 'info',
 	}
 
 	Neovim = {

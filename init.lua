@@ -27,7 +27,7 @@ vim.g.loaded_2html_plugin = false
 local async
 
 async = vim.loop.new_async(vim.schedule_wrap(function()
-    ---- Doom Configurations ------------------------
+	---- Doom Configurations ------------------------
 	-------------------------------------------------
 	-- Load configurations and plugins
 	require('doom.core.config')
@@ -43,16 +43,16 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
 		vim.cmd('Dashboard')
 	end
 
-    vim.opt.shadafile = ''
+	vim.opt.shadafile = ''
 	vim.defer_fn(function()
-        vim.cmd [[
+		vim.cmd([[
             rshada!
             doautocmd BufRead
             syntax on
             filetype plugin indent on
             silent! bufdo e
-        ]]
-    end, 15)
+        ]])
+	end, 15)
 
 	async:close()
 end))

@@ -33,7 +33,16 @@ return function()
 			results_height = 1,
 			results_width = 0.8,
 			border = {},
-			borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+			borderchars = {
+				'─',
+				'│',
+				'─',
+				'│',
+				'╭',
+				'╮',
+				'╯',
+				'╰',
+			},
 			color_devicons = true,
 			use_less = true,
 			set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
@@ -47,14 +56,16 @@ return function()
 				i = {
 					['<C-j>'] = actions.move_selection_next,
 					['<C-k>'] = actions.move_selection_previous,
-					['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
+					['<C-q>'] = actions.smart_send_to_qflist
+						+ actions.open_qflist,
 					['<Leader>f'] = actions.close, -- works like a toggle, sometimes can be buggy
 					['<CR>'] = actions.select_default + actions.center,
 				},
 				n = {
 					['<C-j>'] = actions.move_selection_next,
 					['<C-k>'] = actions.move_selection_previous,
-					['<C-q>'] = actions.smart_send_to_qflist + actions.open_qflist,
+					['<C-q>'] = actions.smart_send_to_qflist
+						+ actions.open_qflist,
 				},
 			},
 		},

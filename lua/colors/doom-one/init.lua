@@ -27,10 +27,10 @@ if vim.g.doom_one_transparent_background == nil then
 	vim.g.doom_one_transparent_background = false
 end
 if vim.g.doom_one_italic_comments == nil then
-    vim.g.doom_one_italic_comments = false
+	vim.g.doom_one_italic_comments = false
 end
 if vim.g.doom_one_telescope_highlights == nil then
-    vim.g.doom_one_telescope_highlights = true
+	vim.g.doom_one_telescope_highlights = true
 end
 
 local transparent_bg = vim.g.doom_one_transparent_background
@@ -121,57 +121,57 @@ local gh_danger_bg0 = Mix('#ffdce0', bg, 0.6)
 local gh_danger_bg1 = Mix('#ffdce0', bg, 0.8)
 
 if current_bg == 'light' then
-    light_bg = true
+	light_bg = true
 
-    base0 = '#f0f0f0'
-    base1 = '#e7e7e7'
-    base2 = '#dfdfdf'
-    base3 = '#c6c7c7'
-    base4 = '#9ca0a4'
-    base5 = '#383a42'
-    base6 = '#202328'
-    base7 = '#23272e'
-    base8 = '#1c1f24'
-    base9 = '#1B2229'
+	base0 = '#f0f0f0'
+	base1 = '#e7e7e7'
+	base2 = '#dfdfdf'
+	base3 = '#c6c7c7'
+	base4 = '#9ca0a4'
+	base5 = '#383a42'
+	base6 = '#202328'
+	base7 = '#23272e'
+	base8 = '#1c1f24'
+	base9 = '#1B2229'
 
-    grey = base4
-    red = '#e45649'
-    orange = '#da8548'
-    green = '#50a14f'
-    yellow = '#986801'
-    blue = '#4078f2'
-    dark_blue = '#a0bcf8'
-    magenta = '#a626a4'
-    light_magenta = Darken(magenta, 0.36)
-    violet = '#b751b6'
-    cyan = '#0184bc'
-    white = '#efefef'
+	grey = base4
+	red = '#e45649'
+	orange = '#da8548'
+	green = '#50a14f'
+	yellow = '#986801'
+	blue = '#4078f2'
+	dark_blue = '#a0bcf8'
+	magenta = '#a626a4'
+	light_magenta = Darken(magenta, 0.36)
+	violet = '#b751b6'
+	cyan = '#0184bc'
+	white = '#efefef'
 
-    bg = '#fafafa'
-    bg_alt = '#f0f0f0'
-    bg_highlight = Darken(bg, 0.2)
-    bg_popup = bg_alt
-    bg_statusline = bg_popup
+	bg = '#fafafa'
+	bg_alt = '#f0f0f0'
+	bg_highlight = Darken(bg, 0.2)
+	bg_popup = bg_alt
+	bg_statusline = bg_popup
 
-    fg = base5
-    fg_alt = base3
-    fg_highlight = Lighten(fg, 0.2)
+	fg = base5
+	fg_alt = base3
+	fg_highlight = Lighten(fg, 0.2)
 
-    tag = Mix(blue, cyan, 0.5)
+	tag = Mix(blue, cyan, 0.5)
 
-    diff_info_fg = orange
-    diff_info_bg0 = Mix('#D8EEFD', bg, 0.6)
-    diff_info_bg1 = Mix('#D8EEFD', bg, 0.8)
+	diff_info_fg = orange
+	diff_info_bg0 = Mix('#D8EEFD', bg, 0.6)
+	diff_info_bg1 = Mix('#D8EEFD', bg, 0.8)
 
-    diff_add_fg = green
-    diff_add_fg0 = Mix(green, fg, 0.4)
-    diff_add_bg0 = Mix('#506d5b', bg, 0.4)
-    diff_add_bg1 = Mix('#acf2bd', bg, 0.8)
+	diff_add_fg = green
+	diff_add_fg0 = Mix(green, fg, 0.4)
+	diff_add_bg0 = Mix('#506d5b', bg, 0.4)
+	diff_add_bg1 = Mix('#acf2bd', bg, 0.8)
 
-    gh_danger_fg = red
-    gh_danger_fg0 = Mix(red, fg, 0.6)
-    gh_danger_bg0 = Mix('#ffdce0', bg, 0.8)
-    gh_danger_bg1 = Mix('#ffdce0', bg, 0.9)
+	gh_danger_fg = red
+	gh_danger_fg0 = Mix(red, fg, 0.6)
+	gh_danger_bg0 = Mix('#ffdce0', bg, 0.8)
+	gh_danger_bg1 = Mix('#ffdce0', bg, 0.9)
 end
 
 if vim.g.doom_one_cursor_coloring then
@@ -198,7 +198,10 @@ local general_ui = {
 		bg = transparent_bg and 'NONE' or Darken(bg_popup, 0.3),
 		gui = 'bold',
 	},
-	NormalPopupSubtle = { fg = base6, bg = transparent_bg and 'NONE' or bg_popup },
+	NormalPopupSubtle = {
+		fg = base6,
+		bg = transparent_bg and 'NONE' or bg_popup,
+	},
 	EndOfBuffer = { fg = bg, bg = transparent_bg and 'NONE' or bg },
 
 	Visual = { bg = dark_blue },
@@ -260,7 +263,7 @@ apply_highlight(general_ui)
 
 local search_high_ui = {
 	Search = { fg = fg, bg = dark_blue, gui = 'bold' },
-	Substitute = {fg = red, gui = 'strikethrough,bold'},
+	Substitute = { fg = red, gui = 'strikethrough,bold' },
 	IncSearch = { fg = fg, bg = dark_blue, gui = 'bold' },
 	IncSearchCursor = { gui = 'reverse' },
 
@@ -332,7 +335,10 @@ local main_syntax = {
 	URL = { fg = tag, sp = 'undercurl' },
 	Underlined = { fg = tag, sp = 'underline' },
 
-	Comment = { fg = base5, gui = vim.g.doom_one_italic_comments and 'italic' or 'NONE' },
+	Comment = {
+		fg = base5,
+		gui = vim.g.doom_one_italic_comments and 'italic' or 'NONE',
+	},
 	CommentBold = { fg = base5, gui = 'bold' },
 	SpecialComment = { fg = base7, gui = 'bold' },
 
@@ -492,16 +498,16 @@ high_link('GitSignsChangeDelete', 'DiffModifiedGutter')
 
 if vim.g.doom_one_telescope_highlights then
 	local telescope = {
-	    TelescopeSelection = { fg = yellow, gui = 'bold' },
-	    TelescopeSelectionCaret = { fg = light_bg and orange or blue },
-	    TelescopeMultiSelection = { fg = grey },
-	    TelescopeNormal = { fg = fg },
-	    TelescopeMatching = { fg = green, gui = 'bold' },
-	    TelescopePromptPrefix = { fg = light_bg and orange or blue },
-	    TelescopeBorder = { fg = light_bg and orange or blue },
-	    TelescopePromptBorder = { fg = light_bg and orange or blue },
-	    TelescopeResultsBorder = { fg = light_bg and orange or blue },
-	    TelescopePreviewBorder = { fg = light_bg and orange or blue },
+		TelescopeSelection = { fg = yellow, gui = 'bold' },
+		TelescopeSelectionCaret = { fg = light_bg and orange or blue },
+		TelescopeMultiSelection = { fg = grey },
+		TelescopeNormal = { fg = fg },
+		TelescopeMatching = { fg = green, gui = 'bold' },
+		TelescopePromptPrefix = { fg = light_bg and orange or blue },
+		TelescopeBorder = { fg = light_bg and orange or blue },
+		TelescopePromptBorder = { fg = light_bg and orange or blue },
+		TelescopeResultsBorder = { fg = light_bg and orange or blue },
+		TelescopePreviewBorder = { fg = light_bg and orange or blue },
 	}
 
 	apply_highlight(telescope)
@@ -540,9 +546,9 @@ high_link('NvimTreeOpenedFolderName', 'NvimTreeFolderName')
 -- Dashboard {{{
 
 local dashboard = {
-    dashboardHeader = { fg = '#586268' },
-    dashboardCenter = { fg = light_bg and orange or blue },
-    dashboardShortcut = { fg = '#9788b9' },
+	dashboardHeader = { fg = '#586268' },
+	dashboardCenter = { fg = light_bg and orange or blue },
+	dashboardShortcut = { fg = '#9788b9' },
 }
 
 apply_highlight(dashboard)
@@ -553,12 +559,12 @@ high_link('dashboardFooter', 'dashboardHeader')
 -- WhichKey {{{
 
 local whichkey = {
-    WhichKey = { fg = light_bg and orange or blue },
-    WhichKeyGroup = { fg = magenta },
-    WhichKeyDesc = { fg = magenta },
-    WhichKeySeparator = { fg = base5 },
-    WhichKeyFloat = { bg = base2 },
-    WhichKeyValue = { fg = grey },
+	WhichKey = { fg = light_bg and orange or blue },
+	WhichKeyGroup = { fg = magenta },
+	WhichKeyDesc = { fg = magenta },
+	WhichKeySeparator = { fg = base5 },
+	WhichKeyFloat = { bg = base2 },
+	WhichKeyValue = { fg = grey },
 }
 
 apply_highlight(whichkey)

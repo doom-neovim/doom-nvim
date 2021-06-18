@@ -2,8 +2,7 @@ return function()
 	local tree_cb = require('nvim-tree.config').nvim_tree_callback
 
 	-- Empty by default
-	vim.g.nvim_tree_ignore =
-		{ '.git', 'node_modules', '.cache', '__pycache__' }
+	vim.g.nvim_tree_ignore = { '.git', 'node_modules', '.cache', '__pycache__' }
 	-- False by default, opens the tree when typing `vim $DIR` or `vim`
 	vim.g.nvim_tree_auto_open = 0
 	-- False by default, closes the tree when it is the last window

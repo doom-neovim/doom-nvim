@@ -53,24 +53,9 @@ if
 	and functions.check_plugin('nvim-compe')
 then
 	-- https://github.com/hrsh7th/nvim-compe#mappings
-	utils.map(
-		'i',
-		'<expr> <C-Space>',
-		vim.fn['compe#complete'](),
-		opts
-	)
-	utils.map(
-		'i',
-		'<expr> <CR>',
-		vim.fn['compe#confirm']('<CR>'),
-		opts
-	)
-	utils.map(
-		'i',
-		'<expr> <C-e>',
-		vim.fn['compe#close']('<C-e>'),
-		opts
-	)
+	utils.map('i', '<expr> <C-Space>', vim.fn['compe#complete'](), opts)
+	utils.map('i', '<expr> <CR>', vim.fn['compe#confirm']('<CR>'), opts)
+	utils.map('i', '<expr> <C-e>', vim.fn['compe#close']('<C-e>'), opts)
 	utils.map(
 		'i',
 		'<expr> <C-f>',
@@ -102,7 +87,9 @@ then
 		":lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>",
 		opts
 	) -- Control+b: Scroll up documents
-	vim.cmd('command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()')
+	vim.cmd(
+		'command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()'
+	)
 end
 
 if Doom.new_file_split then
@@ -182,7 +169,12 @@ utils.map('n', 'Q', '<Nop>', opts)
 utils.map('n', 'q', '<Nop>', opts)
 
 -- Fast exit from Doom Nvim and write messages to logs
-utils.map('n', 'ZZ', ':lua require("doom.core.functions").quit_doom(1, 1)<CR>', opts)
+utils.map(
+	'n',
+	'ZZ',
+	':lua require("doom.core.functions").quit_doom(1, 1)<CR>',
+	opts
+)
 
 ---[[-----------------]]---
 --      Leader keys      --

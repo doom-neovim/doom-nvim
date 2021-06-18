@@ -18,9 +18,7 @@ log.debug('Loading Doom functions module ...')
 M.check_plugin = function(plugin_path, opt)
 	if opt then
 		return vim.fn.isdirectory(
-			vim.fn.stdpath('data')
-				.. '/site/pack/packer/opt/'
-				.. plugin_path
+			vim.fn.stdpath('data') .. '/site/pack/packer/opt/' .. plugin_path
 		) == 1
 	end
 
@@ -77,9 +75,7 @@ M.quit_doom = function(write, force)
 						.. target
 						.. '\'/" $HOME/.config/doom-nvim/doomrc'
 				)
-				log.info(
-					'Colorscheme successfully changed to ' .. target
-				)
+				log.info('Colorscheme successfully changed to ' .. target)
 			end
 		end,
 		utils.catch({
@@ -100,8 +96,8 @@ M.quit_doom = function(write, force)
 		quit_cmd = 'wa | '
 	end
 	if force then
-        vim.cmd(quit_cmd .. 'qa!')
-    else
+		vim.cmd(quit_cmd .. 'qa!')
+	else
 		vim.cmd(quit_cmd .. 'q!')
 	end
 end
@@ -126,40 +122,46 @@ end
 M.create_report = function()
 	local date = os.date('%Y-%m-%d %H:%M:%S')
 
-    utils.try({
-        function()
-            vim.cmd(
-                'silent !echo "'
-                    .. vim.fn.fnameescape('#')
-                    .. ' doom crash report" >> '
-                    .. utils.doom_report
-            )
-            vim.cmd(
-                'silent !echo "Report date: ' .. date .. '" >> ' .. utils.doom_report
-            )
-            vim.cmd(
-                'silent !echo "'
-                    .. vim.fn.fnameescape('##')
-                    .. ' Begin log dump" >> '
-                    .. utils.doom_report
-            )
-            vim.cmd(
-                'silent !cat ' .. utils.doom_logs .. ' | grep "$(date +%a %d %b %Y)" >> ' .. utils.doom_report
-            )
-            vim.cmd(
-                'silent !echo "'
-                    .. vim.fn.fnameescape('##')
-                    .. ' End log dump" >> '
-                    .. utils.doom_report
-            )
-            log.info('Report created at ' .. utils.doom_report)
-        end,
-        utils.catch({
-            function(err)
-                log.error('Error while writing report. Traceback:\n' .. err)
-            end
-        })
-    })
+	utils.try({
+		function()
+			vim.cmd(
+				'silent !echo "'
+					.. vim.fn.fnameescape('#')
+					.. ' doom crash report" >> '
+					.. utils.doom_report
+			)
+			vim.cmd(
+				'silent !echo "Report date: '
+					.. date
+					.. '" >> '
+					.. utils.doom_report
+			)
+			vim.cmd(
+				'silent !echo "'
+					.. vim.fn.fnameescape('##')
+					.. ' Begin log dump" >> '
+					.. utils.doom_report
+			)
+			vim.cmd(
+				'silent !cat '
+					.. utils.doom_logs
+					.. ' | grep "$(date +%a %d %b %Y)" >> '
+					.. utils.doom_report
+			)
+			vim.cmd(
+				'silent !echo "'
+					.. vim.fn.fnameescape('##')
+					.. ' End log dump" >> '
+					.. utils.doom_report
+			)
+			log.info('Report created at ' .. utils.doom_report)
+		end,
+		utils.catch({
+			function(err)
+				log.error('Error while writing report. Traceback:\n' .. err)
+			end,
+		}),
+	})
 end
 
 return M
