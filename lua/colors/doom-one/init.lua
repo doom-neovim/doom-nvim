@@ -29,6 +29,9 @@ end
 if vim.g.doom_one_italic_comments == nil then
     vim.g.doom_one_italic_comments = false
 end
+if vim.g.doom_one_telescope_highlights == nil then
+    vim.g.doom_one_telescope_highlights = true
+end
 
 local transparent_bg = vim.g.doom_one_transparent_background
 
@@ -61,10 +64,15 @@ local function apply_highlight(groups)
 	end
 end
 
+-- Change the colorscheme colors depending on the current background, defaults to
+-- doom-one dark variant colors
+local current_bg = vim.opt.background:get()
+local light_bg = false
+
 local base0 = '#1B2229'
 local base1 = '#1c1f24'
 local base2 = '#202328'
--- local base3 = '#23272e'
+local base3 = '#23272e'
 local base4 = '#3f444a'
 local base5 = '#5B6268'
 local base6 = '#73797e'
@@ -98,21 +106,73 @@ local fg_highlight = Lighten(fg, 0.2)
 
 local tag = Mix(blue, cyan, 0.5)
 
-local diff_info_fg = blue
+local diff_info_fg = orange
 local diff_info_bg0 = Mix('#D8EEFD', bg, 0.6)
 local diff_info_bg1 = Mix('#D8EEFD', bg, 0.8)
 
 local diff_add_fg = green
 local diff_add_fg0 = Mix(green, fg, 0.4)
-local diff_add_bg0 = Mix('#506d5b', bg, 0.4)
--- local diff_add_bg1 = Mix('#acf2bd', bg, 0.6)
-local diff_add_bg2 = Mix('#acf2bd', bg, 0.8)
+local diff_add_bg0 = Mix('#506d5b', bg, 0.6)
+local diff_add_bg1 = Mix('#acf2bd', bg, 0.8)
 
 local gh_danger_fg = red
 local gh_danger_fg0 = Mix(red, fg, 0.6)
--- local gh_danger_bg0 = Mix('#ffdce0', bg, 0.6)
+local gh_danger_bg0 = Mix('#ffdce0', bg, 0.6)
 local gh_danger_bg1 = Mix('#ffdce0', bg, 0.8)
-local gh_danger_bg2 = Mix('#ffdce0', bg, 0.9)
+
+if current_bg == 'light' then
+    light_bg = true
+
+    base0 = '#f0f0f0'
+    base1 = '#e7e7e7'
+    base2 = '#dfdfdf'
+    base3 = '#c6c7c7'
+    base4 = '#9ca0a4'
+    base5 = '#383a42'
+    base6 = '#202328'
+    base7 = '#23272e'
+    base8 = '#1c1f24'
+    base9 = '#1B2229'
+
+    grey = base4
+    red = '#e45649'
+    orange = '#da8548'
+    green = '#50a14f'
+    yellow = '#986801'
+    blue = '#4078f2'
+    dark_blue = '#a0bcf8'
+    magenta = '#a626a4'
+    light_magenta = Darken(magenta, 0.36)
+    violet = '#b751b6'
+    cyan = '#0184bc'
+    white = '#efefef'
+
+    bg = '#fafafa'
+    bg_alt = '#f0f0f0'
+    bg_highlight = Darken(bg, 0.2)
+    bg_popup = bg_alt
+    bg_statusline = bg_popup
+
+    fg = base5
+    fg_alt = base3
+    fg_highlight = Lighten(fg, 0.2)
+
+    tag = Mix(blue, cyan, 0.5)
+
+    diff_info_fg = orange
+    diff_info_bg0 = Mix('#D8EEFD', bg, 0.6)
+    diff_info_bg1 = Mix('#D8EEFD', bg, 0.8)
+
+    diff_add_fg = green
+    diff_add_fg0 = Mix(green, fg, 0.4)
+    diff_add_bg0 = Mix('#506d5b', bg, 0.4)
+    diff_add_bg1 = Mix('#acf2bd', bg, 0.8)
+
+    gh_danger_fg = red
+    gh_danger_fg0 = Mix(red, fg, 0.6)
+    gh_danger_bg0 = Mix('#ffdce0', bg, 0.8)
+    gh_danger_bg1 = Mix('#ffdce0', bg, 0.9)
+end
 
 if vim.g.doom_one_cursor_coloring then
 	vim.opt.guicursor =
@@ -181,56 +241,26 @@ local general_ui = {
 	StatusLinePart = { fg = base6, bg = bg_popup, gui = 'bold' },
 	StatusLinePartNC = { fg = base6, bg = bg_popup, gui = 'bold' },
 
-	Pmenu = { fg = fg, bg = bg_popup },
+	Pmenu = { fg = fg, bg = bg_highlight },
 	PmenuSel = { fg = base0, bg = blue },
 	PmenuSelBold = { fg = base0, bg = blue, gui = 'bold' },
 	PmenuSbar = { bg = bg_alt },
 	PmenuThumb = { bg = fg },
 }
 
-if vim.fn.exists('&pumblend') == 1 then
-	vim.cmd('set pumblend=20')
+if vim.opt.pumblend == 1 then
+	vim.opt.pumblend = 20
 end
 
 apply_highlight(general_ui)
 
 -- }}}
 
--- Buffers {{{
-
-local buffers_ui = {
-	BufferCurrent = { fg = base9, bg = bg },
-	BufferCurrentIndex = { fg = base6, bg = bg },
-	BufferCurrentMod = { fg = yellow, bg = bg },
-	BufferCurrentSign = { fg = blue, bg = bg },
-	BufferCurrentTarget = { fg = red, bg = bg, gui = 'bold' },
-
-	BufferVisible = { fg = base7, bg = bg },
-	BufferVisibleIndex = { fg = base9, bg = bg },
-	BufferVisibleMod = { fg = yellow, bg = bg },
-	BufferVisibleSign = { fg = base4, bg = bg },
-	BufferVisibleTarget = { fg = red, bg = bg, gui = 'bold' },
-
-	BufferInactive = { fg = base6, bg = base1 },
-	BufferInactiveIndex = { fg = base6, bg = base1 },
-	BufferInactiveMod = { fg = yellow, bg = base1 },
-	BufferInactiveSign = { fg = base4, bg = base1 },
-	BufferInactiveTarget = { fg = red, bg = base1, gui = 'bold' },
-
-	BufferTabpages = { fg = blue, bg = bg_statusline, gui = 'bold' },
-	BufferTabpageFill = { fg = base4, bg = base1, gui = 'bold' },
-
-	BufferPart = { fg = diff_info_fg, bg = diff_info_bg0, gui = 'bold' },
-}
-
-apply_highlight(buffers_ui)
-
--- }}}
-
--- Search, Highlight. Conceal, Messgaes {{{
+-- Search, Highlight. Conceal, Messages {{{
 
 local search_high_ui = {
 	Search = { fg = fg, bg = dark_blue, gui = 'bold' },
+	Substitute = {fg = red, gui = 'strikethrough,bold'},
 	IncSearch = { fg = fg, bg = dark_blue, gui = 'bold' },
 	IncSearchCursor = { gui = 'reverse' },
 
@@ -312,23 +342,23 @@ local main_syntax = {
 	PreProc = { fg = violet, gui = 'bold' },
 	PreCondit = { fg = violet, gui = 'bold' },
 
-	Label = { fg = blue },
-	Repeat = { fg = blue },
-	Keyword = { fg = blue },
-	Operator = { fg = blue },
-	Delimiter = { fg = blue },
-	Statement = { fg = blue },
-	Exception = { fg = blue },
-	Conditional = { fg = blue },
+	Label = { fg = light_bg and orange or blue },
+	Repeat = { fg = light_bg and orange or blue },
+	Keyword = { fg = light_bg and orange or blue },
+	Operator = { fg = light_bg and orange or blue },
+	Delimiter = { fg = light_bg and orange or blue },
+	Statement = { fg = light_bg and orange or blue },
+	Exception = { fg = light_bg and orange or blue },
+	Conditional = { fg = light_bg and orange or blue },
 
 	Variable = { fg = '#8B93E6' },
-	VariableBuiltin = { fg = '8B93E6', gui = 'bold' },
+	VariableBuiltin = { fg = '#8B93E6', gui = 'bold' },
 	Constant = { fg = violet, gui = 'bold' },
 
-	Number = { fg = orange },
-	Float = { fg = orange },
-	Boolean = { fg = orange, gui = 'bold' },
-	Enum = { fg = orange },
+	Number = { fg = light_bg and yellow or orange },
+	Float = { fg = light_bg and yellow or orange },
+	Boolean = { fg = light_bg and yellow or orange, gui = 'bold' },
+	Enum = { fg = light_bg and yellow or orange },
 
 	Character = { fg = violet, gui = 'bold' },
 	SpecialChar = { fg = base8, gui = 'bold' },
@@ -343,18 +373,18 @@ local main_syntax = {
 	Argument = { fg = light_magenta },
 	Attribute = { fg = light_magenta },
 	Identifier = { fg = light_magenta },
-	Property = { fg =violet },
+	Property = { fg = magenta },
 	Function = { fg = magenta },
 	FunctionBuiltin = { fg = light_magenta, gui = 'bold' },
-	KeywordFunction = { fg = blue },
+	KeywordFunction = { fg = light_bg and orange or blue },
 	Method = { fg = violet },
 
 	Type = { fg = yellow },
 	TypeBuiltin = { fg = yellow, gui = 'bold' },
-	StorageClass = { fg = blue },
-	Class = { fg = blue },
-	Structure = { fg = blue },
-	Typedef = { fg = blue },
+	StorageClass = { fg = light_bg and orange or blue },
+	Class = { fg = light_bg and orange or blue },
+	Structure = { fg = light_bg and orange or blue },
+	Typedef = { fg = light_bg and orange or blue },
 
 	Regexp = { fg = '#dd0093' },
 	RegexpSpecial = { fg = '#a40073' },
@@ -376,14 +406,14 @@ local diff = {
 	diffLine = { fg = base8, bg = diff_info_bg1 },
 	diffSubName = { fg = base8, bg = diff_info_bg1 },
 
-	DiffAdd = { bg = diff_add_bg2 },
-	DiffChange = { bg = diff_add_bg2 },
+	DiffAdd = { bg = diff_add_bg1 },
+	DiffChange = { bg = diff_add_bg1 },
 	DiffText = { bg = diff_add_bg0 },
-	DiffDelete = { bg = gh_danger_bg1 },
+	DiffDelete = { bg = gh_danger_bg0 },
 
-	DiffAdded = { fg = diff_add_fg0, bg = diff_add_bg2 },
+	DiffAdded = { fg = diff_add_fg0, bg = diff_add_bg1 },
 	DiffModified = { fg = fg, bg = diff_info_bg0 },
-	DiffRemoved = { fg = gh_danger_fg0, bg = gh_danger_bg2 },
+	DiffRemoved = { fg = gh_danger_fg0, bg = gh_danger_bg1 },
 
 	DiffAddedGutter = { fg = diff_add_fg, gui = 'bold' },
 	DiffModifiedGutter = { fg = diff_info_fg, gui = 'bold' },
@@ -403,6 +433,37 @@ apply_highlight(diff)
 -- }}}
 
 -- Plugins {{{
+
+-- barbar.nvim {{{
+
+local barbar = {
+	BufferCurrent = { fg = base9, bg = bg },
+	BufferCurrentIndex = { fg = base6, bg = bg },
+	BufferCurrentMod = { fg = yellow, bg = bg },
+	BufferCurrentSign = { fg = blue, bg = bg },
+	BufferCurrentTarget = { fg = red, bg = bg, gui = 'bold' },
+
+	BufferVisible = { fg = base7, bg = bg },
+	BufferVisibleIndex = { fg = base9, bg = bg },
+	BufferVisibleMod = { fg = yellow, bg = bg },
+	BufferVisibleSign = { fg = base4, bg = bg },
+	BufferVisibleTarget = { fg = red, bg = bg, gui = 'bold' },
+
+	BufferInactive = { fg = base6, bg = base1 },
+	BufferInactiveIndex = { fg = base6, bg = base1 },
+	BufferInactiveMod = { fg = yellow, bg = base1 },
+	BufferInactiveSign = { fg = base4, bg = base1 },
+	BufferInactiveTarget = { fg = red, bg = base1, gui = 'bold' },
+
+	BufferTabpages = { fg = blue, bg = bg_statusline, gui = 'bold' },
+	BufferTabpageFill = { fg = base4, bg = base1, gui = 'bold' },
+
+	BufferPart = { fg = diff_info_fg, bg = diff_info_bg0, gui = 'bold' },
+}
+
+apply_highlight(barbar)
+
+-- }}}
 
 -- Gitgutter {{{
 
@@ -429,33 +490,35 @@ high_link('GitSignsChangeDelete', 'DiffModifiedGutter')
 
 -- Telescope {{{
 
-local telescope = {
-	TelescopeSelection = { fg = yellow, gui = 'bold' },
-	TelescopeSelectionCaret = { fg = blue },
-	TelescopeMultiSelection = { fg = grey },
-	TelescopeNormal = { fg = fg },
-	TelescopeMatching = { fg = green, gui = 'bold' },
-	TelescopePromptPrefix = { fg = blue },
-	TelescopeBorder = { fg = blue },
-	TelescopePromptBorder = { fg = blue },
-	TelescopeResultsBorder = { fg = blue },
-	TelescopePreviewBorder = { fg = blue },
-}
+if vim.g.doom_one_telescope_highlights then
+	local telescope = {
+	    TelescopeSelection = { fg = yellow, gui = 'bold' },
+	    TelescopeSelectionCaret = { fg = light_bg and orange or blue },
+	    TelescopeMultiSelection = { fg = grey },
+	    TelescopeNormal = { fg = fg },
+	    TelescopeMatching = { fg = green, gui = 'bold' },
+	    TelescopePromptPrefix = { fg = light_bg and orange or blue },
+	    TelescopeBorder = { fg = light_bg and orange or blue },
+	    TelescopePromptBorder = { fg = light_bg and orange or blue },
+	    TelescopeResultsBorder = { fg = light_bg and orange or blue },
+	    TelescopePreviewBorder = { fg = light_bg and orange or blue },
+	}
 
-apply_highlight(telescope)
-high_link('TelescopePrompt', 'TelescopeNormal')
+	apply_highlight(telescope)
+	high_link('TelescopePrompt', 'TelescopeNormal')
+end
 
 -- }}}
 
 -- NvimTree {{{
 
 local nvim_tree = {
-	NvimTreeFolderName = { fg = blue, gui = 'bold' },
+	NvimTreeFolderName = { fg = light_bg and base9 or blue, gui = 'bold' },
 	NvimTreeRootFolder = { fg = green },
 	NvimTreeEmptyFolderName = { fg = fg_alt, gui = 'bold' },
 	NvimTreeSymlink = { fg = fg, sp = 'underline' },
 	NvimTreeExecFile = { fg = green, gui = 'bold' },
-	NvimTreeImageFile = { fg = blue },
+	NvimTreeImageFile = { fg = light_bg and orange or blue },
 	NvimTreeOpenedFile = { fg = fg_alt },
 	NvimTreeSpecialFile = { fg = fg, sp = 'underline' },
 	NvimTreeMarkdownFile = { fg = fg, sp = 'underline' },
@@ -478,7 +541,7 @@ high_link('NvimTreeOpenedFolderName', 'NvimTreeFolderName')
 
 local dashboard = {
     dashboardHeader = { fg = '#586268' },
-    dashboardCenter = { fg = blue },
+    dashboardCenter = { fg = light_bg and orange or blue },
     dashboardShortcut = { fg = '#9788b9' },
 }
 
@@ -486,11 +549,11 @@ apply_highlight(dashboard)
 high_link('dashboardFooter', 'dashboardHeader')
 
 -- }}}
-        
+
 -- WhichKey {{{
 
 local whichkey = {
-    WhichKey = { fg = blue },
+    WhichKey = { fg = light_bg and orange or blue },
     WhichKeyGroup = { fg = magenta },
     WhichKeyDesc = { fg = magenta },
     WhichKeySeparator = { fg = base5 },
@@ -501,7 +564,7 @@ local whichkey = {
 apply_highlight(whichkey)
 
 -- }}}
-        
+
 -- }}}
 
 -- LSP {{{
@@ -630,7 +693,7 @@ if vim.g.doom_one_enable_treesitter then
 	high_link('TSDanger', 'Error')
 	high_link('TSType', 'Type')
 	high_link('TSTypeBuiltin', 'TypeBuiltin')
-	high_link('TSVariable', 'Variable')
+	high_link('TSVariable', 'None')
 	high_link('TSVariableBuiltin', 'VariableBuiltin')
 end
 

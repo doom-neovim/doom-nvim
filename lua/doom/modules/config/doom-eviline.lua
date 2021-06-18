@@ -34,7 +34,7 @@ return function()
                 red = '#ff6c6b',
             }
 
-            if vim.g.colors_name == 'doom-one-light' then
+            if vim.g.colors_name == 'doom-one' and vim.opt.background:get() == 'light' then
                 colors = {
                     bg = '#fafafa',
                     fg = '#383a42',
