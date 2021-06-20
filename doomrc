@@ -192,14 +192,6 @@ Doom = {
 	-- @default = 25
 	sidebar_width = 25,
 
-	-- Logging level
-	-- 0 : No logging
-	-- 1 : All errors, no echo (default)
-	-- 2 : All errors and messages, no echo
-	-- 3 : All errors and messages, echo
-	-- @default = 1
-	logging = 1,
-
 	-- Set the Terminal width
 	-- Applies only to float direction
 	-- @default = 70
@@ -222,6 +214,18 @@ Doom = {
     ---[[--------------------------------------------------]]---
     --                   String Options                       --
     ---[[--------------------------------------------------]]---
+
+    -- Logging level
+    -- Set Doom logging level
+    -- Available levels:
+    --   · trace
+    --   · debug
+    --   · info
+    --   · warn
+    --   · error
+    --   · fatal
+    -- @default = 'info'
+	logging = 'info',
 
 	-- Set the Terminal direction
 	-- Available directions:
