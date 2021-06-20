@@ -4,11 +4,8 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
-<<<<<<< HEAD
-=======
 local M = {}
 
->>>>>>> 007239e94c53ef603d1dcbbe14c43607ff7f6436
 -------------------- HELPERS --------------------
 -- Doom Nvim version
 M.doom_version = '2.3.2'
@@ -78,15 +75,8 @@ M.try = function(block)
 end
 
 -- A better and less primitive implementation of custom plugins in Doom Nvim
-<<<<<<< HEAD
-function Custom_plugins(plugins)
-	local packer = require('packer')
-
-	packer.use(plugins)
-=======
 M.custom_plugins = function(plugins)
 	require('packer').use(plugins)
->>>>>>> 007239e94c53ef603d1dcbbe14c43607ff7f6436
 end
 
 -- Get current OS, returns 'Other' if the current OS is not recognized
