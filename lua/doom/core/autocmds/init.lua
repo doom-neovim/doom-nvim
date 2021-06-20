@@ -21,12 +21,6 @@ local autocmds = {
 	doom_extras = {
 		-- Set up vim_buffer_previewer in telescope.nvim
 		{ 'User', 'TelescopePreviewerLoaded', 'setlocal wrap' },
-		-- Disable tabline on Dashboard
-		{
-			'FileType',
-			'dashboard',
-			'set showtabline=0 | autocmd WinLeave <buffer> set showtabline=2',
-		},
 	},
 }
 
@@ -74,8 +68,6 @@ if not Doom.auto_comment then
 			'setlocal formatoptions-=c formatoptions-=r formatoptions-=o',
 		},
 	})
-
-	vim.cmd([[ setlocal formatoptions-=c formatoptions-=r formatoptions-=o ]])
 end
 
 -- Enable highlight on yank
