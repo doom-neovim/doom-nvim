@@ -74,11 +74,6 @@ M.try = function(block)
 	return result
 end
 
--- A better and less primitive implementation of custom plugins in Doom Nvim
-M.custom_plugins = function(plugins)
-	require('packer').use(plugins)
-end
-
 -- Get current OS, returns 'Other' if the current OS is not recognized
 M.get_os = function()
 	--[[

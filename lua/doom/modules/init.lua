@@ -399,6 +399,6 @@ packer.startup(function(use)
 	-----]]----------------[[-----
 	-- If there are custom plugins then also require them
 	for _, plug in pairs(Doom.custom_plugins) do
-		utils.custom_plugins(plug)
+		packer.use(plug)
 	end
 end)
