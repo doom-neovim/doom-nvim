@@ -11,18 +11,15 @@ log.debug('Loading Doom UI module ...')
 
 -- If no colorscheme was established then fallback to defauls
 if not utils.is_empty(Doom.colorscheme) then
-	utils.try({
-		function()
-			vim.opt.background = Doom.colorscheme_bg
-			vim.api.nvim_command('colorscheme ' .. Doom.colorscheme)
-		end,
-		utils.catch({
-			function(_)
-				log.error('Colorscheme not found, falling to doom-one')
-				vim.api.nvim_command('colorscheme ' .. Doom.colorscheme)
-			end,
-		}),
-	})
+	local loaded_colorscheme = pcall(function()
+        vim.opt.background = Doom.colorscheme_bg
+		vim.api.nvim_command('colorscheme ' .. Doom.colorscheme)
+    end)
+
+    if not loaded_colorscheme then
+        log.error('Colorscheme not found, falling to doom-one')
+        vim.api.nvim_command('colorscheme ' .. Doom.colorscheme)
+	end
 else
 	log.warn('Forced default Doom colorscheme')
 	vim.api.nvim_command('colorscheme doom-one')

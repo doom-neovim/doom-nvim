@@ -63,27 +63,24 @@ end
 -- @tparam bool write If doom should save before exiting
 -- @tparam bool force If doom should force the exiting
 M.quit_doom = function(write, force)
-	utils.try({
-		function()
-			log.info('Checking if the colorscheme was changed ...')
-			local target = vim.g.colors_name
-			if target ~= Doom.colorscheme then
-				vim.cmd(
-					'silent !sed -i "s/\''
-						.. Doom.colorscheme
-						.. "'/'"
-						.. target
-						.. '\'/" $HOME/.config/doom-nvim/doomrc'
-				)
-				log.info('Colorscheme successfully changed to ' .. target)
-			end
-		end,
-		utils.catch({
-			function(err)
-				log.error('Unable to write to the doomrc. Traceback:\n' .. err)
-			end,
-		}),
-	})
+	local changed_colorscheme, err = pcall(function()
+        log.info('Checking if the colorscheme was changed ...')
+        local target = vim.g.colors_name
+        if target ~= Doom.colorscheme then
+            vim.cmd(
+                'silent !sed -i "s/\''
+                    .. Doom.colorscheme
+                    .. "'/'"
+                    .. target
+                    .. '\'/" $HOME/.config/doom-nvim/doomrc'
+            )
+            log.info('Colorscheme successfully changed to ' .. target)
+        end
+    end)
+
+    if not changed_colorscheme then
+        log.error('Unable to write to the doomrc. Traceback:\n' .. err)
+    end
 
 	local quit_cmd = ''
 
@@ -104,17 +101,14 @@ end
 
 -- check_updates checks for plugins updates
 M.check_updates = function()
-	utils.try({
-		function()
+	local updated_plugins, err = pcall(function()
 			log.info('Updating the outdated plugins ...')
 			vim.cmd('PackerSync')
-		end,
-		utils.catch({
-			function(err)
-				log.error('Unable to update plugins. Traceback:\n' .. err)
-			end,
-		}),
-	})
+    end)
+
+    if not updated_plugins then
+        log.error('Unable to update plugins. Traceback:\n' .. err)
+    end
 end
 
 -- create_report creates a markdown report. It's meant to be used when a bug
@@ -122,8 +116,7 @@ end
 M.create_report = function()
 	local date = os.date('%Y-%m-%d %H:%M:%S')
 
-	utils.try({
-		function()
+	local created_report, err = pcall(function()
 			vim.cmd(
 				'silent !echo "'
 					.. vim.fn.fnameescape('#')
@@ -155,13 +148,11 @@ M.create_report = function()
 					.. utils.doom_report
 			)
 			log.info('Report created at ' .. utils.doom_report)
-		end,
-		utils.catch({
-			function(err)
-				log.error('Error while writing report. Traceback:\n' .. err)
-			end,
-		}),
-	})
+    end)
+
+    if not created_report then
+    	log.error('Error while writing report. Traceback:\n' .. err)
+    end
 end
 
 return M

@@ -60,20 +60,6 @@ M.has_value = function(tabl, val)
 	return false
 end
 
--- try/catch statements, see
--- https://gist.github.com/cwarden/1207556
-M.catch = function(err)
-	return err[1]
-end
-
-M.try = function(block)
-	local status, result = pcall(block[1])
-	if not status then
-		block[2](result)
-	end
-	return result
-end
-
 -- Get current OS, returns 'Other' if the current OS is not recognized
 M.get_os = function()
 	--[[

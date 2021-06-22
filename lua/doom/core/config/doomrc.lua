@@ -16,7 +16,7 @@ log.debug('Loading Doom doomrc module ...')
 M.check_doomrc = function()
 	-- /home/user/.config/doom-nvim/doomrc
 	log.debug('Looking for a doomrc file in Doom root ...')
-	if vim.fn.filereadable(utils.doom_root .. '/doomrc') then
+	if vim.fn.filereadable(utils.doom_root .. '/doomrc') == 1 then
 		return true
 	end
 
@@ -220,18 +220,15 @@ end
 -- default configs
 M.load_doomrc = function()
 	-- /home/user/.config/doom-nvim/doomrc
-	if vim.fn.filereadable(utils.doom_root .. '/doomrc') then
-		utils.try({
-			function()
-				log.debug('Loading the doomrc ...')
-				vim.cmd('luafile ' .. utils.doom_root .. '/doomrc')
-			end,
-			utils.catch({
-				function(_)
-					log.error('Error while loading the doomrc')
-				end,
-			}),
-		})
+	if vim.fn.filereadable(utils.doom_root .. '/doomrc') == 1 then
+		local loaded_doomrc, err = pcall(function()
+			log.debug('Loading the doomrc ...')
+			vim.cmd('luafile ' .. utils.doom_root .. '/doomrc')
+        end)
+
+        if not loaded_doomrc then
+            log.error('Error while loading the doomrc. Traceback:\n' .. err)
+        end
 	else
 		log.warn('No doomrc file found, falling to defaults')
 		default_doomrc_values()
