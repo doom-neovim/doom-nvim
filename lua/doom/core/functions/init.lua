@@ -64,23 +64,23 @@ end
 -- @tparam bool force If doom should force the exiting
 M.quit_doom = function(write, force)
 	local changed_colorscheme, err = pcall(function()
-        log.info('Checking if the colorscheme was changed ...')
-        local target = vim.g.colors_name
-        if target ~= Doom.colorscheme then
-            vim.cmd(
-                'silent !sed -i "s/\''
-                    .. Doom.colorscheme
-                    .. "'/'"
-                    .. target
-                    .. '\'/" $HOME/.config/doom-nvim/doomrc'
-            )
-            log.info('Colorscheme successfully changed to ' .. target)
-        end
-    end)
+		log.info('Checking if the colorscheme was changed ...')
+		local target = vim.g.colors_name
+		if target ~= Doom.colorscheme then
+			vim.cmd(
+				'silent !sed -i "s/\''
+					.. Doom.colorscheme
+					.. "'/'"
+					.. target
+					.. '\'/" $HOME/.config/doom-nvim/doomrc'
+			)
+			log.info('Colorscheme successfully changed to ' .. target)
+		end
+	end)
 
-    if not changed_colorscheme then
-        log.error('Unable to write to the doomrc. Traceback:\n' .. err)
-    end
+	if not changed_colorscheme then
+		log.error('Unable to write to the doomrc. Traceback:\n' .. err)
+	end
 
 	local quit_cmd = ''
 
@@ -102,13 +102,13 @@ end
 -- check_updates checks for plugins updates
 M.check_updates = function()
 	local updated_plugins, err = pcall(function()
-			log.info('Updating the outdated plugins ...')
-			vim.cmd('PackerSync')
-    end)
+		log.info('Updating the outdated plugins ...')
+		vim.cmd('PackerSync')
+	end)
 
-    if not updated_plugins then
-        log.error('Unable to update plugins. Traceback:\n' .. err)
-    end
+	if not updated_plugins then
+		log.error('Unable to update plugins. Traceback:\n' .. err)
+	end
 end
 
 -- create_report creates a markdown report. It's meant to be used when a bug
@@ -117,42 +117,42 @@ M.create_report = function()
 	local date = os.date('%Y-%m-%d %H:%M:%S')
 
 	local created_report, err = pcall(function()
-			vim.cmd(
-				'silent !echo "'
-					.. vim.fn.fnameescape('#')
-					.. ' doom crash report" >> '
-					.. utils.doom_report
-			)
-			vim.cmd(
-				'silent !echo "Report date: '
-					.. date
-					.. '" >> '
-					.. utils.doom_report
-			)
-			vim.cmd(
-				'silent !echo "'
-					.. vim.fn.fnameescape('##')
-					.. ' Begin log dump" >> '
-					.. utils.doom_report
-			)
-			vim.cmd(
-				'silent !cat '
-					.. utils.doom_logs
-					.. ' | grep "$(date +%a %d %b %Y)" >> '
-					.. utils.doom_report
-			)
-			vim.cmd(
-				'silent !echo "'
-					.. vim.fn.fnameescape('##')
-					.. ' End log dump" >> '
-					.. utils.doom_report
-			)
-			log.info('Report created at ' .. utils.doom_report)
-    end)
+		vim.cmd(
+			'silent !echo "'
+				.. vim.fn.fnameescape('#')
+				.. ' doom crash report" >> '
+				.. utils.doom_report
+		)
+		vim.cmd(
+			'silent !echo "Report date: '
+				.. date
+				.. '" >> '
+				.. utils.doom_report
+		)
+		vim.cmd(
+			'silent !echo "'
+				.. vim.fn.fnameescape('##')
+				.. ' Begin log dump" >> '
+				.. utils.doom_report
+		)
+		vim.cmd(
+			'silent !cat '
+				.. utils.doom_logs
+				.. ' | grep "$(date +%a %d %b %Y)" >> '
+				.. utils.doom_report
+		)
+		vim.cmd(
+			'silent !echo "'
+				.. vim.fn.fnameescape('##')
+				.. ' End log dump" >> '
+				.. utils.doom_report
+		)
+		log.info('Report created at ' .. utils.doom_report)
+	end)
 
-    if not created_report then
-    	log.error('Error while writing report. Traceback:\n' .. err)
-    end
+	if not created_report then
+		log.error('Error while writing report. Traceback:\n' .. err)
+	end
 end
 
 return M

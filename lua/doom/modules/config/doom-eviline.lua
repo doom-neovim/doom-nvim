@@ -1,5 +1,5 @@
 return function()
-    local utils = require('doom.utils')
+	local utils = require('doom.utils')
 
 	local bo = vim.bo
 	local gl = require('galaxyline')

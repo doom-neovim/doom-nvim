@@ -224,11 +224,11 @@ M.load_doomrc = function()
 		local loaded_doomrc, err = pcall(function()
 			log.debug('Loading the doomrc ...')
 			vim.cmd('luafile ' .. utils.doom_root .. '/doomrc')
-        end)
+		end)
 
-        if not loaded_doomrc then
-            log.error('Error while loading the doomrc. Traceback:\n' .. err)
-        end
+		if not loaded_doomrc then
+			log.error('Error while loading the doomrc. Traceback:\n' .. err)
+		end
 	else
 		log.warn('No doomrc file found, falling to defaults')
 		default_doomrc_values()
