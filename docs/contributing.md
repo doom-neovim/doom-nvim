@@ -42,16 +42,9 @@ and which code style you should use :heart:
 
 ## Acquire a backtrace from errors
 
-All the errors ocurred in Doom Nvim are saved into a `doom.log` file inside a `logs/`
-directory inside your Doom Nvim root dir (`$HOME/.config/doom-nvim` by default).
+All the errors ocurred in Doom Nvim are saved into a `doom.log` file inside the
+`~/.local/share/nvim/` directory.
 If the logs are very long, please paste it using a [gist].
-
-> **NOTE:** Alternatively you can paste the most recent lines starting with the
-> following if the logs are extremely long.
->
-> [!] - Errors
->
-> [!!!] - Critical errors
 
 ## Create a step-by-step reproduction guide
 
@@ -84,10 +77,9 @@ type of issue and handle the requests.
 
 Doom Nvim follows some code style rules like ones the mentioned below:
 
-- Single quotes instead of double quotes.
+- Single quotes over double quotes.
 - Variable names in `snake_case`, except in the BASH installation script.
-- Function names in `snake_case`, the only exception are the Vimscript functions
-  which does not are from doom itself, e.g. `function ToggleTerm() ... endfunction`.
+- Function names in `snake_case`.
 - [stylua] is used to format lua files with the following configuration:
 
 ```toml
@@ -99,6 +91,16 @@ quote_style = "AutoPreferSingle"
 
 ```
 
+> **NOTE:** use `--config-path /path/to/doom/nvim/stylua.toml` to use doom's
+> stylua configuration.
+
+- [selene] is a blazing-fast modern Lua linter written in Rust which is used for
+  linting doom's source code. We make use of some custom rules so we can be sure
+  that selene will not raise false errors.
+
+> **NOTE:** use `selene .` in doom's root dir and selene will automatically
+> detect the `selene.toml` and `doom.toml` files.
+
 ### Commits & PRs
 
 - Target `develop` instead of `main`.
@@ -106,8 +108,8 @@ quote_style = "AutoPreferSingle"
 
 ### Keybind conventions
 
-- The keybindings should be declared in [config/keybindings](../lua/doom/keybindings.lua),
-  except when they are keybindings of [Lua plugins](../lua/plugins/configs).
+- The keybindings should be declared in [core/keybindings](../lua/doom/core/keybindings/init.lua),
+  except when they are keybindings of [Lua plugins](../lua/doom/modules/config).
 
 ## Submitting pull requests
 
@@ -116,3 +118,4 @@ they work and do not break any of the current code, you can proceed to upload
 your pull request :)
 
 [stylua]: https://github.com/JohnnyMorganz/StyLua
+[selene]: https://github.com/Kampfkarren/selene

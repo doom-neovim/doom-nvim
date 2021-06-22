@@ -4,8 +4,8 @@ Doom Nvim is a port to Neovim of the [Doom Emacs](https://github.com/hlissner/do
 configuration framework for [GNU Emacs](https://www.gnu.org/software/emacs/) adapted
 for all vimmer who want less framework in their framework and the performance of
 a handmade configuration (or better). It can be a base for your own setup or a
-resource for Vim enthusiasts to learn more about our favorite editor and how to
-do X things on it by using Vimscript/Lua.
+resource for Neovim enthusiasts to learn more about our favorite editor and how to
+do X things on it by using Lua.
 
 Doom Nvim is an opinionated collection of reasonable (and optional) defaults with
 a focus on performance (both runtime and startup) and on abstraction-light, readable
@@ -15,6 +15,7 @@ code design, so that there is less between you and Neovim.
 > `:h doom_nvim`.
 
 # Table of Contents
+
 - [Documentation](#documentation)
   - [Getting Started](#getting-started)
   - [Modules](#modules)
@@ -42,7 +43,6 @@ code design, so that there is less between you and Neovim.
 - [Reporting issues](./contributing.md#reporting-issues)
 - [Suggesting features, keybinds and enhancements](./contributing.md#suggesting-features-keybinds-and-enhancements)
 - [Contributing code](./contributing.md#contributing-code)
-
 
 # Community Resources
 

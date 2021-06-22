@@ -55,7 +55,7 @@ including their plugins individually.
     - Use `tree` to disable it
   - [x] [galaxyline.nvim] - galaxyline is a light-weight and Super Fast statusline plugin.
     - Use `statusline` to disable it
-  - [x] [barbar.nvim] - Tabs, as understood by any other editor.
+  - [x] [nvim-bufferline.lua] - Tabs, as understood by any other editor.
     - Use `tabline` to disable it
   - [x] [nvim-toggleterm.lua] - A neovim plugin to persist and toggle multiple terminals during an editing session
     - Use `terminal` to disable it
@@ -98,6 +98,10 @@ including their plugins individually.
     - **NOTE:** do not disable it if you are going to use LSP!
   - [x] [nvim-compe] - Auto completion plugin for nvim that written in Lua.
     - Use `compe` to disable it
+  - [x] [lspsaga.nvim] - A light-weight lsp plugin based on neovim built-in lsp with highly a performant UI.
+    - Use `lspsaga` to disable it
+  - [x] [nvim-lspinstall] - Provides the missing :LspInstall for nvim-lspconfig.
+    - Use `lspinstall` to disable it
 
 ### Files
 
@@ -109,9 +113,9 @@ including their plugins individually.
     - Use `suda` to disable it
   - [x] [format.nvim] - Neovim lua plugin to format the current buffer with external executables.
     - Use `formatter` to disable it
-  - [x] [pears.nvim] - Auto pair plugin for neovim
+  - [x] [nvim-autopairs] - A super powerful autopairs for Neovim.
     - Use `autopairs` to disable it
-  - [x] [indentLine] - A vim plugin to display the indention levels with thin vertical lines
+  - [x] [indent-blankline.nvim] - Indent guides for Neovim
     - Use `indentlines` to disable it
   - [x] [editorconfig-vim] - EditorConfig support
     - Use `editorconfig` to disable it
@@ -188,7 +192,7 @@ disabled_plugins = { 'emmet' }
 [dashboard-nvim]: https://github.com/glepnir/dashboard-nvim
 [nvim-tree.lua]: https://github.com/kyazdani42/nvim-tree.lua
 [galaxyline.nvim]: https://github.com/glepnir/galaxyline.nvim
-[barbar.nvim]: https://github.com/romgrk/barbar.nvim
+[nvim-bufferline.lua]: https://github.com/akinsho/nvim-bufferline.lua
 [nvim-toggleterm.lua]: https://github.com/akinsho/nvim-toggleterm.lua
 [symbols-outline.nvim]: https://github.com/simrat39/symbols-outline.nvim
 [minimap.vim]: https://github.com/wfxr/minimap.vim
@@ -207,11 +211,16 @@ disabled_plugins = { 'emmet' }
 <!-- LSP -->
 
 [nvim-lspconfig]: https://github.com/neovim/nvim-lspconfig
-[nvim-compe]: <!-- Files -->
+[nvim-compe]: https://github.com/hrsh7th/nvim-compe
+[lspsaga.nvim]: https://github.com/glepnir/lspsaga.nvim
+[nvim-lspinstall]: https://github.com/kabouzeid/nvim-lspinstall
+
+<!-- Files -->
+
 [suda.vim]: https://github.com/lambdalisue/suda.vim
 [format.nvim]: https://github.com/lukas-reineke/format.nvim
-[pears.nvim]: https://github.com/steelsojka/pears.nvim
-[indentline]: https://github.com/Yggdroot/indentLine
+[nvim-autopairs]: https://github.com/windwp/nvim-autopairs
+[indent-blankline.nvim]: https://github.com/lukas-reineke/indent-blankline.nvim
 [editorconfig-vim]: https://github.com/editorconfig/editorconfig-vim
 [kommentary]: https://github.com/b3nj5m1n/kommentary
 
