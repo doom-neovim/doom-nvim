@@ -15,5 +15,4 @@ Herein lies all the Doom utility functions and variables.
 - `create_augroups` - Autocommands wrapper for Lua.
 - `is_empty` - Check if a string is empty or nil.
 - `has_value` - Search if a table have a value.
-- `try` and `catch` - Try/Catch for error handling.
 - `get_os` - Get the current OS using LuaJIT.
