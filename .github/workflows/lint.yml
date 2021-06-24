@@ -1,0 +1,22 @@
+name: lint
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  selene:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup selene
+        run: |
+          curl -LO https://github.com/Kampfkarren/selene/releases/download/0.12.1/selene-0.12.1-linux.zip
+          unzip selene-0.12.1-linux.zip
+          rm selene-0.12.1-linux.zip && chmod +x selene
+      - name: Lint doom source
+        run: |
+          ./selene .
+      
