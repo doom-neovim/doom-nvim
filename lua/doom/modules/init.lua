@@ -251,10 +251,6 @@ packer.startup(function(use)
 				'ray-x/lsp_signature.nvim',
 				config = require('doom.modules.config.doom-lsp-signature'),
 			},
-			{
-				'onsails/lspkind-nvim',
-				config = require('doom.modules.config.doom-lspkind'),
-			},
 			{ 'norcalli/snippets.nvim' },
 		},
 
@@ -322,6 +318,7 @@ packer.startup(function(use)
 		disable = (disabled_files and true or disabled_autopairs),
 		event = 'InsertEnter',
 	})
+
 
 	-- Indent Lines
 	local disabled_indent_lines = utils.has_value(
