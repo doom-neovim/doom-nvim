@@ -1,4 +1,19 @@
 return function()
+	-- Load Doomrc if it is not loaded yet to avoid errors at startup
+	-- with lazy-loading.
+	--
+	-- TODO: change this behavior, we should ditch the doomrc to a fragmented
+	-- and better solution for putting user configurations.
+	if not Doom then
+		local utils = require('doom.utils')
+
+		-- Do the same as `doom.core.config.doomrc` so we can use
+		-- all the debugging levels when sourcing that module
+		if vim.fn.filereadable(utils.doom_root .. '/doomrc') then
+			vim.cmd('silent! luafile ' .. utils.doom_root .. '/doomrc')
+		end
+	end
+
 	vim.g.dashboard_session_directory = require('doom.utils').doom_root
 		.. '/sessions'
 	vim.g.dashboard_default_executive = 'telescope'
