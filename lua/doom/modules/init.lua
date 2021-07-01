@@ -229,15 +229,9 @@ packer.startup(function(use)
 	---     Completion     ---
 	-----]]------------[[-----
 	-- Built-in LSP Config
-	-- NOTE: It should not be disabled if you are going to use LSP!
-	local disabled_lspconfig = utils.has_value(
-		Doom.disabled_plugins,
-		'lspconfig'
-	)
 	use({
 		'neovim/nvim-lspconfig',
 		config = require('doom.modules.config.doom-lspconfig'),
-		disable = (disabled_lsp and true or disabled_lspconfig),
 		event = 'ColorScheme',
 	})
 
