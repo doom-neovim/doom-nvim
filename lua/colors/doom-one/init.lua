@@ -331,9 +331,9 @@ high_link('Todo', 'TextWarningBold')
 
 local main_syntax = {
 	Tag = { fg = tag, gui = 'bold' },
-	Link = { fg = tag, sp = 'undercurl' },
-	URL = { fg = tag, sp = 'undercurl' },
-	Underlined = { fg = tag, sp = 'underline' },
+	Link = { fg = tag, gui = 'undercurl' },
+	URL = { fg = tag, gui = 'undercurl' },
+	Underlined = { fg = tag, gui = 'underline' },
 
 	Comment = {
 		fg = base5,
@@ -438,6 +438,18 @@ apply_highlight(diff)
 
 -- }}}
 
+-- Markdown {{{
+local markdown = {
+	markdownCode = { bg = bg_highlight },
+	markdownCodeBlock = { bg = bg_highlight },
+	markdownH1 = { gui = 'bold' },
+	markdownH2 = { gui = 'bold' },
+	markdownLinkText = { gui = 'underline' },
+}
+
+apply_highlight(markdown)
+--}}}
+
 -- Plugins {{{
 
 -- barbar.nvim {{{
@@ -522,12 +534,12 @@ local nvim_tree = {
 	NvimTreeFolderName = { fg = light_bg and base9 or blue, gui = 'bold' },
 	NvimTreeRootFolder = { fg = green },
 	NvimTreeEmptyFolderName = { fg = fg_alt, gui = 'bold' },
-	NvimTreeSymlink = { fg = fg, sp = 'underline' },
+	NvimTreeSymlink = { fg = fg, gui = 'underline' },
 	NvimTreeExecFile = { fg = green, gui = 'bold' },
 	NvimTreeImageFile = { fg = light_bg and orange or blue },
 	NvimTreeOpenedFile = { fg = fg_alt },
-	NvimTreeSpecialFile = { fg = fg, sp = 'underline' },
-	NvimTreeMarkdownFile = { fg = fg, sp = 'underline' },
+	NvimTreeSpecialFile = { fg = fg, gui = 'underline' },
+	NvimTreeMarkdownFile = { fg = fg, gui = 'underline' },
 }
 
 apply_highlight(nvim_tree)
@@ -576,10 +588,10 @@ apply_highlight(whichkey)
 -- LSP {{{
 
 local msg_underline = {
-	ErrorMsgUnderline = { fg = red, sp = 'undercurl' },
-	WarningMsgUnderline = { fg = yellow, sp = 'undercurl' },
-	MoreMsgUnderline = { fg = blue, sp = 'undercurl' },
-	MsgUnderline = { fg = green, sp = 'undercurl' },
+	ErrorMsgUnderline = { fg = red, gui = 'undercurl' },
+	WarningMsgUnderline = { fg = yellow, gui = 'undercurl' },
+	MoreMsgUnderline = { fg = blue, gui = 'undercurl' },
+	MsgUnderline = { fg = green, gui = 'undercurl' },
 }
 
 apply_highlight(msg_underline)
