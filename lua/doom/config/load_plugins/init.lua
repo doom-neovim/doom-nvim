@@ -12,7 +12,7 @@
 local conditional_plugins = {
 
 	-- Format: ['file-to-require'] = 'plugin-to-check' OR ['file-to-require'] = { 'plugins', 'to', 'check' }
-	['nvim-pears'] = 'pears.nvim',
+	['autopairs'] = 'nvim-autopairs',
 	['lsp'] = { 'nvim-lspconfig', 'nvim-lspinstall' },
 	['nvim-compe'] = 'nvim-compe',
 	['nvim-colorizer'] = 'nvim-colorizer.lua',

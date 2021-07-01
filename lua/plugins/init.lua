@@ -207,7 +207,7 @@ return packer.startup(function()
 	-- can be disabled to use your own autopairs
 	local disabled_autopairs = Has_value(Doom.disabled_plugins, 'autopairs')
 	use({
-		'steelsojka/pears.nvim',
+		'windwp/nvim-autopairs',
 		disable = (disabled_files and true or disabled_autopairs),
 	})
 
