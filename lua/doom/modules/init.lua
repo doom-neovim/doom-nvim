@@ -319,7 +319,6 @@ packer.startup(function(use)
 		event = 'InsertEnter',
 	})
 
-
 	-- Indent Lines
 	local disabled_indent_lines = utils.has_value(
 		Doom.disabled_plugins,
