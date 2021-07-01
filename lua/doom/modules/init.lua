@@ -245,10 +245,6 @@ packer.startup(function(use)
 				'ray-x/lsp_signature.nvim',
 				config = require('doom.modules.config.doom-lsp-signature'),
 			},
-			{
-				'onsails/lspkind-nvim',
-				config = require('doom.modules.config.doom-lspkind'),
-			},
 			{ 'norcalli/snippets.nvim' },
 		},
 

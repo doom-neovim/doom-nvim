@@ -67,7 +67,7 @@ then
 		vim.fn['compe#scroll']({ delta = '-4' }),
 		opts
 	)
-	utils.map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definitionA
+	utils.map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definition
 	utils.map('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts) -- gr: go to reference
 	utils.map('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts) -- gi: buf implementation
 	utils.map('n', 'ca', ':Lspsaga code_action<CR>', opts) -- ca: code actions
