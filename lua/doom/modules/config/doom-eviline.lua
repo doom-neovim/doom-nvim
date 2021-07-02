@@ -216,14 +216,17 @@ return function()
 	gls.right[3] = {
 		ShowLspClientOrFileType = {
 			provider = function()
-			    -- Check if there's a LSP client running to avoid redundant
-			    -- statusline elements
-			    if lsp.get_lsp_client() ~= 'No Active Lsp' then
-			        return ' ' .. lsp.get_lsp_client():gsub('^%l', string.upper)
-			    else
-			        -- Use the filetype instead and capitalize it
-			        return ' ' .. (vim.bo.filetype:gsub('^%l', string.upper))
-			    end
+				-- Check if there's a LSP client running to avoid redundant
+				-- statusline elements
+				if lsp.get_lsp_client() ~= 'No Active Lsp' then
+					return ' ' .. lsp.get_lsp_client():gsub(
+						'^%l',
+						string.upper
+					)
+				else
+					-- Use the filetype instead and capitalize it
+					return ' ' .. (vim.bo.filetype:gsub('^%l', string.upper))
+				end
 			end,
 			condition = function()
 				local tbl = { ['dashboard'] = true, [''] = true }
@@ -233,9 +236,8 @@ return function()
 				return true
 			end,
 			highlight = { get_color('blue'), get_color('bg') },
-            separator = '  ',
+			separator = '  ',
 			separator_highlight = { get_color('bg'), get_color('bg') },
-
 		},
 	}
 	gls.right[4] = {
