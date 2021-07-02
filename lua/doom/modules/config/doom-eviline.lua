@@ -24,9 +24,9 @@ return function()
 	local function get_color(name)
 		return function()
 			local colors = {
-				bg = '#282c34',
+				bg = '#23272e',
 				fg = '#bbc2cf',
-				section_bg = '#3E4556',
+				section_bg = '#5B6268',
 				yellow = '#ECBE7B',
 				cyan = '#46D9FF',
 				green = '#98be65',
@@ -41,9 +41,9 @@ return function()
 				and vim.opt.background:get() == 'light'
 			then
 				colors = {
-					bg = '#fafafa',
+					bg = '#c6c7c7',
 					fg = '#383a42',
-					section_bg = '#c6c7c7',
+					fg_alt = '#9ca0a4',
 					yellow = '#986801',
 					cyan = '#0184bc',
 					green = '#50a14f',
@@ -53,36 +53,27 @@ return function()
 					red = '#e45649',
 				}
 			end
-
 			return colors[name]
 		end
 	end
 
-	-- TODO: merge dashboard functions to get only one function for both cases
-
-	-- If current buffer is not a dashboard
-	local function is_not_dashboard()
-		local buftype = buffer.get_buffer_filetype()
-		if buftype == 'DASHBOARD' then
-			return false
-		else
-			return true
-		end
-	end
-
-	-- If current buffer is a dashboard
 	local function is_dashboard()
 		local buftype = buffer.get_buffer_filetype()
 		if buftype == 'DASHBOARD' then
 			return true
-		else
-			return false
+		end
+	end
+
+	local function is_not_dashboard()
+		local buftype = buffer.get_buffer_filetype()
+		if buftype ~= 'DASHBOARD' then
+			return true
 		end
 	end
 
 	-- Left side
 	gls.left[1] = {
-		RainbowRed = {
+		RainbowLeft = {
 			provider = function()
 				return '▊ '
 			end,
@@ -119,18 +110,21 @@ return function()
 				vim.api.nvim_command(
 					'hi GalaxyViMode guifg=' .. mode_color[vim.fn.mode()]
 				)
-				return ' Doom '
+				return '  '
 			end,
 			highlight = { get_color('red'), get_color('bg'), 'bold' },
 		},
 	}
 	gls.left[3] = {
-		Separator = {
-			provider = function()
-				return ' '
-			end,
+		FileSize = {
+			provider = 'FileSize',
 			condition = condition.buffer_not_empty and is_not_dashboard,
-			highlight = { get_color('bg'), get_color('section_bg') },
+			highlight = {
+				get_color('fg'),
+				get_color('bg'),
+			},
+			separator = ' ',
+			separator_highlight = { get_color('bg'), get_color('bg') },
 		},
 	}
 	gls.left[4] = {
@@ -139,7 +133,7 @@ return function()
 			condition = condition.buffer_not_empty and is_not_dashboard,
 			highlight = {
 				require('galaxyline.provider_fileinfo').get_file_icon_color,
-				get_color('section_bg'),
+				get_color('bg'),
 			},
 		},
 	}
@@ -147,112 +141,58 @@ return function()
 		FileName = {
 			provider = 'FileName',
 			condition = condition.buffer_not_empty and is_not_dashboard,
-			highlight = { get_color('fg'), get_color('section_bg') },
-			separator = '',
-			separator_highlight = { get_color('section_bg'), get_color('bg') },
+			highlight = { get_color('fg'), get_color('bg'), 'bold' },
+			separator = ' ',
+			separator_highlight = { get_color('bg'), get_color('bg') },
 		},
 	}
 	gls.left[6] = {
-		GitIcon = {
+		LineInfo = {
 			provider = function()
-				return '  '
+				local line = vim.fn.line('.')
+				local column = vim.fn.col('.')
+				return string.format('%3d : %2d  ', line, column)
 			end,
-			condition = condition.check_git_workspace and is_not_dashboard,
-			highlight = { get_color('red'), get_color('bg') },
+			condition = is_not_dashboard,
+			highlight = { get_color('fg_alt'), get_color('bg') },
 		},
 	}
 	gls.left[7] = {
-		GitBranch = {
-			provider = 'GitBranch',
-			condition = condition.check_git_workspace and is_not_dashboard,
-			highlight = { get_color('fg'), get_color('bg') },
-			separator = ' ',
-			separator_highlight = { get_color('section_bg'), get_color('bg') },
+		LinePercent = {
+			provider = 'LinePercent',
+			condition = is_not_dashboard,
+			highlight = { get_color('fg_alt'), get_color('bg') },
+			separator = '  ',
+			separator_highlight = { get_color('bg'), get_color('bg') },
 		},
 	}
 	gls.left[8] = {
-		DiffAdd = {
-			provider = 'DiffAdd',
-			condition = condition.hide_in_width and is_not_dashboard,
-			icon = ' ',
-			highlight = { get_color('green'), get_color('bg') },
-		},
-	}
-	gls.left[9] = {
-		DiffModified = {
-			provider = 'DiffModified',
-			condition = condition.hide_in_width and is_not_dashboard,
-			icon = ' ',
-			highlight = { get_color('orange'), get_color('bg') },
-		},
-	}
-	gls.left[10] = {
-		DiffRemove = {
-			provider = 'DiffRemove',
-			condition = condition.hide_in_width and is_not_dashboard,
-			icon = ' ',
-			highlight = { get_color('red'), get_color('bg') },
-		},
-	}
-	gls.left[11] = {
-		LeftEnd = {
-			provider = function()
-				return ''
-			end,
-			condition = is_not_dashboard,
-			highlight = { get_color('section_bg'), get_color('bg') },
-		},
-	}
-	gls.left[12] = {
 		DiagnosticError = {
 			provider = 'DiagnosticError',
 			condition = is_not_dashboard,
 			icon = '   ',
-			highlight = { get_color('red'), get_color('section_bg') },
+			highlight = { get_color('red'), get_color('bg') },
 		},
 	}
-	gls.left[13] = {
+	gls.left[9] = {
 		DiagnosticWarn = {
 			provider = 'DiagnosticWarn',
 			condition = is_not_dashboard,
 			icon = '   ',
-			highlight = { get_color('orange'), get_color('section_bg') },
+			highlight = { get_color('orange'), get_color('bg') },
 		},
 	}
-	gls.left[14] = {
+	gls.left[10] = {
 		DiagnosticInfo = {
 			provider = 'DiagnosticInfo',
 			condition = is_not_dashboard,
 			icon = '   ',
-			highlight = { get_color('blue'), get_color('section_bg') },
-			separator = '',
-			separator_highlight = { get_color('section_bg'), get_color('bg') },
+			highlight = { get_color('blue'), get_color('bg') },
 		},
 	}
 
-	-- Right side
-	-- alternate separator colors if the current buffer is a dashboard
-	gls.right[1] = {
-		RightStart = {
-			provider = function()
-				return ''
-			end,
-			condition = is_not_dashboard,
-			highlight = { get_color('section_bg'), get_color('bg') },
-		},
-	}
-	gls.right[2] = {
-		FileFormat = {
-			provider = function()
-				return bo.filetype
-			end,
-			condition = is_not_dashboard,
-			highlight = { get_color('fg'), get_color('section_bg') },
-			separator = ' ',
-			separator_highlight = { get_color('bg'), get_color('section_bg') },
-		},
-	}
-	gls.right[3] = {
+	-- Mid side
+	gls.mid[1] = {
 		ShowLspClient = {
 			provider = 'GetLspClient',
 			condition = function()
@@ -263,57 +203,112 @@ return function()
 				return true
 			end,
 			icon = 'LSP: ',
-			highlight = { get_color('fg'), get_color('section_bg') },
-			separator = ' | ',
-			separator_highlight = { get_color('bg'), get_color('section_bg') },
+			highlight = { get_color('blue'), get_color('bg') },
 		},
 	}
-	gls.right[4] = {
+
+	-- Right side
+	-- alternate separator colors if the current buffer is a dashboard
+	gls.right[1] = {
+		FileFormat = {
+			provider = 'FileFormat',
+			condition = condition.hide_in_width and is_not_dashboard,
+			highlight = { get_color('fg'), get_color('bg') },
+			separator = '  ',
+			separator_highlight = { get_color('bg'), get_color('bg') },
+		},
+	}
+	gls.right[2] = {
 		FileEncode = {
 			provider = 'FileEncode',
 			condition = condition.hide_in_width and is_not_dashboard,
-			highlight = { get_color('fg'), get_color('section_bg') },
-			separator = ' |',
-			separator_highlight = { get_color('bg'), get_color('section_bg') },
+			highlight = { get_color('fg'), get_color('bg') },
+			separator = ' ',
+			separator_highlight = { get_color('bg'), get_color('bg') },
+		},
+	}
+	gls.right[3] = {
+		FileType = {
+			provider = function()
+				return bo.filetype
+			end,
+			condition = is_not_dashboard,
+			highlight = { get_color('blue'), get_color('bg'), 'bold' },
+			separator = '  ',
+			separator_highlight = { get_color('bg'), get_color('bg') },
+		},
+	}
+	gls.right[4] = {
+		GitIcon = {
+			provider = function()
+				return '  '
+			end,
+			condition = condition.check_git_workspace,
+			highlight = { get_color('red'), get_color('bg') },
+			separator = ' ',
+			separator_highlight = { get_color('bg'), get_color('bg') },
 		},
 	}
 	gls.right[5] = {
-		LineInfo = {
-			provider = 'LineColumn',
-			condition = is_not_dashboard,
-			highlight = { get_color('fg'), get_color('section_bg') },
-			separator = ' | ',
-			separator_highlight = { get_color('bg'), get_color('section_bg') },
+		GitBranch = {
+			provider = 'GitBranch',
+			condition = condition.check_git_workspace,
+			highlight = { get_color('green'), get_color('bg'), 'bold' },
 		},
 	}
+	gls.right[6] = {
+		DiffSeparator = {
+			provider = function()
+				return '   '
+			end,
+			condition = is_not_dashboard,
+			highlight = { get_color('bg'), get_color('bg') },
+		},
+	}
+	gls.right[7] = {
+		DiffAdd = {
+			provider = 'DiffAdd',
+			condition = condition.hide_in_width and is_not_dashboard,
+			icon = ' ',
+			highlight = { get_color('green'), get_color('bg') },
+		},
+	}
+	gls.right[8] = {
+		DiffModified = {
+			provider = 'DiffModified',
+			condition = condition.hide_in_width and is_not_dashboard,
+			icon = ' ',
+			highlight = { get_color('orange'), get_color('bg') },
+		},
+	}
+	gls.right[9] = {
+		DiffRemove = {
+			provider = 'DiffRemove',
+			condition = condition.hide_in_width and is_not_dashboard,
+			icon = ' ',
+			highlight = { get_color('red'), get_color('bg') },
+		},
+	}
+
 	-- If the current buffer is the dashboard then show Doom Nvim version
 	if is_dashboard then
-		gls.right[6] = {
+		gls.right[10] = {
 			DoomVersion = {
 				provider = function()
-					return 'DOOM v' .. utils.doom_version
+					return 'DOOM v' .. utils.doom_version .. ' '
 				end,
 				condition = is_dashboard,
 				highlight = { get_color('blue'), get_color('bg'), 'bold' },
-				separator = ' ',
+				separator = '  ',
 				separator_highlight = {
-					get_color('section_bg'),
+					get_color('bg'),
 					get_color('bg'),
 				},
 			},
 		}
-		gls.right[7] = {
-			Space = {
-				provider = function()
-					return ' '
-				end,
-				condition = is_dashboard,
-				highlight = { get_color('section_bg'), get_color('bg') },
-			},
-		}
 	end
-	gls.right[8] = {
-		RainbowBlue = {
+	gls.right[11] = {
+		RainbowRight = {
 			provider = function()
 				return ' ▊'
 			end,
@@ -323,12 +318,18 @@ return function()
 
 	-- Short status line
 	gls.short_line_left[1] = {
+		ShortRainbowLeft = {
+			provider = function()
+				return '▊ '
+			end,
+			highlight = { get_color('blue'), get_color('bg') },
+		},
+	}
+	gls.short_line_left[2] = {
 		BufferType = {
 			provider = 'FileTypeName',
 			condition = is_not_dashboard,
-			highlight = { get_color('fg'), get_color('section_bg') },
-			separator = '',
-			separator_highlight = { get_color('section_bg'), get_color('bg') },
+			highlight = { get_color('fg'), get_color('bg') },
 		},
 	}
 
@@ -336,9 +337,15 @@ return function()
 		BufferIcon = {
 			provider = 'BufferIcon',
 			condition = is_not_dashboard,
-			highlight = { get_color('yellow'), get_color('section_bg') },
-			separator = '',
-			separator_highlight = { get_color('section_bg'), get_color('bg') },
+			highlight = { get_color('yellow'), get_color('bg') },
+		},
+	}
+	gls.short_line_right[2] = {
+		ShortRainbowRight = {
+			provider = function()
+				return ' ▊'
+			end,
+			highlight = { get_color('blue'), get_color('bg') },
 		},
 	}
 end
