@@ -62,7 +62,7 @@ end
 
 -- Enable auto comment
 if not Doom.auto_comment then
-    vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
+	vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
 end
 
 -- Enable highlight on yank

@@ -35,7 +35,7 @@ end
 ----- Start Doom and run packer.nvim
 -- Search for a configuration file (doomrc)
 if rc.check_doomrc() then
-    rc.load_doomrc()
+	rc.load_doomrc()
 end
 
 -- Load the default Neovim settings, e.g. tabs width

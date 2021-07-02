@@ -33,17 +33,17 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
 	---- Doom Configurations ------------------------
 	-------------------------------------------------
 	vim.defer_fn(function()
-	    -- Load Doom core
-        require('doom.core')
+		-- Load Doom core
+		require('doom.core')
 
-        -- If the current buffer name is empty then trigger Dashboard
-        if vim.api.nvim_buf_get_name(0):len() == 0 then
-            vim.cmd('Dashboard')
-        end
+		-- If the current buffer name is empty then trigger Dashboard
+		if vim.api.nvim_buf_get_name(0):len() == 0 then
+			vim.cmd('Dashboard')
+		end
 
-	    vim.opt.shadafile = ''
-	    vim.defer_fn(function()
-		    vim.cmd([[
+		vim.opt.shadafile = ''
+		vim.defer_fn(function()
+			vim.cmd([[
                 rshada!
                 doautocmd BufRead
                 syntax on
@@ -52,7 +52,7 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
                 PackerLoad nvim-treesitter
                 silent! bufdo e
             ]])
-	    end, 15)
+		end, 15)
 	end, 0)
 
 	async:close()
