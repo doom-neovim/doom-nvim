@@ -20,10 +20,10 @@ return function()
 			layout_strategy = 'horizontal',
 			prompt_prefix = '> ',
 			layout_config = {
-			    prompt_position = 'bottom',
-			    horizontal = {
-    				mirror = false,
-    				preview_width = 0.6,
+				prompt_position = 'bottom',
+				horizontal = {
+					mirror = false,
+					preview_width = 0.6,
 				},
 			},
 			file_sorter = require('telescope.sorters').get_fuzzy_file,
