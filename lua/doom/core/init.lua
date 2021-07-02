@@ -2,7 +2,7 @@
 --- also loads ui, doomrc modules
 --- and the packer setup internally
 require('doom.core.config')
--- Doom aeybindings
+-- Doom keybindings
 require('doom.core.keybindings')
 -- Doom autocommands
 require('doom.core.autocmds')
