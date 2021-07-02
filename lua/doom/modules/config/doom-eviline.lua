@@ -3,6 +3,8 @@ return function()
 
 	local bo = vim.bo
 	local gl = require('galaxyline')
+	local lsp = require('galaxyline.provider_lsp')
+	local file_info = require('galaxyline.provider_fileinfo')
 	local buffer = require('galaxyline.provider_buffer')
 	local condition = require('galaxyline.condition')
 
@@ -191,22 +193,6 @@ return function()
 		},
 	}
 
-	-- Mid side
-	gls.mid[1] = {
-		ShowLspClient = {
-			provider = 'GetLspClient',
-			condition = function()
-				local tbl = { ['dashboard'] = true, [''] = true }
-				if tbl[bo.filetype] then
-					return false
-				end
-				return true
-			end,
-			icon = 'LSP: ',
-			highlight = { get_color('blue'), get_color('bg') },
-		},
-	}
-
 	-- Right side
 	-- alternate separator colors if the current buffer is a dashboard
 	gls.right[1] = {
@@ -228,14 +214,28 @@ return function()
 		},
 	}
 	gls.right[3] = {
-		FileType = {
+		ShowLspClientOrFileType = {
 			provider = function()
-				return bo.filetype
+			    -- Check if there's a LSP client running to avoid redundant
+			    -- statusline elements
+			    if lsp.get_lsp_client() ~= 'No Active Lsp' then
+			        return ' ' .. lsp.get_lsp_client():gsub('^%l', string.upper)
+			    else
+			        -- Use the filetype instead and capitalize it
+			        return ' ' .. (vim.bo.filetype:gsub('^%l', string.upper))
+			    end
 			end,
-			condition = is_not_dashboard,
-			highlight = { get_color('blue'), get_color('bg'), 'bold' },
-			separator = '  ',
+			condition = function()
+				local tbl = { ['dashboard'] = true, [''] = true }
+				if tbl[bo.filetype] then
+					return false
+				end
+				return true
+			end,
+			highlight = { get_color('blue'), get_color('bg') },
+            separator = '  ',
 			separator_highlight = { get_color('bg'), get_color('bg') },
+
 		},
 	}
 	gls.right[4] = {
