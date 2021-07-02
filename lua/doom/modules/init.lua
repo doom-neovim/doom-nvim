@@ -186,7 +186,7 @@ packer.startup(function(use)
 	use({
 		'folke/which-key.nvim',
 		config = require('doom.modules.config.doom-whichkey'),
-		event = 'VimEnter',
+		event = 'BufWinEnter',
 	})
 
 	-- Distraction free environment
