@@ -36,6 +36,7 @@ if Doom.relative_num then
 		'*',
 		'if &nu | set rnu | endif',
 	})
+else
 	table.insert(autocmds['doom_core'], {
 		'BufLeave,WinEnter',
 		'*',
@@ -61,13 +62,7 @@ end
 
 -- Enable auto comment
 if not Doom.auto_comment then
-	table.insert(autocmds['doom_core'], {
-		{
-			'BufEnter',
-			'*',
-			'setlocal formatoptions-=c formatoptions-=r formatoptions-=o',
-		},
-	})
+    vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
 end
 
 -- Enable highlight on yank
@@ -102,12 +97,6 @@ if Doom.preserve_edit_pos then
             endif
         ]],
 	})
-
-	vim.cmd([[
-        if line("'\"") > 1 && line("'\"") <= line("$") |
-            exe "normal! g'\"" |
-        endif
-    ]])
 end
 
 -- Create augroups

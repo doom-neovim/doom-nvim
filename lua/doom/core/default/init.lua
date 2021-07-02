@@ -30,8 +30,8 @@ M.load_default_options = function()
 	vim.opt.hlsearch = true
 	vim.opt.laststatus = 2
 	vim.opt.backspace = { 'indent', 'eol', 'start' }
-	vim.opt.updatetime = 100
-	vim.opt.timeoutlen = 200
+	vim.opt.updatetime = 200
+	vim.opt.timeoutlen = 500
 	vim.opt.completeopt = {
 		'menu',
 		'menuone',
@@ -47,6 +47,8 @@ M.load_default_options = function()
 	-- Buffer options
 	vim.opt.autoindent = true
 	vim.opt.smartindent = true
+	vim.opt.copyindent = true
+	vim.opt.preserveindent = true
 
 	-- set Gui Fonts
 	vim.opt.guifont = Doom.guifont .. ':h' .. Doom.guifont_size

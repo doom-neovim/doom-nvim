@@ -34,22 +34,18 @@ end
 
 ----- Start Doom and run packer.nvim
 -- Search for a configuration file (doomrc)
-local doomrc_exists = rc.check_doomrc()
-if doomrc_exists then
-	rc.load_doomrc()
+if rc.check_doomrc() then
+    rc.load_doomrc()
 end
-
--- Set which separator should be used for paths, unused at the moment
--- Which_os()
 
 -- Load the default Neovim settings, e.g. tabs width
 default.load_default_options()
-
--- Load packer.nvim and load plugins settings
-require('doom.modules')
-
 -- Load the user-defined settings (global variables, autocmds, mappings)
 default.custom_options()
+-- Load packer.nvim and load plugins settings
+require('doom.modules')
+-- Load UI settings
+require('doom.core.config.ui')
 
 if Doom.check_updates then
 	functions.check_updates()

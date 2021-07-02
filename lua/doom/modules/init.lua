@@ -58,10 +58,10 @@ packer.startup(function(use)
 	)
 	use({
 		'nvim-treesitter/nvim-treesitter',
+		opt = true,
 		run = ':TSUpdate',
 		config = require('doom.modules.config.doom-treesitter'),
 		disable = (disabled_files and true or disabled_treesitter),
-		event = 'BufEnter',
 	})
 
 	-- Sessions
@@ -95,11 +95,17 @@ packer.startup(function(use)
 		event = 'TabNewEntered',
 	})
 
+	-- Development icons
+	use({
+		'kyazdani42/nvim-web-devicons',
+		module = 'nvim-web-devicons',
+	})
+
 	-- File tree
 	local disabled_tree = utils.has_value(Doom.disabled_plugins, 'tree')
 	use({
 		'kyazdani42/nvim-tree.lua',
-		requires = { 'kyazdani42/nvim-web-devicons' },
+		requires = 'nvim-web-devicons',
 		config = require('doom.modules.config.doom-tree'),
 		disable = disabled_tree,
 		cmd = {
@@ -199,7 +205,11 @@ packer.startup(function(use)
 	use({
 		'nvim-telescope/telescope.nvim',
 		cmd = 'Telescope',
-		requires = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } },
+		module = 'telescope',
+		requires = {
+			{ 'nvim-lua/popup.nvim' },
+			{ 'nvim-lua/plenary.nvim' },
+		},
 		config = require('doom.modules.config.doom-telescope'),
 	})
 
@@ -213,7 +223,8 @@ packer.startup(function(use)
 		'lewis6991/gitsigns.nvim',
 		config = require('doom.modules.config.doom-gitsigns'),
 		disable = (disabled_git and true or disabled_gitsigns),
-		event = 'ColorScheme',
+		requires = { 'nvim-lua/plenary.nvim' },
+		event = 'BufRead',
 	})
 
 	-- LazyGit integration
@@ -245,7 +256,6 @@ packer.startup(function(use)
 				'ray-x/lsp_signature.nvim',
 				config = require('doom.modules.config.doom-lsp-signature'),
 			},
-			{ 'norcalli/snippets.nvim' },
 		},
 
 		config = require('doom.modules.config.doom-compe'),
@@ -253,6 +263,10 @@ packer.startup(function(use)
 		opt = true,
 		after = 'nvim-lspconfig',
 	})
+
+	-- Snippets
+	local disabled_snippets = utils.has_value(Doom.disabled_plugins, 'snippets')
+	use({ 'norcalli/snippets.nvim', after = 'nvim-compe' })
 
 	-- install lsp saga
 	local disabled_lspsaga = utils.has_value(Doom.disabled_plugins, 'lspsaga')
@@ -297,7 +311,7 @@ packer.startup(function(use)
 		'lukas-reineke/format.nvim',
 		config = require('doom.modules.config.doom-format'),
 		disable = (disabled_files and true or disabled_formatter),
-		event = 'BufEnter',
+		cmd = { 'Format', 'FormatWrite' },
 	})
 
 	-- Autopairs
@@ -371,9 +385,12 @@ packer.startup(function(use)
 		'restclient'
 	)
 	use({
-		'bayne/vim-dot-http',
+		'NTBBloodbath/rest.nvim',
+		config = function()
+			require('rest-nvim').setup()
+		end,
 		disable = (disabled_web and true or disabled_restclient),
-		cmd = 'DotHttp',
+		event = 'BufEnter',
 	})
 
 	-- Emmet plugin

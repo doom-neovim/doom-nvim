@@ -1,6 +1,18 @@
 return function()
-	local wk = require('which-key')
 	local utils = require('doom.utils')
+	-- Load Doomrc if it is not loaded yet to avoid errors at startup
+	-- with lazy-loading.
+	--
+	-- TODO: change this behavior, we should ditch the doomrc to a fragmented
+	-- and better solution for putting user configurations.
+	if not Doom then
+	    -- Do the same as `doom.core.config.doomrc` so we can use
+		-- all the debugging levels when sourcing that module
+		if vim.fn.filereadable(utils.doom_root .. '/doomrc') then
+			vim.cmd('silent! luafile ' .. utils.doom_root .. '/doomrc')
+		end
+	end
+	local wk = require('which-key')
 
 	----- WhichKey setup ------------------------
 	---------------------------------------------
@@ -30,7 +42,7 @@ return function()
 			['zf'] = 'Create fold',
 			['!'] = 'Filter though external program',
 			-- ['v'] = 'Visual Character Mode',
-			gc = 'Comments',
+			-- gc = 'Comments',
 		},
 		icons = {
 			breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
@@ -43,10 +55,9 @@ return function()
 		layout = {
 			height = { min = 1, max = 10 }, -- min and max height of the columns
 		},
-		hidden = { '<silent>', '^:', '^ ' }, -- hide mapping boilerplate
+		hidden = { '<silent>', '<cmd>', '<Plug>', 'call', 'lua', '^:', '^ ' }, -- hide mapping boilerplate
 		show_help = true, -- show help message on the command line when the popup is visible
-		triggers = { '<leader>' }, -- automatically setup triggers
-		-- triggers = {"<leader>"} -- or specifiy a list manually
+		triggers = 'auto', -- automatically setup triggers
 	})
 
 	----- WhichKey binds ------------------------
