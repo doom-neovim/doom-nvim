@@ -14,7 +14,7 @@ local autocmds = {
 		-- Compile new plugins changes at save
 		{
 			'BufWritePost',
-			'init.lua,doomrc',
+			'*/doom-*.lua,doomrc',
 			'PackerCompile profile=true',
 		},
 	},
