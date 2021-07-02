@@ -14,24 +14,24 @@ return function()
 				'--column',
 				'--smart-case',
 			},
-			prompt_position = 'bottom',
-			prompt_prefix = '>',
 			initial_mode = 'insert',
 			selection_strategy = 'reset',
 			sorting_strategy = 'descending',
 			layout_strategy = 'horizontal',
-			layout_defaults = {
-				-- TODO add builtin options.
+			prompt_prefix = '> ',
+			layout_config = {
+			    prompt_position = 'bottom',
+			    horizontal = {
+    				mirror = false,
+    				preview_width = 0.6,
+				},
 			},
 			file_sorter = require('telescope.sorters').get_fuzzy_file,
 			file_ignore_patterns = {},
 			generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
 			shorten_path = true,
 			winblend = 0,
-			width = 0.75,
-			preview_cutoff = 80,
-			results_height = 1,
-			results_width = 0.8,
+			scroll_strategy = 'cycle',
 			border = {},
 			borderchars = {
 				'─',
