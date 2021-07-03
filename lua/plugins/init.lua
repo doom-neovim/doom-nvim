@@ -216,7 +216,6 @@ return packer.startup(function()
 		Has_value(Doom.disabled_plugins, 'indentlines')
 	use({
 		'lukas-reineke/indent-blankline.nvim',
-		branch = 'lua',
 		disable = (disabled_files and true or disabled_indent_lines),
 	})
 
