@@ -44,8 +44,7 @@ packer.startup(function(use)
 	-----[[------------]]-----
 	---     Essentials     ---
 	-----]]------------[[-----
-	-- Plugins manager, remove the branch field when that branch is merged
-	-- in the main branch.
+	-- Plugins manager
 	use({
 		'wbthomason/packer.nvim',
 		opt = true,
@@ -334,7 +333,6 @@ packer.startup(function(use)
 	)
 	use({
 		'lukas-reineke/indent-blankline.nvim',
-		branch = 'lua',
 		config = require('doom.modules.config.doom-blankline'),
 		disable = (disabled_files and true or disabled_indent_lines),
 		event = 'ColorScheme',
