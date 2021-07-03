@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.4] - 2021-07-03
+
+### Changed
+
+- Removed `logs/doom.log` and added it to `gitignore` (#27)
+
+### Fixed
+
+- `nvim-telescope` plugin breaking changes, updated configurations
+- `indent-blankline` plugin lua branch removal notice, moved to master branch (#27)
+
 ## [2.3.3] - 2021-07-01
 
 ### Changed
