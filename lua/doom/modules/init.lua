@@ -27,7 +27,6 @@ local disabled_files = utils.has_value(Doom.disabled_modules, 'files')
 local disabled_web = utils.has_value(Doom.disabled_modules, 'web')
 
 vim.cmd([[ packadd packer.nvim ]])
-
 local packer = require('packer')
 
 -- Change some defaults
@@ -265,7 +264,12 @@ packer.startup(function(use)
 
 	-- Snippets
 	local disabled_snippets = utils.has_value(Doom.disabled_plugins, 'snippets')
-	use({ 'norcalli/snippets.nvim', after = 'nvim-compe' })
+	use({
+		'norcalli/snippets.nvim',
+		disable = (disabled_lsp and true or disabled_snippets),
+		opt = true,
+		after = 'nvim-compe',
+	})
 
 	-- install lsp saga
 	local disabled_lspsaga = utils.has_value(Doom.disabled_plugins, 'lspsaga')
