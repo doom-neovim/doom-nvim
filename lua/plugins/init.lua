@@ -29,11 +29,9 @@ return packer.startup(function()
 	-----[[------------]]-----
 	---     Essentials     ---
 	-----]]------------[[-----
-	-- Plugins manager, remove the branch field when that branch is merged
-	-- in the main branch.
+	-- Plugins manager
 	use({
 		'wbthomason/packer.nvim',
-		branch = 'fix/premature-display-opening',
 	})
 
 	-- Auxiliar functions for using Lua in Neovim
