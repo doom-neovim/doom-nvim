@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 #================================================
 # install.sh - Doom Nvim Installation Script
 # Author: NTBBloodbath
