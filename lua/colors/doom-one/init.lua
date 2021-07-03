@@ -149,7 +149,7 @@ if current_bg == 'light' then
 
 	bg = '#fafafa'
 	bg_alt = '#f0f0f0'
-	bg_highlight = utils.Darken(bg, 0.2)
+	bg_highlight = utils.Darken(bg, 0.3)
 	bg_popup = bg_alt
 	bg_statusline = bg_popup
 
