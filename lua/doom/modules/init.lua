@@ -26,6 +26,21 @@ local disabled_lsp = utils.has_value(Doom.disabled_modules, 'lsp')
 local disabled_files = utils.has_value(Doom.disabled_modules, 'files')
 local disabled_web = utils.has_value(Doom.disabled_modules, 'web')
 
+---- Packer Bootstrap ---------------------------
+-------------------------------------------------
+local packer_path = vim.fn.stdpath('data')
+	.. '/site/pack/packer/opt/packer.nvim'
+
+if vim.fn.empty(vim.fn.glob(packer_path)) > 0 then
+	vim.fn.system({
+		'git',
+		'clone',
+		'https://github.com/wbthomason/packer.nvim',
+		packer_path,
+	})
+end
+
+-- Load packer
 vim.cmd([[ packadd packer.nvim ]])
 local packer = require('packer')
 

@@ -189,15 +189,6 @@ install_nvim_nightly() {
     log_success "Successfully installed Neovim Nightly under $HOME/.local/bin/ directory"
 }
 
-install_packer() {
-    if [[ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]]; then
-        log_info "Installing packer plugin manager ..."
-        # NOTE: stop installing that branch when merged into the main branch
-        git clone -q -b fix/premature-display-opening https://github.com/wbthomason/packer.nvim \
-            $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
-    fi
-}
-
 install_fonts() {
     if [[ ! -d "$HOME/.local/share/fonts" ]]; then
         mkdir -p $HOME/.local/share/fonts
@@ -333,7 +324,6 @@ main() {
             welcome
             check_all
             update_repo "main"
-            install_packer
             install_fonts
             backup_neovim
             install_done
@@ -343,7 +333,6 @@ main() {
             welcome
             check_all
             update_repo "develop"
-            install_packer
             install_fonts
             backup_neovim
             install_done
@@ -353,7 +342,6 @@ main() {
             welcome
             check_all
             update_repo "main"
-            install_packer
             backup_neovim
             install_nvim_nightly
             install_done
@@ -380,7 +368,6 @@ main() {
         welcome
         check_all
         update_repo "main"
-        install_packer
         backup_neovim
         install_fonts
         check_requirements
