@@ -34,9 +34,6 @@ return packer.startup(function()
 		'wbthomason/packer.nvim',
 	})
 
-	-- Auxiliar functions for using Lua in Neovim
-	use('svermeulen/vimpeccable')
-
 	-- Tree-Sitter
 	local disabled_treesitter =
 		Has_value(Doom.disabled_plugins, 'treesitter')
