@@ -47,7 +47,24 @@ end
 -- Install plugins on launch
 if Doom.auto_install_plugins then
 	vim.defer_fn(function()
-		vim.cmd('PackerInstall')
+		-- Check if there is only packer installed so we can decide if we should
+		-- use PackerInstall or PackerSync, useful for generating the
+		-- `plugin/packer_compiled.lua` on first doom launch
+		if
+			vim.tbl_count(
+				vim.fn.globpath(
+					vim.fn.stdpath('data') .. '/site/pack/packer/opt',
+					'*',
+					0,
+					1
+				)
+			) == 1
+		then
+			vim.cmd('PackerSync')
+		else
+			-- Install the plugins
+			vim.cmd('PackerInstall')
+		end
 	end, 200)
 end
 

@@ -36,9 +36,16 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
 		-- Load Doom core
 		require('doom.core')
 
-		-- If the current buffer name is empty then trigger Dashboard
-		if vim.api.nvim_buf_get_name(0):len() == 0 then
-			vim.cmd('Dashboard')
+		-- If the dashboard plugin is already installed and the packer_compiled.lua
+		-- file exists so we can make sure that the dashboard have been loaded
+		local compiled_plugins_path = vim.fn.expand(
+			'$HOME/.config/doom-nvim/plugin/packer_compiled.lua'
+		)
+		if vim.fn.filereadable(compiled_plugins_path) > 0 then
+			-- If the current buffer name is empty then trigger Dashboard
+			if vim.api.nvim_buf_get_name(0):len() == 0 then
+				vim.cmd('Dashboard')
+			end
 		end
 
 		vim.opt.shadafile = ''
