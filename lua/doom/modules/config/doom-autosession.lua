@@ -1,5 +1,5 @@
 return function()
-    local config = require('doom.core.config').load_config()
+	local config = require('doom.core.config').load_config()
 	require('auto-session').setup({
 		-- Sets the log level of the plugin (debug, info, error)
 		logLevel = 'info',

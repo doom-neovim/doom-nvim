@@ -18,7 +18,7 @@ return function()
 		'toggleterm',
 	}
 
-    -- {{{ Utility functions
+	-- {{{ Utility functions
 	-- Dynamically change statusline colors,
 	-- defaults to doom-one dark variant colors.
 	--
@@ -55,10 +55,8 @@ return function()
 					blue = '#4078f2',
 					red = '#e45649',
 				}
-			elseif
-			    vim.g.colors_name:find('gruvbox')
-			then
-			    colors = {
+			elseif vim.g.colors_name:find('gruvbox') then
+				colors = {
 					bg = '#32302f',
 					fg = '#d4be98',
 					fg_alt = '#ddc7a1',
@@ -69,7 +67,7 @@ return function()
 					magenta = '#d3869b',
 					blue = '#7daea3',
 					red = '#ea6962',
-			    }
+				}
 			end
 			return colors[name]
 		end

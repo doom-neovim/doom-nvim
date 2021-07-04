@@ -174,7 +174,7 @@ packer.startup(function(use)
 		'folke/which-key.nvim',
 		config = require('doom.modules.config.doom-whichkey'),
 		event = 'BufWinEnter',
-		disable = disabled_whichkey
+		disable = disabled_whichkey,
 	})
 
 	-- Distraction free environment
@@ -200,7 +200,7 @@ packer.startup(function(use)
 			{ 'nvim-lua/plenary.nvim' },
 		},
 		config = require('doom.modules.config.doom-telescope'),
-		disable = disabled_telescope
+		disable = disabled_telescope,
 	})
 
 	-----[[-------------]]-----

@@ -58,8 +58,8 @@ if config.doom.auto_install_plugins then
 		then
 			vim.cmd('PackerSync')
 		else
-		    -- Clean disabled plugins
-		    vim.cmd('PackerClean')
+			-- Clean disabled plugins
+			vim.cmd('PackerClean')
 			-- Install the plugins
 			vim.cmd('PackerInstall')
 		end

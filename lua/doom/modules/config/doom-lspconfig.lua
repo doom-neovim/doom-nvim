@@ -1,5 +1,5 @@
 return function()
-    local config = require('doom.core.config').load_config()
+	local config = require('doom.core.config').load_config()
 
 	-- Snippets support
 	local capabilities = vim.lsp.protocol.make_client_capabilities()

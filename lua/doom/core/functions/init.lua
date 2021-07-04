@@ -17,12 +17,16 @@ log.debug('Loading Doom functions module ...')
 -- @tparam string path Where should be searched the plugin in packer's path, defaults to `start`
 -- @return bool
 M.check_plugin = function(plugin_name, path)
-    if not path then
-        path = 'start'
-    end
+	if not path then
+		path = 'start'
+	end
 
-    return vim.fn.isdirectory(
-		vim.fn.stdpath('data') .. '/site/pack/packer/' .. path .. '/' .. plugin_name
+	return vim.fn.isdirectory(
+		vim.fn.stdpath('data')
+			.. '/site/pack/packer/'
+			.. path
+			.. '/'
+			.. plugin_name
 	) == 1
 end
 
@@ -30,16 +34,16 @@ end
 -- @tparam string plugin The plugin identifier, e.g. statusline
 -- @return bool
 M.is_plugin_disabled = function(plugin)
-    local doomrc = require('doom.core.config.doomrc').load_doomrc()
+	local doomrc = require('doom.core.config.doomrc').load_doomrc()
 
-    -- Iterate over all doomrc sections (e.g. ui) and their plugins
-    for _, section in pairs(doomrc) do
-        if utils.has_value(section, plugin) then
-            return false
-        end
-    end
+	-- Iterate over all doomrc sections (e.g. ui) and their plugins
+	for _, section in pairs(doomrc) do
+		if utils.has_value(section, plugin) then
+			return false
+		end
+	end
 
-    return true
+	return true
 end
 
 -- Load user-defined settings from the Neovim field in the doomrc
