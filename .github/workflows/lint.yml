@@ -2,8 +2,10 @@ name: lint
 
 on:
   push:
+    paths: '**.lua'
     branches: [main, develop]
   pull_request:
+    paths: '**.lua'
     types: [opened, synchronize]
 
 jobs:
