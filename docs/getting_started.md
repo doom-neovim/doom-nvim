@@ -386,7 +386,7 @@ But first let's see what's new:
 ### Changes for end users
 
 - Raw speed, never go slow again.
-  Reduced average startuptime from 400ms to 40ms, special thanks to @vhyrro
+  Reduced average startuptime from 400ms to 40ms, special thanks to [vhyrro]
 - New and better doom-one colorscheme written in pure Lua. Because the
   colorscheme matters.
 - Easily add new Neovim settings by using your `doomrc`. Extensibility is a
@@ -399,6 +399,8 @@ But first let's see what's new:
 - Built-in plugins. Because we should have some utilities to make our lifes
   easier, isn't this how it should be? See [modules/doom] for more information
   (WIP).
+- Fragmented configuration file (`doomrc`) so it will be more easy to customize
+  Doom nvim (**breaking change**).
 - A lot of bug fixes.
 
 ### Changes for contributors
@@ -412,7 +414,7 @@ But first let's see what's new:
 
 > **IMPORTANT:** This what's new section is subject to changes while version
 > 3.0.0 is in development. Changes are expected.
-> 
+>
 > You can also see the [Version 3.0.0 roadmap](https://github.com/NTBBloodbath/doom-nvim/projects/5)
 > for seeing the current progress.
 
@@ -427,7 +429,11 @@ bad status for this release due to git merging issues.
 
 Said that, you can run the following command snippet.
 
-> **IMPORTANT:** Make sure to read everything it does before executing it.
+> **IMPORTANT:**
+>
+> 1. Make sure to read everything it does before executing it.
+>
+> 2. If you are using cheovim just remove and clone the doom-nvim repository again.
 
 ```sh
 cp $HOME/.config/doom-nvim/doomrc $HOME/.config/doomrc.bak \
@@ -439,18 +445,43 @@ cp $HOME/.config/doom-nvim/doomrc $HOME/.config/doomrc.bak \
 This snippet will do the following tasks for you:
 
 1. Create a copy of your doomrc so you can use a diff tool later with the
-    actual version doomrc.
+   actual breaking changes to doomrc structure.
 2. Remove the doom-nvim configuration directory and all plugins (including packer).
 3. Remove the residual symlink that doom-nvim have created before during the
-    installation (**omit that step if you're using cheovim**).
-3. Clone doom-nvim source to where it belongs again by using the installer
-    (installing the development branch because this version is not released yet).
+   installation (**omit that step if you're using cheovim**).
+4. Clone doom-nvim source to where it belongs again by using the installer
+   (installing the development branch because this version is not released yet).
 
 Then you'll only need to start Neovim and start using it as usual!
+
+#### New configurations
+
+Since version 3.0.0 the doomrc has been fragmented into some files, but why?
+
+This was done to benefit both contributors and end users as follows:
+
+- Improve understanding. One file that handles everything doesn't seem like a
+  good thing on a large scale.
+- Easier to maintain. Divided by function, the new files make the code more
+  readable and easy to modify.
+
+And now, how can I start using the new configuration files?
+
+I'm going to explain you in a short way because the new configuration files has
+a rich documentation inside them.
+
+- `doomrc.lua`, this file handles the doom nvim modules, in other words, which
+  plugins are being installed and loaded and which plugins are not.
+- `doom_config.lua`, this file handles the user configurations for doom nvim,
+  e.g. if mouse is enabled or not. This one also handles user-defined Neovim
+  configurations like global variables.
+- `plugins.lua`, this file handles the user-defined plugins, it is the
+  replacement for the `custom_plugins` field in the old doomrc.
 
 > Are you having issues with the development version? Don't hesitate to [report them]
 > so we can fix them and make doom more stable because that's the way to improve software.
 
 [vlog]: https://github.com/tjdevries/vlog.nvim
+[vhyrro]: https://github.com/vhyrro
 [modules/doom]: https://github.com/NTBBloodbath/doom-nvim/tree/develop/lua/doom/modules/doom
 [report them]: https://github.com/NTBBloodbath/doom-nvim/issues/new

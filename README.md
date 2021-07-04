@@ -58,6 +58,9 @@ Its design is guided by these mantras:
 
 # Notices
 
+- **2021-07-03**: The `doomrc` has been fragmented and it is not working anymore,
+  please see [New configurations](./docs/getting_started.md#new-configurations)
+  for more information.
 - **2021-05-01**: The `doomrc` is not using Vimscript anymore, please see the
   new [doomrc](./doomrc) file structure for use it with Lua.
 
@@ -82,7 +85,7 @@ Its design is guided by these mantras:
 
 - Curl 7.x
 - Git 2.23+
-- Neovim Nightly 0.5.0 (for Neovim 0.4.x see the nvim-0.4 branch _coming soon_)
+- Neovim 0.5.0
 - GNU `find`
 - _OPTIONALS:_
   - [ripgrep] 11.0+ or [fd] 7.3.0+ (improves file indexing performance for some commands)
