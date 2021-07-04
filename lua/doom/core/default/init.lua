@@ -6,6 +6,7 @@
 
 local functions = require('doom.core.functions')
 local log = require('doom.core.logging')
+local config = require('doom.core.config').load_config()
 
 local M = {}
 
@@ -15,9 +16,9 @@ log.debug('Loading Doom defaults module ...')
 M.load_default_options = function()
 	----- Default Neovim configurations
 	-- Set colorscheme
-	vim.cmd('colorscheme ' .. Doom.colorscheme)
-	vim.opt.background = Doom.colorscheme_bg
-	vim.cmd('highlight WhichKeyFloat guibg=' .. Doom.whichkey_bg)
+	vim.cmd('colorscheme ' .. config.doom.colorscheme)
+	vim.opt.background = config.doom.colorscheme_bg
+	vim.cmd('highlight WhichKeyFloat guibg=' .. config.doom.whichkey_bg)
 
 	--- Set default options
 	vim.opt.encoding = 'utf-8'
@@ -51,65 +52,65 @@ M.load_default_options = function()
 	vim.opt.preserveindent = true
 
 	-- set Gui Fonts
-	vim.opt.guifont = Doom.guifont .. ':h' .. Doom.guifont_size
+	vim.opt.guifont = config.doom.guifont .. ':h' .. config.doom.guifont_size
 
 	-- Use clipboard outside vim
-	if Doom.clipboard then
+	if config.doom.clipboard then
 		vim.opt.clipboard = 'unnamedplus'
 	end
 
-	if Doom.line_highlight then
+	if config.doom.line_highlight then
 		vim.opt.cursorline = true
 	else
 		vim.opt.cursorline = false
 	end
 
 	-- Automatic split locations
-	if Doom.split_right then
+	if config.doom.split_right then
 		vim.opt.splitright = true
 	else
 		vim.opt.splitright = false
 	end
 
-	if Doom.split_below then
+	if config.doom.split_below then
 		vim.opt.splitbelow = true
 	else
 		vim.opt.splitbelow = false
 	end
 
 	-- Enable scroll off
-	if Doom.scrolloff then
-		vim.opt.scrolloff = Doom.scrolloff_amount
+	if config.doom.scrolloff then
+		vim.opt.scrolloff = config.doom.scrolloff_amount
 	end
 
 	-- Enable showmode
-	if not Doom.show_mode then
+	if not config.doom.show_mode then
 		vim.opt.showmode = false
 	else
 		vim.opt.showmode = true
 	end
 
 	-- Enable mouse input
-	if Doom.mouse then
+	if config.doom.mouse then
 		vim.opt.mouse = 'a'
 	end
 
 	-- Enable wrapping
-	if not Doom.line_wrap then
+	if not config.doom.line_wrap then
 		vim.opt.wrap = false
 	else
 		vim.opt.wrap = true
 	end
 
 	-- Enable swap files
-	if not Doom.swap_files then
+	if not config.doom.swap_files then
 		vim.opt.swapfile = false
 	else
 		vim.opt.swapfile = true
 	end
 
 	-- Set numbering
-	if Doom.relative_num then
+	if config.doom.relative_num then
 		vim.opt.number = true
 		vim.opt.relativenumber = true
 	else
@@ -117,29 +118,29 @@ M.load_default_options = function()
 	end
 
 	-- Checks to see if undo_dir does not exist. If it doesn't, it will create a undo folder
-	local undo_dir = vim.fn.stdpath('config') .. Doom.undo_dir
-	if Doom.backup and vim.fn.empty(vim.fn.glob(undo_dir)) > 0 then
+	local undo_dir = vim.fn.stdpath('config') .. config.doom.undo_dir
+	if config.doom.backup and vim.fn.empty(vim.fn.glob(undo_dir)) > 0 then
 		vim.api.nvim_command('!mkdir ' .. undo_dir .. ' -p')
 		vim.opt.undofile = true
 	end
 
 	-- If backup is false but `undo_dir` still exists then it will delete it.
-	if not Doom.backup and vim.fn.empty(vim.fn.glob(undo_dir)) == 0 then
+	if not config.doom.backup and vim.fn.empty(vim.fn.glob(undo_dir)) == 0 then
 		vim.api.nvim_command('!rm -rf ' .. undo_dir)
 		vim.opt.undofile = false
 	end
 
 	-- Set local-buffer options
-	if Doom.expand_tabs then
+	if config.doom.expand_tabs then
 		vim.opt.expandtab = true
 	else
 		vim.opt.expandtab = false
 	end
-	vim.opt.tabstop = Doom.indent
-	vim.opt.shiftwidth = Doom.indent
-	vim.opt.softtabstop = Doom.indent
-	vim.opt.colorcolumn = tostring(Doom.max_columns)
-	vim.opt.conceallevel = Doom.conceallevel
+	vim.opt.tabstop = config.doom.indent
+	vim.opt.shiftwidth = config.doom.indent
+	vim.opt.softtabstop = config.doom.indent
+	vim.opt.colorcolumn = tostring(config.doom.max_columns)
+	vim.opt.conceallevel = config.doom.conceallevel
 end
 
 -- Custom Doom Nvim commands
@@ -151,11 +152,11 @@ M.custom_options = function()
 	)
 
 	-- Load user-defined settings from the Neovim field in the doomrc file
-	functions.load_custom_settings(Neovim.autocmds, 'autocmds')
-	functions.load_custom_settings(Neovim.commands, 'commands')
-	functions.load_custom_settings(Neovim.functions, 'functions')
-	functions.load_custom_settings(Neovim.mappings, 'mappings')
-	functions.load_custom_settings(Neovim.global_variables, 'variables')
+	functions.load_custom_settings(config.nvim.autocmds, 'autocmds')
+	functions.load_custom_settings(config.nvim.commands, 'commands')
+	functions.load_custom_settings(config.nvim.functions, 'functions')
+	functions.load_custom_settings(config.nvim.mappings, 'mappings')
+	functions.load_custom_settings(config.nvim.global_variables, 'variables')
 end
 
 return M

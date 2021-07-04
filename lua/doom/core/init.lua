@@ -1,7 +1,16 @@
 --- Main Doom configuration file
---- also loads ui, doomrc modules
---- and the packer setup internally
+--- This file loads all doom core components
+--- (ui, options, doomrc, modules, packer, ect)
+
+-- Doom core configurations
 require('doom.core.config')
+require('doom.core.config.ui')
+-- Neovim configurations, e.g. shiftwidth
+require('doom.core.default').load_default_options()
+-- User-defined settings (global variables, mappings, ect)
+require('doom.core.default').custom_options()
+-- Doom modules (packer and plugins)
+require('doom.modules')
 -- Doom keybindings
 require('doom.core.keybindings')
 -- Doom autocommands

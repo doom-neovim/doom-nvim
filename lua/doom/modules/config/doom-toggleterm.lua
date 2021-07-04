@@ -1,18 +1,20 @@
 return function()
+    local config = require('doom.core.config').load_config()
+
 	require('toggleterm').setup({
-		size = Doom.terminal_height,
+		size = config.doom.terminal_height,
 		open_mapping = [[<F4>]],
 		hide_numbers = true,
 		shade_filetypes = {},
 		shade_terminals = true,
 		start_in_insert = true,
 		persist_size = true,
-		direction = Doom.terminal_direction,
+		direction = config.doom.terminal_direction,
 		close_on_exit = true,
 		float_opts = {
 			border = 'curved',
-			width = Doom.terminal_width,
-			height = Doom.terminal_height,
+			width = config.doom.terminal_width,
+			height = config.doom.terminal_height,
 			winblend = 0,
 			highlights = {
 				border = 'Special',

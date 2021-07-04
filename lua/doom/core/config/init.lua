@@ -4,10 +4,10 @@
 --              License: MIT                   --
 ---[[---------------------------------------]]---
 
+local M = {}
+
 local log = require('doom.core.logging')
-local rc = require('doom.core.config.doomrc')
-local default = require('doom.core.default')
-local functions = require('doom.core.functions')
+local utils = require('doom.utils')
 
 log.debug('Loading Doom core config module ...')
 
@@ -32,21 +32,36 @@ if vim.fn.has('vim_starting') then
 	vim.opt.termguicolors = true
 end
 
------ Start Doom and run packer.nvim
--- Search for a configuration file (doomrc)
-if rc.check_doomrc() then
-	rc.load_doomrc()
+-- load_config Loads the doom_config.lua file if it exists
+-- @return table
+M.load_config = function()
+	local config = {
+		doom = {},
+		nvim = {},
+	}
+
+	-- /home/user/.config/doom-nvim/doomrc
+	if vim.fn.filereadable(utils.doom_root .. '/doom_config.lua') == 1 then
+		local loaded_doomrc, err = pcall(function()
+			log.debug('Loading the doom_config file ...')
+			config = dofile(utils.doom_root .. '/doom_config.lua')
+		end)
+
+		if not loaded_doomrc then
+			log.error(
+				'Error while loading the doom_config file. Traceback:\n' .. err
+			)
+		end
+	else
+		log.warn('No doom_config.lua file found')
+	end
+
+	return config
 end
 
--- Load the default Neovim settings, e.g. tabs width
-default.load_default_options()
--- Load the user-defined settings (global variables, autocmds, mappings)
-default.custom_options()
--- Load packer.nvim and load plugins settings
-require('doom.modules')
--- Load UI settings
-require('doom.core.config.ui')
-
-if Doom.check_updates then
-	functions.check_updates()
+-- Check plugins updates on start if enabled
+if M.load_config().doom.check_updates then
+	require('doom.core.functions').check_updates()
 end
+
+return M

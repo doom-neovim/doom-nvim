@@ -1,8 +1,10 @@
 return function()
+    local config = require('doom.core.config').load_config()
+
 	vim.g.symbols_outline = {
 		highlight_hovered_item = true,
 		show_guides = true,
-		position = Doom.symbols_outline_left,
+		position = config.doom.symbols_outline_left,
 		keymaps = {
 			close = '<Esc>',
 			goto_location = '<CR>',

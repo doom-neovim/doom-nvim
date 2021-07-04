@@ -1,4 +1,5 @@
 return function()
+    local config = require('doom.core.config').load_config()
 	local tree_cb = require('nvim-tree.config').nvim_tree_callback
 
 	-- Empty by default
@@ -14,9 +15,9 @@ return function()
 	-- False by default, this option shows indent markers when folders are open
 	vim.g.nvim_tree_indent_markers = 1
 	-- Show hidden files
-	vim.g.nvim_tree_hide_dotfiles = Doom.show_hidden
+	vim.g.nvim_tree_hide_dotfiles = config.doom.show_hidden
 	-- Set tree width
-	vim.g.nvim_tree_width = Doom.sidebar_width
+	vim.g.nvim_tree_width = config.doom.sidebar_width
 	-- False by default, will enable file highlight for git attributes (can be used without the icons).
 	vim.g.nvim_tree_git_hl = 1
 	-- This is the default. See :help filename-modifiers for more options
@@ -36,7 +37,7 @@ return function()
 	vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1 }
 	-- If the symbols outline is set to left then set tree side to right and vice versa.
 	-- left by default
-	if Doom.symbols_outline_left then
+	if config.doom.symbols_outline_left then
 		vim.g.nvim_tree_side = 'right'
 	end
 	-- You can edit keybindings be defining this variable

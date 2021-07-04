@@ -6,6 +6,7 @@
 
 local utils = require('doom.utils')
 local log = require('doom.core.logging')
+local config = require('doom.core.config').load_config()
 local functions = require('doom.core.functions')
 
 log.debug('Loading Doom keybindings module ...')
@@ -46,9 +47,9 @@ utils.map('n', '<Space>', ':WhichKey <leader><CR>', opts)
 -- If the LSP group is not disabled or the nvim-compe plugin is not disabled
 -- then set its mappings.
 if
-	not utils.has_value(Doom.disabled_modules, 'lsp')
-	and (not utils.has_value(Doom.disabled_plugins, 'compe'))
-	and functions.check_plugin('nvim-compe')
+	--[[ not utils.has_value(Doom.disabled_modules, 'lsp')
+	and (not utils.has_value(Doom.disabled_plugins, 'compe')) ]]
+	functions.check_plugin('nvim-compe')
 then
 	-- https://github.com/hrsh7th/nvim-compe#mappings
 	utils.map('i', '<expr> <C-Space>', vim.fn['compe#complete'](), opts)
@@ -90,7 +91,7 @@ then
 	)
 end
 
-if Doom.new_file_split then
+if config.doom.new_file_split then
 	utils.map('n', '<Leader>fn', ':new<CR>', opts)
 else
 	utils.map('n', '<Leader>fn', ':enew<CR>', opts)
@@ -104,7 +105,7 @@ utils.map('n', '<S-Tab>', ':bprevious<CR>', opts)
 utils.map('n', '<esc>', ':noh<CR>', opts)
 
 --- F<n> keybindings
-if not utils.has_value(Doom.disabled_plugins, 'outline') then
+--[[ if not utils.has_value(Doom.disabled_plugins, 'outline') then
 	utils.map('n', '<F2>', ':SymbolsOutline<CR>', opts)
 end
 if not utils.has_value(Doom.disabled_plugins, 'tree') then
@@ -121,7 +122,7 @@ if
 	and (not utils.has_value(Doom.disabled_plugins, 'restclient'))
 then
 	utils.map('n', '<F7>', ':<Plug>RestNvim<CR>', opts)
-end
+end ]]
 ---[[------------------------------]]---
 --     Window Movements keys          --
 ---]]------------------------------]]---

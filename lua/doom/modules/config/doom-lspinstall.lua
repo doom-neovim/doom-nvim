@@ -1,8 +1,7 @@
 return function()
 	local nvim_lsp = require('lspconfig')
 
-	--[[-----------------]]
-	--
+	--[[-----------------]]--
 	--      LSP Setup      --
 	--]]-----------------[[--
 	-- https://github.com/kabouzeid/nvim-lspinstall#advanced-configuration-recommended

@@ -1,18 +1,5 @@
 return function()
-	-- Load Doomrc if it is not loaded yet to avoid errors at startup
-	-- with lazy-loading.
-	--
-	-- TODO: change this behavior, we should ditch the doomrc to a fragmented
-	-- and better solution for putting user configurations.
-	if not Doom then
-		local utils = require('doom.utils')
-
-		-- Do the same as `doom.core.config.doomrc` so we can use
-		-- all the debugging levels when sourcing that module
-		if vim.fn.filereadable(utils.doom_root .. '/doomrc') then
-			vim.cmd('silent! luafile ' .. utils.doom_root .. '/doomrc')
-		end
-	end
+    local config = require('doom.core.config').load_config()
 
 	vim.g.dashboard_session_directory = require('doom.utils').doom_root
 		.. '/sessions'
@@ -56,26 +43,47 @@ return function()
 		) .. ' seconds.',
 	}
 
-	if not Doom.dashboard_statline then
+	if not config.doom.dashboard_statline then
 		vim.g.dashboard_disable_statusline = 1
 	end
 
-	vim.g.dashboard_custom_header = Doom.dashboard_custom_header
+	vim.g.dashboard_custom_header = vim.tbl_isempty(config.doom.dashboard_custom_header) and {
+			'=================     ===============     ===============   ========  ========',
+			'\\\\ . . . . . . .\\\\   //. . . . . . .\\\\   //. . . . . . .\\\\  \\\\. . .\\\\// . . //',
+			'||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||',
+			'|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||',
+			'||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||',
+			'|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\\ . . . . ||',
+			"||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\\_ . .|. .||",
+			'|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\\ `-_/| . ||',
+			"||_-' ||  .|/    || ||    \\|.  || `-_|| ||_-' ||  .|/    || ||   | \\  / |-_.||",
+			"||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \\  / |  `||",
+			"||    `'         || ||         `'    || ||    `'         || ||   | \\  / |   ||",
+			"||            .===' `===.         .==='.`===.         .===' /==. |  \\/  |   ||",
+			"||         .=='   \\_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \\/  |   ||",
+			"||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \\/  |   ||",
+			"||   .=='    _-'          `-__\\._-'         `-_./__-'         `' |. /|  |   ||",
+			"||.=='    _-'                                                     `' |  /==.||",
+			"=='    _-'                        N E O V I M                         \\/   `==",
+			"\\   _-'                                                                `-_   /",
+			" `''                                                                      ``'  ",
+			'                                                                               ',
+		} or config.doom.dashboard_custom_header
 	-- Header color
 	vim.cmd(
 		'hi! dashboardHeader   guifg='
-			.. Doom.dashboard_custom_colors.header_color
+			.. config.doom.dashboard_custom_colors.header_color
 	)
 	vim.cmd(
 		'hi! dashboardCenter   guifg='
-			.. Doom.dashboard_custom_colors.center_color
+			.. config.doom.dashboard_custom_colors.center_color
 	)
 	vim.cmd(
 		'hi! dashboardShortcut guifg='
-			.. Doom.dashboard_custom_colors.shortcut_color
+			.. config.doom.dashboard_custom_colors.shortcut_color
 	)
 	vim.cmd(
 		'hi! dashboardFooter   guifg='
-			.. Doom.dashboard_custom_colors.footer_color
+			.. config.doom.dashboard_custom_colors.footer_color
 	)
 end

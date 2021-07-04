@@ -6,6 +6,7 @@
 
 local utils = require('doom.utils')
 local log = require('doom.core.logging')
+local config = require('doom.core.config').load_config()
 
 log.debug('Loading Doom autocmds module ...')
 
@@ -24,13 +25,8 @@ local autocmds = {
 	},
 }
 
--- Set proper syntax highlight for our doomrc
-if vim.api.nvim_buf_get_name(0):find('doomrc', 0, true) then
-	vim.cmd([[ set ft=lua ]])
-end
-
 -- Set relative numbers
-if Doom.relative_num then
+if config.doom.relative_num then
 	table.insert(autocmds['doom_core'], {
 		'BufEnter,WinEnter',
 		'*',
@@ -45,7 +41,7 @@ else
 end
 
 -- Install plugins on launch
-if Doom.auto_install_plugins then
+if config.doom.auto_install_plugins then
 	vim.defer_fn(function()
 		-- Check if there is only packer installed so we can decide if we should
 		-- use PackerInstall or PackerSync, useful for generating the
@@ -62,6 +58,8 @@ if Doom.auto_install_plugins then
 		then
 			vim.cmd('PackerSync')
 		else
+		    -- Clean disabled plugins
+		    vim.cmd('PackerClean')
 			-- Install the plugins
 			vim.cmd('PackerInstall')
 		end
@@ -69,7 +67,7 @@ if Doom.auto_install_plugins then
 end
 
 -- Set autosave
-if Doom.autosave then
+if config.doom.autosave then
 	table.insert(autocmds['doom_core'], {
 		'TextChanged,TextChangedI',
 		'<buffer>',
@@ -78,12 +76,12 @@ if Doom.autosave then
 end
 
 -- Enable auto comment
-if not Doom.auto_comment then
+if not config.doom.auto_comment then
 	vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
 end
 
 -- Enable highlight on yank
-if Doom.highlight_yank then
+if config.doom.highlight_yank then
 	table.insert(autocmds['doom_core'], {
 		{
 			'TextYankPost',
@@ -95,7 +93,7 @@ end
 
 -- Format on save
 -- NOTE: Requires formatter to be enabled!
-if Doom.fmt_on_save then
+if config.doom.fmt_on_save then
 	table.insert(autocmds['doom_core'], {
 		'BufWritePost',
 		'*',
@@ -104,7 +102,7 @@ if Doom.fmt_on_save then
 end
 
 -- Preserve last editing position
-if Doom.preserve_edit_pos then
+if config.doom.preserve_edit_pos then
 	table.insert(autocmds['doom_core'], {
 		'BufReadPost',
 		'*',

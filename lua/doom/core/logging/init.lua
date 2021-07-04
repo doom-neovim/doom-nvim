@@ -9,12 +9,7 @@
 ----- CUSTOM SECTION --------------------------------------
 -----------------------------------------------------------
 local utils = require('doom.utils')
-
--- Do the same as `doom.core.config.doomrc` so we can use
--- all the debugging levels when sourcing that module
-if vim.fn.filereadable(utils.doom_root .. '/doomrc') then
-	vim.cmd('silent! luafile ' .. utils.doom_root .. '/doomrc')
-end
+local config = dofile(utils.doom_root .. '/doom_config.lua')
 
 -----------------------------------------------------------
 -----------------------------------------------------------
@@ -35,7 +30,7 @@ local default_config = {
 
 	-- Any messages above this level will be logged.
 	-- defaults to info
-	level = (Doom.logging == nil and 'info' or Doom.logging),
+	level = (config.doom.logging == nil and 'info' or config.doom.logging),
 
 	-- Level configuration
 	modes = {

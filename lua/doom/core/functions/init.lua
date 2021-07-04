@@ -6,25 +6,40 @@
 
 local utils = require('doom.utils')
 local log = require('doom.core.logging')
+local config = require('doom.core.config').load_config()
 
 local M = {}
 
 log.debug('Loading Doom functions module ...')
 
 -- check_plugin checks if the given plugin exists
--- @tparam string plugin_path The plugin name
--- @tparam bool opt If the plugin should be searched in packer's opt dir
+-- @tparam string plugin_name The plugin name, e.g. nvim-tree.lua
+-- @tparam string path Where should be searched the plugin in packer's path, defaults to `start`
 -- @return bool
-M.check_plugin = function(plugin_path, opt)
-	if opt then
-		return vim.fn.isdirectory(
-			vim.fn.stdpath('data') .. '/site/pack/packer/opt/' .. plugin_path
-		) == 1
-	end
+M.check_plugin = function(plugin_name, path)
+    if not path then
+        path = 'start'
+    end
 
-	return vim.fn.isdirectory(
-		vim.fn.stdpath('data') .. '/site/pack/packer/start/' .. plugin_path
+    return vim.fn.isdirectory(
+		vim.fn.stdpath('data') .. '/site/pack/packer/' .. path .. '/' .. plugin_name
 	) == 1
+end
+
+-- is_plugin_disabled checks if the given plugin is disabled in doomrc
+-- @tparam string plugin The plugin identifier, e.g. statusline
+-- @return bool
+M.is_plugin_disabled = function(plugin)
+    local doomrc = require('doom.core.config.doomrc').load_doomrc()
+
+    -- Iterate over all doomrc sections (e.g. ui) and their plugins
+    for _, section in pairs(doomrc) do
+        if utils.has_value(section, plugin) then
+            return false
+        end
+    end
+
+    return true
 end
 
 -- Load user-defined settings from the Neovim field in the doomrc
@@ -66,10 +81,10 @@ M.quit_doom = function(write, force)
 	local changed_colorscheme, err = pcall(function()
 		log.info('Checking if the colorscheme was changed ...')
 		local target = vim.g.colors_name
-		if target ~= Doom.colorscheme then
+		if target ~= config.doom.colorscheme then
 			vim.cmd(
 				'silent !sed -i "s/\''
-					.. Doom.colorscheme
+					.. config.doom.colorscheme
 					.. "'/'"
 					.. target
 					.. '\'/" $HOME/.config/doom-nvim/doomrc'
@@ -85,7 +100,7 @@ M.quit_doom = function(write, force)
 	local quit_cmd = ''
 
 	-- Save current session if enabled
-	if Doom.autosave_sessions then
+	if config.doom.autosave_sessions then
 		vim.cmd('SaveSession')
 	end
 

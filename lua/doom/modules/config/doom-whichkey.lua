@@ -1,11 +1,7 @@
 return function()
 	local wk = require('which-key')
 	local presets = require('which-key.plugins.presets')
-	local utils = require('doom.utils')
-
-	if not Doom then
-		vim.cmd('luafile ' .. utils.doom_root .. '/doomrc')
-	end
+	local functions = require('doom.core.functions')
 
 	-- Disable presets that doom nvim doesn't use
 	presets.operators['gc'] = nil
@@ -243,7 +239,7 @@ return function()
 			d = {
 				name = '+doom',
 				c = {
-					':e ~/.config/doom-nvim/doomrc<CR>',
+					':e ~/.config/doom-nvim/doomrc.lua<CR>',
 					'Edit your Doom Nvim configuration',
 				},
 				d = { ':help doom_nvim<CR>', 'Open Doom Nvim documentation' },
@@ -271,11 +267,8 @@ return function()
 		},
 	})
 
-	-- If web is enabled and restclient is enabled too
-	if
-		not utils.has_value(Doom.disabled_modules, 'web')
-		and (not utils.has_value(Doom.disabled_plugins, 'restclient'))
-	then
+	-- If restclient plugin is enabled
+	if not functions.is_plugin_disabled('restclient') then
 		wk.register({
 			['<leader>'] = {
 				r = {
@@ -290,7 +283,7 @@ return function()
 	end
 
 	-- If LSP is enabled
-	if not utils.has_value(Doom.disabled_modules, 'lsp') then
+	if not functions.is_plugin_disabled('lsp') then
 		wk.register({
 			['<leader>'] = {
 				l = {
@@ -312,24 +305,21 @@ return function()
 		})
 	end
 
-	-- If Git is enabled
-	if not utils.has_value(Doom.disabled_modules, 'git') then
-		wk.register({
-			['<leader>'] = {
-				g = {
-					name = '+git',
-					o = { ':LazyGit<CR>', 'Open LazyGit' },
-					P = { ':TermExec cmd="git pull"<CR>', 'Pull' },
-					p = { ':TermExec cmd="git push"<CR>', 'Push' },
-					S = { 'Stage hunk' },
-					s = { ':TermExec cmd="git status"<CR>', 'Status' },
-					u = { 'Undo stage hunk' },
-					R = { 'Reset buffer' },
-					r = { 'Reset hunk' },
-					h = { 'Preview hunk' },
-					b = { 'Blame line' },
-				},
+	wk.register({
+		['<leader>'] = {
+			g = {
+				name = '+git',
+				o = { ':LazyGit<CR>', 'Open LazyGit' },
+				P = { ':TermExec cmd="git pull"<CR>', 'Pull' },
+				p = { ':TermExec cmd="git push"<CR>', 'Push' },
+				S = { 'Stage hunk' },
+				s = { ':TermExec cmd="git status"<CR>', 'Status' },
+				u = { 'Undo stage hunk' },
+				R = { 'Reset buffer' },
+				r = { 'Reset hunk' },
+				h = { 'Preview hunk' },
+				b = { 'Blame line' },
 			},
-		})
-	end
+		},
+	})
 end
