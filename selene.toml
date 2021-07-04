@@ -1,4 +1,1 @@
 std = "doom"
-
-[rules]
-unused_variable = "allow"
