@@ -17,7 +17,7 @@ local doom = {
 		'doom-themes', -- Additional doom emacs' colorschemes
 		'statusline',  -- Statusline
 		'tabline',     -- Tabline, shows your buffers list at top
-		'zen',         -- Distraction free environment
+		-- 'zen',      -- Distraction free environment
 		'which-key',   -- Keybindings popup menu like Emacs' guide-key
 		'indentlines', -- Show indent lines
 	},
