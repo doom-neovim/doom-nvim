@@ -9,7 +9,7 @@
 ----- CUSTOM SECTION --------------------------------------
 -----------------------------------------------------------
 local utils = require('doom.utils')
-local config = dofile(utils.doom_root .. '/doom_config.lua')
+local doom_config = dofile(utils.doom_root .. '/doom_config.lua')
 
 -----------------------------------------------------------
 -----------------------------------------------------------
@@ -30,7 +30,7 @@ local default_config = {
 
 	-- Any messages above this level will be logged.
 	-- defaults to info
-	level = (config.doom.logging == nil and 'info' or config.doom.logging),
+	level = (doom_config.doom.logging == nil and 'info' or doom_config.doom.logging),
 
 	-- Level configuration
 	modes = {
