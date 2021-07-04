@@ -4,7 +4,6 @@ return function()
 	local bo = vim.bo
 	local gl = require('galaxyline')
 	local lsp = require('galaxyline.provider_lsp')
-	local file_info = require('galaxyline.provider_fileinfo')
 	local buffer = require('galaxyline.provider_buffer')
 	local condition = require('galaxyline.condition')
 
