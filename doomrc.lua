@@ -43,7 +43,6 @@ local doom = {
 	},
 	langs = {
 		-- TODO: add more languages here
-		-- TODO: implement the +lsp parser
 		-- 'javascript',  -- JavaScript support
 		-- 'typescript',  -- TypeScript support
 		-- 'python +lsp', -- Python support + lsp
