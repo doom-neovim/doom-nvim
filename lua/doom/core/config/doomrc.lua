@@ -16,163 +16,51 @@ log.debug('Loading Doom doomrc module ...')
 local function default_doomrc_values()
 	return {
 		doom = {
-			-- Autosave
-			-- false : Disable autosave
-			-- true  : Enable autosave
-			-- @default = false
-			autosave = false,
-
-			-- Format on save
-			-- false : Disable format on save
-			-- true  : Enable format on save
-			-- @default = false
-			fmt_on_save = false,
-
-			-- Autosave sessions
-			-- false : Disable session autosave
-			-- true  : Enable session autosave
-			-- @default = false
-			autosave_sessions = false,
-
-			-- Autoload sessions
-			-- false : Disable session autoload
-			-- true  : Enable session autosave
-			-- @default = false
-			autoload_last_session = false,
-
-			-- Preserve last editing position
-			-- false : Disable preservation of last editing position
-			-- true  : Enable preservation of last editing position
-			-- @default = false
-			preserve_edit_pos = false,
-
-			-- Default indent size
-			-- @default = 4
-			indent = 4,
-
-			-- Show indent lines
-			-- @default = true
-			show_indent = true,
-
-			-- Expand tabs
-			-- Specifies if spaces or tabs must be used
-			-- false : spaces
-			-- true  : tabs
-			-- @default = true
-			expand_tabs = true,
-
-			-- Set numbering
-			-- false : Shows absolute number lines
-			-- true  : Shows relative number lines
-			-- @default = true
-			relative_num = true,
-
-			-- Set max cols
-			-- Defines the column to show a vertical marker
-			-- @default = 80
-			max_columns = 80,
-
-			-- Enable guicolors
-			-- Enables gui colors on GUI versions of Neovim
-			-- @default = true
-			enable_guicolors = true,
-
-			-- Sidebar sizing
-			-- Specifies the default width of Tree Explorer and Symbols-Outline
-			-- @default = 25
-			sidebar_width = 25,
-
-			-- Symbols-Outline left
-			-- Sets Symbols-Outline buffer to the left when enabled
-			-- @default = true
-			symbols_outline_left = true,
-
-			-- Show hidden files
-			-- @default = true
-			show_hidden = true,
-
-			-- Default colorscheme
-			-- @default = doom-one
-			colorscheme = 'doom-one',
-
-			-- Background color
-			-- @default = dark
-			colorscheme_bg = 'dark',
-
-			-- Check updates on start
-			-- @default = false
-			check_updates = false,
-
-			-- Set the Terminal direction
-			-- Available directions:
-			--   - vertical
-			--   - horizontal
-			--   - window
-			--   - float
-			-- @default = 'horizontal'
-			terminal_direction = 'horizontal',
-
-			-- Set the Terminal width
-			-- Applies only to float direction
-			-- @default = 70
-			terminal_width = 70,
-
-			-- Set the Terminal height
-			-- Applies to all directions except window
-			-- @default = 20
-			terminal_height = 20,
-
-			-- Conceal level
-			-- Set Neovim conceal level
-			-- 0 : Disable indentline and show all
-			-- 1 : Conceal some functions and show indentlines
-			-- 2 : Concealed text is completely hidden unless it has a custom replacement
-			--     character defined
-			-- 3 : Concealed text is completely hidden
-			-- @default = 0
-			conceallevel = 0,
-
-			-- Logging level
-			-- Set Doom logging level
-			-- Available levels:
-			--   · trace
-			--   · debug
-			--   · info
-			--   · warn
-			--   · error
-			--   · fatal
-			-- @default = 'info'
-			logging = 'info',
-		},
-
-		nvim = {
-			-- Set custom Neovim global variables
-			-- @default = {}
-			-- example:
-			--   { ['sonokai_style'] = 'andromeda' }
-			global_variables = {},
-
-			-- Set custom autocommands
-			-- @default = {}
-			-- example:
-			--   augroup_name = {
-			--      { 'BufNewFile,BufRead', 'doomrc', 'set ft=lua'}
-			--   }
-			autocmds = {},
-
-			-- Set custom key bindings
-			-- @default = {}
-			-- example:
-			--   {
-			--      {'n', 'ca', ':Lspsaga code_action<CR>'}
-			--   }
-			--
-			--   where
-			--     'n' is the map scope
-			--     'ca' is the map activator
-			--     ':Lspsaga ...' is the command to be executed
-			mappings = {},
-		},
+	        ui = {
+		        'dashboard',   -- Start screen
+		        'doom-themes', -- Additional doom emacs' colorschemes
+		        'statusline',  -- Statusline
+		        'tabline',     -- Tabline, shows your buffers list at top
+		        -- 'zen',      -- Distraction free environment
+		        'which-key',   -- Keybindings popup menu like Emacs' guide-key
+		        'indentlines', -- Show indent lines
+	        },
+	        doom = {
+		        -- 'neorg', -- Life Organization Tool
+	        },
+	        editor = {
+		        'auto-session',    -- A small automated session manager for Neovim
+		        'terminal',        -- Terminal for Neovim
+		        'explorer',        -- Tree explorer
+		        'symbols',         -- LSP symbols and tags
+		        -- 'minimap',      -- Code minimap, requires github.com/wfxr/code-minimap
+		        -- 'gitsigns',     -- Git signs
+		        'telescope',       -- Highly extendable fuzzy finder over lists
+		        -- 'restclient',   -- A fast Neovim http client
+		        'formatter',       -- File formatting
+		        'autopairs',       -- Autopairs
+		        -- 'editorconfig', -- EditorConfig support for Neovim
+		        'kommentary',      -- Comments plugin
+	           'lsp',             -- Language Server Protocols
+		        'treesitter',      -- An incremental parsing system for programming tools
+		        'snippets',        -- LSP snippets
+	        },
+	        langs = {
+		        -- 'javascript',  -- JavaScript support
+		        -- 'typescript',  -- TypeScript support
+		        -- 'python +lsp', -- Python support + lsp
+		        'lua',            -- Support for our gods language
+		        -- 'rust +lsp',   -- Let's get rusty!
+		        -- 'config',      -- Configuration files (JSON, YAML, TOML)
+	        },
+	        utilities = {
+		        -- 'suda',      -- Write and read files without sudo permissions
+		        -- 'lazygit',   -- LazyGit integration for Neovim, requires LazyGit
+		        -- 'neogit',    -- Magit for Neovim
+		        -- 'octo',      -- GitHub in Neovim, requires GitHub CLI
+		        -- 'colorizer', -- Fastets colorizer for Neovim
+	        },
+        }
 	}
 end
 

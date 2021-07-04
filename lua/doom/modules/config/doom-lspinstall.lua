@@ -1,8 +1,7 @@
 return function()
 	local nvim_lsp = require('lspconfig')
 
-	--[[-----------------]]
-	--
+	--[[-----------------]]--
 	--      LSP Setup      --
 	--]]-----------------[[--
 	-- https://github.com/kabouzeid/nvim-lspinstall#advanced-configuration-recommended
@@ -11,7 +10,7 @@ return function()
 		require('lspinstall').setup()
 		local servers = require('lspinstall').installed_servers()
 		for _, server in pairs(servers) do
-			-- Configure sumneko to neovim lua development
+			-- Configure sumneko for neovim lua development
 			if server == 'lua' then
 				local lua_path = vim.split(package.path, ';')
 				table.insert(lua_path, 'lua/?.lua')
