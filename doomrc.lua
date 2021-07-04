@@ -30,7 +30,7 @@ local doom = {
 		'explorer',        -- Tree explorer
 		'symbols',         -- LSP symbols and tags
 		-- 'minimap',      -- Code minimap, requires github.com/wfxr/code-minimap
-		-- 'gitsigns',     -- Git signs
+		'gitsigns',        -- Git signs
 		'telescope',       -- Highly extendable fuzzy finder over lists
 		-- 'restclient',   -- A fast Neovim http client
 		'formatter',       -- File formatting
@@ -43,6 +43,9 @@ local doom = {
 	},
 	langs = {
 		-- TODO: add more languages here
+		-- To enable LSP for a language just add the +lsp flag at the end
+		-- e.g. 'rust +lsp'
+		--
 		-- 'javascript',  -- JavaScript support
 		-- 'typescript',  -- TypeScript support
 		-- 'python +lsp', -- Python support + lsp
@@ -51,11 +54,12 @@ local doom = {
 		-- 'config',      -- Configuration files (JSON, YAML, TOML)
 	},
 	utilities = {
-		-- 'suda',      -- Write and read files without sudo permissions
-		-- 'lazygit',   -- LazyGit integration for Neovim, requires LazyGit
-		-- 'neogit',    -- Magit for Neovim
-		-- 'octo',      -- GitHub in Neovim, requires GitHub CLI
-		-- 'colorizer', -- Fastets colorizer for Neovim
+		-- 'suda',            -- Write and read files without sudo permissions
+		-- 'lazygit',         -- LazyGit integration for Neovim, requires LazyGit
+		-- 'neogit',          -- Magit for Neovim
+		-- 'octo',            -- GitHub in Neovim, requires GitHub CLI
+		-- 'colorizer',       -- Fastets colorizer for Neovim
+		'range-highlight',    -- hightlights ranges you have entered in commandline
 	},
 }
 
