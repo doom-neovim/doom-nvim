@@ -83,18 +83,31 @@ end
 -- @tparam bool force If doom should force the exiting
 M.quit_doom = function(write, force)
 	local changed_colorscheme, err = pcall(function()
-		log.info('Checking if the colorscheme was changed ...')
-		local target = vim.g.colors_name
-		if target ~= config.doom.colorscheme then
+		log.info('Checking if the colorscheme or background were changed ...')
+		local target_colorscheme = vim.g.colors_name
+		local target_background = vim.opt.background:get()
+
+		if target_colorscheme ~= config.doom.colorscheme then
 			vim.cmd(
 				'silent !sed -i "s/\''
 					.. config.doom.colorscheme
 					.. "'/'"
-					.. target
-					.. '\'/" $HOME/.config/doom-nvim/doomrc'
+					.. target_colorscheme
+					.. '\'/" $HOME/.config/doom-nvim/doom_config.lua'
 			)
-			log.info('Colorscheme successfully changed to ' .. target)
+			log.info('Colorscheme successfully changed to ' .. target_colorscheme)
 		end
+		if target_background ~= config.doom.colorscheme_bg then
+			vim.cmd(
+				'silent !sed -i "s/\''
+					.. config.doom.colorscheme_bg
+					.. "'/'"
+					.. target_background
+					.. '\'/" $HOME/.config/doom-nvim/doom_config.lua'
+			)
+			log.info('Background successfully changed to ' .. target_background)
+		end
+
 	end)
 
 	if not changed_colorscheme then
