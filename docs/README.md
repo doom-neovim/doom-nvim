@@ -14,7 +14,7 @@ code design, so that there is less between you and Neovim.
 > The documentation is designed to be viewed within Doom Nvim. Access it by pressing
 > `:h doom_nvim`.
 
-# Table of Contents
+## Table of Contents
 
 - [Documentation](#documentation)
   - [Getting Started](#getting-started)
@@ -24,32 +24,32 @@ code design, so that there is less between you and Neovim.
   - [Asking for help](#asking-for-help)
   - [Projects](#projects)
 
-# Documentation
+## Documentation
 
-## Getting Started
+### Getting Started
 
 - [Install](./getting_started.md#install)
 - [Update & Rollback](./getting_started.md#update--rollback)
 - [Configuration](./getting_started.md#configuration)
 
-## Modules
+### Modules
 
 - [Introduction](./modules.md#introduction)
 - [Tweaking Doom Nvim Modules](./modules.md#tweaking-doom-nvim-modules)
 
-## Contributing
+### Contributing
 
 - [Where can I help?](./contributing.md#where-can-i-help)
 - [Reporting issues](./contributing.md#reporting-issues)
 - [Suggesting features, keybinds and enhancements](./contributing.md#suggesting-features-keybinds-and-enhancements)
 - [Contributing code](./contributing.md#contributing-code)
 
-# Community Resources
+## Community Resources
 
-## Asking for help
+### Asking for help
 
 - [Our issues tracker](https://github.com/NTBBloodbath/doom-nvim/issues)
 
-## Projects
+### Projects
 
 - [Projects](https://github.com/NTBBloodbath/doom-nvim/projects)

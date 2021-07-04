@@ -11,7 +11,7 @@ and which code style you should use :heart:
 > **Working on your first Pull Request?** You can learn how from this _free_ series
 > [How to Contribute to an Open Source Project on GitHub](https://kcd.im/pull-request).
 
-# Table of Contents
+## Table of Contents
 
 - [Where can I help?](#where-can-i-help)
 - [Reporting issues](#reporting-issues)
@@ -26,7 +26,7 @@ and which code style you should use :heart:
     - [Keybind conventions](#keybind-conventions)
   - [Submitting pull requests](#submitting-pull-requests)
 
-# Where can I help
+## Where can I help
 
 - If you’ve encountered a bug, [file a bug report](https://github.com/NTBBloodbath/doom-nvim/issues/new/choose).
 - Check out our [issue tracker](https://github.com/NTBBloodbath/doom-nvim/issues)
@@ -38,46 +38,47 @@ and which code style you should use :heart:
   so that it works correctly on your environment, you can do it freely since I
   currently do not have that system to do tests.
 
-# Reporting issues
+## Reporting issues
 
-## Acquire a backtrace from errors
+### Acquire a backtrace from errors
 
 All the errors ocurred in Doom Nvim are saved into a `doom.log` file inside the
-`~/.local/share/nvim/` directory.
-If the logs are very long, please paste it using a [gist].
+`~/.local/share/nvim/` directory. If the logs are very long, please paste it
+using a [gist].
 
-## Create a step-by-step reproduction guide
+### Create a step-by-step reproduction guide
 
 A step-by-step guide can help considerably to debug the error that occurs and
 thus reach a solution more quickly.
 
-## Include information about your Doom Nvim install
+### Include information about your Doom Nvim install
 
 Some important data would be:
 
-- Your Neovim version
-- Your custom configuration if you have one (`$HOME/.config/doom-nvim/doomrc`)
+- Your custom configuration if you have one
+  (`doomrc.lua`, `doom_config.lua` and `plugins.lua`)
 - Which branch of Doom Nvim are you using
 - Which plugins are you using
 
-# Suggest features, keybinds and enhancements
+## Suggest features, keybinds and enhancements
 
-- To request a new feature, please use the prefix `[Feature Request]` in your issue.
-- To request a keybind, please use the prefix `[Keybind Request]` in your issue.
-- To request an enhancement, please use the prefix `[Enhancement]` in your issue.
+- To request a new feature, please use the prefix `Feature request:` in your issue.
+- To request a keybind, please use the prefix `Keybind request:` in your issue.
+- To request an enhancement, please use the prefix `Enhancement:` in your issue.
 
 In this way, it is much easier and more organized to identify the
 type of issue and handle the requests.
 
-# Contributing code
+## Contributing code
 
-## Conventions
+### Conventions
 
-### Code style
+#### Code style
 
 Doom Nvim follows some code style rules like ones the mentioned below:
 
 - Single quotes over double quotes.
+- Tabs over spaces.
 - Variable names in `snake_case`, except in the BASH installation script.
 - Function names in `snake_case`.
 - [stylua] is used to format lua files with the following configuration:
@@ -101,20 +102,20 @@ quote_style = "AutoPreferSingle"
 > **NOTE:** use `selene .` in doom's root dir and selene will automatically
 > detect the `selene.toml` and `doom.toml` files.
 
-### Commits & PRs
+#### Commits & PRs
 
 - Target `develop` instead of `main`.
-  the only exception are hotfixes!
+  The only exception are hotfixes!
 
-### Keybind conventions
+#### Keybind conventions
 
 - The keybindings should be declared in [core/keybindings](../lua/doom/core/keybindings/init.lua),
   except when they are keybindings of [Lua plugins](../lua/doom/modules/config).
 
-## Submitting pull requests
+### Submitting pull requests
 
-After having made all your changes and having tested them locally to certify that
-they work and do not break any of the current code, you can proceed to upload
+After having made all your changes **and having tested them locally to certify that**
+**they work and do not break any of the current code**, you can proceed to upload
 your pull request :)
 
 [stylua]: https://github.com/JohnnyMorganz/StyLua

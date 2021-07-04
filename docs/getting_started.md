@@ -33,6 +33,7 @@
     - [Configuring LSP](#configuring-lsp)
   - [Binding keys](#binding-keys)
 - [Migrating to 3.0.0](#migrating-to-300)
+  - [New configurations](#new-configurations)
 
 ## Install
 
