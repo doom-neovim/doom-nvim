@@ -190,14 +190,23 @@ packer.startup(function(use)
 	-----[[--------------]]-----
 	---     Fuzzy Search     ---
 	-----]]--------------[[-----
+	use({
+	    'nvim-lua/plenary.nvim',
+	    module = 'plenary',
+	})
+	use({
+	    'nvim-lua/popup.nvim',
+	    module = 'popup',
+	})
+
 	local disabled_telescope = functions.is_plugin_disabled('telescope')
 	use({
 		'nvim-telescope/telescope.nvim',
 		cmd = 'Telescope',
 		module = 'telescope',
 		requires = {
-			{ 'nvim-lua/popup.nvim' },
-			{ 'nvim-lua/plenary.nvim' },
+			'popup.nvim' ,
+			'plenary.nvim',
 		},
 		config = require('doom.modules.config.doom-telescope'),
 		disable = disabled_telescope,
@@ -213,7 +222,7 @@ packer.startup(function(use)
 		'lewis6991/gitsigns.nvim',
 		config = require('doom.modules.config.doom-gitsigns'),
 		disable = disabled_gitsigns,
-		requires = { 'nvim-lua/plenary.nvim' },
+		requires = 'plenary.nvim',
 		event = 'BufRead',
 	})
 
@@ -221,7 +230,7 @@ packer.startup(function(use)
 	local disabled_lazygit = functions.is_plugin_disabled('lazygit')
 	use({
 		'kdheepak/lazygit.nvim',
-		requires = { 'nvim-lua/plenary.nvim' },
+		requires = 'plenary.nvim',
 		disable = disabled_lazygit,
 		cmd = { 'LazyGit', 'LazyGitConfig' },
 	})
@@ -335,8 +344,7 @@ packer.startup(function(use)
 	use({
 		'b3nj5m1n/kommentary',
 		disable = disabled_kommentary,
-		opt = true,
-		module = 'kommentary',
+		event = 'BufEnter',
 	})
 
 	-----[[-------------]]-----
@@ -356,11 +364,27 @@ packer.startup(function(use)
 	local disabled_restclient = functions.is_plugin_disabled('restclient')
 	use({
 		'NTBBloodbath/rest.nvim',
+		requires = 'plenary.nvim',
 		config = function()
 			require('rest-nvim').setup()
 		end,
 		disable = disabled_restclient,
 		event = 'BufEnter',
+	})
+
+	local disabled_range_highlight = functions.is_plugin_disabled(
+		'range-highlight'
+	)
+	use({
+		'winston0410/range-highlight.nvim',
+		requires = {
+			{ 'winston0410/cmd-parser.nvim', opt = true, module = 'cmd-parser' },
+		},
+		config = function()
+			require('range-highlight').setup()
+		end,
+		disable = disabled_range_highlight,
+		event = 'BufRead',
 	})
 
 	-----[[----------------]]-----
