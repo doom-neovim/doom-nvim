@@ -16,51 +16,51 @@ log.debug('Loading Doom doomrc module ...')
 local function default_doomrc_values()
 	return {
 		doom = {
-	        ui = {
-		        'dashboard',   -- Start screen
-		        'doom-themes', -- Additional doom emacs' colorschemes
-		        'statusline',  -- Statusline
-		        'tabline',     -- Tabline, shows your buffers list at top
-		        -- 'zen',      -- Distraction free environment
-		        'which-key',   -- Keybindings popup menu like Emacs' guide-key
-		        'indentlines', -- Show indent lines
-	        },
-	        doom = {
-		        -- 'neorg', -- Life Organization Tool
-	        },
-	        editor = {
-		        'auto-session',    -- A small automated session manager for Neovim
-		        'terminal',        -- Terminal for Neovim
-		        'explorer',        -- Tree explorer
-		        'symbols',         -- LSP symbols and tags
-		        -- 'minimap',      -- Code minimap, requires github.com/wfxr/code-minimap
-		        -- 'gitsigns',     -- Git signs
-		        'telescope',       -- Highly extendable fuzzy finder over lists
-		        -- 'restclient',   -- A fast Neovim http client
-		        'formatter',       -- File formatting
-		        'autopairs',       -- Autopairs
-		        -- 'editorconfig', -- EditorConfig support for Neovim
-		        'kommentary',      -- Comments plugin
-	           'lsp',             -- Language Server Protocols
-		        'treesitter',      -- An incremental parsing system for programming tools
-		        'snippets',        -- LSP snippets
-	        },
-	        langs = {
-		        -- 'javascript',  -- JavaScript support
-		        -- 'typescript',  -- TypeScript support
-		        -- 'python +lsp', -- Python support + lsp
-		        'lua',            -- Support for our gods language
-		        -- 'rust +lsp',   -- Let's get rusty!
-		        -- 'config',      -- Configuration files (JSON, YAML, TOML)
-	        },
-	        utilities = {
-		        -- 'suda',      -- Write and read files without sudo permissions
-		        -- 'lazygit',   -- LazyGit integration for Neovim, requires LazyGit
-		        -- 'neogit',    -- Magit for Neovim
-		        -- 'octo',      -- GitHub in Neovim, requires GitHub CLI
-		        -- 'colorizer', -- Fastets colorizer for Neovim
-	        },
-        }
+			ui = {
+				'dashboard', -- Start screen
+				'doom-themes', -- Additional doom emacs' colorschemes
+				'statusline', -- Statusline
+				'tabline', -- Tabline, shows your buffers list at top
+				-- 'zen',      -- Distraction free environment
+				'which-key', -- Keybindings popup menu like Emacs' guide-key
+				'indentlines', -- Show indent lines
+			},
+			doom = {
+				-- 'neorg', -- Life Organization Tool
+			},
+			editor = {
+				'auto-session', -- A small automated session manager for Neovim
+				'terminal', -- Terminal for Neovim
+				'explorer', -- Tree explorer
+				'symbols', -- LSP symbols and tags
+				-- 'minimap',      -- Code minimap, requires github.com/wfxr/code-minimap
+				-- 'gitsigns',     -- Git signs
+				'telescope', -- Highly extendable fuzzy finder over lists
+				-- 'restclient',   -- A fast Neovim http client
+				'formatter', -- File formatting
+				'autopairs', -- Autopairs
+				-- 'editorconfig', -- EditorConfig support for Neovim
+				'kommentary', -- Comments plugin
+				'lsp', -- Language Server Protocols
+				'treesitter', -- An incremental parsing system for programming tools
+				'snippets', -- LSP snippets
+			},
+			langs = {
+				-- 'javascript',  -- JavaScript support
+				-- 'typescript',  -- TypeScript support
+				-- 'python +lsp', -- Python support + lsp
+				'lua', -- Support for our gods language
+				-- 'rust +lsp',   -- Let's get rusty!
+				-- 'config',      -- Configuration files (JSON, YAML, TOML)
+			},
+			utilities = {
+				-- 'suda',      -- Write and read files without sudo permissions
+				-- 'lazygit',   -- LazyGit integration for Neovim, requires LazyGit
+				-- 'neogit',    -- Magit for Neovim
+				-- 'octo',      -- GitHub in Neovim, requires GitHub CLI
+				-- 'colorizer', -- Fastets colorizer for Neovim
+			},
+		},
 	}
 end
 

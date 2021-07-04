@@ -17,4 +17,6 @@ require('doom.core.keybindings')
 require('doom.core.autocmds')
 
 -- Automatically install language servers
-require('doom.core.config').install_servers(require('doom.core.config.doomrc').load_doomrc().langs)
+require('doom.core.config').install_servers(
+	require('doom.core.config.doomrc').load_doomrc().langs
+)

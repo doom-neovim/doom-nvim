@@ -30,7 +30,10 @@ local default_config = {
 
 	-- Any messages above this level will be logged.
 	-- defaults to info
-	level = (doom_config.doom.logging == nil and 'info' or doom_config.doom.logging),
+	level = (
+			doom_config.doom.logging == nil and 'info'
+			or doom_config.doom.logging
+		),
 
 	-- Level configuration
 	modes = {
