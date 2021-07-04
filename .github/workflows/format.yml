@@ -13,13 +13,13 @@ jobs:
         uses: JohnnyMorganz/stylua-action@1.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          args: --config-path=stylua.toml .
+          args: --config-path=stylua.toml -g ./doomrc.lua -- .
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           if [[ ! -z $(git status -s) ]]; then
-            git add init.lua lua/
+            git add *.lua lua/
             git commit -m "Format lua files"
           fi
       - name: Push formatted files
