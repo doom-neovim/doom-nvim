@@ -82,6 +82,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ZeusThundr",
+      "name": "ZeusThundr",
+      "avatar_url": "https://avatars.githubusercontent.com/u/76399616?v=4",
+      "profile": "https://github.com/ZeusThundr",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7
