@@ -38,7 +38,6 @@ local doom = {
 		-- 'editorconfig', -- EditorConfig support for Neovim
 		'kommentary',      -- Comments plugin
 	    'lsp',             -- Language Server Protocols
-		'treesitter',      -- An incremental parsing system for programming tools
 		'snippets',        -- LSP snippets
 	},
 	langs = {

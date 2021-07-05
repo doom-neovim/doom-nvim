@@ -45,13 +45,11 @@ packer.startup(function(use)
 	})
 
 	-- Tree-Sitter
-	local disabled_treesitter = functions.is_plugin_disabled('treesitter')
 	use({
 		'nvim-treesitter/nvim-treesitter',
 		opt = true,
 		run = ':TSUpdate',
 		config = require('doom.modules.config.doom-treesitter'),
-		disable = disabled_treesitter,
 	})
 
 	-- Sessions
