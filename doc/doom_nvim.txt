@@ -57,27 +57,24 @@
 ==============================================================================
 INTRODUCTION                                                 *doom_nvim_intro*
 
-Doom Nvim is a port to Neovim of the Doom Emacs configuration framework for
-GNU Emacs adapted for all vimmer who want less framework in their framework
-and the performance of a handmade configuration (or better). It can be a base
-for your own setup or a resource for Vim enthusiasts to learn more about our
-favorite editor and how to do X things on it by using Vimscript/Lua.
+Doom Neovim is a Neovim port of the Doom Emacs configuration framework, adapted
+for the Neovim user that wants less framework in their framework and the performance
+of a hand-made configuration. You can use it as a base for your own setup or as 
+a learning resource on how to achieve a great Neovim configuration.
 
-Doom Nvim is an opinionated collection of reasonable (and optional) defaults
-with a focus on performance (both runtime and startup) and on
-abstraction-light, readable code design, so that there is less between you
-and Neovim.
-
+Doom Neovim features an opinionated collection of reasonable and optional
+defaults, with a focus on runtime and startup performance, and a clean, 
+readable code base.
 
 ==============================================================================
 OPTIONS                                                    *doom_nvim_options*
 
-NOTICE: Since version 2.1.0 Doom makes use of Lua for the doomrc instead of
+NOTICE: As of version 2.1.0 Doom makes use of Lua for the doomrc instead of
 using Vimscript.
 
-Doom Nvim configuration files resides in the
+The Doom Neovim configuration files resides in the
 `$HOME/.config/doom-nvim/lua/doom/config` directory.
-Default configurations for Doom Nvim resides in
+Default configurations for Doom Neovim reside in
 `$HOME/.config/doom-nvim/lua/doom/config/doomrc.lua`.
 
 All the options available in the `doomrc.lua` file are global fields.
@@ -227,10 +224,10 @@ Specifies the root directory of Doom Nvim.
 ==============================================================================
 AUTOCOMPLETE                                  *doom_nvim_options_autocomplete*
 
-Doom Neovim uses the built-in LSP as completion engine on Neovim Nightly.
-Use <c-n> to select the next suggestion.
+Doom Neovim uses the built-in LSP as completion engine in Neovim 0.5.0.
+Use <C-n> to select the next suggestion.
 
-Autocompletion for parenthesis can be disabled by disabling the autopairs
+Autocompletion for parenthesis can be disabled by disabling the pears.nvim
 plugin (see |doom_nvim_configuration_modules_disabling| for more information)
 
 
@@ -254,7 +251,7 @@ at: `$HOME/.config/doom-nvim/doomrc` (see |doom_nvim_hacking|).
 ==============================================================================
 CONFIGURATION                                        *doom_nvim_configuration*
 
-Doom Nvim configuration files resides under the
+The Doom Neovim configuration files reside under the
 `$HOME/.config/doom-nvim/config/` directory. See |doom_nvim_hacking| for more
 info.
 
@@ -292,8 +289,8 @@ See |doom_nvim_commands| for more information.
 ==============================================================================
 FILE EXPLORER                        *doom_nvim_configuration_layout_explorer*
 
-Doom Nvim uses `kyazdani42/nvim-tree.lua` plugin as a file explorer when using
-Neovim Nightly. It can be toggled by performing the following commands:
+Doom Neovim uses the `kyazdani42/nvim-tree.lua` plugin as a file explorer. 
+It can be toggled by running the following commands:
 <Space>te for `FileExplorer`
 <F3> for `FileExplorer`
 
@@ -329,8 +326,8 @@ See https://github.com/simrat39/symbols-outline.nvim for more information.
 ==============================================================================
 MINIMAP                               *doom_nvim_configuration_layout_minimap*
 
-Doom Nvim uses `wfxr/minimap.vim` plugin as its minimap when using Neovim
-Nightly. It can be toggled by performing the following commands:
+Doom Nvim uses `wfxr/minimap.vim` plugin as its minimap.
+It can be toggled by performing the following commands:
 <Space>tm for `Minimap`
 <F5> for `Minimap`
 
@@ -350,7 +347,7 @@ toggle it, you can enter in `NORMAL` mode:
 ==============================================================================
 MODULES                                      *doom_nvim_configuration_modules*
 
-Doom Nvim consists of around 7 modules and growing. A Doom Nvim Module is a
+Doom Nvim consists of around 7 modules. A Doom Nvim Module is a
 bundle of plugins, configuration and commands, organized into a unit that can
 be toggled easily.
 
@@ -399,7 +396,7 @@ CUSTOM PLUGINS                        *doom_nvim_configuration_custom_plugins*
 To use your own plugins in Doom Nvim you can use the `Doom.custom_plugins`
 field on your `doomrc`.
 
-To add plugins without extra configurations (e.g., if a plugin does not depends
+To add plugins without extra configurations (e.g., if a plugin does not depend
 on other plugins), you can simply set it as follow:
 
     Doom.custom_plugins = { 'andweeb/presence.nvim' }
@@ -425,7 +422,7 @@ As you can see, the second way depends on a structure to work.
 ==============================================================================
 LSP                                              *doom_nvim_configuration_lsp*
 
-To easily install LSPs and without having to do it system-wide or having to
+To easily install language servers and without having to do it system-wide or having to
 manually configure servers, Doom Nvim makes use of `kabouzeid/nvim-lspinstall`.
 You can see a list of currently supported languages at
 https://github.com/kabouzeid/nvim-lspinstall#bundled-installers
@@ -615,19 +612,17 @@ KNOWN ISSUES                                                *doom_nvim_issues*
 FAQ                                                            *doom_nvim_faq*
 
 - General
-  - What type of vimmer is Doom Nvim intended for?
+  - Who is Doom Nvim intended for?
 
-Doom Nvim is intended for all types of Vimmer who want a stable and efficient
+Doom Nvim is intended for anyone who wants a stable and efficient
 development environment without spending a lot of time setting everything up.
 
-  - Why does Doom Nvim only support Neovim nightly?
+  - Why does Doom Nvim only support Neovim 0.5.0 (and beyond)?
 
-Doom Nvim doesn't support Neovim versions lower than Nightly (0.5) due to:
-- some features would be lost
-- Not all Lua plugins have good alternatives in Vimscript, so the experience
-  would not be the same
-- performance would not be the same as Lua cannot be used
-
+Doom Nvim relies on lua for the configuration and use of many plugins. Since 
+lua is not available in neovim 0.4.4 and below, it is not possible to use Doom
+Nvim with a neovim version lower than 0.5.0. However, the Doom Nvim installer 
+automatically installs Neovim 0.5.0 for you!
 
 ==============================================================================
 HACKING DOOM NVIM                                          *doom_nvim_hacking*
@@ -743,7 +738,59 @@ CHANGELOG                                                *doom_nvim_changelog*
 The format is based on Keep a Changelog (https://keepachangelog.com/en/1.0.0/),
 and this project adheres to Semantic Versioning
 (https://semver.org/spec/v2.0.0.html).
-
+2.3.2
+    - Added
+        - Configurations
+          - `auto_install_plugins` option
+    - Changed
+        - Use `fix/premature-display-opening` branch in packer (temporal)
+        - Cleaned `plugins/init.lua` code
+        - Reverted [2.1.5] changes related to how packer is installed
+    - Fixed
+        - Plugins installation on fresh installation
+- 2.3.1
+    - Fixed 
+        - Fix typos in custom plugins example
+        - Fix custom plugins enabling/disabling
+- 2.3.0
+    - Added
+        - Configurations
+          - `complete_size` option
+          - `complete_transparency` option
+    - Changed
+        - Organized doomrc
+    - Removed
+        - Plugins
+          - `focus`
+- 2.2.0
+    - Added
+        - LSP symbol diagnostics (_check `doomrc`_)
+        - Lspsaga (go to definition, references, hover_doc, etc)
+        - Better keybindings
+        - Tab completion
+        - Way more customization options to `doomrc`
+        - You can now easily add an `undodir` in `doomrc` (default = `false`)
+        - You now can change `new_file_split` to `false` in `doomrc` so `<Leader>fn` doesn't create a split
+    - Changed 
+        - Plugins
+          - Whichkey
+            - now appears as a small window at the bottom (increase in screen real estate)
+            - _NOTE: you can change the background color by tweaking `whichkey_bg` in `doomrc`_
+          - Dashboard
+            - Changed icons and Option names
+            - You now set your header/colors through `doomrc`
+          - Symbols-Outline / Nvim-tree
+            - Default positions have changed (Nvim-tree will now open to the left by default)
+        - Improvements to loading optional doom plugins
+    - Removed 
+        - Many hard coded config options
+        - Dashboard: removed messy code
+        - Telescope: `vimgrep_arguments` (returning `nil` on some machines)
+        - Whichkey: `Window: border, position. Layout: spacing`
+    - Fixed
+        - Telescope grep returning `nil`
+        - Whichkey triggering when pressing certain keys
+        - Minor bug fixes
 - 2.1.5
     - Changed
         - Installation script will not install packer anymore, it'll be installed by Doom
