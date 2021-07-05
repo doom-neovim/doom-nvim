@@ -145,7 +145,7 @@ local doom = {
 	-- Symbols-Outline on the left
 	-- Places the Symbols-Outline buffer to the left when enabled
 	-- @default = false
-	symbols_outline_left = true,
+	symbols_outline_left = false,
 
 	-- Show hidden files
 	-- @default = true

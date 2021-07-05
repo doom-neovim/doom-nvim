@@ -13,20 +13,20 @@
 
 local doom = {
 	ui = {
-		'dashboard',   -- Start screen
-		'doom-themes', -- Additional doom emacs' colorschemes
-		'statusline',  -- Statusline
-		'tabline',     -- Tabline, shows your buffers list at top
-		-- 'zen',      -- Distraction free environment
-		'which-key',   -- Keybindings popup menu like Emacs' guide-key
-		'indentlines', -- Show indent lines
+		'dashboard',      -- Start screen
+		-- 'doom-themes', -- Additional doom emacs' colorschemes
+		'statusline',     -- Statusline
+		'tabline',        -- Tabline, shows your buffers list at top
+		-- 'zen',         -- Distraction free environment
+		'which-key',      -- Keybindings popup menu like Emacs' guide-key
+		-- 'indentlines', -- Show indent lines
 	},
 	doom = {
 		-- 'neorg', -- Life Organization Tool
 	},
 	editor = {
 		'auto-session',    -- A small automated session manager for Neovim
-		'terminal',        -- Terminal for Neovim
+		-- 'terminal',     -- Terminal for Neovim
 		'explorer',        -- Tree explorer
 		'symbols',         -- LSP symbols and tags
 		-- 'minimap',      -- Code minimap, requires github.com/wfxr/code-minimap
