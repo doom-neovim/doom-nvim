@@ -2,20 +2,20 @@
 
 # Doom Neovim
 
-![License](https://img.shields.io/github/license/NTBBloodbath/doom-nvim?style=flat-square)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-![Latest Release](https://img.shields.io/github/v/release/NTBBloodbath/doom-nvim?include_prereleases&style=flat-square)
-![Neovim version](https://img.shields.io/badge/Neovim-0.5-57A143?style=flat-square&logo=neovim)
+![License](https://img.shields.io/github/license/NTBBloodbath/doom-nvim?style=for-the-badge)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
+![Latest Release](https://img.shields.io/github/v/release/NTBBloodbath/doom-nvim?include_prereleases&style=for-the-badge)
+![Neovim version](https://img.shields.io/badge/Neovim-0.5-57A143?style=for-the-badge&logo=neovim)
 
 [Features](#features) • [Install](#install) • [Documentation] • [Contribute](#contribute)
 
-![Doom Nvim demo](./assets/demo.png)
+![Doom Nvim demo](https://i.imgur.com/ejEnlEP.png)
 
 </div>
 
 ---
 
-# Introduction
+## Introduction
 
 <a href="http://ultravioletbat.deviantart.com/art/Yay-Evil-111710573">
   <img src="https://raw.githubusercontent.com/hlissner/doom-emacs/screenshots/cacochan.png" align="right" />
@@ -39,24 +39,18 @@ Its design is guided by these mantras:
 
 - **Gotta go fast.** Startup and run-time performance are priorities.
   That is why Doom Nvim uses Lua instead of Vimscript for its configurations
-  and searches for tiny but powerful plugins.
+  and lazy-loads all the plugins.
 - **Your system, your rules.** You know better than a third party what is
   convenient for you. At least, Doom hopes so! It won't _automatically_
-  install system dependencies, plugins that have external dependencies
+  install system dependencies nor plugins that have external dependencies
   (and will force plugins not to do so either if they have any external dependencies).
 - **What does not serve you, you throw away.** Doom Nvim is made up of a moderate number
-  of plugins (~ 40 plugins as of this writing). You more than anyone know what you need in
+  of plugins (~40 plugins as of this writing). You more than anyone know what you need in
   your environment and that's why Doom Nvim allows you to easily disable plugins and add new ones.
   Also, Doom Nvim doesn't come with TreeSitter parsers or LSPs by default,
-  so you can use **only** what you need.
+  so **you can use _only_ what you need**.
 
-# Acknowledgements
-
-- [hlissner](https://github.com/hlissner) per doing Doom Emacs :heart:.
-- [romgrk](https://github.com/romgrk) per doing a port to Vim of Doom One
-  colorscheme from Doom Emacs (and everyone who improves the colorscheme!).
-
-# Notices
+## Notices
 
 - **2021-07-03**: The `doomrc` has been fragmented and it is not working anymore,
   please see [New configurations](./docs/getting_started.md#new-configurations)
@@ -64,15 +58,15 @@ Its design is guided by these mantras:
 - **2021-05-01**: The `doomrc` is not using Vimscript anymore, please see the
   new [doomrc](./doomrc) file structure for use it with Lua.
 
-# Features
+## Features
 
 - Minimalistic good looks inspired by modern code editors.
-- Curated and sane defaults for many packages.
+- Curated and sane defaults for many plugins.
 - A modular organizational structure for separating concerns in your config.
-- A declarative and powerful [package management system]
+- A declarative and powerful [plugins management system](https://github.com/wbthomason/packer.nvim)
   (powered by `packer.nvim`).
 - Opt-in LSP integration for many languages by using the new
-  built-in LSP included on Neovim Nightly.
+  built-in LSP included on Neovim 0.5.
 - An Emacs which-key like plugin to manage your `keybindings`, centered around leader
   prefix key (<kbd>SPC</kbd>).
 - Per-file indentation style detection and [editorconfig] integration. Let
@@ -81,11 +75,11 @@ Its design is guided by these mantras:
 - Project search (and more) utilities, powered by
   [telescope.nvim].
 
-# Prerequisites
+## Prerequisites
 
 - Curl 7.x
 - Git 2.23+
-- Neovim 0.5.0
+- Neovim 0.5.0 onwards
 - GNU `find`
 - _OPTIONALS:_
   - [ripgrep] 11.0+ or [fd] 7.3.0+ (improves file indexing performance for some commands)
@@ -94,7 +88,7 @@ Its design is guided by these mantras:
 Doom is comprised of [~40 optional plugins][modules], some of which may have
 additional dependencies. [Please visit their documentation][modules].
 
-# Install
+## Install
 
 Simply run the following command:
 
@@ -105,10 +99,10 @@ curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.
 Then [read our Getting Started guide][getting-started] to be walked through
 installing, configuring and maintaining Doom Nvim.
 
-> NOTE: If you want to see all the available commands in the installation script, then use
+> **NOTE**: If you want to see all the available commands in the installation script, then use
 > <kbd>bash -s -- -h</kbd> instead of just <kbd>bash</kbd>
 
-# Getting help
+## Getting help
 
 Neovim is not very difficult. Although you will occasionally run into problems
 if you are not an advanced vimmer. When you do, here are some places you can look help:
@@ -116,24 +110,34 @@ if you are not an advanced vimmer. When you do, here are some places you can loo
 - [Our documentation][documentation] covers many use cases.
   - [The Configuration section][configuration] covers how to configure Doom Nvim and
     its modules.
-  - [The Package Management section][package-management] covers how to install
-    and disable modules.
+  - [The Plugins Management section][plugins-management] covers how to install
+    and disable plugins.
 - Search the [Doom Nvim's issue tracker](https://github.com/NTBBloodbath/doom-nvim/issues)
   before opening a new issue to see if your issue was already been reported and to
   avoid duplicating issues.
 
-# Contribute
+## Acknowledgements
+
+- [hlissner](https://github.com/hlissner) per doing Doom Emacs :heart:.
+- [romgrk](https://github.com/romgrk) per doing a port to Vim of Doom One
+  colorscheme from Doom Emacs (and everyone who improves the colorscheme!).
+
+## Contribute
 
 - I really :heart: pull requests and bug reports (please see the [Contributing Guidelines][contribute] before contributing)!
 - Don't hesitate to [tell me my Lua coding style sucks](https://github.com/NTBBloodbath/doom-nvim/issues/new),
-  but please tell me why (I am new to Lua, I may have some bad practices that can be fixed in code).
+  but please tell me why.
+
+## License
+
+Doom Nvim is licensed under [MIT](./LICENSE) license.
 
 [contribute]: docs/contributing.md
 [documentation]: docs/README.md
 [getting-started]: docs/getting_started.md
 [install]: docs/getting_started.md#install
 [configuration]: docs/getting_started.md#configuring-doom
-[package-management]: docs/getting_started.md#package-management
+[plugins-management]: docs/getting_started.md#plugins-management
 [modules]: docs/modules.md
 [editorconfig]: http://editorconfig.org/
 [fd]: https://github.com/sharkdp/fd
