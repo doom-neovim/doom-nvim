@@ -22,6 +22,12 @@ local doom = {
 	-- @default = false
 	fmt_on_save = false,
 
+    -- Disable Vim macros
+    -- false : Enable Vim macros
+    -- true  : Disable Vim macros
+    -- @default = true
+    disable_macros = true,
+
 	-- Autosave sessions
 	-- false : Disable session autosave
 	-- true  : Enable session autosave

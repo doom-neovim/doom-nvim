@@ -13,6 +13,8 @@ log.debug('Loading Doom keybindings module ...')
 
 -- Additional options for mappings
 local opts = { silent = true }
+
+-- Map WhichKey popup menu
 utils.map('n', '<Space>', ':WhichKey <leader><CR>', opts)
 
 -------------------------------------------------
@@ -46,25 +48,13 @@ utils.map('n', '<Space>', ':WhichKey <leader><CR>', opts)
 ---]]-----------------[[---
 -- If the LSP group is not disabled or the nvim-compe plugin is not disabled
 -- then set its mappings.
-if
-	functions.check_plugin('nvim-compe', 'opt')
-then
+if functions.check_plugin('nvim-compe', 'opt') then
 	-- https://github.com/hrsh7th/nvim-compe#mappings
 	utils.map('i', '<expr> <C-Space>', 'compe#complete()', opts)
 	utils.map('i', '<expr> <CR>', 'compe#confirm("<CR>")', opts)
 	utils.map('i', '<expr> <C-e>', 'compe#close("<C-e>")', opts)
-	utils.map(
-		'i',
-		'<expr> <C-f>',
-		'compe#scroll({ "delta": +4 })',
-		opts
-	)
-	utils.map(
-		'i',
-		'<expr> <C-d>',
-		'compe#scroll({ "delta": -4 })',
-		opts
-	)
+	utils.map('i', '<expr> <C-f>', 'compe#scroll({ "delta": +4 })', opts)
+	utils.map('i', '<expr> <C-d>', 'compe#scroll({ "delta": -4 })', opts)
 	utils.map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definition
 	utils.map('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts) -- gr: go to reference
 	utils.map('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts) -- gi: buf implementation
@@ -103,28 +93,25 @@ utils.map('n', '<S-Tab>', ':bprevious<CR>', opts)
 utils.map('n', '<esc>', ':noh<CR>', opts)
 
 --- F<n> keybindings
---[[ if not utils.has_value(Doom.disabled_plugins, 'outline') then
+if not functions.is_plugin_disabled('symbols') then
 	utils.map('n', '<F2>', ':SymbolsOutline<CR>', opts)
 end
-if not utils.has_value(Doom.disabled_plugins, 'tree') then
+if not functions.is_plugin_disabled('explorer') then
 	utils.map('n', '<F3>', ':NvimTreeToggle<CR>', opts)
 end
-if not utils.has_value(Doom.disabled_plugins, 'minimap') then
+if not functions.is_plugin_disabled('minimap') then
 	utils.map('n', '<F5>', ':MinimapToggle<CR>', opts)
 end
-if not utils.has_value(Doom.disabled_plugins, 'zen') then
+if not functions.is_plugin_disabled('zen') then
 	utils.map('n', '<F6>', ':TZAtaraxis<CR>', opts)
 end
-if
-	not utils.has_value(Doom.disabled_modules, 'web')
-	and (not utils.has_value(Doom.disabled_plugins, 'restclient'))
-then
+if not functions.is_plugin_disabled('restclient') then
 	utils.map('n', '<F7>', ':<Plug>RestNvim<CR>', opts)
-end ]]
+end
+
 ---[[------------------------------]]---
 --     Window Movements keys          --
 ---]]------------------------------]]---
-
 utils.map('n', '<C-h>', '<C-w>h', opts)
 utils.map('n', '<C-j>', '<C-w>j', opts)
 utils.map('n', '<C-k>', '<C-w>k', opts)
@@ -136,15 +123,16 @@ utils.map('n', '<C-l>', '<C-w>l', opts)
 utils.map('i', 'jk', '<ESC>', opts)
 
 ---[[-----------------]]---
---     Select Movement   --
+--    Select Movement    --
 ---]]-----------------[[---
 utils.map('x', 'K', ":move '<-2<CR>gv-gv", opts)
 utils.map('x', 'J', ":move '>+1<CR>gv-gv", opts)
 
-vim.cmd('tnoremap <Esc> <C-\\><C-n>') -- get out of terminal insert mode into normal mode with Esc
+-- get out of terminal insert mode into normal mode with Esc
+vim.cmd('tnoremap <Esc> <C-\\><C-n>')
 
 ---[[-----------------]]---
---     Resizing Splits   --
+--    Resizing Splits    --
 ---]]-----------------[[---
 vim.cmd([[
   nnoremap <silent> <C-Up>    :resize -2<CR>
@@ -162,8 +150,10 @@ utils.map('n', '<c-z>', '<Nop>', opts)
 -- Disable ex mode
 utils.map('n', 'Q', '<Nop>', opts)
 
--- Disable recording
-utils.map('n', 'q', '<Nop>', opts)
+-- Disable recording macros
+if config.doom.disable_macros then
+	utils.map('n', 'q', '<Nop>', opts)
+end
 
 -- Fast exit from Doom Nvim and write messages to logs
 utils.map(
