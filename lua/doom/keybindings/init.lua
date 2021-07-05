@@ -51,19 +51,19 @@ if
     and Check_plugin('nvim-compe')
 then
 	-- https://github.com/hrsh7th/nvim-compe#mappings
-	Map('i', '<expr> <C-Space>', Fn['compe#complete'](), opts)
-	Map('i', '<expr> <CR>', Fn['compe#confirm']('<CR>'), opts)
-	Map('i', '<expr> <C-e>', Fn['compe#close']('<C-e>'), opts)
+	Map('i', '<expr> <C-Space>', 'compe#complete("<C-space>")', opts)
+	Map('i', '<expr> <CR>', 'compe#confirm("<CR>")', opts)
+	Map('i', '<expr> <C-e>', 'compe#close("<C-e>")', opts)
 	Map(
 		'i',
 		'<expr> <C-f>',
-		Fn['compe#scroll']({ delta = '+4' }),
+		'compe#scroll({ "delta": +4 })',
 		opts
 	)
 	Map(
 		'i',
 		'<expr> <C-d>',
-		Fn['compe#scroll']({ delta = '-4' }),
+		'compe#scroll({ "delta": -4 })',
 		opts
 	)
     Map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definitionA
