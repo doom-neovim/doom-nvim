@@ -16,7 +16,7 @@ log.debug('Loading Doom core config module ...')
 -- 2. Running Neovim 0.4 or below
 if vim.fn.has('nvim') == 1 then
 	if vim.fn.has('nvim-0.5') ~= 1 then
-		log.fatal('Doom Nvim requires Neovim 0.5.0')
+		log.fatal('Doom Nvim requires Neovim 0.5.0, please update it')
 	end
 else
 	log.fatal(
@@ -173,7 +173,7 @@ local function default_doom_config_values()
 		-- Symbols-Outline on the left
 		-- Places the Symbols-Outline buffer to the left when enabled
 		-- @default = false
-		symbols_outline_left = true,
+		symbols_outline_left = false,
 
 		-- Show hidden files
 		-- @default = true
@@ -396,16 +396,23 @@ end
 M.install_servers = function(langs)
 	local lspinstall = require('lspinstall')
 	local installed_servers = lspinstall.installed_servers()
+	local available_servers = lspinstall.available_servers()
 
 	for _, lang in ipairs(langs) do
 		local lang_str = lang
 		lang = lang:gsub('%s+%+lsp', '')
-	
+
 		-- If the +lsp flag exists and the language server is not installed yet
 		if
 			lang_str:find('%+lsp') and (not utils.has_value(installed_servers, lang))
 		then
-			lspinstall.install_server(lang)
+		    -- Try to install the server only if there is a server available for
+		    -- the language, oterwise raise a warning
+		    if utils.has_value(available_servers, lang) then
+    			lspinstall.install_server(lang)
+    		else
+    		    log.warn('The language ' .. lang .. ' does not have a server, please remove the "+lsp" flag')
+    		end
 		end
 	end
 end
