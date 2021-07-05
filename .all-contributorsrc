@@ -1,0 +1,24 @@
+{
+  "projectName": "doom-nvim",
+  "projectOwner": "NTBBloodbath",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "gitmoji",
+  "contributors": [
+    {
+      "login": "JohnIrle",
+      "name": "John Irle",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11879736?v=4",
+      "profile": "https://johnirle.com/",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
