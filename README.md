@@ -130,7 +130,7 @@ if you are not an advanced vimmer. When you do, here are some places you can loo
 
 ## License
 
-Doom Nvim is licensed under [MIT](./LICENSE) license.
+Doom Nvim is licensed under [GPLv2](./LICENSE) license.
 
 [contribute]: docs/contributing.md
 [documentation]: docs/README.md
