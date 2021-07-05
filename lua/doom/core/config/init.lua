@@ -398,9 +398,12 @@ M.install_servers = function(langs)
 	local installed_servers = lspinstall.installed_servers()
 
 	for _, lang in ipairs(langs) do
+		local lang_str = lang
+		lang = lang:gsub('%s+%+lsp', '')
+	
 		-- If the +lsp flag exists and the language server is not installed yet
 		if
-			lang:find('%+lsp') and not utils.has_value(installed_servers, lang)
+			lang_str:find('%+lsp') and (not utils.has_value(installed_servers, lang))
 		then
 			lspinstall.install_server(lang)
 		end
