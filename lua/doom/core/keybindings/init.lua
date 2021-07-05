@@ -47,24 +47,22 @@ utils.map('n', '<Space>', ':WhichKey <leader><CR>', opts)
 -- If the LSP group is not disabled or the nvim-compe plugin is not disabled
 -- then set its mappings.
 if
-	--[[ not utils.has_value(Doom.disabled_modules, 'lsp')
-	and (not utils.has_value(Doom.disabled_plugins, 'compe')) ]]
-	functions.check_plugin('nvim-compe')
+	functions.check_plugin('nvim-compe', 'opt')
 then
 	-- https://github.com/hrsh7th/nvim-compe#mappings
-	utils.map('i', '<expr> <C-Space>', vim.fn['compe#complete'](), opts)
-	utils.map('i', '<expr> <CR>', vim.fn['compe#confirm']('<CR>'), opts)
-	utils.map('i', '<expr> <C-e>', vim.fn['compe#close']('<C-e>'), opts)
+	utils.map('i', '<expr> <C-Space>', 'compe#complete()', opts)
+	utils.map('i', '<expr> <CR>', 'compe#confirm("<CR>")', opts)
+	utils.map('i', '<expr> <C-e>', 'compe#close("<C-e>")', opts)
 	utils.map(
 		'i',
 		'<expr> <C-f>',
-		vim.fn['compe#scroll']({ delta = '+4' }),
+		'compe#scroll({ "delta": +4 })',
 		opts
 	)
 	utils.map(
 		'i',
 		'<expr> <C-d>',
-		vim.fn['compe#scroll']({ delta = '-4' }),
+		'compe#scroll({ "delta": -4 })',
 		opts
 	)
 	utils.map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definition
