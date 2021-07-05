@@ -46,6 +46,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "bandithedoge",
+      "name": "bandithedoge",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26331682?v=4",
+      "profile": "http://bandithedoge.com/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7
