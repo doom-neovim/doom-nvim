@@ -91,6 +91,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "leonistor",
+      "name": "Leo Nistor",
+      "avatar_url": "https://avatars.githubusercontent.com/u/310468?v=4",
+      "profile": "https://github.com/leonistor",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7
