@@ -2,3 +2,6 @@
 plugin/
 sessions/
 time_cost.txt
+# Backup files
+.doom_releases
+.doom_backup_hash
