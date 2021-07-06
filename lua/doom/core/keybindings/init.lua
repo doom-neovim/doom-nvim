@@ -46,15 +46,16 @@ utils.map('n', '<Space>', ':WhichKey <leader><CR>', opts)
 ---[[-----------------]]---
 --    LSP Keybindings    --
 ---]]-----------------[[---
--- If the LSP group is not disabled or the nvim-compe plugin is not disabled
--- then set its mappings.
+-- If the LSP is not disabled and compe is installed then set its mappings.
 if functions.check_plugin('nvim-compe', 'opt') then
+    local compe_opts = vim.tbl_extend('force', opts, { expr = true })
+
 	-- https://github.com/hrsh7th/nvim-compe#mappings
-	utils.map('i', '<expr> <C-Space>', 'compe#complete()', opts)
-	utils.map('i', '<expr> <CR>', 'compe#confirm("<CR>")', opts)
-	utils.map('i', '<expr> <C-e>', 'compe#close("<C-e>")', opts)
-	utils.map('i', '<expr> <C-f>', 'compe#scroll({ "delta": +4 })', opts)
-	utils.map('i', '<expr> <C-d>', 'compe#scroll({ "delta": -4 })', opts)
+	utils.map('i', '<C-Space>', 'compe#complete()', compe_opts)
+	utils.map('i', '<CR>', 'compe#confirm("<CR>")', compe_opts)
+	utils.map('i', '<C-e>', 'compe#close("<C-e>")', compe_opts)
+	utils.map('i', '<C-f>', 'compe#scroll({ "delta": +4 })', compe_opts)
+	utils.map('i', '<C-d>', 'compe#scroll({ "delta": -4 })', compe_opts)
 	utils.map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definition
 	utils.map('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts) -- gr: go to reference
 	utils.map('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts) -- gi: buf implementation
