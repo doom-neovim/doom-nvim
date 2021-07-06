@@ -68,7 +68,6 @@ local doom = {
 		-- 'suda',            -- Write and read files without sudo permissions
 		-- 'lazygit',         -- LazyGit integration for Neovim, requires LazyGit
 		-- 'neogit',          -- Magit for Neovim
-		-- 'octo',            -- GitHub in Neovim, requires GitHub CLI
 		-- 'colorizer',       -- Fastets colorizer for Neovim
 		'range-highlight',    -- hightlights ranges you have entered in commandline
 	},
