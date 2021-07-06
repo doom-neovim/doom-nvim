@@ -41,16 +41,28 @@ local doom = {
 		'snippets',        -- LSP snippets
 	},
 	langs = {
-		-- TODO: add more languages here
-		-- To enable LSP for a language just add the +lsp flag at the end
-		-- e.g. 'rust +lsp'
+		-- To enable the language server for a language just add the +lsp flag
+		-- at the end, e.g. 'rust +lsp'. This will install the rust TreeSitter
+		-- parser and rust-analyzer
 		--
+		-- 'html',        -- HTML support
+		-- 'css',         -- CSS support
 		-- 'javascript',  -- JavaScript support
 		-- 'typescript',  -- TypeScript support
+		-- 'bash',        -- The terminal gods language
 		-- 'python +lsp', -- Python support + lsp
+		-- 'ruby',        -- Look ma, I love the gems!
 		'lua',            -- Support for our gods language
+		-- 'elixir',      -- Build scalable and maintainable software
+		-- 'haskell',     -- Because Functional programming is fun, isn't it?
+
 		-- 'rust +lsp',   -- Let's get rusty!
+		-- 'go',          -- Hello, gopher
+		-- 'cpp',         -- C++ support
+		-- 'java',        -- Java support
+
 		-- 'config',      -- Configuration files (JSON, YAML, TOML)
+		-- 'dockerfile',  -- Do you like containers, right?
 	},
 	utilities = {
 		-- 'suda',            -- Write and read files without sudo permissions
