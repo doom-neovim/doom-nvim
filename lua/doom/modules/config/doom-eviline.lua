@@ -1,5 +1,6 @@
 return function()
 	local utils = require('doom.utils')
+	local config = require('doom.core.config').load_config()
 
 	local bo = vim.bo
 	local gl = require('galaxyline')
@@ -126,7 +127,7 @@ return function()
 				vim.api.nvim_command(
 					'hi GalaxyViMode guifg=' .. mode_color[vim.fn.mode()]
 				)
-				return '  '
+				return '  '
 			end,
 			highlight = { get_color('red'), get_color('bg'), 'bold' },
 		},
@@ -186,7 +187,7 @@ return function()
 		DiagnosticError = {
 			provider = 'DiagnosticError',
 			condition = is_not_dashboard,
-			icon = '   ',
+			icon = config.doom.lsp_error,
 			highlight = { get_color('red'), get_color('bg') },
 		},
 	}
@@ -194,7 +195,7 @@ return function()
 		DiagnosticWarn = {
 			provider = 'DiagnosticWarn',
 			condition = is_not_dashboard,
-			icon = '   ',
+			icon = config.doom.lsp_warning,
 			highlight = { get_color('orange'), get_color('bg') },
 		},
 	}
@@ -202,7 +203,7 @@ return function()
 		DiagnosticInfo = {
 			provider = 'DiagnosticInfo',
 			condition = is_not_dashboard,
-			icon = '   ',
+			icon = config.doom.lsp_hint,
 			highlight = { get_color('blue'), get_color('bg') },
 		},
 	}
