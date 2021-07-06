@@ -148,8 +148,13 @@ M.custom_options = function()
 	-- Set a custom command to update Doom Nvim
 	-- can be called by using :DoomUpdate
 	vim.cmd(
-		'command! DoomUpdate !git -C ~/.config/doom-nvim/ pull --rebase'
+		'command! DoomUpdate lua require("doom.core.functions").update_doom()'
 	)
+	-- Set a custom command to rollback Doom Nvim version
+	-- can be called by using :DoomRollback
+	--[[ vim.cmd(
+	    'command! DoomRollback lua require("doom.core.functions").rollback()'
+	) ]]
 
 	-- Load user-defined settings from the Neovim field in the doomrc file
 	functions.load_custom_settings(config.nvim.autocmds, 'autocmds')
