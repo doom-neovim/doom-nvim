@@ -46,16 +46,17 @@ utils.map('n', '<Space>', ':WhichKey <leader><CR>', opts)
 ---[[-----------------]]---
 --    LSP Keybindings    --
 ---]]-----------------[[---
+
+local lsp_opts = vim.tbl_extend('force', opts, { expr = true })
+
 -- If the LSP is not disabled and compe is installed then set its mappings.
 if functions.check_plugin('nvim-compe', 'opt') then
-    local compe_opts = vim.tbl_extend('force', opts, { expr = true })
-
 	-- https://github.com/hrsh7th/nvim-compe#mappings
-	utils.map('i', '<C-Space>', 'compe#complete()', compe_opts)
-	utils.map('i', '<CR>', 'compe#confirm("<CR>")', compe_opts)
-	utils.map('i', '<C-e>', 'compe#close("<C-e>")', compe_opts)
-	utils.map('i', '<C-f>', 'compe#scroll({ "delta": +4 })', compe_opts)
-	utils.map('i', '<C-d>', 'compe#scroll({ "delta": -4 })', compe_opts)
+	utils.map('i', '<C-Space>', 'compe#complete()', lsp_opts)
+	utils.map('i', '<CR>', 'compe#confirm("<CR>")', lsp_opts)
+	utils.map('i', '<C-e>', 'compe#close("<C-e>")', lsp_opts)
+	utils.map('i', '<C-f>', 'compe#scroll({ "delta": +4 })', lsp_opts)
+	utils.map('i', '<C-d>', 'compe#scroll({ "delta": -4 })', lsp_opts)
 	utils.map('n', 'gd', ':lua vim.lsp.buf.definition()<CR>', opts) -- gd: jump to definition
 	utils.map('n', 'gr', ':lua vim.lsp.buf.references()<CR>', opts) -- gr: go to reference
 	utils.map('n', 'gi', ':lua vim.lsp.buf.implementation()<CR>', opts) -- gi: buf implementation
@@ -79,6 +80,17 @@ if functions.check_plugin('nvim-compe', 'opt') then
 		'command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()'
 	)
 end
+
+-- LuaSnip mappings
+utils.map('n', '<Tab>', 'luasnip#expand_or_jumpable() ? "<Plug>luasnip-expand-or-jump" : "<Tab>"', lsp_opts)
+utils.map('i', '<S-Tab>', '<cmd>lua require("luasnip").jump(-1)<CR>', opts)
+
+utils.map('s', '<Tab>', '<cmd>lua require("luasnip").jump(1)<CR>', opts)
+utils.map('s', '<S-Tab>', '<cmd>lua require("luasnip").jump(-1)<CR>', opts)
+
+utils.map('i', '<C-E>', 'luasnip#choice_active() ? "<Plug>luasnip-next-choice" : "<C-E>"', lsp_opts)
+utils.map('s', '<C-E>', 'luasnip#choice_active() ? "<Plug>luasnip-next-choice" : "<C-E>"', lsp_opts)
+
 
 if config.doom.new_file_split then
 	utils.map('n', '<Leader>fn', ':new<CR>', opts)

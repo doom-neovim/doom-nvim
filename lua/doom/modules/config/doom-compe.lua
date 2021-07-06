@@ -26,7 +26,7 @@ return function()
 			nvim_lua = true,
 			spell = false,
 			tags = true,
-			snippets_nvim = true,
+			snippets_nvim = false,
 			treesitter = true,
 		},
 	})

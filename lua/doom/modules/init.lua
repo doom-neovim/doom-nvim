@@ -273,7 +273,13 @@ packer.startup(function(use)
 	-- Snippets
 	local disabled_snippets = functions.is_plugin_disabled('snippets')
 	use({
-		'norcalli/snippets.nvim',
+	    'L3MON4D3/LuaSnip',
+		disable = (disabled_lsp and true or disabled_snippets),
+		opt = true,
+		after = 'nvim-compe',
+	})
+	use({
+		'rafamadriz/friendly-snippets',
 		disable = (disabled_lsp and true or disabled_snippets),
 		opt = true,
 		after = 'nvim-compe',
