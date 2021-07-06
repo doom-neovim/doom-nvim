@@ -52,6 +52,14 @@ packer.startup(function(use)
 		config = require('doom.modules.config.doom-treesitter'),
 	})
 
+	-- Neorg
+	local disabled_neorg = functions.is_plugin_disabled('neorg')
+	use({
+	    'vhyrro/neorg',
+	    config = require('doom.modules.config.doom-neorg'),
+	    disable = disabled_neorg,
+	})
+
 	-- Sessions
 	local disabled_sessions = functions.is_plugin_disabled('auto-session')
 	use({
