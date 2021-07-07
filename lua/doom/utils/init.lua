@@ -15,6 +15,8 @@ M.doom_root = vim.fn.expand('$HOME/.config/doom-nvim')
 M.doom_logs = vim.fn.stdpath('data') .. '/doom.log'
 M.doom_report = vim.fn.stdpath('data') .. '/doom_report.md'
 
+M.git_workspace = string.format('git -C %s ', M.doom_root)
+
 -- mappings wrapper, extracted from
 -- https://github.com/ojroques/dotfiles/blob/master/nvim/init.lua#L8-L12
 M.map = function(mode, lhs, rhs, opts)
@@ -93,15 +95,15 @@ end
 -- @tparam string content The content to be written in the file
 -- @tparam string mode The mode for opening the file, e.g. 'w+'
 M.write_file = function(path, content, mode)
-    -- 644 sets read and write permissions for the owner, and it sets read-only
-    -- mode for the group and others.
-    vim.loop.fs_open(path, mode, tonumber('644', 8), function(err, fd)
-        if not err then
-            local fpipe = vim.loop.new_pipe(false)
-            vim.loop.pipe_open(fpipe, fd)
-            vim.loop.write(fpipe, content)
-        end
-    end)
+	-- 644 sets read and write permissions for the owner, and it sets read-only
+	-- mode for the group and others.
+	vim.loop.fs_open(path, mode, tonumber('644', 8), function(err, fd)
+		if not err then
+			local fpipe = vim.loop.new_pipe(false)
+			vim.loop.pipe_open(fpipe, fd)
+			vim.loop.write(fpipe, content)
+		end
+	end)
 end
 
 return M

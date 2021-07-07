@@ -152,9 +152,9 @@ M.custom_options = function()
 	)
 	-- Set a custom command to rollback Doom Nvim version
 	-- can be called by using :DoomRollback
-	--[[ vim.cmd(
-	    'command! DoomRollback lua require("doom.core.functions").rollback()'
-	) ]]
+	vim.cmd(
+		'command! DoomRollback lua require("doom.core.functions").rollback_doom()'
+	)
 
 	-- Load user-defined settings from the Neovim field in the doomrc file
 	functions.load_custom_settings(config.nvim.autocmds, 'autocmds')

@@ -189,11 +189,12 @@ M.create_report = function()
 end
 
 -- save_backup_hashes saves the commits or releases SHA for future rollbacks
--- @tparam string git_workspace The git workspace to be used
-local function save_backup_hashes(git_workspace)
+local function save_backup_hashes()
 	-- Check for the current branch
-	local branch_handler = io.popen(git_workspace .. 'branch ---show-current')
-	local git_branch = branch_handler:read('a'):gsub('\n', '')
+	local branch_handler = io.popen(
+		utils.git_workspace .. 'branch --show-current'
+	)
+	local git_branch = branch_handler:read('a'):gsub('[\r\n]', '')
 	branch_handler:close()
 
 	if git_branch == 'main' then
@@ -206,8 +207,9 @@ local function save_backup_hashes(git_workspace)
 		log.info('Saving the Doom releases for future rollbacks ...')
 		local saved_releases, releases_err = pcall(function()
 			-- Get the releases
+		    log.debug('Executing "' .. utils.git_workspace .. 'show-ref --tags"')
 			local releases_handler = io.popen(
-				git_workspace .. 'show-ref --tags'
+				utils.git_workspace .. 'show-ref --tags'
 			)
 			local doom_releases = releases_handler:read('a')
 			releases_handler:close()
@@ -218,8 +220,9 @@ local function save_backup_hashes(git_workspace)
 				table.insert(releases, release)
 			end
 			-- Sort the releases table
+		    local sorted_releases = {}
 			for idx, release in ipairs(releases) do
-				releases[#releases + 1 - idx] = release
+				sorted_releases[#releases + 1 - idx] = release:gsub("refs/tags/", "")
 			end
 
 			-- Check if the database already exists so we can check if the
@@ -233,11 +236,11 @@ local function save_backup_hashes(git_workspace)
 					-- actual content will be overwritten by this one
 					utils.write_file(
 						releases_database_path,
-						releases[1] .. '\n',
+						sorted_releases[1] .. '\n',
 						'w+'
 					)
 					-- Write the rest of the releases
-					for idx, release in ipairs(releases) do
+					for idx, release in ipairs(sorted_releases) do
 						-- Exclude the first release because we have already
 						-- written it in the database file
 						if idx ~= 1 then
@@ -250,7 +253,7 @@ local function save_backup_hashes(git_workspace)
 					end
 				end
 			else
-				for _, release in ipairs(releases) do
+				for _, release in ipairs(sorted_releases) do
 					utils.write_file(
 						releases_database_path,
 						release .. '\n',
@@ -271,7 +274,7 @@ local function save_backup_hashes(git_workspace)
 		log.info('Saving the current commit SHA for future rollbacks ...')
 		local saved_backup_hash, backup_err = pcall(function()
 			os.execute(
-				git_workspace
+				utils.git_workspace
 					.. 'rev-parse --short HEAD > '
 					.. utils.doom_root
 					.. '/.doom_backup_hash'
@@ -290,12 +293,11 @@ end
 -- update_doom saves the current commit/release hash into a file for future
 -- restore if needed and then updates Doom.
 M.update_doom = function()
-	local git_workspace = string.format('git -C %s ', utils.doom_root)
-	save_backup_hashes(git_workspace)
+	save_backup_hashes()
 
 	log.info('Pulling Doom remote changes ...')
 	local updated_doom, update_err = pcall(function()
-		os.execute(git_workspace .. 'pull')
+		os.execute(utils.git_workspace .. 'pull -q')
 	end)
 
 	if not updated_doom then
@@ -305,6 +307,127 @@ M.update_doom = function()
 	vim.cmd('syntax on')
 
 	log.info('Successfully updated Doom, please restart')
+end
+
+-- rollback_doom will rollback the local doom version to an older one
+-- in case that the local one is broken
+M.rollback_doom = function()
+	-- Backup file for main (stable) branch
+	local releases_database_path = string.format(
+		'%s/.doom_releases',
+		utils.doom_root
+	)
+	-- Backup file for development branch
+	local rolling_backup = string.format(
+		'%s/.doom_backup_hash',
+		utils.doom_root
+	)
+
+	-- Check if there's a rollback file and sets the rollback type
+	if vim.fn.filereadable(releases_database_path) == 1 then
+		-- Get the releases database and split it into a table
+		local doom_releases = utils.read_file(releases_database_path)
+
+		-- Put all the releases into a table so we can sort them later
+		local releases = {}
+		for release in doom_releases:gmatch('[^\r\n]+') do
+			table.insert(releases, release)
+		end
+		-- Sort the releases table
+		local sorted_releases = {}
+		for idx, release in ipairs(releases) do
+			sorted_releases[#releases + 1 - idx] = release:gsub("refs/tags/", "")
+		end
+
+		-- Check the current commit hash and compare it with the ones in the
+		-- releases table
+		local current_version
+		local commit_handler = io.popen(utils.git_workspace .. 'rev-parse HEAD')
+		local current_commit = commit_handler:read('a'):gsub('[\r\n]', '')
+		commit_handler:close()
+		for _, version_info in ipairs(sorted_releases) do
+		    for release_hash, version in version_info:gmatch('(%w+)%s(%w+%W+%w+%W+%w+)') do
+		        if release_hash == current_commit then
+		            current_version = version
+		        end
+		    end
+		end
+		-- If the current_version variable is still nil then
+		-- fallback to latest version
+		if not current_version then
+		    -- next => index, SHA vX.Y.Z
+		    local _, release_info = next(releases, nil)
+		    -- split => { SHA, vX.Y.Z }, [2] => vX.Y.Z
+		    current_version = vim.split(release_info, ' ')[2]
+		end
+
+        local rollback_sha, rollback_version
+        local break_loop = false
+		for _, version_info in ipairs(releases) do
+	        for commit_hash, release in version_info:gmatch('(%w+)%s(%w+%W+%w+%W+%w+)') do
+		        if release:gsub('v', '') < current_version:gsub('v', '') then
+		            rollback_sha = commit_hash
+		            rollback_version = release
+		            break_loop = true
+		            break
+		        end
+	        end
+	        if break_loop then
+	            break
+	        end
+		end
+
+        log.info('Reverting back to version ' .. rollback_version .. ' (' .. rollback_sha .. ') ...')
+		local rolled_back, rolled_err = pcall(function()
+			os.execute(utils.git_workspace .. 'checkout ' .. rollback_sha)
+		end)
+
+		if not rolled_back then
+			log.error(
+				'Error while rolling back to version '
+				    .. rollback_version
+				    .. ' ('
+					.. rollback_sha
+					.. '). Traceback:\n'
+					.. rolled_err
+			)
+		end
+
+		log.info(
+			'Successfully rolled back Doom to version '
+			    .. rollback_version
+			    .. ' ('
+				.. rollback_sha
+				.. '), please restart'
+		)
+
+	elseif vim.fn.filereadable(rolling_backup) == 1 then
+		local backup_commit = utils.read_file(rolling_backup):gsub(
+			'[\r\n]+',
+			''
+		)
+		log.info('Reverting back to commit ' .. backup_commit .. ' ...')
+		local rolled_back, rolled_err = pcall(function()
+			os.execute(utils.git_workspace .. 'checkout ' .. backup_commit)
+		end)
+
+		if not rolled_back then
+			log.error(
+				'Error while rolling back to commit '
+					.. backup_commit
+					.. '. Traceback:\n'
+					.. rolled_err
+			)
+		end
+
+		log.info(
+			'Successfully rolled back Doom to commit '
+				.. backup_commit
+				.. ', please restart'
+		)
+	else
+		log.error('There are no backup files to rollback')
+	end
 end
 
 return M
