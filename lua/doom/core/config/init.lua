@@ -403,7 +403,6 @@ M.load_config = function()
 	-- /home/user/.config/doom-nvim/doomrc
 	if vim.fn.filereadable(utils.doom_root .. '/doom_config.lua') == 1 then
 		local loaded_doomrc, err = pcall(function()
-			log.debug('Loading the doom_config file ...')
 			config = dofile(utils.doom_root .. '/doom_config.lua')
 		end)
 
