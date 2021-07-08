@@ -26,7 +26,7 @@
     - [Rolling back doom](#rolling-back-doom)
 - [Configuration](#configuration)
   - [Modules](#modules)
-  - [Plugins Management](#plugins-management)
+  - [Plugin Management](#plugin-management)
     - [Installing plugins](#installing-plugins)
     - [Disabling plugins](#disabling-plugins)
   - [Configuring Doom](#configuring-doom)
@@ -56,8 +56,9 @@ i.e. pacman/aptitude/rpm/etc on the various Linux distributions.
 
 #### On Linux
 
-Since Neovim 0.5 is a night version, it does not come packaged in the repositories
-of your distribution, so you have several options to install it.
+Neovim 0.5.0 was recently released as a stable version. 
+You can check what version your repository has by looking at [this site.](https://repology.org/project/neovim/versions)
+If Neovim 0.5.0 is still not available in your repository, you can install it by doing one of the following:
 
 1. Using the Doom Nvim install script to download a Neovim Nightly AppImage from releases
    (see how by executing the installer with <kbd>bash -s -- -h</kbd>).
@@ -203,8 +204,8 @@ Doom Nvim itself:
 
 > **NOTES:**
 
-1. If you have not installed Neovim Nightly yet, please run the following command
-   before installing Doom Nvim, it will install Neovim nightly and Doom Nvim.
+1. If you have not installed Neovim 0.5.0 yet, please run the following command
+   before installing Doom Nvim, it will install Neovim 0.5.0 and Doom Nvim.
 2. If you want to know all the commands of the installer, run the installer with
    <kbd>bash -s -- -h</kbd> instead of just <kbd>bash</kbd>.
 
@@ -265,7 +266,7 @@ a previous release (for main branch) or a previous commit (for development branc
 
 ## Configuration
 
-You can configure Doom Nvim by tweaking the file `doomrc` in your Doom Nvim root
+You can configure Doom Nvim by tweaking the `doomrc` file in your Doom Nvim root
 dir (`$HOME/.config/doom-nvim/` by default), please see
 <kbd>:h doom_nvim_options</kbd> for more information.
 
@@ -275,22 +276,22 @@ dir (`$HOME/.config/doom-nvim/` by default), please see
 
 ### Modules
 
-Doom Nvim consists of around 7 modules and growing. A Doom Nvim Module is a bundle of plugins,
+Doom Nvim consists of around 7 modules. A Doom Nvim Module is a bundle of plugins,
 configuration and commands, organized into a unit that can be toggled easily by
 tweaking your doomrc (found in `$HOME/.config/doom-nvim`).
 
-Please see [Plugins Management](#plugins-management) for more information.
+Please see [Plugin Management](#plugin-management) for more information.
 
 > **IMPORTANT:** any changes to your Doom Nvim Modules won't take effect until
 > you run `:PackerSync` inside Neovim.
 
-### Plugins Management
+### Plugin Management
 
 Doom Nvim uses a declarative and use-package inspired package manager called
 [packer.nvim](https://github.com/wbthomason/packer.nvim).
 
 Modules and plugins are declared in `lua/doom/modules/init.lua` file, located
-in your Doom Nvim root dir. Read on to learn how to use this system to install
+in your Doom Nvim root directory. Read on to learn how to use this system to install
 your own plugins.
 
 > **WARNING:** Do not install plugins directly in `lua/doom/modules/init.lua`. Instead,
@@ -308,7 +309,7 @@ custom_plugins = { 'plugin_author/plugin_repo' }
 
 You can also use other method if the plugin depends on other plugins. All the
 available options for the plugins can be found on
-[packer.nvim](https://github.com/wbthomason/packer.nvim) README file.
+[packer.nvim](https://github.com/wbthomason/packer.nvim) README.
 
 ```lua
 custom_plugins = {
@@ -367,7 +368,7 @@ Go to `lua/doom/modules/config` dir and you will find the configurations for the
 Be aware that this plugin is disabled per default. To enable it, remove it from the
 `disabled_modules` section in your `doomrc`.
 
-To easily install LSPs and without having to do it system-wide or having to
+To easily install language servers and without having to do it system-wide or having to
 manually configure servers, Doom Nvim makes use of [kabouzeid/nvim-lspinstall](https://github.com/kabouzeid/nvim-lspinstall).
 
 You can see a list of currently supported languages at [bundled installers](https://github.com/kabouzeid/nvim-lspinstall#bundled-installers).
@@ -408,9 +409,9 @@ But first let's see what's new:
   much as you want?
 - New logging system powered by [vlog]. A faster and smaller logging system
   because complexity is not always the best choice.
-- Better custom plugins handler. Now the custom plugins are being directly
-  handled by packer as it should be, no more non-sense wrappers around it.
-- Built-in plugins. Because we should have some utilities to make our lifes
+- Better custom plugin manager. Now the custom plugins are being directly
+  handled by packer as it should be, no more nonsense wrappers around it.
+- Built-in plugins. Because we should have some utilities to make our lives
   easier, isn't this how it should be? See [modules/doom] for more information
   (WIP).
 - Fragmented configuration file (`doomrc`) so it will be more easy to customize
@@ -421,9 +422,9 @@ But first let's see what's new:
 
 - Better documentation. Added docs for each doom lua module because
   documentation is the core of all projects.
-- Restructured source code. Now the doom nvim source code is more cleaner and
+- Restructured source code. Now the doom nvim source code is much cleaner and
   easier to understand.
-- Added selene linter CI for incoming pull requests and stylua CI for pushs.
+- Added selene linter CI for incoming pull requests and stylua CI for pushes.
   Let's get a consistent way to maintain doom nvim source.
 
 > **IMPORTANT:** This what's new section is subject to changes while version
@@ -434,14 +435,14 @@ But first let's see what's new:
 
 Now that we know what's new we will surely want to update, isn't it?
 
-Due to the new raw speed we highly recommend to do a fresh installation so
-everything will be work as intended. **Make sure to backup your doomrc changes**.
+Due to the new raw speed we highly recommend that you do a fresh installation so
+everything will be work as it should. **Make sure to backup your doomrc changes**.
 
 We don't recommend using the `:DoomUpdate` command for this task because of the
-huge changes that doom nvim suffered. This command will only end in a really
+huge changes that doom nvim gotten. This command will only end in a really
 bad status for this release due to git merging issues.
 
-Said that, you can run the following command snippet.
+With that being said, you can run the following command snippet:
 
 > **IMPORTANT:**
 >
