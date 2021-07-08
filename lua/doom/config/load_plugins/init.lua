@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --    load_plugins - Load Doom Nvim Plugins    --
 --              Author: NTBBloodbath           --
---              License: MIT                   --
+--              License: GPLv2                   --
 ---[[---------------------------------------]]---
 
 -- /home/user/.config/doom-nvim/lua/plugins/init.lua

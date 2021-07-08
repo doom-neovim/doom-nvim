@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --     logging - Doom Nvim logging system      --
 --              Author: NTBBloodbath           --
---              License: MIT                   --
+--              License: GPLv2                   --
 ---[[---------------------------------------]]---
 
 function Log_init()

@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --         default - Doom Nvim defaults        --
 --              Author: NTBBloodbath           --
---              License: MIT                   --
+--              License: GPLv2                   --
 ---[[---------------------------------------]]---
 -- Set and load default options
 function Default_options()

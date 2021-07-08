@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --          config - Core of Doom Nvim         --
 --              Author: NTBBloodbath           --
---              License: MIT                   --
+--              License: GPLv2                   --
 ---[[---------------------------------------]]---
 -- Doom Nvim version
 Doom_version = '2.3.4'

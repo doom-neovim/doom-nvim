@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --     doomrc.lua - Load Doom Nvim doomrc      --
 --              Author: NTBBloodbath           --
---              License: MIT                   --
+--              License: GPLv2                   --
 ---[[---------------------------------------]]---
 
 function Check_BFC()

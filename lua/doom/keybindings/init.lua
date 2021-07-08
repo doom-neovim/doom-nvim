@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --     keybindings - Doom Nvim keybindings     --
 --              Author: NTBBloodbath           --
---              License: MIT                   --
+--              License: GPLv2                   --
 ---[[---------------------------------------]]---
 
 local wk = require('which-key')

@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --         utils - Doom Nvim utilities         --
 --              Author: NTBBloodbath           --
---              License: MIT                   --
+--              License: GPLv2                   --
 ---[[---------------------------------------]]---
 
 --- Require packer so we can use `packer.use` function in `custom_plugins` function

@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --      init.lua - Init file of Doom Nvim      --
 --             Author: NTBBloodbath            --
---             License: MIT                    --
+--             License: GPLv2                    --
 ---[[---------------------------------------]]---
 
 -- Utility functions

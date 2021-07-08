@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --        autocmds - Doom Nvim Autocmds        --
 --              Author: NTBBloodbath           --
---              License: MIT                   --
+--              License: GPLv2                   --
 ---[[---------------------------------------]]---
 
 local autocmds = {

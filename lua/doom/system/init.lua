@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --     system - Doom Nvim system utilities     --
 --              Author: NTBBloodbath           --
---              License: MIT                   --
+--              License: GPLv2                   --
 ---[[---------------------------------------]]---
 
 function Which_os()

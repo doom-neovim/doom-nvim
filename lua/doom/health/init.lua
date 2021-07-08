@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --       health - Doom Nvim Health check       --
 --              Author: NTBBloodbath           --
---              License: MIT                   --
+--              License: GPLv2                   --
 ---[[---------------------------------------]]---
 
 -- Health status

@@ -1,7 +1,7 @@
 "================================================
 " health.vim - Doom Nvim Health
 " Author: NTBBloodbath
-" License: MIT
+" License: GPLv2
 "================================================
 
 function! health#doom#check() abort
