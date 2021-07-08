@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --      functions - Doom Nvim Functions        --
 --              Author: NTBBloodbath           --
---              License: MIT                   --
+--              License: GPLv2                   --
 ---[[---------------------------------------]]---
 
 local utils = require('doom.utils')

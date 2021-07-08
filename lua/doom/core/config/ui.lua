@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --       ui.lua - Doom Nvim UI settings        --
 --             Author: NTBBloodbath            --
---             License: MIT                    --
+--             License: GPLv2                    --
 ---[[---------------------------------------]]---
 
 local utils = require('doom.utils')

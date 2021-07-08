@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --         default - Doom Nvim defaults        --
 --              Author: NTBBloodbath           --
---              License: MIT                   --
+--              License: GPLv2                   --
 ---[[---------------------------------------]]---
 
 local functions = require('doom.core.functions')

@@ -1,7 +1,7 @@
 ---[[------------------------------]]---
 --     config - Core of Doom Nvim     --
 --        Author: NTBBloodbath        --
---           License: MIT             --
+--           License: GPLv2             --
 ---[[------------------------------]]---
 
 local M = {}

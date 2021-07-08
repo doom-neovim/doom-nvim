@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --         utils - Doom Nvim utilities         --
 --              Author: NTBBloodbath           --
---              License: MIT                   --
+--              License: GPLv2                   --
 ---[[---------------------------------------]]---
 
 local M = {}

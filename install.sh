@@ -2,7 +2,7 @@
 #================================================
 # install.sh - Doom Nvim Installation Script
 # Author: NTBBloodbath
-# License: MIT
+# License: GPLv2
 #================================================
 
 # Terminal Colors
