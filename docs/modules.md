@@ -19,6 +19,18 @@ First of all, we must know which modules are there and their plugins.
 
 > **NOTE:** all plugins can be disabled, including the UI ones.
 
+### Essentials
+
+This ones are implicit plugins so the end user cannot disable them. But why?
+
+That is because these plugins are the core of Doom so in fact, things can break
+without them. These plugins are the following:
+
+- [packer.nvim]
+  - A use-package inspired plugin manager for Neovim.
+- [treesitter]
+  - An incremental parsing system for programming tools.
+
 ### UI
 
 - [dashboard]
@@ -69,13 +81,30 @@ First of all, we must know which modules are there and their plugins.
   - Comments plugin.
 - [lsp]
   - Language Server Protocols ([compe] + [lspsaga] + [lspinstall]).
-- [treesitter]
-  - An incremental parsing system for programming tools.
-- [snippets]
-  - LSP code snippets.
+- snippets
+  - Code snippets ([LuaSnip] + [friendly-snippets]).
 
 ### Langs
 
+The languages module entries has some flags that improves their experience and
+makes your life easier.
+
+The currently available flags are the following:
+
+- `+lsp` - enables and installs the Language Server Protocol for the language.
+  e.g. `rust +lsp` will automatically install TreeSitter parser for getting
+  syntax highlighting for Rust and will also install `rust-analyzer`.
+
+#### Web development
+
+- **html**
+  - HTML support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **css**
+  - CSS support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
 - **javascript**
   - JavaScript support.
   - TreeSitter based syntax highlighting: yes.
@@ -84,22 +113,63 @@ First of all, we must know which modules are there and their plugins.
   - TypeScript support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+
+#### Scripting
+
+- **bash**
+  - BASH support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
 - **python**
-   Python support.
+  - Python support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **ruby**
+  - Ruby support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
 - **lua**
   - Lua support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+- **elixir**
+  - Elixir support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+
+#### Compiled
+
+- **haskell**
+  - Haskell support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
 - **rust**
   - Rust support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+- **go**
+  - Golang support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **cpp**
+  - CPP support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **java**
+  - Java support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+
+#### Configs & DevOps
+
 - **config**
   - Configuration languages support (JSON, YAML, TOML).
   - TreeSitter based syntax highlighting: yes.
   - LSP: not yet.
+- **dockerfile**
+  - Docker support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
 
 > **NOTE**: this group requires `treesitter` enabled for getting syntax highlighting
 > and `lsp` for the `+lsp` flags.
@@ -112,8 +182,6 @@ First of all, we must know which modules are there and their plugins.
   - LazyGit integration for neovim, requires LazyGit.
 - [neogit]
   - Magit for Neovim.
-- [octo]
-  - GitHub in Neovim, requires GitHub CLI.
 - [colorizer]
   - Fastest colorizer for Neovim.
 - [range-highlight]
@@ -143,6 +211,7 @@ changes for you!
 [packer.nvim]: https://github.com/wbthomason/packer.nvim
 [treesitter]: https://github.com/nvim-treesitter/nvim-treesitter
 
+[auto-session]: https://github.com/rmagatti/auto-session
 [dashboard]: https://github.com/glepnir/dashboard-nvim
 [explorer]: https://github.com/kyazdani42/nvim-tree.lua
 [statusline]: https://github.com/glepnir/galaxyline.nvim
@@ -156,7 +225,6 @@ changes for you!
 
 [gitsigns]: https://github.com/lewis6991/gitsigns.nvim
 [lazygit]: https://github.com/kdheepak/lazygit.nvim
-[octo]: https://github.com/pwntester/octo.nvim
 [neogit]: https://github.com/TimUntersberger/neogit
 [neorg]: https://github.com/vhyrro/neorg
 
@@ -164,7 +232,8 @@ changes for you!
 [compe]: https://github.com/hrsh7th/nvim-compe
 [lspsaga]: https://github.com/glepnir/lspsaga.nvim
 [lspinstall]: https://github.com/kabouzeid/nvim-lspinstall
-[snippets]: https://github.com/norcalli/snippets.nvim
+[LuaSnip]: https://github.com/L3MON4D3/LuaSnip
+[friendly-snippets]: https://github.com/rafamadriz/friendly-snippets
 
 [suda]: https://github.com/lambdalisue/suda.vim
 [formatter]: https://github.com/lukas-reineke/format.nvim
