@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.5] - 2021-07-08
+
+### Changed
+
+- use `/usr/bin/env bash` to make installer more portable
+- Stop using a custom `packer.nvim` branch
+- Relicense project to `GPLv2`
+
+### Fixed
+
+- `nvim-compe` keybinds mappings
+- `nvim-telescope` plugin breaking changes, updated configurations
+
+## [2.3.4] - 2021-07-03
+
+### Changed
+
+- Removed `logs/doom.log` and added it to `gitignore` (#27)
+
+### Fixed
+
+- `nvim-telescope` plugin breaking changes, updated configurations
+- `indent-blankline` plugin lua branch removal notice, moved to master branch (#27)
+
+## [2.3.3] - 2021-07-01
+
+### Changed
+
+- Revert autopairs plugin from `pears.nvim` to `nvim-autopairs` because of pears issues
+
+### Fixed
+
+- `nvim-tree` plugin is now using its new keybindings syntax
+
 ## [2.3.2] - 2021-05-20
 
 ### Added
@@ -69,7 +103,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Dashboard
     - Changed icons and Option names
     - You now set your header/colors through `doomrc`
-  - Symbols-Outline / Nvim-tree
+  - Tagbar / Nvim-tree
     - Default positions have changed (Nvim-tree will now open to the left by default)
 - Improvements to loading optional doom plugins
 
@@ -274,7 +308,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.2...HEAD
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.5...develop
+[2.3.5]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.4...v2.3.5
+[2.3.4]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.3...v2.3.4
+[2.3.3]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.2...v2.3.3
 [2.3.2]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.1...v2.3.2
 [2.3.1]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.2.0...v2.3.0
