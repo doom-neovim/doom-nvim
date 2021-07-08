@@ -148,10 +148,10 @@ local doom = {
 	-- @default = true
 	enable_guicolors = true,
 
-	-- Symbols-Outline on the left
-	-- Places the Symbols-Outline buffer to the left when enabled
+	-- Tree explorer on the right
+	-- Places the Tree explorer buffer to the right when enabled
 	-- @default = false
-	symbols_outline_left = false,
+	explorer_right = false,
 
 	-- Show hidden files
 	-- @default = true

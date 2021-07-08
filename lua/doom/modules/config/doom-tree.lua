@@ -35,9 +35,7 @@ return function()
 	-- true by default, notice that if 'files' is 1, it will only display
 	-- if nvim-web-devicons is installed and on your runtimepath
 	vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1 }
-	-- If the symbols outline is set to left then set tree side to right and vice versa.
-	-- left by default
-	if config.doom.symbols_outline_left then
+	if config.doom.explorer_right then
 		vim.g.nvim_tree_side = 'right'
 	end
 	-- You can edit keybindings be defining this variable
