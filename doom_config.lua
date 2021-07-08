@@ -250,6 +250,29 @@ local doom = {
 	-- @default = dark
 	colorscheme_bg = 'dark',
 
+	-- Doom One colorscheme settings
+	doom_one = {
+	    -- If the cursor color should be blue
+	    -- @default = false
+	    cursor_coloring = false,
+	    -- If TreeSitter highlighting should be enabled
+	    -- @default = true
+	    enable_treesitter = true,
+	    -- If the comments should be italic
+	    -- @default = false
+	    italic_comments = false,
+	    -- If the telescope plugin window should be colored
+	    -- @default = true
+	    telescope_highlights = true,
+	    -- If the built-in Neovim terminal should use the doom-one
+	    -- colorscheme palette
+	    -- @default = false
+	    terminal_colors = true,
+	    -- If the Neovim instance should be transparent
+	    -- @default = false
+	    transparent_background = false,
+	},
+
 	-- Set gui fonts here
 	-- @default = "FiraCode Nerd Font", @default font size = 15,
 	-- WARNING: Font sizes must be in string format!
@@ -280,7 +303,6 @@ local doom = {
 	-- Set your custom dashboard header below
 	-- @default = doom emacs' default dashboard header
 	dashboard_custom_header = {},
-
 }
 -- }}}
 

@@ -34,3 +34,11 @@ if config.doom.enable_guicolors then
 		vim.opt.guicolors = true
 	end
 end
+
+-- Set doom-one colorscheme settings
+vim.g.doom_one_cursor_coloring = config.doom.doom_one.cursor_coloring
+vim.g.doom_one_enable_treesitter = config.doom.doom_one.enable_treesitter
+vim.g.doom_one_italic_comments = config.doom.doom_one.italic_comments
+vim.g.doom_one_telescope_highlights = config.doom.doom_one.telescope_highlights
+vim.g.doom_one_terminal_colors = config.doom.doom_one.terminal_colors
+vim.g.doom_one_transparent_background = config.doom.doom_one.transparent_background
