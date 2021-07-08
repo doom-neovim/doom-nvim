@@ -22,6 +22,8 @@
 - [Update & Rollback](#update--rollback)
   - [Update Doom Nvim](#update-doom-nvim)
   - [Rollback](#rollback)
+    - [Previous configurations](#previous-configurations)
+    - [Rolling back doom](#rolling-back-doom)
 - [Configuration](#configuration)
   - [Modules](#modules)
   - [Plugins Management](#plugins-management)
@@ -246,9 +248,20 @@ run the installation script with <kbd>bash -s -- -u</kbd>.
 
 ### Rollback
 
+#### Previous Configurations
+
 To uninstall Doom Nvim and go back to your previous setup, simply run the
 installation script with <kbd>bash -s -- -x</kbd>. It will uninstall Doom Nvim
 and restore the backup of your previous setup.
+
+#### Rolling Back Doom
+
+Did the update screwed up your setup because of a bug and you want to rollback?
+Then you're lucky. Just run `:DoomRollback` in Neovim and Doom will rollback to
+a previous release (for main branch) or a previous commit (for development branch).
+
+> **IMPORTANT**: remember to report the issues before just rolling back. In that
+> way we can work on fixing it and make doom better!
 
 ## Configuration
 
