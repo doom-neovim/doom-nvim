@@ -12,6 +12,7 @@ Color_reset='\033[0m' # Reset
 
 ## Normal colors
 Black='\033[0;30m'  # Black
+Gray='\033[0;90m'   # Gray
 White='\033[0;37m'  # White
 Red='\033[0;31m'    # Red
 Blue='\033[0;34m'   # Blue
@@ -22,6 +23,7 @@ Yellow='\033[0;33m' # Yellow
 
 ## Bold colors
 BBlack='\033[1;30m'  # Black
+BGray='\033[1;90m'   # Gray
 BWhite='\033[1;37m'  # White
 BRed='\033[1;31m'    # Red
 BBlue='\033[1;34m'   # Blue
@@ -264,26 +266,26 @@ uninstall() {
 # ===========
 # {{{
 welcome() {
-    pretty_echo ${BRed} "  =================     ===============     ===============   ========  ========"
-    pretty_echo ${BRed} "  \\\\\ . . . . . . .\\\\\   //. . . . . . .\\\\\   //. . . . . . .\\\\\  \\\\\. . .\\\\\// . . //"
-    pretty_echo ${BRed} "  ||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||"
-    pretty_echo ${BRed} "  || . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||"
-    pretty_echo ${BRed} "  ||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||"
-    pretty_echo ${BRed} "  || . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||"
-    pretty_echo ${BYellow} "  ||. . ||   ||-'  || ||  \`-||   || . .|| ||. . ||   ||-'  || ||  \`|\_ . .|. .||"
-    pretty_echo ${BYellow} "  || . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ \`-_/| . ||"
-    pretty_echo ${BYellow} "  ||_-' ||  .|/    || ||    \|.  || \`-_|| ||_-' ||  .|/    || ||   | \  / |-_.||"
-    pretty_echo ${BYellow} "  ||    ||_-'      || ||      \`-_||    || ||    ||_-'      || ||   | \  / |  \`||"
-    pretty_echo ${BYellow} "  ||    \`'         || ||         \`'    || ||    \`'         || ||   | \  / |   ||"
-    pretty_echo ${BYellow} "  ||            .===' \`===.         .==='.\`===.         .===' /==. |  \/  |   ||"
-    pretty_echo ${BYellow} "  ||         .=='   \_|-_ \`===. .==='   _|_   \`===. .===' _-|/   \`==  \/  |   ||"
-    pretty_echo ${BYellow} "  ||      .=='    _-'    \`-_  \`='    _-'   \`-_    \`='  _-'   \`-_  /|  \/  |   ||"
-    pretty_echo ${BYellow} "  ||   .=='    _-'          '-__\._-'         '-_./__-'         \`' |. /|  |   ||"
-    pretty_echo ${BYellow} "  ||.=='    _-'                                                     \`' |  /==.||"
-    pretty_echo ${BRed} "  =='    _-'                                                            \/   \`=="
-    pretty_echo ${BRed} "  \   _-'                           N e o v i m                         \`-_    /"
-    pretty_echo ${BRed} "   \`''                                                                      \`\`' "
-    pretty_echo ${BYellow} "                   Version : ${DoomNvimVersion}               By : NTBBloodbath "
+    pretty_echo ${Gray} "  =================     ===============     ===============   ========  ========"
+    pretty_echo ${Gray} "  \\\\\ . . . . . . .\\\\\   //. . . . . . .\\\\\   //. . . . . . .\\\\\  \\\\\. . .\\\\\// . . //"
+    pretty_echo ${Gray} "  ||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||"
+    pretty_echo ${Gray} "  || . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||"
+    pretty_echo ${Gray} "  ||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||"
+    pretty_echo ${Gray} "  || . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||"
+    pretty_echo ${Gray} "  ||. . ||   ||-'  || ||  \`-||   || . .|| ||. . ||   ||-'  || ||  \`|\_ . .|. .||"
+    pretty_echo ${Gray} "  || . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ \`-_/| . ||"
+    pretty_echo ${Gray} "  ||_-' ||  .|/    || ||    \|.  || \`-_|| ||_-' ||  .|/    || ||   | \  / |-_.||"
+    pretty_echo ${Gray} "  ||    ||_-'      || ||      \`-_||    || ||    ||_-'      || ||   | \  / |  \`||"
+    pretty_echo ${Gray} "  ||    \`'         || ||         \`'    || ||    \`'         || ||   | \  / |   ||"
+    pretty_echo ${Gray} "  ||            .===' \`===.         .==='.\`===.         .===' /==. |  \/  |   ||"
+    pretty_echo ${Gray} "  ||         .=='   \_|-_ \`===. .==='   _|_   \`===. .===' _-|/   \`==  \/  |   ||"
+    pretty_echo ${Gray} "  ||      .=='    _-'    \`-_  \`='    _-'   \`-_    \`='  _-'   \`-_  /|  \/  |   ||"
+    pretty_echo ${Gray} "  ||   .=='    _-'          '-__\._-'         '-_./__-'         \`' |. /|  |   ||"
+    pretty_echo ${Gray} "  ||.=='    _-'                                                     \`' |  /==.||"
+    pretty_echo ${Gray} "  =='    _-'                                                            \/   \`=="
+    pretty_echo ${Gray} "  \   _-'                           N E O V I M                         \`-_    /"
+    pretty_echo ${Gray} "   \`''                                                                      \`\`' "
+    pretty_echo ${BBlue} "                   Version : ${DoomNvimVersion}               By : NTBBloodbath "
     echo ""
 }
 # }}}
@@ -294,17 +296,17 @@ welcome() {
 helper() {
     welcome
     echo ""
-    pretty_echo ${BRed} "  Usage ./install.sh [OPTION]"
+    pretty_echo ${BBlue} "  Usage ./install.sh [OPTION]"
     echo ""
-    pretty_echo ${BRed} "  OPTIONS:"
-    pretty_echo ${Yellow} "    -h --help                                    Displays this message"
-    pretty_echo ${Yellow} "    -c --check-requirements                      Check Doom Nvim requirements"
-    pretty_echo ${Yellow} "    -i --install                                 Install Doom Nvim"
-    pretty_echo ${Yellow} "    -d --install-dev                             Install Development version of Doom Nvim"
-    pretty_echo ${Yellow} "    -n --nightly                                 Install Neovim Nightly and Doom Nvim"
-    pretty_echo ${Yellow} "    -u --update                                  Update Doom Nvim"
-    pretty_echo ${Yellow} "    -v --version                                 Echo Doom Nvim version"
-    pretty_echo ${Yellow} "    -x --uninstall                               Uninstall Doom Nvim"
+    pretty_echo ${BBlue} "  OPTIONS:"
+    pretty_echo ${BGray} "    -h --help\t\t\t\tDisplays this message"
+    pretty_echo ${BGray} "    -c --check-requirements\t\tCheck Doom Nvim requirements"
+    pretty_echo ${BGray} "    -i --install\t\t\tInstall Doom Nvim"
+    pretty_echo ${BGray} "    -d --install-dev\t\t\tInstall Development version of Doom Nvim"
+    pretty_echo ${BGray} "    -n --nightly\t\t\tInstall Neovim Nightly and Doom Nvim"
+    pretty_echo ${BGray} "    -u --update\t\t\t\tUpdate Doom Nvim"
+    pretty_echo ${BGray} "    -v --version\t\t\tEcho Doom Nvim version"
+    pretty_echo ${BGray} "    -x --uninstall\t\t\tUninstall Doom Nvim"
 }
 
 main() {
