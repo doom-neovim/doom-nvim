@@ -2,7 +2,7 @@ name: format
 
 on:
   push:
-    paths: '**.lua'
+    paths: ['**.lua']
     branches: [main, develop]
 
 jobs:
