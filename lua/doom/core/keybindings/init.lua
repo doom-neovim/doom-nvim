@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --     keybindings - Doom Nvim keybindings     --
 --              Author: NTBBloodbath           --
---              License: GPLv2                   --
+--              License: GPLv2                 --
 ---[[---------------------------------------]]---
 
 local utils = require('doom.utils')
@@ -13,6 +13,12 @@ log.debug('Loading Doom keybindings module ...')
 
 -- Additional options for mappings
 local opts = { silent = true }
+
+-- selene: allow(undefined_variable)
+if not packer_plugins['which-key.nvim'] then
+	utils.map('n', '<Space>', '<Nop>', opts)
+	vim.g.mapleader = ' '
+end
 
 -- Map WhichKey popup menu
 utils.map('n', '<Space>', ':WhichKey <leader><CR>', opts)
@@ -82,15 +88,29 @@ if functions.check_plugin('nvim-compe', 'opt') then
 end
 
 -- LuaSnip mappings
-utils.map('n', '<Tab>', 'luasnip#expand_or_jumpable() ? "<Plug>luasnip-expand-or-jump" : "<Tab>"', lsp_opts)
+utils.map(
+	'n',
+	'<Tab>',
+	'luasnip#expand_or_jumpable() ? "<Plug>luasnip-expand-or-jump" : "<Tab>"',
+	lsp_opts
+)
 utils.map('i', '<S-Tab>', '<cmd>lua require("luasnip").jump(-1)<CR>', opts)
 
 utils.map('s', '<Tab>', '<cmd>lua require("luasnip").jump(1)<CR>', opts)
 utils.map('s', '<S-Tab>', '<cmd>lua require("luasnip").jump(-1)<CR>', opts)
 
-utils.map('i', '<C-E>', 'luasnip#choice_active() ? "<Plug>luasnip-next-choice" : "<C-E>"', lsp_opts)
-utils.map('s', '<C-E>', 'luasnip#choice_active() ? "<Plug>luasnip-next-choice" : "<C-E>"', lsp_opts)
-
+utils.map(
+	'i',
+	'<C-E>',
+	'luasnip#choice_active() ? "<Plug>luasnip-next-choice" : "<C-E>"',
+	lsp_opts
+)
+utils.map(
+	's',
+	'<C-E>',
+	'luasnip#choice_active() ? "<Plug>luasnip-next-choice" : "<C-E>"',
+	lsp_opts
+)
 
 if config.doom.new_file_split then
 	utils.map('n', '<Leader>fn', ':new<CR>', opts)
@@ -172,6 +192,194 @@ end
 utils.map(
 	'n',
 	'ZZ',
-	':lua require("doom.core.functions").quit_doom(1, 1)<CR>',
+	':lua require("doom.core.functions").quit_doom(true, true)<CR>',
+	opts
+)
+
+---[[-----------------]]---
+--    WhichKey binds     --
+---]]-----------------[[---
+
+-- Misc
+utils.map('n', '<leader>`', '<cmd>e #<CR>', opts)
+utils.map('n', '<leader><space>', '<cmd>Telescope find_files<CR>', opts)
+utils.map('n', '<leader>.', '<cmd>Telescope file_browser<CR>', opts)
+utils.map(
+	'n',
+	'<leader>,',
+	'<cmd>Telescope buffers show_all_buffers=true<CR>',
+	opts
+)
+utils.map('n', '<leader>/', '<cmd>Telescope live_grep<CR>', opts)
+utils.map('n', '<leader>:', '<cmd>Telescope command_history<CR>', opts)
+
+-- Buffers
+utils.map(
+	'n',
+	'<leader>bc',
+	'<cmd>lua require("bufferline").handle_close_buffer(vim.fn.bufnr("%"))<CR>',
+	opts
+)
+utils.map('n', '<leader>bb', '<cmd>e #<CR>', opts)
+utils.map(
+	'n',
+	'<leader>b]',
+	'<cmd>lua require("bufferline").cycle(1)<CR>',
+	opts
+)
+utils.map(
+	'n',
+	'<leader>bn',
+	'<cmd>lua require("bufferline").cycle(1)<CR>',
+	opts
+)
+utils.map(
+	'n',
+	'<leader>bg',
+	'<cmd>lua require("bufferline").pick_buffer()<CR>',
+	opts
+)
+utils.map(
+	'n',
+	'<leader>b[',
+	'<cmd>lua require("bufferline").cycle(-1)<CR>',
+	opts
+)
+utils.map(
+	'n',
+	'<leader>bp',
+	'<cmd>lua require("bufferline").cycle(-1)<CR>',
+	opts
+)
+utils.map('n', '<leader>bf', '<cmd>FormatWrite<CR>', opts)
+
+-- Doom
+utils.map(
+	'n',
+	'<leader>dc',
+	'<cmd>e ~/.config/doom-nvim/doom_config.lua<CR>',
+	opts
+)
+utils.map('n', '<leader>dd', '<cmd>help doom_nvim<CR>', opts)
+utils.map('n', '<leader>du', '<cmd>DoomUpdate<CR>', opts)
+utils.map('n', '<leader>dr', '<cmd>DoomRollback<CR>', opts)
+utils.map(
+	'n',
+	'<leader>dR',
+	'<cmd>lua require("doom.core.functions").create_report()<CR>',
+	opts
+)
+
+-- Plugins
+utils.map('n', '<leader>ps', '<cmd>PackerSync<CR>', opts)
+utils.map('n', '<leader>pi', '<cmd>PackerInstall<CR>', opts)
+utils.map('n', '<leader>pc', '<cmd>PackerClean<CR>', opts)
+utils.map('n', '<leader>pC', '<cmd>PackerCompile<CR>', opts)
+utils.map('n', '<leader>pS', '<cmd>PackerStatus<CR>', opts)
+utils.map('n', '<leader>pp', '<cmd>PackerProfile<CR>', opts)
+
+-- files
+utils.map('n', '<leader>fc', '<cmd>e $MYVIMRC<CR>', opts)
+utils.map('n', '<leader>ff', '<cmd>Telescope find_files<CR>', opts)
+
+utils.map('n', '<leader>fr', '<cmd>Telescope oldfiles<CR>', opts)
+utils.map('n', '<leader>ft', '<cmd>Telescope help_tags<CR>', opts)
+utils.map('n', '<leader>fR', '<cmd>SudaRead<CR>', opts)
+utils.map('n', '<leader>fw', '<cmd>SudaWrite', opts)
+
+-- search
+utils.map('n', '<leader>sg', '<cmd>Telescope live_grep<CR>', opts)
+utils.map(
+	'n',
+	'<leader>sb',
+	'<cmd>Telescope current_buffer_fuzzy_find<CR>',
+	opts
+)
+utils.map('n', '<leader>ss', '<cmd>Telescope lsp_document_symbols<CR>', opts)
+utils.map('n', '<leader>sh', '<cmd>Telescope command_history<CR>', opts)
+utils.map('n', '<leader>sm', '<cmd>Telescope marks<CR>', opts)
+
+-- windows
+utils.map('n', '<leader>ww', '<C-W>p', opts)
+utils.map('n', '<leader>wd', '<C-W>c', opts)
+utils.map('n', '<leader>w-', '<C-W>s', opts)
+utils.map('n', '<leader>w|', '<C-W>v', opts)
+utils.map('n', '<leader>w2', '<C-W>v', opts)
+utils.map('n', '<leader>wh', '<C-W>h', opts)
+utils.map('n', '<leader>wj', '<C-W>j', opts)
+utils.map('n', '<leader>wl', '<C-W>l', opts)
+utils.map('n', '<leader>wk', '<C-W>k', opts)
+utils.map('n', '<leader>wH', '<C-W>5<', opts)
+utils.map('n', '<leader>wJ', '<cmd>resize +5', opts)
+utils.map('n', '<leader>wL', '<C-W>5>', opts)
+utils.map('n', '<leader>wK', '<cmd>resize -5', opts)
+utils.map('n', '<leader>w=', '<C-W>=', opts)
+utils.map('n', '<leader>ws', '<C-W>s', opts)
+utils.map('n', '<leader>wv', '<C-W>v', opts)
+
+-- quit / sessions
+utils.map(
+	'n',
+	'<leader>qq',
+	'<cmd>lua require("doom.core.functions").quit_doom()<CR>',
+	opts
+)
+utils.map(
+	'n',
+	'<leader>qw',
+	'<cmd>lua require("doom.core.functions").quit_doom(true, true)<CR>',
+	opts
+)
+utils.map('n', '<leader>qs', '<cmd>SaveSession<CR>', opts)
+utils.map('n', '<leader>qr', '<cmd>RestoreSession<CR>', opts)
+utils.map(
+	'n',
+	'<leader>ql',
+	'<cmd>Telescope session-lens search_session<CR>',
+	opts
+)
+
+-- toggle
+utils.map('n', '<leader>od', '<cmd>Dashboard<CR>', opts)
+utils.map('n', '<leader>oe', '<cmd>NvimTreeToggle<CR>', opts)
+utils.map('n', '<leader>om', '<cmd>MinimapToggle<CR>', opts)
+utils.map('n', '<leader>os', '<cmd>SymbolsOutline<CR>', opts)
+utils.map('n', '<leader>ot', '<cmd>ToggleTerm<CR>', opts)
+
+-- git
+utils.map('n', '<leader>go', '<cmd>LazyGit<CR>', opts)
+utils.map('n', '<leader>gl', '<cmd>TermExec cmd="git pull"<CR>', opts)
+utils.map('n', '<leader>gp', '<cmd>TermExec cmd="git push"<CR>', opts)
+utils.map('n', '<leader>gs', '<cmd>Telescope git_status<CR>', opts)
+utils.map('n', '<leader>gB', '<cmd>Telescope git_branches<CR>', opts)
+utils.map('n', '<leader>gc', '<cmd>Telescope git_commits<CR>', opts)
+
+-- code
+utils.map('n', '<leader>ch', '<Plug>RestNvim<CR>', opts)
+
+-- lsp
+utils.map('n', '<leader>cli', '<cmd>LspInfo<CR>', opts)
+utils.map(
+	'n',
+	'<leader>cla',
+	'<cmd>require("lspsaga.codeaction").code_action()<CR>',
+	opts
+)
+utils.map(
+	'n',
+	'<leader>cld',
+	'<cmd>lua vim.lsp.buf.type_definition()<CR>',
+	opts
+)
+utils.map(
+	'n',
+	'<leader>cll',
+	'<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',
+	opts
+)
+utils.map(
+	'n',
+	'<leader>clL',
+	'<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',
 	opts
 )
