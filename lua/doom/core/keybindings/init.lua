@@ -362,7 +362,7 @@ utils.map('n', '<leader>cli', '<cmd>LspInfo<CR>', opts)
 utils.map(
 	'n',
 	'<leader>cla',
-	'<cmd>require("lspsaga.codeaction").code_action()<CR>',
+	'<cmd>Lspsaga code_action<CR>',
 	opts
 )
 utils.map(
