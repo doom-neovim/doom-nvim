@@ -198,7 +198,7 @@ install_fonts() {
 
     download_font "Fira Code Regular Nerd Font Complete Mono.ttf"
     log_info "Updating font cache, please wait ..."
-    if [ $System == "Darwin" ]; then
+    if [ "$System" == "Darwin" ]; then
         if [ ! -e "$HOME/Library/Fonts" ]; then
             mkdir "$HOME/Library/Fonts"
         fi
@@ -296,74 +296,74 @@ welcome() {
 helper() {
     welcome
     echo ""
-    pretty_echo ${BBlue} "  Usage ./install.sh [OPTION]"
+    pretty_echo ${BGreen} "  Usage: ./install.sh [OPTION]"
     echo ""
-    pretty_echo ${BBlue} "  OPTIONS:"
-    pretty_echo ${BGray} "    -h --help\t\t\t\tDisplays this message"
-    pretty_echo ${BGray} "    -c --check-requirements\t\tCheck Doom Nvim requirements"
-    pretty_echo ${BGray} "    -i --install\t\t\tInstall Doom Nvim"
-    pretty_echo ${BGray} "    -d --install-dev\t\t\tInstall Development version of Doom Nvim"
-    pretty_echo ${BGray} "    -n --nightly\t\t\tInstall Neovim Nightly and Doom Nvim"
-    pretty_echo ${BGray} "    -u --update\t\t\t\tUpdate Doom Nvim"
-    pretty_echo ${BGray} "    -v --version\t\t\tEcho Doom Nvim version"
-    pretty_echo ${BGray} "    -x --uninstall\t\t\tUninstall Doom Nvim"
+    pretty_echo ${BGreen} "  Options:"
+    pretty_echo "    -h --help\t\t\t\tDisplays this message"
+    pretty_echo "    -c --check-requirements\t\tCheck Doom Nvim requirements"
+    pretty_echo "    -i --install\t\t\tInstall Doom Nvim"
+    pretty_echo "    -d --install-dev\t\t\tInstall Development version of Doom Nvim"
+    pretty_echo "    -n --nightly\t\t\tInstall Neovim Nightly and Doom Nvim"
+    pretty_echo "    -u --update\t\t\t\tUpdate Doom Nvim"
+    pretty_echo "    -v --version\t\t\tEcho Doom Nvim version"
+    pretty_echo "    -x --uninstall\t\t\tUninstall Doom Nvim"
 }
 
 main() {
     if [ $# -gt 0 ]; then
         case $1 in
-        --check-requirements | -c)
-            welcome
-            check_requirements
-            exit 0
-            ;;
-        --update | -u)
-            welcome
-            update_repo
-            exit 0
-            ;;
-        --install | -i)
-            welcome
-            check_all
-            update_repo "main"
-            install_fonts
-            backup_neovim
-            install_done
-            exit 0
-            ;;
-        --install-dev | -d)
-            welcome
-            check_all
-            update_repo "develop"
-            install_fonts
-            backup_neovim
-            install_done
-            exit 0
-            ;;
-        --nvim-nightly | -n)
-            welcome
-            check_all
-            update_repo "main"
-            backup_neovim
-            install_nvim_nightly
-            install_done
-            exit 0
-            ;;
-        --help | -h)
-            helper
-            exit 0
-            ;;
-        --version | -v)
-            log "Doom Nvim v${DoomNvimVersion}"
-            exit 0
-            ;;
-        --uninstall | -x)
-            welcome
-            log_info "Uninstalling Doom Nvim ..."
-            uninstall
-            pretty_echo ${Green} "Thanks for using Doom Nvim, there are no more demons!"
-            exit 0
-            ;;
+            --check-requirements | -c)
+                welcome
+                check_requirements
+                exit 0
+                ;;
+            --update | -u)
+                welcome
+                update_repo
+                exit 0
+                ;;
+            --install | -i)
+                welcome
+                check_all
+                update_repo "main"
+                install_fonts
+                backup_neovim
+                install_done
+                exit 0
+                ;;
+            --install-dev | -d)
+                welcome
+                check_all
+                update_repo "develop"
+                install_fonts
+                backup_neovim
+                install_done
+                exit 0
+                ;;
+            --nvim-nightly | -n)
+                welcome
+                check_all
+                update_repo "main"
+                backup_neovim
+                install_nvim_nightly
+                install_done
+                exit 0
+                ;;
+            --help | -h)
+                helper
+                exit 0
+                ;;
+            --version | -v)
+                log "Doom Nvim v${DoomNvimVersion}"
+                exit 0
+                ;;
+            --uninstall | -x)
+                welcome
+                log_info "Uninstalling Doom Nvim ..."
+                uninstall
+                pretty_echo ${Green} "Thanks for using Doom Nvim, there are no more demons!"
+                exit 0
+                ;;
         esac
     else
         # Run normal commands
