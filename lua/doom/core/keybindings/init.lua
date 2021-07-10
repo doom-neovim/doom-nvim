@@ -356,15 +356,34 @@ utils.map('n', '<leader>gc', '<cmd>Telescope git_commits<CR>', opts)
 
 -- code
 utils.map('n', '<leader>ch', '<Plug>RestNvim<CR>', opts)
+utils.map(
+	'n',
+	'<leader>ci',
+	'<cmd>lua require("doom.modules.built-in.runner").start_repl()<CR>',
+	opts
+)
+utils.map(
+	'n',
+	'<leader>cr',
+	'<cmd>lua require("doom.modules.built-in.runner").run_code()<CR>',
+	opts
+)
+utils.map(
+	'n',
+	'<leader>cb',
+	'<cmd>lua require("doom.modules.built-in.compiler").compile()<cr>',
+	opts
+)
+utils.map(
+	'n',
+	'<leader>cc',
+	'<cmd>lua require("doom.modules.built-in.compiler").compile_and_run()<cr>',
+	opts
+)
 
 -- lsp
 utils.map('n', '<leader>cli', '<cmd>LspInfo<CR>', opts)
-utils.map(
-	'n',
-	'<leader>cla',
-	'<cmd>Lspsaga code_action<CR>',
-	opts
-)
+utils.map('n', '<leader>cla', '<cmd>Lspsaga code_action<CR>', opts)
 utils.map(
 	'n',
 	'<leader>cld',

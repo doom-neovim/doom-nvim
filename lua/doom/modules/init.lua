@@ -141,7 +141,7 @@ packer.startup(function(use)
 		'akinsho/nvim-toggleterm.lua',
 		config = require('doom.modules.config.doom-toggleterm'),
 		disable = disabled_terminal,
-		module = 'toggleterm.terminal',
+		module = { 'toggleterm', 'toggleterm.terminal' },
 		cmd = { 'ToggleTerm', 'TermExec' },
 		keys = { 'n', '<F4>' },
 	})

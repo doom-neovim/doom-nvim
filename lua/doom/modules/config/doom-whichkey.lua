@@ -86,8 +86,10 @@ return function()
 	    },
 	    ['c'] = {
 		    name = '+code',
-		    -- r = { 'Run' },
-		    -- c = { 'Compile' },
+		    i = { 'Start a REPL' },
+		    r = { 'Run current file' },
+		    b = { 'Compile project' },
+		    c = { 'Compile and run project' },
 		    ['h'] = { 'Run restclient on the line that the cursor is currently on' },
 		    ['l'] = {
 			    name = '+lsp',
