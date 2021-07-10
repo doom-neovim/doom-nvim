@@ -23,16 +23,19 @@ M.compile = function()
 
 	local compiled_code, err = pcall(function()
 		if lang_bin then
-		    -- Set the properly builder command for the project
-		    local compiler_cmd
-		    if lang_bin == 'rust' then
-		        compiler_cmd = 'cargo build'
-       		elseif lang_bin == 'go' then
-    		    -- NOTE: Untested because I am not using Go anymore, this
-        		-- command should look for a main program in the cwd
-    		    compiler_cmd = 'go build .'
-    		end
-            require('toggleterm').exec_command(string.format('cmd="%s"', compiler_cmd), 1)
+			-- Set the properly builder command for the project
+			local compiler_cmd
+			if lang_bin == 'rust' then
+				compiler_cmd = 'cargo build'
+			elseif lang_bin == 'go' then
+				-- NOTE: Untested because I am not using Go anymore, this
+				-- command should look for a main program in the cwd
+				compiler_cmd = 'go build .'
+			end
+			require('toggleterm').exec_command(
+				string.format('cmd="%s"', compiler_cmd),
+				1
+			)
 		else
 			log.error(
 				'The filetype '
@@ -44,8 +47,7 @@ M.compile = function()
 
 	if not compiled_code then
 		log.error(
-			'Error while trying to compile the project. Traceback:\n'
-				.. err
+			'Error while trying to compile the project. Traceback:\n' .. err
 		)
 	end
 end
@@ -57,17 +59,20 @@ M.compile_and_run = function()
 
 	local compiled_code, err = pcall(function()
 		if lang_bin then
-		    -- Set the properly builder command for the project
-		    local compiler_cmd
-		    if lang_bin == 'rust' then
-		        compiler_cmd = 'cargo run'
-       		elseif lang_bin == 'go' then
-    		    -- NOTE: Untested because I am not using Go anymore
-        		-- TODO: Maybe try to find other way for this if not everyone
-            	--       uses a main.go file as their entry points?
-    		    compiler_cmd = 'go run main.go'
-    		end
-            require('toggleterm').exec_command(string.format('cmd="%s"', compiler_cmd), 1)
+			-- Set the properly builder command for the project
+			local compiler_cmd
+			if lang_bin == 'rust' then
+				compiler_cmd = 'cargo run'
+			elseif lang_bin == 'go' then
+				-- NOTE: Untested because I am not using Go anymore
+				-- TODO: Maybe try to find other way for this if not everyone
+				--       uses a main.go file as their entry points?
+				compiler_cmd = 'go run main.go'
+			end
+			require('toggleterm').exec_command(
+				string.format('cmd="%s"', compiler_cmd),
+				1
+			)
 		else
 			log.error(
 				'The filetype '

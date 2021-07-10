@@ -55,9 +55,9 @@ packer.startup(function(use)
 	-- Neorg
 	local disabled_neorg = functions.is_plugin_disabled('neorg')
 	use({
-	    'vhyrro/neorg',
-	    config = require('doom.modules.config.doom-neorg'),
-	    disable = disabled_neorg,
+		'vhyrro/neorg',
+		config = require('doom.modules.config.doom-neorg'),
+		disable = disabled_neorg,
 	})
 
 	-- Sessions
@@ -197,12 +197,12 @@ packer.startup(function(use)
 	---     Fuzzy Search     ---
 	-----]]--------------[[-----
 	use({
-	    'nvim-lua/plenary.nvim',
-	    module = 'plenary',
+		'nvim-lua/plenary.nvim',
+		module = 'plenary',
 	})
 	use({
-	    'nvim-lua/popup.nvim',
-	    module = 'popup',
+		'nvim-lua/popup.nvim',
+		module = 'popup',
 	})
 
 	local disabled_telescope = functions.is_plugin_disabled('telescope')
@@ -211,7 +211,7 @@ packer.startup(function(use)
 		cmd = 'Telescope',
 		module = 'telescope',
 		requires = {
-			'popup.nvim' ,
+			'popup.nvim',
 			'plenary.nvim',
 		},
 		config = require('doom.modules.config.doom-telescope'),
@@ -273,7 +273,7 @@ packer.startup(function(use)
 	-- Snippets
 	local disabled_snippets = functions.is_plugin_disabled('snippets')
 	use({
-	    'L3MON4D3/LuaSnip',
+		'L3MON4D3/LuaSnip',
 		disable = (disabled_lsp and true or disabled_snippets),
 		opt = true,
 		after = 'nvim-compe',

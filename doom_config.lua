@@ -22,11 +22,11 @@ local doom = {
 	-- @default = false
 	fmt_on_save = false,
 
-    -- Disable Vim macros
-    -- false : Enable Vim macros
-    -- true  : Disable Vim macros
-    -- @default = false
-    disable_macros = false,
+	-- Disable Vim macros
+	-- false : Enable Vim macros
+	-- true  : Disable Vim macros
+	-- @default = false
+	disable_macros = false,
 
 	-- Autosave sessions
 	-- false : Disable session autosave
@@ -252,25 +252,25 @@ local doom = {
 
 	-- Doom One colorscheme settings
 	doom_one = {
-	    -- If the cursor color should be blue
-	    -- @default = false
-	    cursor_coloring = false,
-	    -- If TreeSitter highlighting should be enabled
-	    -- @default = true
-	    enable_treesitter = true,
-	    -- If the comments should be italic
-	    -- @default = false
-	    italic_comments = false,
-	    -- If the telescope plugin window should be colored
-	    -- @default = true
-	    telescope_highlights = true,
-	    -- If the built-in Neovim terminal should use the doom-one
-	    -- colorscheme palette
-	    -- @default = false
-	    terminal_colors = true,
-	    -- If the Neovim instance should be transparent
-	    -- @default = false
-	    transparent_background = false,
+		-- If the cursor color should be blue
+		-- @default = false
+		cursor_coloring = false,
+		-- If TreeSitter highlighting should be enabled
+		-- @default = true
+		enable_treesitter = true,
+		-- If the comments should be italic
+		-- @default = false
+		italic_comments = false,
+		-- If the telescope plugin window should be colored
+		-- @default = true
+		telescope_highlights = true,
+		-- If the built-in Neovim terminal should use the doom-one
+		-- colorscheme palette
+		-- @default = false
+		terminal_colors = true,
+		-- If the Neovim instance should be transparent
+		-- @default = false
+		transparent_background = false,
 	},
 
 	-- Set gui fonts here

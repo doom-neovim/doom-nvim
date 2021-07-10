@@ -207,7 +207,9 @@ local function save_backup_hashes()
 		log.info('Saving the Doom releases for future rollbacks ...')
 		local saved_releases, releases_err = pcall(function()
 			-- Get the releases
-		    log.debug('Executing "' .. utils.git_workspace .. 'show-ref --tags"')
+			log.debug(
+				'Executing "' .. utils.git_workspace .. 'show-ref --tags"'
+			)
 			local releases_handler = io.popen(
 				utils.git_workspace .. 'show-ref --tags'
 			)
@@ -220,9 +222,12 @@ local function save_backup_hashes()
 				table.insert(releases, release)
 			end
 			-- Sort the releases table
-		    local sorted_releases = {}
+			local sorted_releases = {}
 			for idx, release in ipairs(releases) do
-				sorted_releases[#releases + 1 - idx] = release:gsub("refs/tags/", "")
+				sorted_releases[#releases + 1 - idx] = release:gsub(
+					'refs/tags/',
+					''
+				)
 			end
 
 			-- Check if the database already exists so we can check if the
@@ -336,7 +341,10 @@ M.rollback_doom = function()
 		-- Sort the releases table
 		local sorted_releases = {}
 		for idx, release in ipairs(releases) do
-			sorted_releases[#releases + 1 - idx] = release:gsub("refs/tags/", "")
+			sorted_releases[#releases + 1 - idx] = release:gsub(
+				'refs/tags/',
+				''
+			)
 		end
 
 		-- Check the current commit hash and compare it with the ones in the
@@ -346,38 +354,44 @@ M.rollback_doom = function()
 		local current_commit = commit_handler:read('a'):gsub('[\r\n]', '')
 		commit_handler:close()
 		for _, version_info in ipairs(sorted_releases) do
-		    for release_hash, version in version_info:gmatch('(%w+)%s(%w+%W+%w+%W+%w+)') do
-		        if release_hash == current_commit then
-		            current_version = version
-		        end
-		    end
+			for release_hash, version in version_info:gmatch('(%w+)%s(%w+%W+%w+%W+%w+)') do
+				if release_hash == current_commit then
+					current_version = version
+				end
+			end
 		end
 		-- If the current_version variable is still nil then
 		-- fallback to latest version
 		if not current_version then
-		    -- next => index, SHA vX.Y.Z
-		    local _, release_info = next(releases, nil)
-		    -- split => { SHA, vX.Y.Z }, [2] => vX.Y.Z
-		    current_version = vim.split(release_info, ' ')[2]
+			-- next => index, SHA vX.Y.Z
+			local _, release_info = next(releases, nil)
+			-- split => { SHA, vX.Y.Z }, [2] => vX.Y.Z
+			current_version = vim.split(release_info, ' ')[2]
 		end
 
-        local rollback_sha, rollback_version
-        local break_loop = false
+		local rollback_sha, rollback_version
+		local break_loop = false
 		for _, version_info in ipairs(releases) do
-	        for commit_hash, release in version_info:gmatch('(%w+)%s(%w+%W+%w+%W+%w+)') do
-		        if release:gsub('v', '') < current_version:gsub('v', '') then
-		            rollback_sha = commit_hash
-		            rollback_version = release
-		            break_loop = true
-		            break
-		        end
-	        end
-	        if break_loop then
-	            break
-	        end
+			for commit_hash, release in version_info:gmatch('(%w+)%s(%w+%W+%w+%W+%w+)') do
+				if release:gsub('v', '') < current_version:gsub('v', '') then
+					rollback_sha = commit_hash
+					rollback_version = release
+					break_loop = true
+					break
+				end
+			end
+			if break_loop then
+				break
+			end
 		end
 
-        log.info('Reverting back to version ' .. rollback_version .. ' (' .. rollback_sha .. ') ...')
+		log.info(
+			'Reverting back to version '
+				.. rollback_version
+				.. ' ('
+				.. rollback_sha
+				.. ') ...'
+		)
 		local rolled_back, rolled_err = pcall(function()
 			os.execute(utils.git_workspace .. 'checkout ' .. rollback_sha)
 		end)
@@ -385,8 +399,8 @@ M.rollback_doom = function()
 		if not rolled_back then
 			log.error(
 				'Error while rolling back to version '
-				    .. rollback_version
-				    .. ' ('
+					.. rollback_version
+					.. ' ('
 					.. rollback_sha
 					.. '). Traceback:\n'
 					.. rolled_err
@@ -395,12 +409,11 @@ M.rollback_doom = function()
 
 		log.info(
 			'Successfully rolled back Doom to version '
-			    .. rollback_version
-			    .. ' ('
+				.. rollback_version
+				.. ' ('
 				.. rollback_sha
 				.. '), please restart'
 		)
-
 	elseif vim.fn.filereadable(rolling_backup) == 1 then
 		local backup_commit = utils.read_file(rolling_backup):gsub(
 			'[\r\n]+',
