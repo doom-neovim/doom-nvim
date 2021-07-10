@@ -56,8 +56,10 @@ packer.startup(function(use)
 	local disabled_neorg = functions.is_plugin_disabled('neorg')
 	use({
 		'vhyrro/neorg',
+		branch = 'unstable',
 		config = require('doom.modules.config.doom-neorg'),
 		disable = disabled_neorg,
+		after = { 'nvim-treesitter' },
 	})
 
 	-- Sessions
