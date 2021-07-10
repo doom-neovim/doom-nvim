@@ -24,14 +24,6 @@ else
 	)
 end
 
--- Set some configs on load
-if vim.fn.has('vim_starting') then
-	-- Set encoding
-	vim.opt.encoding = 'utf-8'
-	-- Required to use some colorschemes and improve colors
-	vim.opt.termguicolors = true
-end
-
 -- {{{ Default doom_config values
 
 -- default_doom_config_values loads the default doom_config values

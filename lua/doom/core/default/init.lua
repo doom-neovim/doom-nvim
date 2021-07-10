@@ -20,17 +20,8 @@ M.load_default_options = function()
 	vim.opt.background = config.doom.colorscheme_bg
 	vim.cmd('highlight WhichKeyFloat guibg=' .. config.doom.whichkey_bg)
 
-	--- Set default options
-	vim.opt.encoding = 'utf-8'
-
 	-- Global options
-	vim.opt.wildmenu = true
-	vim.opt.autoread = true
-	vim.opt.smarttab = true
 	vim.opt.hidden = true
-	vim.opt.hlsearch = true
-	vim.opt.laststatus = 2
-	vim.opt.backspace = { 'indent', 'eol', 'start' }
 	vim.opt.updatetime = 200
 	vim.opt.timeoutlen = 500
 	vim.opt.completeopt = {
@@ -46,7 +37,6 @@ M.load_default_options = function()
 	vim.opt.signcolumn = 'yes'
 
 	-- Buffer options
-	vim.opt.autoindent = true
 	vim.opt.smartindent = true
 	vim.opt.copyindent = true
 	vim.opt.preserveindent = true
