@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2021-07-11
+
+### Added
+
+- `:DoomRollback` command, easily rollback to a previous Doom Nvim version
+  (main branch, a.k.a stable) or a previous commit (development branch).
+- Dynamic statusline colors (WIP)
+- More automation, plugins configurations will automatically take effect
+  and the plugins will be automatically installed or uninstalled too, say bye
+  to `PackerClean` and `PackerInstall` commands!
+- The language servers can be automatically installed now by adding a `+lsp`
+  flag in the `doomrc` languages field, e.g. for adding `rust` support and adding
+  `rust-analyzer`: `'rust +lsp'`.
+- Plugins:
+  - Added `neorg`, `range-highlight`, `neogit` and more plugins!
+  - Added initial built-in plugins for compiling and running your projects,
+    see [modules](./docs/modules.md) for more information.
+
+### Changed
+
+- Our `doom-one` colorscheme have been rewritten and is now pure Lua!
+- Reduced average startuptime from 400ms to 40ms (depends on the hardware!)
+- Vim macros can be optionally disabled now, see related issue: #31
+- Doom Nvim has been restructured, it's more robust and maintainable now.
+- No more non-sense global wrappers around the Neovim Lua API, everything
+  should have their own scope.
+- Our `:DoomUpdate` command is now better, say bye to those annoying merging
+  issues when there were huge changes.
+- New statusline look and feel
+- New logging system powered by [vlog](https://github.com/tjdevries/vlog).
+- `packer.nvim` bootstrapping is now handled internally.
+- Plugins:
+  - We are now using `bufferline` instead of `barbar.nvim`.
+  - We are now using `rest.nvim` as our HTTP client instead of `dot-http`.
+  - We are now using `LuaSnip` + `friendly-snippets` instead of `snippets.nvim`.
+
+### Deleted
+
+- LSP kind plugin, the symbols kinds can be managed with the Lua API.
+
+### Fixed
+
+- Some issues on first launch related to plugins.
+
 ## [2.3.6] - 2021-07-11
 
 ### Fixed
@@ -314,7 +358,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.6...develop
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.0...develop
+[3.0.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.6...v3.0.0
 [2.3.6]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.5...v2.3.6
 [2.3.5]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.4...v2.3.5
 [2.3.4]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.3...v2.3.4
