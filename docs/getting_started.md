@@ -1,53 +1,16 @@
 # Getting Started
 
-## Table of Contents
-
-- [Install](#install)
-  - [Neovim & dependencies](#neovim--dependencies)
-    - [On Linux](#on-linux)
-      - [Ubuntu](#ubuntu)
-      - [Fedora](#fedora)
-      - [Arch Linux](#arch)
-    - [On MacOS](#on-macos)
-    - [On Windows](#on-windows)
-  - [External dependencies](#external-dependencies)
-    - [On Linux](#on-linux)
-      - [Ubuntu](#ubuntu)
-      - [Fedora](#fedora)
-      - [Arch Linux](#arch)
-    - [On MacOS](#on-macos)
-    - [On Windows](#on-windows)
-  - [Doom Nvim](#doom-nvim)
-    - [Using cheovim](#using-cheovim)
-- [Update & Rollback](#update--rollback)
-  - [Update Doom Nvim](#update-doom-nvim)
-  - [Rollback](#rollback)
-    - [Previous configurations](#previous-configurations)
-    - [Rolling back doom](#rolling-back-doom)
-- [Configuration](#configuration)
-  - [Modules](#modules)
-  - [Plugin Management](#plugin-management)
-    - [Installing plugins](#installing-plugins)
-    - [Disabling plugins](#disabling-plugins)
-  - [Configuring Doom](#configuring-doom)
-    - [Configuring settings](#configuring-settings)
-    - [Configuring plugins](#configuring-plugins)
-    - [Configuring LSP](#configuring-lsp)
-  - [Binding keys](#binding-keys)
-- [Migrating to 3.0.0](#migrating-to-300)
-  - [New configurations](#new-configurations)
-
 ## Install
 
 This is what you will have installed by the end of this section:
 
 - Git 2.23+
 - Neovim 0.5.0 (Neovim 0.4 not supported, see [faq](https://github.com/NTBBloodbath/doom-nvim/blob/main/docs/faq.md#why-does-doom-nvim-only-support-neovim-nightly) to know why)
-- ripgrep 11.0+
 - GNU Find
-- (Optional) fd 7.3.0+ (known as `fd-find` on Debian, Ubuntu & derivates),
+- **Optional**: ripgrep 11.0+
+- **Optional**: fd 7.3.0+ (known as `fd-find` on Debian, Ubuntu & derivates),
   improves performance for many file indexing commands
-- (Optional) node & npm, required to use LanguageServerProtocols (LSP) and the plugins using LSP, like the symbols-outline plugin.
+- **Optional**: node & npm, required to use LanguageServerProtocols (LSP) and the plugins using LSP, like the symbols-outline plugin.
 
 These packages ought to be available through the package managers of your OS;
 i.e. pacman/aptitude/rpm/etc on the various Linux distributions.
@@ -56,7 +19,7 @@ i.e. pacman/aptitude/rpm/etc on the various Linux distributions.
 
 #### On Linux
 
-Neovim 0.5.0 was recently released as a stable version. 
+Neovim 0.5.0 was recently released as a stable version.
 You can check what version your repository has by looking at [this site.](https://repology.org/project/neovim/versions)
 If Neovim 0.5.0 is still not available in your repository, you can install it by doing one of the following:
 
@@ -96,9 +59,9 @@ available on the [AUR](https://wiki.archlinux.org/index.php/Arch_User_Repository
 
 #### On MacOS
 
-You can download a prebuilt binary from the [Neovim](https://github.com/neovim/neovim/releases/tag/nightly) nightly releases page.
+You can download a prebuilt binary from the [Neovim](https://github.com/neovim/neovim/releases/tag/nightly) releases page.
 
-1. Download: `curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos.tar.gz`
+1. Download: `curl -LO https://github.com/neovim/neovim/releases/download/v0.5.0/nvim-macos.tar.gz`
 2. Extract: `tar xzvf nvim-macos.tar.gz`
 3. Run: `./nvim-osx64/bin/nvim`
 
@@ -109,7 +72,7 @@ Neovim nightly can also be downloaded with [homebrew](https://brew.sh/):
 
 `brew install --HEAD neovim` will download the source and build it locally on your machine.
 
-If you already have Neovim v4 installed you may need to unlink it.
+If you already have Neovim v0.4 installed you may need to unlink it.
 
 ```
 brew unlink neovim
@@ -117,7 +80,7 @@ brew install neovim --HEAD
 nvim --version
 ```
 
-MacPorts currently only has Neovim v4.4
+MacPorts currently only has Neovim v0.4.4
 
 You can also download a prebuilt binary from the [Neovim](https://github.com/neovim/neovim/releases) releases page.
 
@@ -157,7 +120,7 @@ apt-get install git ripgrep
 # (Optional) Improves performance for many file indexing commands
 apt-get install fd-find
 
-# (Optional) Required by Language Server Protocols
+# (Optional) Required by some Language Server Protocols
 apt-get install nodejs npm
 ```
 
@@ -170,7 +133,7 @@ dnf install git ripgrep
 # (Optional) Improves performance for many file indexing commands
 dnf install fd-find # is 'fd' in Fedora <28
 
-# (Optional) Required by Language Server Protocols
+# (Optional) Required by some Language Server Protocols
 dnf install nodejs
 ```
 
@@ -183,7 +146,7 @@ pacman -S git ripgrep
 # (Optional) Improves performance for many file indexing commands
 pacman -S fd
 
-# (Optional) Required by Language Server Protocols
+# (Optional) Required by some Language Server Protocols
 pacman -S nodejs npm
 ```
 
@@ -199,15 +162,15 @@ dependencies here!
 
 ### Doom Nvim
 
-With Neovim Nightly and Doom's dependencies installed, next is to install
+With Neovim v0.5.0 and Doom's dependencies installed, next is to install
 Doom Nvim itself:
 
 > **NOTES:**
-
-1. If you have not installed Neovim 0.5.0 yet, please run the following command
-   before installing Doom Nvim, it will install Neovim 0.5.0 and Doom Nvim.
-2. If you want to know all the commands of the installer, run the installer with
-   <kbd>bash -s -- -h</kbd> instead of just <kbd>bash</kbd>.
+>
+> 1. If you have not installed Neovim 0.5.0 yet, please run the following command
+>    before installing Doom Nvim, it will install Neovim 0.5.0 and Doom Nvim.
+> 2. If you want to know all the commands of the installer, run the installer with
+>    <kbd>bash -s -- -h</kbd> instead of just <kbd>bash</kbd>.
 
 ```sh
 # Check if you have all the dependencies listed above
@@ -215,12 +178,12 @@ curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.
 ```
 
 ```sh
-# If you do not have Neovim nightly but you have all the dependencies listed above
+# If you do not have Neovim 0.5.0 but you have all the dependencies listed above
 curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash -s -- -n
 ```
 
 ```sh
-# If you already have Neovim nightly and all the dependencies listed above
+# If you already have Neovim 0.5.0 and all the dependencies listed above
 curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash
 ```
 
@@ -257,33 +220,160 @@ and restore the backup of your previous setup.
 
 #### Rolling Back Doom
 
-Did the update screwed up your setup because of a bug and you want to rollback?
-Then you're lucky. Just run `:DoomRollback` in Neovim and Doom will rollback to
+Did the update screwed up your setup because of a bug or a breaking change and you want to rollback?
+Then you're lucky. Just run `:DoomRollback` in Neovim and Doom will rollback itself to
 a previous release (for main branch) or a previous commit (for development branch).
 
 > **IMPORTANT**: remember to report the issues before just rolling back. In that
-> way we can work on fixing it and make doom better!
+> way we can work on fixing them and make doom better!
 
 ## Configuration
 
-You can configure Doom Nvim by tweaking the `doomrc` file in your Doom Nvim root
-dir (`$HOME/.config/doom-nvim/` by default), please see
-<kbd>:h doom_nvim_options</kbd> for more information.
+You can configure Doom Nvim by tweaking the `doomrc.lua`, `doom_config.lua` and
+the `plugins.lua` files located in your Doom Nvim root directory
+(`$HOME/.config/doom-nvim/` by default).
 
-> **IMPORTANT:** any changes to your Doom Nvim configuration occassionally
-> need a run of `:PackerSync` inside Neovim (if you're using the stable branch).
-> For instance, when you enable a disabled plugin.
+### doomrc.lua
+
+This file handles all the Doom Nvim modules, its structure is really simple and
+easy to understand.
+
+This one will look like that:
+
+```lua
+local doom = {
+	ui = {
+		'dashboard',      -- Start screen
+		-- 'doom-themes', -- Additional doom emacs' colorschemes
+		'statusline',     -- Statusline
+		'tabline',        -- Tabline, shows your buffers list at top
+		-- 'zen',         -- Distraction free environment
+		'which-key',      -- Keybindings popup menu like Emacs' guide-key
+		-- 'indentlines', -- Show indent lines
+	},
+	doom = {
+		-- 'neorg',    -- Life Organization Tool
+		-- 'runner',   -- Open a REPL for the current language or run the current file
+		-- 'compiler', -- Compile (and run) your code with just pressing three keys!
+	},
+	editor = {
+		'auto-session',    -- A small automated session manager for Neovim
+		-- 'terminal',     -- Terminal for Neovim (NOTE: needed for runner and compiler)
+		'explorer',        -- Tree explorer
+		'symbols',         -- LSP symbols and tags
+		-- 'minimap',      -- Code minimap, requires github.com/wfxr/code-minimap
+		'gitsigns',        -- Git signs
+		'telescope',       -- Highly extendable fuzzy finderover lists
+		-- 'restclient',   -- A fast Neovim http client
+		'formatter',       -- File formatting
+		'autopairs',       -- Autopairs
+		-- 'editorconfig', -- EditorConfig support for Neovim
+		'kommentary',      -- Comments plugin
+		'lsp',             -- Language Server Protocols
+		'snippets',        -- LSP snippets
+	},
+	langs = {
+		-- To enable the language server for a language justadd the +lsp flag
+		-- at the end, e.g. 'rust +lsp'. This will install the rust TreeSitter
+		-- parser and rust-analyzer
+		--
+		-- 'html',        -- HTML support
+		-- 'css',         -- CSS support
+		-- 'javascript',  -- JavaScript support
+		-- 'typescript',  -- TypeScript support
+		-- 'bash',        -- The terminal gods language
+		-- 'python +lsp', -- Python support + lsp
+		-- 'ruby',        -- Look ma, I love the gems!
+		'lua',            -- Support for our gods language
+		-- 'elixir',      -- Build scalable and maintainablesoftware
+		-- 'haskell',     -- Because Functional programming is fun, isn't it?
+
+		-- 'rust +lsp',   -- Let's get rusty!
+		-- 'go',          -- Hello, gopher
+		-- 'cpp',         -- C++ support
+		-- 'java',        -- Java support
+
+		-- 'config',      -- Configuration files (JSON, YAML, TOML)
+		-- 'dockerfile',  -- Do you like containers, right?
+	},
+	utilities = {
+		-- 'suda',            -- Write and read files without sudo permissions
+		-- 'lazygit',         -- LazyGit integration for Neovim, requires LazyGit
+		-- 'neogit',          -- Magit for Neovim
+		-- 'colorizer',       -- Fastets colorizer for Neovim
+		'range-highlight',    -- hightlights ranges you haveentered in commandline
+	},
+}
+
+return doom
+```
+
+And as the `doomrc.lua` file self-documentation says, you will only need to uncomment
+or comment the plugins names in order to enable or disable them. e.g. to enable the `terminal`
+plugin you will only need to uncomment the `-- 'terminal',` line and restart Neovim.
+Doom will automatically handle your changes and install the `terminal` plugin for you.
+
+> **NOTE**: for more information please refer to [modules].
+
+### doom_config.lua
+
+This file handles all the Doom Nvim configurations, including the ability to easily
+create new custom mappings and global Neovim variables.
+
+All the options are self-documented on it so you can easily modify them and know
+exactly what you are doing.
+
+This is its structure:
+
+```lua
+local doom = {
+    -- Here lies all the Doom Nvim configurations
+}
+
+local nvim = {
+    -- Here lies all the custom Neovim configurations
+}
+
+return {
+    doom = doom,
+    nvim = nvim,
+}
+```
+
+### plugins.lua
+
+This file handles your custom plugins, in other words, it handles all the extra
+plugins you need that are not covered by Doom Nvim.
+
+If you are familiar with [packer.nvim] then you can see this file as a wrapper
+for its `use` function.
+
+This one just contains a `return {}` statement. Your plugins should be declared
+inside the returned table, e.g. if you want to install `markdown-preview.nvim`:
+
+```lua
+return {
+    {
+        'iamcco/markdown-preview.nvim',
+        run = 'cd app && yarn install',
+        event = 'BufRead',
+    },
+}
+```
+
+And as with the `doomrc.lua` file, Doom Nvim will automatically handle your changes
+and install or uninstall the plugins declared on here.
+
+> **NOTE**: all the valid options for declaring plugins can be found in
+> [specifying plugins](https://github.com/wbthomason/packer.nvim#specifying-plugins).
 
 ### Modules
 
-Doom Nvim consists of around 7 modules. A Doom Nvim Module is a bundle of plugins,
+Doom Nvim consists of around 5 modules. A Doom Nvim Module is a bundle of plugins,
 configuration and commands, organized into a unit that can be toggled easily by
-tweaking your doomrc (found in `$HOME/.config/doom-nvim`).
+tweaking your `doomrc.lua` (found in `$HOME/.config/doom-nvim`).
 
 Please see [Plugin Management](#plugin-management) for more information.
-
-> **IMPORTANT:** any changes to your Doom Nvim Modules won't take effect until
-> you run `:PackerSync` inside Neovim.
 
 ### Plugin Management
 
@@ -295,88 +385,54 @@ in your Doom Nvim root directory. Read on to learn how to use this system to ins
 your own plugins.
 
 > **WARNING:** Do not install plugins directly in `lua/doom/modules/init.lua`. Instead,
-> use your `doomrc` to modify them.
-
-#### Installing plugins
-
-To install a custom plugin, add it to `custom_plugins` field into the `Doom` table
-in your `doomrc`.
-
-```lua
--- @default = {}
-custom_plugins = { 'plugin_author/plugin_repo' }
-```
-
-You can also use other method if the plugin depends on other plugins. All the
-available options for the plugins can be found on
-[packer.nvim](https://github.com/wbthomason/packer.nvim) README.
-
-```lua
-custom_plugins = {
-    'plugin_author/plugin_repo',
-    {
-        'plugin_author/second_plugin_repo',
-        disable = false, -- not required, false by default
-        requires = { 'foo', 'bar' } -- not required if the plugin does not have dependencies
-    },
-}
-```
-
-> **NOTES:**
->
-> 1. Do not forget to run `:PackerInstall` to install your new plugins if you're
->    using the stable branch of Doom Nvim.
-
-#### Disabling plugins
-
-To disable plugins from Doom Nvim Modules or disable a module itself, just use the
-`disabled_plugins` and/or `disabled_modules` fields.
-
-```lua
--- @default = {}
-disabled_plugins = { 'terminal', 'treesitter' }
-
--- @default = { 'git', 'lsp', 'web' }
-disabled_modules = { 'web' }
-```
-
-> **NOTES:**
->
-> 1. Do not forget to run `:PackerSync` or your changes won't take effect if you're
->    using the stable branch of Doom Nvim.
->
-> 2. You can see a list of the plugins that you can disable on [Modules](./modules.md#list-of-modules).
->
-> 3. You can also see how to enable/disable plugins modules on [Modules](./modules.md).
+> use your `doomrc.lua` and `plugins.lua` files to modify them.
 
 ### Configuring Doom
 
 #### Configuring settings
 
-You can change Doom's default settings by tweaking your `doomrc`, please see
-<kbd>:h doom_nvim_options</kbd> to know how to.
+You can change Doom's default settings by tweaking your `doom_config.lua` file,
+please see <kbd>:h doom_nvim_options</kbd> to know how to.
 
 #### Configuring plugins
 
 Do you want to change some configurations of some modules?
 
-Go to `lua/doom/modules/config` dir and you will find the configurations for the plugins.
+Go to `lua/doom/modules/config` directory and you will find the configurations
+for the plugins.
+
+Otherwise if you want to configure a plugin declared in your `plugins.lua` you
+can use the packer's `config` field, e.g.
+
+```lua
+{
+    'TimUntersberger/neogit',
+    config = function()
+        require('neogit').setup()
+    end,
+}
+```
 
 ##### Configuring LSP
 
-[LSP](https://microsoft.github.io/language-server-protocol/) is installed as a plugin.
-Be aware that this plugin is disabled per default. To enable it, remove it from the
-`disabled_modules` section in your `doomrc`.
+[Language Server Protocols](https://microsoft.github.io/language-server-protocol/) is installed as a plugin.
 
 To easily install language servers and without having to do it system-wide or having to
 manually configure servers, Doom Nvim makes use of [kabouzeid/nvim-lspinstall](https://github.com/kabouzeid/nvim-lspinstall).
 
-You can see a list of currently supported languages at [bundled installers](https://github.com/kabouzeid/nvim-lspinstall#bundled-installers).
+To enable the language server for a certain programming language and automatically
+install it, just append a `+lsp` flag at the end of the language field in your `doomrc.lua`,
+e.g. for enabling Rust support in Doom and install `rust-analyzer`:
 
-> Usage example:
+```lua
+local doom = {
+    langs = {
+        'rust +lsp', -- Let's get rusty!
+    }
+}
+```
 
-- `:LspInstall python` to install Python LSP
-- `:LspUninstall python` to uninstall Python LSP
+> **NOTE**: You can see a list of currently supported languages at [bundled installers](https://github.com/kabouzeid/nvim-lspinstall#bundled-installers).
 
 ### Binding keys
 
@@ -385,12 +441,9 @@ You can modify the default keybindings by modifying the following files:
 - `lua/doom/core/keybindings/init.lua` - General and SPC keybindings
 - `lua/doom/modules/config` - lua plugins keybindings
 
-You can also define your own keybindings in your `doomrc` with the `Neovim.mappings` field.
+You can also define your own keybindings in your `doom_config.lua` with the `nvim.mappings` field.
 
 ## Migrating to 3.0.0
-
-> At the time of writing this (2021-06-30) version 3.0.0 is still in development
-> and subject to breaking changes.
 
 As this is a major version, there are many improvements and breaking changes.
 This section is made to help you migrate to this version without dying in the
@@ -401,21 +454,29 @@ But first let's see what's new:
 ### Changes for end users
 
 - Raw speed, never go slow again.
-  Reduced average startuptime from 400ms to 40ms, special thanks to [vhyrro]
+  Reduced average startuptime from 400ms to 40ms (tested with old hardware),
+  special thanks to [vhyrro]!
 - New and better doom-one colorscheme written in pure Lua. Because the
   colorscheme matters.
-- Easily add new Neovim settings by using your `doomrc`. Extensibility is a
-  feature that you cannot miss, and what better than being able to extend as
-  much as you want?
+- Fragmented configuration file (`doomrc`) so it will be more easy to customize
+  Doom. See [New configurations](#new-configurations).
+- Easily add new Neovim settings by using your `doom_config.lua` file.
+  Extensibility is a feature that you cannot miss, and what better than being
+  able to extend Doom as much as you want?
 - New logging system powered by [vlog]. A faster and smaller logging system
   because complexity is not always the best choice.
-- Better custom plugin manager. Now the custom plugins are being directly
+- Easily enable and disable plugins. Now toggling the doom default plugins is easier
+  than before, just comment or uncomment it in your `doomrc.lua`!
+- Better custom plugins management. Now the custom plugins are being directly
   handled by packer as it should be, no more nonsense wrappers around it.
+- Better updating mechanism. Forget these annoying merging issues and save the
+  current state of your Doom Nvim installation in case that you need to rollback
+  your Doom Nvim version because of the demons!
+- Added a `DoomRollback` command. Something went wrong after updating? No worries,
+  just rollback to a previous version (stable branch) or a previous commit
+  (development branch) and be piece of mind!
 - Built-in plugins. Because we should have some utilities to make our lives
-  easier, isn't this how it should be? See [modules/doom] for more information
-  (WIP).
-- Fragmented configuration file (`doomrc`) so it will be more easy to customize
-  Doom nvim (**breaking change**).
+  easier, isn't this how it should be? See [modules/doom] for more information.
 - A lot of bug fixes.
 
 ### Changes for contributors
@@ -425,18 +486,13 @@ But first let's see what's new:
 - Restructured source code. Now the doom nvim source code is much cleaner and
   easier to understand.
 - Added selene linter CI for incoming pull requests and stylua CI for pushes.
-  Let's get a consistent way to maintain doom nvim source.
-
-> **IMPORTANT:** This what's new section is subject to changes while version
-> 3.0.0 is in development. Changes are expected.
->
-> You can also see the [Version 3.0.0 roadmap](https://github.com/NTBBloodbath/doom-nvim/projects/5)
-> for seeing the current progress.
+  Let's get a consistent way to maintain Doom Nvim source!
 
 Now that we know what's new we will surely want to update, isn't it?
 
 Due to the new raw speed we highly recommend that you do a fresh installation so
-everything will be work as it should. **Make sure to backup your doomrc changes**.
+everything will be work as it should. **Make sure to backup your doomrc changes
+so you can apply your changes to the new `doom_config.lua` configuration file**.
 
 We don't recommend using the `:DoomUpdate` command for this task because of the
 huge changes that doom nvim gotten. This command will only end in a really
@@ -485,18 +541,20 @@ And now, how can I start using the new configuration files?
 I'm going to explain you in a short way because the new configuration files has
 a rich documentation inside them.
 
-- `doomrc.lua`, this file handles the doom nvim modules, in other words, which
+- `doomrc.lua`, this file handles the Doom Nvim modules, in other words, which
   plugins are being installed and loaded and which plugins are not.
 - `doom_config.lua`, this file handles the user configurations for doom nvim,
   e.g. if mouse is enabled or not. This one also handles user-defined Neovim
-  configurations like global variables.
+  configurations like global variables and mappings.
 - `plugins.lua`, this file handles the user-defined plugins, it is the
   replacement for the `custom_plugins` field in the old doomrc.
 
-> Are you having issues with the development version? Don't hesitate to [report them]
+> Are you having issues with the 3.0.0 version? Don't hesitate to [report them]
 > so we can fix them and make doom more stable because that's the way to improve software.
 
 [vlog]: https://github.com/tjdevries/vlog.nvim
+[packer.nvim]: https://github.com/wbthomason/packer.nvim
 [vhyrro]: https://github.com/vhyrro
+[modules]: ./modules.md
 [modules/doom]: https://github.com/NTBBloodbath/doom-nvim/tree/develop/lua/doom/modules/doom
 [report them]: https://github.com/NTBBloodbath/doom-nvim/issues/new

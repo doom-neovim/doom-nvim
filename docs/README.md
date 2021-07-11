@@ -14,16 +14,6 @@ code design, so that there is less between you and Neovim.
 > The documentation is designed to be viewed within Doom Nvim. Access it by pressing
 > `:h doom_nvim`.
 
-## Table of Contents
-
-- [Documentation](#documentation)
-  - [Getting Started](#getting-started)
-  - [Modules](#modules)
-  - [Contributing](#contributing)
-- [Community Resources](#community-resources)
-  - [Asking for help](#asking-for-help)
-  - [Projects](#projects)
-
 ## Documentation
 
 ### Getting Started

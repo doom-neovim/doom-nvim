@@ -2,8 +2,8 @@
 
 ## Introduction
 
-Doom Nvim consists of around 5 modules with ~30 plugins and growing.
-A dDoom Nvim module is a bundle of plugins, configurations and commands,
+Doom Nvim consists of around 5 modules with ~40 plugins and growing.
+A Doom Nvim module is a bundle of plugins, configurations and commands,
 organized into a unit that can be toggled easily.
 
 > **NOTE**: Doom Nvim uses [packer.nvim] as its plugins manager.
@@ -52,6 +52,10 @@ without them. These plugins are the following:
 
 - [neorg]
   - Life Organization Tool.
+- [runner] (built-in)
+  - A code runner for your interpreted code.
+- [compiler] (built-in)
+  - Compile _and run_ your projects with only a few keystrokes.
 
 ### Editor
 
@@ -171,8 +175,7 @@ The currently available flags are the following:
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
 
-> **NOTE**: this group requires `treesitter` enabled for getting syntax highlighting
-> and `lsp` for the `+lsp` flags.
+> **NOTE**: this group requires the `lsp` installed for the `+lsp` flags.
 
 ### Utilities
 
@@ -189,15 +192,15 @@ The currently available flags are the following:
 
 ## Managing modules
 
-Since version 3.0.0 managing the modules plugins is really easy, you don't need
-to learn nothing anymore. Just comment the plugins that you don't want to use
-and uncomment the ones that you are going to use!
+Since version 3.0.0 managing the modules plugins is really easy because you
+don't need to learn nothing anymore. Just comment the plugins that you don't
+want to use and uncomment the ones that you are going to use!
 
 So by example, if you want to disable the tree explorer you can simply comment it.
 
 ```lua
 -- Before, the plugin is enabled
-'explorer', -- Tree explorer
+'explorer',    -- Tree explorer
 
 -- After, the plugin is disabled
 -- 'explorer', -- Tree explorer
@@ -222,6 +225,7 @@ changes for you!
 [which-key]: https://github.com/folke/which-key.nvim
 [zen]: https://github.com/kdav5758/TrueZen.nvim
 [telescope]: https://github.com/nvim-telescope/telescope.nvim
+[doom-themes]: https://github.com/GustavoPrietoP/doom-themes.nvim
 
 [gitsigns]: https://github.com/lewis6991/gitsigns.nvim
 [lazygit]: https://github.com/kdheepak/lazygit.nvim
@@ -245,3 +249,6 @@ changes for you!
 [restclient]: https://github.com/NTBBloodbath/rest.nvim
 [colorizer]: https://github.com/norcalli/nvim-colorizer.lua
 [range-highlight]: https://github.com/winston0410/range-highlight.nvim
+
+[runner]: ../lua/doom/modules/built-in/runner/README.md
+[compiler]: ../lua/doom/modules/built-in/compiler/README.md

@@ -11,21 +11,6 @@ and which code style you should use :heart:
 > **Working on your first Pull Request?** You can learn how from this _free_ series
 > [How to Contribute to an Open Source Project on GitHub](https://kcd.im/pull-request).
 
-## Table of Contents
-
-- [Where can I help?](#where-can-i-help)
-- [Reporting issues](#reporting-issues)
-  - [Acquire a backtrace from errors](#acquire-a-backtrace-from-errors)
-  - [Create a step-by-setp reproduction guide](#create-a-ste-by-step-reproduction-guide)
-  - [Include information about your Doom Nvim install](include-information-about-your-doom-nvim-install)
-- [Suggesting features, keybinds and enhancements](#suggesting-features-keybinds-and-enhancements)
-- [Contributing code](#contributing-code)
-  - [Conventions](#conventions)
-    - [Code style](#code-style)
-    - [Commits & PRs](#commits--prs)
-    - [Keybind conventions](#keybind-conventions)
-  - [Submitting pull requests](#submitting-pull-requests)
-
 ## Where can I help
 
 - If you’ve encountered a bug, [file a bug report](https://github.com/NTBBloodbath/doom-nvim/issues/new/choose).

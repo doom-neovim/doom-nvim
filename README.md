@@ -1,14 +1,17 @@
 <div align="center">
 
-# Doom Neovim
+# Doom Nvim
 
 ![License](https://img.shields.io/github/license/NTBBloodbath/doom-nvim?style=for-the-badge)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
-![Latest Release](https://img.shields.io/github/v/release/NTBBloodbath/doom-nvim?include_prereleases&style=for-the-badge)
+![Latest Release](https://img.shields.io/github/v/release/NTBBloodbath/doom-nvim?include_prereleases&style=for-the-badge&color=red)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/NTBBloodbath/doom-nvim/develop?style=for-the-badge)
 ![Neovim version](https://img.shields.io/badge/Neovim-0.5-57A143?style=for-the-badge&logo=neovim)
-  
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=for-the-badge)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [Features](#features) • [Install](#install) • [Documentation] • [Contribute](#contribute)
@@ -25,25 +28,22 @@
   <img src="https://raw.githubusercontent.com/hlissner/doom-emacs/screenshots/cacochan.png" align="right" />
 </a>
 
-> It is a story as old as time. A barely new vimmer that is afraid to configure
-> Neovim and make it work out-of-the-box without problems, that gets the
-> solution to his configuration problems. This is his configuration.
-
-Doom Nvim is a Neovim port of the [doom-emacs](https://github.com/hlissner/doom-emacs) framework.
-
-As a vimmer, I know that it's difficult to configure Vim/Neovim when you are just starting to use it,
-how time consuming it's to customize it to your needs and that's why Doom Nvim exists
-_also because I love Doom_.
+Doom Nvim is a Neovim port of the [doom-emacs](https://github.com/hlissner/doom-emacs) framework
+and adapted to Vim philosophy.
 
 Its goal is to give Neovim an initial configuration to start working in a stable and efficient
-development environment without spending a lot of time configuring everything, without forgetting
+development environment without spending a lot of time configuring everything and without forgetting
 that we don't all need the same environment.
+
+> As a vimmer, I know that it's difficult to configure Vim/Neovim when you are just starting to use it,
+> how time consuming it's to customize it to your needs and that's why Doom Nvim exists
+> _also because I love Doom_.
 
 Its design is guided by these mantras:
 
 - **Gotta go fast.** Startup and run-time performance are priorities.
   That is why Doom Nvim uses Lua instead of Vimscript for its configurations
-  and lazy-loads all the plugins.
+  and lazy-loads _all_ the plugins.
 - **Your system, your rules.** You know better than a third party what is
   convenient for you. At least, Doom hopes so! It won't _automatically_
   install system dependencies nor plugins that have external dependencies
@@ -51,13 +51,13 @@ Its design is guided by these mantras:
 - **What does not serve you, you throw away.** Doom Nvim is made up of a moderate number
   of plugins (~40 plugins as of this writing). You more than anyone know what you need in
   your environment and that's why Doom Nvim allows you to easily disable plugins and add new ones.
-  Also, Doom Nvim doesn't come with TreeSitter parsers or LSPs by default,
+  Also, Doom Nvim doesn't come with TreeSitter parsers or Language Server Protocols configured by default,
   so **you can use _only_ what you need**.
 
 ## Notices
 
 - **2021-07-03**: The `doomrc` has been fragmented and it is not working anymore,
-  please see [New configurations](./docs/getting_started.md#new-configurations)
+  please see [Migrating to 3.0.0](./docs/getting_started.md#migrating-to-300)
   for more information.
 - **2021-05-01**: The `doomrc` is not using Vimscript anymore, please see the
   new [doomrc](./doomrc) file structure for use it with Lua.
@@ -65,29 +65,33 @@ Its design is guided by these mantras:
 ## Features
 
 - Minimalistic good looks inspired by modern code editors.
-- Curated and sane defaults for many plugins.
+- Works out of the box, just install and start editing.
 - A modular organizational structure for separating concerns in your config.
+- Extensible and customizable, everything can be easily modified.
+- Curated and sane defaults for many plugins.
 - A declarative and powerful [plugins management system](https://github.com/wbthomason/packer.nvim)
   (powered by `packer.nvim`).
 - Opt-in LSP integration for many languages by using the new
   built-in LSP included on Neovim 0.5.
 - An Emacs which-key like plugin to manage your `keybindings`, centered around leader
   prefix key (<kbd>SPC</kbd>).
-- Per-file indentation style detection and [editorconfig] integration. Let
-  someone else argue about tabs vs **_spaces_**.
-- Project-management tools.
-- Project search (and more) utilities, powered by
+- Project search _and more_ utilities, powered by
   [telescope.nvim].
 
 ## Prerequisites
 
-- Curl 7.x
+### Installation
+
+- Curl 7.x (for using the installation script)
 - Git 2.23+
 - Neovim 0.5.0 onwards
+
+### Runtime
+
 - GNU `find`
-- _OPTIONALS:_
+- _Optionals:_
   - [ripgrep] 11.0+ or [fd] 7.3.0+ (improves file indexing performance for some commands)
-  - `nodejs` and `npm` (required to use the built-in LSP)
+  - `nodejs` and `npm` (required to use some Language Server Protocols)
 
 Doom is comprised of [~40 optional plugins][modules], some of which may have
 additional dependencies. [Please visit their documentation][modules].
@@ -98,6 +102,12 @@ Simply run the following command:
 
 ```sh
 curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash
+```
+
+Or if you want to live in the bleeding-edge with the latest features:
+
+```sh
+curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash -s -- -d
 ```
 
 Then [read our Getting Started guide][getting-started] to be walked through
@@ -141,16 +151,16 @@ Special thanks to these amazing people for helping improve doom (see [emoji key]
 <!-- markdownlint-disable -->
 <table>
   <tr>
+    <td align="center"><a href="https://github.com/GustavoPrietoP"><img src="https://avatars.githubusercontent.com/u/70907734?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gustavo Prieto</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/commits?author=GustavoPrietoP" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/vhyrro"><img src="https://avatars.githubusercontent.com/u/76052559?v=4?s=100" width="100px;" alt=""/><br /><sub><b>vhyrro</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/commits?author=vhyrro" title="Code">💻</a></td>
     <td align="center"><a href="https://johnirle.com/"><img src="https://avatars.githubusercontent.com/u/11879736?v=4?s=100" width="100px;" alt=""/><br /><sub><b>John Irle</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/commits?author=JohnIrle" title="Documentation">📖</a></td>
     <td align="center"><a href="http://www.brianketelsen.com/"><img src="https://avatars.githubusercontent.com/u/37492?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Brian Ketelsen</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/commits?author=bketelsen" title="Code">💻</a> <a href="https://github.com/NTBBloodbath/doom-nvim/issues?q=author%3Abketelsen" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/Samantha-uk"><img src="https://avatars.githubusercontent.com/u/45871296?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Samantha-uk</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/commits?author=Samantha-uk" title="Documentation">📖</a></td>
     <td align="center"><a href="https://rscircus.github.io/"><img src="https://avatars.githubusercontent.com/u/1167114?v=4?s=100" width="100px;" alt=""/><br /><sub><b>rscircus</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/commits?author=rscircus" title="Documentation">📖</a></td>
     <td align="center"><a href="http://bandithedoge.com/"><img src="https://avatars.githubusercontent.com/u/26331682?v=4?s=100" width="100px;" alt=""/><br /><sub><b>bandithedoge</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/commits?author=bandithedoge" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/vhyrro"><img src="https://avatars.githubusercontent.com/u/76052559?v=4?s=100" width="100px;" alt=""/><br /><sub><b>vhyrro</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/commits?author=vhyrro" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/Mremmalex"><img src="https://avatars.githubusercontent.com/u/40169444?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ifeanyichukwu Sampson Ebenezer</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/issues?q=author%3AMremmalex" title="Bug reports">🐛</a></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/GustavoPrietoP"><img src="https://avatars.githubusercontent.com/u/70907734?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gustavo Prieto</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/commits?author=GustavoPrietoP" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Mremmalex"><img src="https://avatars.githubusercontent.com/u/40169444?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ifeanyichukwu Sampson Ebenezer</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/issues?q=author%3AMremmalex" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/ZeusThundr"><img src="https://avatars.githubusercontent.com/u/76399616?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ZeusThundr</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/issues?q=author%3AZeusThundr" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/leonistor"><img src="https://avatars.githubusercontent.com/u/310468?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Leo Nistor</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/issues?q=author%3Aleonistor" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/notusknot"><img src="https://avatars.githubusercontent.com/u/69602000?v=4?s=100" width="100px;" alt=""/><br /><sub><b>notusknot</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/commits?author=notusknot" title="Documentation">📖</a></td>

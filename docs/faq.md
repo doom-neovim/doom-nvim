@@ -1,11 +1,5 @@
 # Frequently Asked Questions
 
-## Table of Contents
-
-- [General](#general)
-  - [What type of vimmer is Doom Nvim intended for?](#what-type-of-vimmer-is-doom-nvim-intended-for)
-  - [Why does Doom Nvim only support Neovim nightly?](#why-does-doom-nvim-only-support-neovim-nightly)
-
 ## General
 
 ### What type of vimmer is Doom Nvim intended for?
