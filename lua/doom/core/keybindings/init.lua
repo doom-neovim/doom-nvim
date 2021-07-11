@@ -269,6 +269,7 @@ utils.map(
 	'<cmd>lua require("doom.core.functions").create_report()<CR>',
 	opts
 )
+utils.map('n', '<leader>ds', '<cmd>Telescope colorscheme<CR>', opts)
 
 -- Plugins
 utils.map('n', '<leader>ps', '<cmd>PackerSync<CR>', opts)

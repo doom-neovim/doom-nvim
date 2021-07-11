@@ -106,9 +106,10 @@ return function()
 			name = '+doom',
 			['c'] = { 'Edit your Doom Nvim configuration' },
 			['d'] = { 'Open Doom Nvim documentation' },
-			['u'] = { 'Check Doom Nvim udpates' },
-			['r'] = { 'ROllback Doom Nvim version' },
+			['u'] = { 'Update Doom Nvim' },
+			['r'] = { 'Rollback Doom Nvim version' },
 			['R'] = { 'Create crash report' },
+			['s'] = { 'Change colorscheme' },
 		},
 		['f'] = {
 			name = '+file',
