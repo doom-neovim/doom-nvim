@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#
 #================================================
 # install.sh - Doom Nvim Installation Script
 # Author: NTBBloodbath
@@ -12,6 +13,7 @@ Color_reset='\033[0m' # Reset
 
 ## Normal colors
 Black='\033[0;30m'  # Black
+Gray='\033[0;90m'   # Gray
 White='\033[0;37m'  # White
 Red='\033[0;31m'    # Red
 Blue='\033[0;34m'   # Blue
@@ -22,6 +24,7 @@ Yellow='\033[0;33m' # Yellow
 
 ## Bold colors
 BBlack='\033[1;30m'  # Black
+BGray='\033[1;90m'   # Gray
 BWhite='\033[1;37m'  # White
 BRed='\033[1;31m'    # Red
 BBlue='\033[1;34m'   # Blue
@@ -32,7 +35,7 @@ BYellow='\033[1;33m' # Yellow
 # }}}
 
 # Doom Nvim version
-DoomNvimVersion='2.3.5'
+DoomNvimVersion='3.0.0'
 # System OS
 System="$(uname -s)"
 
@@ -84,12 +87,13 @@ check_cmd() {
 check_all() {
     # Install Doom Nvim (see also git)
     need_cmd 'curl'
+    sleep 1
     # Clone repositories and install Doom Nvim
     need_cmd 'git'
-    # Generate help tags
-    check_cmd 'ctags'
+    sleep 1
     # Install Language Server Protocols
     check_cmd 'npm'
+    sleep 1
     check_cmd 'node'
 }
 
@@ -103,6 +107,7 @@ check_requirements() {
     else
         log_warn "Check requirements : git"
     fi
+    sleep 1
 
     # Checks if neovim is installed
     if hash "nvim" &>/dev/null; then
@@ -110,6 +115,7 @@ check_requirements() {
     else
         log_warn "Check requirements : nvim"
     fi
+    sleep 1
 
     # Check if nodejs and npm are installed again,
     # we do not check only nodejs because some Linux distributions
@@ -119,6 +125,7 @@ check_requirements() {
     else
         log_warn "Check requirements : node (optional, required to use LSP)"
     fi
+    sleep 1
     if hash "npm" &>/dev/null; then
         log_success "Check requirements : npm"
     else
@@ -172,30 +179,22 @@ update_repo() {
     fi
 }
 
-install_nvim_nightly() {
-    log_info "Installing Neovim Nightly AppImage ..."
+install_nvim_appimage() {
+    log_info "Installing Neovim 0.5 AppImage ..."
 
-    curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+    curl -LO https://github.com/neovim/neovim/releases/download/v0.5.0/nvim.appimage
     chmod u+x nvim.appimage
     mkdir -p $HOME/.local/bin
     mv nvim.appimage $HOME/.local/bin/
 
+    log_info "Creating an alias for the Neovim AppImage ..."
     if [ -f "$HOME/.zshrc" ]; then
         echo "alias 'nvim'=$HOME/.local/bin/nvim.appimage" >>$HOME/.zshrc
     else
         echo "alias 'nvim'=$HOME/.local/bin/nvim.appimage" >>$HOME/.bashrc
     fi
 
-    log_success "Successfully installed Neovim Nightly under $HOME/.local/bin/ directory"
-}
-
-install_packer() {
-    if [[ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]]; then
-        log_info "Installing packer plugin manager ..."
-        # NOTE: stop installing that branch when merged into the main branch
-        git clone -q -b fix/premature-display-opening https://github.com/wbthomason/packer.nvim \
-            $HOME/.local/share/nvim/site/pack/packer/start/packer.nvim
-    fi
+    log_success "Successfully installed Neovim 0.5.0 under $HOME/.local/bin/ directory"
 }
 
 install_fonts() {
@@ -203,19 +202,21 @@ install_fonts() {
         mkdir -p $HOME/.local/share/fonts
     fi
 
-    download_font "Fira Code Regular Nerd Font Complete Mono.ttf"
-    log_info "Updating font cache, please wait ..."
-    if [ $System == "Darwin" ]; then
-        if [ ! -e "$HOME/Library/Fonts" ]; then
-            mkdir "$HOME/Library/Fonts"
+    if [[ ! -f "$HOME/.local/share/fonts/Fira Code Regular Nerd Font Complete Mono.ttf" ]]; then
+        download_font "Fira Code Regular Nerd Font Complete Mono.ttf"
+        log_info "Updating font cache, please wait ..."
+        if [ "$System" == "Darwin" ]; then
+            if [ ! -e "$HOME/Library/Fonts" ]; then
+                mkdir "$HOME/Library/Fonts"
+            fi
+            cp $HOME/.local/share/fonts/* $HOME/Library/Fonts/
+        else
+            fc-cache -fv >/dev/null
+            mkfontdir "$HOME/.local/share/fonts" >/dev/null
+            mkfontscale "$HOME/.local/share/fonts" >/dev/null
         fi
-        cp $HOME/.local/share/fonts/* $HOME/Library/Fonts/
-    else
-        fc-cache -fv >/dev/null
-        mkfontdir "$HOME/.local/share/fonts" >/dev/null
-        mkfontscale "$HOME/.local/share/fonts" >/dev/null
+        log_success "Font cache done"
     fi
-    log_success "Font cache done"
 }
 
 download_font() {
@@ -241,8 +242,8 @@ install_done() {
     pretty_echo ${Green} "   You are almost done. Start neovim to install   "
     pretty_echo ${Green} "         the plugins and kill some demons.        "
     pretty_echo ${Green} "                                                  "
-    pretty_echo ${Green} " Thanks for installing Doom Nvim, if you have any "
-    pretty_echo ${Green} "             issue, please report it :)           "
+    pretty_echo ${Green} " Thanks for installing Doom Nvim. If you have any "
+    pretty_echo ${Green} "            issue, please report it :)            "
     pretty_echo ${Green} "=================================================="
 }
 # }}}
@@ -273,26 +274,26 @@ uninstall() {
 # ===========
 # {{{
 welcome() {
-    pretty_echo ${BRed} "  =================     ===============     ===============   ========  ========"
-    pretty_echo ${BRed} "  \\\\\ . . . . . . .\\\\\   //. . . . . . .\\\\\   //. . . . . . .\\\\\  \\\\\. . .\\\\\// . . //"
-    pretty_echo ${BRed} "  ||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||"
-    pretty_echo ${BRed} "  || . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||"
-    pretty_echo ${BRed} "  ||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||"
-    pretty_echo ${BRed} "  || . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||"
-    pretty_echo ${BYellow} "  ||. . ||   ||-'  || ||  \`-||   || . .|| ||. . ||   ||-'  || ||  \`|\_ . .|. .||"
-    pretty_echo ${BYellow} "  || . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ \`-_/| . ||"
-    pretty_echo ${BYellow} "  ||_-' ||  .|/    || ||    \|.  || \`-_|| ||_-' ||  .|/    || ||   | \  / |-_.||"
-    pretty_echo ${BYellow} "  ||    ||_-'      || ||      \`-_||    || ||    ||_-'      || ||   | \  / |  \`||"
-    pretty_echo ${BYellow} "  ||    \`'         || ||         \`'    || ||    \`'         || ||   | \  / |   ||"
-    pretty_echo ${BYellow} "  ||            .===' \`===.         .==='.\`===.         .===' /==. |  \/  |   ||"
-    pretty_echo ${BYellow} "  ||         .=='   \_|-_ \`===. .==='   _|_   \`===. .===' _-|/   \`==  \/  |   ||"
-    pretty_echo ${BYellow} "  ||      .=='    _-'    \`-_  \`='    _-'   \`-_    \`='  _-'   \`-_  /|  \/  |   ||"
-    pretty_echo ${BYellow} "  ||   .=='    _-'          '-__\._-'         '-_./__-'         \`' |. /|  |   ||"
-    pretty_echo ${BYellow} "  ||.=='    _-'                                                     \`' |  /==.||"
-    pretty_echo ${BRed} "  =='    _-'                                                            \/   \`=="
-    pretty_echo ${BRed} "  \   _-'                           N e o v i m                         \`-_    /"
-    pretty_echo ${BRed} "   \`''                                                                      \`\`' "
-    pretty_echo ${BYellow} "                   Version : ${DoomNvimVersion}               By : NTBBloodbath "
+    pretty_echo ${Gray} "  =================     ===============     ===============   ========  ========"
+    pretty_echo ${Gray} "  \\\\\ . . . . . . .\\\\\   //. . . . . . .\\\\\   //. . . . . . .\\\\\  \\\\\. . .\\\\\// . . //"
+    pretty_echo ${Gray} "  ||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||"
+    pretty_echo ${Gray} "  || . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||"
+    pretty_echo ${Gray} "  ||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||"
+    pretty_echo ${Gray} "  || . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||"
+    pretty_echo ${Gray} "  ||. . ||   ||-'  || ||  \`-||   || . .|| ||. . ||   ||-'  || ||  \`|\_ . .|. .||"
+    pretty_echo ${Gray} "  || . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ \`-_/| . ||"
+    pretty_echo ${Gray} "  ||_-' ||  .|/    || ||    \|.  || \`-_|| ||_-' ||  .|/    || ||   | \  / |-_.||"
+    pretty_echo ${Gray} "  ||    ||_-'      || ||      \`-_||    || ||    ||_-'      || ||   | \  / |  \`||"
+    pretty_echo ${Gray} "  ||    \`'         || ||         \`'    || ||    \`'         || ||   | \  / |   ||"
+    pretty_echo ${Gray} "  ||            .===' \`===.         .==='.\`===.         .===' /==. |  \/  |   ||"
+    pretty_echo ${Gray} "  ||         .=='   \_|-_ \`===. .==='   _|_   \`===. .===' _-|/   \`==  \/  |   ||"
+    pretty_echo ${Gray} "  ||      .=='    _-'    \`-_  \`='    _-'   \`-_    \`='  _-'   \`-_  /|  \/  |   ||"
+    pretty_echo ${Gray} "  ||   .=='    _-'          '-__\._-'         '-_./__-'         \`' |. /|  |   ||"
+    pretty_echo ${Gray} "  ||.=='    _-'                                                     \`' |  /==.||"
+    pretty_echo ${Gray} "  =='    _-'                                                            \/   \`=="
+    pretty_echo ${Gray} "  \   _-'                           N E O V I M                         \`-_    /"
+    pretty_echo ${Gray} "   \`''                                                                      \`\`' "
+    pretty_echo ${BBlue} "                   Version : ${DoomNvimVersion}               By : NTBBloodbath "
     echo ""
 }
 # }}}
@@ -303,88 +304,85 @@ welcome() {
 helper() {
     welcome
     echo ""
-    pretty_echo ${BRed} "  Usage ./install.sh [OPTION]"
+    pretty_echo ${BGreen} "  Usage: ./install.sh [OPTION]"
     echo ""
-    pretty_echo ${BRed} "  OPTIONS:"
-    pretty_echo ${Yellow} "    -h --help                                    Displays this message"
-    pretty_echo ${Yellow} "    -c --check-requirements                      Check Doom Nvim requirements"
-    pretty_echo ${Yellow} "    -i --install                                 Install Doom Nvim"
-    pretty_echo ${Yellow} "    -d --install-dev                             Install Development version of Doom Nvim"
-    pretty_echo ${Yellow} "    -n --nightly                                 Install Neovim Nightly and Doom Nvim"
-    pretty_echo ${Yellow} "    -u --update                                  Update Doom Nvim"
-    pretty_echo ${Yellow} "    -v --version                                 Echo Doom Nvim version"
-    pretty_echo ${Yellow} "    -x --uninstall                               Uninstall Doom Nvim"
+    pretty_echo ${BGreen} "  Options:"
+    pretty_echo "    -h --help\t\t\t\tDisplays this message"
+    pretty_echo "    -c --check-requirements\t\tCheck Doom Nvim requirements"
+    pretty_echo "    -i --install\t\t\tInstall Doom Nvim"
+    pretty_echo "    -d --install-dev\t\t\tInstall Development version of Doom Nvim"
+    pretty_echo "    -n --install-nvim\t\t\tInstall Neovim 0.5.0 and Doom Nvim"
+    pretty_echo "    -u --update\t\t\t\tUpdate Doom Nvim"
+    pretty_echo "    -v --version\t\t\tEcho Doom Nvim version"
+    pretty_echo "    -x --uninstall\t\t\tUninstall Doom Nvim"
 }
 
 main() {
     if [ $# -gt 0 ]; then
         case $1 in
-        --check-requirements | -c)
-            welcome
-            check_requirements
-            exit 0
-            ;;
-        --update | -u)
-            welcome
-            update_repo
-            exit 0
-            ;;
-        --install | -i)
-            welcome
-            check_all
-            update_repo "main"
-            install_packer
-            install_fonts
-            backup_neovim
-            install_done
-            exit 0
-            ;;
-        --install-dev | -d)
-            welcome
-            check_all
-            update_repo "develop"
-            install_packer
-            install_fonts
-            backup_neovim
-            install_done
-            exit 0
-            ;;
-        --nvim-nightly | -n)
-            welcome
-            check_all
-            update_repo "main"
-            install_packer
-            backup_neovim
-            install_nvim_nightly
-            install_done
-            exit 0
-            ;;
-        --help | -h)
-            helper
-            exit 0
-            ;;
-        --version | -v)
-            log "Doom Nvim v${DoomNvimVersion}"
-            exit 0
-            ;;
-        --uninstall | -x)
-            welcome
-            log_info "Uninstalling Doom Nvim ..."
-            uninstall
-            pretty_echo ${Green} "Thanks for using Doom Nvim, there are no more demons!"
-            exit 0
-            ;;
+            --check-requirements | -c)
+                welcome
+                check_requirements
+                exit 0
+                ;;
+            --update | -u)
+                welcome
+                update_repo
+                exit 0
+                ;;
+            --install | -i)
+                welcome
+                check_all
+                update_repo "main"
+                install_fonts
+                backup_neovim
+                install_done
+                exit 0
+                ;;
+            --install-dev | -d)
+                welcome
+                check_all
+                update_repo "develop"
+                install_fonts
+                backup_neovim
+                install_done
+                exit 0
+                ;;
+            --install-nvim | -n)
+                welcome
+                check_all
+                update_repo "main"
+                backup_neovim
+                install_nvim_appimage
+                install_done
+                exit 0
+                ;;
+            --help | -h)
+                helper
+                exit 0
+                ;;
+            --version | -v)
+                log "Doom Nvim v${DoomNvimVersion}"
+                exit 0
+                ;;
+            --uninstall | -x)
+                welcome
+                log_info "Uninstalling Doom Nvim ..."
+                uninstall
+                pretty_echo ${Green} "Thanks for using Doom Nvim, there are no more demons!"
+                exit 0
+                ;;
         esac
     else
         # Run normal commands
         welcome
         check_all
         update_repo "main"
-        install_packer
         backup_neovim
         install_fonts
         check_requirements
         install_done
+        exit 0
     fi
 }
 

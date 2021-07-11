@@ -1,5 +1,7 @@
 # My temp files
-logs/
 plugin/
 sessions/
-logs/doom.log
+time_cost.txt
+# Backup files
+.doom_releases
+.doom_backup_hash

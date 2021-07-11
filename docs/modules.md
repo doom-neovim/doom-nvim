@@ -1,222 +1,254 @@
 # Doom Nvim Modules
 
-# Table of Contents
+## Introduction
 
-- [Introduction](#introduction)
-- [Tweaking Doom Nvim Modules](#tweaking-doom-nvim-modules)
-  - [List of modules](#list-of-modules)
-    - [Essentials](#essentials)
-    - [UI](#ui)
-    - [Fuzzy](#fuzzy)
-    - [Git](#git)
-    - [LSP](#lsp)
-    - [Files](#files)
-    - [Web](#web)
-  - [Managing modules](#managing-modules)
-    - [Enabling modules](#enabling-modules)
-    - [Enabling module plugins](#enabling-module-plugins)
-    - [Disabling modules](#disabling-modules)
-    - [Disabling module plugins](#disabling-module-plugins)
+Doom Nvim consists of around 5 modules with ~40 plugins and growing.
+A Doom Nvim module is a bundle of plugins, configurations and commands,
+organized into a unit that can be toggled easily.
 
-# Introduction
+> **NOTE**: Doom Nvim uses [packer.nvim] as its plugins manager.
 
-Doom Nvim consists of around 7 modules and growing. A Doom Nvim Module is a bundle of plugins,
-configuration and commands, organized into a unit that can be toggled easily.
+## Tweaking Doom Nvim Modules
 
-# Tweaking Doom Nvim Modules
-
-You can easily tweak Doom Nvim Modules by tweaking your doomrc
-(found in `$HOME/.config/doom-nvim`).
+You can easily tweak Doom Nvim Modules by tweaking your `doomrc.lua` file
+(found in `~/.config/doom-nvim`).
 
 ## List of modules
 
-First of all, we must know which modules we can enable and disable,
-including their plugins individually.
+First of all, we must know which modules are there and their plugins.
+
+> **NOTE:** all plugins can be disabled, including the UI ones.
 
 ### Essentials
 
-- [x] Enabled by default
-- [ ] Can be disabled
-- Plugins inside
-  - [ ] [packer.nvim] - A use-package inspired plugin manager for Neovim.
-  - [ ] [vimpeccable] - Helpers for Lua configs.
-  - [x] [treesitter] - Nvim Treesitter configurations and abstraction layer.
-    - Use `treesitter` to disable it
+This ones are implicit plugins so the end user cannot disable them. But why?
+
+That is because these plugins are the core of Doom so in fact, things can break
+without them. These plugins are the following:
+
+- [packer.nvim]
+  - A use-package inspired plugin manager for Neovim.
+- [treesitter]
+  - An incremental parsing system for programming tools.
 
 ### UI
 
-- [x] Enabled by default
-- [ ] Can be disabled
-- Plugins inside
-  - [ ] [dashboard-nvim] - Vim dashboard.
-  - [x] colorschemes - Obviously, colorschemes.
-    - Use `colorschemes` to disable it
-  - [x] [nvim-tree.lua] - A file explorer tree for neovim written in lua.
-    - Use `tree` to disable it
-  - [x] [galaxyline.nvim] - galaxyline is a light-weight and Super Fast statusline plugin.
-    - Use `statusline` to disable it
-  - [x] [barbar.nvim] - Tabs, as understood by any other editor.
-    - Use `tabline` to disable it
-  - [x] [nvim-toggleterm.lua] - A neovim plugin to persist and toggle multiple terminals during an editing session
-    - Use `terminal` to disable it
-  - [x] [symbols-outline.nvim] - A tree like view for symbols in Neovim using the Language Server Protocol.
-    - Use `tagbar` to disable it
-  - [x] [minimap.vim] - Blazing fast minimap / scrollbar for vim, powered by code-minimap written in Rust.
-    - Use `minimap` to disable it
-    - **Depends on** [wfxr/code-minimap](htps://github.com/wfxr/code-minimap) **to work!**
-  - [ ] [which-key.nvim] - WhichKey is a lua plugin for Neovim 0.5 that displays a popup with possible keybindings of the command you started typing.
-  - [x] [TrueZen.nvim] - Clean and elegant distraction-free writing for NeoVim.
-    - Use `zen` to disable it
+- [dashboard]
+  - Vim dashboard (start screen).
+- [doom-themes]
+  - Additional doom emacs' colorschemes.
+- [statusline]
+  - Neovim statusline.
+- [tabline]
+  - Tabline, shows your buffers list at top.
+- [zen]
+  - Distraction free environment.
+- [which-key]
+  - Keybindings popup like Emacs' guide-key.
+- [indentlines]
+  - Show indent lines.
 
-### Fuzzy
+### Doom
 
-- [x] Enabled by default
-- [ ] Can be disabled
-- Plugins inside
-  - [ ] [telescope.nvim] - Find, Filter, Preview, Pick. All lua, all the time.
+- [neorg]
+  - Life Organization Tool.
+- [runner] (built-in)
+  - A code runner for your interpreted code.
+- [compiler] (built-in)
+  - Compile _and run_ your projects with only a few keystrokes.
 
-### Git
+### Editor
 
-- [ ] Enabled by default
-- [x] Can be disabled
-  - Use `git` to disable the entire module
-- Plugins inside
-  - [x] [gitsigns.nvim] - Git signs written in pure lua
-    - Use `gitsigns` to disable it
-  - [x] [lazygit.nvim] - Plugin for calling lazygit from within neovim.
-    - Use `lazygit` to disable it
-    - **Depends on** [jesseduffield/lazygit](https://github.com/jesseduffield/lazygit) **to work!**
+- [auto-session]
+  - A small automated session manager for Neovim.
+- [terminal]
+  - Terminal for Neovim.
+- [explorer]
+  - Tree explorer.
+- [symbols]
+  - LSP symbols and tags.
+- [minimap]
+  - Code minimap, requires [wfxr/code-minimap](https://github.com/wfxr/code-minimap).
+- [gitsigns]
+  - Git signs.
+- [telescope]
+  - Highly extendable fuzzy finder over lists.
+- [restclient]
+  - A fast Neovim http client.
+- [formatter]
+  - File formatting.
+- [autopairs]
+  - Autopairs.
+- [editorconfig]
+  - EditorConfig support for Neovim, let other argue about tabs vs spaces.
+- [kommentary]
+  - Comments plugin.
+- [lsp]
+  - Language Server Protocols ([compe] + [lspsaga] + [lspinstall]).
+- snippets
+  - Code snippets ([LuaSnip] + [friendly-snippets]).
 
-### LSP
+### Langs
 
-- [ ] Enabled by default
-- [x] Can be disabled
-  - Use `lsp` to disable the entire module
-- Plugins inside
-  - [x] [nvim-lspconfig] - Quickstart configurations for the Nvim LSP client
-    - Use `lspconfig` to disable it
-    - **NOTE:** do not disable it if you are going to use LSP!
-  - [x] [nvim-compe] - Auto completion plugin for nvim that written in Lua.
-    - Use `compe` to disable it
+The languages module entries has some flags that improves their experience and
+makes your life easier.
 
-### Files
+The currently available flags are the following:
 
-- [x] Enabled by default
-- [x] Can be disabled
-  - Use `files` to disable the entire module
-- Plugins inside
-  - [x] [suda.vim] - suda is a plugin to read or write files with sudo command.
-    - Use `suda` to disable it
-  - [x] [format.nvim] - Neovim lua plugin to format the current buffer with external executables.
-    - Use `formatter` to disable it
-  - [x] [pears.nvim] - Auto pair plugin for neovim
-    - Use `autopairs` to disable it
-  - [x] [indentLine] - A vim plugin to display the indention levels with thin vertical lines
-    - Use `indentlines` to disable it
-  - [x] [editorconfig-vim] - EditorConfig support
-    - Use `editorconfig` to disable it
-  - [x] [kommentary] - Neovim commenting plugin, written in lua.
-    - Use `kommentary` to disable it
+- `+lsp` - enables and installs the Language Server Protocol for the language.
+  e.g. `rust +lsp` will automatically install TreeSitter parser for getting
+  syntax highlighting for Rust and will also install `rust-analyzer`.
 
-### Web
+#### Web development
 
-- [ ] Enabled by default
-- [x] Can be disabled
-  - Use `web` to disable the entire module
-- Plugins inside
-  - [x] [nvim-colorizer.lua] - A high-performance color highlighter for Neovim which has no external dependencies written in performant Luajit.
-    - Use `colorizer` to disable it
-  - [x] [vim-dot-http] - Rest HTTP Client
-    - Use `restclient` to disable it
-    - **Depends on** [bayne/dot-http](https://github/bayne/dot-http) **to work!**
-  - [x] [emmet-vim] - Emmet for Vim
-    - Use `emmet` to disable it
+- **html**
+  - HTML support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **css**
+  - CSS support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **javascript**
+  - JavaScript support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes, by using TSServer.
+- **typescript**
+  - TypeScript support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+
+#### Scripting
+
+- **bash**
+  - BASH support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **python**
+  - Python support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **ruby**
+  - Ruby support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **lua**
+  - Lua support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **elixir**
+  - Elixir support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+
+#### Compiled
+
+- **haskell**
+  - Haskell support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **rust**
+  - Rust support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **go**
+  - Golang support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **cpp**
+  - CPP support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **java**
+  - Java support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+
+#### Configs & DevOps
+
+- **config**
+  - Configuration languages support (JSON, YAML, TOML).
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: not yet.
+- **dockerfile**
+  - Docker support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+
+> **NOTE**: this group requires the `lsp` installed for the `+lsp` flags.
+
+### Utilities
+
+- [suda]
+  - Write and read files without sudo permissions.
+- [lazygit]
+  - LazyGit integration for neovim, requires LazyGit.
+- [neogit]
+  - Magit for Neovim.
+- [colorizer]
+  - Fastest colorizer for Neovim.
+- [range-highlight]
+  - Highlights ranges you have entered in commandline
 
 ## Managing modules
 
-### Enabling modules
+Since version 3.0.0 managing the modules plugins is really easy because you
+don't need to learn nothing anymore. Just comment the plugins that you don't
+want to use and uncomment the ones that you are going to use!
 
-To enable a module, you can use the `disabled_modules` field in the `Doom` table
-on your `doomrc`.
-
-```lua
--- To enable all modules except web, just put only 'web' in the disabled modules
--- array and then, reboot Neovim and do :PackerSync
---
--- @default = { 'git', 'lsp', 'web' }
-disabled_modules = { 'web' }
-```
-
-### Enabling module plugins
-
-All the module plugins will be enabled by default unless the entire module is disabled.
-
-> If you want to use custom plugins, please refer to
-> [Installing plugins](./getting_started.md#installing-plugins).
-
-### Disabling modules
-
-To disable a module, you can use the `disabled_modules` field in the `Doom` table
-on your `doomrc`.
+So by example, if you want to disable the tree explorer you can simply comment it.
 
 ```lua
--- To disable only the web module, just put only 'web' in the disabled modules
--- array and then, reboot Neovim and do :PackerSync
---
--- @default = { 'git', 'lsp', 'web' }
-disabled_modules = { 'web' }
+-- Before, the plugin is enabled
+'explorer',    -- Tree explorer
+
+-- After, the plugin is disabled
+-- 'explorer', -- Tree explorer
 ```
 
-### Disabling module plugins
+After doing the changes, just restart Neovim and Doom Nvim will handle the plugins
+changes for you!
 
-To disable a module plugin, you can use the `disabled_plugins` field in the `Doom` table
-on your `doomrc`.
-
-```vim
--- @default = {}
-disabled_plugins = { 'emmet' }
-```
-
-<!-- Essentials -->
+<!-- links to plugins -->
 
 [packer.nvim]: https://github.com/wbthomason/packer.nvim
-[vimpeccable]: https://github.com/svermeulen/vimpeccable
 [treesitter]: https://github.com/nvim-treesitter/nvim-treesitter
 
-<!-- UI -->
+[auto-session]: https://github.com/rmagatti/auto-session
+[dashboard]: https://github.com/glepnir/dashboard-nvim
+[explorer]: https://github.com/kyazdani42/nvim-tree.lua
+[statusline]: https://github.com/glepnir/galaxyline.nvim
+[tabline]: https://github.com/akinsho/nvim-bufferline.lua
+[terminal]: https://github.com/akinsho/nvim-toggleterm.lua
+[symbols]: https://github.com/simrat39/symbols-outline.nvim
+[minimap]: https://github.com/wfxr/minimap.vim
+[which-key]: https://github.com/folke/which-key.nvim
+[zen]: https://github.com/kdav5758/TrueZen.nvim
+[telescope]: https://github.com/nvim-telescope/telescope.nvim
+[doom-themes]: https://github.com/GustavoPrietoP/doom-themes.nvim
 
-[dashboard-nvim]: https://github.com/glepnir/dashboard-nvim
-[nvim-tree.lua]: https://github.com/kyazdani42/nvim-tree.lua
-[galaxyline.nvim]: https://github.com/glepnir/galaxyline.nvim
-[barbar.nvim]: https://github.com/romgrk/barbar.nvim
-[nvim-toggleterm.lua]: https://github.com/akinsho/nvim-toggleterm.lua
-[symbols-outline.nvim]: https://github.com/simrat39/symbols-outline.nvim
-[minimap.vim]: https://github.com/wfxr/minimap.vim
-[which-key.nvim]: https://github.com/folke/which-key.nvim
-[truezen.nvim]: https://github.com/kdav5758/TrueZen.nvim
+[gitsigns]: https://github.com/lewis6991/gitsigns.nvim
+[lazygit]: https://github.com/kdheepak/lazygit.nvim
+[neogit]: https://github.com/TimUntersberger/neogit
+[neorg]: https://github.com/vhyrro/neorg
 
-<!-- Fuzzy -->
+[lsp]: https://github.com/neovim/nvim-lspconfig
+[compe]: https://github.com/hrsh7th/nvim-compe
+[lspsaga]: https://github.com/glepnir/lspsaga.nvim
+[lspinstall]: https://github.com/kabouzeid/nvim-lspinstall
+[LuaSnip]: https://github.com/L3MON4D3/LuaSnip
+[friendly-snippets]: https://github.com/rafamadriz/friendly-snippets
 
-[telescope.nvim]: https://github.com/nvim-telescope/telescope.nvim
-
-<!-- Git -->
-
-[gitsigns.nvim]: https://github.com/lewis6991/gitsigns.nvim
-[lazygit.nvim]: https://github.com/kdheepak/lazygit.nvim
-
-<!-- LSP -->
-
-[nvim-lspconfig]: https://github.com/neovim/nvim-lspconfig
-[nvim-compe]: <!-- Files -->
-[suda.vim]: https://github.com/lambdalisue/suda.vim
-[format.nvim]: https://github.com/lukas-reineke/format.nvim
-[pears.nvim]: https://github.com/steelsojka/pears.nvim
-[indentline]: https://github.com/Yggdroot/indentLine
-[editorconfig-vim]: https://github.com/editorconfig/editorconfig-vim
+[suda]: https://github.com/lambdalisue/suda.vim
+[formatter]: https://github.com/lukas-reineke/format.nvim
+[autopairs]: https://github.com/windwp/nvim-autopairs
+[indentlines]: https://github.com/lukas-reineke/indent-blankline.nvim
+[editorconfig]: https://github.com/editorconfig/editorconfig-vim
 [kommentary]: https://github.com/b3nj5m1n/kommentary
 
-<!-- Web -->
+[restclient]: https://github.com/NTBBloodbath/rest.nvim
+[colorizer]: https://github.com/norcalli/nvim-colorizer.lua
+[range-highlight]: https://github.com/winston0410/range-highlight.nvim
 
-[nvim-colorizer.lua]: https://github.com/norcalli/nvim-colorizer.lua
-[vim-dot-http]: https://github.com/bayne/vim-dot-http
-[emmet-vim]: https://github.com/mattn/emmet-vim
+[runner]: ../lua/doom/modules/built-in/runner/README.md
+[compiler]: ../lua/doom/modules/built-in/compiler/README.md

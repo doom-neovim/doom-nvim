@@ -1,0 +1,115 @@
+{
+  "projectName": "doom-nvim",
+  "projectOwner": "NTBBloodbath",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "gitmoji",
+  "contributors": [
+    {
+      "login": "JohnIrle",
+      "name": "John Irle",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11879736?v=4",
+      "profile": "https://johnirle.com/",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "bketelsen",
+      "name": "Brian Ketelsen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/37492?v=4",
+      "profile": "http://www.brianketelsen.com/",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "Samantha-uk",
+      "name": "Samantha-uk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45871296?v=4",
+      "profile": "https://github.com/Samantha-uk",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "rscircus",
+      "name": "rscircus",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1167114?v=4",
+      "profile": "https://rscircus.github.io/",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "bandithedoge",
+      "name": "bandithedoge",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26331682?v=4",
+      "profile": "http://bandithedoge.com/",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "vhyrro",
+      "name": "vhyrro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/76052559?v=4",
+      "profile": "https://github.com/vhyrro",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Mremmalex",
+      "name": "Ifeanyichukwu Sampson Ebenezer",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40169444?v=4",
+      "profile": "https://github.com/Mremmalex",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "GustavoPrietoP",
+      "name": "Gustavo Prieto",
+      "avatar_url": "https://avatars.githubusercontent.com/u/70907734?v=4",
+      "profile": "https://github.com/GustavoPrietoP",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ZeusThundr",
+      "name": "ZeusThundr",
+      "avatar_url": "https://avatars.githubusercontent.com/u/76399616?v=4",
+      "profile": "https://github.com/ZeusThundr",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "leonistor",
+      "name": "Leo Nistor",
+      "avatar_url": "https://avatars.githubusercontent.com/u/310468?v=4",
+      "profile": "https://github.com/leonistor",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "notusknot",
+      "name": "notusknot",
+      "avatar_url": "https://avatars.githubusercontent.com/u/69602000?v=4",
+      "profile": "https://github.com/notusknot",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
