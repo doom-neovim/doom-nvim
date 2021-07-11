@@ -2,7 +2,7 @@ local log = require('doom.core.logging')
 local term
 
 -- selene: allow(undefined_variable)
-if packer_plugins['nvim-toggleterm.lua'] then
+if packer_plugins and packer_plugins['nvim-toggleterm.lua'] then
 	term = require('toggleterm.terminal').Terminal
 else
 	log.error(
