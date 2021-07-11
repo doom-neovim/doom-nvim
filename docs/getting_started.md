@@ -82,11 +82,7 @@ nvim --version
 
 MacPorts currently only has Neovim v0.4.4
 
-You can also download a prebuilt binary from the [Neovim](https://github.com/neovim/neovim/releases) releases page.
 
-1. Download nvim-macos.tar.gz
-2. Extract: tar xzvf nvim-macos.tar.gz
-3. Run ./nvim-osx64/bin/nvim
 
 #### On Windows
 
@@ -152,8 +148,17 @@ pacman -S nodejs npm
 
 #### On MacOS
 
-If you use MacOS, please help by posting the steps to install the external
-dependencies here!
+Dependencies can be installed using [homebrew](https://brew.sh/) 
+
+```sh
+# Required dependencies
+# git is already installed as part of MacOS
+brew install ripgrep ctags
+
+# (Optional) Required by Language Server Protocols
+brew install node
+
+```
 
 #### On Windows
 
