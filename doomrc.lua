@@ -39,7 +39,7 @@ local doom = {
 		'autopairs',       -- Autopairs
 		-- 'editorconfig', -- EditorConfig support for Neovim
 		'kommentary',      -- Comments plugin
-	    'lsp',             -- Language Server Protocols
+		'lsp',             -- Language Server Protocols
 		'snippets',        -- LSP snippets
 	},
 	langs = {
