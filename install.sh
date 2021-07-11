@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#
 #================================================
 # install.sh - Doom Nvim Installation Script
 # Author: NTBBloodbath
@@ -88,8 +89,6 @@ check_all() {
     need_cmd 'curl'
     # Clone repositories and install Doom Nvim
     need_cmd 'git'
-    # Generate help tags
-    check_cmd 'ctags'
     # Install Language Server Protocols
     check_cmd 'npm'
     check_cmd 'node'
@@ -174,21 +173,22 @@ update_repo() {
     fi
 }
 
-install_nvim_nightly() {
-    log_info "Installing Neovim Nightly AppImage ..."
+install_nvim_appimage() {
+    log_info "Installing Neovim 0.5 AppImage ..."
 
-    curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+    curl -LO https://github.com/neovim/neovim/releases/download/v0.5.0/nvim.appimage
     chmod u+x nvim.appimage
     mkdir -p $HOME/.local/bin
     mv nvim.appimage $HOME/.local/bin/
 
+    log_info "Creating an alias for the Neovim AppImage ..."
     if [ -f "$HOME/.zshrc" ]; then
         echo "alias 'nvim'=$HOME/.local/bin/nvim.appimage" >>$HOME/.zshrc
     else
         echo "alias 'nvim'=$HOME/.local/bin/nvim.appimage" >>$HOME/.bashrc
     fi
 
-    log_success "Successfully installed Neovim Nightly under $HOME/.local/bin/ directory"
+    log_success "Successfully installed Neovim 0.5.0 under $HOME/.local/bin/ directory"
 }
 
 install_fonts() {
@@ -196,19 +196,21 @@ install_fonts() {
         mkdir -p $HOME/.local/share/fonts
     fi
 
-    download_font "Fira Code Regular Nerd Font Complete Mono.ttf"
-    log_info "Updating font cache, please wait ..."
-    if [ "$System" == "Darwin" ]; then
-        if [ ! -e "$HOME/Library/Fonts" ]; then
-            mkdir "$HOME/Library/Fonts"
+    if [[ ! -f "$HOME/.local/share/fonts/Fira Code Regular Nerd Font Complete Mono.ttf" ]]; then
+        download_font "Fira Code Regular Nerd Font Complete Mono.ttf"
+        log_info "Updating font cache, please wait ..."
+        if [ "$System" == "Darwin" ]; then
+            if [ ! -e "$HOME/Library/Fonts" ]; then
+                mkdir "$HOME/Library/Fonts"
+            fi
+            cp $HOME/.local/share/fonts/* $HOME/Library/Fonts/
+        else
+            fc-cache -fv >/dev/null
+            mkfontdir "$HOME/.local/share/fonts" >/dev/null
+            mkfontscale "$HOME/.local/share/fonts" >/dev/null
         fi
-        cp $HOME/.local/share/fonts/* $HOME/Library/Fonts/
-    else
-        fc-cache -fv >/dev/null
-        mkfontdir "$HOME/.local/share/fonts" >/dev/null
-        mkfontscale "$HOME/.local/share/fonts" >/dev/null
+        log_success "Font cache done"
     fi
-    log_success "Font cache done"
 }
 
 download_font() {
@@ -234,8 +236,8 @@ install_done() {
     pretty_echo ${Green} "   You are almost done. Start neovim to install   "
     pretty_echo ${Green} "         the plugins and kill some demons.        "
     pretty_echo ${Green} "                                                  "
-    pretty_echo ${Green} " Thanks for installing Doom Nvim, if you have any "
-    pretty_echo ${Green} "             issue, please report it :)           "
+    pretty_echo ${Green} " Thanks for installing Doom Nvim. If you have any "
+    pretty_echo ${Green} "            issue, please report it :)            "
     pretty_echo ${Green} "=================================================="
 }
 # }}}
@@ -303,7 +305,7 @@ helper() {
     pretty_echo "    -c --check-requirements\t\tCheck Doom Nvim requirements"
     pretty_echo "    -i --install\t\t\tInstall Doom Nvim"
     pretty_echo "    -d --install-dev\t\t\tInstall Development version of Doom Nvim"
-    pretty_echo "    -n --nightly\t\t\tInstall Neovim Nightly and Doom Nvim"
+    pretty_echo "    -n --install-nvim\t\t\tInstall Neovim 0.5.0 and Doom Nvim"
     pretty_echo "    -u --update\t\t\t\tUpdate Doom Nvim"
     pretty_echo "    -v --version\t\t\tEcho Doom Nvim version"
     pretty_echo "    -x --uninstall\t\t\tUninstall Doom Nvim"
@@ -340,12 +342,12 @@ main() {
                 install_done
                 exit 0
                 ;;
-            --nvim-nightly | -n)
+            --install-nvim | -n)
                 welcome
                 check_all
                 update_repo "main"
                 backup_neovim
-                install_nvim_nightly
+                install_nvim_appimage
                 install_done
                 exit 0
                 ;;
@@ -374,6 +376,7 @@ main() {
         install_fonts
         check_requirements
         install_done
+        exit 0
     fi
 }
 
