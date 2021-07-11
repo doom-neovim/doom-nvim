@@ -69,6 +69,9 @@ Its design is guided by these mantras:
 - A modular organizational structure for separating concerns in your config.
 - Extensible and customizable, everything can be easily modified.
 - Curated and sane defaults for many plugins.
+- Automatized, you don't have to care about manually managing plugins, installing
+  language servers or even TreeSitter syntax parsers, Doom Nvim will handle all
+  these things for you.
 - A declarative and powerful [plugins management system](https://github.com/wbthomason/packer.nvim)
   (powered by `packer.nvim`).
 - Opt-in LSP integration for many languages by using the new
