@@ -19,18 +19,19 @@ return function()
 		return langs
 	end
 
+	-- Set up treesitter for Neorg
+	local parser_configs =
+		require('nvim-treesitter.parsers').get_parser_configs()
+	parser_configs.norg = {
+		install_info = {
+			url = 'https://github.com/vhyrro/tree-sitter-norg',
+			files = { 'src/parser.c' },
+			branch = 'main',
+		},
+	}
 	-- selene: allow(undefined_variable)
-	if packer_plugins['neorg'] then
-		-- Set up treesitter for Neorg
-		local parser_configs =
-			require('nvim-treesitter.parsers').get_parser_configs()
-		parser_configs.norg = {
-			install_info = {
-				url = 'https://github.com/vhyrro/tree-sitter-norg',
-				files = { 'src/parser.c' },
-				branch = 'main',
-			},
-		}
+	if packer_plugins and packer_plugins['neorg'] then
+	    table.insert(doomrc.langs, 'norg')
 	end
 
 	require('nvim-treesitter.configs').setup({
