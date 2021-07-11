@@ -10,7 +10,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=for-the-badge)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=for-the-badge)](#contributors)
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
@@ -84,9 +84,10 @@ Its design is guided by these mantras:
 
 - Curl 7.x (for using the installation script)
 - Git 2.23+
-- Neovim 0.5.0 onwards
 
 ### Runtime
+
+- Neovim 0.5.0 onwards
 
 - GNU `find`
 - _Optionals:_
@@ -135,6 +136,7 @@ if you are not an advanced vimmer. When you do, here are some places you can loo
 - [hlissner](https://github.com/hlissner) per doing Doom Emacs :heart:.
 - [romgrk](https://github.com/romgrk) per doing a port to Vim of Doom One
   colorscheme from Doom Emacs (and everyone who improves the colorscheme!).
+- [All our contributors](#contributors) per helping improve Doom :heart:
 
 ## Contribute
 
