@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.6] - 2021-07-11
+
+### Fixed
+
+- `nvim-telescope` plugin was not showing the files names (#34)
+
 ## [2.3.5] - 2021-07-08
 
 ### Changed
@@ -308,7 +314,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.5...develop
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.6...develop
+[2.3.6]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.5...v2.3.6
 [2.3.5]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.4...v2.3.5
 [2.3.4]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.3...v2.3.4
 [2.3.3]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.2...v2.3.3
