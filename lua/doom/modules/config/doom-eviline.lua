@@ -234,10 +234,8 @@ return function()
 				-- Check if there's a LSP client running to avoid redundant
 				-- statusline elements
 				if lsp.get_lsp_client() ~= 'No Active Lsp' then
-					return ' ' .. lsp.get_lsp_client():gsub(
-						'^%l',
-						string.upper
-					)
+					return ' '
+						.. lsp.get_lsp_client():gsub('^%l', string.upper)
 				else
 					-- Use the filetype instead and capitalize it
 					return ' ' .. (vim.bo.filetype:gsub('^%l', string.upper))
