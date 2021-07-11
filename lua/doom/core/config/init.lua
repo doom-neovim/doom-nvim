@@ -1,7 +1,7 @@
 ---[[------------------------------]]---
 --     config - Core of Doom Nvim     --
 --        Author: NTBBloodbath        --
---           License: GPLv2             --
+--           License: GPLv2           --
 ---[[------------------------------]]---
 
 local M = {}
@@ -72,7 +72,9 @@ local function default_doom_config_values()
 		-- false : ignores undo Directories (this code block will be ignored)
 		-- true  : enable undo files/undo dirs.
 		-- @default = false
-		backup = false, -- WARNING: if you change this to false and you have an undo dir already, it will REMOVE the undodir (loss of data might take place)
+		-- WARNING: if you change this to false and you have an undo dir already,
+		--          it will REMOVE the undodir (loss of data might take place)
+		backup = false,
 
 		-- Enable Line wrapping
 		-- false : disables line wrapping
