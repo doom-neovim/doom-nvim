@@ -87,10 +87,13 @@ check_cmd() {
 check_all() {
     # Install Doom Nvim (see also git)
     need_cmd 'curl'
+    sleep 1
     # Clone repositories and install Doom Nvim
     need_cmd 'git'
+    sleep 1
     # Install Language Server Protocols
     check_cmd 'npm'
+    sleep 1
     check_cmd 'node'
 }
 
@@ -104,6 +107,7 @@ check_requirements() {
     else
         log_warn "Check requirements : git"
     fi
+    sleep 1
 
     # Checks if neovim is installed
     if hash "nvim" &>/dev/null; then
@@ -111,6 +115,7 @@ check_requirements() {
     else
         log_warn "Check requirements : nvim"
     fi
+    sleep 1
 
     # Check if nodejs and npm are installed again,
     # we do not check only nodejs because some Linux distributions
@@ -120,6 +125,7 @@ check_requirements() {
     else
         log_warn "Check requirements : node (optional, required to use LSP)"
     fi
+    sleep 1
     if hash "npm" &>/dev/null; then
         log_success "Check requirements : npm"
     else
