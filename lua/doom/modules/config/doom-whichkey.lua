@@ -185,7 +185,7 @@ return function()
 			['d'] = { 'Start screen' },
 			['e'] = { 'Tree Explorer' },
 			['m'] = { 'Minimap' },
-			['S'] = { 'Symbols' },
+			['s'] = { 'Symbols' },
 			['t'] = { 'terminal' },
 		},
 	}
