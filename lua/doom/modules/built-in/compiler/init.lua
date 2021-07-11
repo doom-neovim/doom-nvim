@@ -1,7 +1,7 @@
 local log = require('doom.core.logging')
 
 -- selene: allow(undefined_variable)
-if packer_plugins and (not packer_plugins['nvim-toggleterm.lua']) then
+if packer_plugins and not packer_plugins['nvim-toggleterm.lua'] then
 	log.error(
 		"Doom compiler needs toggleterm plugin, please uncomment the 'terminal' entry in your doomrc"
 	)

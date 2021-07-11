@@ -15,7 +15,7 @@ log.debug('Loading Doom keybindings module ...')
 local opts = { silent = true }
 
 -- selene: allow(undefined_variable)
-if packer_plugins and (not packer_plugins['which-key.nvim']) then
+if packer_plugins and not packer_plugins['which-key.nvim'] then
 	utils.map('n', '<Space>', '<Nop>', opts)
 	vim.g.mapleader = ' '
 end
