@@ -67,11 +67,11 @@ return function()
 	----- Whichkey binds ------------------------
 	---------------------------------------------
 	local mappings = {
-		['`'] = { 'Switch to other buffer' },
+		['`'] = { 'Switch buffer' },
 		[' '] = { 'Find file' },
 		['.'] = { 'Browse files' },
 		[','] = { 'Switch buffer' },
-		['/'] = { 'Search' },
+		['/'] = { 'Search a word' },
 		[':'] = { 'Command history' },
 		['b'] = {
 			name = '+buffers',
