@@ -186,7 +186,7 @@ return function()
 			['e'] = { 'Tree Explorer' },
 			['m'] = { 'Minimap' },
 			['s'] = { 'Symbols' },
-			['t'] = { 'terminal' },
+			['t'] = { 'Terminal' },
 		},
 	}
 
