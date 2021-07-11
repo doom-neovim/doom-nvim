@@ -31,7 +31,7 @@ return function()
 	}
 	-- selene: allow(undefined_variable)
 	if packer_plugins and packer_plugins['neorg'] then
-	    table.insert(doomrc.langs, 'norg')
+		table.insert(doomrc.langs, 'norg')
 	end
 
 	require('nvim-treesitter.configs').setup({
