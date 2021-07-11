@@ -69,7 +69,7 @@ end
 -- Set autosave
 if config.doom.autosave then
 	table.insert(autocmds['doom_core'], {
-		'TextChanged,TextChangedI',
+		'TextChanged,InsertLeave',
 		'<buffer>',
 		'silent! write',
 	})
