@@ -90,7 +90,7 @@ packer.startup(function(use)
 	use({
 		'GustavoPrietoP/doom-themes.nvim',
 		disable = disabled_doom_themes,
-		event = 'TabNewEntered',
+		event = 'ColorSchemePre',
 	})
 
 	-- Development icons
