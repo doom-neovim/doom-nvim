@@ -54,6 +54,8 @@ Its design is guided by these mantras:
 
 ## Notices
 
+- **2021-07-12**: If you are facing issues related to `LuaSnip`, update Doom Nvim and follow
+  the instructions found in the issue [#38](https://github.com/NTBBloodbath/doom-nvim/issues/38).
 - **2021-07-03**: The `doomrc` has been fragmented and it is not working anymore,
   please see [Migrating to 3.0.0](./docs/getting_started.md#migrating-to-300)
   for more information.
