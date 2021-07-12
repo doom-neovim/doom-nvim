@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.2] - 2021-07-12
+
+### Fixed
+
+- Temporarily reverted `LuaSnip` to a previous commit to avoid issues with it.
+
 ## [3.0.1] - 2021-07-11
 
 ### Fixed
@@ -364,7 +370,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.1...develop
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.2...develop
+[3.0.2]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.1...v3.0.2
 [3.0.1]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.6...v3.0.0
 [2.3.6]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.5...v2.3.6
