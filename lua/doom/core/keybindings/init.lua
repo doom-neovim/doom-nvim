@@ -254,7 +254,12 @@ utils.map(
 utils.map('n', '<leader>bf', '<cmd>FormatWrite<CR>', opts)
 
 -- Doom
-utils.map('n', '<leader>dc', '<cmd>e ' .. utils.doom_root .. '/doom_config.lua<CR>', opts)
+utils.map(
+	'n',
+	'<leader>dc',
+	'<cmd>e ' .. utils.doom_root .. '/doom_config.lua<CR>',
+	opts
+)
 utils.map('n', '<leader>dd', '<cmd>help doom_nvim<CR>', opts)
 utils.map('n', '<leader>du', '<cmd>DoomUpdate<CR>', opts)
 utils.map('n', '<leader>dr', '<cmd>DoomRollback<CR>', opts)
