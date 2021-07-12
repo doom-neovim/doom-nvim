@@ -192,7 +192,7 @@ end
 utils.map(
 	'n',
 	'ZZ',
-	':lua require("doom.core.functions").quit_doom(true, true)<CR>',
+	'<cmd>lua require("doom.core.functions").quit_doom(true, true)<CR>',
 	opts
 )
 
@@ -257,7 +257,7 @@ utils.map('n', '<leader>bf', '<cmd>FormatWrite<CR>', opts)
 utils.map(
 	'n',
 	'<leader>dc',
-	'<cmd>e ~/.config/doom-nvim/doom_config.lua<CR>',
+	'<cmd>e ~/.config/nvim/doom_config.lua<CR>',
 	opts
 )
 utils.map('n', '<leader>dd', '<cmd>help doom_nvim<CR>', opts)
@@ -286,7 +286,7 @@ utils.map('n', '<leader>ff', '<cmd>Telescope find_files<CR>', opts)
 utils.map('n', '<leader>fr', '<cmd>Telescope oldfiles<CR>', opts)
 utils.map('n', '<leader>ft', '<cmd>Telescope help_tags<CR>', opts)
 utils.map('n', '<leader>fR', '<cmd>SudaRead<CR>', opts)
-utils.map('n', '<leader>fw', '<cmd>SudaWrite', opts)
+utils.map('n', '<leader>fw', '<cmd>SudaWrite<CR>', opts)
 
 -- search
 utils.map('n', '<leader>sg', '<cmd>Telescope live_grep<CR>', opts)
@@ -311,9 +311,9 @@ utils.map('n', '<leader>wj', '<C-W>j', opts)
 utils.map('n', '<leader>wl', '<C-W>l', opts)
 utils.map('n', '<leader>wk', '<C-W>k', opts)
 utils.map('n', '<leader>wH', '<C-W>5<', opts)
-utils.map('n', '<leader>wJ', '<cmd>resize +5', opts)
+utils.map('n', '<leader>wJ', '<cmd>resize +5<CR>', opts)
 utils.map('n', '<leader>wL', '<C-W>5>', opts)
-utils.map('n', '<leader>wK', '<cmd>resize -5', opts)
+utils.map('n', '<leader>wK', '<cmd>resize -5<CR>', opts)
 utils.map('n', '<leader>w=', '<C-W>=', opts)
 utils.map('n', '<leader>ws', '<C-W>s', opts)
 utils.map('n', '<leader>wv', '<C-W>v', opts)

@@ -11,7 +11,7 @@ local M = {}
 M.doom_version = '3.0.0'
 
 -- Local files
-M.doom_root = vim.fn.expand('$HOME/.config/doom-nvim')
+M.doom_root = vim.fn.expand('$HOME/.config/nvim')
 M.doom_logs = vim.fn.stdpath('data') .. '/doom.log'
 M.doom_report = vim.fn.stdpath('data') .. '/doom_report.md'
 
