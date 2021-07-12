@@ -257,7 +257,7 @@ utils.map('n', '<leader>bf', '<cmd>FormatWrite<CR>', opts)
 utils.map(
 	'n',
 	'<leader>dc',
-	'<cmd>e ~/.config/doom-nvim/doom_config.lua<CR>',
+	'<cmd>e ~/.config/nvim/doom_config.lua<CR>',
 	opts
 )
 utils.map('n', '<leader>dd', '<cmd>help doom_nvim<CR>', opts)

@@ -93,7 +93,7 @@ M.quit_doom = function(write, force)
 					.. config.doom.colorscheme
 					.. "'/'"
 					.. target_colorscheme
-					.. '\'/" $HOME/.config/doom-nvim/doom_config.lua'
+					.. '\'/" $HOME/.config/nvim/doom_config.lua'
 			)
 			log.info(
 				'Colorscheme successfully changed to ' .. target_colorscheme
@@ -105,7 +105,7 @@ M.quit_doom = function(write, force)
 					.. config.doom.colorscheme_bg
 					.. "'/'"
 					.. target_background
-					.. '\'/" $HOME/.config/doom-nvim/doom_config.lua'
+					.. '\'/" $HOME/.config/nvim/doom_config.lua'
 			)
 			log.info('Background successfully changed to ' .. target_background)
 		end
