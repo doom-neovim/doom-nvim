@@ -1,5 +1,6 @@
 return function()
 	local config = require('doom.core.config').load_config()
+	local doom_root = require('doom.utils').doom_root
 
 	vim.g.dashboard_session_directory = require('doom.utils').doom_root
 		.. '/sessions'
@@ -28,7 +29,7 @@ return function()
 		},
 		f = {
 			description = { '  Open Private Configuration     SPC d c' },
-			command = ':e ~/.config/nvim/doomrc',
+			command = ':e ' .. doom_root .. '/doom_config.lua',
 		},
 		g = {
 			description = { '  Open Documentation             SPC d d' },

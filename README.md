@@ -114,6 +114,12 @@ Or if you want to live in the bleeding-edge with the latest features:
 curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash -s -- -d
 ```
 
+Or if you are using a configurations switcher like cheovim:
+
+```sh
+curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/develop/install.sh | bash -s -- -s
+```
+
 Then [read our Getting Started guide][getting-started] to be walked through
 installing, configuring and maintaining Doom Nvim.
 

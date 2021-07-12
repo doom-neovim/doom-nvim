@@ -82,8 +82,6 @@ nvim --version
 
 MacPorts currently only has Neovim v0.4.4
 
-
-
 #### On Windows
 
 ##### [Chocolatey](https://community.chocolatey.org/)
@@ -176,6 +174,8 @@ Doom Nvim itself:
 >    before installing Doom Nvim, it will install Neovim 0.5.0 and Doom Nvim.
 > 2. If you want to know all the commands of the installer, run the installer with
 >    <kbd>bash -s -- -h</kbd> instead of just <kbd>bash</kbd>.
+> 3. If you are going to use cheovim with Doom Nvim, please see [Using cheovim](#using-cheovim)
+>    for the installation instructions
 
 ```sh
 # Check if you have all the dependencies listed above
@@ -197,8 +197,14 @@ the first-time setup of Doom Nvim.
 
 #### Using cheovim
 
-If you're using cheovim as your Neovim configurations manager you can use the
-recipe listed in cheovim documentation:
+If you're using cheovim as your Neovim configurations manager you will need to install
+Doom Nvim with the following command:
+
+```sh
+curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/develop/install.sh | bash -s -- -s
+```
+
+Also you can use the recipe listed in cheovim documentation for using Doom Nvim:
 
 ```lua
 doom_nvim = { "~/.config/doom-nvim", {

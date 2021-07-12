@@ -35,7 +35,7 @@ BYellow='\033[1;33m' # Yellow
 # }}}
 
 # Doom Nvim version
-DoomNvimVersion='3.0.2'
+DoomNvimVersion='3.1.0'
 # System OS
 System="$(uname -s)"
 
@@ -137,16 +137,21 @@ check_requirements() {
 # Neovim backup and installation of Doom Nvim
 # ===========================================
 # {{{
-backup_neovim() {
+backup_neovim_and_install_doom() {
     if [[ -d "$HOME/.config/nvim" ]]; then
         if [[ "$(readlink $HOME/.config/nvim)" =~ \.config\/doom-nvim$ ]]; then
             log_success "Installed Doom Nvim and some demons were released, be careful!"
+        elif [[ -n "$1" && "$1" == "using-cheovim" ]]; then
+            # If installing for using with cheovim then don't create a backup directory
+            # of the current nvim directory and switch the `utils.doom_root` value from
+            # `~/.config/nvim` to `~/.config/doom-nvim`.
+            sed -i "s/.config\/nvim/.config\/doom-nvim/" "$HOME/.config/doom-nvim/lua/doom/utils/init.lua"
         else
             mv "$HOME/.config/nvim" "$HOME/.config/nvim_bak"
             log_success "Neovim backup is in $HOME/.config/nvim_bak"
             ln -s "$HOME/.config/doom-nvim" "$HOME/.config/nvim"
-            log_success "Installed Doom Nvim and more demons were released!"
         fi
+        log_success "Installed Doom Nvim and more demons were released, be careful!"
     else
         mkdir -p "$HOME/.config"
         ln -s "$HOME/.config/doom-nvim" "$HOME/.config/nvim"
@@ -312,6 +317,7 @@ helper() {
     pretty_echo "    -i --install\t\t\tInstall Doom Nvim"
     pretty_echo "    -d --install-dev\t\t\tInstall Development version of Doom Nvim"
     pretty_echo "    -n --install-nvim\t\t\tInstall Neovim 0.5.0 and Doom Nvim"
+    pretty_echo "    -s --install-cheovim\t\tInstall Doom Nvim with cheovim compatibility"
     pretty_echo "    -u --update\t\t\t\tUpdate Doom Nvim"
     pretty_echo "    -v --version\t\t\tEcho Doom Nvim version"
     pretty_echo "    -x --uninstall\t\t\tUninstall Doom Nvim"
@@ -335,7 +341,7 @@ main() {
                 check_all
                 update_repo "main"
                 install_fonts
-                backup_neovim
+                backup_neovim_and_install_doom
                 install_done
                 exit 0
                 ;;
@@ -344,7 +350,7 @@ main() {
                 check_all
                 update_repo "develop"
                 install_fonts
-                backup_neovim
+                backup_neovim_and_install_doom
                 install_done
                 exit 0
                 ;;
@@ -352,8 +358,17 @@ main() {
                 welcome
                 check_all
                 update_repo "main"
-                backup_neovim
+                backup_neovim_and_install_doom
                 install_nvim_appimage
+                install_done
+                exit 0
+                ;;
+            --install-cheovim | -s)
+                welcome
+                check_all
+                update_repo "main"
+                install_fonts
+                backup_neovim_and_install_doom "using-cheovim"
                 install_done
                 exit 0
                 ;;
@@ -378,7 +393,7 @@ main() {
         welcome
         check_all
         update_repo "main"
-        backup_neovim
+        backup_neovim_and_install_doom
         install_fonts
         check_requirements
         install_done
