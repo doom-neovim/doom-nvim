@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Do not try to automatically install servers on start if the lspinstall plugin
+  is not loaded
 - Set termguicolors on start instead of wait for the UI module, avoid a strange
   error that I was having with packer
 
