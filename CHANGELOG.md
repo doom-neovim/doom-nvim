@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `doom-themes` plugin was loaded incorrectly
 - Custom keymaps were not working in the `doom_config.lua` file
 
 ## [3.0.3] - 2021-07-12
