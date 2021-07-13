@@ -277,15 +277,9 @@ packer.startup(function(use)
 	use({
 		'L3MON4D3/LuaSnip',
 		config = require('doom.modules.config.doom-luasnip'),
-		disable = (disabled_lsp and true or disabled_snippets),
-		opt = true,
-		after = 'nvim-compe',
-	})
-	use({
-		'rafamadriz/friendly-snippets',
-		disable = (disabled_lsp and true or disabled_snippets),
-		opt = true,
-		after = 'nvim-compe',
+		disable = disabled_snippets,
+		requires = { 'rafamadriz/friendly-snippets' },
+		event = 'BufRead',
 	})
 
 	-- install lsp saga
