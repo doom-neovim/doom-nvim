@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.5] - 2021-07-13
+
+### Fixed
+
+- Set termguicolors on start instead of wait for the UI module, avoid a strange
+  error that I was having with packer
+
 ## [3.0.4] - 2021-07-13
 
 ### Fixed
@@ -383,7 +390,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.4...develop
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.5...develop
+[3.0.5]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.4...v3.0.5
 [3.0.4]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.3...v3.0.4
 [3.0.3]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.2...v3.0.3
 [3.0.2]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.1...v3.0.2

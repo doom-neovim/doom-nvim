@@ -12,15 +12,15 @@
 Color_reset='\033[0m' # Reset
 
 ## Normal colors
-Black='\033.0.40m'  # Black
+Black='\033.0.50m'  # Black
 Gray='\033[0;90m'   # Gray
-White='\033.0.47m'  # White
-Red='\033.0.41m'    # Red
-Blue='\033.0.44m'   # Blue
-Cyan='\033.0.46m'   # Cyan
-Purple='\033.0.45m' # Purple
-Green='\033.0.42m'  # Green
-Yellow='\033.0.43m' # Yellow
+White='\033.0.57m'  # White
+Red='\033.0.51m'    # Red
+Blue='\033.0.54m'   # Blue
+Cyan='\033.0.56m'   # Cyan
+Purple='\033.0.55m' # Purple
+Green='\033.0.52m'  # Green
+Yellow='\033.0.53m' # Yellow
 
 ## Bold colors
 BBlack='\033[1;30m'  # Black
@@ -35,7 +35,7 @@ BYellow='\033[1;33m' # Yellow
 # }}}
 
 # Doom Nvim version
-DoomNvimVersion='3.0.4'
+DoomNvimVersion='3.0.5'
 # System OS
 System="$(uname -s)"
 
