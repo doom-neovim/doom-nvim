@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Added `neorg` to completion sources
 - Properly setup for `LuaSnip` + `friendly-snippets`
 
 ## [3.0.5] - 2021-07-13
