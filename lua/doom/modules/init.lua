@@ -276,6 +276,7 @@ packer.startup(function(use)
 	local disabled_snippets = functions.is_plugin_disabled('snippets')
 	use({
 		'L3MON4D3/LuaSnip',
+		config = require('doom.modules.config.doom-luasnip'),
 		disable = (disabled_lsp and true or disabled_snippets),
 		opt = true,
 		after = 'nvim-compe',
