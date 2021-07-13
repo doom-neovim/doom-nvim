@@ -323,7 +323,7 @@ packer.startup(function(use)
 		'lukas-reineke/format.nvim',
 		config = require('doom.modules.config.doom-format'),
 		disable = disabled_formatter,
-		cmd = { 'Format', 'FormatWrite' },
+		event = 'BufWinEnter',
 	})
 
 	-- Autopairs
