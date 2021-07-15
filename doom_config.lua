@@ -352,6 +352,13 @@ local nvim = {
 	--      end
 	--   }
 	functions = {},
+	-- Set custom options
+	-- @default = {}
+	-- example:
+	--   {
+  --      { ['shiftwidth'] = 4 }
+	--   }
+	options = {},
 }
 -- }}}
 
