@@ -74,9 +74,9 @@ M.load_custom_settings = function(settings_tbl, scope)
 				vim.g[var] = val
 			end
 		elseif scope == 'options' then
-		  for var, val in pairs(settings_tbl) do
-		    vim.opt[var] = val
-		  end
+			for var, val in pairs(settings_tbl) do
+				vim.opt[var] = val
+			end
 		end
 	end
 end

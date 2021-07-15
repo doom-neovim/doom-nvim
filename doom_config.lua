@@ -356,7 +356,7 @@ local nvim = {
 	-- @default = {}
 	-- example:
 	--   {
-  --      { ['shiftwidth'] = 4 }
+	--      { ['shiftwidth'] = 4 }
 	--   }
 	options = {},
 }
