@@ -152,6 +152,7 @@ M.custom_options = function()
 	functions.load_custom_settings(config.nvim.functions, 'functions')
 	functions.load_custom_settings(config.nvim.mappings, 'mappings')
 	functions.load_custom_settings(config.nvim.global_variables, 'variables')
+	functions.load_custom_settings(config.nvim.options, 'options')
 end
 
 return M
