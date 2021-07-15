@@ -279,7 +279,7 @@ packer.startup(function(use)
 		config = require('doom.modules.config.doom-luasnip'),
 		disable = disabled_snippets,
 		requires = { 'rafamadriz/friendly-snippets' },
-		event = 'BufRead',
+		event = 'BufWinEnter',
 	})
 
 	-- install lsp saga
