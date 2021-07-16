@@ -101,8 +101,30 @@ scoop install neovim-nightly
 
 ##### Manual
 
-You can also download a prebuilt binary from the [Neovim](https://github.com/neovim/neovim/releases) releases page.
+1. Download a prebuilt binary from the [Neovim](https://github.com/neovim/neovim/releases) releases page.
+2. Unpack the binary
+3. Move and symlink to somewhere in your path
 
+```
+# unpack the binary
+tar xzvf nvim-linux64.tar.gz
+
+# create a directory to store the unpacked folder
+sudo mkdir /opt/nvim
+
+# move the unpacked binary
+sudo mv nvim-linux64 /opt/nvim
+
+# add the neovim executable to somewhere in your path
+# ex: /usr/bin OR $HOME/.local/bin
+sudo ln -s /opt/nvim/nvim-linux64/nvim /usr/bin
+
+# should print /usr/bin/nvim
+which nvim
+
+# should print NVIM 0.5
+nvim --version
+```
 ### External dependencies
 
 #### On Linux
