@@ -117,7 +117,7 @@ sudo mv nvim-linux64 /opt/nvim
 
 # add the neovim executable to somewhere in your path
 # ex: /usr/bin OR $HOME/.local/bin
-sudo ln -s /opt/nvim/nvim-linux64/nvim /usr/bin/nvim
+sudo ln -s /opt/nvim/nvim-linux64/bin/nvim /usr/bin/nvim
 
 # should print /usr/bin/nvim
 which nvim
