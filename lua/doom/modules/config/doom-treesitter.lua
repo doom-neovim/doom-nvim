@@ -41,5 +41,19 @@ return function()
 			enable = functions.is_plugin_disabled('autopairs') and false or true,
 		},
 		indent = { enable = true },
+		tree_docs = { enable = true },
+		context_commentstring = { enable = true },
+		autotag = {
+			enable = true,
+			filetypes = {
+				'html',
+				'javascript',
+				'javascriptreact',
+				'typescriptreact',
+				'svelte',
+				'vue',
+				'markdown',
+			},
+		},
 	})
 end

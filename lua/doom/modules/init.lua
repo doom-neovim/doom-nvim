@@ -51,6 +51,19 @@ packer.startup(function(use)
 		run = ':TSUpdate',
 		config = require('doom.modules.config.doom-treesitter'),
 	})
+	use({
+		'JoosepAlviste/nvim-ts-context-commentstring',
+		requires = { { 'Olical/aniseed', after = 'nvim-treesitter' } },
+		after = 'nvim-treesitter',
+	})
+	use({
+		'nvim-treesitter/nvim-tree-docs',
+		after = 'nvim-treesitter',
+	})
+	use({
+		'windwp/nvim-ts-autotag',
+		after = 'nvim-treesitter',
+	})
 
 	-- Neorg
 	local disabled_neorg = functions.is_plugin_disabled('neorg')
