@@ -90,7 +90,7 @@ packer.startup(function(use)
 	use({
 		'GustavoPrietoP/doom-themes.nvim',
 		disable = disabled_doom_themes,
-		event = 'TabNewEntered',
+		event = 'ColorSchemePre',
 	})
 
 	-- Development icons
@@ -276,16 +276,10 @@ packer.startup(function(use)
 	local disabled_snippets = functions.is_plugin_disabled('snippets')
 	use({
 		'L3MON4D3/LuaSnip',
-		commit = '24f3317166a91db3d8f16fbaa610b1cfa6615f14',
-		disable = (disabled_lsp and true or disabled_snippets),
-		opt = true,
-		after = 'nvim-compe',
-	})
-	use({
-		'rafamadriz/friendly-snippets',
-		disable = (disabled_lsp and true or disabled_snippets),
-		opt = true,
-		after = 'nvim-compe',
+		config = require('doom.modules.config.doom-luasnip'),
+		disable = disabled_snippets,
+		requires = { 'rafamadriz/friendly-snippets' },
+		event = 'BufWinEnter',
 	})
 
 	-- install lsp saga
@@ -323,7 +317,7 @@ packer.startup(function(use)
 		'lukas-reineke/format.nvim',
 		config = require('doom.modules.config.doom-format'),
 		disable = disabled_formatter,
-		cmd = { 'Format', 'FormatWrite' },
+		event = 'BufWinEnter',
 	})
 
 	-- Autopairs

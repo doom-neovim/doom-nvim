@@ -116,7 +116,17 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/2058566?v=4",
       "profile": "https://github.com/bdillahu",
       "contributions": [
-        "doc"
+        "doc",
+        "bug"
+      ]
+    },
+    {
+      "login": "amxj9",
+      "name": "amxj9",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2029709?v=4",
+      "profile": "https://github.com/amxj9",
+      "contributions": [
+        "bug"
       ]
     }
   ],

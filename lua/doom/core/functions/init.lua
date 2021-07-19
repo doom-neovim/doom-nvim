@@ -67,7 +67,7 @@ M.load_custom_settings = function(settings_tbl, scope)
 			local opts = { silent = true }
 			for _, map in ipairs(settings_tbl) do
 				-- scope, lhs, rhs, options
-				map(map[1], map[2], map[3], opts)
+				utils.map(map[1], map[2], map[3], opts)
 			end
 		elseif scope == 'variables' then
 			for var, val in pairs(settings_tbl) do

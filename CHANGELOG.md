@@ -7,6 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.7] - 2021-07-13
+
+### Fixed
+
+- Properly lazy-load `format.nvim`
+- Stop lazy-loading `friendly-snippets`
+
+## [3.0.6] - 2021-07-13
+
+### Fixed
+
+- Added `neorg` to completion sources
+- Properly setup for `LuaSnip` + `friendly-snippets`
+
+## [3.0.5] - 2021-07-13
+
+### Fixed
+
+- Do not try to automatically install servers on start if the lspinstall plugin
+  is not loaded
+- Set termguicolors on start instead of wait for the UI module, avoid a strange
+  error that I was having with packer
+
+## [3.0.4] - 2021-07-13
+
+### Fixed
+
+- `doom-themes` plugin was loaded incorrectly
+- Custom keymaps were not working in the `doom_config.lua` file
+
+## [3.0.3] - 2021-07-12
+
+### Changed
+
+- Reverted [3.0.2] changes
+
 ## [3.0.2] - 2021-07-12
 
 ### Fixed
@@ -370,7 +406,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.2...develop
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.7...develop
+[3.0.6]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.6...v3.0.7
+[3.0.6]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.5...v3.0.6
+[3.0.5]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.4...v3.0.5
+[3.0.4]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.3...v3.0.4
+[3.0.3]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.2...v3.0.3
 [3.0.2]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.1...v3.0.2
 [3.0.1]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.6...v3.0.0
