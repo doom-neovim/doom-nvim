@@ -1,6 +1,5 @@
 return function()
 	local config = require('doom.core.config').load_config()
-	local doom_root = require('doom.utils').doom_root
 
 	vim.g.dashboard_session_directory = require('doom.utils').doom_root
 		.. '/sessions'
