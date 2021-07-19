@@ -14,14 +14,11 @@ log.debug('Loading Doom keybindings module ...')
 -- Additional options for mappings
 local opts = { silent = true }
 
--- selene: allow(undefined_variable)
-if packer_plugins and not packer_plugins['which-key.nvim'] then
-	utils.map('n', '<Space>', '<Nop>', opts)
-	vim.g.mapleader = ' '
-end
+utils.map('n', '<Space>', '<Nop>', opts)
+vim.g.mapleader = ' '
 
 -- Map WhichKey popup menu
-utils.map('n', '<Space>', ':WhichKey <leader><CR>', opts)
+-- utils.map('n', '<Space>', ':WhichKey <leader><CR>', opts)
 
 -------------------------------------------------
 
@@ -257,7 +254,7 @@ utils.map('n', '<leader>bf', '<cmd>FormatWrite<CR>', opts)
 utils.map(
 	'n',
 	'<leader>dc',
-	'<cmd>e ' .. utils.doom_root .. '/doom_config.lua<CR>',
+	'<cmd>lua require("doom.core.functions").edit_config()<CR>',
 	opts
 )
 utils.map('n', '<leader>dd', '<cmd>help doom_nvim<CR>', opts)

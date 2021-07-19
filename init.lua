@@ -57,9 +57,10 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
                 filetype on
                 filetype plugin indent on
                 PackerLoad nvim-treesitter
+                PackerLoad which-key.nvim
                 silent! bufdo e
             ]])
-		end, 15)
+		end, 10)
 	end, 0)
 
 	async:close()

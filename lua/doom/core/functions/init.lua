@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --      functions - Doom Nvim Functions        --
 --              Author: NTBBloodbath           --
---              License: GPLv2                   --
+--              License: GPLv2                 --
 ---[[---------------------------------------]]---
 
 local utils = require('doom.utils')
@@ -448,6 +448,40 @@ M.rollback_doom = function()
 		)
 	else
 		log.error('There are no backup files to rollback')
+	end
+end
+
+-- edit_config creates a prompt to modify a doom configuration file
+M.edit_config = function()
+	local selected_config = tonumber(
+		vim.fn.input(
+			'Select a configuration file to edit:'
+				.. '\n\t1. doom_config.lua'
+				.. '\n\t2. doomrc.lua'
+				.. '\n\t3. plugins.lua'
+				.. '\n\n>> '
+		)
+	)
+	local open_command = config.doom.new_file_split and 'split' or 'edit'
+
+	if selected_config == 1 then
+		vim.cmd(
+			string.format(
+				'%s %s/doom_config.lua',
+				open_command,
+				utils.doom_root
+			)
+		)
+	elseif selected_config == 2 then
+		vim.cmd(
+			string.format('%s %s/doomrc.lua', open_command, utils.doom_root)
+		)
+	elseif selected_config == 3 then
+		vim.cmd(
+			string.format('%s %s/plugins.lua', open_command, utils.doom_root)
+		)
+	else
+		log.error('Invalid option selected.')
 	end
 end
 

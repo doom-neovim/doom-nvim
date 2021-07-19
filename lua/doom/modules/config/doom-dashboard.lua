@@ -29,7 +29,7 @@ return function()
 		},
 		f = {
 			description = { '  Open Private Configuration     SPC d c' },
-			command = ':e ' .. doom_root .. '/doom_config.lua',
+			command = ':lua require("doom.core.functions").edit_config()',
 		},
 		g = {
 			description = { '  Open Documentation             SPC d d' },

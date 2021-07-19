@@ -180,8 +180,8 @@ packer.startup(function(use)
 	local disabled_whichkey = functions.is_plugin_disabled('which-key')
 	use({
 		'folke/which-key.nvim',
+		opt = true,
 		config = require('doom.modules.config.doom-whichkey'),
-		event = 'BufWinEnter',
 		disable = disabled_whichkey,
 	})
 
@@ -250,7 +250,6 @@ packer.startup(function(use)
 	-- Built-in LSP Config
 	use({
 		'neovim/nvim-lspconfig',
-		opt = true,
 		config = require('doom.modules.config.doom-lspconfig'),
 		disable = disabled_lsp,
 		event = 'ColorScheme',
@@ -353,7 +352,7 @@ packer.startup(function(use)
 	use({
 		'b3nj5m1n/kommentary',
 		disable = disabled_kommentary,
-		event = 'BufEnter',
+		event = 'BufWinEnter',
 	})
 
 	-----[[-------------]]-----
