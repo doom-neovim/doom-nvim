@@ -453,15 +453,12 @@ end
 
 -- edit_config creates a prompt to modify a doom configuration file
 M.edit_config = function()
-	local selected_config = tonumber(
-		vim.fn.input(
-			'Select a configuration file to edit:'
-				.. '\n\t1. doom_config.lua'
-				.. '\n\t2. doomrc.lua'
-				.. '\n\t3. plugins.lua'
-				.. '\n\n>> '
-		)
-	)
+	local selected_config = tonumber(vim.fn.inputlist({
+		'Select a configuration file to edit:',
+		'1. doom_config.lua',
+		'2. doomrc.lua',
+		'3. plugins.lua',
+	}))
 	local open_command = config.doom.new_file_split and 'split' or 'edit'
 
 	if selected_config == 1 then
@@ -480,7 +477,7 @@ M.edit_config = function()
 		vim.cmd(
 			string.format('%s %s/plugins.lua', open_command, utils.doom_root)
 		)
-	else
+	elseif selected_config ~= 0 then
 		log.error('Invalid option selected.')
 	end
 end
