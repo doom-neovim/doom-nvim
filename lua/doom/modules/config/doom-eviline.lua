@@ -187,7 +187,7 @@ return function()
 		DiagnosticError = {
 			provider = 'DiagnosticError',
 			condition = is_not_dashboard,
-			icon = config.doom.lsp_error,
+			icon = config.doom.lsp_error .. ' ',
 			highlight = { get_color('red'), get_color('bg') },
 		},
 	}
@@ -195,7 +195,7 @@ return function()
 		DiagnosticWarn = {
 			provider = 'DiagnosticWarn',
 			condition = is_not_dashboard,
-			icon = config.doom.lsp_warning,
+			icon = config.doom.lsp_warning .. ' ',
 			highlight = { get_color('orange'), get_color('bg') },
 		},
 	}
@@ -203,7 +203,7 @@ return function()
 		DiagnosticInfo = {
 			provider = 'DiagnosticInfo',
 			condition = is_not_dashboard,
-			icon = config.doom.lsp_hint,
+			icon = config.doom.lsp_hint .. ' ',
 			highlight = { get_color('blue'), get_color('bg') },
 		},
 	}
@@ -234,8 +234,10 @@ return function()
 				-- Check if there's a LSP client running to avoid redundant
 				-- statusline elements
 				if lsp.get_lsp_client() ~= 'No Active Lsp' then
-					return ' '
-						.. lsp.get_lsp_client():gsub('^%l', string.upper)
+					return ' ' .. lsp.get_lsp_client():gsub(
+						'^%l',
+						string.upper
+					)
 				else
 					-- Use the filetype instead and capitalize it
 					return ' ' .. (vim.bo.filetype:gsub('^%l', string.upper))
