@@ -17,8 +17,8 @@ return function()
 			diagnostics_indicator = function(_, _, diagnostics_dict, _)
 				local s = ' '
 				for e, n in pairs(diagnostics_dict) do
-					local sym = e == 'error' and ' '
-						or (e == 'warning' and ' ' or ' ')
+					local sym = e == 'error' and '  '
+						or (e == 'warning' and '  ' or '  ')
 					s = s .. n .. sym
 				end
 				return s
@@ -58,7 +58,7 @@ return function()
 			persist_buffer_sort = true,
 			separator_style = 'thick',
 			enforce_regular_tabs = true,
-			always_show_bufferline = true,
+			always_show_bufferline = false,
 			sort_by = 'directory',
 			custom_areas = {
 				right = function()
