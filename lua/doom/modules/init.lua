@@ -69,7 +69,7 @@ packer.startup(function(use)
 		config = require('doom.modules.config.doom-autosession'),
 		requires = { { 'rmagatti/session-lens', after = 'telescope.nvim' } },
 		cmd = { 'SaveSession', 'RestoreSession', 'DeleteSession' },
-		event = 'TabNewEntered',
+		module = 'auto-session',
 		disable = disabled_sessions,
 	})
 
