@@ -5,7 +5,7 @@
 ---[[---------------------------------------]]---
 
 local utils = require('doom.utils')
-local log = require('doom.core.logging')
+local log = require('doom.extras.logging')
 
 local M = {}
 

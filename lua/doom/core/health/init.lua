@@ -4,7 +4,7 @@
 --              License: GPLv2                   --
 ---[[---------------------------------------]]---
 
-local log = require('doom.core.logging')
+local log = require('doom.extras.logging')
 
 local M = {}
 

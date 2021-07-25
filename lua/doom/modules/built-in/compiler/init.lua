@@ -1,4 +1,4 @@
-local log = require('doom.core.logging')
+local log = require('doom.extras.logging')
 
 -- selene: allow(undefined_variable)
 if packer_plugins and not packer_plugins['nvim-toggleterm.lua'] then

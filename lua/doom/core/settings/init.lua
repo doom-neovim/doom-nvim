@@ -1,18 +1,18 @@
 ---[[---------------------------------------]]---
---         default - Doom Nvim defaults        --
---              Author: NTBBloodbath           --
---              License: GPLv2                   --
+--        settings - Doom Nvim settings        --
+--             Author: NTBBloodbath            --
+--             License: GPLv2                  --
 ---[[---------------------------------------]]---
 
 local functions = require('doom.core.functions')
-local log = require('doom.core.logging')
+local log = require('doom.extras.logging')
 local config = require('doom.core.config').load_config()
 
 local M = {}
 
 log.debug('Loading Doom defaults module ...')
 
--- load_default_options sets and loads default Doom options based on doomrc values
+-- load_default_options sets and loads default Neovim options based on doomrc values
 M.load_default_options = function()
 	----- Default Neovim configurations
 	-- Set colorscheme

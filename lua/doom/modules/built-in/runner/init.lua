@@ -1,4 +1,4 @@
-local log = require('doom.core.logging')
+local log = require('doom.extras.logging')
 local term
 
 -- selene: allow(undefined_variable)

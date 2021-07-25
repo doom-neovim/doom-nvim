@@ -5,7 +5,7 @@
 ---[[---------------------------------------]]---
 
 local utils = require('doom.utils')
-local log = require('doom.core.logging')
+local log = require('doom.extras.logging')
 local config = require('doom.core.config').load_config()
 
 log.debug('Loading Doom autocmds module ...')

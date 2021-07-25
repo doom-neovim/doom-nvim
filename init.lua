@@ -30,12 +30,26 @@ vim.g.loaded_remote_plugins = false
 ---- Doom Configurations ------------------------
 -------------------------------------------------
 vim.defer_fn(function()
-	-- TODO: uncomment it after restructuring some things later
-	-- Load plugins
-	-- require('doom.modules')
+	local log = require('doom.extras.logging')
 
-	-- Load Doom core
-	require('doom.core')
+	-- Load Doom stuff (core, extras, modules)
+	local doom_modules = { 'core', 'extras', 'modules' }
+	for i = 1, #doom_modules, 1 do
+		local ok, err = xpcall(
+			require,
+			debug.traceback,
+			string.format('doom.%s', doom_modules[i])
+		)
+		if not ok then
+			log.error(
+				string.format(
+					"There was an error loading the module 'doom.%s'. Traceback:\n%s",
+					doom_modules[i],
+					err
+				)
+			)
+		end
+	end
 
 	-- If the dashboard plugin is already installed and the packer_compiled.lua
 	-- file exists so we can make sure that the dashboard have been loaded.
@@ -51,8 +65,8 @@ vim.defer_fn(function()
 		end
 	end
 
-	vim.opt.shadafile = ''
 	vim.defer_fn(function()
+		vim.opt.shadafile = ''
 		vim.cmd([[
             rshada!
             doautocmd BufRead
