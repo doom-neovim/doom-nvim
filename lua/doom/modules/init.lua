@@ -297,7 +297,7 @@ packer.startup(function(use)
 	use({
 		'glepnir/lspsaga.nvim',
 		disable = disabled_lsp,
-	    after = 'nvim-lspconfig',
+		after = 'nvim-lspconfig',
 	})
 
 	-- provides the missing `:LspInstall` for `nvim-lspconfig`.

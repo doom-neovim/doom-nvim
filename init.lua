@@ -30,9 +30,9 @@ vim.g.loaded_remote_plugins = false
 ---- Doom Configurations ------------------------
 -------------------------------------------------
 vim.defer_fn(function()
-    -- TODO: uncomment it after restructuring some things later
-    -- Load plugins
-    -- require('doom.modules')
+	-- TODO: uncomment it after restructuring some things later
+	-- Load plugins
+	-- require('doom.modules')
 
 	-- Load Doom core
 	require('doom.core')
@@ -44,8 +44,8 @@ vim.defer_fn(function()
 	)
 	if vim.fn.filereadable(compiled_plugins_path) > 0 then
 		-- If the current buffer name is empty then trigger Dashboard.
-	    -- NOTE: this is done to avoid some weird issues with Dashboard and
-        --       number / signcolumn when Dashboard gets triggered automatically
+		-- NOTE: this is done to avoid some weird issues with Dashboard and
+		--       number / signcolumn when Dashboard gets triggered automatically
 		if vim.api.nvim_buf_get_name(0):len() == 0 then
 			vim.cmd('Dashboard')
 		end
