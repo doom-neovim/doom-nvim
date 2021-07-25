@@ -1,7 +1,6 @@
-local fn = vim.fn
-local lsp = vim.lsp
-
 return function()
+    local fn = vim.fn
+    local lsp = vim.lsp
 	local config = require('doom.core.config').load_config()
 
 	-- Snippets support
