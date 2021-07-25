@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.8] - 2021-07-25
+
+### Fixed
+
+- Properly lazy-load `TrueZen.nvim`
+
 ## [3.0.7] - 2021-07-13
 
 ### Fixed
@@ -406,8 +412,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.7...develop
-[3.0.6]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.6...v3.0.7
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.8...develop
+[3.0.8]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.7...v3.0.8
+[3.0.7]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.6...v3.0.7
 [3.0.6]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.5...v3.0.6
 [3.0.5]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.4...v3.0.5
 [3.0.4]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.3...v3.0.4

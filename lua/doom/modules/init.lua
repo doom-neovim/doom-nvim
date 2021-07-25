@@ -192,7 +192,7 @@ packer.startup(function(use)
 		config = require('doom.modules.config.doom-zen'),
 		disable = disabled_zen,
 		module = 'true-zen',
-		event = 'TabNewEntered',
+		event = 'BufWinEnter',
 	})
 
 	-----[[--------------]]-----
