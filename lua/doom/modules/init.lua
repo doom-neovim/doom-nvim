@@ -94,7 +94,6 @@ packer.startup(function(use)
 	use({
 		'glepnir/dashboard-nvim',
 		config = require('doom.modules.config.doom-dashboard'),
-		cmd = 'Dashboard',
 		disable = disabled_dashboard,
 	})
 
@@ -281,7 +280,7 @@ packer.startup(function(use)
 		config = require('doom.modules.config.doom-compe'),
 		disable = disabled_lsp,
 		opt = true,
-		after = 'nvim-lspconfig',
+		event = 'InsertEnter',
 	})
 
 	-- Snippets
@@ -291,15 +290,14 @@ packer.startup(function(use)
 		config = require('doom.modules.config.doom-luasnip'),
 		disable = disabled_snippets,
 		requires = { 'rafamadriz/friendly-snippets' },
-		event = 'BufWinEnter',
+		after = 'nvim-compe',
 	})
 
 	-- install lsp saga
 	use({
 		'glepnir/lspsaga.nvim',
 		disable = disabled_lsp,
-		opt = true,
-		after = 'nvim-lspconfig',
+	    after = 'nvim-lspconfig',
 	})
 
 	-- provides the missing `:LspInstall` for `nvim-lspconfig`.
@@ -390,7 +388,7 @@ packer.startup(function(use)
 			require('rest-nvim').setup()
 		end,
 		disable = disabled_restclient,
-		event = 'BufEnter',
+		event = 'BufWinEnter',
 	})
 
 	local disabled_range_highlight = functions.is_plugin_disabled(
@@ -399,7 +397,7 @@ packer.startup(function(use)
 	use({
 		'winston0410/range-highlight.nvim',
 		requires = {
-			{ 'winston0410/cmd-parser.nvim', opt = true, module = 'cmd-parser' },
+			{ 'winston0410/cmd-parser.nvim', module = 'cmd-parser' },
 		},
 		config = function()
 			require('range-highlight').setup()
