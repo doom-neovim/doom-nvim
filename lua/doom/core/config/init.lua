@@ -435,7 +435,7 @@ M.install_servers = function(langs)
 
 		for _, lang in ipairs(langs) do
 			local lang_str = lang
-			lang = lang:gsub('%s+%+lsp', '')
+			lang = lang:gsub('%s+%+lsp', ''):gsub('%s+%+debug', '')
 
 			-- If the +lsp flag exists and the language server is not installed yet
 			if
@@ -451,6 +451,55 @@ M.install_servers = function(langs)
 						'The language '
 							.. lang
 							.. ' does not have a server, please remove the "+lsp" flag'
+					)
+				end
+			end
+		end
+	end
+end
+
+-- install_dap_clients will install the DAP clients for the languages with
+-- the +debug flag.
+--
+-- @param langs The list of languages in the doomrc
+M.install_dap_clients = function(langs)
+    -- TODO: finish the integration, see notes below
+
+	-- selene: allow(undefined_variable)
+	if
+		packer_plugins
+		and packer_plugins['dap-install']
+		and packer_plugins['dap-install'].loaded
+	then
+		-- NOTE: this doesn't work as lspinstall one, we will need to find other
+		--       way to get the installed clients in a Lua table
+		local installed_clients =
+			require('dap-install.tools.tool_list').list_debuggers()
+	    -- NOTE: not all the clients follows the 'language_dbg' standard and this
+	    --       can give some problems to us
+	    local available_clients =
+			vim.tbl_keys(require('dap-install.debuggers_list').debuggers)
+
+		for _, lang in ipairs(langs) do
+			local lang_str = lang
+			lang = lang:gsub('%s+%+lsp', ''):gsub('%s+%+debug', '')
+
+			-- If the +debug flag exists and the language server is not installed yet
+			if
+				lang_str:find('%+debug')
+				and (not utils.has_value(installed_clients, lang .. '_dbg'))
+			then
+				-- Try to install the server only if there is a server available for
+				-- the language, oterwise raise a warning
+				if utils.has_value(available_clients, lang) then
+					require('dap-install.tools.tool_install').install_debugger(
+						lang .. '_dbg'
+					)
+				else
+					log.warn(
+						'The language '
+							.. lang
+							.. ' does not have a DAP client, please remove the "+debug" flag'
 					)
 				end
 			end

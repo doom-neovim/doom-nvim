@@ -290,7 +290,7 @@ packer.startup(function(use)
 		config = require('doom.modules.config.doom-luasnip'),
 		disable = disabled_snippets,
 		requires = { 'rafamadriz/friendly-snippets' },
-		after = 'nvim-compe',
+		event = 'BufWinEnter',
 	})
 
 	-- install lsp saga
@@ -306,6 +306,29 @@ packer.startup(function(use)
 		config = require('doom.modules.config.doom-lspinstall'),
 		disable = disabled_lsp,
 		after = 'nvim-lspconfig',
+	})
+
+	-----[[-----------]]-----
+	---     Debugging     ---
+	-----]]-----------[[-----
+	local disabled_dap = functions.is_plugin_disabled('dap')
+	use({
+	    'mfussenegger/nvim-dap',
+	    disable = disabled_dap,
+	    event = 'BufWinEnter',
+	})
+
+	use({
+	    'rcarriga/nvim-dap-ui',
+	    config = require('doom.modules.config.doom-dap-ui'),
+	    disable = disabled_dap,
+	    after = 'nvim-dap',
+	})
+
+	use({
+	    'Pocco81/DAPInstall.nvim',
+	    disable = disabled_dap,
+	    after = 'nvim-dap',
 	})
 
 	-----[[--------------]]-----

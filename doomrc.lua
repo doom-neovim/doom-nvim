@@ -40,7 +40,8 @@ local doom = {
 		-- 'editorconfig', -- EditorConfig support for Neovim
 		'kommentary',      -- Comments plugin
 		'lsp',             -- Language Server Protocols
-		'snippets',        -- LSP snippets
+		'dap',             -- Debug Adapter Protocol
+		'snippets',        -- Snippets
 	},
 	langs = {
 		-- To enable the language server for a language just add the +lsp flag
@@ -70,7 +71,7 @@ local doom = {
 		-- 'suda',            -- Write and read files without sudo permissions
 		-- 'lazygit',         -- LazyGit integration for Neovim, requires LazyGit
 		-- 'neogit',          -- Magit for Neovim
-		-- 'colorizer',       -- Fastets colorizer for Neovim
+		-- 'colorizer',       -- Fastest colorizer for Neovim
 		'range-highlight',    -- hightlights ranges you have entered in commandline
 	},
 }
