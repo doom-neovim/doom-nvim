@@ -463,7 +463,7 @@ end
 --
 -- @param langs The list of languages in the doomrc
 M.install_dap_clients = function(langs)
-    -- TODO: finish the integration, see notes below
+	-- TODO: finish the integration, see notes below
 
 	-- selene: allow(undefined_variable)
 	if
@@ -475,10 +475,11 @@ M.install_dap_clients = function(langs)
 		--       way to get the installed clients in a Lua table
 		local installed_clients =
 			require('dap-install.tools.tool_list').list_debuggers()
-	    -- NOTE: not all the clients follows the 'language_dbg' standard and this
-	    --       can give some problems to us
-	    local available_clients =
-			vim.tbl_keys(require('dap-install.debuggers_list').debuggers)
+		-- NOTE: not all the clients follows the 'language_dbg' standard and this
+		--       can give some problems to us
+		local available_clients = vim.tbl_keys(
+			require('dap-install.debuggers_list').debuggers
+		)
 
 		for _, lang in ipairs(langs) do
 			local lang_str = lang

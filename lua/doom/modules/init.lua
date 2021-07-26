@@ -313,22 +313,22 @@ packer.startup(function(use)
 	-----]]-----------[[-----
 	local disabled_dap = functions.is_plugin_disabled('dap')
 	use({
-	    'mfussenegger/nvim-dap',
-	    disable = disabled_dap,
-	    event = 'BufWinEnter',
+		'mfussenegger/nvim-dap',
+		disable = disabled_dap,
+		event = 'BufWinEnter',
 	})
 
 	use({
-	    'rcarriga/nvim-dap-ui',
-	    config = require('doom.modules.config.doom-dap-ui'),
-	    disable = disabled_dap,
-	    after = 'nvim-dap',
+		'rcarriga/nvim-dap-ui',
+		config = require('doom.modules.config.doom-dap-ui'),
+		disable = disabled_dap,
+		after = 'nvim-dap',
 	})
 
 	use({
-	    'Pocco81/DAPInstall.nvim',
-	    disable = disabled_dap,
-	    after = 'nvim-dap',
+		'Pocco81/DAPInstall.nvim',
+		disable = disabled_dap,
+		after = 'nvim-dap',
 	})
 
 	-----[[--------------]]-----
