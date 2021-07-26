@@ -308,6 +308,13 @@ packer.startup(function(use)
 		after = 'nvim-lspconfig',
 	})
 
+	-- Setup for Lua development in Neovim
+	use({
+	    'folke/lua-dev.nvim',
+	    disable = disabled_lsp,
+	    module = 'lua-dev',
+	})
+
 	-----[[-----------]]-----
 	---     Debugging     ---
 	-----]]-----------[[-----
