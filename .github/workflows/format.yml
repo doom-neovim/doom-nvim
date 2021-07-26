@@ -20,8 +20,8 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           if [[ ! -z $(git status -s) ]]; then
-            git add *.lua lua/
-            git commit -m "Format lua files"
+            git add *.lua colors/*.lua lua/
+            git commit -m "chore: format source code"
           fi
       - name: Push formatted files
         uses: ad-m/github-push-action@master
