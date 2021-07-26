@@ -10,7 +10,7 @@ return function()
 		for _, server in pairs(servers) do
 			-- Configure sumneko for neovim lua development
 			if server == 'lua' then
-			    nvim_lsp.lua.setup(lua_lsp)
+				nvim_lsp.lua.setup(lua_lsp)
 			else
 				-- Use default settings for all the other language servers
 				nvim_lsp[server].setup({})
