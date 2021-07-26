@@ -105,19 +105,19 @@ additional dependencies. [Please visit their documentation][modules].
 Simply run the following command:
 
 ```sh
-curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash
+curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/bin/install.sh | bash
 ```
 
 Or if you want to live in the bleeding-edge with the latest features:
 
 ```sh
-curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash -s -- -d
+curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/develop/bin/install.sh | bash -s -- -d
 ```
 
 Or if you are using a configurations switcher like cheovim:
 
 ```sh
-curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/develop/install.sh | bash -s -- -s
+curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/develop/bin/install.sh | bash -s -- -s
 ```
 
 Then [read our Getting Started guide][getting-started] to be walked through

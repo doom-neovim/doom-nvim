@@ -201,17 +201,17 @@ Doom Nvim itself:
 
 ```sh
 # Check if you have all the dependencies listed above
-curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash -s -- -c
+curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/bin/install.sh | bash -s -- -c
 ```
 
 ```sh
 # If you do not have Neovim 0.5.0 but you have all the dependencies listed above
-curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash -s -- -n
+curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/bin/install.sh | bash -s -- -n
 ```
 
 ```sh
 # If you already have Neovim 0.5.0 and all the dependencies listed above
-curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash
+curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/bin/install.sh | bash
 ```
 
 The installation script will set up everything for you and will work you through
@@ -537,7 +537,7 @@ With that being said, you can run the following command snippet:
 cp $HOME/.config/doom-nvim/doomrc $HOME/.config/doomrc.bak \
     && rm -rf $HOME/.config/doom-nvim $HOME/.local/share/nvim/site/pack/packer \
     && unlink $HOME/.config/nvim \
-    && curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash -s -- -d
+    && curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/bin/install.sh | bash -s -- -d
 ```
 
 This snippet will do the following tasks for you:
