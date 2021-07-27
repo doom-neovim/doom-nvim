@@ -14,7 +14,7 @@ for i = 1, #extra_modules, 1 do
   if not ok then
     log.error(
       string.format(
-        "There was an error loading the module 'doom.core.%s'. Traceback:\n%s",
+        "There was an error loading the module 'doom.extras.%s'. Traceback:\n%s",
         extra_modules[i],
         err
       )
