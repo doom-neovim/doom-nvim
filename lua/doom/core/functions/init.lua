@@ -177,7 +177,7 @@ end
 local function save_backup_hashes()
   -- Check for the current branch
   local branch_handler = io.popen(utils.git_workspace .. "branch --show-current")
-  local git_branch = branch_handler:read("a"):gsub("[\r\n]", "")
+  local git_branch = branch_handler:read("*a"):gsub("[\r\n]", "")
   branch_handler:close()
 
   if git_branch == "main" then
@@ -189,7 +189,7 @@ local function save_backup_hashes()
       -- Get the releases
       log.debug('Executing "' .. utils.git_workspace .. 'show-ref --tags"')
       local releases_handler = io.popen(utils.git_workspace .. "show-ref --tags")
-      local doom_releases = releases_handler:read("a")
+      local doom_releases = releases_handler:read("*a")
       releases_handler:close()
 
       -- Put all the releases into a table so we can sort them later
@@ -297,7 +297,7 @@ M.rollback_doom = function()
     -- releases table
     local current_version
     local commit_handler = io.popen(utils.git_workspace .. "rev-parse HEAD")
-    local current_commit = commit_handler:read("a"):gsub("[\r\n]", "")
+    local current_commit = commit_handler:read("*a"):gsub("[\r\n]", "")
     commit_handler:close()
     for _, version_info in ipairs(sorted_releases) do
       for release_hash, version in version_info:gmatch("(%w+)%s(%w+%W+%w+%W+%w+)") do
