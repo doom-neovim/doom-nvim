@@ -650,7 +650,15 @@ utils.map(
   "edit_vimrc",
   "Edit your Neovim rc"
 )
-utils.map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts, "Editor", "find_files_alt", "Find files")
+utils.map(
+  "n",
+  "<leader>ff",
+  "<cmd>Telescope find_files<CR>",
+  opts,
+  "Editor",
+  "find_files_alt",
+  "Find files"
+)
 
 utils.map(
   "n",

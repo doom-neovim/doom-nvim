@@ -21,18 +21,18 @@ M.git_workspace = string.format("git -C %s ", M.doom_root)
 -- https://github.com/ojroques/dotfiles/blob/master/nvim/init.lua#L8-L12
 -- https://github.com/lazytanuki/nvim-mapper#prevent-issues-when-module-is-not-installed
 local function is_module_available(name)
-    if package.loaded[name] then
+  if package.loaded[name] then
+    return true
+  else
+    for _, searcher in ipairs(package.searchers or package.loaders) do
+      local loader = searcher(name)
+      if type(loader) == "function" then
+        package.preload[name] = loader
         return true
-    else
-        for _, searcher in ipairs(package.searchers or package.loaders) do
-            local loader = searcher(name)
-            if type(loader) == 'function' then
-                package.preload[name] = loader
-                return true
-            end
-        end
-        return false
+      end
     end
+    return false
+  end
 end
 
 if is_module_available("nvim-mapper") then
