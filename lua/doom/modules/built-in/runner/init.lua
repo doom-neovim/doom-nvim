@@ -54,7 +54,11 @@ M.run_code = function()
 
   local run_code, err = pcall(function()
     if lang_bin then
-      local runner = term:new({ cmd = lang_bin .. ' ' .. vim.fn.expand('%'), hidden = true, close_on_exit = false })
+      local runner = term:new({
+        cmd = lang_bin .. " " .. vim.fn.expand("%"),
+        hidden = true,
+        close_on_exit = false,
+      })
       runner:open()
     else
       log.error(
