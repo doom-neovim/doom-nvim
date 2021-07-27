@@ -64,7 +64,11 @@ M.compile_and_run = function()
         --       uses a main.go file as their entry points?
         compiler_cmd = "go run main.go"
       end
-      local compiler_and_runner = term:new({ cmd = compiler_cmd, hidden = true, close_on_exit = false })
+      local compiler_and_runner = term:new({
+        cmd = compiler_cmd,
+        hidden = true,
+        close_on_exit = false,
+      })
       compiler_and_runner:open()
     else
       log.error("The filetype " .. filetype .. " is not yet supported in the Doom compiler plugin")
