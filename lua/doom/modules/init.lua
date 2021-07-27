@@ -279,7 +279,7 @@ packer.startup(function(use)
     config = require("doom.modules.config.doom-compe"),
     disable = disabled_lsp,
     opt = true,
-    after = 'nvim-lspconfig',
+    after = "nvim-lspconfig",
   })
 
   -- Snippets

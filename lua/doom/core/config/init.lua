@@ -451,7 +451,11 @@ end
 -- @param langs The list of languages in the doomrc
 M.install_dap_clients = function(langs)
   -- selene: allow(undefined_variable)
-  if packer_plugins and packer_plugins["DAPInstall.nvim"] and packer_plugins["DAPInstall.nvim"].loaded then
+  if
+    packer_plugins
+    and packer_plugins["DAPInstall.nvim"]
+    and packer_plugins["DAPInstall.nvim"].loaded
+  then
     local installed_clients = require("dap-install.api.debuggers").get_installed_debuggers()
     -- NOTE: not all the clients follows the 'language_dbg' standard and this
     --       can give some problems to us (maybe?)
