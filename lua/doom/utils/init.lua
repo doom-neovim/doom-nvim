@@ -8,7 +8,7 @@ local M = {}
 
 -------------------- HELPERS --------------------
 -- Doom Nvim version
-M.doom_version = '3.0.8'
+M.doom_version = '3.0.9'
 
 -- Local files
 M.doom_root = vim.fn.expand('$HOME/.config/doom-nvim')
