@@ -54,7 +54,8 @@ M.run_code = function()
 
   local run_code, err = pcall(function()
     if lang_bin then
-      require("toggleterm").exec_command('cmd="' .. lang_bin .. ' %"', 1)
+      local runner = term:new({ cmd = lang_bin .. ' ' .. vim.fn.expand('%'), hidden = true, close_on_exit = false })
+      runner:open()
     else
       log.error(
         "There is no available executable for "

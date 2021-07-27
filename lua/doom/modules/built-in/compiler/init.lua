@@ -1,7 +1,10 @@
 local log = require("doom.extras.logging")
+local term
 
 -- selene: allow(undefined_variable)
-if packer_plugins and not packer_plugins["nvim-toggleterm.lua"] then
+if packer_plugins and packer_plugins["nvim-toggleterm.lua"] then
+  term = require("toggleterm.terminal").Terminal
+else
   log.error(
     "Doom compiler needs toggleterm plugin, please uncomment the 'terminal' entry in your doomrc"
   )
@@ -32,7 +35,8 @@ M.compile = function()
         -- command should look for a main program in the cwd
         compiler_cmd = "go build ."
       end
-      require("toggleterm").exec_command(string.format('cmd="%s"', compiler_cmd), 1)
+      local compiler = term:new({ cmd = compiler_cmd, hidden = true, close_on_exit = false })
+      compiler:open()
     else
       log.error("The filetype " .. filetype .. " is not yet supported in the Doom compiler plugin")
     end
@@ -60,7 +64,8 @@ M.compile_and_run = function()
         --       uses a main.go file as their entry points?
         compiler_cmd = "go run main.go"
       end
-      require("toggleterm").exec_command(string.format('cmd="%s"', compiler_cmd), 1)
+      local compiler_and_runner = term:new({ cmd = compiler_cmd, hidden = true, close_on_exit = false })
+      compiler_and_runner:open()
     else
       log.error("The filetype " .. filetype .. " is not yet supported in the Doom compiler plugin")
     end
