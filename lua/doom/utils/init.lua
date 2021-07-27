@@ -17,14 +17,56 @@ M.doom_report = vim.fn.stdpath("data") .. "/doom_report.md"
 
 M.git_workspace = string.format("git -C %s ", M.doom_root)
 
--- mappings wrapper, extracted from
+-- Mappings wrapper, extracted from
 -- https://github.com/ojroques/dotfiles/blob/master/nvim/init.lua#L8-L12
-M.map = function(mode, lhs, rhs, opts)
-  local options = { noremap = true }
-  if opts then
-    options = vim.tbl_extend("force", options, opts)
+-- https://github.com/lazytanuki/nvim-mapper#prevent-issues-when-module-is-not-installed
+local function is_module_available(name)
+    if package.loaded[name] then
+        return true
+    else
+        for _, searcher in ipairs(package.searchers or package.loaders) do
+            local loader = searcher(name)
+            if type(loader) == 'function' then
+                package.preload[name] = loader
+                return true
+            end
+        end
+        return false
+    end
+end
+
+if is_module_available("nvim-mapper") then
+  local mapper = require("nvim-mapper")
+
+  M.map = function(mode, lhs, rhs, opts, category, unique_identifier, description)
+    mapper.map(mode, lhs, rhs, opts, category, unique_identifier, description)
   end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+  M.map_buf = function(bufnr, mode, lhs, rhs, opts, category, unique_identifier, description)
+    mapper.map_buf(bufnr, mode, lhs, rhs, opts, category, unique_identifier, description)
+  end
+  M.map_virtual = function(mode, lhs, rhs, opts, category, unique_identifier, description)
+    mapper.map_virtual(mode, lhs, rhs, opts, category, unique_identifier, description)
+  end
+  M.map_buf_virtual = function(mode, lhs, rhs, opts, category, unique_identifier, description)
+    mapper.map_buf_virtual(mode, lhs, rhs, opts, category, unique_identifier, description)
+  end
+else
+  M.map = function(mode, lhs, rhs, opts, _, _, _)
+    local options = { noremap = true }
+    if opts then
+      options = vim.tbl_extend("force", options, opts)
+    end
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+  end
+  M.map_buf = function(mode, lhs, rhs, opts, _, _, _)
+    vim.api.nvim_buf_set_keymap(mode, lhs, rhs, opts)
+  end
+  M.map_virtual = function(_, _, _, _, _, _, _)
+    return
+  end
+  M.map_buf_virtual = function(_, _, _, _, _, _, _)
+    return
+  end
 end
 
 -- For autocommands, extracted from

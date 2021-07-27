@@ -67,8 +67,7 @@ return function()
   ----- Whichkey binds ------------------------
   ---------------------------------------------
   local mappings = {
-    ["`"] = { "Switch buffer" },
-    [" "] = { "Find file" },
+    ["`"] = { "Find file" },
     ["."] = { "Browse files" },
     [","] = { "Switch buffer" },
     ["/"] = { "Search a word" },
@@ -104,6 +103,7 @@ return function()
     },
     ["d"] = {
       name = "+doom",
+      ["b"] = { "Show Doom keybindings" },
       ["c"] = { "Edit your Doom Nvim configuration" },
       ["d"] = { "Open Doom Nvim documentation" },
       ["u"] = { "Update Doom Nvim" },

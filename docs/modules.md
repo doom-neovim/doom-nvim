@@ -84,7 +84,7 @@ without them. These plugins are the following:
 - [kommentary]
   - Comments plugin.
 - [lsp]
-  - Language Server Protocols ([compe] + [lspsaga] + [lspinstall]).
+  - Language Server Protocols ([compe] + [lspinstall]).
 - snippets
   - Code snippets ([LuaSnip] + [friendly-snippets]).
 
@@ -251,7 +251,6 @@ changes for you!
 
 [lsp]: https://github.com/neovim/nvim-lspconfig
 [compe]: https://github.com/hrsh7th/nvim-compe
-[lspsaga]: https://github.com/glepnir/lspsaga.nvim
 [lspinstall]: https://github.com/kabouzeid/nvim-lspinstall
 [LuaSnip]: https://github.com/L3MON4D3/LuaSnip
 [friendly-snippets]: https://github.com/rafamadriz/friendly-snippets

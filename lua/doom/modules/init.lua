@@ -52,7 +52,7 @@ packer.startup(function(use)
   })
   use({
     "JoosepAlviste/nvim-ts-context-commentstring",
-    requires = { { "Olical/aniseed", after = "nvim-treesitter" } },
+    requires = { "Olical/aniseed" },
     after = "nvim-treesitter",
   })
   use({
@@ -221,7 +221,7 @@ packer.startup(function(use)
   local disabled_telescope = functions.is_plugin_disabled("telescope")
   use({
     "nvim-telescope/telescope.nvim",
-    cmd = "Telescope",
+    event = "BufWinEnter",
     module = "telescope",
     requires = {
       "popup.nvim",
@@ -229,6 +229,20 @@ packer.startup(function(use)
     },
     config = require("doom.modules.config.doom-telescope"),
     disable = disabled_telescope,
+  })
+  use({
+    "lazytanuki/nvim-mapper",
+    config = function()
+      require("nvim-mapper").setup({
+        -- do not assign the default keymap (<leader>MM)
+        no_map = false,
+        -- default config search path is ~/.config/nvim/lua
+        search_path = os.getenv("HOME") .. "/.config/doom-nvim/lua",
+      })
+
+      -- Manually load the extension, don't know why it's not loading by default
+      require("telescope").load_extension("mapper")
+    end,
   })
 
   -----[[-------------]]-----
@@ -290,13 +304,6 @@ packer.startup(function(use)
     disable = disabled_snippets,
     requires = { "rafamadriz/friendly-snippets" },
     event = "BufWinEnter",
-  })
-
-  -- install lsp saga
-  use({
-    "glepnir/lspsaga.nvim",
-    disable = disabled_lsp,
-    after = "nvim-lspconfig",
   })
 
   -- provides the missing `:LspInstall` for `nvim-lspconfig`.
