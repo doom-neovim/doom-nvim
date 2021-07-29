@@ -6,31 +6,31 @@ return function()
 
   vim.g.dashboard_custom_section = {
     a = {
-      description = { "  Reload Last Session            SPC s r" },
+      description = { "  Load Last Session              SPC s r" },
       command = "lua require('persistence').load({ last = true })",
     },
     b = {
-      description = { "  Recently Opened Files          SPC f h" },
+      description = { "  Recently Opened Files          SPC f r" },
       command = "Telescope oldfiles",
     },
     c = {
-      description = { "  Jump to Bookmark               SPC f b" },
+      description = { "  Jump to Bookmark               SPC s m" },
       command = "Telescope marks",
     },
     d = {
-      description = { "  Find File                      SPC f f" },
+      description = { "  Find File                      SPC f f" },
       command = "Telescope find_files",
     },
     e = {
-      description = { "  Find Word                      SPC f g" },
+      description = { "  Find Word                      SPC s g" },
       command = "Telescope live_grep",
     },
     f = {
-      description = { "  Open Private Configuration     SPC d c" },
+      description = { "  Open Private Configuration     SPC d c" },
       command = 'lua require("doom.core.functions").edit_config()',
     },
     g = {
-      description = { "  Open Documentation             SPC d d" },
+      description = { "  Open Documentation             SPC d d" },
       command = "h doom_nvim",
     },
   }
@@ -48,6 +48,7 @@ return function()
 
   vim.g.dashboard_custom_header = vim.tbl_isempty(config.doom.dashboard_custom_header)
       and {
+        "                                                                              ",
         "=================     ===============     ===============   ========  ========",
         "\\\\ . . . . . . .\\\\   //. . . . . . .\\\\   //. . . . . . .\\\\  \\\\. . .\\\\// . . //",
         "||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||",
