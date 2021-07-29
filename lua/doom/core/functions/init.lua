@@ -60,10 +60,9 @@ M.load_custom_settings = function(settings_tbl, scope)
         func_body()
       end
     elseif scope == "mappings" then
-      local opts = { silent = true }
       for _, map in ipairs(settings_tbl) do
         -- scope, lhs, rhs, options
-        utils.map(map[1], map[2], map[3], opts)
+        vim.api.nvim_set_keymap(map[1], map[2], map[3], map[4] and map[4] or {})
       end
     elseif scope == "variables" then
       for var, val in pairs(settings_tbl) do
