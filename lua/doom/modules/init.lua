@@ -79,7 +79,6 @@ packer.startup(function(use)
   use({
     "rmagatti/auto-session",
     config = require("doom.modules.config.doom-autosession"),
-    requires = { { "rmagatti/session-lens", after = "telescope.nvim" } },
     cmd = { "SaveSession", "RestoreSession", "DeleteSession" },
     module = "auto-session",
     disable = disabled_sessions,
@@ -221,7 +220,7 @@ packer.startup(function(use)
   local disabled_telescope = functions.is_plugin_disabled("telescope")
   use({
     "nvim-telescope/telescope.nvim",
-    event = "BufWinEnter",
+    cmd = "Telescope",
     module = "telescope",
     requires = {
       "popup.nvim",
@@ -239,10 +238,9 @@ packer.startup(function(use)
         -- default config search path is ~/.config/nvim/lua
         search_path = os.getenv("HOME") .. "/.config/doom-nvim/lua",
       })
-
-      -- Manually load the extension, don't know why it's not loading by default
-      require("telescope").load_extension("mapper")
     end,
+    module = "nvim-mapper",
+    disable = disabled_telescope,
   })
 
   -----[[-------------]]-----
@@ -328,7 +326,7 @@ packer.startup(function(use)
   use({
     "mfussenegger/nvim-dap",
     disable = disabled_dap,
-    event = "BufWinEnter",
+    event = "ColorScheme",
   })
 
   use({
