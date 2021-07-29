@@ -77,10 +77,9 @@ packer.startup(function(use)
   -- Sessions
   local disabled_sessions = functions.is_plugin_disabled("auto-session")
   use({
-    "rmagatti/auto-session",
-    config = require("doom.modules.config.doom-autosession"),
-    cmd = { "SaveSession", "RestoreSession", "DeleteSession" },
-    module = "auto-session",
+    "folke/persistence.nvim",
+    config = require("doom.modules.config.doom-persistence"),
+    -- event = "VimEnter",
     disable = disabled_sessions,
   })
 

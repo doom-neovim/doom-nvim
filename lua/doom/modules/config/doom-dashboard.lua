@@ -7,7 +7,7 @@ return function()
   vim.g.dashboard_custom_section = {
     a = {
       description = { "  Reload Last Session            SPC s r" },
-      command = "SessionLoad",
+      command = "lua require('persistence').load({ last = true })",
     },
     b = {
       description = { "  Recently Opened Files          SPC f h" },
@@ -27,11 +27,11 @@ return function()
     },
     f = {
       description = { "  Open Private Configuration     SPC d c" },
-      command = ':lua require("doom.core.functions").edit_config()',
+      command = 'lua require("doom.core.functions").edit_config()',
     },
     g = {
       description = { "  Open Documentation             SPC d d" },
-      command = ":h doom_nvim",
+      command = "h doom_nvim",
     },
   }
 

@@ -149,9 +149,7 @@ return function()
       name = "+quit/sessions",
       ["q"] = { "Quit" },
       ["w"] = { "Save and quit" },
-      ["s"] = { "Save current session" },
       ["r"] = { "Restore previously saved session" },
-      ["l"] = { "Session switcher" },
     },
     ["s"] = {
       name = "+search",

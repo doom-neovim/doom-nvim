@@ -807,30 +807,12 @@ utils.map(
 )
 utils.map(
   "n",
-  "<leader>qs",
-  "<cmd>SaveSession<CR>",
-  opts,
-  "Editor",
-  "save_session",
-  "Save current session"
-)
-utils.map(
-  "n",
   "<leader>qr",
-  "<cmd>RestoreSession<CR>",
+  "<cmd>lua require('persistence').load({ last = true })<CR>",
   opts,
   "Editor",
   "restore_session",
   "Restore previously saved session"
-)
-utils.map(
-  "n",
-  "<leader>ql",
-  "<cmd>Telescope session-lens search_session<CR>",
-  opts,
-  "Editor",
-  "switch_session",
-  "Session switcher"
 )
 
 -- toggle
