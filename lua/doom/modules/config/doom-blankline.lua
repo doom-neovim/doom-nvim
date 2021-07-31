@@ -3,7 +3,7 @@ return function()
 
   vim.g.indent_blankline_enabled = config.doom.show_indent
 
-  vim.g.indent_blankline_char_list = { "|", "¦", "┆", "┊" }
+  vim.g.indent_blankline_char = "|"
 
   -- If treesitter plugin is enabled then use its indentation
   if require("doom.core.functions").check_plugin("nvim-treesitter", "opt") then
@@ -11,6 +11,6 @@ return function()
   end
   vim.g.indent_blankline_show_first_indent_level = false
 
-  vim.g.indent_blankline_filetype_exclude = { "dashboard" }
+  vim.g.indent_blankline_filetype_exclude = { "help", "dashboard", "packer" }
   vim.g.indent_blankline_buftype_exclude = { "terminal" }
 end
