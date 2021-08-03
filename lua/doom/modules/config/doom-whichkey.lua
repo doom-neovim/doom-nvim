@@ -85,12 +85,17 @@ return function()
     },
     ["c"] = {
       name = "+code",
-      i = { "Start a REPL" },
-      r = { "Run current file" },
-      b = { "Compile project" },
-      c = { "Compile and run project" },
+      ["i"] = { "Start a REPL" },
+      ["r"] = { "Run current file" },
+      ["b"] = { "Compile project" },
+      ["c"] = { "Compile and run project" },
       ["h"] = {
         "Run restclient on the line that the cursor is currently on",
+      },
+      ["d"] = {
+        name = "+debug",
+        ["e"] = { "Evaluate word under cursor" },
+        ["s"] = { "Evaluate selection" },
       },
       ["l"] = {
         name = "+lsp",
@@ -98,7 +103,7 @@ return function()
         ["i"] = { "Lsp info" },
         ["d"] = { "Show type definition" },
         ["l"] = { "Show line diagnostics" },
-        ["L"] = { "Diagnostics into location list" },
+        ["q"] = { "Diagnostics into location list" },
       },
     },
     ["d"] = {
@@ -181,6 +186,7 @@ return function()
     },
     ["o"] = {
       name = "+open",
+      ["b"] = { "Debugging UI "},
       ["d"] = { "Start screen" },
       ["e"] = { "Tree Explorer" },
       ["m"] = { "Minimap" },

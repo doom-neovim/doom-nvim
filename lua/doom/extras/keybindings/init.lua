@@ -827,6 +827,15 @@ utils.map(
 -- toggle
 utils.map(
   "n",
+  "<leader>ob",
+  "<cmd>lua require('dapui').toggle()<CR>",
+  opts,
+  "Editor",
+  "open_dapui",
+  "Open debugging UI"
+)
+utils.map(
+  "n",
   "<leader>od",
   "<cmd>Dashboard<CR>",
   opts,
@@ -966,6 +975,10 @@ utils.map(
   "Compile and run project"
 )
 
+-- debugging
+utils.map("n", "<leader>cde", "<cmd>lua require('dapui').eval()<CR>", opts, "DAP", "dap_eval", "Evaluate word under cursor")
+utils.map("v", "<leader>cds", "<cmd>lua require('dapui').eval()<CR>", opts, "DAP", "dap_eval_selection", "Evaluate selection")
+
 -- lsp
 utils.map("n", "<leader>cli", "<cmd>LspInfo<CR>", opts, "LSP", "lsp_info", "LSP Information")
 utils.map(
@@ -997,7 +1010,7 @@ utils.map(
 )
 utils.map(
   "n",
-  "<leader>clL",
+  "<leader>clq",
   "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>",
   opts,
   "LSP",
