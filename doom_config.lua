@@ -326,13 +326,15 @@ local nvim = {
   -- @default = {}
   -- example:
   --   {
-  --      {'n', 'ca', ':Lspsaga code_action<CR>'}
+  --      {'n', 'ca', ':Lspsaga code_action<CR>', options}
   --   }
   --
   --   where
   --     'n' is the map scope
   --     'ca' is the map activator
   --     ':Lspsaga ...' is the command to be executed
+  --     options is a Lua table containing the mapping options, e.g.
+  --     { silent = true }, see ':h map-arguments'.
   mappings = {},
 
   -- Set custom commands
@@ -352,6 +354,7 @@ local nvim = {
   --      end
   --   }
   functions = {},
+
   -- Set custom options
   -- @default = {}
   -- example:
