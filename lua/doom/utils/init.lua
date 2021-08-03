@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --         utils - Doom Nvim utilities         --
 --              Author: NTBBloodbath           --
---              License: GPLv2                   --
+--              License: GPLv2                 --
 ---[[---------------------------------------]]---
 
 local M = {}
@@ -11,7 +11,9 @@ local M = {}
 M.doom_version = "3.1.0"
 
 -- Local files
-M.doom_root = vim.fn.expand("$HOME/.config/doom-nvim")
+local config_dir = os.getenv("XDG_CONFIG_HOME") and os.getenv("XDG_CONFIG_HOME")
+  or os.getenv("HOME") .. "/.config"
+M.doom_root = string.format("%s/nvim", config_dir)
 M.doom_logs = vim.fn.stdpath("data") .. "/doom.log"
 M.doom_report = vim.fn.stdpath("data") .. "/doom_report.md"
 
