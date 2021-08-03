@@ -95,7 +95,7 @@ end
 -- NOTE: Requires formatter to be enabled!
 if config.doom.fmt_on_save then
   table.insert(autocmds["doom_core"], {
-    "BufWritePost",
+    "BufWritePre",
     "*",
     "FormatWrite",
   })
