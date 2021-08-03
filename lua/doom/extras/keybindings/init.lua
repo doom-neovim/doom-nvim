@@ -583,6 +583,15 @@ utils.map(
   "show_keybindings",
   "Show Doom keybindings"
 )
+utils.map(
+  "n",
+  "<leader>dl",
+  "<cmd>lua require('doom.core.functions').reload_custom_settings()<CR>",
+  opts,
+  "Doom",
+  "reload_user_settings",
+  "Reload user custom settings"
+)
 
 -- Plugins
 utils.map(

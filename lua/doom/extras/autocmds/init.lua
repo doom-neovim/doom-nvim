@@ -18,6 +18,12 @@ local autocmds = {
       "*/doom-*.lua,doomrc.lua,plugins.lua",
       "PackerCompile profile=true",
     },
+    -- Reload user-defined settings when 'doom_config.lua' file was modified
+    {
+      "BufWritePost",
+      "doom_config.lua",
+      "lua require('doom.core.functions').reload_user_settings()",
+    },
   },
   doom_extras = {
     -- Set up vim_buffer_previewer in telescope.nvim
@@ -101,10 +107,10 @@ if config.doom.preserve_edit_pos then
     "BufReadPost",
     "*",
     [[
-            if line("'\"") > 1 && line("'\"") <= line("$") |
-                exe "normal! g'\"" |
-            endif
-        ]],
+      if line("'\"") > 1 && line("'\"") <= line("$") |
+        exe "normal! g'\"" |
+      endif
+    ]],
   })
 end
 

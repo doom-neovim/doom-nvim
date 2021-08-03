@@ -76,6 +76,17 @@ M.load_custom_settings = function(settings_tbl, scope)
   end
 end
 
+-- reload_custom_settings reloads all the user-defined configurations
+-- in the 'doom_config.lua' file.
+M.reload_custom_settings = function()
+  -- Get the user-defined settings, the 'nvim' field in our 'doom_config.lua'
+  local custom_settings = require("doom.core.config").load_config().nvim
+  -- iterate over all the custom settings fields, e.g. global_variables, mappings, etc.
+  for scope, _ in pairs(custom_settings) do
+    M.load_custom_settings(custom_settings[scope], scope)
+  end
+end
+
 -- Quit Neovim and change the colorscheme at doomrc if the colorscheme is not the same,
 -- dump all messages to doom.log file
 -- @tparam bool write If doom should save before exiting

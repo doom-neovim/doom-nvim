@@ -110,6 +110,7 @@ return function()
       ["r"] = { "Rollback Doom Nvim version" },
       ["R"] = { "Create crash report" },
       ["s"] = { "Change colorscheme" },
+      ["l"] = { "Reload user custom settings" },
     },
     ["f"] = {
       name = "+file",
