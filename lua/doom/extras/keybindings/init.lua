@@ -976,8 +976,24 @@ utils.map(
 )
 
 -- debugging
-utils.map("n", "<leader>cde", "<cmd>lua require('dapui').eval()<CR>", opts, "DAP", "dap_eval", "Evaluate word under cursor")
-utils.map("v", "<leader>cds", "<cmd>lua require('dapui').eval()<CR>", opts, "DAP", "dap_eval_selection", "Evaluate selection")
+utils.map(
+  "n",
+  "<leader>cde",
+  "<cmd>lua require('dapui').eval()<CR>",
+  opts,
+  "DAP",
+  "dap_eval",
+  "Evaluate word under cursor"
+)
+utils.map(
+  "v",
+  "<leader>cds",
+  "<cmd>lua require('dapui').eval()<CR>",
+  opts,
+  "DAP",
+  "dap_eval_selection",
+  "Evaluate selection"
+)
 
 -- lsp
 utils.map("n", "<leader>cli", "<cmd>LspInfo<CR>", opts, "LSP", "lsp_info", "LSP Information")

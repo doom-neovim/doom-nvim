@@ -186,7 +186,7 @@ return function()
     },
     ["o"] = {
       name = "+open",
-      ["b"] = { "Debugging UI "},
+      ["b"] = { "Debugging UI " },
       ["d"] = { "Start screen" },
       ["e"] = { "Tree Explorer" },
       ["m"] = { "Minimap" },
