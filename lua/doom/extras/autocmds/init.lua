@@ -1,7 +1,7 @@
 ---[[---------------------------------------]]---
 --        autocmds - Doom Nvim Autocmds        --
 --              Author: NTBBloodbath           --
---              License: GPLv2                   --
+--              License: GPLv2                 --
 ---[[---------------------------------------]]---
 
 local utils = require("doom.utils")
@@ -40,7 +40,7 @@ if config.doom.relative_num then
   })
 else
   table.insert(autocmds["doom_core"], {
-    "BufLeave,WinEnter",
+    "BufEnter,WinEnter",
     "*",
     "if &nu | set nornu | endif",
   })
