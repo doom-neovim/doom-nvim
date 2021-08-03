@@ -22,7 +22,7 @@ local autocmds = {
     {
       "BufWritePost",
       "doom_config.lua",
-      "lua require('doom.core.functions').reload_user_settings()",
+      "lua require('doom.core.functions').reload_custom_settings()",
     },
   },
   doom_extras = {
