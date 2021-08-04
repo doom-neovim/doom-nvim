@@ -344,7 +344,6 @@ packer.startup(function(use)
 	use({
 		'editorconfig/editorconfig-vim',
 		disable = disabled_editorconfig,
-		event = 'TabNewEntered',
 	})
 
 	-- Comments
