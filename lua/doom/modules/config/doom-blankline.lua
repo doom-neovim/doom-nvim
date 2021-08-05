@@ -1,7 +1,6 @@
 return function()
   local config = require("doom.core.config").load_config()
 
-  require("indent_blankline").init()
   require("indent_blankline").setup({
     enabled = config.doom.show_indent,
     char = "|",
