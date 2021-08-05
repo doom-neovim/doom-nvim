@@ -5,6 +5,7 @@
 ---[[---------------------------------------]]---
 
 local utils = require("doom.utils")
+local system = require("doom.core.system")
 local log = require("doom.extras.logging")
 
 local M = {}
@@ -87,10 +88,10 @@ M.load_doomrc = function()
   -- Path cases:
   --   1. /home/user/.config/doom-nvim/doomrc.lua
   --   2. /home/user/.config/nvim/doomrc.lua
-  if utils.file_exists(utils.doom_configs_root .. "/doomrc.lua") then
-    doomrc_path = utils.doom_configs_root .. "/doomrc.lua"
-  elseif utils.file_exists(utils.doom_root .. "/doomrc.lua") then
-    doomrc_path = utils.doom_root .. "/doomrc.lua"
+  if utils.file_exists(string.format("%s%sdoomrc.lua", system.doom_configs_root, system.sep)) then
+    doomrc_path = string.format("%s%sdoomrc.lua", system.doom_configs_root, system.sep)
+  elseif utils.file_exists(string.format("%s%sdoomrc.lua", system.doom_root, system.sep)) then
+    doomrc_path = string.format("%s%sdoomrc.lua", system.doom_root, system.sep)
   end
 
   if doomrc_path then

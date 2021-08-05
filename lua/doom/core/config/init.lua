@@ -8,6 +8,7 @@ local M = {}
 
 local log = require("doom.extras.logging")
 local utils = require("doom.utils")
+local system = require("doom.core.system")
 
 log.debug("Loading Doom core config module ...")
 
@@ -401,10 +402,10 @@ M.load_config = function()
   -- Path cases:
   --   1. /home/user/.config/doom-nvim/doom_config.lua
   --   2. /home/user/.config/nvim/doom_config.lua
-  if utils.file_exists(utils.doom_configs_root .. "/doom_config.lua") then
-    doom_config_path = utils.doom_configs_root .. "/doom_config.lua"
-  elseif utils.file_exists(utils.doom_root .. "/doom_config.lua") then
-    doom_config_path = utils.doom_root .. "/doom_config.lua"
+  if utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)) then
+    doom_config_path = string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)
+  elseif utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep)) then
+    doom_config_path = string.format("%s%sdoom_config.lua", system.doom_root, system.sep)
   end
 
   if doom_config_path then

@@ -4,6 +4,7 @@
 --       to our FAQ to see why.
 
 local utils = require("doom.utils")
+local system = require("doom.core.system")
 local functions = require("doom.core.functions")
 
 ---- Packer Bootstrap ---------------------------
@@ -231,7 +232,8 @@ packer.startup(function(use)
   use({
     "lazytanuki/nvim-mapper",
     config = function()
-      local doom_root, sep = require("doom.utils").doom_root, require("doom.core.system").sep
+      local doom_root, sep =
+        require("doom.core.system").doom_root, require("doom.core.system").sep
       require("nvim-mapper").setup({
         -- do not assign the default keymap (<leader>MM)
         no_map = false,
@@ -454,10 +456,10 @@ packer.startup(function(use)
   -----]]----------------[[-----
   -- If there are custom plugins then also require them
   local custom_plugins
-  if utils.file_exists(utils.doom_configs_root) then
-    custom_plugins = dofile(utils.doom_configs_root .. "/plugins.lua")
+  if utils.file_exists(string.format("%s%splugins.lua", system.doom_configs_root, system.sep)) then
+    custom_plugins = dofile(string.format("%s%splugins.lua", system.doom_configs_root, system.sep))
   else
-    custom_plugins = dofile(utils.doom_root .. "/plugins.lua")
+    custom_plugins = dofile(string.format("%s%splugins.lua", system.doom_root, system.sep))
   end
 
   for _, plug in pairs(custom_plugins or {}) do

@@ -8,7 +8,9 @@
 
 ----- CUSTOM SECTION --------------------------------------
 -----------------------------------------------------------
+
 local utils = require("doom.utils")
+local system = require("doom.core.system")
 -- logging defaults to "info" level
 local doom_config = {
   doom = {
@@ -17,10 +19,10 @@ local doom_config = {
 }
 
 -- /home/user/.config/doom-nvim/doom_config.lua
-if utils.file_exists(utils.doom_root .. "/doom_config.lua") then
-  doom_config = dofile(utils.doom_root .. "/doom_config.lua")
-elseif utils.file_exists(utils.doom_configs_root .. "/doom_config.lua") then
-  doom_config = dofile(utils.doom_configs_root .. "/doom_config.lua")
+if utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep)) then
+  doom_config = dofile(string.format("%s%sdoom_config.lua", system.doom_root, system.sep))
+elseif utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)) then
+  doom_config = dofile(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep))
 end
 
 -----------------------------------------------------------
@@ -68,8 +70,9 @@ log.new = function(config, standalone)
   config = vim.tbl_deep_extend("force", default_config, config)
 
   local outfile = string.format(
-    "%s/%s.log",
+    "%s%s%s.log",
     vim.api.nvim_call_function("stdpath", { "data" }),
+    system.sep,
     config.plugin
   )
 

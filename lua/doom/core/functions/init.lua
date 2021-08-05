@@ -4,8 +4,9 @@
 --              License: GPLv2                 --
 ---[[---------------------------------------]]---
 
-local utils = require("doom.utils")
 local log = require("doom.extras.logging")
+local utils = require("doom.utils")
+local system = require("doom.core.system")
 local config = require("doom.core.config").load_config()
 
 local M = {}
@@ -99,26 +100,25 @@ M.quit_doom = function(write, force)
 
     if target_colorscheme ~= config.doom.colorscheme then
       vim.cmd(
-        "silent !sed -i \"s/'"
+        "silent !sed -i 's/\""
           .. config.doom.colorscheme
-          .. "'/'"
+          .. "\"/\""
           .. target_colorscheme
-          .. "'/\" "
-          .. utils.doom_root
+          .. "\"/' "
+          .. system.doom_root
           .. "/doom_config.lua"
       )
       log.info("Colorscheme successfully changed to " .. target_colorscheme)
     end
     if target_background ~= config.doom.colorscheme_bg then
       vim.cmd(
-        "silent !sed -i \"s/'"
+        "silent !sed -i 's/\""
           .. config.doom.colorscheme_bg
-          .. "'/'"
+          .. "\"/\""
           .. target_background
-          .. "'/\" "
-          .. utils.doom_root
-          .. "/doom_config.lua"
-      )
+          .. "\"/' "
+          .. system.doom_root
+          .. "/doom_config.lua")
       log.info("Background successfully changed to " .. target_background)
     end
   end)
@@ -163,19 +163,19 @@ M.create_report = function()
 
   local created_report, err = pcall(function()
     vim.cmd(
-      'silent !echo "' .. vim.fn.fnameescape("#") .. ' doom crash report" >> ' .. utils.doom_report
+      'silent !echo "' .. vim.fn.fnameescape("#") .. ' doom crash report" >> ' .. system.doom_report
     )
-    vim.cmd('silent !echo "Report date: ' .. date .. '" >> ' .. utils.doom_report)
+    vim.cmd('silent !echo "Report date: ' .. date .. '" >> ' .. system.doom_report)
     vim.cmd(
-      'silent !echo "' .. vim.fn.fnameescape("##") .. ' Begin log dump" >> ' .. utils.doom_report
-    )
-    vim.cmd(
-      "silent !cat " .. utils.doom_logs .. ' | grep "$(date +%a %d %b %Y)" >> ' .. utils.doom_report
+      'silent !echo "' .. vim.fn.fnameescape("##") .. ' Begin log dump" >> ' .. system.doom_report
     )
     vim.cmd(
-      'silent !echo "' .. vim.fn.fnameescape("##") .. ' End log dump" >> ' .. utils.doom_report
+      "silent !cat " .. system.doom_logs .. ' | grep "$(date +%a %d %b %Y)" >> ' .. system.doom_report
     )
-    log.info("Report created at " .. utils.doom_report)
+    vim.cmd(
+      'silent !echo "' .. vim.fn.fnameescape("##") .. ' End log dump" >> ' .. system.doom_report
+    )
+    log.info("Report created at " .. system.doom_report)
   end)
 
   if not created_report then
@@ -186,19 +186,19 @@ end
 -- save_backup_hashes saves the commits or releases SHA for future rollbacks
 local function save_backup_hashes()
   -- Check for the current branch
-  local branch_handler = io.popen(utils.git_workspace .. "branch --show-current")
+  local branch_handler = io.popen(system.git_workspace .. "branch --show-current")
   local git_branch = branch_handler:read("*a"):gsub("[\r\n]", "")
   branch_handler:close()
 
   if git_branch == "main" then
-    local releases_database_path = string.format("%s/.doom_releases", utils.doom_root)
+    local releases_database_path = string.format("%s%s.doom_releases", system.doom_root, system.sep)
 
     -- Fetch for a file containing the releases tags
     log.info("Saving the Doom releases for future rollbacks ...")
     local saved_releases, releases_err = pcall(function()
       -- Get the releases
-      log.debug('Executing "' .. utils.git_workspace .. 'show-ref --tags"')
-      local releases_handler = io.popen(utils.git_workspace .. "show-ref --tags")
+      log.debug('Executing "' .. system.git_workspace .. 'show-ref --tags"')
+      local releases_handler = io.popen(system.git_workspace .. "show-ref --tags")
       local doom_releases = releases_handler:read("*a")
       releases_handler:close()
 
@@ -247,10 +247,11 @@ local function save_backup_hashes()
     log.info("Saving the current commit SHA for future rollbacks ...")
     local saved_backup_hash, backup_err = pcall(function()
       os.execute(
-        utils.git_workspace
+        system.git_workspace
           .. "rev-parse --short HEAD > "
-          .. utils.doom_root
-          .. "/.doom_backup_hash"
+          .. system.doom_root
+          .. system.sep
+          .. ".doom_backup_hash"
       )
     end)
 
@@ -267,7 +268,7 @@ M.update_doom = function()
 
   log.info("Pulling Doom remote changes ...")
   local updated_doom, update_err = pcall(function()
-    os.execute(utils.git_workspace .. "pull -q")
+    os.execute(system.git_workspace .. "pull -q")
   end)
 
   if not updated_doom then
@@ -283,9 +284,9 @@ end
 -- in case that the local one is broken
 M.rollback_doom = function()
   -- Backup file for main (stable) branch
-  local releases_database_path = string.format("%s/.doom_releases", utils.doom_root)
+  local releases_database_path = string.format("%s%s.doom_releases", system.doom_root, system.sep)
   -- Backup file for development branch
-  local rolling_backup = string.format("%s/.doom_backup_hash", utils.doom_root)
+  local rolling_backup = string.format("%s%s.doom_backup_hash", system.doom_root, system.sep)
 
   -- Check if there's a rollback file and sets the rollback type
   if vim.fn.filereadable(releases_database_path) == 1 then
@@ -306,7 +307,7 @@ M.rollback_doom = function()
     -- Check the current commit hash and compare it with the ones in the
     -- releases table
     local current_version
-    local commit_handler = io.popen(utils.git_workspace .. "rev-parse HEAD")
+    local commit_handler = io.popen(system.git_workspace .. "rev-parse HEAD")
     local current_commit = commit_handler:read("*a"):gsub("[\r\n]", "")
     commit_handler:close()
     for _, version_info in ipairs(sorted_releases) do
@@ -343,7 +344,7 @@ M.rollback_doom = function()
 
     log.info("Reverting back to version " .. rollback_version .. " (" .. rollback_sha .. ") ...")
     local rolled_back, rolled_err = pcall(function()
-      os.execute(utils.git_workspace .. "checkout " .. rollback_sha)
+      os.execute(system.git_workspace .. "checkout " .. rollback_sha)
     end)
 
     if not rolled_back then
@@ -368,7 +369,7 @@ M.rollback_doom = function()
     local backup_commit = utils.read_file(rolling_backup):gsub("[\r\n]+", "")
     log.info("Reverting back to commit " .. backup_commit .. " ...")
     local rolled_back, rolled_err = pcall(function()
-      os.execute(utils.git_workspace .. "checkout " .. backup_commit)
+      os.execute(system.git_workspace .. "checkout " .. backup_commit)
     end)
 
     if not rolled_back then
@@ -394,11 +395,11 @@ M.edit_config = function()
   local open_command = config.doom.new_file_split and "split" or "edit"
 
   if selected_config == 1 then
-    vim.cmd(string.format("%s %s/doom_config.lua", open_command, utils.doom_root))
+    vim.cmd(string.format("%s %s%sdoom_config.lua", open_command, system.doom_root, system.sep))
   elseif selected_config == 2 then
-    vim.cmd(string.format("%s %s/doomrc.lua", open_command, utils.doom_root))
+    vim.cmd(string.format("%s %s%sdoomrc.lua", open_command, system.doom_root, system.sep))
   elseif selected_config == 3 then
-    vim.cmd(string.format("%s %s/plugins.lua", open_command, utils.doom_root))
+    vim.cmd(string.format("%s %s%splugins.lua", open_command, system.doom_root, system.sep))
   elseif selected_config ~= 0 then
     log.error("Invalid option selected.")
   end
