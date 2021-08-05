@@ -568,7 +568,7 @@ utils.map(
 utils.map(
   "n",
   "<leader>ds",
-  "<cmd>Telescope colorscheme<CR>",
+  "<cmd>lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<CR>",
   opts,
   "Editor",
   "change_colorscheme",
