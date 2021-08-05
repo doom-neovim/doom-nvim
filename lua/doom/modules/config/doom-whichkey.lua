@@ -135,6 +135,8 @@ return function()
 			['b'] = { 'Blame line' },
 			['B'] = { 'Branches' },
 			['c'] = { 'Commits' },
+			['n'] = { 'Open Neogit' },
+			['C'] = { 'Open commit popup' },
 		},
 		['p'] = {
 			name = '+plugins',

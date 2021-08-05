@@ -234,6 +234,18 @@ packer.startup(function(use)
 		event = 'BufRead',
 	})
 
+	-- Neogit
+	local disabled_neogit = functions.is_plugin_disabled('neogit')
+	use({
+	  'TimUntersberger/neogit',
+	  config = function()
+	    require('neogit').setup({})
+	  end,
+	  disable = disabled_neogit,
+	  cmd = 'Neogit',
+	  module = 'neogit',
+	})
+
 	-- LazyGit integration
 	local disabled_lazygit = functions.is_plugin_disabled('lazygit')
 	use({

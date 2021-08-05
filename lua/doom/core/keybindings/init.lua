@@ -354,6 +354,8 @@ utils.map('n', '<leader>gp', '<cmd>TermExec cmd="git push"<CR>', opts)
 utils.map('n', '<leader>gs', '<cmd>Telescope git_status<CR>', opts)
 utils.map('n', '<leader>gB', '<cmd>Telescope git_branches<CR>', opts)
 utils.map('n', '<leader>gc', '<cmd>Telescope git_commits<CR>', opts)
+utils.map('n', '<leader>gn', '<cmd>Neogit<CR>', opts)
+utils.map('n', '<leader>gC', '<cmd>Neogit commit<CR>', opts)
 
 -- code
 utils.map('n', '<leader>ch', '<Plug>RestNvim<CR>', opts)
