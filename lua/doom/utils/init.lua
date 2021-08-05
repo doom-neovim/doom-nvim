@@ -20,9 +20,9 @@ M.doom_root = string.format("%s%snvim", config_dir, sep)
 -- The doom-nvim configurations root directory
 M.doom_configs_root = string.format("%s%sdoom-nvim", config_dir, sep)
 -- The doom-nvim logs file path
-M.doom_logs = vim.fn.stdpath("data") .. "/doom.log"
+M.doom_logs = vim.fn.stdpath("data") .. string.format("%sdoom.log", sep)
 -- The doom-nvim bug report file path
-M.doom_report = vim.fn.stdpath("data") .. "/doom_report.md"
+M.doom_report = vim.fn.stdpath("data") .. string.format("%sdoom_report.md", sep)
 -- The git workspace for doom-nvim, e.g. 'git -C /home/JohnDoe/.config/nvim'
 M.git_workspace = string.format("git -C %s ", M.doom_root)
 
