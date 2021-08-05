@@ -6,19 +6,19 @@
 
 local M = {}
 
+local system = require("doom.core.system")
+
 -------------------- HELPERS --------------------
 -- Doom Nvim version
 M.doom_version = "3.1.0"
 
--- Get the user config directory, e.g. '/home/JohnDoe/.config'
-local config_dir = os.getenv("XDG_CONFIG_HOME") and os.getenv("XDG_CONFIG_HOME")
-  or os.getenv("HOME") .. "/.config"
+local config_dir, sep = system.config_dir, system.sep
 
 -- The doom-nvim root directory, works as a fallback for looking Doom Nvim configurations
 -- in case that doom_configs_root directory does not exists.
-M.doom_root = string.format("%s/nvim", config_dir)
+M.doom_root = string.format("%s%snvim", config_dir, sep)
 -- The doom-nvim configurations root directory
-M.doom_configs_root = string.format("%s/doom-nvim", config_dir)
+M.doom_configs_root = string.format("%s%sdoom-nvim", config_dir, sep)
 -- The doom-nvim logs file path
 M.doom_logs = vim.fn.stdpath("data") .. "/doom.log"
 -- The doom-nvim bug report file path
@@ -108,23 +108,6 @@ M.has_value = function(tabl, val)
   end
 
   return false
-end
-
--- Get current OS, returns 'Other' if the current OS is not recognized
--- @return string
-M.get_os = function()
-  --[[
-	--	 Target OS names:
-	--	 	- Windows
-	--	 	- Linux
-	--	 	- OSX
-	--	 	- BSD
-	--	 	- POSIX
-	--	 	- Other
-	--]]
-
-  -- We make use of JIT because LuaJIT is bundled in Neovim
-  return jit.os
 end
 
 -- file_exists checks if the given file exists

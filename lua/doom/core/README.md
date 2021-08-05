@@ -9,3 +9,4 @@ Those modules are the following:
 - settings - Doom configurations for Neovim, e.g. `tabwidth`, `showmode`.
 - functions - Doom core functions, e.g. `create_report`.
 - health - Doom health add-on.
+- system - Doom system detection utilities.
