@@ -21,7 +21,9 @@ local doom_config = {
 -- /home/user/.config/doom-nvim/doom_config.lua
 if utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep)) then
   doom_config = dofile(string.format("%s%sdoom_config.lua", system.doom_root, system.sep))
-elseif utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)) then
+elseif
+  utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep))
+then
   doom_config = dofile(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep))
 end
 

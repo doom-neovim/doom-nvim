@@ -232,8 +232,7 @@ packer.startup(function(use)
   use({
     "lazytanuki/nvim-mapper",
     config = function()
-      local doom_root, sep =
-        require("doom.core.system").doom_root, require("doom.core.system").sep
+      local doom_root, sep = require("doom.core.system").doom_root, require("doom.core.system").sep
       require("nvim-mapper").setup({
         -- do not assign the default keymap (<leader>MM)
         no_map = false,

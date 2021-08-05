@@ -102,7 +102,7 @@ M.quit_doom = function(write, force)
       vim.cmd(
         "silent !sed -i 's/\""
           .. config.doom.colorscheme
-          .. "\"/\""
+          .. '"/"'
           .. target_colorscheme
           .. "\"/' "
           .. system.doom_root
@@ -114,11 +114,12 @@ M.quit_doom = function(write, force)
       vim.cmd(
         "silent !sed -i 's/\""
           .. config.doom.colorscheme_bg
-          .. "\"/\""
+          .. '"/"'
           .. target_background
           .. "\"/' "
           .. system.doom_root
-          .. "/doom_config.lua")
+          .. "/doom_config.lua"
+      )
       log.info("Background successfully changed to " .. target_background)
     end
   end)
@@ -170,7 +171,10 @@ M.create_report = function()
       'silent !echo "' .. vim.fn.fnameescape("##") .. ' Begin log dump" >> ' .. system.doom_report
     )
     vim.cmd(
-      "silent !cat " .. system.doom_logs .. ' | grep "$(date +%a %d %b %Y)" >> ' .. system.doom_report
+      "silent !cat "
+        .. system.doom_logs
+        .. ' | grep "$(date +%a %d %b %Y)" >> '
+        .. system.doom_report
     )
     vim.cmd(
       'silent !echo "' .. vim.fn.fnameescape("##") .. ' End log dump" >> ' .. system.doom_report

@@ -402,7 +402,9 @@ M.load_config = function()
   -- Path cases:
   --   1. /home/user/.config/doom-nvim/doom_config.lua
   --   2. /home/user/.config/nvim/doom_config.lua
-  if utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)) then
+  if
+    utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep))
+  then
     doom_config_path = string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)
   elseif utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep)) then
     doom_config_path = string.format("%s%sdoom_config.lua", system.doom_root, system.sep)
