@@ -231,11 +231,12 @@ packer.startup(function(use)
   use({
     "lazytanuki/nvim-mapper",
     config = function()
+      local doom_root, sep = require("doom.utils").doom_root, require("doom.core.system").sep
       require("nvim-mapper").setup({
         -- do not assign the default keymap (<leader>MM)
         no_map = false,
         -- default config search path is ~/.config/nvim/lua
-        search_path = os.getenv("HOME") .. "/.config/doom-nvim/lua",
+        search_path = string.format("%s%slua", doom_root, sep),
       })
     end,
     module = "nvim-mapper",
