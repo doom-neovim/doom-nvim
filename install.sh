@@ -12,15 +12,15 @@
 Color_reset='\033[0m' # Reset
 
 ## Normal colors
-Black='\033.0.90m'  # Black
+Black='\033[0;90m'  # Black
 Gray='\033[0;90m'   # Gray
-White='\033.0.97m'  # White
-Red='\033.0.91m'    # Red
-Blue='\033.0.94m'   # Blue
-Cyan='\033.0.96m'   # Cyan
-Purple='\033.0.95m' # Purple
-Green='\033.0.92m'  # Green
-Yellow='\033.0.93m' # Yellow
+White='\033[0;97m'  # White
+Red='\033[0;91m'    # Red
+Blue='\033[0;94m'   # Blue
+Cyan='\033[0;96m'   # Cyan
+Purple='\033[0;95m' # Purple
+Green='\033[0;92m'  # Green
+Yellow='\033[0;93m' # Yellow
 
 ## Bold colors
 BBlack='\033[1;30m'  # Black
