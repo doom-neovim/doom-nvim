@@ -14,7 +14,8 @@ M.doom_version = "3.1.0"
 local config_dir = os.getenv("XDG_CONFIG_HOME") and os.getenv("XDG_CONFIG_HOME")
   or os.getenv("HOME") .. "/.config"
 
--- The doom-nvim root directory
+-- The doom-nvim root directory, works as a fallback for looking Doom Nvim configurations
+-- in case that doom_configs_root directory does not exists.
 M.doom_root = string.format("%s/nvim", config_dir)
 -- The doom-nvim configurations root directory
 M.doom_configs_root = string.format("%s/doom-nvim", config_dir)
