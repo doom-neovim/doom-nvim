@@ -10,13 +10,19 @@ local M = {}
 -- Doom Nvim version
 M.doom_version = "3.1.0"
 
--- Local files
+-- Get the user config directory, e.g. '/home/JohnDoe/.config'
 local config_dir = os.getenv("XDG_CONFIG_HOME") and os.getenv("XDG_CONFIG_HOME")
   or os.getenv("HOME") .. "/.config"
-M.doom_root = string.format("%s/nvim", config_dir)
-M.doom_logs = vim.fn.stdpath("data") .. "/doom.log"
-M.doom_report = vim.fn.stdpath("data") .. "/doom_report.md"
 
+-- The doom-nvim root directory
+M.doom_root = string.format("%s/nvim", config_dir)
+-- The doom-nvim configurations root directory
+M.doom_configs_root = string.format("%s/doom-nvim", config_dir)
+-- The doom-nvim logs file path
+M.doom_logs = vim.fn.stdpath("data") .. "/doom.log"
+-- The doom-nvim bug report file path
+M.doom_report = vim.fn.stdpath("data") .. "/doom_report.md"
+-- The git workspace for doom-nvim, e.g. 'git -C /home/JohnDoe/.config/nvim'
 M.git_workspace = string.format("git -C %s ", M.doom_root)
 
 -- Mappings wrapper, extracted from
@@ -86,7 +92,7 @@ M.create_augroups = function(definitions)
 end
 
 -- Check if string is empty or if it's nil
--- @return bool
+-- @return boolean
 M.is_empty = function(str)
   return str == "" or str == nil
 end
@@ -104,6 +110,7 @@ M.has_value = function(tabl, val)
 end
 
 -- Get current OS, returns 'Other' if the current OS is not recognized
+-- @return string
 M.get_os = function()
   --[[
 	--	 Target OS names:
@@ -117,6 +124,19 @@ M.get_os = function()
 
   -- We make use of JIT because LuaJIT is bundled in Neovim
   return jit.os
+end
+
+-- file_exists checks if the given file exists
+-- @tparam string path The path to the file
+-- @return boolean
+M.file_exists = function(path)
+  local fd = vim.loop.fs_open(path, "r", 438)
+  if fd then
+    vim.loop.fs_close(fd)
+    return true
+  end
+
+  return false
 end
 
 -- read_file returns the content of the given file

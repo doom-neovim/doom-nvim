@@ -452,7 +452,13 @@ packer.startup(function(use)
   ---     Custom Plugins     ---
   -----]]----------------[[-----
   -- If there are custom plugins then also require them
-  local custom_plugins = dofile(utils.doom_root .. "/plugins.lua")
+  local custom_plugins = {}
+  if utils.file_exists(utils.doom_configs_root) then
+    custom_plugins = dofile(utils.doom_configs_root .. "/plugins.lua")
+  else
+    custom_plugins = dofile(utils.doom_root .. "/plugins.lua")
+  end
+
   for _, plug in pairs(custom_plugins) do
     packer.use(plug)
   end

@@ -396,14 +396,23 @@ M.load_config = function()
     doom = {},
     nvim = {},
   }
+  local doom_config_path
 
-  -- /home/user/.config/doom-nvim/doomrc
-  if vim.fn.filereadable(utils.doom_root .. "/doom_config.lua") == 1 then
-    local loaded_doomrc, err = pcall(function()
-      config = dofile(utils.doom_root .. "/doom_config.lua")
+  -- Path cases:
+  --   1. /home/user/.config/doom-nvim/doom_config.lua
+  --   2. /home/user/.config/nvim/doom_config.lua
+  if utils.file_exists(utils.doom_configs_root .. "/doom_config.lua") then
+    doom_config_path = utils.doom_configs_root .. "/doom_config.lua"
+  elseif utils.file_exists(utils.doom_root .. "/doom_config.lua") then
+    doom_config_path = utils.doom_root .. "/doom_config.lua"
+  end
+
+  if doom_config_path then
+    local loaded_doom_config, err = pcall(function()
+      config = dofile(doom_config_path)
     end)
 
-    if not loaded_doomrc then
+    if not loaded_doom_config then
       log.error("Error while loading the doom_config file. Traceback:\n" .. err)
     end
   else

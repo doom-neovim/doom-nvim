@@ -9,7 +9,19 @@
 ----- CUSTOM SECTION --------------------------------------
 -----------------------------------------------------------
 local utils = require("doom.utils")
-local doom_config = dofile(utils.doom_root .. "/doom_config.lua")
+-- logging defaults to "info" level
+local doom_config = {
+  doom = {
+    logging = "info",
+  },
+}
+
+-- /home/user/.config/doom-nvim/doom_config.lua
+if utils.file_exists(utils.doom_root .. "/doom_config.lua") then
+  doom_config = dofile(utils.doom_root .. "/doom_config.lua")
+elseif utils.file_exists(utils.doom_configs_root .. "/doom_config.lua") then
+  doom_config = dofile(utils.doom_configs_root .. "/doom_config.lua")
+end
 
 -----------------------------------------------------------
 -----------------------------------------------------------
@@ -30,7 +42,7 @@ local default_config = {
 
   -- Any messages above this level will be logged.
   -- defaults to info
-  level = (doom_config.doom.logging == nil and "info" or doom_config.doom.logging),
+  level = doom_config.doom.logging,
 
   -- Level configuration
   modes = {

@@ -82,13 +82,21 @@ end
 -- load_doomrc Loads the doomrc if it exists, otherwise it'll fallback to doom
 -- default configs.
 M.load_doomrc = function()
-  local config
+  local config, doomrc_path
 
-  -- /home/user/.config/doom-nvim/doomrc
-  if vim.fn.filereadable(utils.doom_root .. "/doomrc.lua") == 1 then
+  -- Path cases:
+  --   1. /home/user/.config/doom-nvim/doomrc.lua
+  --   2. /home/user/.config/nvim/doomrc.lua
+  if utils.file_exists(utils.doom_configs_root .. "/doomrc.lua") then
+    doomrc_path = utils.doom_configs_root .. "/doomrc.lua"
+  elseif utils.file_exists(utils.doom_root .. "/doomrc.lua") then
+    doomrc_path = utils.doom_root .. "/doomrc.lua"
+  end
+
+  if doomrc_path then
     local loaded_doomrc, err = pcall(function()
       log.debug("Loading the doomrc file ...")
-      config = dofile(utils.doom_root .. "/doomrc.lua")
+      config = dofile(doomrc_path)
     end)
 
     if not loaded_doomrc then
