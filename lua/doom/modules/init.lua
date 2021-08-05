@@ -237,13 +237,13 @@ packer.startup(function(use)
 	-- Neogit
 	local disabled_neogit = functions.is_plugin_disabled('neogit')
 	use({
-	  'TimUntersberger/neogit',
-	  config = function()
-	    require('neogit').setup({})
-	  end,
-	  disable = disabled_neogit,
-	  cmd = 'Neogit',
-	  module = 'neogit',
+		'TimUntersberger/neogit',
+		config = function()
+			require('neogit').setup({})
+		end,
+		disable = disabled_neogit,
+		cmd = 'Neogit',
+		module = 'neogit',
 	})
 
 	-- LazyGit integration
