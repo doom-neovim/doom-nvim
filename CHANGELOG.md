@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [3.0.9] - 2021-07-27
+## [3.0.9] - 2021-08-04
 
 ### Fixed
 
+- We're not lazy-loading `editorconfig` plugin anymore
+- Added missing `neogit` entry in the plugins module
 - `DoomUpdate` and `DoomRollback` not working in some Linux distributions
+- Some visual bugs in the installer script
 
 ## [3.0.8] - 2021-07-25
 
