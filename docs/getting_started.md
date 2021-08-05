@@ -193,10 +193,10 @@ Doom Nvim itself.
 First you'll want to backup your current Neovim configuration if you have one.
 
 > **NOTES**:
-> 
+>
 > 1. Your current configuration will be backed up to `~/.config/nvim.bak`
 >    or where your `XDG_CONFIG_HOME` environment variable points to.
-> 
+>
 > 2. If you're a cheovim user you can skip this step and go directly to
 >    [Using cheovim](#using-cheovim).
 
@@ -227,7 +227,7 @@ use the recipe listed in cheovim documentation:
 git clone --depth 1 https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_HOME:-$HOME/.config}/doom-nvim
 
 # Change the doom-nvim internal path
-sed -i "16s/nvim/doom-nvim/" ${XDG_CONFIG_HOME:-$HOME/.config}/doom-nvim/lua/doom/utils/init.lua
+sed -i "37s/nvim/doom-nvim/" ${XDG_CONFIG_HOME:-$HOME/.config}/doom-nvim/lua/doom/core/system/init.lua
 ```
 
 ```lua

@@ -102,5 +102,6 @@ After having made all your changes **and having tested them locally to certify t
 **they work and do not break any of the current code**, you can proceed to upload
 your pull request :)
 
+[gist]: https://gist.github.com/
 [stylua]: https://github.com/JohnnyMorganz/StyLua
 [selene]: https://github.com/Kampfkarren/selene

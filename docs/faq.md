@@ -24,7 +24,7 @@ configuration files to this path so you can version control your doom setup too.
 
 > **NOTE**: In case that you're using cheovim (with `/home/user/.config/doom-nvim`
 > as your Doom Nvim path) then you will need to change this variable value manually
-> by tweaking [this](../lua/doom/utils/init.lua) file.
+> by tweaking [this](../lua/doom/core/system/init.lua) file.
 
 After changing your configurations path you will surely want to remove your
 `~/.config/nvim/plugin/packer_compiled.lua` and running `:PackerCompile` again.
