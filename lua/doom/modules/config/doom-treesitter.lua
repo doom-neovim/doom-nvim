@@ -1,4 +1,5 @@
 return function()
+  local has_value = require("doom.utils").has_value
   local doomrc = require("doom.core.config.doomrc").load_doomrc()
   local functions = require("doom.core.functions")
 
@@ -15,6 +16,11 @@ return function()
         lang = lang:gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
         table.insert(langs, lang)
       end
+    end
+
+    -- Add TSX parser if TypeScript is enabled
+    if has_value(langs, "typescript") then
+      table.insert(langs, "tsx")
     end
     return langs
   end
@@ -48,6 +54,7 @@ return function()
         "html",
         "javascript",
         "javascriptreact",
+        "typescript",
         "typescriptreact",
         "svelte",
         "vue",
