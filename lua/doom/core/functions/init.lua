@@ -88,13 +88,11 @@ M.reload_custom_settings = function()
   end
 end
 
--- Quit Neovim and change the colorscheme at doomrc if the colorscheme is not the same,
--- dump all messages to doom.log file
--- @tparam bool write If doom should save before exiting
--- @tparam bool force If doom should force the exiting
-M.quit_doom = function(write, force)
+-- Change the 'doom_config.lua' file configurations for the colorscheme and the
+-- background if they were changed by the user within Neovim
+M.change_colors_and_bg = function()
   local changed_colorscheme, err = pcall(function()
-    log.info("Checking if the colorscheme or background were changed ...")
+    log.debug("Checking if the colorscheme or background were changed ...")
     local target_colorscheme = vim.g.colors_name
     local target_background = vim.opt.background:get()
 
@@ -111,35 +109,40 @@ M.quit_doom = function(write, force)
     end
 
     if target_colorscheme ~= config.doom.colorscheme then
-      vim.cmd(
-        "silent !sed -i 's/\""
-          .. config.doom.colorscheme
-          .. '"/"'
-          .. target_colorscheme
-          .. "\"/' "
-          .. doom_config_path
+      local doom_config = utils.read_file(doom_config_path)
+        doom_config = string.gsub(
+        doom_config,
+        string.format('"%s"', config.doom.colorscheme:gsub("[%-]", "%%%1")),
+        string.format('"%s"', target_colorscheme:gsub("[%-]", "%%%1"))
       )
-      log.info("Colorscheme successfully changed to " .. target_colorscheme)
+      utils.write_file(doom_config_path, doom_config, "w+")
+      log.debug("Colorscheme successfully changed to " .. target_colorscheme)
     end
     if target_background ~= config.doom.colorscheme_bg then
-      vim.cmd(
-        "silent !sed -i 's/\""
-          .. config.doom.colorscheme_bg
-          .. '"/"'
-          .. target_background
-          .. "\"/' "
-          .. doom_config_path
+      local doom_config = utils.read_file(doom_config_path)
+      doom_config = string.gsub(
+        doom_config,
+        string.format('"%s"', config.doom.colorscheme_bg),
+        string.format('"%s"', target_background)
       )
-      log.info("Background successfully changed to " .. target_background)
+      utils.write_file(doom_config_path, doom_config, "w+")
+      log.debug("Background successfully changed to " .. target_background)
     end
   end)
 
   if not changed_colorscheme then
     log.error("Unable to write to the doom_config.lua file. Traceback:\n" .. err)
   end
+end
+
+-- Quit Neovim and change the colorscheme at doomrc if the colorscheme is not the same,
+-- dump all messages to doom.log file
+-- @tparam bool write If doom should save before exiting
+-- @tparam bool force If doom should force the exiting
+M.quit_doom = function(write, force)
+  M.change_colors_and_bg()
 
   local quit_cmd = ""
-
   if write then
     quit_cmd = "wa | "
   end
