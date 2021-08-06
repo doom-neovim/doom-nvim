@@ -98,6 +98,16 @@ M.quit_doom = function(write, force)
     local target_colorscheme = vim.g.colors_name
     local target_background = vim.opt.background:get()
 
+    -- Set the correct path for the 'doom_config.lua' file
+    local doom_config_path
+    if
+      utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep))
+    then
+      doom_config_path = string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)
+    elseif utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep)) then
+      doom_config_path = string.format("%s%sdoom_config.lua", system.doom_root, system.sep)
+    end
+
     if target_colorscheme ~= config.doom.colorscheme then
       vim.cmd(
         "silent !sed -i 's/\""
@@ -105,8 +115,7 @@ M.quit_doom = function(write, force)
           .. '"/"'
           .. target_colorscheme
           .. "\"/' "
-          .. system.doom_root
-          .. "/doom_config.lua"
+          .. doom_config_path
       )
       log.info("Colorscheme successfully changed to " .. target_colorscheme)
     end
@@ -117,23 +126,17 @@ M.quit_doom = function(write, force)
           .. '"/"'
           .. target_background
           .. "\"/' "
-          .. system.doom_root
-          .. "/doom_config.lua"
+          .. doom_config_path
       )
       log.info("Background successfully changed to " .. target_background)
     end
   end)
 
   if not changed_colorscheme then
-    log.error("Unable to write to the doomrc. Traceback:\n" .. err)
+    log.error("Unable to write to the doom_config.lua file. Traceback:\n" .. err)
   end
 
   local quit_cmd = ""
-
-  -- Save current session if enabled
-  if config.doom.autosave_sessions then
-    vim.cmd("SaveSession")
-  end
 
   if write then
     quit_cmd = "wa | "
