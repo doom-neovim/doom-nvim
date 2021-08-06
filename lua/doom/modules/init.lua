@@ -450,6 +450,17 @@ packer.startup(function(use)
     event = "BufRead",
   })
 
+	use({
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = require('doom.modules.config.doom-todo'),
+  })
+  use({
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = require('doom.modules.config.doom-trouble'),
+  })
+
   -----[[----------------]]-----
   ---     Custom Plugins     ---
   -----]]----------------[[-----
