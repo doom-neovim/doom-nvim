@@ -111,7 +111,7 @@ First you'll want to backup your current Neovim configuration if you have one.
 >    or where your `XDG_CONFIG_HOME` environment variable points to.
 >
 > 2. If you're a cheovim user you can skip this step and go directly to
->    [installing with cheovim](#cheovim).
+>    [installing with cheovim](#installing-with-cheovim).
 
 ```sh
 [ -d ${XDG_CONFIG_HOME:-$HOME/.config}/nvim ] && mv ${XDG_CONFIG_HOME:-$HOME/.config}/nvim ${XDG_CONFIG_HOME:-$HOME/.config}/nvim.bak
