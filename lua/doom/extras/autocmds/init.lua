@@ -28,8 +28,8 @@ local autocmds = {
     {
       "VimLeavePre",
       "*",
-      "lua require('doom.core.functions').change_colors_and_bg()"
-    }
+      "lua require('doom.core.functions').change_colors_and_bg()",
+    },
   },
   doom_extras = {
     -- Set up vim_buffer_previewer in telescope.nvim

@@ -110,7 +110,7 @@ M.change_colors_and_bg = function()
 
     if target_colorscheme ~= config.doom.colorscheme then
       local doom_config = utils.read_file(doom_config_path)
-        doom_config = string.gsub(
+      doom_config = string.gsub(
         doom_config,
         string.format('"%s"', config.doom.colorscheme:gsub("[%-]", "%%%1")),
         string.format('"%s"', target_colorscheme:gsub("[%-]", "%%%1"))
