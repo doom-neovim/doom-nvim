@@ -34,7 +34,7 @@ M.sep = get_separator()
 
 -- The doom-nvim root directory, works as a fallback for looking Doom Nvim configurations
 -- in case that doom_configs_root directory does not exists.
-M.doom_root = string.format("%s%snvim.config/doom", M.config_dir, M.sep)
+M.doom_root = string.format("%s%sdoom-nvim", M.config_dir, M.sep)
 -- The doom-nvim configurations root directory
 M.doom_configs_root = string.format("%s%sdoom-nvim", M.config_dir, M.sep)
 -- The doom-nvim logs file path
