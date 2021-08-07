@@ -1033,3 +1033,50 @@ utils.map(
   "diagnostic_list",
   "Diagnostics into location list"
 )
+
+-- jumps
+utils.map(
+    'n',
+    '<leader>ja',
+    '<C-^>',
+    opts,
+    "Jumps",
+    "alternate_file",
+    "Alternate file"
+)
+utils.map(
+    'n',
+    '<leader>jj',
+    '<C-o>',
+    opts,
+    "Jumps",
+    "jump_older",
+    "Jump to older pos"
+)
+utils.map(
+    'n',
+    '<leader>jk',
+    '<C-i>',
+    opts,
+    "Jumps",
+    "jump_newer",
+    "Jump to newer pos"
+)
+utils.map(
+    'n',
+    '<leader>jp',
+    ':pop<CR>',
+    opts,
+    "Jumps",
+    "jump_older",
+    "Pop from tag stack"
+)
+utils.map(
+    'n',
+    '<leader>jt',
+    ':tag<CR>',
+    opts,
+    "Jumps",
+    "jump_older",
+    "Follow tag / add to stack"
+)
