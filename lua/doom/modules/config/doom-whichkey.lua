@@ -193,6 +193,8 @@ return function()
       ["s"] = { "Symbols" },
       ["t"] = { "Terminal" },
     },
+    ["m"] = { "Save" },
+    ["v"] = { "Save" },
   }
 
   wk.register(mappings, { prefix = "<leader>" })
