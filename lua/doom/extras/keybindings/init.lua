@@ -1080,3 +1080,22 @@ utils.map(
     "jump_older",
     "Follow tag / add to stack"
 )
+-- save
+utils.map(
+    'n',
+    '<leader>v',
+    '<cmd>w<cr>',
+    opts,
+    "Save",
+    "save",
+    "Save"
+)
+utils.map(
+    'n',
+    '<leader>m',
+    '<cmd>w<cr>',
+    opts,
+    "Save",
+    "save",
+    "Save"
+)
