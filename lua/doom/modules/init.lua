@@ -460,6 +460,7 @@ packer.startup(function(use)
     requires = "kyazdani42/nvim-web-devicons",
     config = require('doom.modules.config.doom-trouble'),
   })
+  use({ "jez/vim-superman" })
 
   -----[[----------------]]-----
   ---     Custom Plugins     ---
