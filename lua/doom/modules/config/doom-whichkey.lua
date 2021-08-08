@@ -73,6 +73,7 @@ return function()
     [","] = { "Switch buffer" },
     ["/"] = { "Search a word" },
     [":"] = { "Command history" },
+    ["M"] = { "Manpage" },
     ["b"] = {
       name = "+buffers",
       ["c"] = { "Close current buffer" },
