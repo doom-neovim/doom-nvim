@@ -126,6 +126,14 @@ packer.startup(function(use)
     },
   })
 
+  -- Ranger File Browser
+  local disabled_ranger = functions.is_plugin_disabled("ranger")
+  use({
+    "francoiscabrol/ranger.vim",
+    requires = "rbgrouleff/bclose.vim",
+    disable = disabled_ranger,
+  })
+
   -- Statusline
   -- can be disabled to use your own statusline
   local disabled_statusline = functions.is_plugin_disabled("statusline")

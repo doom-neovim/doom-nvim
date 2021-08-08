@@ -878,6 +878,15 @@ utils.map(
 )
 utils.map(
   "n",
+  "<leader>or",
+  "<cmd>Ranger<CR>",
+  opts,
+  "Editor",
+  "open_ranger_browser",
+  "Toggle Ranger File Browser"
+)
+utils.map(
+  "n",
   "<leader>os",
   "<cmd>SymbolsOutline<CR>",
   opts,

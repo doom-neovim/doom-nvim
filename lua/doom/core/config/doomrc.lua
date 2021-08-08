@@ -34,6 +34,7 @@ local function default_doomrc_values()
       "auto-session", -- A small automated session manager for Neovim
       -- 'terminal',     -- Terminal for Neovim (NOTE: needed for runner and compiler)
       "explorer", -- Tree explorer
+      -- "ranger", -- Ranger File Browser, requires ranger file browser
       "symbols", -- LSP symbols and tags
       -- 'minimap',      -- Code minimap, requires github.com/wfxr/code-minimap
       "gitsigns", -- Git signs

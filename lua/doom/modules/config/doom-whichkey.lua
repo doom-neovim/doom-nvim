@@ -189,6 +189,7 @@ return function()
       ["b"] = { "Debugging UI " },
       ["d"] = { "Start screen" },
       ["e"] = { "Tree Explorer" },
+      ["r"] = { "Ranger File Browser" },
       ["m"] = { "Minimap" },
       ["s"] = { "Symbols" },
       ["t"] = { "Terminal" },

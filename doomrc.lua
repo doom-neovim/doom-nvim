@@ -22,14 +22,15 @@ local doom = {
     -- "indentlines",     -- Show indent lines
   },
   doom = {
-    -- "neorg",           -- Life Organization Tool
+    -- "neorg",              -- Life Organization Tool
     -- "runner",          -- Open a REPL for the current language or run the current file
     -- "compiler",        -- Compile (and run) your code with just pressing three keys!
   },
   editor = {
     "auto-session",       -- A small automated session manager for Neovim
-    -- "terminal",        -- Terminal for Neovim (NOTE: needed for runner and compiler)
+    "terminal",           -- Terminal for Neovim (NOTE: needed for runner and compiler)
     "explorer",           -- Tree explorer
+    -- "ranger",             -- Ranger File Browser, requires ranger file browser
     "symbols",            -- LSP symbols and tags
     -- "minimap",         -- Code minimap, requires github.com/wfxr/code-minimap
     "gitsigns",           -- Git signs
@@ -37,7 +38,7 @@ local doom = {
     -- "restclient",      -- A fast Neovim http client
     "formatter",          -- File formatting
     "autopairs",          -- Autopairs
-    -- "editorconfig",    -- EditorConfig support for Neovim
+    "editorconfig",       -- EditorConfig support for Neovim
     "kommentary",         -- Comments plugin
     "lsp",                -- Language Server Protocols
     "dap",                -- Debug Adapter Protocol
