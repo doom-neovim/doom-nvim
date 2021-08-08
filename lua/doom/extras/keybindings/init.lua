@@ -329,6 +329,16 @@ utils.map("i", "jk", "<ESC>", opts, "Editor", "exit_insert", "Exit insert mode")
 -- utils.map("o", "F", "vF", opts, "Editor", "occurence_backw_till_inclusive", "Backwards occurence till inclusive")
 
 ---[[-----------------]]---
+--       Move Lines      --
+---]]-----------------[[---
+utils.map("n", '<a-j>', ':m .+1<CR>==',        opts, "Editor", "normal_move_line_down",  "Normal Move line down")
+utils.map("n", '<a-k>', ':m .-2<CR>==',        opts, "Editor", "normal_move_line_up",    "Normal Move line up")
+utils.map("i", '<a-j>', '<esc>:m .+1<CR>==gi', opts, "Editor", "instert_move_line_down", "Insert Move line down")
+utils.map("i", '<a-k>', '<esc>:m .-2<CR>==gi', opts, "Editor", "instert_move_line_up",   "Insert Move line up")
+utils.map("v", '<a-j>', ':m \'>+1<CR>gv=gv',   opts, "Editor", "visual_move_line_down",  "Visual Move line down")
+utils.map("v", '<a-k>', ':m \'<-2<CR>gv=gv',   opts, "Editor", "visual_move_line_up",    "Visual Move line up")
+
+---[[-----------------]]---
 --    Select Movement    --
 ---]]-----------------[[---
 utils.map("x", "K", ":move '<-2<CR>gv-gv", opts, "Editor", "select_right", "Move selection right")
