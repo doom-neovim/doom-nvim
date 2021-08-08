@@ -1099,3 +1099,14 @@ utils.map(
     "save",
     "Save"
 )
+
+-- man pages
+utils.map(
+    'n',
+    '<leader>M',
+    ':Man ',
+  {silent = false},
+    "Man page",
+    "man_page",
+    "Man page"
+)
