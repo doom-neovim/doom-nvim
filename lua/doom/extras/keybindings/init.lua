@@ -321,6 +321,21 @@ utils.map("n", "<C-l>", "<C-w>l", opts, "Movement", "right_window", "Goto right 
 utils.map("i", "jk", "<ESC>", opts, "Editor", "exit_insert", "Exit insert mode")
 
 ---[[-----------------]]---
+--      Suspend Vim      --
+---]]-----------------[[---
+-- NOTE: this is not working?!
+utils.map("n", "<c-z>", "<c-z>", opts,
+  "Suspend vim",
+  "normal_suspend_vim",
+  "Suspend vim normal mode"
+)
+utils.map("v", "<c-z>", "<esc><c-z>", opts,
+  "Suspend vim visual",
+  "visual_suspend_vim",
+  "Suspend vim visual mode"
+)
+
+---[[-----------------]]---
 --    Select Movement    --
 ---]]-----------------[[---
 utils.map("x", "K", ":move '<-2<CR>gv-gv", opts, "Editor", "select_right", "Move selection right")
