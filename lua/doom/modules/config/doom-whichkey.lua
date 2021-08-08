@@ -67,6 +67,7 @@ return function()
   ----- Whichkey binds ------------------------
   ---------------------------------------------
   local mappings = {
+    ["spc"] = { "Command" },
     ["`"] = { "Find file" },
     ["."] = { "Browse files" },
     [","] = { "Switch buffer" },
