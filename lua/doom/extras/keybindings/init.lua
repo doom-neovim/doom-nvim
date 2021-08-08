@@ -1068,7 +1068,7 @@ utils.map(
     '<C-^>',
     opts,
     "Jumps",
-    "alternate_file",
+    "jump_alternate_file",
     "Alternate file"
 )
 utils.map(
@@ -1095,7 +1095,7 @@ utils.map(
     ':pop<CR>',
     opts,
     "Jumps",
-    "jump_older",
+    "jump_pop_tag",
     "Pop from tag stack"
 )
 utils.map(
@@ -1104,7 +1104,7 @@ utils.map(
     ':tag<CR>',
     opts,
     "Jumps",
-    "jump_older",
+    "jump_folow_tag",
     "Follow tag / add to stack"
 )
 -- save
