@@ -321,19 +321,12 @@ utils.map("n", "<C-l>", "<C-w>l", opts, "Movement", "right_window", "Goto right 
 utils.map("i", "jk", "<ESC>", opts, "Editor", "exit_insert", "Exit insert mode")
 
 ---[[-----------------]]---
---      Suspend Vim      --
+--    Make inclusive     --
 ---]]-----------------[[---
--- NOTE: this is not working?!
-utils.map("n", "<c-z>", "<c-z>", opts,
-  "Suspend vim",
-  "normal_suspend_vim",
-  "Suspend vim normal mode"
-)
-utils.map("v", "<c-z>", "<esc><c-z>", opts,
-  "Suspend vim visual",
-  "visual_suspend_vim",
-  "Suspend vim visual mode"
-)
+-- BUG: my nvim freezes from this when which key shows up
+-- NOTE: IMO inclusive is better
+-- utils.map("o", "T", "vT", opts, "Editor", "occurence_backw_inclusive", "Backwards occurence inclusive")
+-- utils.map("o", "F", "vF", opts, "Editor", "occurence_backw_till_inclusive", "Backwards occurence till inclusive")
 
 ---[[-----------------]]---
 --    Select Movement    --
