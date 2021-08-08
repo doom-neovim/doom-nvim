@@ -1114,8 +1114,8 @@ utils.map(
     '<cmd>w<cr>',
     opts,
     "Save",
-    "save",
-    "Save"
+    "save_left",
+    "Save v"
 )
 utils.map(
     'n',
@@ -1123,8 +1123,8 @@ utils.map(
     '<cmd>w<cr>',
     opts,
     "Save",
-    "save",
-    "Save"
+    "save_right",
+    "Save m"
 )
 
 -- man pages
