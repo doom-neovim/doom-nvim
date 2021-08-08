@@ -1139,10 +1139,9 @@ utils.map(
 )
 
 -- man pages
--- BUG: this binding is not working! why??
 utils.map(
     'n',
-    '<leader>M',
+    '<leader>h',
     ':Man ',
   {silent = false},
     "Man page",

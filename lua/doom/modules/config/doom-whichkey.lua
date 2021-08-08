@@ -73,7 +73,7 @@ return function()
     [","] = { "Switch buffer" },
     ["/"] = { "Search a word" },
     [":"] = { "Command history" },
-    ["M"] = { "Manpage" },
+    ["h"] = { "Manpage" },
     ["m"] = { "Save" },
     ["v"] = { "Save" },
     ["b"] = {
