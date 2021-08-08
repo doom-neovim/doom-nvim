@@ -74,6 +74,8 @@ return function()
     ["/"] = { "Search a word" },
     [":"] = { "Command history" },
     ["M"] = { "Manpage" },
+    ["m"] = { "Save" },
+    ["v"] = { "Save" },
     ["b"] = {
       name = "+buffers",
       ["c"] = { "Close current buffer" },
@@ -204,8 +206,6 @@ return function()
 			['p'] = { 'pop tag stack', },
 			['t'] = { 'jump to tag', },
 		},
-    ["m"] = { "Save" },
-    ["v"] = { "Save" },
   }
 
   wk.register(mappings, { prefix = "<leader>" })
