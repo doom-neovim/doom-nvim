@@ -75,6 +75,9 @@ local doom = {
     -- "colorizer",       -- Fastest colorizer for Neovim
     "range-highlight",    -- hightlights ranges you have entered in commandline
   },
+  web = {
+    -- "firenvim"          -- requires firenvim web extension; change fontsize by increasing guifontsize in doomrc
+  }
 }
 
 return doom

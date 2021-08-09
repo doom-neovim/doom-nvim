@@ -458,6 +458,12 @@ packer.startup(function(use)
     event = "BufRead",
   })
 
+  local disabled_firenvim = functions.is_plugin_disabled("firenvim")
+  use({
+    'glacambre/firenvim',
+    run = function() vim.fn['firenvim#install'](0) end
+  })
+
 	use({
     "folke/todo-comments.nvim",
     requires = "nvim-lua/plenary.nvim",

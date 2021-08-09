@@ -78,6 +78,9 @@ local function default_doomrc_values()
       -- 'colorizer',       -- Fastets colorizer for Neovim
       "range-highlight", -- hightlights ranges you have entered in commandline
     },
+    web = {
+      -- "firenvim"          -- requires firenvim extension to be installed in webbrowser
+    }
   }
 end
 
