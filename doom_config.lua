@@ -137,6 +137,13 @@ local doom = {
   -- @default = true
   relative_num = true,
 
+	-- Enable winwidth
+	-- false : Manually set win width
+	-- true  : Active window auto sets width
+	-- @default = false, @default win_width_nr = 85
+	win_width = false,
+	win_width_nr = 85,
+
   -- Enable Highlight on yank
   -- false : disables highligh on yank
   -- true  : enables highlight on yank
