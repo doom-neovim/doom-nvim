@@ -38,7 +38,7 @@ local doom = {
     -- "restclient",      -- A fast Neovim http client
     "formatter",          -- File formatting
     "autopairs",          -- Autopairs
-    "editorconfig",       -- EditorConfig support for Neovim
+    -- "editorconfig",       -- EditorConfig support for Neovim
     "kommentary",         -- Comments plugin
     "lsp",                -- Language Server Protocols
     "dap",                -- Debug Adapter Protocol
