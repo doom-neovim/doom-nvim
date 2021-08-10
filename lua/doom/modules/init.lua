@@ -203,6 +203,13 @@ packer.startup(function(use)
     disable = disabled_whichkey,
   })
 
+  -- popup that shows contents of each register
+  local disabled_show_registers = functions.is_plugin_disabled("show_registers")
+  use({
+    "tversteeg/registers.nvim",
+    disable = disabled_show_registers
+  })
+
   -- Distraction free environment
   local disabled_zen = functions.is_plugin_disabled("zen")
   use({

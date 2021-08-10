@@ -20,6 +20,8 @@ local doom = {
     -- "zen",             -- Distraction free environment
     "which-key",          -- Keybindings popup menu like Emacs' guide-key
     -- "indentlines",     -- Show indent lines
+    -- "show_registers",     -- popup that shows register contents
+    -- "indentlines",        -- Show indent lines
   },
   doom = {
     -- "neorg",              -- Life Organization Tool

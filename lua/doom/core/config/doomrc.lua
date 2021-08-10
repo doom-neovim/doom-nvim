@@ -23,6 +23,7 @@ local function default_doomrc_values()
       "tabline",        -- Tabline, shows your buffers list at top
       -- 'zen',         -- Distraction free environment
       "which-key",      -- Keybindings popup menu like Emacs' guide-key
+      -- "show_registers", -- popup that shows register contents
       -- 'indentlines',    -- Show indent lines
     },
     doom = {
