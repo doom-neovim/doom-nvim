@@ -461,7 +461,9 @@ packer.startup(function(use)
   local disabled_firenvim = functions.is_plugin_disabled("firenvim")
   use({
     'glacambre/firenvim',
-    run = function() vim.fn['firenvim#install'](0) end
+    disable = disabled_firenvim,
+    run = function() vim.fn['firenvim#install'](0) end,
+    config = require('doom.modules.config.doom-fire'),
   })
 
 	use({
