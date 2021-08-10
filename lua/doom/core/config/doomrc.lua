@@ -17,13 +17,13 @@ log.debug("Loading Doom doomrc module ...")
 local function default_doomrc_values()
   return {
     ui = {
-      "dashboard", -- Start screen
+      "dashboard",      -- Start screen
       -- 'doom-themes', -- Additional doom emacs' colorschemes
-      "statusline", -- Statusline
-      "tabline", -- Tabline, shows your buffers list at top
+      "statusline",     -- Statusline
+      "tabline",        -- Tabline, shows your buffers list at top
       -- 'zen',         -- Distraction free environment
-      "which-key", -- Keybindings popup menu like Emacs' guide-key
-      -- 'indentlines', -- Show indent lines
+      "which-key",      -- Keybindings popup menu like Emacs' guide-key
+      -- 'indentlines',    -- Show indent lines
     },
     doom = {
       -- 'neorg',    -- Life Organization Tool
