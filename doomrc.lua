@@ -37,7 +37,6 @@ local doom = {
     -- "minimap",         -- Code minimap, requires github.com/wfxr/code-minimap
     "gitsigns",           -- Git signs
     "telescope",          -- Highly extendable fuzzy finder over lists
-    -- "restclient",      -- A fast Neovim http client
     "formatter",          -- File formatting
     "autopairs",          -- Autopairs
     -- "editorconfig",       -- EditorConfig support for Neovim
@@ -78,7 +77,9 @@ local doom = {
     "range-highlight",    -- hightlights ranges you have entered in commandline
   },
   web = {
-    -- "firenvim"          -- requires firenvim web extension; change fontsize by increasing guifontsize in doomrc
+    -- "restclient",      -- A fast Neovim http client
+    -- "firenvim",          -- requires firenvim web extension; change fontsize by increasing guifontsize in doomrc
+    -- "colorizer",       -- Fastest colorizer for Neovim
   }
 }
 

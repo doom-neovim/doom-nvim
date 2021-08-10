@@ -40,7 +40,6 @@ local function default_doomrc_values()
       -- 'minimap',      -- Code minimap, requires github.com/wfxr/code-minimap
       "gitsigns", -- Git signs
       "telescope", -- Highly extendable fuzzy finder over lists
-      -- 'restclient',   -- A fast Neovim http client
       "formatter", -- File formatting
       "autopairs", -- Autopairs
       -- 'editorconfig', -- EditorConfig support for Neovim
@@ -76,11 +75,12 @@ local function default_doomrc_values()
       -- 'suda',            -- Write and read files without sudo permissions
       -- 'lazygit',         -- LazyGit integration for Neovim, requires LazyGit
       -- 'neogit',          -- Magit for Neovim
-      -- 'colorizer',       -- Fastets colorizer for Neovim
       "range-highlight", -- hightlights ranges you have entered in commandline
     },
     web = {
-      -- "firenvim"          -- requires firenvim extension to be installed in webbrowser
+      -- 'restclient',   -- A fast Neovim http client
+      -- "firenvim",          -- requires firenvim extension to be installed in webbrowser
+      -- 'colorizer',       -- Fastets colorizer for Neovim
     }
   }
 end
