@@ -60,9 +60,7 @@ if is_module_available("nvim-mapper") then
 else
   -- Manually load the doom_config.lua file to avoid circular dependencies
   local doom_config_path
-  if
-    M.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep))
-  then
+  if M.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)) then
     doom_config_path = string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)
   elseif M.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep)) then
     doom_config_path = string.format("%s%sdoom_config.lua", system.doom_root, system.sep)
