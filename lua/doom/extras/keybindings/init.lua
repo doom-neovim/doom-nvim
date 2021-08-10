@@ -424,17 +424,6 @@ utils.map(
 --    WhichKey binds     --
 ---]]-----------------[[---
 
-utils.map(
-  "n",
-  "<leader><space>",
-  ":",
-  { silent = false },
-  "Editor",
-  "command",
-  "Command"
-)
-
-
 -- Misc
 utils.map(
   "n",
