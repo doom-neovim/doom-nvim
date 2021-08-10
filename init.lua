@@ -19,7 +19,6 @@ vim.cmd([[
 -- Temporarily disable shada file to improve performance
 vim.opt.shadafile = "NONE"
 -- Disable some unused built-in Neovim plugins
-vim.g.loaded_man = false
 vim.g.loaded_gzip = false
 vim.g.loaded_netrwPlugin = false
 vim.g.loaded_tarPlugin = false
