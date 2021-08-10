@@ -49,8 +49,14 @@ vim.defer_fn(function()
 
   -- If the dashboard plugin is already installed and the packer_compiled.lua
   -- file exists so we can make sure that the dashboard have been loaded.
-  local compiled_plugins_path = vim.fn.expand("$HOME/.config/doom-nvim/plugin/packer_compiled.lua")
-  if vim.fn.filereadable(compiled_plugins_path) > 0 then
+  local system = require("doom.core.system")
+  local compiled_plugins_path = string.format(
+    "%s%splugin%spacker_compiled.lua",
+    system.doom_root,
+    system.sep,
+    system.sep
+  )
+  if require("doom.utils").file_exists(compiled_plugins_path) then
     -- If the current buffer name is empty then trigger Dashboard.
     -- NOTE: this is done to avoid some weird issues with Dashboard and
     --       number / signcolumn when Dashboard gets triggered automatically
