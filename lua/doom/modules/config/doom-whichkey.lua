@@ -72,6 +72,9 @@ return function()
     [","] = { "Switch buffer" },
     ["/"] = { "Search a word" },
     [":"] = { "Command history" },
+    ["h"] = { "Manpage" },
+    ["m"] = { "Save" },
+    ["v"] = { "Save" },
     ["b"] = {
       name = "+buffers",
       ["c"] = { "Close current buffer" },
@@ -189,10 +192,19 @@ return function()
       ["b"] = { "Debugging UI " },
       ["d"] = { "Start screen" },
       ["e"] = { "Tree Explorer" },
+      ["r"] = { "Ranger File Browser" },
       ["m"] = { "Minimap" },
       ["s"] = { "Symbols" },
       ["t"] = { "Terminal" },
     },
+		['j'] = {
+			name = '+jumps',
+			['a'] = { 'Alternate file', },
+			['j'] = { 'jump back', },
+			['k'] = { 'jump forward', },
+			['p'] = { 'pop tag stack', },
+			['t'] = { 'jump to tag', },
+		},
   }
 
   wk.register(mappings, { prefix = "<leader>" })

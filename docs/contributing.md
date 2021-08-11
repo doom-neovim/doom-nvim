@@ -23,6 +23,15 @@ and which code style you should use :heart:
   so that it works correctly on your environment, you can do it freely since I
   currently do not have that system to do tests.
 
+## Jumping between two branches
+
+If you have a personal branch and then a second branch only made for creating PRs
+you will most likely have to remove the `plugin/packer_compiled.lua` file every
+time you checkout the `pull_request_branch`. This is because the pr branch most likely
+will have less settings and plugins than you personal branch and therefore it will
+not work as expected otherwise. Eg. you will see 'Dashboard' text on vim load instead of
+'Doom'.
+
 ## Reporting issues
 
 ### Acquire a backtrace from errors

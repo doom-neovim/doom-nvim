@@ -36,7 +36,7 @@ M.sep = get_separator()
 -- in case that doom_configs_root directory does not exists.
 M.doom_root = string.format("%s%snvim", M.config_dir, M.sep)
 -- The doom-nvim configurations root directory
-M.doom_configs_root = string.format("%s%sdoom-nvim", M.config_dir, M.sep)
+M.doom_configs_root = string.format("%s%snvim", M.config_dir, M.sep)
 -- The doom-nvim logs file path
 M.doom_logs = vim.fn.stdpath("data") .. string.format("%sdoom.log", M.sep)
 -- The doom-nvim bug report file path

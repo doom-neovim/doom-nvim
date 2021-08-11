@@ -126,6 +126,14 @@ packer.startup(function(use)
     },
   })
 
+  -- Ranger File Browser
+  local disabled_ranger = functions.is_plugin_disabled("ranger")
+  use({
+    "francoiscabrol/ranger.vim",
+    requires = "rbgrouleff/bclose.vim",
+    disable = disabled_ranger,
+  })
+
   -- Statusline
   -- can be disabled to use your own statusline
   local disabled_statusline = functions.is_plugin_disabled("statusline")
@@ -193,6 +201,13 @@ packer.startup(function(use)
     opt = true,
     config = require("doom.modules.config.doom-whichkey"),
     disable = disabled_whichkey,
+  })
+
+  -- popup that shows contents of each register
+  local disabled_show_registers = functions.is_plugin_disabled("show_registers")
+  use({
+    "tversteeg/registers.nvim",
+    disable = disabled_show_registers
   })
 
   -- Distraction free environment
@@ -449,6 +464,26 @@ packer.startup(function(use)
     disable = disabled_range_highlight,
     event = "BufRead",
   })
+
+  local disabled_firenvim = functions.is_plugin_disabled("firenvim")
+  use({
+    'glacambre/firenvim',
+    disable = disabled_firenvim,
+    run = function() vim.fn['firenvim#install'](0) end,
+    config = require('doom.modules.config.doom-fire'),
+  })
+
+	use({
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = require('doom.modules.config.doom-todo'),
+  })
+  use({
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = require('doom.modules.config.doom-trouble'),
+  })
+  use({ "jez/vim-superman" })
 
   -----[[----------------]]-----
   ---     Custom Plugins     ---

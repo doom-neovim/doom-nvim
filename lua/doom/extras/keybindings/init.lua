@@ -321,6 +321,24 @@ utils.map("n", "<C-l>", "<C-w>l", opts, "Movement", "right_window", "Goto right 
 utils.map("i", "jk", "<ESC>", opts, "Editor", "exit_insert", "Exit insert mode")
 
 ---[[-----------------]]---
+--    Make inclusive     --
+---]]-----------------[[---
+-- BUG: my nvim freezes from this when which key shows up
+-- NOTE: IMO inclusive is better
+-- utils.map("o", "T", "vT", opts, "Editor", "occurence_backw_inclusive", "Backwards occurence inclusive")
+-- utils.map("o", "F", "vF", opts, "Editor", "occurence_backw_till_inclusive", "Backwards occurence till inclusive")
+
+---[[-----------------]]---
+--       Move Lines      --
+---]]-----------------[[---
+utils.map("n", '<a-j>', ':m .+1<CR>==',        opts, "Editor", "normal_move_line_down",  "Normal Move line down")
+utils.map("n", '<a-k>', ':m .-2<CR>==',        opts, "Editor", "normal_move_line_up",    "Normal Move line up")
+utils.map("i", '<a-j>', '<esc>:m .+1<CR>==gi', opts, "Editor", "instert_move_line_down", "Insert Move line down")
+utils.map("i", '<a-k>', '<esc>:m .-2<CR>==gi', opts, "Editor", "instert_move_line_up",   "Insert Move line up")
+utils.map("v", '<a-j>', ':m \'>+1<CR>gv=gv',   opts, "Editor", "visual_move_line_down",  "Visual Move line down")
+utils.map("v", '<a-k>', ':m \'<-2<CR>gv=gv',   opts, "Editor", "visual_move_line_up",    "Visual Move line up")
+
+---[[-----------------]]---
 --    Select Movement    --
 ---]]-----------------[[---
 utils.map("x", "K", ":move '<-2<CR>gv-gv", opts, "Editor", "select_right", "Move selection right")
@@ -863,6 +881,15 @@ utils.map(
 )
 utils.map(
   "n",
+  "<leader>or",
+  "<cmd>Ranger<CR>",
+  opts,
+  "Editor",
+  "open_ranger_browser",
+  "Toggle Ranger File Browser"
+)
+utils.map(
+  "n",
   "<leader>os",
   "<cmd>SymbolsOutline<CR>",
   opts,
@@ -1032,4 +1059,81 @@ utils.map(
   "LSP",
   "diagnostic_list",
   "Diagnostics into location list"
+)
+
+-- jumps
+utils.map(
+    'n',
+    '<leader>ja',
+    '<C-^>',
+    opts,
+    "Jumps",
+    "jump_alternate_file",
+    "Alternate file"
+)
+utils.map(
+    'n',
+    '<leader>jj',
+    '<C-o>',
+    opts,
+    "Jumps",
+    "jump_older",
+    "Jump to older pos"
+)
+utils.map(
+    'n',
+    '<leader>jk',
+    '<C-i>',
+    opts,
+    "Jumps",
+    "jump_newer",
+    "Jump to newer pos"
+)
+utils.map(
+    'n',
+    '<leader>jp',
+    ':pop<CR>',
+    opts,
+    "Jumps",
+    "jump_pop_tag",
+    "Pop from tag stack"
+)
+utils.map(
+    'n',
+    '<leader>jt',
+    ':tag<CR>',
+    opts,
+    "Jumps",
+    "jump_folow_tag",
+    "Follow tag / add to stack"
+)
+-- save
+utils.map(
+    'n',
+    '<leader>v',
+    '<cmd>w<cr>',
+    opts,
+    "Save",
+    "save_left",
+    "Save v"
+)
+utils.map(
+    'n',
+    '<leader>m',
+    '<cmd>w<cr>',
+    opts,
+    "Save",
+    "save_right",
+    "Save m"
+)
+
+-- man pages
+utils.map(
+    'n',
+    '<leader>h',
+    ':Man ',
+  {silent = false},
+    "Man page",
+    "man_page",
+    "Man page"
 )

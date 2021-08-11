@@ -107,6 +107,11 @@ M.load_default_options = function()
     vim.opt.number = true
   end
 
+  -- Enable winwidth
+  if config.doom.win_width then
+    vim.opt.winwidth = config.doom.win_width_nr
+  end
+
   -- Checks to see if undo_dir does not exist. If it doesn't, it will create a undo folder
   local undo_dir = vim.fn.stdpath("config") .. config.doom.undo_dir
   if config.doom.backup and vim.fn.empty(vim.fn.glob(undo_dir)) > 0 then

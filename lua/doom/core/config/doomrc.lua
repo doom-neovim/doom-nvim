@@ -17,13 +17,14 @@ log.debug("Loading Doom doomrc module ...")
 local function default_doomrc_values()
   return {
     ui = {
-      "dashboard", -- Start screen
+      "dashboard",      -- Start screen
       -- 'doom-themes', -- Additional doom emacs' colorschemes
-      "statusline", -- Statusline
-      "tabline", -- Tabline, shows your buffers list at top
+      "statusline",     -- Statusline
+      "tabline",        -- Tabline, shows your buffers list at top
       -- 'zen',         -- Distraction free environment
-      "which-key", -- Keybindings popup menu like Emacs' guide-key
-      -- 'indentlines', -- Show indent lines
+      "which-key",      -- Keybindings popup menu like Emacs' guide-key
+      -- "show_registers", -- popup that shows register contents
+      -- 'indentlines',    -- Show indent lines
     },
     doom = {
       -- 'neorg',    -- Life Organization Tool
@@ -34,11 +35,11 @@ local function default_doomrc_values()
       "auto-session", -- A small automated session manager for Neovim
       -- 'terminal',     -- Terminal for Neovim (NOTE: needed for runner and compiler)
       "explorer", -- Tree explorer
+      -- "ranger", -- Ranger File Browser, requires ranger file browser
       "symbols", -- LSP symbols and tags
       -- 'minimap',      -- Code minimap, requires github.com/wfxr/code-minimap
       "gitsigns", -- Git signs
       "telescope", -- Highly extendable fuzzy finder over lists
-      -- 'restclient',   -- A fast Neovim http client
       "formatter", -- File formatting
       "autopairs", -- Autopairs
       -- 'editorconfig', -- EditorConfig support for Neovim
@@ -74,9 +75,13 @@ local function default_doomrc_values()
       -- 'suda',            -- Write and read files without sudo permissions
       -- 'lazygit',         -- LazyGit integration for Neovim, requires LazyGit
       -- 'neogit',          -- Magit for Neovim
-      -- 'colorizer',       -- Fastets colorizer for Neovim
       "range-highlight", -- hightlights ranges you have entered in commandline
     },
+    web = {
+      -- 'restclient',   -- A fast Neovim http client
+      -- "firenvim",          -- requires firenvim extension to be installed in webbrowser
+      -- 'colorizer',       -- Fastets colorizer for Neovim
+    }
   }
 end
 
