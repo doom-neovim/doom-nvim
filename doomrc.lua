@@ -20,11 +20,10 @@ local doom = {
     -- "zen",             -- Distraction free environment
     "which-key",          -- Keybindings popup menu like Emacs' guide-key
     -- "indentlines",     -- Show indent lines
-    -- "show_registers",     -- popup that shows register contents
-    -- "indentlines",        -- Show indent lines
+    -- "show_registers",  -- popup that shows register contents
   },
   doom = {
-    -- "neorg",              -- Life Organization Tool
+    -- "neorg",           -- Life Organization Tool
     -- "runner",          -- Open a REPL for the current language or run the current file
     -- "compiler",        -- Compile (and run) your code with just pressing three keys!
   },
@@ -32,14 +31,14 @@ local doom = {
     "auto-session",       -- A small automated session manager for Neovim
     "terminal",           -- Terminal for Neovim (NOTE: needed for runner and compiler)
     "explorer",           -- Tree explorer
-    -- "ranger",             -- Ranger File Browser, requires ranger file browser
+    -- "ranger",          -- Ranger File Browser, requires ranger file browser
     "symbols",            -- LSP symbols and tags
     -- "minimap",         -- Code minimap, requires github.com/wfxr/code-minimap
     "gitsigns",           -- Git signs
     "telescope",          -- Highly extendable fuzzy finder over lists
     "formatter",          -- File formatting
     "autopairs",          -- Autopairs
-    -- "editorconfig",       -- EditorConfig support for Neovim
+    -- "editorconfig",    -- EditorConfig support for Neovim
     "kommentary",         -- Comments plugin
     "lsp",                -- Language Server Protocols
     "dap",                -- Debug Adapter Protocol
@@ -78,7 +77,7 @@ local doom = {
   },
   web = {
     -- "restclient",      -- A fast Neovim http client
-    -- "firenvim",          -- requires firenvim web extension; change fontsize by increasing guifontsize in doomrc
+    -- "firenvim",        -- requires firenvim web extension; change fontsize by increasing guifontsize in doom_config
     -- "colorizer",       -- Fastest colorizer for Neovim
   }
 }
