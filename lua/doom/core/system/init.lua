@@ -10,7 +10,7 @@ local M = {}
 -- 'C:\Users\JohnDoe\AppData\Local' for windows and '~/.config' for *nix
 -- @return string
 local function get_config_dir()
-  if vim.loop.os_uname().sysname == "Windows" then
+  if string.find(vim.loop.os_uname().sysname, "Windows") then
     return os.getenv("USERPROFILE") .. "\\AppData\\Local\\"
   end
 

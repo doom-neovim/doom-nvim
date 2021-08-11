@@ -84,6 +84,12 @@ local doom = {
   -- @default = false
   preserve_edit_pos = false,
 
+  -- Allow overriding the default Doom Nvim keybinds
+  -- false : Default keybinds cannot be overwritten
+  -- true  : Default keybinds can be overwritten
+  -- @default = true
+  allow_default_keymaps_overriding = true,
+
   -- horizontal split on creating a new file (<Leader>fn)
   -- false : doesn't split the window when creating a new file
   -- true  : horizontal split on creating a new file

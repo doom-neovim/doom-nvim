@@ -5,10 +5,24 @@
 ---[[---------------------------------------]]---
 
 local M = {}
+local system = require("doom.core.system")
 
 -------------------- HELPERS --------------------
 -- Doom Nvim version
 M.doom_version = "3.1.0"
+
+-- file_exists checks if the given file exists
+-- @tparam string path The path to the file
+-- @return boolean
+M.file_exists = function(path)
+  local fd = vim.loop.fs_open(path, "r", 438)
+  if fd then
+    vim.loop.fs_close(fd)
+    return true
+  end
+
+  return false
+end
 
 -- Mappings wrapper, extracted from
 -- https://github.com/ojroques/dotfiles/blob/master/nvim/init.lua#L8-L12
@@ -44,8 +58,17 @@ if is_module_available("nvim-mapper") then
     mapper.map_buf_virtual(mode, lhs, rhs, opts, category, unique_identifier, description)
   end
 else
+  -- Manually load the doom_config.lua file to avoid circular dependencies
+  local doom_config_path
+  if M.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)) then
+    doom_config_path = string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)
+  elseif M.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep)) then
+    doom_config_path = string.format("%s%sdoom_config.lua", system.doom_root, system.sep)
+  end
+  local config = dofile(doom_config_path)
+
   M.map = function(mode, lhs, rhs, opts, _, _, _)
-    local options = { noremap = true }
+    local options = config.doom.allow_default_keymaps_overriding and {} or { noremap = true }
     if opts then
       options = vim.tbl_extend("force", options, opts)
     end
@@ -89,19 +112,6 @@ M.has_value = function(tabl, val)
     if value == val then
       return true
     end
-  end
-
-  return false
-end
-
--- file_exists checks if the given file exists
--- @tparam string path The path to the file
--- @return boolean
-M.file_exists = function(path)
-  local fd = vim.loop.fs_open(path, "r", 438)
-  if fd then
-    vim.loop.fs_close(fd)
-    return true
   end
 
   return false

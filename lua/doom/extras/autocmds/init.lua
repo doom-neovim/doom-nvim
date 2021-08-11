@@ -24,6 +24,12 @@ local autocmds = {
       "doom_config.lua",
       "lua require('doom.core.functions').reload_custom_settings()",
     },
+    -- Automatically change colorscheme and background on exit
+    {
+      "VimLeavePre",
+      "*",
+      "lua require('doom.core.functions').change_colors_and_bg()",
+    },
   },
   doom_extras = {
     -- Set up vim_buffer_previewer in telescope.nvim
