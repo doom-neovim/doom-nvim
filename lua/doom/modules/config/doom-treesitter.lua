@@ -40,7 +40,7 @@ return function()
   end
 
   -- macos uses wrong c version
-  require('nvim-treesitter.install').compilers = { 'gcc' }
+  require("nvim-treesitter.install").compilers = { "gcc" }
 
   require("nvim-treesitter.configs").setup({
     ensure_installed = get_ts_parsers(doomrc.langs),

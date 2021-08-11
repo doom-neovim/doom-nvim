@@ -197,14 +197,14 @@ return function()
       ["s"] = { "Symbols" },
       ["t"] = { "Terminal" },
     },
-		['j'] = {
-			name = '+jumps',
-			['a'] = { 'Alternate file', },
-			['j'] = { 'jump back', },
-			['k'] = { 'jump forward', },
-			['p'] = { 'pop tag stack', },
-			['t'] = { 'jump to tag', },
-		},
+    ["j"] = {
+      name = "+jumps",
+      ["a"] = { "Alternate file" },
+      ["j"] = { "jump back" },
+      ["k"] = { "jump forward" },
+      ["p"] = { "pop tag stack" },
+      ["t"] = { "jump to tag" },
+    },
   }
 
   wk.register(mappings, { prefix = "<leader>" })

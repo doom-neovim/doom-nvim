@@ -207,7 +207,7 @@ packer.startup(function(use)
   local disabled_show_registers = functions.is_plugin_disabled("show_registers")
   use({
     "tversteeg/registers.nvim",
-    disable = disabled_show_registers
+    disable = disabled_show_registers,
   })
 
   -- Distraction free environment
@@ -467,21 +467,23 @@ packer.startup(function(use)
 
   local disabled_firenvim = functions.is_plugin_disabled("firenvim")
   use({
-    'glacambre/firenvim',
+    "glacambre/firenvim",
     disable = disabled_firenvim,
-    run = function() vim.fn['firenvim#install'](0) end,
-    config = require('doom.modules.config.doom-fire'),
+    run = function()
+      vim.fn["firenvim#install"](0)
+    end,
+    config = require("doom.modules.config.doom-fire"),
   })
 
-	use({
+  use({
     "folke/todo-comments.nvim",
     requires = "nvim-lua/plenary.nvim",
-    config = require('doom.modules.config.doom-todo'),
+    config = require("doom.modules.config.doom-todo"),
   })
   use({
     "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
-    config = require('doom.modules.config.doom-trouble'),
+    config = require("doom.modules.config.doom-trouble"),
   })
   use({ "jez/vim-superman" })
 
