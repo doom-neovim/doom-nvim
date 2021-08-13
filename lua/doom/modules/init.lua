@@ -28,6 +28,11 @@ local packer = require("packer")
 packer.init({
   git = {
     clone_timeout = 300, -- 5 mins
+    subcommands = {
+      -- Prevent packer from downloading all branches metadata to reduce cloning cost
+      -- for heavy size plugins like plenary (removed the '--no-single-branch' git flag)
+      install = "clone --depth %i --progress",
+    },
   },
   profile = {
     enable = true,
