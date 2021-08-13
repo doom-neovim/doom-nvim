@@ -24,7 +24,7 @@ return function()
   local fc = vim.g.firenvim_config.localSettings
   fc["https?://github.com/"] = {
     takeover = "always",
-    priority = 1
+    priority = 1,
   }
 
   -- Change the filetype to enable proper syntax highlighting
