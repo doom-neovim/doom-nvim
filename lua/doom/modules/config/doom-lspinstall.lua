@@ -1,6 +1,16 @@
 return function()
   local nvim_lsp = require("lspconfig")
-  local lua_lsp = require("lua-dev").setup({})
+  local lua_lsp = require("lua-dev").setup({
+    lspconfig = {
+      settings = {
+        Lua = {
+          workspace = {
+            preloadFileSize = 200,
+          },
+        },
+      },
+    },
+  })
 
   -- https://github.com/kabouzeid/nvim-lspinstall#advanced-configuration-recommended
   local function setup_servers()
