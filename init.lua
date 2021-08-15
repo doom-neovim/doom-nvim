@@ -11,9 +11,9 @@ vim.g.start_time = vim.fn.reltime()
 
 -- Disable these for very fast startup time
 vim.cmd([[
-	syntax off
-	filetype off
-    filetype plugin indent off
+  syntax off
+  filetype off
+  filetype plugin indent off
 ]])
 
 -- Temporarily disable shada file to improve performance
@@ -29,31 +29,19 @@ vim.g.loaded_remote_plugins = false
 ---- Doom Configurations ------------------------
 -------------------------------------------------
 vim.defer_fn(function()
-  local log = require("doom.extras.logging")
+  local load_modules = require("doom.utils").load_modules
 
-  -- Load Doom stuff (core, extras, modules)
-  local doom_modules = { "core", "extras", "modules" }
-  for i = 1, #doom_modules, 1 do
-    local ok, err = xpcall(require, debug.traceback, string.format("doom.%s", doom_modules[i]))
-    if not ok then
-      log.error(
-        string.format(
-          "There was an error loading the module 'doom.%s'. Traceback:\n%s",
-          doom_modules[i],
-          err
-        )
-      )
-    end
-  end
+  -- Load Doom stuff (core, modules, extras)
+  load_modules("doom", { "core", "modules", "extras.autocmds" })
 
   -- If the dashboard plugin is already installed and the packer_compiled.lua
   -- file exists so we can make sure that the dashboard have been loaded.
-  local system = require("doom.core.system")
+  local doom_root, sep = require("doom.core.system").doom_root, require("doom.core.system").sep
   local compiled_plugins_path = string.format(
     "%s%splugin%spacker_compiled.lua",
-    system.doom_root,
-    system.sep,
-    system.sep
+    doom_root,
+    sep,
+    sep
   )
   if require("doom.utils").file_exists(compiled_plugins_path) then
     -- If the current buffer name is empty then trigger Dashboard.
@@ -64,17 +52,21 @@ vim.defer_fn(function()
     end
   end
 
+  vim.opt.shadafile = ""
+  vim.cmd([[
+    rshada!
+    doautocmd BufRead
+    syntax on
+    filetype on
+    filetype plugin indent on
+    PackerLoad nvim-treesitter
+  ]])
+
+  -- Load keybindings module at the end because the keybindings module cost is high
   vim.defer_fn(function()
-    vim.opt.shadafile = ""
+    load_modules("doom.extras", { "keybindings" })
     vim.cmd([[
-            rshada!
-            doautocmd BufRead
-            syntax on
-            filetype on
-            filetype plugin indent on
-            PackerLoad nvim-treesitter
-            PackerLoad which-key.nvim
-            silent! bufdo e
-        ]])
-  end, 10)
+      PackerLoad which-key.nvim
+    ]])
+  end, 20)
 end, 0)

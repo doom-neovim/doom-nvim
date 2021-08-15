@@ -145,4 +145,20 @@ M.write_file = function(path, content, mode)
   end)
 end
 
+M.load_modules = function(module_path, modules)
+  for i = 1, #modules, 1 do
+    local ok, err = xpcall(require, debug.traceback, string.format("%s.%s", module_path, modules[i]))
+    if not ok then
+      log.error(
+        string.format(
+          "There was an error loading the module '%s.%s'. Traceback:\n%s",
+          module_path,
+          modules[i],
+          err
+        )
+      )
+    end
+  end
+end
+
 return M
