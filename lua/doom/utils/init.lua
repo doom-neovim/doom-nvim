@@ -147,7 +147,11 @@ end
 
 M.load_modules = function(module_path, modules)
   for i = 1, #modules, 1 do
-    local ok, err = xpcall(require, debug.traceback, string.format("%s.%s", module_path, modules[i]))
+    local ok, err = xpcall(
+      require,
+      debug.traceback,
+      string.format("%s.%s", module_path, modules[i])
+    )
     if not ok then
       log.error(
         string.format(
