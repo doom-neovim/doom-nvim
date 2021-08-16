@@ -332,7 +332,7 @@ high_link('Todo', 'TextWarningBold')
 local main_syntax = {
 	Tag = { fg = tag, gui = 'bold' },
 	Link = { fg = tag, gui = 'undercurl' },
-	URL = { fg = tag, gui = 'undercurl' },
+	URL = { fg = green, gui = 'undercurl' },
 	Underlined = { fg = tag, gui = 'underline' },
 
 	Comment = {
