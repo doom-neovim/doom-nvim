@@ -9,7 +9,7 @@ return function()
         and true
       or false,
     show_first_indent_level = false,
-    filetype_exclude = { "help", "dashboard", "packer" },
+    filetype_exclude = { "help", "dashboard", "packer", "norg" },
     buftype_exclude = { "terminal" },
   })
 end
