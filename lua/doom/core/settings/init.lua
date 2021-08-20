@@ -114,9 +114,11 @@ M.load_default_options = function()
 
   -- Checks to see if undo_dir does not exist. If it doesn't, it will create a undo folder
   local undo_dir = vim.fn.stdpath("config") .. config.doom.undo_dir
-  if config.doom.backup and vim.fn.empty(vim.fn.glob(undo_dir)) > 0 then
-    vim.api.nvim_command("!mkdir " .. undo_dir .. " -p")
-    vim.opt.undofile = true
+  if config.doom.backup and vim.fn.empty(vim.fn.glob(undo_dir)) >= 0 then
+    if vim.fn.isdirectory(undo_dir) ~= 1 then
+      vim.api.nvim_command("!mkdir -p " .. undo_dir)
+    end
+		vim.opt.undofile = true
   end
 
   -- If backup is false but `undo_dir` still exists then it will delete it.
