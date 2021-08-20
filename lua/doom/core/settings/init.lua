@@ -118,7 +118,7 @@ M.load_default_options = function()
     if vim.fn.isdirectory(undo_dir) ~= 1 then
       vim.api.nvim_command("!mkdir -p " .. undo_dir)
     end
-		vim.opt.undofile = true
+    vim.opt.undofile = true
   end
 
   -- If backup is false but `undo_dir` still exists then it will delete it.
