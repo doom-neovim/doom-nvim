@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.10] - 2021-08-20
+
+### Fixed
+
+- `undodir` was not working as expected
+
 ## [3.0.9] - 2021-08-04
 
 ### Fixed
@@ -421,7 +427,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.9...develop
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.10...develop
+[3.0.10]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.9...v3.0.10
 [3.0.9]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.8...v3.0.9
 [3.0.8]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.7...v3.0.8
 [3.0.7]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.6...v3.0.7
