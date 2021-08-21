@@ -113,6 +113,7 @@ M.load_default_options = function()
     if vim.fn.isdirectory(undo_dir) ~= 1 then
       vim.api.nvim_command("!mkdir -p " .. undo_dir)
     end
+    vim.opt.undodir = undo_dir
 		vim.opt.undofile = true
 	end
 
