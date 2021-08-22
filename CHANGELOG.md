@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.12] - 2021-08-22
+
+### Fixed
+
+- Proper conditional for triggering dashboard-nvim plugin, check if it's in the packer_plugins table
+
 ## [3.0.11] - 2021-08-20
 
 ### Fixed
@@ -433,7 +439,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.11...develop
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.12...develop
+[3.0.12]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.11...v3.0.12
 [3.0.11]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.10...v3.0.11
 [3.0.10]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.9...v3.0.10
 [3.0.9]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.8...v3.0.9
