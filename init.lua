@@ -42,8 +42,12 @@ async = vim.loop.new_async(vim.schedule_wrap(function()
 			'$HOME/.config/doom-nvim/plugin/packer_compiled.lua'
 		)
 		if vim.fn.filereadable(compiled_plugins_path) > 0 then
-			-- If the current buffer name is empty then trigger Dashboard
-			if vim.api.nvim_buf_get_name(0):len() == 0 then
+			-- If the current buffer name is empty and dashboard-nvim is installed
+			-- then trigger Dashboard
+			if
+				(vim.api.nvim_buf_get_name(0):len() == 0)
+				and packer_plugins['dashboard-nvim']
+			then
 				vim.cmd('Dashboard')
 			end
 		end
