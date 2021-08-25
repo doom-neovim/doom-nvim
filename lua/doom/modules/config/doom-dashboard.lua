@@ -28,7 +28,11 @@ return function()
 		},
 		f = {
 			description = { '  Open Private Configuration     SPC d c' },
-			command = ':e ' .. require('doom.utils').doom_root .. '/doomrc',
+			command = ':args'
+				.. ' ' .. require('doom.utils').doom_root .. '/doomrc.lua'
+				.. ' ' .. require('doom.utils').doom_root .. '/doom_config.lua'
+				.. ' ' .. require('doom.utils').doom_root .. '/plugins.lua'
+				.. ' | tab all',
 		},
 		g = {
 			description = { '  Open Documentation             SPC d d' },
