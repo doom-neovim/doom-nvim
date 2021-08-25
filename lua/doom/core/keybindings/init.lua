@@ -258,9 +258,15 @@ utils.map(
 	'n',
 	'<leader>dc',
 	'<cmd>args'
-		.. ' ' .. utils.doom_root .. '/doomrc.lua'
-		.. ' ' .. utils.doom_root .. '/doom_config.lua'
-		.. ' ' .. utils.doom_root .. '/plugins.lua'
+		.. ' '
+		.. utils.doom_root
+		.. '/doomrc.lua'
+		.. ' '
+		.. utils.doom_root
+		.. '/doom_config.lua'
+		.. ' '
+		.. utils.doom_root
+		.. '/plugins.lua'
 		.. ' | tab all<CR>',
 	opts
 )
