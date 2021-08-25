@@ -35,7 +35,7 @@ BYellow='\033[1;33m' # Yellow
 # }}}
 
 # Doom Nvim version
-DoomNvimVersion='3.0.12'
+DoomNvimVersion='3.0.13'
 # System OS
 System="$(uname -s)"
 

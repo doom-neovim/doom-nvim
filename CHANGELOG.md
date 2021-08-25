@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.13] - 2021-08-24
+
+### Fixed
+
+- Use `stdpath("config")` for configuration paths instead of `~/.config/doom-nvim` because doom-nvim is actually symlinked, respect `XDG_CONFIG_HOME` (see [#101](https://github.com/NTBBloodbath/doom-nvim/pull/101))
+- Update `<leader>dc` to match new config setup, ref [#101](https://github.com/NTBBloodbath/doom-nvim/pull/101). See [#102](https://github.com/NTBBloodbath/doom-nvim/pull/102)
+
 ## [3.0.12] - 2021-08-22
 
 ### Fixed
@@ -439,7 +446,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.12...develop
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.13...develop
+[3.0.12]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.12...v3.0.13
 [3.0.12]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.11...v3.0.12
 [3.0.11]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.10...v3.0.11
 [3.0.10]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.9...v3.0.10
