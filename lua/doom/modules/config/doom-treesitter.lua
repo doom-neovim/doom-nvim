@@ -34,9 +34,20 @@ return function()
       branch = "main",
     },
   }
-  -- selene: allow(undefined_variable)
   if packer_plugins and packer_plugins["neorg"] then
     table.insert(doomrc.langs, "norg")
+  end
+
+  -- Set up treesitter for HTTP
+  parser_configs.http = {
+    install_info = {
+      url = "https://github.com/NTBBloodbath/tree-sitter-http",
+      files = { "src/parser.c" },
+      branch = "main",
+    }
+  }
+  if packer_plugins and packer_plugins["rest.nvim"] then
+    table.insert(doomrc.langs, "http")
   end
 
   -- macos uses wrong c version
@@ -49,6 +60,7 @@ return function()
       enable = functions.is_plugin_disabled("autopairs") and false or true,
     },
     indent = { enable = true },
+    playground = { enable = true },
     tree_docs = { enable = true },
     context_commentstring = { enable = true },
     autotag = {
