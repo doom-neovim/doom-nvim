@@ -44,7 +44,7 @@ return function()
       url = "https://github.com/NTBBloodbath/tree-sitter-http",
       files = { "src/parser.c" },
       branch = "main",
-    }
+    },
   }
   if packer_plugins and packer_plugins["rest.nvim"] then
     table.insert(doomrc.langs, "http")
