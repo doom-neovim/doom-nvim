@@ -3,7 +3,7 @@ return function()
 
   require("indent_blankline").setup({
     enabled = config.doom.show_indent,
-    char = "|",
+    char = "│",
     -- If treesitter plugin is enabled then use its indentation
     use_treesitter = require("doom.core.functions").check_plugin("nvim-treesitter", "opt")
         and true
