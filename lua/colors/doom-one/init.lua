@@ -1,9 +1,9 @@
 -- vim:fdm=marker
 -- Vim Color File
--- Name:       doom-one
--- Maintainer: http//github.com/NTBBloodbath
--- License:    The MIT License (MIT)
--- Based On:   http//github.com/romgrk/doom-one.vim and the original Doom Emacs one
+-- Name:            doom-one
+-- Maintainer:      https://github.com/NTBBloodbath
+-- License:         The MIT License (MIT)
+-- Based On:        https://github.com/romgrk/doom-one.vim and the original Doom Emacs one
 
 -- Helpers {{{
 
@@ -233,11 +233,11 @@ local general_ui = {
 
 	TabLine = {
 		fg = base7,
-		bg = transparent_bg and 'NONE' or bg_alt,
+		bg = bg_alt,
 		gui = 'bold',
 	},
 	TabLineSel = { fg = blue, bg = bg, gui = 'bold' },
-	TabLineFill = { bg = transparent_bg and 'NONE' or base1, gui = 'bold' },
+	TabLineFill = { bg = base1, gui = 'bold' },
 
 	StatusLine = { fg = base8, bg = base3 },
 	StatusLineNC = { fg = base6, bg = bg_popup },
@@ -483,6 +483,97 @@ apply_highlight(barbar)
 
 -- }}}
 
+-- BufferLine {{{
+
+-- NOTE: this is a temporal workaround for using bufferline with a transparent
+--       background and having highlighting, please refer to
+--       https://github.com/NTBBloodbath/doom-one.nvim/issues/8#issuecomment-883737667
+--       for more information about this
+if transparent_bg then
+	local bufferline = {
+		BufferLineTab = { fg = fg, bg = bg },
+		BufferLineTabClose = { fg = fg, bg = bg, gui = 'bold' },
+		BufferLineTabSelected = { fg = blue, bg = bg, gui = 'bold,italic' },
+		BufferLineBackground = { fg = fg_alt, bg = bg },
+		BufferLineBufferSelected = { fg = fg, bg = bg, gui = 'bold,italic' },
+		BufferLineBufferVisible = { fg = fg, bg = bg },
+		BufferLineCloseButton = { fg = fg_alt, bg = bg },
+		BufferLineCloseButtonSelected = { fg = fg, bg = bg, gui = 'bold' },
+		BufferLineCloseButtonVisible = { fg = fg, bg = bg },
+		BufferLineModified = { fg = green, bg = bg },
+		BufferLineModifiedSelected = { fg = green, bg = bg },
+		BufferLineModifiedVisible = { fg = green, bg = bg },
+		BufferLineFill = { fg = blue, bg = bg_alt },
+		BufferLineIndicatorSelected = { fg = blue, bg = bg },
+		BufferLineSeparator = { fg = base0, bg = bg },
+		BufferLineSeparatorSelected = { fg = base0, bg = bg },
+		BufferLineSeparatorVisible = { fg = base0, bg = bg_alt },
+		BufferLinePick = { fg = fg, bg = bg, gui = 'bold' },
+		BufferLinePickSelected = { fg = blue, bg = bg, gui = 'bold,italic' },
+		BufferLinePickVisible = { fg = fg, bg = bg_alt },
+
+		BufferLineDiagnostic = { fg = fg, bg = bg, sp = fg },
+		BufferLineDiagnosticSelected = { fg = fg, bg = bg, sp = fg },
+		BufferLineDiagnosticVisible = { fg = fg, bg = bg, sp = fg },
+
+		BufferLineInfo = { fg = cyan, bg = bg, sp = cyan, gui = 'bold' },
+		BufferLineInfoSelected = {
+			fg = cyan,
+			bg = bg,
+			sp = cyan,
+			gui = 'bold,italic',
+		},
+		BufferLineInfoVisible = { fg = cyan, bg = bg, sp = cyan, gui = 'bold' },
+		BufferLineInfoDiagnostic = { fg = cyan, bg = bg, sp = cyan },
+		BufferLineInfoDiagnosticSelected = { fg = cyan, bg = bg, sp = cyan },
+		BufferLineInfoDiagnosticVisible = { fg = cyan, bg = bg, sp = cyan },
+		BufferLineError = { fg = red, bg = bg, sp = red, gui = 'bold' },
+		BufferLineErrorSelected = {
+			fg = red,
+			bg = bg,
+			sp = red,
+			gui = 'bold,italic',
+		},
+		BufferLineErrorVisible = { fg = red, bg = bg, sp = red, gui = 'bold' },
+		BufferLineErrorDiagnostic = { fg = red, bg = bg, sp = red },
+		BufferLineErrorDiagnosticSelected = { fg = red, bg = bg, sp = red },
+		BufferLineErrorDiagnosticVisible = { fg = red, bg = bg, sp = red },
+		BufferLineWarning = {
+			fg = yellow,
+			bg = bg,
+			sp = yellow,
+			gui = 'bold,italic',
+		},
+		BufferLineWarningSelected = {
+			fg = yellow,
+			bg = bg,
+			sp = yellow,
+			gui = 'bold,italic',
+		},
+		BufferLineWarningVisible = {
+			fg = yellow,
+			bg = bg,
+			sp = yellow,
+			gui = 'bold',
+		},
+		BufferLineWarningDiagnostic = { fg = yellow, bg = bg, sp = yellow },
+		BufferLineWarningDiagnosticSelected = {
+			fg = yellow,
+			bg = bg,
+			sp = yellow,
+		},
+		BufferLineWarningDiagnosticVisible = {
+			fg = yellow,
+			bg = bg,
+			sp = yellow,
+		},
+	}
+
+	apply_highlight(bufferline)
+end
+
+-- }}}
+
 -- Gitgutter {{{
 
 high_link('GitGutterAdd', 'DiffAddedGutter')
@@ -568,6 +659,21 @@ high_link('dashboardFooter', 'dashboardHeader')
 
 -- }}}
 
+-- Startify {{{
+
+local startify = {
+	StartifyHeader = { fg = bg_popup },
+	StartifyBracket = { fg = bg_popup },
+	StartifyNumber = { fg = blue },
+	StartifyPath = { fg = violet },
+	StartifySlash = { fg = violet },
+	StartifyFile = { fg = green },
+}
+
+apply_highlight(startify)
+
+-- }}}
+
 -- WhichKey {{{
 
 local whichkey = {
@@ -580,6 +686,35 @@ local whichkey = {
 }
 
 apply_highlight(whichkey)
+
+-- }}}
+
+-- indent-blankline {{{
+
+local indent_blankline = {
+	IndentBlanklineChar = {
+		fg = base4,
+		cterm = 'nocombine',
+		gui = 'nocombine',
+	},
+	IndentBlanklineContextChar = {
+		fg = blue,
+		cterm = 'nocombine',
+		gui = 'nocombine',
+	},
+	IndentBlanklineSpaceChar = {
+		fg = base4,
+		cterm = 'nocombine',
+		gui = 'nocombine',
+	},
+	IndentBlanklineSpaceCharBlankline = {
+		fg = base4,
+		cterm = 'nocombine',
+		gui = 'nocombine',
+	},
+}
+
+apply_highlight(indent_blankline)
 
 -- }}}
 

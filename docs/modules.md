@@ -84,7 +84,7 @@ without them. These plugins are the following:
 - [kommentary]
   - Comments plugin.
 - [lsp]
-  - Language Server Protocols ([compe] + [lspsaga] + [lspinstall]).
+  - Language Server Protocols ([compe] + [lspinstall]).
 - snippets
   - Code snippets ([LuaSnip] + [friendly-snippets]).
 
@@ -96,8 +96,12 @@ makes your life easier.
 The currently available flags are the following:
 
 - `+lsp` - enables and installs the Language Server Protocol for the language.
-  e.g. `rust +lsp` will automatically install TreeSitter parser for getting
-  syntax highlighting for Rust and will also install `rust-analyzer`.
+  e.g. `rust +lsp` will automatically install `rust-analyzer`.
+- `+debug` - enables and installs the Debug Adapter Protocol client for the
+  language. e.g. `python +debug` will automatically install `debugpy`.
+
+> **NOTE**: when the language entry is not commented, doom-nvim will automatically
+> install the TreeSitter parser for that language too.
 
 #### Web development
 
@@ -105,18 +109,22 @@ The currently available flags are the following:
   - HTML support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+  - DAP client: no.
 - **css**
   - CSS support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+  - DAP client: no.
 - **javascript**
   - JavaScript support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes, by using TSServer.
+  - DAP client: yes.
 - **typescript**
   - TypeScript support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+  - DAP client: no.
 
 #### Scripting
 
@@ -124,18 +132,22 @@ The currently available flags are the following:
   - BASH support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+  - DAP client: no.
 - **python**
   - Python support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+  - DAP client: yes.
 - **ruby**
   - Ruby support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+  - DAP client: yes.
 - **lua**
   - Lua support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+  - DAP client: no (it has but isn't supported by Doom _yet_, requires extra setup).
 - **elixir**
   - Elixir support.
   - TreeSitter based syntax highlighting: yes.
@@ -147,22 +159,27 @@ The currently available flags are the following:
   - Haskell support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+  - DAP client: no.
 - **rust**
   - Rust support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+  - DAP client: yes (not supported _yet_ by Doom for automatic installation).
 - **go**
   - Golang support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+  - DAP client: yes.
 - **cpp**
   - CPP support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+  - DAP client: yes (not supported _yet_ by Doom for automatic installation).
 - **java**
   - Java support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
+  - DAP client: no.
 
 #### Configs & DevOps
 
@@ -234,7 +251,6 @@ changes for you!
 
 [lsp]: https://github.com/neovim/nvim-lspconfig
 [compe]: https://github.com/hrsh7th/nvim-compe
-[lspsaga]: https://github.com/glepnir/lspsaga.nvim
 [lspinstall]: https://github.com/kabouzeid/nvim-lspinstall
 [LuaSnip]: https://github.com/L3MON4D3/LuaSnip
 [friendly-snippets]: https://github.com/rafamadriz/friendly-snippets

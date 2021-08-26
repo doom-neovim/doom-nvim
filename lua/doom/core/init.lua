@@ -1,22 +1,37 @@
 --- Main Doom configuration file
 --- This file loads all doom core components
---- (ui, options, doomrc, modules, packer, ect)
+--- (ui, options, doomrc, etc)
 
--- Doom core configurations
-require('doom.core.config')
-require('doom.core.config.ui')
--- Neovim configurations, e.g. shiftwidth
-require('doom.core.default').load_default_options()
--- User-defined settings (global variables, mappings, ect)
-require('doom.core.default').custom_options()
--- Doom modules (packer and plugins)
-require('doom.modules')
--- Doom keybindings
-require('doom.core.keybindings')
--- Doom autocommands
-require('doom.core.autocmds')
+local log = require("doom.extras.logging")
 
--- Automatically install language servers
-require('doom.core.config').install_servers(
-	require('doom.core.config.doomrc').load_doomrc().langs
-)
+local core_modules = { "config", "config.ui", "settings" }
+for i = 1, #core_modules, 1 do
+  local ok, err = xpcall(require, debug.traceback, string.format("doom.core.%s", core_modules[i]))
+  if not ok then
+    log.error(
+      string.format(
+        "There was an error loading the module 'doom.core.%s'. Traceback:\n%s",
+        core_modules[i],
+        err
+      )
+    )
+  end
+
+  if ok then
+    if core_modules[i] == "settings" then
+      -- Neovim configurations, e.g. shiftwidth
+      require("doom.core.settings").load_default_options()
+      -- User-defined settings (global variables, mappings, ect)
+      require("doom.core.settings").custom_options()
+    elseif core_modules[i] == "config" then
+      -- Automatically install language servers
+      require("doom.core.config").install_servers(
+        require("doom.core.config.doomrc").load_doomrc().langs
+      )
+      -- Automatically install language DAP clients
+      require("doom.core.config").install_dap_clients(
+        require("doom.core.config.doomrc").load_doomrc().langs
+      )
+    end
+  end
+end

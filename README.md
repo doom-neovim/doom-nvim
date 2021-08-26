@@ -85,7 +85,6 @@ Its design is guided by these mantras:
 
 ### Installation
 
-- Curl 7.x (for using the installation script)
 - Git 2.23+
 
 ### Runtime
@@ -93,32 +92,69 @@ Its design is guided by these mantras:
 - Neovim 0.5.0 onwards
 
 - GNU `find`
-- _Optionals:_
-  - [ripgrep] 11.0+ or [fd] 7.3.0+ (improves file indexing performance for some commands)
-  - `nodejs` and `npm` (required to use some Language Server Protocols)
+- [ripgrep] 11.0+ or [fd] 7.3.0+ (optional but highly recommended, improves file indexing performance for some commands)
+- `nodejs` and `npm` (optional, required to use some Language Server Protocols)
 
 Doom is comprised of [~40 optional plugins][modules], some of which may have
 additional dependencies. [Please visit their documentation][modules].
 
 ## Install
 
-Simply run the following command:
+> **IMPORTANT**: if you don't have a patched nerd font then you will need to
+> install one in your system so you will be able to see icons in Neovim.
+
+First you'll want to backup your current Neovim configuration if you have one.
+
+> **NOTES**:
+>
+> 1. Your current configuration will be backed up to `~/.config/nvim.bak`
+>    or where your `XDG_CONFIG_HOME` environment variable points to.
+>
+> 2. If you're a cheovim user you can skip this step and go directly to
+>    [installing with cheovim](#installing-with-cheovim).
 
 ```sh
-curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash
+[ -d ${XDG_CONFIG_HOME:-$HOME/.config}/nvim ] && mv ${XDG_CONFIG_HOME:-$HOME/.config}/nvim ${XDG_CONFIG_HOME:-$HOME/.config}/nvim.bak
+```
+
+Now that you have backed up your current Neovim configuration you can proceed to install
+`doom-nvim`.
+
+```sh
+git clone --depth 1 https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_HOME:-$HOME/.config}/nvim
 ```
 
 Or if you want to live in the bleeding-edge with the latest features:
 
 ```sh
-curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash -s -- -d
+git clone --depth 1 -b develop https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_HOME:-$HOME/.config}/nvim
 ```
+
+### Installing with cheovim
+
+If you're using cheovim as your Neovim configurations manager you can install `doom-nvim` and then
+use the recipe listed in cheovim documentation:
+
+```sh
+# Clone doom-nvim under a specific directory under our '~/.config' directory
+git clone --depth 1 https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_HOME:-$HOME/.config}/doom-nvim
+
+# Change the doom-nvim internal path
+sed -i "37s/nvim/doom-nvim/" ${XDG_CONFIG_HOME:-$HOME/.config}/doom-nvim/lua/doom/core/system/init.lua
+```
+
+```lua
+-- In your '~/.config/nvim/profiles.lua'
+doom_nvim = { "~/.config/doom-nvim", {
+        plugins = "packer",
+        preconfigure = "doom-nvim"
+    }
+}
+```
+---
 
 Then [read our Getting Started guide][getting-started] to be walked through
 installing, configuring and maintaining Doom Nvim.
-
-> **NOTE**: If you want to see all the available commands in the installation script, then use
-> <kbd>bash -s -- -h</kbd> instead of just <kbd>bash</kbd>
 
 ## Getting help
 
@@ -130,6 +166,7 @@ if you are not an advanced vimmer. When you do, here are some places you can loo
     its modules.
   - [The Plugins Management section][plugins-management] covers how to install
     and disable plugins.
+- [Our troubleshooting wiki](https://github.com/NTBBloodbath/doom-nvim/wiki/Troubleshooting)
 - Search the [Doom Nvim's issue tracker](https://github.com/NTBBloodbath/doom-nvim/issues)
   before opening a new issue to see if your issue was already been reported and to
   avoid duplicating issues.

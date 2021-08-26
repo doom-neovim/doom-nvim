@@ -1,3 +1,0 @@
-# Use Lua syntax for doomrc file
-doomrc linguist-language=lua
-doomrc -linguist-detectable

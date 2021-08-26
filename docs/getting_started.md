@@ -7,7 +7,7 @@ This is what you will have installed by the end of this section:
 - Git 2.23+
 - Neovim 0.5.0+ (Neovim 0.4.x not supported, see [faq](./faq.md#why-does-doom-nvim-only-support-neovim-05) to know why)
 - GNU Find
-- **Optional**: ripgrep 11.0+
+- **Optional**: ripgrep 11.0+ (highly recommended)
 - **Optional**: fd 7.3.0+ (known as `fd-find` on Debian, Ubuntu & derivates),
   improves performance for many file indexing commands
 - **Optional**: node & npm, required to use LanguageServerProtocols (LSP) and the plugins using LSP, like the symbols-outline plugin.
@@ -23,12 +23,9 @@ Neovim 0.5.0 was recently released as a stable version.
 You can check what version your repository has by looking at [this site.](https://repology.org/project/neovim/versions)
 If Neovim 0.5.0 is still not available in your repository, you can install it by doing one of the following:
 
-1. Using the Doom Nvim install script to download a Neovim Nightly AppImage from releases
-   (see how by executing the installer with <kbd>bash -s -- -h</kbd>).
+1. Using extra repositories according to your distribution (PPA/COPR/AUR/etc).
 
-2. Using extra repositories according to your distribution (PPA/COPR/AUR/etc).
-
-3. Using a Neovim version manager like [nvenv](https://github.com/NTBBloodbath/nvenv).
+2. Using a Neovim version manager like [nvenv](https://github.com/NTBBloodbath/nvenv).
 
 ##### Ubuntu
 
@@ -82,8 +79,6 @@ nvim --version
 
 MacPorts currently only has Neovim v0.4.4
 
-
-
 #### On Windows
 
 ##### [Chocolatey](https://community.chocolatey.org/)
@@ -104,6 +99,27 @@ scoop install neovim-nightly
 1. Download a prebuilt binary from the [Neovim](https://github.com/neovim/neovim/releases) releases page.
 2. Unpack the binary
 3. Move and symlink to somewhere in your path
+
+```sh
+# unpack the binary
+tar xzvf nvim-linux64.tar.gz
+
+# create a directory to store the unpacked folder
+sudo mkdir /opt/nvim
+
+# move the unpacked binary
+sudo mv nvim-linux64 /opt/nvim
+
+# add the neovim executable to somewhere in your path
+# ex: /usr/bin OR $HOME/.local/bin
+sudo ln -s /opt/nvim/nvim-linux64/bin/nvim /usr/bin/nvim
+
+# should print /usr/bin/nvim
+which nvim
+
+# should print NVIM 0.5
+nvim --version
+```
 
 ```
 # unpack the binary
@@ -170,7 +186,7 @@ pacman -S nodejs npm
 
 #### On MacOS
 
-Dependencies can be installed using [homebrew](https://brew.sh/) 
+Dependencies can be installed using [homebrew](https://brew.sh/)
 
 ```sh
 # Required dependencies
@@ -179,7 +195,6 @@ brew install ripgrep ctags
 
 # (Optional) Required by Language Server Protocols
 brew install node
-
 ```
 
 #### On Windows
@@ -190,39 +205,53 @@ dependencies here!
 ### Doom Nvim
 
 With Neovim v0.5.0 and Doom's dependencies installed, next is to install
-Doom Nvim itself:
+Doom Nvim itself.
 
-> **NOTES:**
+> **IMPORTANT**: if you don't have a patched nerd font then you will need to
+> install one in your system so you will be able to see icons in Neovim.
+
+First you'll want to backup your current Neovim configuration if you have one.
+
+> **NOTES**:
 >
-> 1. If you have not installed Neovim 0.5.0 yet, please run the following command
->    before installing Doom Nvim, it will install Neovim 0.5.0 and Doom Nvim.
-> 2. If you want to know all the commands of the installer, run the installer with
->    <kbd>bash -s -- -h</kbd> instead of just <kbd>bash</kbd>.
+> 1. Your current configuration will be backed up to `~/.config/nvim.bak`
+>    or where your `XDG_CONFIG_HOME` environment variable points to.
+>
+> 2. If you're a cheovim user you can skip this step and go directly to
+>    [Using cheovim](#using-cheovim).
 
 ```sh
-# Check if you have all the dependencies listed above
-curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash -s -- -c
+[ -d ${XDG_CONFIG_HOME:-$HOME/.config}/nvim ] && mv ${XDG_CONFIG_HOME:-$HOME/.config}/nvim ${XDG_CONFIG_HOME:-$HOME/.config}/nvim.bak
 ```
+
+Now that you have backed up your current Neovim configuration you can proceed to install
+`doom-nvim`.
 
 ```sh
-# If you do not have Neovim 0.5.0 but you have all the dependencies listed above
-curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash -s -- -n
+git clone --depth 1 https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_HOME:-$HOME/.config}/nvim
 ```
+
+Or if you want to live in the bleeding-edge with the latest features:
 
 ```sh
-# If you already have Neovim 0.5.0 and all the dependencies listed above
-curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash
+git clone --depth 1 -b develop https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_HOME:-$HOME/.config}/nvim
 ```
-
-The installation script will set up everything for you and will work you through
-the first-time setup of Doom Nvim.
 
 #### Using cheovim
 
-If you're using cheovim as your Neovim configurations manager you can use the
-recipe listed in cheovim documentation:
+If you're using cheovim as your Neovim configurations manager you can install `doom-nvim` and then
+use the recipe listed in cheovim documentation:
+
+```sh
+# Clone doom-nvim under a specific directory under our '~/.config' directory
+git clone --depth 1 https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_HOME:-$HOME/.config}/doom-nvim
+
+# Change the doom-nvim internal path
+sed -i "37s/nvim/doom-nvim/" ${XDG_CONFIG_HOME:-$HOME/.config}/doom-nvim/lua/doom/core/system/init.lua
+```
 
 ```lua
+-- In your '~/.config/nvim/profiles.lua'
 doom_nvim = { "~/.config/doom-nvim", {
         plugins = "packer",
         preconfigure = "doom-nvim"
@@ -234,16 +263,36 @@ doom_nvim = { "~/.config/doom-nvim", {
 
 ### Update Doom Nvim
 
-To update Doom Nvim, you have two options, run `:DoomUpdate` inside Neovim or
-run the installation script with <kbd>bash -s -- -u</kbd>.
+To update Doom Nvim, you have two options, run `:DoomUpdate` or <kbd>SPC - d - u</kbd>
+inside Neovim or alternatively run `git pull` in doom-nvim directory (**not recommended, see why below**).
+
+#### Why use the built-in doom command for updating instead of running git pull manually?
+
+> **tl;dr**: The `:DoomUpdate` command creates an additional local database of the doom-nvim
+> releases so in case something breaks you can easily rollback to a previous doom-nvim version
+
+The reason is that `doom-nvim` also brings a functionality for rolling back to a previous version
+or a previous state (e.g. a previous commit) and doing it manually can be a bit tedious (looking
+for the previous release tag or the previous commit hash if there were too much commits).
+Our `:DoomUpdate` command creates a local database into the `doom-nvim` directory depending on
+what branch are you using because if you are using the development branch you will not want to
+rollback to a previous version, isn't it?
+
+So, if you are using the main a.k.a stable branch of doom-nvim, the `:DoomUpdate` command will
+create a local database of doom-nvim's releases. Otherwise, if you're using the development branch
+it will create a local file with the commit hash that you were using before updating.
 
 ### Rollback
 
 #### Previous Configurations
 
-To uninstall Doom Nvim and go back to your previous setup, simply run the
-installation script with <kbd>bash -s -- -x</kbd>. It will uninstall Doom Nvim
-and restore the backup of your previous setup.
+To uninstall Doom Nvim and go back to your previous setup, simply remove the `~/.config/nvim`
+directory if it's where you have `doom-nvim` installed and move your backup.
+
+```sh
+rm -rf ${XDG_CONFIG_HOME:-$HOME/.config}/nvim \
+    && mv ${XDG_CONFIG_HOME:-$HOME/.config}/nvim.bak ${XDG_CONFIG_HOME:-$HOME/.config}/nvim
+```
 
 #### Rolling Back Doom
 
@@ -366,6 +415,9 @@ return {
     nvim = nvim,
 }
 ```
+
+> **NOTE**: all your used-defined configurations here will be live-reloaded, e.g.
+> mappings, autocommands, etc.
 
 ### plugins.lua
 
@@ -537,7 +589,7 @@ With that being said, you can run the following command snippet:
 cp $HOME/.config/doom-nvim/doomrc $HOME/.config/doomrc.bak \
     && rm -rf $HOME/.config/doom-nvim $HOME/.local/share/nvim/site/pack/packer \
     && unlink $HOME/.config/nvim \
-    && curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/install.sh | bash -s -- -d
+    && curl -sLf https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/bin/install.sh | bash -s -- -d
 ```
 
 This snippet will do the following tasks for you:

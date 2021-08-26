@@ -2,19 +2,17 @@ name: lint
 
 on:
   push:
-    paths: '**.lua'
     branches: [main, develop]
   pull_request:
-    paths: '**.lua'
     types: [opened, synchronize]
 
 jobs:
-  selene:
+  luacheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup and run selene
-        uses: NTBBloodbath/selene-action@v1.0.0
+      - uses: nebularg/actions-luacheck@v1.1.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          args: "."
+          files: '.'
+          config: 'https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/develop/.luacheckrc'
+          annotate: 'error'

@@ -1,7 +1,9 @@
 # My temp files
 plugin/
 sessions/
+undodir/
 time_cost.txt
+tags
 # Backup files
 .doom_releases
 .doom_backup_hash

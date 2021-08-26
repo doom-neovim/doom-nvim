@@ -23,6 +23,15 @@ and which code style you should use :heart:
   so that it works correctly on your environment, you can do it freely since I
   currently do not have that system to do tests.
 
+## Jumping between two branches
+
+If you have a personal branch and then a second branch only made for creating PRs
+you will most likely have to remove the `plugin/packer_compiled.lua` file every
+time you checkout the `pull_request_branch`. This is because the pr branch most likely
+will have less settings and plugins than you personal branch and therefore it will
+not work as expected otherwise. Eg. you will see 'Dashboard' text on vim load instead of
+'Doom'.
+
 ## Reporting issues
 
 ### Acquire a backtrace from errors
@@ -62,19 +71,18 @@ type of issue and handle the requests.
 
 Doom Nvim follows some code style rules like ones the mentioned below:
 
-- Single quotes over double quotes.
-- Tabs over spaces.
+- Double quotes over single quotes.
+- Spaces over tabs.
 - Variable names in `snake_case`, except in the BASH installation script.
 - Function names in `snake_case`.
 - [stylua] is used to format lua files with the following configuration:
 
 ```toml
-column_width = 80
+column_width = 100
 line_endings = "Unix"
-indent_type = "Tabs"
-indent_width = 4
-quote_style = "AutoPreferSingle"
-
+indent_type = "Spaces"
+indent_width = 2
+quote_style = "AutoPreferDouble"
 ```
 
 > **NOTE:** use `--config-path /path/to/doom/nvim/stylua.toml` to use doom's
@@ -94,7 +102,7 @@ quote_style = "AutoPreferSingle"
 
 #### Keybind conventions
 
-- The keybindings should be declared in [core/keybindings](../lua/doom/core/keybindings/init.lua),
+- The keybindings should be declared in [extras/keybindings](../lua/doom/extras/keybindings/init.lua),
   except when they are keybindings of [Lua plugins](../lua/doom/modules/config).
 
 ### Submitting pull requests
@@ -103,5 +111,6 @@ After having made all your changes **and having tested them locally to certify t
 **they work and do not break any of the current code**, you can proceed to upload
 your pull request :)
 
+[gist]: https://gist.github.com/
 [stylua]: https://github.com/JohnnyMorganz/StyLua
 [selene]: https://github.com/Kampfkarren/selene
