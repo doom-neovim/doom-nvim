@@ -121,6 +121,26 @@ which nvim
 nvim --version
 ```
 
+```
+# unpack the binary
+tar xzvf nvim-linux64.tar.gz
+
+# create a directory to store the unpacked folder
+sudo mkdir /opt/nvim
+
+# move the unpacked binary
+sudo mv nvim-linux64 /opt/nvim
+
+# add the neovim executable to somewhere in your path
+# ex: /usr/bin OR $HOME/.local/bin
+sudo ln -s /opt/nvim/nvim-linux64/bin/nvim /usr/bin/nvim
+
+# should print /usr/bin/nvim
+which nvim
+
+# should print NVIM 0.5
+nvim --version
+```
 ### External dependencies
 
 #### On Linux

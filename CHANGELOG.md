@@ -7,6 +7,110 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2021-08-26
+
+### Added
+
+- Options field to `doom_config.lua`, see [#62](https://github.com/NTBBloodbath/doom-nvim/pull/62)
+- New prompt for editing doom configurations
+- Better internal errors handling
+- Allow to use options (e.g. silent) in the custom mappings
+- Custom settings defined on `doom_config.lua` are automatically reloaded
+- `SPC - d - l` keybinding for manually reload configurations
+- Windows support (note that some plugins does not work well on Windows and that's not a doom issue!)
+- `SPC - d - s` keybinding now offers a live preview for the colorschemes
+- `tsx` treesitter parser is now installed alongside with the typescript one, see [#84](https://github.com/NTBBloodbath/doom-nvim/issues/84)
+- Allow to override default keymappings
+- Quick save with `SPC - v / m`
+- Jump keybindings on which-key
+- Keybindings to move lines (`Alt + j / k`)
+- `win_width` option, for automatically setting the windows width
+- You can now add your doom-nvim configurations to your dotfiles without having to use submodules!
+    See [#79](https://github.com/NTBBloodbath/doom-nvim/issues/79)
+- Plugins:
+  - New plugin: treesitter companion plugins (autotag, docs, etc)
+  - New plugin: nvim-mapper, a keybindings cheatsheet
+  - New plugin: DAP (Debugging Adapter Protocol) support
+  - New plugin: trouble, better quickfix window
+  - New plugin: todo-comments.nvim, better TODO comments
+  - New plugin: superman, man pages integration
+  - New plugin: ranger, file browser integration
+  - New plugin: firenvim, use Neovim in your favorite web browser!
+  - New plugin: registers.nvim, show contents of each register on a popup window
+  - Added more dynamic color palettes to galaxyline (e.g. nord, dracula, tokyonight)
+
+### Changed
+
+- Assume `~/.config/nvim` rather than `~/.config/doom-nvim`, see [#41](https://github.com/NTBBloodbath/doom-nvim/pull/41)
+- Autocommands and keybindings now lives in `doom.extras` instead of `doom.core`
+- Use a custom toggleterm instance for running and compiling code
+- `<leader><space>` keybind is now `<leader>` + \`
+- Format files before saving them instead of saving and formatting later
+- Improved crash report (`SPC - d - R`) output
+- undodir is now located at `~/.local/share/nvim`
+- We have adopted a more saner and common coding style:
+  - Spaces over tabs
+  - Two spaces for indentation
+- Plugins:
+  - Changed some packer defaults for cloning, should speed up the cloning step with heavy size plugins like plenary
+  - Changed kommentary lazy-loading event
+  - Changed nvim-compe lazy-loading event
+  - Improved how which-key plugin is being lazy-loaded
+  - Updated TrueZen configurations
+  - Updated gitsigns configurations
+  - Lua LSP configurations are now handled by lua-dev.nvim plugin
+  - session-lens was replaced by persistence.nvim
+  - Improved some dashboard icons
+  - indent-blankline character is now full height
+  - Saner telescope configurations
+
+### Fixed
+
+- Respect `XDG_CONFIG_HOME` environment variable
+- Plugins:
+  - Occasional bug with autosessions
+  - Properly lazy-load TrueZen
+  - Use GCC compiler for haskell treesitter parser
+  - bufferline will not be shown when:
+    1. Only one buffer is opened
+    2. While being in the dashboard
+  - Add extra whitespace to some icons on galaxyline
+  - Disable indent-blankline on norg files
+
+### Deleted
+
+- "Async" logic, it was not true async so we don't need it anymore
+- Installer, doom-nvim can be installed with just two commands. Now you can have truly power over
+    the installation process and a very transparent installation
+- Unneeded `:checkhealth` add-on
+- Plugins:
+  - lspsaga, we are now using the built-in functionalities for LSP (hover doc, etc)
+
+## [3.0.13] - 2021-08-24
+
+### Fixed
+
+- Use `stdpath("config")` for configuration paths instead of `~/.config/doom-nvim` because doom-nvim is actually symlinked, respect `XDG_CONFIG_HOME` (see [#101](https://github.com/NTBBloodbath/doom-nvim/pull/101))
+- Update `<leader>dc` to match new config setup, ref [#101](https://github.com/NTBBloodbath/doom-nvim/pull/101). See [#102](https://github.com/NTBBloodbath/doom-nvim/pull/102)
+
+## [3.0.12] - 2021-08-22
+
+### Fixed
+
+- Proper conditional for triggering dashboard-nvim plugin, check if it's in the packer_plugins table
+
+## [3.0.11] - 2021-08-20
+
+### Fixed
+
+- Added missing `undodir` option
+
+## [3.0.10] - 2021-08-20
+
+### Fixed
+
+- `undodir` was not working as expected
+
 ## [3.0.9] - 2021-08-04
 
 ### Fixed
@@ -421,7 +525,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.9...develop
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.0...develop
+[3.1.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.13...v3.1.0
+[3.0.13]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.12...v3.0.13
+[3.0.12]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.11...v3.0.12
+[3.0.11]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.10...v3.0.11
+[3.0.10]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.9...v3.0.10
 [3.0.9]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.8...v3.0.9
 [3.0.8]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.7...v3.0.8
 [3.0.7]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.6...v3.0.7

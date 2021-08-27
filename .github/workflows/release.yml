@@ -1,0 +1,40 @@
+name: release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    name: Release to GitHub
+    if: contains(github.event.head_commit.message, 'release:') && github.repository == 'NTBBloodbath/doom-nvim'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository }}
+          path: "workspace"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Release information
+        run: |
+          versionName=`sed '12q;d' ./workspace/lua/doom/utils/init.lua | cut -d "\"" -f2 | xargs`
+          export VERSION_NAME=$versionName
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+
+      - name: Extract release notes
+        id: extract-release-notes
+        uses: ffurrer2/extract-release-notes@v1
+        with:
+          changelog_file: ./workspace/CHANGELOG.md
+
+      - name: Create Release
+        uses: Xotl/cool-github-releases@v1
+        with:
+          mode: update
+          isDraft: false
+          isPrerelease: false
+          tag_name: v${{ env.VERSION_NAME }}
+          release_name: v${{ env.VERSION_NAME }}
+          body_mrkdwn: ${{ steps.extract-release-notes.outputs.release_notes }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
