@@ -88,13 +88,6 @@ quote_style = "AutoPreferDouble"
 > **NOTE:** use `--config-path /path/to/doom/nvim/stylua.toml` to use doom's
 > stylua configuration.
 
-- [selene] is a blazing-fast modern Lua linter written in Rust which is used for
-  linting doom's source code. We make use of some custom rules so we can be sure
-  that selene will not raise false errors.
-
-> **NOTE:** use `selene .` in doom's root dir and selene will automatically
-> detect the `selene.toml` and `doom.toml` files.
-
 #### Commits & PRs
 
 - Target `develop` instead of `main`.
@@ -113,4 +106,3 @@ your pull request :)
 
 [gist]: https://gist.github.com/
 [stylua]: https://github.com/JohnnyMorganz/StyLua
-[selene]: https://github.com/Kampfkarren/selene
