@@ -438,7 +438,6 @@ end
 --
 -- @param langs The list of languages in the doomrc
 M.install_servers = function(langs)
-  -- selene: allow(undefined_variable)
   if packer_plugins and packer_plugins["lspinstall"] and packer_plugins["lspinstall"].loaded then
     local lspinstall = require("lspinstall")
     local installed_servers = lspinstall.installed_servers()
@@ -469,7 +468,6 @@ end
 --
 -- @param langs The list of languages in the doomrc
 M.install_dap_clients = function(langs)
-  -- selene: allow(undefined_variable)
   if
     packer_plugins
     and packer_plugins["DAPInstall.nvim"]

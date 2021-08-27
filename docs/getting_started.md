@@ -544,8 +544,6 @@ But first let's see what's new:
   documentation is the core of all projects.
 - Restructured source code. Now the doom nvim source code is much cleaner and
   easier to understand.
-- Added selene linter CI for incoming pull requests and stylua CI for pushes.
-  Let's get a consistent way to maintain Doom Nvim source!
 
 Now that we know what's new we will surely want to update, isn't it?
 
