@@ -67,7 +67,7 @@ local unpack = unpack or table.unpack
 log.new = function(config, standalone)
   config = vim.tbl_deep_extend("force", default_config, config)
 
-  local outfile = ("%s/%s.log"):format(vim.fn.stdpath("data"), config.plugin)
+  local outfile = ("%s/%s.log"):format(vim.fn.stdpath("cache"), config.plugin)
 
   local obj
   if standalone then
