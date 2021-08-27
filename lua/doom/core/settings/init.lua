@@ -6,13 +6,13 @@
 
 local functions = require("doom.core.functions")
 local log = require("doom.extras.logging")
-local config = require("doom.core.config").load_config()
+local config = require("doom.core.config").config
 
 local M = {}
 
 log.debug("Loading Doom defaults module ...")
 
--- load_default_options sets and loads default Neovim options based on doomrc values
+-- load_default_options sets and loads default Neovim options based on doom_config.lua values
 M.load_default_options = function()
   ----- Default Neovim configurations
   -- Set colorscheme
@@ -149,7 +149,7 @@ M.custom_options = function()
   -- can be called by using :DoomRollback
   vim.cmd('command! DoomRollback lua require("doom.core.functions").rollback_doom()')
 
-  -- Load user-defined settings from the Neovim field in the doomrc file
+  -- Load user-defined settings from the Neovim field in the doom_config.lua file
   functions.load_custom_settings(config.nvim.autocmds, "autocmds")
   functions.load_custom_settings(config.nvim.commands, "commands")
   functions.load_custom_settings(config.nvim.functions, "functions")

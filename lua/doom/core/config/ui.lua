@@ -6,7 +6,7 @@
 
 local utils = require("doom.utils")
 local log = require("doom.extras.logging")
-local config = require("doom.core.config").load_config()
+local config = require("doom.core.config").config
 
 log.debug("Loading Doom UI module ...")
 

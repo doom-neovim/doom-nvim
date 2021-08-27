@@ -3,8 +3,6 @@
 -- NOTE: We do not provide other LSP integration like coc.nvim, please refer
 --       to our FAQ to see why.
 
-local utils = require("doom.utils")
-local system = require("doom.core.system")
 local functions = require("doom.core.functions")
 
 ---- Packer Bootstrap ---------------------------
@@ -496,12 +494,7 @@ packer.startup(function(use)
   ---     Custom Plugins     ---
   -----]]----------------[[-----
   -- If there are custom plugins then also require them
-  local custom_plugins
-  if utils.file_exists(string.format("%s%splugins.lua", system.doom_configs_root, system.sep)) then
-    custom_plugins = dofile(string.format("%s%splugins.lua", system.doom_configs_root, system.sep))
-  else
-    custom_plugins = dofile(string.format("%s%splugins.lua", system.doom_root, system.sep))
-  end
+  local custom_plugins = require("doom.core.config.userplugins").plugins
 
   for _, plug in pairs(custom_plugins or {}) do
     packer.use(plug)

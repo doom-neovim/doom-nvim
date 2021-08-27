@@ -1,6 +1,6 @@
 return function()
   local has_value = require("doom.utils").has_value
-  local doomrc = require("doom.core.config.doomrc").load_doomrc()
+  local modules = require("doom.core.config.modules").modules
   local functions = require("doom.core.functions")
 
   local function get_ts_parsers(languages)
@@ -35,7 +35,7 @@ return function()
     },
   }
   if packer_plugins and packer_plugins["neorg"] then
-    table.insert(doomrc.langs, "norg")
+    table.insert(modules.langs, "norg")
   end
 
   -- Set up treesitter for HTTP
@@ -47,14 +47,14 @@ return function()
     },
   }
   if packer_plugins and packer_plugins["rest.nvim"] then
-    table.insert(doomrc.langs, "http")
+    table.insert(modules.langs, "http")
   end
 
   -- macos uses wrong c version
   require("nvim-treesitter.install").compilers = { "gcc" }
 
   require("nvim-treesitter.configs").setup({
-    ensure_installed = get_ts_parsers(doomrc.langs),
+    ensure_installed = get_ts_parsers(modules.langs),
     highlight = { enable = true },
     autopairs = {
       enable = functions.is_plugin_disabled("autopairs") and false or true,

@@ -59,13 +59,16 @@ if is_module_available("nvim-mapper") then
   end
 else
   -- Manually load the doom_config.lua file to avoid circular dependencies
-  local doom_config_path
-  if M.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)) then
-    doom_config_path = string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)
-  elseif M.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep)) then
-    doom_config_path = string.format("%s%sdoom_config.lua", system.doom_root, system.sep)
+  local config = {}
+  local ok, ret = pcall(require, "doom_config")
+  if ok then
+    config = ret.config
+  else
+    ok, ret = pcall(dofile, system.doom_configs_root.."/doom_config.lua")
+    if ok then
+      config = ret.config
+    end
   end
-  local config = dofile(doom_config_path)
 
   M.map = function(mode, lhs, rhs, opts, _, _, _)
     local options = config.doom.allow_default_keymaps_overriding and {} or { noremap = true }
