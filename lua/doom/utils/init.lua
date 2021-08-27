@@ -153,7 +153,7 @@ M.load_modules = function(module_path, modules)
       string.format("%s.%s", module_path, modules[i])
     )
     if not ok then
-      log.error(
+      require("doom.extras.logging").error(
         string.format(
           "There was an error loading the module '%s.%s'. Traceback:\n%s",
           module_path,
