@@ -6,7 +6,7 @@
 
 local utils = require("doom.utils")
 local log = require("doom.extras.logging")
-local config = require("doom.core.config").load_config()
+local config = require("doom.core.config").config
 
 log.debug("Loading Doom autocmds module ...")
 
@@ -15,7 +15,7 @@ local autocmds = {
     -- Compile new plugins changes at save
     {
       "BufWritePost",
-      "*/doom-*.lua,doomrc.lua,plugins.lua",
+      "*/doom-*.lua,doom_modules.lua,doom_userplugins.lua",
       "PackerCompile profile=true",
     },
     -- Reload user-defined settings when 'doom_config.lua' file was modified

@@ -7,7 +7,7 @@
 local log = require("doom.extras.logging")
 local utils = require("doom.utils")
 local system = require("doom.core.system")
-local config = require("doom.core.config").load_config()
+local config = require("doom.core.config").config
 
 local M = {}
 
@@ -27,14 +27,14 @@ M.check_plugin = function(plugin_name, path)
   ) == 1
 end
 
--- is_plugin_disabled checks if the given plugin is disabled in doomrc
+-- is_plugin_disabled checks if the given plugin is disabled in doom_modules.lua
 -- @tparam string plugin The plugin identifier, e.g. statusline
 -- @return bool
 M.is_plugin_disabled = function(plugin)
-  local doomrc = require("doom.core.config.doomrc").load_doomrc()
+  local modules = require("doom.core.config.modules").modules
 
-  -- Iterate over all doomrc sections (e.g. ui) and their plugins
-  for _, section in pairs(doomrc) do
+  -- Iterate over all modules sections (e.g. ui) and their plugins
+  for _, section in pairs(modules) do
     if utils.has_value(section, plugin) then
       return false
     end
@@ -43,7 +43,7 @@ M.is_plugin_disabled = function(plugin)
   return true
 end
 
--- Load user-defined settings from the Neovim field in the doomrc
+-- Load user-defined settings from the Neovim field in the doom_config.lua
 -- @param settings_tbl The settings table to iterate over
 -- @param scope The settings scope, e.g. autocmds
 M.load_custom_settings = function(settings_tbl, scope)
@@ -81,7 +81,7 @@ end
 -- in the 'doom_config.lua' file.
 M.reload_custom_settings = function()
   -- Get the user-defined settings, the 'nvim' field in our 'doom_config.lua'
-  local custom_settings = require("doom.core.config").load_config().nvim
+  local custom_settings = require("doom.core.config").config.nvim
   -- iterate over all the custom settings fields, e.g. global_variables, mappings, etc.
   for scope, _ in pairs(custom_settings) do
     M.load_custom_settings(custom_settings[scope], scope)
@@ -97,16 +97,7 @@ M.change_colors_and_bg = function()
     local target_background = vim.opt.background:get()
 
     -- Set the correct path for the 'doom_config.lua' file
-    local doom_config_path
-    if
-      utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep))
-    then
-      doom_config_path = string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)
-    elseif
-      utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep))
-    then
-      doom_config_path = string.format("%s%sdoom_config.lua", system.doom_root, system.sep)
-    end
+    local doom_config_path = require("doom.core.config").source
 
     if target_colorscheme ~= config.doom.colorscheme then
       local doom_config = utils.read_file(doom_config_path)
@@ -135,7 +126,7 @@ M.change_colors_and_bg = function()
   end
 end
 
--- Quit Neovim and change the colorscheme at doomrc if the colorscheme is not the same,
+-- Quit Neovim and change the colorscheme at doom_config.lua if the colorscheme is not the same,
 -- dump all messages to doom.log file
 -- @tparam bool write If doom should save before exiting
 -- @tparam bool force If doom should force the exiting
@@ -455,17 +446,17 @@ M.edit_config = function()
   local selected_config = tonumber(vim.fn.inputlist({
     "Select a configuration file to edit:",
     "1. doom_config.lua",
-    "2. doomrc.lua",
-    "3. plugins.lua",
+    "2. doom_modules.lua",
+    "3. doom_userplugins.lua",
   }))
   local open_command = config.doom.new_file_split and "split" or "edit"
 
   if selected_config == 1 then
-    vim.cmd(string.format("%s %s%sdoom_config.lua", open_command, system.doom_root, system.sep))
+    vim.cmd(("%s %s"):format(open_command, require("doom.core.config").source))
   elseif selected_config == 2 then
-    vim.cmd(string.format("%s %s%sdoomrc.lua", open_command, system.doom_root, system.sep))
+    vim.cmd(("%s %s"):format(open_command, require("doom.core.config.modules").source))
   elseif selected_config == 3 then
-    vim.cmd(string.format("%s %s%splugins.lua", open_command, system.doom_root, system.sep))
+    vim.cmd(("%s %s"):format(open_command, require("doom.core.config.userplugins").source))
   elseif selected_config ~= 0 then
     log.error("Invalid option selected.")
   end

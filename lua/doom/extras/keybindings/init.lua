@@ -6,7 +6,7 @@
 
 local utils = require("doom.utils")
 local log = require("doom.extras.logging")
-local config = require("doom.core.config").load_config()
+local config = require("doom.core.config").config
 local functions = require("doom.core.functions")
 
 log.debug("Loading Doom keybindings module ...")

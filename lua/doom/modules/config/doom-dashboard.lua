@@ -1,5 +1,5 @@
 return function()
-  local config = require("doom.core.config").load_config()
+  local config = require("doom.core.config").config
 
   vim.g.dashboard_session_directory = require("doom.core.system").doom_root .. "/sessions"
   vim.g.dashboard_default_executive = "telescope"

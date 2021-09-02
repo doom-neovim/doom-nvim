@@ -1,6 +1,6 @@
 return function()
   local utils = require("doom.utils")
-  local config = require("doom.core.config").load_config()
+  local config = require("doom.core.config").config
   local get_color = require("doom.modules.config.doom-eviline-palettes").get_color
 
   local bo = vim.bo

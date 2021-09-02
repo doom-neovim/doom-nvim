@@ -1,7 +1,7 @@
 return function()
   local fn = vim.fn
   local lsp = vim.lsp
-  local config = require("doom.core.config").load_config()
+  local config = require("doom.core.config").config
 
   -- Snippets support
   local capabilities = lsp.protocol.make_client_capabilities()

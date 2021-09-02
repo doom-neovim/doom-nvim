@@ -6,17 +6,7 @@ local log = require("doom.extras.logging")
 
 local core_modules = { "config", "config.ui", "settings" }
 for i = 1, #core_modules, 1 do
-  local ok, err = xpcall(require, debug.traceback, string.format("doom.core.%s", core_modules[i]))
-  if not ok then
-    log.error(
-      string.format(
-        "There was an error loading the module 'doom.core.%s'. Traceback:\n%s",
-        core_modules[i],
-        err
-      )
-    )
-  end
-
+  local ok, err = xpcall(require, debug.traceback, ("doom.core.%s"):format(core_modules[i]))
   if ok then
     if core_modules[i] == "settings" then
       -- Neovim configurations, e.g. shiftwidth
@@ -26,12 +16,20 @@ for i = 1, #core_modules, 1 do
     elseif core_modules[i] == "config" then
       -- Automatically install language servers
       require("doom.core.config").install_servers(
-        require("doom.core.config.doomrc").load_doomrc().langs
+        require("doom.core.config.modules").modules.langs
       )
       -- Automatically install language DAP clients
       require("doom.core.config").install_dap_clients(
-        require("doom.core.config.doomrc").load_doomrc().langs
+        require("doom.core.config.modules").modules.langs
       )
     end
+  else
+    log.error(
+      string.format(
+        "There was an error loading the module 'doom.core.%s'. Traceback:\n%s",
+        core_modules[i],
+        err
+      )
+    )
   end
 end

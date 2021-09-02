@@ -5,7 +5,7 @@ if packer_plugins and packer_plugins["nvim-toggleterm.lua"] then
   term = require("toggleterm.terminal").Terminal
 else
   log.error(
-    "Doom runner needs toggleterm plugin, please uncomment the 'terminal' entry in your doomrc"
+    "Doom runner needs toggleterm plugin, please uncomment the 'terminal' entry in your doom_modules.lua"
   )
 end
 

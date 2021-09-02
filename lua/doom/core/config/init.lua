@@ -30,11 +30,9 @@ end
 
 -- {{{ Default doom_config values
 
--- default_doom_config_values loads the default doom_config values
--- @return table
-local function default_doom_config_values()
+M.config = {
   -- {{{ Doom
-  local doom = {
+  doom = {
     -- Autosave
     -- false : Disable autosave
     -- true  : Enable autosave
@@ -110,6 +108,12 @@ local function default_doom_config_values()
     -- true  : Enable preservation of last editing position
     -- @default = false
     preserve_edit_pos = false,
+
+    -- Allow overriding the default Doom Nvim keybinds
+    -- false : Default keybinds cannot be overwritten
+    -- true  : Default keybinds can be overwritten
+    -- @default = true
+    allow_default_keymaps_overriding = true,
 
     -- horizontal split on creating a new file (<Leader>fn)
     -- false : doesn't split the window when creating a new file
@@ -337,11 +341,11 @@ local function default_doom_config_values()
     -- Set your custom dashboard header below
     -- @default = doom emacs' default dashboard header
     dashboard_custom_header = {},
-  }
+  },
   -- }}}
 
   -- {{{ Nvim
-  local nvim = {
+  nvim = {
     -- Set custom Neovim global variables
     -- @default = {}
     -- example:
@@ -352,7 +356,7 @@ local function default_doom_config_values()
     -- @default = {}
     -- example:
     --   augroup_name = {
-    --      { 'BufNewFile,BufRead', 'doomrc', 'set ft=lua'}
+    --      { 'BufNewFile,BufRead', 'doom_modules.lua', 'set ft=lua'}
     --   }
     autocmds = {},
 
@@ -360,13 +364,15 @@ local function default_doom_config_values()
     -- @default = {}
     -- example:
     --   {
-    --      {'n', 'ca', ':Lspsaga code_action<CR>'}
+    --      {'n', 'ca', ':Lspsaga code_action<CR>', options}
     --   }
     --
     --   where
     --     'n' is the map scope
     --     'ca' is the map activator
     --     ':Lspsaga ...' is the command to be executed
+    --     options is a Lua table containing the mapping options, e.g.
+    --     { silent = true }, see ':h map-arguments'.
     mappings = {},
 
     -- Set custom commands
@@ -386,57 +392,38 @@ local function default_doom_config_values()
     --      end
     --   }
     functions = {},
-  }
+  },
   -- }}}
-
-  return {
-    doom = doom,
-    nvim = nvim,
-  }
-end
+}
 
 -- }}}
 
--- load_config Loads the doom_config.lua file if it exists
--- @return table
-M.load_config = function()
-  local config = {
-    doom = {},
-    nvim = {},
-  }
-  local doom_config_path
+M.source = nil
 
-  -- Path cases:
-  --   1. /home/user/.config/doom-nvim/doom_config.lua
-  --   2. /home/user/.config/nvim/doom_config.lua
-  if
-    utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep))
-  then
-    doom_config_path = string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)
-  elseif utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep)) then
-    doom_config_path = string.format("%s%sdoom_config.lua", system.doom_root, system.sep)
-  end
+log.debug("Loading Doom config module ...")
 
-  if doom_config_path then
-    local loaded_doom_config, err = pcall(function()
-      config = dofile(doom_config_path)
-    end)
-
-    if not loaded_doom_config then
-      log.error("Error while loading the doom_config file. Traceback:\n" .. err)
-    end
+-- Path cases:
+--   1. <runtimepath>/doom_config.lua
+--   2. /home/user/.config/doom-nvim/doom_config.lua
+--   3. stdpath('config')/doom_config.lua
+local ok, ret = pcall(require, "doom_config")
+if ok then
+  M.config = ret.config
+  M.source = ret.source
+else
+  ok, ret = pcall(dofile, system.doom_configs_root.."/doom_config.lua")
+  if ok then
+    M.config = ret.config
+    M.source = ret.source
   else
-    log.warn("No doom_config.lua file found, falling to defaults")
-    default_doom_config_values()
+    log.error("Error while loading  doom_config.lua. Traceback:\n" .. ret)
   end
-
-  return config
 end
 
 -- install_servers will install the language servers for the languages with
 -- the +lsp flag.
 --
--- @param langs The list of languages in the doomrc
+-- @param langs The list of languages in the doom_modules.lua
 M.install_servers = function(langs)
   if packer_plugins and packer_plugins["lspinstall"] and packer_plugins["lspinstall"].loaded then
     local lspinstall = require("lspinstall")
@@ -466,7 +453,7 @@ end
 -- install_dap_clients will install the DAP clients for the languages with
 -- the +debug flag.
 --
--- @param langs The list of languages in the doomrc
+-- @param langs The list of languages in the doom_modules.lua
 M.install_dap_clients = function(langs)
   if
     packer_plugins
@@ -501,7 +488,7 @@ M.install_dap_clients = function(langs)
 end
 
 -- Check plugins updates on start if enabled
-if M.load_config().doom.check_updates then
+if M.config.doom.check_updates then
   require("doom.core.functions").check_updates()
 end
 

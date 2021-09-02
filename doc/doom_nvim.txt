@@ -56,11 +56,11 @@ INTRODUCTION                                                 *doom_nvim_intro*
 
 Doom Neovim is a Neovim port of the Doom Emacs configuration framework, adapted
 for the Neovim user that wants less framework in their framework and the performance
-of a hand-made configuration. You can use it as a base for your own setup or as 
+of a hand-made configuration. You can use it as a base for your own setup or as
 a learning resource on how to achieve a great Neovim configuration.
 
 Doom Neovim features an opinionated collection of reasonable and optional
-defaults, with a focus on runtime and startup performance, and a clean, 
+defaults, with a focus on runtime and startup performance, and a clean,
 readable code base.
 
 
@@ -81,7 +81,7 @@ COLORSCHEME                                            *doom_nvim_colorscheme*
 
 The colorscheme of Doom Nvim. Default is `doom-one`. There are some additional
 doom emacs' colorschemes port for Neovim that can be enabled by uncommenting
-the `doom-themes` in your `doomrc.lua`.
+the `doom-themes` in your `doom_modules.lua`.
 
 You can switch between colorschemes by doing <Space>ds and then type the name
 of the colorscheme you want to use. You can also edit the `doom_config.lua`
@@ -129,7 +129,7 @@ See |doom_nvim_commands| for more information.
 ==============================================================================
 FILE EXPLORER                        *doom_nvim_configuration_layout_explorer*
 
-Doom Neovim uses the `kyazdani42/nvim-tree.lua` plugin as a file explorer. 
+Doom Neovim uses the `kyazdani42/nvim-tree.lua` plugin as a file explorer.
 It can be toggled by running the following commands:
 <Space>oe for `FileExplorer`
 <F3> for `FileExplorer`
@@ -222,11 +222,11 @@ and Doom Nvim will automatically handle your changes on here.
 ==============================================================================
 CUSTOM PLUGINS                        *doom_nvim_configuration_custom_plugins*
 
-To use your own plugins in Doom Nvim you can use the `plugins.lua` file
-located in the Doom Nvim root directory.
+To use your own plugins in Doom Nvim you can use the `doom_userplugins.lua`
+file located in the Doom Nvim root directory.
 
 NOTE: if you are familiar with `packer.nvim` (the plugins manager used by Doom
-Nvim) then you can see the `plugins.lua` file as a wrapper for it.
+Nvim) then you can see the `doom_userplugins.lua` file as a wrapper for it.
 
 To add plugins without extra configurations (e.g., if a plugin does not depend
 on other plugins), you can simply set it as follow:
@@ -259,8 +259,8 @@ having to manually configure servers, Doom Nvim makes use of
 
 To enable the language server for a certain programming language and
 automatically install it, just append a `+lsp` flag at the end of the language
-field in your `doomrc.lua`, e.g. for enabling Rust support in Doom and install
-`rust-analyzer`:
+field in your `doom_modules.lua`, e.g. for enabling Rust support in Doom and
+install `rust-analyzer`:
 
 `    local doom = {`
 `        langs = {`
@@ -495,9 +495,9 @@ development environment without spending a lot of time setting everything up.
 
   - Why does Doom Nvim only support Neovim 0.5.0 (and beyond)?
 
-Doom Nvim relies on lua for the configuration and use of many plugins. Since 
+Doom Nvim relies on lua for the configuration and use of many plugins. Since
 lua is not available in neovim 0.4.4 and below, it is not possible to use Doom
-Nvim with a neovim version lower than 0.5.0. However, the Doom Nvim installer 
+Nvim with a neovim version lower than 0.5.0. However, the Doom Nvim installer
 automatically installs Neovim 0.5.0 for you!
 
 ==============================================================================
@@ -515,7 +515,9 @@ This is the structure of Doom Nvim:
 ├── doc                   # Doom Nvim documentation to be used inside Nvim
 │  └── doom_nvim.txt      # Doom Nvim help file
 ├── docs                  # Doom Nvim docs meant to be readed on GitHub
-├── doomrc                # Doom Nvim user configurations file
+├── doom_config.lua       # Doom Nvim user configurations file
+├── doom_modules.lua      # Doom Nvim user module selection
+├── doom_userplugins.lua  # Doom Nvim user plugins
 ├── init.lua              # init.lua file
 ├── install.sh            # Doom Nvim installer
 ├── LICENSE               # Doom Nvim License
@@ -537,8 +539,8 @@ This is the structure of Doom Nvim:
 │     └── init.lua        # packer.nvim setup
 └── sessions              # Location of Neovim workspaces
 
-Doom Nvim also sets default configurations for the `doomrc.lua` and the
-`doom_config.lua` files, which serves as the user configuration file
+Doom Nvim also sets default configurations for the `doom_config.lua` and the
+`doom_modules.lua` files, which serves as the user configuration file
 if it is not present on the system. It allows a fine control over the core
 functions of Doom Nvim.
 

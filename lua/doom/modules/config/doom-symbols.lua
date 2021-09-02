@@ -1,5 +1,5 @@
 return function()
-  local config = require("doom.core.config").load_config()
+  local config = require("doom.core.config").config
 
   vim.g.symbols_outline = {
     highlight_hovered_item = true,

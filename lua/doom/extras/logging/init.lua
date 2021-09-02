@@ -9,22 +9,19 @@
 ----- CUSTOM SECTION --------------------------------------
 -----------------------------------------------------------
 
-local utils = require("doom.utils")
 local system = require("doom.core.system")
 -- logging defaults to "info" level
-local doom_config = {
-  doom = {
-    logging = "info",
-  },
-}
+local logging_level = "info"
 
--- /home/user/.config/doom-nvim/doom_config.lua
-if utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep)) then
-  doom_config = dofile(string.format("%s%sdoom_config.lua", system.doom_root, system.sep))
-elseif
-  utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep))
-then
-  doom_config = dofile(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep))
+-- Manually load doom_config.lua to avoid circular dependencies
+local ok, ret = pcall(require, "doom_config")
+if ok then
+  logging_level = ret.config.doom.logging or logging_level
+else
+  ok, ret = pcall(dofile, system.doom_configs_root.."/doom_config.lua")
+  if ok then
+    logging_level = ret.config.doom.logging or logging_level
+  end
 end
 
 -----------------------------------------------------------
@@ -46,7 +43,7 @@ local default_config = {
 
   -- Any messages above this level will be logged.
   -- defaults to info
-  level = doom_config.doom.logging,
+  level = logging_level;
 
   -- Level configuration
   modes = {
@@ -70,12 +67,7 @@ local unpack = unpack or table.unpack
 log.new = function(config, standalone)
   config = vim.tbl_deep_extend("force", default_config, config)
 
-  local outfile = string.format(
-    "%s%s%s.log",
-    vim.api.nvim_call_function("stdpath", { "data" }),
-    system.sep,
-    config.plugin
-  )
+  local outfile = ("%s/%s.log"):format(vim.fn.stdpath("data"), config.plugin)
 
   local obj
   if standalone then

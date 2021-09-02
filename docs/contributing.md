@@ -50,7 +50,7 @@ thus reach a solution more quickly.
 Some important data would be:
 
 - Your custom configuration if you have one
-  (`doomrc.lua`, `doom_config.lua` and `plugins.lua`)
+  (`doom_modules.lua`, `doom_config.lua` and `doom_userplugins.lua`)
 - Which branch of Doom Nvim are you using
 - Which plugins are you using
 
