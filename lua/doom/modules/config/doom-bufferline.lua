@@ -1,9 +1,9 @@
 return function()
   require("bufferline").setup({
     options = {
-      numbers = "buffer_id",
-      number_style = "none",
-      mappings = false,
+      numbers = function(opts)
+        return string.format("%s", opts.id)
+      end,
       indicator_icon = "▎",
       buffer_close_icon = "",
       modified_icon = "●",
