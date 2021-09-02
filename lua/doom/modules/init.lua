@@ -430,6 +430,18 @@ packer.startup(function(use)
     event = "BufWinEnter",
   })
 
+  local disabled_contrib = functions.is_plugin_disabled("contrib")
+  -- Lua 5.1 docs
+  use({
+    "milisims/nvim-luaref",
+    disable = disabled_contrib,
+  })
+  -- LibUV docs
+  use({
+    "nanotee/luv-vimdocs",
+    disable = disabled_contrib,
+  })
+
   -----[[-------------]]-----
   ---     Web Related     ---
   -----]]-------------[[-----
