@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.1] - 2021-09-02
+
+### Fixed
+
+- Updated bufferline configs to match the new breaking changes
+- Updated Neorg treesttier parser files to be able to successfully compile it
+- Properly require logging on utils module
+
 ## [3.1.0] - 2021-08-26
 
 ### Added
@@ -525,7 +533,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.0...develop
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.1...develop
+[3.1.1]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.13...v3.1.0
 [3.0.13]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.12...v3.0.13
 [3.0.12]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.11...v3.0.12
