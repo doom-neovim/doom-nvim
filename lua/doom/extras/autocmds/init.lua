@@ -7,6 +7,7 @@
 local utils = require("doom.utils")
 local log = require("doom.extras.logging")
 local config = require("doom.core.config").config
+local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
 
 log.debug("Loading Doom autocmds module ...")
 
@@ -117,6 +118,15 @@ if config.doom.preserve_edit_pos then
         exe "normal! g'\"" |
       endif
     ]],
+  })
+end
+
+-- Linting
+if not is_plugin_disabled("linter") then
+  table.insert(autocmds["doom_extras"], {
+    "BufWritePost,InsertLeave,TextChanged",
+    "*",
+    "lua require('lint').try_lint()",
   })
 end
 
