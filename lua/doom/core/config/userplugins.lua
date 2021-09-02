@@ -23,7 +23,7 @@ if ok then
   M.plugins = ret.plugins
   M.source = ret.source
 else
-  ok, ret = pcall(dofile, system.doom_configs_root.."/doom_userplugins.lua")
+  ok, ret = pcall(dofile, system.doom_configs_root .. "/doom_userplugins.lua")
   if ok then
     M.plugins = ret.plugins
     M.source = ret.source

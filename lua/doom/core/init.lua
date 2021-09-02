@@ -15,9 +15,7 @@ for i = 1, #core_modules, 1 do
       require("doom.core.settings").custom_options()
     elseif core_modules[i] == "config" then
       -- Automatically install language servers
-      require("doom.core.config").install_servers(
-        require("doom.core.config.modules").modules.langs
-      )
+      require("doom.core.config").install_servers(require("doom.core.config.modules").modules.langs)
       -- Automatically install language DAP clients
       require("doom.core.config").install_dap_clients(
         require("doom.core.config.modules").modules.langs

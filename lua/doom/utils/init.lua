@@ -64,7 +64,7 @@ else
   if ok then
     config = ret.config
   else
-    ok, ret = pcall(dofile, system.doom_configs_root.."/doom_config.lua")
+    ok, ret = pcall(dofile, system.doom_configs_root .. "/doom_config.lua")
     if ok then
       config = ret.config
     end

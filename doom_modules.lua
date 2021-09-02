@@ -15,13 +15,13 @@ M.source = debug.getinfo(1, "S").source:sub(2)
 
 M.modules = {
   ui = {
-    "dashboard",          -- Start screen
+    "dashboard", -- Start screen
     -- "doom-themes",     -- Additional doom emacs' colorschemes
     -- "indentlines",     -- Show indent lines
     -- "show_registers",  -- popup that shows register contents
-    "statusline",         -- Statusline
-    "tabline",            -- Tabline, shows your buffers list at top
-    "which-key",          -- Keybindings popup menu like Emacs' guide-key
+    "statusline", -- Statusline
+    "tabline", -- Tabline, shows your buffers list at top
+    "which-key", -- Keybindings popup menu like Emacs' guide-key
     -- "zen",             -- Distraction free environment
   },
   doom = {
@@ -30,20 +30,20 @@ M.modules = {
     -- "runner",          -- Open a REPL for the current language or run the current file
   },
   editor = {
-    "autopairs",          -- Autopairs
-    "auto-session",       -- A small automated session manager for Neovim
-    "dap",                -- Debug Adapter Protocol
+    "autopairs", -- Autopairs
+    "auto-session", -- A small automated session manager for Neovim
+    "dap", -- Debug Adapter Protocol
     -- "editorconfig",    -- EditorConfig support for Neovim
-    "explorer",           -- Tree explorer
-    "formatter",          -- File formatting
-    "gitsigns",           -- Git signs
-    "kommentary",         -- Comments plugin
-    "lsp",                -- Language Server Protocols
+    "explorer", -- Tree explorer
+    "formatter", -- File formatting
+    "gitsigns", -- Git signs
+    "kommentary", -- Comments plugin
+    "lsp", -- Language Server Protocols
     -- "minimap",         -- Code minimap, requires github.com/wfxr/code-minimap
     -- "ranger",          -- Ranger File Browser, requires ranger file browser
-    "snippets",           -- LSP snippets
-    "symbols",            -- LSP symbols and tags
-    "telescope",          -- Highly extendable fuzzy finder over lists
+    "snippets", -- LSP snippets
+    "symbols", -- LSP symbols and tags
+    "telescope", -- Highly extendable fuzzy finder over lists
     -- "terminal",        -- Terminal for Neovim (NOTE: needed for runner and compiler)
   },
   langs = {
@@ -58,7 +58,7 @@ M.modules = {
 
     -- "bash",            -- The terminal gods language
     -- "elixir",          -- Build scalable and maintainable software
-    "lua",                -- Support for our gods language
+    "lua", -- Support for our gods language
     -- "python +lsp",     -- Python support + lsp
     -- "ruby",            -- Look ma, I love the gems!
 
@@ -74,14 +74,14 @@ M.modules = {
   utilities = {
     -- "lazygit",         -- LazyGit integration for Neovim, requires LazyGit
     -- "neogit",          -- Magit for Neovim
-    "range-highlight",    -- hightlights ranges you have entered in commandline
+    "range-highlight", -- hightlights ranges you have entered in commandline
     -- "suda",            -- Write and read files without sudo permissions
   },
   web = {
     -- "colorizer",       -- Fastest colorizer for Neovim
     -- "firenvim",        -- requires firenvim browser extension; change fontsize by increasing guifontsize in doom_config
     -- "restclient",      -- A fast Neovim http client
-  }
+  },
 }
 
 return M

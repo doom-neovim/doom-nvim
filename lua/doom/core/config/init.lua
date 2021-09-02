@@ -411,7 +411,7 @@ if ok then
   M.config = ret.config
   M.source = ret.source
 else
-  ok, ret = pcall(dofile, system.doom_configs_root.."/doom_config.lua")
+  ok, ret = pcall(dofile, system.doom_configs_root .. "/doom_config.lua")
   if ok then
     M.config = ret.config
     M.source = ret.source
