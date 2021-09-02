@@ -478,17 +478,29 @@ packer.startup(function(use)
     config = require("doom.modules.config.doom-fire"),
   })
 
+  local disabled_todo = functions.is_plugin_disabled("todo_comments")
   use({
     "folke/todo-comments.nvim",
     requires = "nvim-lua/plenary.nvim",
     config = require("doom.modules.config.doom-todo"),
+    disable = disabled_todo,
   })
+
+  local disabled_trouble = functions.is_plugin_disabled("trouble")
   use({
     "folke/trouble.nvim",
+    cmd = { "Trouble", "TroubleClose", "TroubleRefresh", "TroubleToggle" },
     requires = "kyazdani42/nvim-web-devicons",
     config = require("doom.modules.config.doom-trouble"),
+    disable = disabled_trouble,
   })
-  use({ "jez/vim-superman" })
+
+  local disabled_superman = functions.is_plugin_disabled("superman")
+  use({
+    "jez/vim-superman",
+    cmd = "SuperMan",
+    disable = disabled_superman,
+  })
 
   -----[[----------------]]-----
   ---     Custom Plugins     ---
