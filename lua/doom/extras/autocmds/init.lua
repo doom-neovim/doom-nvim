@@ -122,10 +122,10 @@ if config.doom.preserve_edit_pos then
 end
 
 -- Linting
-if not is_plugin_disabled("linter") then
+if not is_plugin_disabled("linter") and packer_plugins and packer_plugins["nvim-lint"] then
   table.insert(autocmds["doom_extras"], {
-    "BufWritePost,InsertLeave,TextChanged",
-    "*",
+    "BufWritePost",
+    "<buffer>",
     "lua require('lint').try_lint()",
   })
 end
