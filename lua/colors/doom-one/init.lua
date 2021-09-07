@@ -331,8 +331,8 @@ high_link('Todo', 'TextWarningBold')
 
 local main_syntax = {
 	Tag = { fg = tag, gui = 'bold' },
-	Link = { fg = tag, gui = 'undercurl' },
-	URL = { fg = green, gui = 'undercurl' },
+	Link = { fg = green, gui = 'underline' },
+	URL = { fg = green, gui = 'underline' },
 	Underlined = { fg = tag, gui = 'underline' },
 
 	Comment = {
@@ -490,86 +490,78 @@ apply_highlight(barbar)
 --       https://github.com/NTBBloodbath/doom-one.nvim/issues/8#issuecomment-883737667
 --       for more information about this
 if transparent_bg then
-	local bufferline = {
-		BufferLineTab = { fg = fg, bg = bg },
-		BufferLineTabClose = { fg = fg, bg = bg, gui = 'bold' },
-		BufferLineTabSelected = { fg = blue, bg = bg, gui = 'bold,italic' },
-		BufferLineBackground = { fg = fg_alt, bg = bg },
-		BufferLineBufferSelected = { fg = fg, bg = bg, gui = 'bold,italic' },
-		BufferLineBufferVisible = { fg = fg, bg = bg },
-		BufferLineCloseButton = { fg = fg_alt, bg = bg },
-		BufferLineCloseButtonSelected = { fg = fg, bg = bg, gui = 'bold' },
-		BufferLineCloseButtonVisible = { fg = fg, bg = bg },
-		BufferLineModified = { fg = green, bg = bg },
-		BufferLineModifiedSelected = { fg = green, bg = bg },
-		BufferLineModifiedVisible = { fg = green, bg = bg },
-		BufferLineFill = { fg = blue, bg = bg_alt },
-		BufferLineIndicatorSelected = { fg = blue, bg = bg },
-		BufferLineSeparator = { fg = base0, bg = bg },
-		BufferLineSeparatorSelected = { fg = base0, bg = bg },
-		BufferLineSeparatorVisible = { fg = base0, bg = bg_alt },
-		BufferLinePick = { fg = fg, bg = bg, gui = 'bold' },
-		BufferLinePickSelected = { fg = blue, bg = bg, gui = 'bold,italic' },
-		BufferLinePickVisible = { fg = fg, bg = bg_alt },
+    local bufferline = {
+	    BufferLineTab = { fg = fg, bg = bg },
+	    BufferLineTabClose = { fg = fg, bg = bg, gui = 'bold' },
+	    BufferLineTabSelected = { fg = blue, bg = bg, gui = 'bold,italic' },
+	    BufferLineBackground = { fg = fg_alt, bg = bg },
+	    BufferLineBufferSelected = { fg = fg, bg = bg, gui = 'bold,italic' },
+	    BufferLineBufferVisible = { fg = fg, bg = bg },
+	    BufferLineCloseButton = { fg = fg_alt, bg = bg },
+	    BufferLineCloseButtonSelected = { fg = fg, bg = bg, gui = 'bold' },
+	    BufferLineCloseButtonVisible = { fg = fg, bg = bg },
+	    BufferLineModified = { fg = green, bg = bg },
+	    BufferLineModifiedSelected = { fg = green, bg = bg },
+	    BufferLineModifiedVisible = { fg = green, bg = bg },
+	    BufferLineFill = { fg = blue, bg = bg_alt },
+	    BufferLineIndicatorSelected = { fg = blue, bg = bg },
+	    BufferLineSeparator = { fg = base0, bg = bg },
+	    BufferLineSeparatorSelected = { fg = base0, bg = bg },
+	    BufferLineSeparatorVisible = { fg = base0, bg = bg_alt },
+	    BufferLinePick = { fg = fg, bg = bg, gui = 'bold' },
+	    BufferLinePickSelected = { fg = blue, bg = bg, gui = 'bold,italic' },
+	    BufferLinePickVisible = { fg = fg, bg = bg_alt },
 
-		BufferLineDiagnostic = { fg = fg, bg = bg, sp = fg },
-		BufferLineDiagnosticSelected = { fg = fg, bg = bg, sp = fg },
-		BufferLineDiagnosticVisible = { fg = fg, bg = bg, sp = fg },
+	    BufferLineDiagnostic = { fg = fg, bg = bg, sp = fg },
+	    BufferLineDiagnosticSelected = { fg = fg, bg = bg, sp = fg },
+	    BufferLineDiagnosticVisible = { fg = fg, bg = bg, sp = fg },
 
-		BufferLineInfo = { fg = cyan, bg = bg, sp = cyan, gui = 'bold' },
-		BufferLineInfoSelected = {
-			fg = cyan,
-			bg = bg,
-			sp = cyan,
-			gui = 'bold,italic',
-		},
-		BufferLineInfoVisible = { fg = cyan, bg = bg, sp = cyan, gui = 'bold' },
-		BufferLineInfoDiagnostic = { fg = cyan, bg = bg, sp = cyan },
-		BufferLineInfoDiagnosticSelected = { fg = cyan, bg = bg, sp = cyan },
-		BufferLineInfoDiagnosticVisible = { fg = cyan, bg = bg, sp = cyan },
-		BufferLineError = { fg = red, bg = bg, sp = red, gui = 'bold' },
-		BufferLineErrorSelected = {
-			fg = red,
-			bg = bg,
-			sp = red,
-			gui = 'bold,italic',
-		},
-		BufferLineErrorVisible = { fg = red, bg = bg, sp = red, gui = 'bold' },
-		BufferLineErrorDiagnostic = { fg = red, bg = bg, sp = red },
-		BufferLineErrorDiagnosticSelected = { fg = red, bg = bg, sp = red },
-		BufferLineErrorDiagnosticVisible = { fg = red, bg = bg, sp = red },
-		BufferLineWarning = {
-			fg = yellow,
-			bg = bg,
-			sp = yellow,
-			gui = 'bold,italic',
-		},
-		BufferLineWarningSelected = {
-			fg = yellow,
-			bg = bg,
-			sp = yellow,
-			gui = 'bold,italic',
-		},
-		BufferLineWarningVisible = {
-			fg = yellow,
-			bg = bg,
-			sp = yellow,
-			gui = 'bold',
-		},
-		BufferLineWarningDiagnostic = { fg = yellow, bg = bg, sp = yellow },
-		BufferLineWarningDiagnosticSelected = {
-			fg = yellow,
-			bg = bg,
-			sp = yellow,
-		},
-		BufferLineWarningDiagnosticVisible = {
-			fg = yellow,
-			bg = bg,
-			sp = yellow,
-		},
-	}
+	    BufferLineInfo = { fg = cyan, bg = bg, sp = cyan, gui = 'bold' },
+	    BufferLineInfoSelected = {
+		    fg = cyan,
+		    bg = bg,
+		    sp = cyan,
+		    gui = 'bold,italic',
+	    },
+	    BufferLineInfoVisible = { fg = cyan, bg = bg, sp = cyan, gui = 'bold' },
+	    BufferLineInfoDiagnostic = { fg = cyan, bg = bg, sp = cyan },
+	    BufferLineInfoDiagnosticSelected = { fg = cyan, bg = bg, sp = cyan },
+	    BufferLineInfoDiagnosticVisible = { fg = cyan, bg = bg, sp = cyan },
+	    BufferLineError = { fg = red, bg = bg, sp = red, gui = 'bold' },
+	    BufferLineErrorSelected = {
+		    fg = red,
+		    bg = bg,
+		    sp = red,
+		    gui = 'bold,italic',
+	    },
+	    BufferLineErrorVisible = { fg = red, bg = bg, sp = red, gui = 'bold' },
+	    BufferLineErrorDiagnostic = { fg = red, bg = bg, sp = red },
+	    BufferLineErrorDiagnosticSelected = { fg = red, bg = bg, sp = red },
+	    BufferLineErrorDiagnosticVisible = { fg = red, bg = bg, sp = red },
+	    BufferLineWarning = {
+		    fg = yellow,
+		    bg = bg,
+		    sp = yellow,
+		    gui = 'bold,italic',
+	    },
+	    BufferLineWarningSelected = {
+		    fg = yellow,
+		    bg = bg,
+		    sp = yellow,
+		    gui = 'bold,italic',
+	    },
+	    BufferLineWarningVisible = {
+		    fg = yellow,
+		    bg = bg,
+		    sp = yellow,
+		    gui = 'bold',
+	    },
+	    BufferLineWarningDiagnostic = { fg = yellow, bg = bg, sp = yellow },
+	    BufferLineWarningDiagnosticSelected = { fg = yellow, bg = bg, sp = yellow },
+	    BufferLineWarningDiagnosticVisible = { fg = yellow, bg = bg, sp = yellow },
+    }
 
-	apply_highlight(bufferline)
+    apply_highlight(bufferline)
 end
 
 -- }}}
@@ -805,6 +797,12 @@ high_link('LspLinesDiagBorder', 'Bold')
 -- TreeSitter {{{
 
 if vim.g.doom_one_enable_treesitter then
+    -- We will set a special definition for TSStrike here
+    local treesitter = {
+        TSStrike = { fg = utils.Darken(violet, 0.2), cterm = 'strikethrough', gui = 'strikethrough' },
+    }
+
+    apply_highlight(treesitter)
 	high_link('TSException', 'Exception')
 	high_link('TSAnnotation', 'PreProc')
 	high_link('TSAttribute', 'Attribute')
