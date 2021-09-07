@@ -50,6 +50,14 @@ local keybinds_modules = config.doom.keybinds_modules
 
 for module in pairs(keybinds_modules) do
   if keybinds_modules[module] then
-    require(string.format("doom.extras.keybindings.%s", module))
+    local ok, err = xpcall(require, debug.traceback, ("doom.extras.keybindings.%s"):format(module))
+    if not ok then
+      log.error(
+        string.format(
+          "There was an error loading the module 'doom.extras.keybindings.%s'. Traceback:\n%s",
+          module, err
+        )
+      )
+    end
   end
 end
