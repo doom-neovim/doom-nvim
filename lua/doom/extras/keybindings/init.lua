@@ -35,17 +35,18 @@ log.debug("Loading Doom keybindings module ...")
 
 -------------------------------------------------
 
-local keybinds_modules = config.doom.keybinds_modules or {
-  -- Core doom keybindings
-  core = true,
-  -- Movement keybindings, jump between your windows, buffers and code
-  movement = true,
-  -- Leader keybindings, a bunch of useful keybindings managed by space key
-  -- WARNING: disabling this will break which-key plugin if the plugin is enabled
-  leader = true,
-  -- Completion and snippets keybindings
-  completion = true,
-}
+local keybinds_modules = config.doom.keybinds_modules
+  or {
+    -- Core doom keybindings
+    core = true,
+    -- Movement keybindings, jump between your windows, buffers and code
+    movement = true,
+    -- Leader keybindings, a bunch of useful keybindings managed by space key
+    -- WARNING: disabling this will break which-key plugin if the plugin is enabled
+    leader = true,
+    -- Completion and snippets keybindings
+    completion = true,
+  }
 
 for module in pairs(keybinds_modules) do
   if keybinds_modules[module] then
