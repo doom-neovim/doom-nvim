@@ -1,43 +1,66 @@
 return function()
   local config = require("doom.core.config").config
+  local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
+
   local tree_cb = require("nvim-tree.config").nvim_tree_callback
 
   -- Empty by default
   vim.g.nvim_tree_ignore = { ".git", "node_modules", ".cache", "__pycache__" }
+
   -- False by default, opens the tree when typing `vim $DIR` or `vim`
   vim.g.nvim_tree_auto_open = 0
+
   -- False by default, closes the tree when it is the last window
   vim.g.nvim_tree_auto_close = 0
+
   -- False by default, closes the tree when you open a file
   vim.g.nvim_tree_quit_on_open = 1
+
   -- False by default, this option allows the cursor to be updated when entering a buffer
   vim.g.nvim_tree_follow = 1
+
+  -- False by default, will update the path of the current dir if the file is not inside the tree.
+  vim.g.nvim_tree_follow_update_path = 1
+
   -- False by default, this option shows indent markers when folders are open
   vim.g.nvim_tree_indent_markers = 1
+
   -- Show hidden files
   vim.g.nvim_tree_hide_dotfiles = config.doom.show_hidden
+
   -- Set tree width
   vim.g.nvim_tree_width = config.doom.sidebar_width
+
   -- False by default, will enable file highlight for git attributes (can be used without the icons).
   vim.g.nvim_tree_git_hl = 1
+
   -- This is the default. See :help filename-modifiers for more options
   vim.g.nvim_tree_root_folder_modifier = ":~"
+
   -- False by default, will open the tree when entering a new tab and the tree was previously open
   vim.g.nvim_tree_tab_open = 1
+
   -- False by default, will not resize the tree when opening a file
   vim.g.nvim_tree_width_allow_resize = 1
+
   -- False by default, append a trailing slash to folder names
   vim.g.nvim_tree_add_trailing = 1
+
   -- False by default, compact folders that only contain a single folder into one node in the file tree
   vim.g.nvim_tree_group_empty = 1
-  --- Tree icons
+
+  -- False by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
+  vim.g.nvim_tree_lsp_diagnostics = is_plugin_disabled("lsp") and 0 or 1
+
   -- If false, do not show the icons for one of 'git' 'folder' and 'files'
   -- true by default, notice that if 'files' is 1, it will only display
   -- if nvim-web-devicons is installed and on your runtimepath
-  vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1 }
+  vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1, folder_arrows = 0 }
   if config.doom.explorer_right then
     vim.g.nvim_tree_side = "right"
   end
+
+  --- Tree keybindings
   -- You can edit keybindings be defining this variable
   -- You don't have to define all keys.
   -- NOTE: the 'edit' key will wrap/unwrap a folder and open a file
@@ -70,25 +93,36 @@ return function()
     { key = "q", cb = tree_cb("close") },
   }
 
+  --- Tree icons
   -- default will show icon by default if no icon is provided
   -- default shows no icon by default
   vim.g.nvim_tree_icons = {
     default = "",
     symlink = "",
     git = {
-      unstaged = "✗",
-      staged = "✓",
+      unstaged = "",
+      staged = "",
       unmerged = "",
-      renamed = "➜",
-      untracked = "★",
+      renamed = "",
+      untracked = "",
+      deleted = "",
+      ignored = "◌",
     },
     folder = {
+      arrow_open = "",
+      arrow_closed = "",
       default = "",
       open = "",
       empty = "",
       empty_open = "",
       symlink = "",
       symlink_open = "",
+    },
+    lsp = {
+      hint = config.doom.lsp_hint,
+      info = config.doom.lsp_information,
+      warning = config.doom.lsp_warning,
+      error = config.doom.lsp_error,
     },
   }
 
