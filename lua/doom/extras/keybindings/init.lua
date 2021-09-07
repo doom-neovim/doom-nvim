@@ -55,7 +55,8 @@ for module in pairs(keybinds_modules) do
       log.error(
         string.format(
           "There was an error loading the module 'doom.extras.keybindings.%s'. Traceback:\n%s",
-          module, err
+          module,
+          err
         )
       )
     end
