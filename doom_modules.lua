@@ -27,7 +27,7 @@ M.modules = {
   doom = {
     -- "compiler",        -- Compile (and run) your code with just pressing three keys!
     -- "contrib",         -- Special plugins intended for Doom Nvim contributors (lua docs, etc)
-    -- "neorg",           -- Life Organization Tool
+    "neorg",              -- Life Organization Tool, used by Doom Nvim user manual
     -- "runner",          -- Open a REPL for the current language or run the current file
   },
   editor = {
