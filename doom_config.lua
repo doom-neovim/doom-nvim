@@ -190,6 +190,21 @@ M.config = {
     -- @default = true
     dashboard_statline = true,
 
+    -- Set the keybindings modules that you want to use
+    -- false : disables keybindings module
+    -- true  : enables keybindings module
+    keybinds_modules = {
+      -- Core doom keybindings
+      core = true,
+      -- Movement keybindings, jump between your windows, buffers and code
+      movement = true,
+      -- Leader keybindings, a bunch of useful keybindings managed by space key
+      -- WARNING: disabling this will break which-key plugin if the plugin is enabled
+      leader = true,
+      -- Completion and snippets keybindings
+      completion = true,
+    },
+
     -- Default indent size
     -- @default = 4
     indent = 4,
