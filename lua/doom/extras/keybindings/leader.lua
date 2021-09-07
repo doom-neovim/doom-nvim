@@ -8,10 +8,14 @@ local config = require("doom.core.config").config
 -- Additional options for mappings
 local opts = { silent = true }
 
+-- Set Space key as leader
+utils.map("n", "<Space>", "<Nop>", opts, "Editor", "open_whichkey", "Open WhichKey menu")
+vim.g.mapleader = " "
+
 if config.doom.new_file_split then
   utils.map(
     "n",
-    "<Leader>fn",
+    "<leader>fn",
     ":new<CR>",
     opts,
     "Editor",
@@ -21,7 +25,7 @@ if config.doom.new_file_split then
 else
   utils.map(
     "n",
-    "<Leader>fn",
+    "<leader>fn",
     ":enew<CR>",
     opts,
     "Editor",

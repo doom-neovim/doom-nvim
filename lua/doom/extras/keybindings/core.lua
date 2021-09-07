@@ -5,10 +5,6 @@ local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
 -- Additional options for mappings
 local opts = { silent = true }
 
--- Set Space key as leader
-utils.map("n", "<Space>", "<Nop>", opts, "Editor", "open_whichkey", "Open WhichKey menu")
-vim.g.mapleader = " "
-
 -- Fast exit from Doom Nvim
 utils.map(
   "n",
