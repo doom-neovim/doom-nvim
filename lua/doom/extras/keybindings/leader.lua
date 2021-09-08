@@ -159,7 +159,7 @@ utils.map(
 utils.map(
   "n",
   "<leader>dc",
-  '<cmd>DoomConfigs<CR>',
+  "<cmd>DoomConfigs<CR>",
   opts,
   "Doom",
   "edit_doom_config",
@@ -187,7 +187,7 @@ utils.map(
 utils.map(
   "n",
   "<leader>dR",
-  '<cmd>DoomReport<CR>',
+  "<cmd>DoomReport<CR>",
   opts,
   "Doom",
   "create_crash_report",
