@@ -1,4 +1,6 @@
 return function()
+  local doom_root = require("doom.core.system").doom_root
+
   -- Default setup for Neorg
   require("neorg").setup({
     -- Tell Neorg what modules to load
@@ -15,6 +17,7 @@ return function()
         config = {
           workspaces = {
             default_workspace = "~/neorg",
+            doom_docs = string.format("%s/doc", doom_root),
           },
         },
       },
