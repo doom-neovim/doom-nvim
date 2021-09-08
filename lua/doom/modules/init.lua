@@ -153,7 +153,7 @@ packer.startup(function(use)
   -- can be disabled to use your own tabline
   local disabled_tabline = functions.is_plugin_disabled("tabline")
   use({
-    "akinsho/nvim-bufferline.lua",
+    "akinsho/bufferline.nvim",
     config = require("doom.modules.config.doom-bufferline"),
     disable = disabled_tabline,
     event = "ColorScheme",
@@ -163,7 +163,7 @@ packer.startup(function(use)
   -- can be disabled to use your own terminal plugin
   local disabled_terminal = functions.is_plugin_disabled("terminal")
   use({
-    "akinsho/nvim-toggleterm.lua",
+    "akinsho/toggleterm.nvim",
     config = require("doom.modules.config.doom-toggleterm"),
     disable = disabled_terminal,
     module = { "toggleterm", "toggleterm.terminal" },
