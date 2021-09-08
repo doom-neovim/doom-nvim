@@ -73,7 +73,7 @@ packer.startup(function(use)
   -- Neorg
   local disabled_neorg = functions.is_plugin_disabled("neorg")
   use({
-    "vhyrro/neorg",
+    "nvim-neorg/neorg",
     branch = "unstable",
     config = require("doom.modules.config.doom-neorg"),
     disable = disabled_neorg,
