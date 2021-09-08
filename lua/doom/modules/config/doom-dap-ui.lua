@@ -21,7 +21,7 @@ return function()
         "stacks",
         "watches",
       },
-      width = 40,
+      size = 40,
       position = "left", -- Can be "left" or "right"
     },
     tray = {
@@ -29,7 +29,7 @@ return function()
       elements = {
         "repl",
       },
-      height = 10,
+      size = 10,
       position = "bottom", -- Can be "bottom" or "top"
     },
     floating = {
