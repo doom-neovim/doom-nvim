@@ -140,8 +140,8 @@ M.load_default_options = function()
   vim.opt.conceallevel = config.doom.conceallevel
 end
 
--- Custom Doom Nvim commands
-M.custom_options = function()
+-- Doom Nvim commands
+M.doom_commands = function()
   -- Set a custom command to update Doom Nvim
   -- can be called by using :DoomUpdate
   vim.cmd('command! DoomUpdate lua require("doom.core.functions").update_doom()')
@@ -151,7 +151,19 @@ M.custom_options = function()
   -- Set a custom command to open Doom Nvim user manual
   -- can be called by using :DoomManual
   vim.cmd('command! DoomManual lua require("doom.core.functions").open_docs()')
+  -- Set a custom command to edit Doom Nvim private configurations
+  -- can be called by using :DoomConfigs
+  vim.cmd('command! DoomConfigs lua require("doom.core.functions").edit_config()')
+  -- Set a custom command to reload Doom Nvim custom mappings, autocommands, etc
+  -- can be called by using :DoomConfigsReload
+  vim.cmd('command! DoomConfigsReload lua require("doom.core.functions").reload_custom_settings()')
+  -- Set a custom command to create a crash report
+  -- can be called by using :DoomReport
+  vim.cmd('command! DoomReport lua require("doom.core.functions").create_report()')
+end
 
+-- Custom Doom Nvim options
+M.custom_options = function()
   -- Load user-defined settings from the Neovim field in the doom_config.lua file
   functions.load_custom_settings(config.nvim.autocmds, "autocmds")
   functions.load_custom_settings(config.nvim.commands, "commands")

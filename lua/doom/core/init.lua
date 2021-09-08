@@ -13,6 +13,8 @@ for i = 1, #core_modules, 1 do
       require("doom.core.settings").load_default_options()
       -- User-defined settings (global variables, mappings, ect)
       require("doom.core.settings").custom_options()
+      -- Doom Nvim custom commands
+      require("doom.core.settings").doom_commands()
     elseif core_modules[i] == "config" then
       -- Automatically install language servers
       require("doom.core.config").install_servers(require("doom.core.config.modules").modules.langs)

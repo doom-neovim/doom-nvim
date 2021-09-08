@@ -159,7 +159,7 @@ utils.map(
 utils.map(
   "n",
   "<leader>dc",
-  '<cmd>lua require("doom.core.functions").edit_config()<CR>',
+  '<cmd>DoomConfigs<CR>',
   opts,
   "Doom",
   "edit_doom_config",
@@ -168,7 +168,7 @@ utils.map(
 utils.map(
   "n",
   "<leader>dd",
-  "<cmd>lua require('doom.core.functions').open_docs()<CR>",
+  "<cmd>DoomManual<CR>",
   opts,
   "Doom",
   "help_doom",
@@ -187,7 +187,7 @@ utils.map(
 utils.map(
   "n",
   "<leader>dR",
-  '<cmd>lua require("doom.core.functions").create_report()<CR>',
+  '<cmd>DoomReport<CR>',
   opts,
   "Doom",
   "create_crash_report",
@@ -214,7 +214,7 @@ utils.map(
 utils.map(
   "n",
   "<leader>dl",
-  "<cmd>lua require('doom.core.functions').reload_custom_settings()<CR>",
+  "<cmd>DoomConfigsReload<CR>",
   opts,
   "Doom",
   "reload_user_settings",
