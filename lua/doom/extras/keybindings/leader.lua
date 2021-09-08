@@ -168,11 +168,11 @@ utils.map(
 utils.map(
   "n",
   "<leader>dd",
-  "<cmd>help doom_nvim<CR>",
+  "<cmd>lua require('doom.core.functions').open_docs()<CR>",
   opts,
   "Doom",
   "help_doom",
-  "Open Doom help pages"
+  "Open Doom user manual"
 )
 utils.map("n", "<leader>du", "<cmd>DoomUpdate<CR>", opts, "Doom", "update_doom", "Update Doom Nvim")
 utils.map(

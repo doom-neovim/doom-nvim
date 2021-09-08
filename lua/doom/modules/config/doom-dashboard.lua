@@ -31,7 +31,7 @@ return function()
     },
     g = {
       description = { "  Open Documentation             SPC d d" },
-      command = "h doom_nvim",
+      command = 'lua require("doom.core.functions").open_docs()',
     },
   }
 

@@ -156,6 +156,40 @@ M.check_updates = function()
   end
 end
 
+-- Open Doom Nvim user manual and set extra options to buffer
+M.open_docs = function()
+  -- NOTE: we aren't using the default Neovim way with ':h doom' because of some bugs
+  -- with the tags and Neovim overriding the filetype, causing some highlighting issues
+
+  -- Get the documentation path
+  local docs_path
+  if utils.file_exists(string.format("%s/doc/doom_nvim.norg", system.doom_root)) then
+    docs_path = string.format("%s/doc/doom_nvim.norg", system.doom_root)
+  else
+    docs_path = string.format("%s/doc/doom_nvim.norg", system.doom_configs_root)
+  end
+
+  -- Open the documentation in a split window
+  vim.cmd(string.format("split %s", docs_path))
+  -- Move cursor to table of contents section
+  vim.api.nvim_buf_call(vim.fn.bufnr("doom_nvim.norg"), function()
+    vim.fn.cursor(12, 1)
+  end)
+  -- Set local documentation options
+  vim.opt_local.modified = false
+  vim.opt_local.modifiable = false
+  vim.opt_local.signcolumn = "no"
+  vim.opt_local.number = false
+  vim.opt_local.relativenumber = false
+  vim.opt_local.colorcolumn = "0"
+  vim.opt_local.shiftwidth = 2
+  vim.opt_local.tabstop = 2
+  vim.opt_local.conceallevel = 2
+  vim.opt_local.concealcursor = "n"
+  vim.opt_local.textwidth = 100
+  vim.opt_local.rightleft = false
+end
+
 -- create_report creates a markdown report. It's meant to be used when a bug
 -- occurs, useful for debugging issues.
 M.create_report = function()
