@@ -50,20 +50,31 @@ M.load_custom_settings = function(settings_tbl, scope)
   -- If the provided settings table is not empty
   if next(settings_tbl) ~= nil then
     log.debug("Loading custom " .. scope .. " ...")
-    if scope == "autocmds" then
-      utils.create_augroups(settings_tbl)
-    elseif scope == "commands" then
-      for _, cmd in ipairs(settings_tbl) do
-        vim.cmd(cmd)
-      end
-    elseif scope == "functions" then
-      for _, func_body in pairs(settings_tbl) do
-        func_body()
+    if scope == "functions" then
+      for _, func in ipairs(settings_tbl) do
+        -- Copy the function table so we can modify it safely
+        local func_tbl = func
+        -- Remove the additional table parameters
+        func_tbl.run_on_start = nil
+        local func_name = vim.tbl_keys(func_tbl)[1]
+
+        -- If we should run the function on launch or set it as a global function
+        if func.run_on_start then
+          func_tbl[func_name]()
+        else
+          _G[func_name] = func_tbl[func_name]
+        end
       end
     elseif scope == "mappings" then
       for _, map in ipairs(settings_tbl) do
         -- scope, lhs, rhs, options
         vim.api.nvim_set_keymap(map[1], map[2], map[3], map[4] and map[4] or {})
+      end
+    elseif scope == "autocmds" then
+      utils.create_augroups(settings_tbl)
+    elseif scope == "commands" then
+      for _, cmd in ipairs(settings_tbl) do
+        vim.cmd(cmd)
       end
     elseif scope == "variables" then
       for var, val in pairs(settings_tbl) do

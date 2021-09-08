@@ -382,9 +382,14 @@ M.config = {
     -- @default = {}
     -- example:
     --   {
-    --      hello_custom_func = function()
-    --        print("Hello, custom functions!")
-    --      end
+    --      {
+    --         hello_custom_func = function()
+    --           print("Hello, custom functions!")
+    --         end,
+    --         -- If the function should be ran on neovim launch or if it should
+    --         -- be a global function accesible from anywhere
+    --         run_on_start = false,
+    --      },
     --   }
     functions = {},
 

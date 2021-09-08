@@ -165,9 +165,9 @@ end
 -- Custom Doom Nvim options
 M.custom_options = function()
   -- Load user-defined settings from the Neovim field in the doom_config.lua file
+  functions.load_custom_settings(config.nvim.functions, "functions")
   functions.load_custom_settings(config.nvim.autocmds, "autocmds")
   functions.load_custom_settings(config.nvim.commands, "commands")
-  functions.load_custom_settings(config.nvim.functions, "functions")
   functions.load_custom_settings(config.nvim.mappings, "mappings")
   functions.load_custom_settings(config.nvim.global_variables, "variables")
   functions.load_custom_settings(config.nvim.options, "options")
