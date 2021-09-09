@@ -1,5 +1,11 @@
 return function()
   local nvim_lsp = require("lspconfig")
+
+  -- Snippets support
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  -- capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+
   local lua_lsp = require("lua-dev").setup({
     lspconfig = {
       settings = {
@@ -9,6 +15,7 @@ return function()
           },
         },
       },
+      capabilities = capabilities,
     },
   })
 
@@ -16,6 +23,7 @@ return function()
   local function setup_servers()
     -- Provide the missing :LspInstall
     require("lspinstall").setup()
+
     local servers = require("lspinstall").installed_servers()
     for _, server in pairs(servers) do
       -- Configure sumneko for neovim lua development
@@ -23,7 +31,9 @@ return function()
         nvim_lsp.lua.setup(lua_lsp)
       else
         -- Use default settings for all the other language servers
-        nvim_lsp[server].setup({})
+        nvim_lsp[server].setup({
+          capabilities = capabilities,
+        })
       end
     end
   end

@@ -3,10 +3,6 @@ return function()
   local lsp = vim.lsp
   local config = require("doom.core.config").config
 
-  -- Snippets support
-  local capabilities = lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-
   -- Lsp Symbols
   fn.sign_define("LspDiagnosticsSignError", {
     texthl = "LspDiagnosticsSignError",
@@ -40,18 +36,18 @@ return function()
     "   (Text) ",
     "   (Method)",
     "   (Function)",
-    "   (Constructor)",
+    "   (Constructor)",
     " ﴲ  (Field)",
-    "[] (Variable)",
+    "   (Variable)",
     "   (Class)",
     " ﰮ  (Interface)",
     "   (Module)",
-    " 襁 (Property)",
+    " ﰠ  (Property)",
     "   (Unit)",
     "   (Value)",
     " 練 (Enum)",
     "   (Keyword)",
-    "   (Snippet)",
+    "   (Snippet)",
     "   (Color)",
     "   (File)",
     "   (Reference)",
@@ -60,7 +56,7 @@ return function()
     " ﲀ  (Constant)",
     " ﳤ  (Struct)",
     "   (Event)",
-    "   (Operator)",
+    "   (Operator)",
     "   (TypeParameter)",
   }
 

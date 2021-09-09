@@ -312,17 +312,35 @@ packer.startup(function(use)
   -- Completion plugin
   -- can be disabled to use your own completion plugin
   use({
-    "hrsh7th/nvim-compe",
+    "hrsh7th/nvim-cmp",
     requires = {
-      {
-        "ray-x/lsp_signature.nvim",
-        config = require("doom.modules.config.doom-lsp-signature"),
-      },
+      "ray-x/lsp_signature.nvim",
+      config = require("doom.modules.config.doom-lsp-signature"),
     },
-    config = require("doom.modules.config.doom-compe"),
+    config = require("doom.modules.config.doom-cmp"),
     disable = disabled_lsp,
+    event = "BufWinEnter",
     opt = true,
-    after = "nvim-lspconfig",
+  })
+  use({
+    "hrsh7th/cmp-nvim-lua",
+    after = "nvim-cmp",
+  })
+  use({
+    "hrsh7th/cmp-nvim-lsp",
+    after = "nvim-cmp",
+  })
+  use({
+    "hrsh7th/cmp-path",
+    after = "nvim-cmp",
+  })
+  use({
+    "hrsh7th/cmp-buffer",
+    after = "nvim-cmp",
+  })
+  use({
+    "saadparwaiz1/cmp_luasnip",
+    after = "nvim-cmp",
   })
 
   -- Snippets
@@ -332,7 +350,6 @@ packer.startup(function(use)
     config = require("doom.modules.config.doom-luasnip"),
     disable = disabled_snippets,
     requires = { "rafamadriz/friendly-snippets" },
-    event = "BufWinEnter",
   })
 
   -- provides the missing `:LspInstall` for `nvim-lspconfig`.
