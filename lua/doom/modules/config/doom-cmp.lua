@@ -37,8 +37,8 @@ return function()
     return vim.api.nvim_replace_termcodes(str, true, true, true)
   end
   local function check_backspace()
-    local col = vim.fn.col "." - 1
-    if col == 0 or vim.fn.getline("."):sub(col, col):match "%s" then
+    local col = vim.fn.col(".") - 1
+    if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
       return true
     else
       return false
@@ -66,7 +66,7 @@ return function()
     mappings = {
       ["<C-Space>"] = cmp.mapping.complete(),
       ["<CR>"] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
+        behavior = cmp.ConfirmBehavior.Replace,
         select = true,
       }),
       ["<C-e>"] = cmp.mapping.close(),

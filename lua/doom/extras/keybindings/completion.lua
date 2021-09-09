@@ -49,15 +49,7 @@ utils.map(
   "Code action"
 )
 -- K: hover doc
-utils.map(
-  "n",
-  "K",
-  ":lua vim.lsp.buf.hover()<CR>",
-  opts,
-  "LSP",
-  "hover_doc",
-  "Hover documentation"
-)
+utils.map("n", "K", ":lua vim.lsp.buf.hover()<CR>", opts, "LSP", "hover_doc", "Hover documentation")
 -- Control+p: Jump to previous diagnostic
 utils.map(
   "n",
