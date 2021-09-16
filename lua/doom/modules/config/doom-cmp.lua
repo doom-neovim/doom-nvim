@@ -38,16 +38,15 @@ return function()
   end
   local function check_backspace()
     local col = vim.fn.col(".") - 1
-    if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-      return true
-    else
-      return false
-    end
+    return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
   end
 
   cmp.setup({
     completion = {
       completeopt = "menu,menuone,preview,noinsert",
+    },
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
     },
     formatting = {
       format = function(entry, item)
@@ -59,21 +58,26 @@ return function()
           nvim_lua = "[Lua]",
           path = "[Path]",
         })[entry.source.name]
-
+        item.dup = ({
+          buffer = 1,
+          path = 1,
+          nvim_lsp = 0,
+        })[entry.source.name] or 0
         return item
       end,
     },
-    mappings = {
+    mapping = {
+      ["<C-p>"] = cmp.mapping.select_prev_item(),
+      ["<C-n>"] = cmp.mapping.select_next_item(),
+      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
       ["<C-Space>"] = cmp.mapping.complete(),
+      ["<C-e>"] = cmp.mapping.close(),
+      -- ["<ESC>"] = cmp.mapping.close(),
       ["<CR>"] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
       }),
-      ["<C-e>"] = cmp.mapping.close(),
-      ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-p>"] = cmp.mapping.select_prev_item(),
-      ["<C-n>"] = cmp.mapping.select_next_item(),
       ["<Tab>"] = cmp.mapping(function(fallback)
         if vim.fn.pumvisible() == 1 then
           vim.fn.feedkeys(t("<C-n>"), "n")

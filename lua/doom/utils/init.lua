@@ -148,6 +148,55 @@ M.write_file = function(path, content, mode)
   end)
 end
 
+-- keep functions that we want to call
+M.functions = {}
+
+-- execute the given lua functions
+-- @tparam int index of the function in M.functions
+function M.execute(id)
+  local func = M.functions[id]
+  if not func then
+    error("Function doest not exist: " .. id)
+  end
+  return func()
+end
+
+-- map keybindings to functions and cmds
+local key_map = function(mode, key, cmd, opts, defaults)
+  opts = vim.tbl_deep_extend("force", { silent = true }, defaults or {}, opts or {})
+
+  if type(cmd) == "function" then
+    table.insert(M.functions, cmd)
+    if opts.expr then
+      cmd = ([[luaeval('require("doom.utils").execute(%d)')]]):format(#M.functions)
+    else
+      cmd = ("<cmd>lua require('doom.utils').execute(%d)<cr>"):format(#M.functions)
+    end
+  end
+  if opts.buffer ~= nil then
+    local buffer = opts.buffer
+    opts.buffer = nil
+    return vim.api.nvim_buf_set_keymap(buffer, mode, key, cmd, opts)
+  else
+    return vim.api.nvim_set_keymap(mode, key, cmd, opts)
+  end
+end
+
+-- map termcode keybindings
+function M.t(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+-- insert mode keybinding
+function M.imap(key, cmd, opts)
+  return key_map("i", key, cmd, opts)
+end
+
+-- substitute mode keybinding
+function M.smap(key, cmd, opts)
+  return key_map("s", key, cmd, opts)
+end
+
 M.load_modules = function(module_path, modules)
   for i = 1, #modules, 1 do
     local ok, err = xpcall(
