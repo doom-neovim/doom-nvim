@@ -210,6 +210,26 @@ M.config = {
     -- @default = true
     dashboard_statline = true,
 
+    -- Show the editing file path in your status line
+    -- false : show only file name on status line
+    -- true  : show file name and the updir in status line
+    statusline_show_file_path = true,
+
+    -- Set the keybindings modules that you want to use
+    -- false : disables keybindings module
+    -- true  : enables keybindings module
+    keybinds_modules = {
+      -- Core doom keybindings
+      core = true,
+      -- Movement keybindings, jump between your windows, buffers and code
+      movement = true,
+      -- Leader keybindings, a bunch of useful keybindings managed by space key
+      -- WARNING: disabling this will break which-key plugin if the plugin is enabled
+      leader = true,
+      -- Completion and snippets keybindings
+      completion = true,
+    },
+
     -- Default indent size
     -- @default = 4
     indent = 4,

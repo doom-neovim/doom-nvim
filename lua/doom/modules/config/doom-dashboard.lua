@@ -42,10 +42,6 @@ return function()
     ) .. " seconds.",
   }
 
-  if not config.doom.dashboard_statline then
-    vim.g.dashboard_disable_statusline = 1
-  end
-
   vim.g.dashboard_custom_header = vim.tbl_isempty(config.doom.dashboard_custom_header)
       and {
         "                                                                              ",

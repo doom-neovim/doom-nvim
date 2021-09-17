@@ -190,6 +190,11 @@ M.config = {
     -- @default = true
     dashboard_statline = true,
 
+    -- Show the editing file path in your status line
+    -- false : show only file name on status line
+    -- true  : show file name and the updir in status line
+    statusline_show_file_path = true,
+
     -- Set the keybindings modules that you want to use
     -- false : disables keybindings module
     -- true  : enables keybindings module
