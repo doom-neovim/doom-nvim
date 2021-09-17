@@ -30,21 +30,21 @@ return function()
       end,
       groups = {
         options = {
-          toggle_hidden_on_enter = true -- when you re-enter a hidden group this options re-opens that group so the buffer is visible
+          toggle_hidden_on_enter = true, -- when you re-enter a hidden group this options re-opens that group so the buffer is visible
         },
         items = {
           {
             name = "Tests",
             auto_close = true,
             matcher = function(buf)
-              return buf.filename:match('%_test') or buf.filename:match('%_spec')
+              return buf.filename:match("%_test") or buf.filename:match("%_spec")
             end,
           },
           {
             name = "Docs",
             auto_close = true,
             matcher = function(buf)
-              return buf.filename:match('%.md') or buf.filename:match('%.txt')
+              return buf.filename:match("%.md") or buf.filename:match("%.txt")
             end,
           },
           {
@@ -57,7 +57,7 @@ return function()
               return false
             end,
           },
-        }
+        },
       },
       offsets = {
         {
