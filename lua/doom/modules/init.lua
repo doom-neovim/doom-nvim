@@ -308,13 +308,33 @@ packer.startup(function(use)
     event = "ColorScheme",
   })
 
+  -- Snippets
+  local disabled_snippets = is_plugin_disabled("snippets")
+
+  -- Autopairs
+  -- can be disabled to use your own autopairs
+  local disabled_autopairs = is_plugin_disabled("autopairs")
+
   -- Completion plugin
   -- can be disabled to use your own completion plugin
   use({
     "hrsh7th/nvim-cmp",
+    wants = { "LuaSnip" },
     requires = {
-      "ray-x/lsp_signature.nvim",
-      config = require("doom.modules.config.doom-lsp-signature"),
+      {
+        "L3MON4D3/LuaSnip",
+        event = "BufReadPre",
+        wants = "friendly-snippets",
+        config = require("doom.modules.config.doom-luasnip"),
+        disable = disabled_snippets,
+        requires = { "rafamadriz/friendly-snippets" },
+      },
+      {
+        "windwp/nvim-autopairs",
+        config = require("doom.modules.config.doom-autopairs"),
+        disable = disabled_autopairs,
+        event = "BufReadPre",
+      },
     },
     config = require("doom.modules.config.doom-cmp"),
     disable = disabled_lsp,
@@ -346,21 +366,20 @@ packer.startup(function(use)
     after = "nvim-cmp",
   })
 
-  -- Snippets
-  local disabled_snippets = is_plugin_disabled("snippets")
-  use({
-    "L3MON4D3/LuaSnip",
-    config = require("doom.modules.config.doom-luasnip"),
-    disable = disabled_snippets,
-    requires = { "rafamadriz/friendly-snippets" },
-  })
-
   -- provides the missing `:LspInstall` for `nvim-lspconfig`.
   use({
     "kabouzeid/nvim-lspinstall",
     config = require("doom.modules.config.doom-lspinstall"),
     disable = disabled_lsp,
     after = "nvim-lspconfig",
+  })
+
+  -- Show function signature when you type
+  use({
+    "ray-x/lsp_signature.nvim",
+    config = require("doom.modules.config.doom-lsp-signature"),
+    after = "nvim-lspconfig",
+    event = "InsertEnter",
   })
 
   -- Setup for Lua development in Neovim
@@ -422,16 +441,6 @@ packer.startup(function(use)
     config = require("doom.modules.config.doom-lint"),
     disable = disabled_linter,
     event = "BufWinEnter",
-  })
-
-  -- Autopairs
-  -- can be disabled to use your own autopairs
-  local disabled_autopairs = is_plugin_disabled("autopairs")
-  use({
-    "windwp/nvim-autopairs",
-    config = require("doom.modules.config.doom-autopairs"),
-    disable = disabled_autopairs,
-    event = "InsertEnter",
   })
 
   -- Indent Lines
