@@ -141,10 +141,9 @@ packer.startup(function(use)
   -- can be disabled to use your own statusline
   local disabled_statusline = is_plugin_disabled("statusline")
   use({
-    "glepnir/galaxyline.nvim",
+    "NTBBloodbath/galaxyline.nvim",
     config = require("doom.modules.config.doom-eviline"),
     disable = disabled_statusline,
-    event = "ColorScheme",
   })
 
   -- Tabline
@@ -319,27 +318,31 @@ packer.startup(function(use)
     },
     config = require("doom.modules.config.doom-cmp"),
     disable = disabled_lsp,
-    event = "BufWinEnter",
-    opt = true,
+    event = "InsertEnter",
   })
   use({
     "hrsh7th/cmp-nvim-lua",
+    disable = disabled_lsp,
     after = "nvim-cmp",
   })
   use({
     "hrsh7th/cmp-nvim-lsp",
+    disable = disabled_lsp,
     after = "nvim-cmp",
   })
   use({
     "hrsh7th/cmp-path",
+    disable = disabled_lsp,
     after = "nvim-cmp",
   })
   use({
     "hrsh7th/cmp-buffer",
+    disable = disabled_lsp,
     after = "nvim-cmp",
   })
   use({
     "saadparwaiz1/cmp_luasnip",
+    disable = disabled_lsp,
     after = "nvim-cmp",
   })
 
