@@ -236,8 +236,8 @@ if config.doom.new_file_split then
     ":new<CR>",
     opts,
     "Editor",
-    "new_buffer",
-    "Open a new unnamed buffer"
+    "new_buffer_split",
+    "Open a new unnamed buffer in a split window"
   )
 else
   utils.map(
@@ -246,8 +246,8 @@ else
     ":enew<CR>",
     opts,
     "Editor",
-    "new_buffer_split",
-    "Open a new unnamed buffer in a split window"
+    "new_buffer",
+    "Open a new unnamed buffer"
   )
 end
 
