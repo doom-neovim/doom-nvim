@@ -19,28 +19,10 @@ vim.g.mapleader = " "
 
 -------------------------------------------------
 
----[[---------------------------------]]---
---          Custom Key mappings          --
---                                       --
---    <leader>b = Buffer Menu            --
---    <leader>f = File Menu              --
---    <leader>g = Git Menu               --
---    <leader>p = Plugin Menu            --
---    <leader>r = Runner Menu            --
---    <leader>s = Session Menu           --
---    <leader>t = Toggle Menu            --
---    <leader>w = Window Menu            --
---                                       --
---          TAB = Cycle buffers          --
---          ESC = Search highlight off   --
---           F2 = Toggle Symbols-Outline --
---           F3 = Toggle Tree Explorer   --
---           F4 = Toggle Terminal        --
---           F5 = Toggle Minimap         --
---           F6 = Toggle Zen Mode        --
---           F7 = Run restclient         --
----]]---------------------------------[[---
-
+---[[--------------------------------------------------------------------]]---
+--  Some <Leader>-key related settings for the which-key.lua package are    --
+--  also defined in lua/doom/modules/config/doom-whichkey.lua               --
+---]]--------------------------------------------------------------------[[---
 -------------------------------------------------
 
 ---[[-----------------]]---
