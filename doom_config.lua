@@ -90,11 +90,17 @@ local doom = {
   -- @default = true
   allow_default_keymaps_overriding = true,
 
-  -- horizontal split on creating a new file (<Leader>fn)
+  -- split on creating a new file (<Leader>fn)
   -- false : doesn't split the window when creating a new file
   -- true  : horizontal split on creating a new file
   -- @default = true
   new_file_split = true,
+
+  -- Use vertical split when split (<Leader>fn, <Leader>dd, <leader>dc)
+  -- false : use horizontal split for editing or displaying a file when split
+  -- true  : use vertical split for editing or displaying a file when split
+  -- @default = true
+  vertical_split = true,
 
   -- enable current line highlight
   -- false : disables current line highlight

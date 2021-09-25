@@ -458,14 +458,15 @@ M.edit_config = function()
     "2. doomrc.lua",
     "3. plugins.lua",
   }))
+  local direction = config.doom.vertical_split and "vert " or ""
   local open_command = config.doom.new_file_split and "split" or "edit"
 
   if selected_config == 1 then
-    vim.cmd(string.format("%s %s%sdoom_config.lua", open_command, system.doom_root, system.sep))
+    vim.cmd(string.format("%s%s %s%sdoom_config.lua", direction, open_command, system.doom_root, system.sep))
   elseif selected_config == 2 then
-    vim.cmd(string.format("%s %s%sdoomrc.lua", open_command, system.doom_root, system.sep))
+    vim.cmd(string.format("%s%s %s%sdoomrc.lua", direction, open_command, system.doom_root, system.sep))
   elseif selected_config == 3 then
-    vim.cmd(string.format("%s %s%splugins.lua", open_command, system.doom_root, system.sep))
+    vim.cmd(string.format("%s%s %s%splugins.lua", direction, open_command, system.doom_root, system.sep))
   elseif selected_config ~= 0 then
     log.error("Invalid option selected.")
   end

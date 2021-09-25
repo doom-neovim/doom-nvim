@@ -230,15 +230,27 @@ utils.map(
 )
 
 if config.doom.new_file_split then
-  utils.map(
-    "n",
-    "<Leader>fn",
-    ":new<CR>",
-    opts,
-    "Editor",
-    "new_buffer_split",
-    "Open a new unnamed buffer in a split window"
-  )
+  if config.doom.vertical_split then
+    utils.map(
+      "n",
+      "<Leader>fn",
+      ":vert new<CR>",
+      opts,
+      "Editor",
+      "new_buffer_split_vertical",
+      "Open a new unnamed buffer in a vertical split window"
+    )
+  else
+    utils.map(
+      "n",
+      "<Leader>fn",
+      ":new<CR>",
+      opts,
+      "Editor",
+      "new_buffer_split",
+      "Open a new unnamed buffer in a split window"
+    )
+  end
 else
   utils.map(
     "n",
@@ -603,15 +615,27 @@ utils.map(
   "edit_doom_config",
   "Edit Doom configuration"
 )
-utils.map(
-  "n",
-  "<leader>dd",
-  "<cmd>help doom_nvim<CR>",
-  opts,
-  "Doom",
-  "help_doom",
-  "Open Doom help pages"
-)
+if config.doom.vertical_split then
+  utils.map(
+    "n",
+    "<leader>dd",
+    "<cmd>vert help doom_nvim<CR>",
+    opts,
+    "Doom",
+    "help_doom_vertical",
+    "Open Doom help pages (vertical)"
+  )
+else
+  utils.map(
+    "n",
+    "<leader>dd",
+    "<cmd>help doom_nvim<CR>",
+    opts,
+    "Doom",
+    "help_doom",
+    "Open Doom help pages"
+  )
+end
 utils.map("n", "<leader>du", "<cmd>DoomUpdate<CR>", opts, "Doom", "update_doom", "Update Doom Nvim")
 utils.map(
   "n",
