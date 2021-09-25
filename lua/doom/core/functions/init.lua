@@ -472,4 +472,57 @@ M.edit_config = function()
   end
 end
 
+-- set_indent set the indent and tab related numbers
+M.set_indent = function()
+  local indent = tonumber(vim.fn.input("Set all tab related options to a specified number and set expandtab\n(0 to reset to vim defaults, ? to print current settings): "))
+  if (indent == nil) or (indent < 0) then
+    vim.cmd("set expandtab? softtabstop? tabstop? shiftwidth? expandtab?")
+  elseif indent > 0 then
+    vim.o.tabstop = indent
+    vim.o.softtabstop = indent
+    vim.o.shiftwidth = indent
+    vim.o.expandtab = true
+  elseif indent == 0 then
+    vim.o.tabstop = 8
+    vim.o.softtabstop = 0
+    vim.o.shiftwidth = 8
+    vim.o.expandtab = false
+  else
+    log.error("Invalid indent specified.")
+  end
+end
+
+-- change_number change the number display modes
+M.change_number = function()
+  local number = vim.o.number
+  local relativenumber = vim.o.relativenumber
+  if (number == false) and (relativenumber == false) then
+    vim.o.number = true
+    vim.o.relativenumber = false
+  elseif (number == true) and (relativenumber == false) then
+    vim.o.number = false
+    vim.o.relativenumber = true
+  elseif (number == false) and (relativenumber == true) then
+    vim.o.number = true
+    vim.o.relativenumber = true
+  elseif (number == true) and (relativenumber == true) then
+    vim.o.number = false
+    vim.o.relativenumber = false
+  else
+    log.error("Invalid number situation.")
+  end
+end
+
+-- toggle_spell toggle spell
+M.toggle_spell = function()
+  if vim.o.spell then
+    vim.o.spell = false
+  else
+    if vim.o.spelllang == nil then
+      vim.o.spelllang = "en_us"
+    end
+    vim.o.spell = true
+  end
+end
+
 return M

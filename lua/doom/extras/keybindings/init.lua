@@ -843,6 +843,34 @@ utils.map(
   "Jump to mark"
 )
 
+-- Tweak
+utils.map(
+  "n",
+  "<leader>ti",
+  '<cmd>lua require("doom.core.functions").set_indent()<CR>',
+  opts,
+  "Tweak",
+  "set_indent",
+  "Set tab and indent"
+)
+utils.map(
+  "n",
+  "<leader>tn",
+  '<cmd>lua require("doom.core.functions").change_number()<CR>',
+  opts,
+  "Tweak",
+  "change_number",
+  "Change number"
+)
+utils.map(
+  "n",
+  "<leader>ts",
+  '<cmd>lua require("doom.core.functions").toggle_spell()<CR>',
+  opts,
+  "Tweak",
+  "toggle_spell",
+  "Toggle spell"
+)
 -- windows
 utils.map("n", "<leader>ww", "<C-W>p", opts, "Window", "other_window", "Goto other window")
 utils.map("n", "<leader>wd", "<C-W>c", opts, "Window", "close_window", "Close current window")
@@ -914,7 +942,7 @@ utils.map(
   "Restore previously saved session"
 )
 
--- toggle
+-- open
 utils.map(
   "n",
   "<leader>ob",

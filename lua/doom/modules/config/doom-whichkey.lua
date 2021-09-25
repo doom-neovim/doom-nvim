@@ -168,6 +168,12 @@ return function()
       ["h"] = { "Command history" },
       ["m"] = { "Jump to mark" },
     },
+    ["t"] = {
+      name = "+tweak",
+      ["i"] = { "indent" },
+      ["n"] = { "number" },
+      ["s"] = { "spell" },
+    },
     ["w"] = {
       name = "+windows",
       ["w"] = { "Other window" },
