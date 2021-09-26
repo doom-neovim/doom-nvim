@@ -64,7 +64,6 @@ return function()
         "=='    _-'                        N E O V I M                         \\/   `==",
         "\\   _-'                                                                `-_   /",
         " `''                                                                      ``'  ",
-        "                                                                               ",
       }
     or config.doom.dashboard_custom_header
   -- Header color
