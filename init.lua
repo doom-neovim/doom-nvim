@@ -67,7 +67,6 @@ vim.defer_fn(function()
     load_modules("doom.extras", { "keybindings" })
     vim.cmd([[
       PackerLoad which-key.nvim
-      silent! bufdo e
     ]])
   end, 20)
 end, 0)
