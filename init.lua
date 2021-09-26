@@ -65,8 +65,10 @@ vim.defer_fn(function()
   -- Load keybindings module at the end because the keybindings module cost is high
   vim.defer_fn(function()
     load_modules("doom.extras", { "keybindings" })
-    vim.cmd([[
-      PackerLoad which-key.nvim
-    ]])
+    if not require("doom.core.functions").is_plugin_disabled("which-key") then
+      vim.cmd([[
+        PackerLoad which-key.nvim
+      ]])
+    end
   end, 20)
 end, 0)
