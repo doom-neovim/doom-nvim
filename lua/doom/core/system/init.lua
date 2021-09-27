@@ -26,6 +26,6 @@ M.doom_logs = table.concat({ stdpath("data"), "doom.log" }, M.sep)
 -- The doom-nvim bug report file path
 M.doom_report = table.concat({ stdpath("data"), "doom_report.md" }, M.sep)
 -- The git workspace for doom-nvim, e.g. 'git -C /home/JohnDoe/.config/nvim'
-M.git_workspace = string.format("git -C %s", stdpath("config"))
+M.git_workspace = string.format("git -C %s ", stdpath("config"))
 
 return M

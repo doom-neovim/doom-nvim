@@ -116,7 +116,7 @@ local function get_doom_info()
   local doom_version = utils.doom_version
   -- Doom branch
   local git_branch_handler = io.popen(
-    require("doom.core.system").git_workspace .. " branch --show-current"
+    require("doom.core.system").git_workspace .. "branch --show-current"
   )
   local doom_branch = git_branch_handler:read("*a"):gsub("[\r\n]", "")
   git_branch_handler:close()
@@ -142,7 +142,7 @@ local function get_doom_info()
   )
 
   -- Local commit and last update date
-  local last_update_handler = io.popen(system.git_workspace .. " show -s --format=%cD")
+  local last_update_handler = io.popen(system.git_workspace .. "show -s --format=%cD")
   local last_update_date = last_update_handler:read("*a"):gsub("[\r\n]", "")
   last_update_handler:close()
   vim.list_extend(doom_info, {
@@ -158,7 +158,7 @@ local function get_doom_info()
     string.format("%s• Last update date: %s", padding_level[1], last_update_date),
   })
   if doom_branch == "develop" then
-    local commit_handler = io.popen(system.git_workspace .. " rev-parse HEAD")
+    local commit_handler = io.popen(system.git_workspace .. "rev-parse HEAD")
     local current_commit = commit_handler:read("*a"):gsub("[\r\n]", "")
     commit_handler:close()
     vim.list_extend(doom_info, {
