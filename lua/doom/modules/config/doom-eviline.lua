@@ -165,7 +165,7 @@ return function()
     },
   }
 
-  gls.right[2] ={
+  gls.right[2] = {
     FileEncode = {
       provider = "FileEncode",
       condition = condition.hide_in_width and is_not_dashboard,
