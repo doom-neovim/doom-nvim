@@ -114,6 +114,7 @@ return function()
       ["b"] = { "Show Doom keybindings" },
       ["c"] = { "Edit your Doom Nvim configuration" },
       ["d"] = { "Open Doom Nvim documentation" },
+      ["i"] = { "Open Doom Nvim information dashboard" },
       ["u"] = { "Update Doom Nvim" },
       ["r"] = { "Rollback Doom Nvim version" },
       ["R"] = { "Create crash report" },

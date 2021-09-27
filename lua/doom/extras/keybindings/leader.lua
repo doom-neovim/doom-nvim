@@ -220,6 +220,15 @@ utils.map(
   "reload_user_settings",
   "Reload user custom settings"
 )
+utils.map(
+  "n",
+  "<leader>di",
+  "<cmd>DoomInfo<CR>",
+  opts,
+  "Doom",
+  "display_info_dashboard",
+  "Display information dashboard"
+)
 
 -- Plugins
 utils.map(

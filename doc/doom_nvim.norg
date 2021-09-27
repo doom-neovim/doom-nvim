@@ -258,6 +258,8 @@
     │DoomConfigsReload │ Reload user-defined keybindings, etc       │
     ├──────────────────┼────────────────────────────────────────────┤
     │DoomReport        │ Create a Doom Nvim markdown crash report   │
+    ├──────────────────┼────────────────────────────────────────────┤
+    │DoomInfo          │ Open Doom Nivm information dashboard       │
     └──────────────────┴────────────────────────────────────────────┘
 
     Doom Nvim also uses [which-key.nvim](https://github.com/folke/which-key.nvim) as a commands manager, inspired by emacs' guide-key.
@@ -352,6 +354,8 @@
     │ d - c               │ Edit your Doom Nvim configurations                 │
     ├─────────────────────┼────────────────────────────────────────────────────┤
     │ d - d               │ Open Doom Nvim documentation                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ d - i               │ Open Doom Nivm information dashboard               │
     ├─────────────────────┼────────────────────────────────────────────────────┤
     │ d - R               │ Create crash reports, useful for debugging issues  │
     ├─────────────────────┼────────────────────────────────────────────────────┤
