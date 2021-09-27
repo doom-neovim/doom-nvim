@@ -349,7 +349,16 @@ M.config = {
     -- Set custom Neovim global variables
     -- @default = {}
     -- example:
-    --   { ['sonokai_style'] = 'andromeda' }
+    --   {
+    --     ['sonokai_style'] = 'andromeda',
+    --     ['modelineexpr'] = true,
+    --   }
+    --
+    --   modeline feature was turned off to reduce security exploit surfaces.
+    --   Since modeline now uses whitelist approach since nvim 0.4 /vim 8.1,
+    --   enabling this is as safe as external packages such as securemodelines.
+    --   See https://github.com/neovim/neovim/issues/2865
+    --
     global_variables = {},
 
     -- Set custom autocommands
