@@ -26,16 +26,12 @@ return function()
   -- {{{ Utility functions
   local function is_dashboard()
     local buftype = buffer.get_buffer_filetype()
-    if buftype == "DASHBOARD" then
-      return true
-    end
+    return buftype == "DASHBOARD"
   end
 
   local function is_not_dashboard()
     local buftype = buffer.get_buffer_filetype()
-    if buftype ~= "DASHBOARD" then
-      return true
-    end
+    return buftype ~= "DASHBOARD"
   end
   -- }}}
 
@@ -84,7 +80,7 @@ return function()
   gls.left[3] = {
     FileSize = {
       provider = "FileSize",
-      condition = condition.buffer_not_empty and is_not_dashboard,
+      condition = condition.buffer_not_empty and condition.hide_in_width,
       highlight = {
         colors("fg"),
         colors("bg"),
@@ -168,7 +164,8 @@ return function()
       separator_highlight = { colors("bg"), colors("bg") },
     },
   }
-  gls.right[2] = {
+
+  gls.right[2] ={
     FileEncode = {
       provider = "FileEncode",
       condition = condition.hide_in_width and is_not_dashboard,
@@ -204,7 +201,7 @@ return function()
   gls.right[4] = {
     GitIcon = {
       provider = function()
-        return "  "
+        return " "
       end,
       condition = condition.check_git_workspace,
       highlight = { colors("red"), colors("bg") },
@@ -222,16 +219,16 @@ return function()
   gls.right[6] = {
     DiffSeparator = {
       provider = function()
-        return "   "
+        return "  "
       end,
-      condition = is_not_dashboard,
+      condition = condition.hide_in_width,
       highlight = { colors("bg"), colors("bg") },
     },
   }
   gls.right[7] = {
     DiffAdd = {
       provider = "DiffAdd",
-      condition = condition.hide_in_width and is_not_dashboard,
+      condition = condition.hide_in_width,
       icon = " ",
       highlight = { colors("green"), colors("bg") },
     },
@@ -239,7 +236,7 @@ return function()
   gls.right[8] = {
     DiffModified = {
       provider = "DiffModified",
-      condition = condition.hide_in_width and is_not_dashboard,
+      condition = condition.hide_in_width,
       icon = " ",
       highlight = { colors("orange"), colors("bg") },
     },
@@ -247,7 +244,7 @@ return function()
   gls.right[9] = {
     DiffRemove = {
       provider = "DiffRemove",
-      condition = condition.hide_in_width and is_not_dashboard,
+      condition = condition.hide_in_width,
       icon = " ",
       highlight = { colors("red"), colors("bg") },
     },
