@@ -146,7 +146,9 @@ local function get_doom_info()
   local commit_handler = io.popen(system.git_workspace .. "rev-parse HEAD")
   local current_commit = commit_handler:read("*a"):gsub("[\r\n]", "")
   commit_handler:close()
-  local last_update_handler = io.popen(string.format("%s%s %s", system.git_workspace, "show -s --format=%cD", current_commit))
+  local last_update_handler = io.popen(
+    string.format("%s%s %s", system.git_workspace, "show -s --format=%cD", current_commit)
+  )
   local last_update_date = last_update_handler:read("*a"):gsub("[\r\n]", "")
   last_update_handler:close()
 
@@ -341,23 +343,11 @@ local function get_system_info()
   end
   vim.list_extend(sys_info, {
     "System Information",
-    string.format(
-      "%s• %s: %s%s",
-      padding_level[1],
-      "OS",
-      padding_level[4],
-      sysname
-    ),
+    string.format("%s• %s: %s%s", padding_level[1], "OS", padding_level[4], sysname),
   })
   if distro_name then
     vim.list_extend(sys_info, {
-      string.format(
-        "%s• %s: %s%s",
-        padding_level[1],
-        "Distro",
-        padding_level[3],
-        distro_name
-      ),
+      string.format("%s• %s: %s%s", padding_level[1], "Distro", padding_level[3], distro_name),
     })
   end
   vim.list_extend(sys_info, {
