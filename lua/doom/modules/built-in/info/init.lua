@@ -51,6 +51,7 @@ local padding_level = {
   get_padding(2),
   get_padding(4),
   get_padding(6),
+  get_padding(10),
 }
 
 --- Aligns text to center
@@ -142,9 +143,13 @@ local function get_doom_info()
   )
 
   -- Local commit and last update date
-  local last_update_handler = io.popen(system.git_workspace .. "show -s --format=%cD")
+  local commit_handler = io.popen(system.git_workspace .. "rev-parse HEAD")
+  local current_commit = commit_handler:read("*a"):gsub("[\r\n]", "")
+  commit_handler:close()
+  local last_update_handler = io.popen(string.format("%s%s %s", system.git_workspace, "show -s --format=%cD", current_commit))
   local last_update_date = last_update_handler:read("*a"):gsub("[\r\n]", "")
   last_update_handler:close()
+
   vim.list_extend(doom_info, {
     "Doom Nvim Information",
     string.format("%s• Neovim version: %s%s", padding_level[1], padding_level[1], nvim_version),
@@ -158,9 +163,6 @@ local function get_doom_info()
     string.format("%s• Last update date: %s", padding_level[1], last_update_date),
   })
   if doom_branch == "develop" then
-    local commit_handler = io.popen(system.git_workspace .. "rev-parse HEAD")
-    local current_commit = commit_handler:read("*a"):gsub("[\r\n]", "")
-    commit_handler:close()
     vim.list_extend(doom_info, {
       string.format(
         "%s• Current commit: %s%s",
@@ -343,7 +345,7 @@ local function get_system_info()
       "%s• %s: %s%s",
       padding_level[1],
       "OS",
-      (padding_level[1] .. padding_level[2]:rep(2)),
+      padding_level[4],
       sysname
     ),
   })
@@ -353,7 +355,7 @@ local function get_system_info()
         "%s• %s: %s%s",
         padding_level[1],
         "Distro",
-        (padding_level[1] .. padding_level[2]:rep(1)),
+        padding_level[3],
         distro_name
       ),
     })
@@ -448,8 +450,8 @@ local function set_syntax_highlighting(buffer_id)
           -- Highlight only the field name, e.g. 'Version'
           endl = vim.split(line, ":")[1]:len()
         else
-          -- Highlight the field name and the '?' character
-          endl = vim.split(line, "?")[1]:len() + 1
+          -- Highlight only the field name
+          endl = vim.split(line, "?")[1]:len()
         end
       end
       vim.api.nvim_buf_add_highlight(buffer_id, -1, hl, lnum - 1, 0, endl)
@@ -458,14 +460,23 @@ local function set_syntax_highlighting(buffer_id)
 
   -- Extra highlights that we can't manually set with nvim_buf_add_highlight
   vim.cmd([[
-    call matchadd("TextSuccessBold", "yes")
-    call matchadd("TextErrorBold", '\(no\s\)\|\(no$\)\|\(No Active Lsp\)')
-    call matchadd("Boolean", '\(true\)\|\(false\)')
-    call matchadd("Operator", '\(\s\+-\s\)')
-    call matchadd("SpecialComment", '\(\s[a-f0-9]\{7}$\)')
+    " True / False
+    " NOTE: Use String and ErrorMsg as a fallback if TextXBold does not exists in the current colorscheme
+    call matchadd(match(execute("hi TextSuccessBold"), "cleared") =~ -1  ? "TextSuccessBold" : "String", "yes")
+    call matchadd(match(execute("hi TextErrorBold"), "cleared") =~ -1  ? "TextErrorBold" : "ErrorMsg", '\(no\s\)\|\(no$\)\|\(No Active Lsp\)')
+    " Lists and delimiters
+    call matchadd("Operator", '\(\s\+-\s\)\|:\s\+\|?')
+    " Release type and branches
+    call matchadd("Constant", '\(prerelease\)\|\(develop\|main\)\sbranch')
+    " Commit SHA
+    call matchadd("Constant", '\(\s[a-f0-9]\{7}$\)')
+    " Numbers
     call matchadd("Number", '\s[0-9]\+$')
+    " Fields
     call matchadd("String", "•")
-    call matchadd("CommentBold", '\(:[A-Za-z]\+\)')
+    " Neovim commands
+    " NOTE: Use Comment as a fallback if CommentBold does not exists in the current colorscheme
+    call matchadd(match(execute("hi CommentBold"), "cleared") =~ -1 ? "CommentBold" : "Comment", '\(:[A-Za-z]\+\)')
   ]])
 end
 
