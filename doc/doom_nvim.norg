@@ -451,6 +451,22 @@
     ├─────────────────────┼────────────────────────────────────────────────────┤
     │ s - s               │ Goto symbol                                        │
     ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - -               │ Tweak Neovim behavior                              │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - b               │ Toggle background light/dark                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - g               │ Turn on and off signcolumn for gitsigns, ...       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - i               │ Set tabstop and indent steps to any integer        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - n               │ Change line number display (4 types)               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - p               │ Turn on and off autopairs if available             │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - s               │ Spell check on/off                                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - x               │ Syntax/treesetter on/off                           │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
     │ w - -               │ Split window below                                 │
     ├─────────────────────┼────────────────────────────────────────────────────┤
     │ w - =               │ Balance windows size                               │
@@ -535,7 +551,7 @@
     │ Control + Right     │ Resize window right                                │
     └─────────────────────┴────────────────────────────────────────────────────┘
 
-    You can modify the default keybindings my modifying the following files:
+    You can modify the default keybindings by modifying the following files:
       - General keybindings: `lua/doom/extras/keybindings/init.lua`
       - Plugins keybindings: `lua/doom/modules/config`
       - which-key keybindings: `lua/doom/modules/config/doom-whichkey.lua`

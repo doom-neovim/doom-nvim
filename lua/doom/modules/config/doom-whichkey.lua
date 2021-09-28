@@ -169,6 +169,17 @@ return function()
       ["h"] = { "Command history" },
       ["m"] = { "Jump to mark" },
     },
+    ["t"] = {
+      name = "+tweak",
+      ["b"] = { "background" },
+      -- ["c"] = { "completion" }, -- to be implemented XXX FIXME XXX
+      ["g"] = { "signcolumn" }, -- "g" for gitsigs (also for ale)
+      ["i"] = { "indent" },
+      ["n"] = { "number" },
+      -- ["p"] = { "autopairs" }, -- moved below as conditional
+      ["s"] = { "spell" },
+      ["x"] = { "syntax/treesetter" },
+    },
     ["w"] = {
       name = "+windows",
       ["w"] = { "Other window" },
@@ -207,6 +218,9 @@ return function()
       ["t"] = { "jump to tag" },
     },
   }
-
+  local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
+  if not is_plugin_disabled("autopairs") then
+    mappings["t"]["p"] = { "autopairs" }
+  end
   wk.register(mappings, { prefix = "<leader>" })
 end
