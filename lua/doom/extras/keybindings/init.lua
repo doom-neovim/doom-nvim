@@ -14,14 +14,20 @@ log.debug("Loading Doom keybindings module ...")
 ---[[---------------------------------]]---
 --          Custom Key mappings          --
 --                                       --
---    <leader>b = Buffer Menu            --
---    <leader>f = File Menu              --
---    <leader>g = Git Menu               --
---    <leader>p = Plugin Menu            --
---    <leader>r = Runner Menu            --
---    <leader>s = Session Menu           --
---    <leader>o = Open Menu              --
---    <leader>w = Window Menu            --
+--    <leader>b = +buffers               --
+--    <leader>c = +code                  --
+--    <leader>d = +debug                 --
+--    <leader>l = +lsp                   --
+--    <leader>d = +doom                  --
+--    <leader>f = +file                  --
+--    <leader>g = +git                   --
+--    <leader>p = +plugins               --
+--    <leader>q = +quit/sessions         --
+--    <leader>s = +search                --
+--    <leader>t = +tweak                 --
+--    <leader>w = +windows               --
+--    <leader>o = +open                  --
+--    <leader>j = +jumps                 --
 --                                       --
 --          TAB = Cycle buffers          --
 --          ESC = Search highlight off   --

@@ -494,16 +494,140 @@ M.edit_config = function()
     "2. doom_modules.lua",
     "3. doom_userplugins.lua",
   }))
+  local direction = config.doom.vertical_split and "vert " or ""
   local open_command = config.doom.new_file_split and "split" or "edit"
 
   if selected_config == 1 then
-    vim.cmd(("%s %s"):format(open_command, require("doom.core.config").source))
+    vim.cmd(("%s%s %s"):format(direction, open_command, require("doom.core.config").source))
   elseif selected_config == 2 then
-    vim.cmd(("%s %s"):format(open_command, require("doom.core.config.modules").source))
+    vim.cmd(("%s%s %s"):format(direction, open_command, require("doom.core.config.modules").source))
   elseif selected_config == 3 then
-    vim.cmd(("%s %s"):format(open_command, require("doom.core.config.userplugins").source))
+    vim.cmd(("%s%s %s"):format(direction, open_command, require("doom.core.config.userplugins").source))
   elseif selected_config ~= 0 then
     log.error("Invalid option selected.")
+  end
+end
+
+-- followings are called from lua/doom/extras/keybindings/leader.lua
+--
+-- toggle_background() -- <leader>tb -- toggle background light/dark
+M.toggle_background = function()
+  local background = vim.go.background
+  if  background == "light" then
+    vim.go.background = "dark"
+    print("background=dark")
+  else
+    vim.go.background = "light"
+    print("background=light")
+  end
+end
+
+-- toggle_signcolumn() -- <leader>tg -- signcolumn auto/no
+M.toggle_signcolumn = function()
+  local signcolumn = vim.o.signcolumn
+  if  signcolumn == "no" then
+    vim.o.signcolumn = "auto"
+    print("signcolumn=auto")
+  else
+    vim.o.signcolumn = "no"
+    print("signcolumn=no")
+  end
+end
+
+-- set_indent() -- <leader>ti -- set the indent and tab related numbers
+M.set_indent = function()
+  local indent = tonumber(vim.fn.input("Set all tab related options to a specified number and set expandtab\n(0 to reset to vim defaults, ? to print current settings): "))
+  if (indent == nil) or (indent < 0) then
+    vim.cmd("set softtabstop? tabstop? shiftwidth? expandtab?")
+  elseif indent > 0 then
+    vim.o.tabstop = indent
+    vim.o.softtabstop = indent
+    vim.o.shiftwidth = indent
+    vim.o.expandtab = true
+    print(("\nindent=%i, expandtab"):format(indent))
+  else -- indent == 0
+    vim.o.tabstop = 8
+    vim.o.softtabstop = 0
+    vim.o.shiftwidth = 8
+    vim.o.expandtab = false
+    print("\nindent=8, noexpandtab")
+  end
+end
+
+-- change_number() -- <leader>tn -- change the number display modes
+M.change_number = function()
+  local number = vim.o.number
+  local relativenumber = vim.o.relativenumber
+  if (number == false) and (relativenumber == false) then
+    vim.o.number = true
+    vim.o.relativenumber = false
+    print("number on, relativenumber off")
+  elseif (number == true) and (relativenumber == false) then
+    vim.o.number = false
+    vim.o.relativenumber = true
+    print("number off, relativenumber on")
+  elseif (number == false) and (relativenumber == true) then
+    vim.o.number = true
+    vim.o.relativenumber = true
+    print("number on, relativenumber on")
+  else -- (number == true) and (relativenumber == true) then
+    vim.o.number = false
+    vim.o.relativenumber = false
+    print("number off, relativenumber off")
+  end
+end
+
+-- toggle_autopairs() -- <leader>tp -- toggle autopairs
+M.toggle_autopairs = function()
+  local ok, autopairs = pcall(require, "nvim-autopairs")
+  if ok then
+    if autopairs.state.disabled then
+      autopairs.enable()
+      print("autopairs on")
+    else
+      autopairs.disable()
+      print("autopairs off")
+    end
+  else
+    print("autopairs not available")
+  end
+end
+
+-- toggle_spell() -- <leader>ts -- toggle spell
+M.toggle_spell = function()
+  if vim.o.spell then
+    vim.o.spell = false
+    print("spell off")
+  else
+    if vim.o.spelllang == nil then
+      vim.o.spelllang = "en_us"
+    end
+    vim.o.spell = true
+    print(("spell on, lang %s"):format(vim.o.spelllang))
+  end
+end
+
+-- change_syntax() -- <leader>tx -- toggle syntax/treesetter
+M.change_syntax = function()
+  local parsers = require("nvim-treesitter.parsers")
+  if parsers and parsers.has_parser() then
+    if vim.o.syntax then
+      vim.cmd("TSBufDisable highlight")
+      vim.cmd("syntax off")
+    print("syntax off, treesetter off")
+    else
+      vim.cmd("TSBufEnable highlight")
+      vim.cmd("syntax on")
+    print("syntax on, treesetter on")
+    end
+  else
+    if vim.o.syntax then
+      vim.cmd("syntax off")
+    print("syntax off")
+    else
+      vim.cmd("syntax on")
+    print("syntax on")
+    end
   end
 end
 

@@ -4,6 +4,7 @@
 
 local utils = require("doom.utils")
 local config = require("doom.core.config").config
+local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
 
 -- Additional options for mappings
 local opts = { silent = true }
@@ -13,15 +14,27 @@ utils.map("n", "<Space>", "<Nop>", opts, "Editor", "open_whichkey", "Open WhichK
 vim.g.mapleader = " "
 
 if config.doom.new_file_split then
-  utils.map(
-    "n",
-    "<leader>fn",
-    ":new<CR>",
-    opts,
-    "Editor",
-    "new_buffer",
-    "Open a new unnamed buffer"
-  )
+  if config.doom.vertical_split then
+    utils.map(
+      "n",
+      "<Leader>fn",
+      ":vert new<CR>",
+      opts,
+      "Editor",
+      "new_buffer_split_vertical",
+      "Open a new unnamed buffer in a vertical split window"
+    )
+  else
+    utils.map(
+      "n",
+      "<Leader>fn",
+      ":new<CR>",
+      opts,
+      "Editor",
+      "new_buffer_split",
+      "Open a new unnamed buffer in a split window"
+    )
+  end
 else
   utils.map(
     "n",
@@ -29,8 +42,8 @@ else
     ":enew<CR>",
     opts,
     "Editor",
-    "new_buffer_split",
-    "Open a new unnamed buffer in a split window"
+    "new_buffer",
+    "Open a new unnamed buffer"
   )
 end
 
@@ -81,7 +94,7 @@ utils.map(
   "Command history"
 )
 
--- Buffers
+-- buffers
 utils.map(
   "n",
   "<leader>bc",
@@ -155,7 +168,7 @@ utils.map(
   "Format buffer"
 )
 
--- Doom
+-- doom
 utils.map(
   "n",
   "<leader>dc",
@@ -230,7 +243,7 @@ utils.map(
   "Display information dashboard"
 )
 
--- Plugins
+-- plugins
 utils.map(
   "n",
   "<leader>ps",
@@ -390,6 +403,75 @@ utils.map(
   "Jump to mark"
 )
 
+-- tweak
+utils.map(
+  "n",
+  "<leader>tb",
+  '<cmd>lua require("doom.core.functions").toggle_background()<CR>',
+  opts,
+  "Tweak",
+  "toggle_background",
+  "Toggle background"
+)
+-- "<leader>tc" is reserved for completion on/off
+-- "g" as gutter, git, ... (but this tweak is applicable for linter like ALE, too)
+utils.map(
+  "n",
+  "<leader>tg",
+  '<cmd>lua require("doom.core.functions").toggle_signcolumn()<CR>',
+  opts,
+  "Tweak",
+  "toggle_signcolumn",
+  "Toggle signcolumn"
+)
+utils.map(
+  "n",
+  "<leader>ti",
+  '<cmd>lua require("doom.core.functions").set_indent()<CR>',
+  opts,
+  "Tweak",
+  "set_indent",
+  "Set tab and indent"
+)
+utils.map(
+  "n",
+  "<leader>tn",
+  '<cmd>lua require("doom.core.functions").change_number()<CR>',
+  opts,
+  "Tweak",
+  "change_number",
+  "Change number"
+)
+if not is_plugin_disabled("autopairs") then
+  utils.map(
+  "n",
+  "<leader>tp",
+  '<cmd>lua require("doom.core.functions").toggle_autopairs()<CR>',
+  opts,
+  "Tweak",
+  "toggle_autopairs",
+  "Toggle autopairs"
+  )
+end
+utils.map(
+  "n",
+  "<leader>ts",
+  '<cmd>lua require("doom.core.functions").toggle_spell()<CR>',
+  opts,
+  "Tweak",
+  "toggle_spell",
+  "Toggle spell"
+)
+utils.map(
+  "n",
+  "<leader>tx",
+  '<cmd>lua require("doom.core.functions").change_syntax()<CR>',
+  opts,
+  "Tweak",
+  "change_syntax",
+  "Change syntax"
+)
+
 -- windows
 utils.map("n", "<leader>ww", "<C-W>p", opts, "Window", "other_window", "Goto other window")
 utils.map("n", "<leader>wd", "<C-W>c", opts, "Window", "close_window", "Close current window")
@@ -461,7 +543,7 @@ utils.map(
   "Restore previously saved session"
 )
 
--- toggle
+-- open
 utils.map(
   "n",
   "<leader>ob",
