@@ -1,5 +1,6 @@
 return function()
   local nvim_lsp = require("lspconfig")
+  local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
 
   -- Snippets support
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -31,6 +32,18 @@ return function()
     },
   }
 
+  --- Intelligent highlighting of word under cursor
+  local on_attach
+  if not is_plugin_disabled("illuminated") and packer_plugins["vim-illuminate"] then
+    on_attach = function(client)
+      require("illuminate").on_attach(client)
+      -- Set underline highlighting for Lsp references
+      vim.cmd("hi! LspReferenceText cterm=underline gui=underline")
+      vim.cmd("hi! LspReferenceWrite cterm=underline gui=underline")
+      vim.cmd("hi! LspReferenceRead cterm=underline gui=underline")
+    end
+  end
+
   local lua_lsp = require("lua-dev").setup({
     lspconfig = {
       settings = {
@@ -41,6 +54,7 @@ return function()
         },
       },
       capabilities = capabilities,
+      on_attach = on_attach,
     },
   })
 
@@ -58,6 +72,7 @@ return function()
         -- Use default settings for all the other language servers
         nvim_lsp[server].setup({
           capabilities = capabilities,
+          on_attach = on_attach,
         })
       end
     end

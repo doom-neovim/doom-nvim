@@ -23,6 +23,7 @@ M.modules = {
     "tabline",            -- Tabline, shows your buffers list at top
     "which-key",          -- Keybindings popup menu like Emacs' guide-key
     -- "zen",             -- Distraction free environment
+    -- "illuminated",     -- Highlight other uses of the word under the cursor like VSC
   },
   doom = {
     -- "compiler",        -- Compile (and run) your code with just pressing three keys!

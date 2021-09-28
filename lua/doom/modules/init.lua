@@ -222,6 +222,14 @@ packer.startup(function(use)
     event = "BufWinEnter",
   })
 
+  use({
+    "RRethy/vim-illuminate",
+    setup = function()
+      vim.g.Illuminate_ftblacklist = { "help", "dashboard", "packer", "norg", "DoomInfo", "NvimTree", "Outline", "toggleterm" }
+    end,
+    event = "BufRead",
+  })
+
   -----[[--------------]]-----
   ---     Fuzzy Search     ---
   -----]]--------------[[-----
@@ -305,7 +313,6 @@ packer.startup(function(use)
     "neovim/nvim-lspconfig",
     config = require("doom.modules.config.doom-lspconfig"),
     disable = disabled_lsp,
-    event = "ColorScheme",
   })
 
   -- Snippets
@@ -371,7 +378,7 @@ packer.startup(function(use)
     "kabouzeid/nvim-lspinstall",
     config = require("doom.modules.config.doom-lspinstall"),
     disable = disabled_lsp,
-    after = "nvim-lspconfig",
+    event = "VimEnter",
   })
 
   -- Show function signature when you type
@@ -534,6 +541,7 @@ packer.startup(function(use)
     requires = "nvim-lua/plenary.nvim",
     config = require("doom.modules.config.doom-todo"),
     disable = disabled_todo,
+    event = "ColorScheme",
   })
 
   local disabled_trouble = is_plugin_disabled("trouble")
