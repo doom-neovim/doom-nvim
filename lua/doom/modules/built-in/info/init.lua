@@ -108,6 +108,19 @@ local get_lsp_clients = function(bufnr)
   return string.len(client_names) > 0 and client_names or msg
 end
 
+--- Executes a git command and gets the output
+--- @param command string
+--- @return string
+local function get_git_output(command)
+  local git_command_handler = io.popen(system.git_workspace .. command)
+  -- Read the command output and remove newlines
+  local command_output = git_command_handler:read("*a"):gsub("[\r\n]", "")
+  -- Close child process
+  git_command_handler:close()
+
+  return command_output
+end
+
 local function get_doom_info()
   local doom_info = {}
 
@@ -116,11 +129,7 @@ local function get_doom_info()
   -- Doom version
   local doom_version = utils.doom_version
   -- Doom branch
-  local git_branch_handler = io.popen(
-    require("doom.core.system").git_workspace .. "branch --show-current"
-  )
-  local doom_branch = git_branch_handler:read("*a"):gsub("[\r\n]", "")
-  git_branch_handler:close()
+  local doom_branch = get_git_output("branch --show-current")
   -- Configurations path
   local config_path = require("doom.core.config").source
   local modules_path = require("doom.core.config.modules").source
@@ -143,14 +152,8 @@ local function get_doom_info()
   )
 
   -- Local commit and last update date
-  local commit_handler = io.popen(system.git_workspace .. "rev-parse HEAD")
-  local current_commit = commit_handler:read("*a"):gsub("[\r\n]", "")
-  commit_handler:close()
-  local last_update_handler = io.popen(
-    string.format("%s%s %s", system.git_workspace, "show -s --format=%cD", current_commit)
-  )
-  local last_update_date = last_update_handler:read("*a"):gsub("[\r\n]", "")
-  last_update_handler:close()
+  local current_commit = get_git_output("rev-parse HEAD")
+  local last_update_date = get_git_output("show -s --format=%cD " .. current_commit)
 
   vim.list_extend(doom_info, {
     "Doom Nvim Information",
@@ -162,25 +165,41 @@ local function get_doom_info()
       doom_version,
       doom_branch
     ),
-    string.format("%s• Last update date: %s", padding_level[1], last_update_date),
-  })
-  if doom_branch == "develop" then
-    vim.list_extend(doom_info, {
-      string.format(
-        "%s• Current commit: %s%s",
-        padding_level[1],
-        padding_level[1],
-        current_commit:sub(current_commit:len() - 6, current_commit:len())
-      ),
-    })
-  end
-  vim.list_extend(doom_info, {
     string.format(
       "%s• Doom root:%s%s",
       padding_level[1],
       padding_level[2]:rep(2),
       system.doom_root
     ),
+    string.format("%s• Last update date: %s", padding_level[1], last_update_date),
+  })
+  if doom_branch == "develop" then
+    -- Current commit relevant information
+    local current_commit_message = get_git_output("show -s --format=%s " .. current_commit)
+    local current_commit_author = get_git_output('show -s --format="%cN <%cE>" ' .. current_commit)
+    vim.list_extend(doom_info, {
+      "",
+      string.format("%s▶ Doom current commit", padding_level[1]),
+      string.format(
+        "%s• Commit author: %s%s",
+        padding_level[2],
+        padding_level[2],
+        current_commit_author
+      ),
+      string.format(
+        "%s• Commit message:%s%s",
+        padding_level[2],
+        padding_level[2],
+        current_commit_message
+      ),
+      string.format(
+        "%s• Commit short hash: %s",
+        padding_level[2],
+        current_commit:sub(current_commit:len() - 6, current_commit:len())
+      ),
+    })
+  end
+  vim.list_extend(doom_info, {
     "",
     string.format("%s▶ Doom configurations paths", padding_level[1]),
     string.format("%s- %s", padding_level[2], config_path),
@@ -384,7 +403,7 @@ local function get_system_info()
     table.insert(
       sys_info,
       string.format(
-        "%s• Found %s? %s%s%s",
+        "%s• Found `%s`? %s%s%s",
         padding_level[2],
         program,
         extra_padding,
@@ -449,24 +468,49 @@ local function set_syntax_highlighting(buffer_id)
   end
 
   -- Extra highlights that we can't manually set with nvim_buf_add_highlight
+  -- NOTE: these extra newlines are for improving code readability, don't remove!
   vim.cmd([[
     " True / False
     " NOTE: Use String and ErrorMsg as a fallback if TextXBold does not exists in the current colorscheme
     call matchadd(match(execute("hi TextSuccessBold"), "cleared") =~ -1  ? "TextSuccessBold" : "String", "yes")
     call matchadd(match(execute("hi TextErrorBold"), "cleared") =~ -1  ? "TextErrorBold" : "ErrorMsg", '\(no\s\)\|\(no$\)\|\(No Active Lsp\)')
-    " Lists and delimiters
-    call matchadd("Operator", '\(\s\+-\s\)\|:\s\+\|?')
+
     " Release type and branches
     call matchadd("Constant", '\(prerelease\)\|\(develop\|main\)\sbranch')
+
+    " Commit author email
+    call matchadd("Bold", '\([-a-zA-Z0-9_]\+@[-a-zA-Z0-9_]\+\.\w\+\)')
+
     " Commit SHA
     call matchadd("Constant", '\(\s[a-f0-9]\{7}$\)')
+
+    " Commits scopes
+    call matchadd("Msg", '\(hotfix\)\|\(fix\)')
+    call matchadd("MoreMsg", "feat")
+    call matchadd("WarningMsg", "refact")
+    call matchadd("SpecialComment", "docs")
+    call matchadd("Comment", "chore")
+    call matchadd("Constant", "release")
+
     " Numbers
     call matchadd("Number", '\s[0-9]\+$')
+
     " Fields
     call matchadd("String", "•")
+
+    " Lists and delimiters
+    call matchadd("Operator", '\(\s\+-\s\)\|:\s\+\|<\|>\|@')
+
     " Neovim commands
     " NOTE: Use Comment as a fallback if CommentBold does not exists in the current colorscheme
     call matchadd(match(execute("hi CommentBold"), "cleared") =~ -1 ? "CommentBold" : "Comment", '\(:[A-Za-z]\+\)')
+
+    " Inline code like markdown
+    call matchadd(match(execute("hi CommentBold"), "cleared") =~ -1 ? "CommentBold" : "Comment", '\(`[-a-zA-Z0-9_]\+`\)')
+    " Conceal start `
+    call matchadd("Conceal", '\(`[-a-zA-Z0-9_]\+`\)\@=', 10, -1, {"conceal": ""})
+    " Conceal ending `
+    call matchadd("Conceal", '\(\(`?\)\|\(`$\)\|\(`\s\)\)\@=', 10, -1, {"conceal": ""})
   ]])
 end
 
@@ -504,8 +548,12 @@ info.open = function()
 
   -- Set the buffer options
   vim.api.nvim_buf_set_option(info_buffer, "modifiable", false)
+  -- Concealing for inline code
+  vim.opt_local.conceallevel = 2
+  vim.opt_local.concealcursor = "nc"
+  -- Folding
   vim.opt_local.foldtext =
-    [[substitute(substitute(getline(v:foldstart), '?\s\+', '? ', 'g'),'\\t',repeat('\ ',&tabstop),'g').' ... ' . '(' . (v:foldend - v:foldstart + 1) . ' fields)']]
+    [[substitute(substitute(substitute(getline(v:foldstart), '?\s\+', '? ', 'g'), ':\s\+', ': ', 'g'), '\\t', repeat('\ ',&tabstop), 'g') . ' ... ' . '(' . (v:foldend - v:foldstart + 1) . ' fields)']]
   vim.opt_local.shiftwidth = 6
   vim.opt_local.foldignore = [[=\\\|]]
   vim.opt_local.foldmethod = "indent"
