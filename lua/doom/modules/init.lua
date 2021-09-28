@@ -225,7 +225,16 @@ packer.startup(function(use)
   use({
     "RRethy/vim-illuminate",
     setup = function()
-      vim.g.Illuminate_ftblacklist = { "help", "dashboard", "packer", "norg", "DoomInfo", "NvimTree", "Outline", "toggleterm" }
+      vim.g.Illuminate_ftblacklist = {
+        "help",
+        "dashboard",
+        "packer",
+        "norg",
+        "DoomInfo",
+        "NvimTree",
+        "Outline",
+        "toggleterm",
+      }
     end,
     event = "BufRead",
   })
