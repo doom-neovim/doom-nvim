@@ -222,6 +222,8 @@ packer.startup(function(use)
     event = "BufWinEnter",
   })
 
+  -- Highlight other uses of the word under the cursor like VSC
+  local disabled_illuminate = is_plugin_disabled("illuminated")
   use({
     "RRethy/vim-illuminate",
     setup = function()
@@ -236,6 +238,7 @@ packer.startup(function(use)
         "toggleterm",
       }
     end,
+    disable = disabled_illuminate,
     event = "BufRead",
   })
 
