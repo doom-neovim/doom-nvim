@@ -105,7 +105,7 @@ return function()
     -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
     update_cwd = true,
     -- show lsp diagnostics in the signcolumn
-    lsp_diagnostics = is_plugin_disabled("lsp") and false or true,
+    lsp_diagnostics = require("doom.core.functions").is_plugin_disabled("lsp") and false or true,
     -- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
     update_focused_file = {
       -- enables the feature
