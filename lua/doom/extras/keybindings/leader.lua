@@ -413,7 +413,15 @@ utils.map(
   "toggle_background",
   "Toggle background"
 )
--- "<leader>tc" is reserved for completion on/off
+utils.map(
+  "n",
+  "<leader>tc",
+  '<cmd>lua require("doom.core.functions").toggle_completion()<CR>',
+  opts,
+  "Tweak",
+  "toggle_completion",
+  "Toggle completion"
+)
 -- "g" as gutter, git, ... (but this tweak is applicable for linter like ALE, too)
 utils.map(
   "n",
