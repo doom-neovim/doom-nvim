@@ -544,11 +544,11 @@ local function set_syntax_highlighting(buffer_id)
     call matchadd(match(execute("hi CommentBold"), "cleared") =~ -1 ? "CommentBold" : "Comment", '\(:[A-Za-z]\+\)')
 
     " Inline code like markdown
-    call matchadd(match(execute("hi CommentBold"), "cleared") =~ -1 ? "CommentBold" : "Comment", '\(`[-a-zA-Z0-9_]\+`\)')
+    call matchadd(match(execute("hi CommentBold"), "cleared") =~ -1 ? "CommentBold" : "Comment", '\(`[-a-zA-Z0-9_,\.\<\>@\$#+\!]\+`\)')
     " Conceal start `
-    call matchadd("Conceal", '\(`[-a-zA-Z0-9_]\+`\)\@=', 10, -1, {"conceal": ""})
+    call matchadd("Conceal", '\(`[-a-zA-Z0-9_,\.\<\>@\$#+\!]\+`\)\@=', 10, -1, {"conceal": ""})
     " Conceal ending `
-    call matchadd("Conceal", '\(\(`?\)\|\(`$\)\|\(`\s\)\)\@=', 10, -1, {"conceal": ""})
+    call matchadd("Conceal", '\(\(`?\)\|\(`$\)\|\(`\s\)\|\(`,\s\)\)\@=', 10, -1, {"conceal": ""})
   ]])
 end
 
