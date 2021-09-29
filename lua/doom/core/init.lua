@@ -4,7 +4,7 @@
 
 local log = require("doom.extras.logging")
 
-local core_modules = { "config", "config.ui", "settings" }
+local core_modules = { "settings", "config.ui", "config" }
 for i = 1, #core_modules, 1 do
   local ok, err = xpcall(require, debug.traceback, ("doom.core.%s"):format(core_modules[i]))
   if ok then

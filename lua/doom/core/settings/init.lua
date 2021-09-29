@@ -15,11 +15,6 @@ log.debug("Loading Doom defaults module ...")
 -- load_default_options sets and loads default Neovim options based on doom_config.lua values
 M.load_default_options = function()
   ----- Default Neovim configurations
-  -- Set colorscheme
-  vim.cmd("colorscheme " .. config.doom.colorscheme)
-  vim.opt.background = config.doom.colorscheme_bg
-  vim.cmd("highlight WhichKeyFloat guibg=" .. config.doom.whichkey_bg)
-
   -- Global options
   vim.opt.hidden = true
   vim.opt.updatetime = 200

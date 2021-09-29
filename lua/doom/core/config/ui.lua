@@ -35,10 +35,18 @@ if config.doom.enable_guicolors then
   end
 end
 
+-- Set custom WhichKey background
+vim.cmd("highlight WhichKeyFloat guibg=" .. config.doom.whichkey_bg)
+
 -- Set doom-one colorscheme settings
-vim.g.doom_one_cursor_coloring = config.doom.doom_one.cursor_coloring
-vim.g.doom_one_enable_treesitter = config.doom.doom_one.enable_treesitter
-vim.g.doom_one_italic_comments = config.doom.doom_one.italic_comments
-vim.g.doom_one_telescope_highlights = config.doom.doom_one.telescope_highlights
-vim.g.doom_one_terminal_colors = config.doom.doom_one.terminal_colors
-vim.g.doom_one_transparent_background = config.doom.doom_one.transparent_background
+local doom_one_options = {
+  "cursor_coloring",
+  "enable_treesitter",
+  "italic_comments",
+  "telescope_highlights",
+  "terminal_colors",
+  "transparent_background",
+}
+for _, option in ipairs(doom_one_options) do
+  vim.g["doom_one_" .. option] = config.doom.doom_one[option]
+end
