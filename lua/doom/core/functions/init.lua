@@ -609,24 +609,24 @@ end
 
 -- change_syntax() -- <leader>tx -- toggle syntax/treesetter
 M.change_syntax = function()
-  local parsers = require("nvim-treesitter.parsers")
-  if parsers and parsers.has_parser() then
+  local ok, parsers = pcall(require, "nvim-treesitter.parsers")
+  if ok and parsers and parsers.has_parser() then
     if vim.o.syntax then
       vim.cmd("TSBufDisable highlight")
       vim.cmd("syntax off")
-    print("syntax off, treesetter off")
+      print("syntax off, treesetter off")
     else
       vim.cmd("TSBufEnable highlight")
       vim.cmd("syntax on")
-    print("syntax on, treesetter on")
+      print("syntax on, treesetter on")
     end
   else
     if vim.o.syntax then
       vim.cmd("syntax off")
-    print("syntax off")
+      print("syntax off")
     else
       vim.cmd("syntax on")
-    print("syntax on")
+      print("syntax on")
     end
   end
 end
