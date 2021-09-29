@@ -1,5 +1,5 @@
 return function()
-  local config = require("doom.core.config").load_config()
+  local config = require("doom.core.config").config
   local tree_cb = require("nvim-tree.config").nvim_tree_callback
 
   ----- GLOBAL VARIABLES ------------------------
