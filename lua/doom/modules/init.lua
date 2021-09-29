@@ -153,7 +153,7 @@ packer.startup(function(use)
     "akinsho/bufferline.nvim",
     config = require("doom.modules.config.doom-bufferline"),
     disable = disabled_tabline,
-    event = "ColorScheme",
+    event = "BufWinEnter",
   })
 
   -- Better terminal
