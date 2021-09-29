@@ -207,7 +207,8 @@ local function get_doom_info()
         current_commit_message
       ),
     })
-    if current_commit_body:len() > 0 then
+    -- Check if the commit body is empty before trying to add it
+    if current_commit_body:gsub("[\r\n]", ""):len() > 0 then
       vim.list_extend(doom_info, {
         "",
         string.format("%s○ Commit body", padding_level[2]),
