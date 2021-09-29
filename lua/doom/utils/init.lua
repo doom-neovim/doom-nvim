@@ -213,6 +213,14 @@ M.load_modules = function(module_path, modules)
           err
         )
       )
+    else
+      require("doom.extras.logging").debug(
+        string.format(
+          "Successfully loaded '%s.%s' module",
+          module_path,
+          modules[i]
+        )
+      )
     end
   end
 end
