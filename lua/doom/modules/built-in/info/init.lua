@@ -189,11 +189,7 @@ local function get_doom_info()
     vim.list_extend(doom_info, {
       "",
       string.format("%s▶ Doom current commit", padding_level[1]),
-      string.format(
-        "%s• Commit short hash: %s",
-        padding_level[2],
-        current_commit:sub(1, 7)
-      ),
+      string.format("%s• Commit short hash: %s", padding_level[2], current_commit:sub(1, 7)),
       string.format(
         "%s• Commit author: %s%s",
         padding_level[2],
