@@ -192,7 +192,7 @@ local function get_doom_info()
       string.format(
         "%s• Commit short hash: %s",
         padding_level[2],
-        current_commit:sub(current_commit:len() - 6, current_commit:len())
+        current_commit:sub(1, 7)
       ),
       string.format(
         "%s• Commit author: %s%s",
