@@ -172,7 +172,7 @@ return function()
     ["t"] = {
       name = "+tweak",
       ["b"] = { "background" },
-      -- ["c"] = { "completion" }, -- to be implemented XXX FIXME XXX
+      ["c"] = { "completion" },
       ["g"] = { "signcolumn" }, -- "g" for gitsigs (also for ale)
       ["i"] = { "indent" },
       ["n"] = { "number" },
