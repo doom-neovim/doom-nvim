@@ -56,6 +56,7 @@
 
  ** Moving around
     Doom Nvim uses the default Neovim keybindings to move around: `k, j, k, l` and the cursor keys.
+    If you are in the insert mode, you must type `Esc`-key first to change into the normal mode.
     Use `h` to go left, `j` to go down, `k` to go up and `l` to go right.
 
     See `:Tutor` to know how to use Neovim and its keybindings.
@@ -64,6 +65,11 @@
     the key `g` to select a buffer or press `TAB` to cycle buffers.
 
  ** Configuration
+    Doom Nvim offers easy access to the dynamic reconfiguration of some key editor featurs, such as
+    console background to be dark or light, auto-completion to be on or off, autopairs to be on or
+    off, indentation step width, line number display style, spell checker to be on or off, and more.
+    For these, press `SPC - t` and select the desired configuration item by another key stroke.
+
     The Doom Nvim configuration files resides under the `$HOME/.config/nvim` directory by default.
     See [Hacking Doom Nvim](**Hacking Doom Nvim) for more information.
 
@@ -82,9 +88,9 @@
       You can see in a more detailed view the modules and its plugins at [modules.md](https://github.com/NTBBloodbath/doom-nvim/blob/main/docs/modules.md).
 
    **** Tweaking modules
-        For tweaking a module (enable / disable its plugins) you will only need to
-        comment or uncomment the desired plugin, e.g. for disabling the tree explorer
-        you will only need to comment it.
+        For persistently tweaking a module (enable / disable its plugins) you will only need to
+        comment or uncomment the desired plugin, e.g. for disabling the tree explorer you will only
+        need to comment it.
 
 @code lua
   -- Right now the Tree explorer is enabled
@@ -559,7 +565,8 @@
       - which-key keybindings: `lua/doom/modules/config/doom-whichkey.lua`
 
     *NOTE*: You can also make your own keybindings or override the default ones
-    by editing your `doom_config.lua` file.
+    by editing your `doom_config.lua` file.  If you override, you need to update which-key
+    keybindings to make it work properly.  This is known issue.
 
  ** Hacking Doom Nvim
     Doom Nvim aims to be hackable to suit everyone's needs. Therefore this is the structure of Doom Nvim:
@@ -610,6 +617,13 @@
       Doom Nvim relies on lua for the configuration and use of many plugins. Since
       lua is not available in neovim 0.4.4 and below, it is not possible to use Doom
       Nvim with a neovim version lower than 0.5.0.
+
+ ** Workaround
+  *** Missing nvim help documentation
+      Since Doom Nvim extensively uses delayed loading of packages, their help documentation may not
+      show up under `LOCAL ADDITIONS:`. If this happens and you still wish to see them, you need to
+      make copies or symlinks of the help documentation of the affected packages in `doc/` of Doom
+      Nvim and update help tags file manually with `:helptags ALL` .
 
 * Acknowledgements
   Doom Nvim would not have been possible had it not been for
