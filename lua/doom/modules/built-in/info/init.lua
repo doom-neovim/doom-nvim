@@ -110,11 +110,15 @@ end
 
 --- Executes a git command and gets the output
 --- @param command string
+--- @param remove_newlines boolean
 --- @return string
-local function get_git_output(command)
+local function get_git_output(command, remove_newlines)
   local git_command_handler = io.popen(system.git_workspace .. command)
-  -- Read the command output and remove newlines
-  local command_output = git_command_handler:read("*a"):gsub("[\r\n]", "")
+  -- Read the command output and remove newlines if wanted
+  local command_output = git_command_handler:read("*a")
+  if remove_newlines then
+    command_output = command_output:gsub("[\r\n]", "")
+  end
   -- Close child process
   git_command_handler:close()
 
@@ -129,7 +133,7 @@ local function get_doom_info()
   -- Doom version
   local doom_version = utils.doom_version
   -- Doom branch
-  local doom_branch = get_git_output("branch --show-current")
+  local doom_branch = get_git_output("branch --show-current", true)
   -- Configurations path
   local config_path = require("doom.core.config").source
   local modules_path = require("doom.core.config.modules").source
@@ -152,8 +156,8 @@ local function get_doom_info()
   )
 
   -- Local commit and last update date
-  local current_commit = get_git_output("rev-parse HEAD")
-  local last_update_date = get_git_output("show -s --format=%cD " .. current_commit)
+  local current_commit = get_git_output("rev-parse HEAD", true)
+  local last_update_date = get_git_output("show -s --format=%cD " .. current_commit, true)
 
   vim.list_extend(doom_info, {
     "Doom Nvim Information",
@@ -175,11 +179,21 @@ local function get_doom_info()
   })
   if doom_branch == "develop" then
     -- Current commit relevant information
-    local current_commit_message = get_git_output("show -s --format=%s " .. current_commit)
-    local current_commit_author = get_git_output('show -s --format="%cN <%cE>" ' .. current_commit)
+    local current_commit_author = get_git_output(
+      'show -s --format="%cN <%cE>" ' .. current_commit,
+      true
+    )
+    local current_commit_message = get_git_output("show -s --format=%s " .. current_commit, true)
+    local current_commit_body = get_git_output("show -s --format=%b " .. current_commit, false)
+
     vim.list_extend(doom_info, {
       "",
       string.format("%s▶ Doom current commit", padding_level[1]),
+      string.format(
+        "%s• Commit short hash: %s",
+        padding_level[2],
+        current_commit:sub(current_commit:len() - 6, current_commit:len())
+      ),
       string.format(
         "%s• Commit author: %s%s",
         padding_level[2],
@@ -187,17 +201,31 @@ local function get_doom_info()
         current_commit_author
       ),
       string.format(
-        "%s• Commit message:%s%s",
+        "%s• Commit subject:%s%s",
         padding_level[2],
         padding_level[2],
         current_commit_message
       ),
-      string.format(
-        "%s• Commit short hash: %s",
-        padding_level[2],
-        current_commit:sub(current_commit:len() - 6, current_commit:len())
-      ),
     })
+    if current_commit_body:len() > 0 then
+      vim.list_extend(doom_info, {
+        "",
+        string.format("%s○ Commit body", padding_level[2]),
+      })
+      -- Add each line separately because Neovim does not like newlines
+      for _, body_part in ipairs(vim.split(current_commit_body, "\n")) do
+        if body_part:len() > 0 then
+          vim.list_extend(doom_info, {
+            string.format(
+              "%s",
+              body_part
+                :gsub("^%s+", string.format("%s", padding_level[3]))
+                :gsub("^%s+%-", string.format("%s-", padding_level[3]))
+            ),
+          })
+        end
+      end
+    end
   end
   vim.list_extend(doom_info, {
     "",
@@ -248,7 +276,6 @@ local function get_doom_info()
   return doom_info
 end
 
--- TODO: add treesitter and LSP information like LunarVim
 local function get_buffer_info()
   local buffer_info = {}
   local buffer_ft = vim.api.nvim_buf_get_option(curr_buffer, "filetype")
@@ -264,13 +291,7 @@ local function get_buffer_info()
     ),
     string.format("%s• %s: %s", padding_level[1], "Detected filetype", buffer_ft),
     "",
-    string.format("%s▶ Buffer settings", padding_level[1]),
-    string.format(
-      "%s• %s: %s",
-      padding_level[2],
-      "Indentation width",
-      vim.api.nvim_buf_get_option(curr_buffer, "tabstop")
-    ),
+    string.format("%s▶ Settings", padding_level[1]),
     string.format(
       "%s• %s: %s%s",
       padding_level[2],
@@ -284,6 +305,18 @@ local function get_buffer_info()
       "File encoding",
       padding_level[2],
       vim.api.nvim_buf_get_option(curr_buffer, "fileencoding"):upper()
+    ),
+    string.format(
+      "%s• %s: %s",
+      padding_level[2],
+      "Indentation width",
+      vim.api.nvim_buf_get_option(curr_buffer, "tabstop")
+    ),
+    string.format(
+      "%s• %s: %s",
+      padding_level[2],
+      "Indentation style",
+      vim.api.nvim_buf_get_option(curr_buffer, "expandtab") and "Tabs" or "Spaces"
     ),
     "",
     ----- TREESITTER INFORMATION ------------------
@@ -450,8 +483,11 @@ local function set_syntax_highlighting(buffer_id)
         -- Information headers
         hl = "Title" -- "Structure"
       elseif line:find("▶") then
-        -- Information headers level 2 (subheaders)
+        -- Information subheaders (level 2)
         hl = "VariableBuiltin"
+      elseif line:find("○") then
+        -- Information subheaders (level 3)
+        hl = "FunctionBuiltin"
       elseif line:find(": ") or line:find("? ") then
         -- Information fields
         hl = "Bold"
@@ -475,9 +511,6 @@ local function set_syntax_highlighting(buffer_id)
     call matchadd(match(execute("hi TextSuccessBold"), "cleared") =~ -1  ? "TextSuccessBold" : "String", "yes")
     call matchadd(match(execute("hi TextErrorBold"), "cleared") =~ -1  ? "TextErrorBold" : "ErrorMsg", '\(no\s\)\|\(no$\)\|\(No Active Lsp\)')
 
-    " Release type and branches
-    call matchadd("Constant", '\(prerelease\)\|\(develop\|main\)\sbranch')
-
     " Commit author email
     call matchadd("Bold", '\([-a-zA-Z0-9_]\+@[-a-zA-Z0-9_]\+\.\w\+\)')
 
@@ -488,9 +521,17 @@ local function set_syntax_highlighting(buffer_id)
     call matchadd("Msg", '\(hotfix\)\|\(fix\)')
     call matchadd("MoreMsg", "feat")
     call matchadd("WarningMsg", "refact")
+    call matchadd("ErrorMsg", '\(refact\!\)\|\(BREAKING CHANGE\)')
     call matchadd("SpecialComment", "docs")
     call matchadd("Comment", "chore")
     call matchadd("Constant", "release")
+    call matchadd("SpecialComment", '\(([-a-zA-Z0-9_]\+):\)\@>')
+
+    " Release type and branches
+    call matchadd("Bold", '\(prerelease\)\|\(develop\|main\)\sbranch')
+
+    " Strings
+    call matchadd("String", '".*"')
 
     " Numbers
     call matchadd("Number", '\s[0-9]\+$')
@@ -499,7 +540,7 @@ local function set_syntax_highlighting(buffer_id)
     call matchadd("String", "•")
 
     " Lists and delimiters
-    call matchadd("Operator", '\(\s\+-\s\)\|:\s\+\|<\|>\|@')
+    call matchadd("Operator", '\(\s\+-\s\)\|:\s\+\|<\|>\|@\|(\|)')
 
     " Neovim commands
     " NOTE: Use Comment as a fallback if CommentBold does not exists in the current colorscheme
