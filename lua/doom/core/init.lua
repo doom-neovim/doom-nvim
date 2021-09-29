@@ -4,6 +4,8 @@
 
 local log = require("doom.extras.logging")
 
+log.debug("Loading Doom core ...")
+
 local core_modules = { "settings", "config.ui", "config" }
 for i = 1, #core_modules, 1 do
   local ok, err = xpcall(require, debug.traceback, ("doom.core.%s"):format(core_modules[i]))
@@ -23,6 +25,7 @@ for i = 1, #core_modules, 1 do
         require("doom.core.config.modules").modules.langs
       )
     end
+    log.debug(string.format("Successfully loaded 'doom.core.%s' module", core_modules[i]))
   else
     log.error(
       string.format(

@@ -10,7 +10,7 @@ local log = require("doom.extras.logging")
 local utils = require("doom.utils")
 local system = require("doom.core.system")
 
-log.debug("Loading Doom core config module ...")
+log.debug("Loading Doom config module ...")
 
 -- Check if running Neovim or Vim and fails if:
 -- 1. Running Vim instead of Neovim
