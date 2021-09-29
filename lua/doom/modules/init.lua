@@ -390,8 +390,7 @@ packer.startup(function(use)
     "kabouzeid/nvim-lspinstall",
     config = require("doom.modules.config.doom-lspinstall"),
     disable = disabled_lsp,
-    module = "lspinstall",
-    cmd = { "LspInstall", "LspUninstall" },
+    event = "VimEnter",
   })
 
   -- Show function signature when you type
