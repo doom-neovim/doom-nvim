@@ -56,7 +56,6 @@ packer.startup(function(use)
   })
   use({
     "JoosepAlviste/nvim-ts-context-commentstring",
-    requires = { "Olical/aniseed" },
     after = "nvim-treesitter",
   })
   use({
@@ -66,6 +65,12 @@ packer.startup(function(use)
   use({
     "windwp/nvim-ts-autotag",
     after = "nvim-treesitter",
+  })
+
+  -- Aniseed, required by some treesitter modules
+  use({
+    "Olical/aniseed",
+    module_pattern = "aniseed",
   })
 
   -- Neorg
@@ -272,12 +277,17 @@ packer.startup(function(use)
       local doom_root, sep = require("doom.core.system").doom_root, require("doom.core.system").sep
       require("nvim-mapper").setup({
         -- do not assign the default keymap (<leader>MM)
-        no_map = false,
-        -- default config search path is ~/.config/nvim/lua
+        no_map = true,
+        -- where should ripgrep look for your keybinds definitions.
+        -- Default config search path is ~/.config/nvim/lua
         search_path = string.format("%s%slua", doom_root, sep),
+        -- what should be done with the selected keybind when pressing enter.
+        -- Available actions:
+        --   * "definition" - Go to keybind definition (default)
+        --   * "execute" - Execute the keybind command
+        action_on_enter = "execute",
       })
     end,
-    module = "nvim-mapper",
     disable = disabled_telescope,
   })
 
