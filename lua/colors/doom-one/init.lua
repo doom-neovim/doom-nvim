@@ -774,15 +774,15 @@ apply_highlight(illuminated)
 -- LSP {{{
 
 local msg_underline = {
-	ErrorMsgUnderline = { fg = red, gui = 'undercurl' },
-	WarningMsgUnderline = { fg = yellow, gui = 'undercurl' },
-	MoreMsgUnderline = { fg = blue, gui = 'undercurl' },
-	MsgUnderline = { fg = green, gui = 'undercurl' },
+	ErrorMsgUnderline = { fg = red, gui = 'underline' },
+	WarningMsgUnderline = { fg = yellow, gui = 'underline' },
+	MoreMsgUnderline = { fg = blue, gui = 'underline' },
+	MsgUnderline = { fg = green, gui = 'underline' },
 }
 
 apply_highlight(msg_underline)
 high_link('LspDiagnosticsFloatingError', 'ErrorMsg')
-high_link('LspDiagnosticsFloatingWarning', 'Warning')
+high_link('LspDiagnosticsFloatingWarning', 'WarningMsg')
 high_link('LspDiagnosticsFloatingInformation', 'MoreMsg')
 high_link('LspDiagnosticsFloatingHint', 'Msg')
 high_link('LspDiagnosticsDefaultError', 'ErrorMsg')
@@ -802,7 +802,7 @@ high_link('LspDiagnosticsSignWarning', 'WarningMsg')
 high_link('LspDiagnosticsSignInformation', 'MoreMsg')
 high_link('LspDiagnosticsSignHint', 'Msg')
 high_link('DiagnosticFloatingError', 'ErrorMsg')
-high_link('DiagnosticFloatingWarn', 'Warning')
+high_link('DiagnosticFloatingWarn', 'WarningMsg')
 high_link('DiagnosticFloatingInfo', 'MoreMsg')
 high_link('DiagnosticFloatingHint', 'Msg')
 high_link('DiagnosticDefaultError', 'ErrorMsg')
@@ -851,8 +851,8 @@ high_link('ProviderTruncateLine', 'Normal')
 high_link('LspSagaFinderSelection', 'Search')
 high_link('DiagnosticTruncateLine', 'Normal')
 high_link('DiagnosticError', 'LspDiagnosticsDefaultError')
-high_link('DiagnosticWarning', 'LspDiagnosticsDefaultWarning')
-high_link('DiagnosticInformation', 'LspDiagnosticsDefaultInformation')
+high_link('DiagnosticWarn', 'LspDiagnosticsDefaultWarning')
+high_link('DiagnosticInfo', 'LspDiagnosticsDefaultInformation')
 high_link('DiagnosticHint', 'LspDiagnosticsDefaultHint')
 high_link('DefinitionPreviewTitle', 'Title')
 high_link('LspSagaShTruncateLine', 'Normal')
@@ -919,8 +919,8 @@ if vim.g.doom_one_enable_treesitter then
 	high_link('TSTagDelimiter', 'Delimiter')
 	high_link('TSStrong', 'Bold')
 	high_link('TSURI', 'URL')
-	high_link('TSWarning', 'Warning')
-	high_link('TSDanger', 'Error')
+	high_link('TSWarning', 'WarningMsg')
+	high_link('TSDanger', 'ErrorMsg')
 	high_link('TSType', 'Type')
 	high_link('TSTypeBuiltin', 'TypeBuiltin')
 	high_link('TSVariable', 'None')
