@@ -18,6 +18,19 @@ vim.g.loaded_tarPlugin = false
 vim.g.loaded_zipPlugin = false
 vim.g.loaded_2html_plugin = false
 
+local doom_root, sep = require("doom.core.system").doom_root, require("doom.core.system").sep
+local compiled_plugins_path = ("%s%splugin%spacker_compiled.lua"):format(doom_root, sep, sep)
+local compiled_plugins_exists = require("doom.utils").file_exists(compiled_plugins_path)
+if not compiled_plugins_exists then
+  -- bootstrap start only -- no deferred loading
+  -- ensure packer availability only
+  load_modules("doom", {"modules"})
+  -- followings are blocked until packages are loaded
+  vim.cmd("PackerInstall")
+  vim.cmd("PackerCompile")
+  -- packages in start path may cause noise.  Ignore and type ":"
+  -- Once successful, use ":q!" to get out and restart nvim.
+else
 ---- Doom Configurations ------------------------
 -------------------------------------------------
 -- Load Doom core and UI related stuff (colorscheme, background)
@@ -49,3 +62,4 @@ vim.defer_fn(function()
     ]])
   end
 end, 0)
+end
