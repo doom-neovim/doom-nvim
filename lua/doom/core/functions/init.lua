@@ -502,7 +502,9 @@ M.edit_config = function()
   elseif selected_config == 2 then
     vim.cmd(("%s%s %s"):format(direction, open_command, require("doom.core.config.modules").source))
   elseif selected_config == 3 then
-    vim.cmd(("%s%s %s"):format(direction, open_command, require("doom.core.config.userplugins").source))
+    vim.cmd(
+      ("%s%s %s"):format(direction, open_command, require("doom.core.config.userplugins").source)
+    )
   elseif selected_config ~= 0 then
     log.error("Invalid option selected.")
   end
@@ -513,7 +515,7 @@ end
 -- toggle_background() -- <leader>tb -- toggle background light/dark
 M.toggle_background = function()
   local background = vim.go.background
-  if  background == "light" then
+  if background == "light" then
     vim.go.background = "dark"
     print("background=dark")
   else
@@ -525,7 +527,7 @@ end
 -- toggle_completion() -- <leader>tc -- toggle completion
 vim.g.cmp_toggle_flag = true -- initialize
 local normal_buftype = function()
-  return vim.api.nvim_buf_get_option(0, 'buftype') ~= 'prompt'
+  return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
 end
 M.toggle_completion = function()
   local ok, cmp = pcall(require, "cmp")
@@ -536,16 +538,16 @@ M.toggle_completion = function()
     else
       print("completion off")
     end
-    cmp.setup {
+    cmp.setup({
       enabled = function()
-	vim.g.cmp_toggle_flag = next_cmp_toggle_flag
+        vim.g.cmp_toggle_flag = next_cmp_toggle_flag
         if next_cmp_toggle_flag then
-	  return normal_buftype
-	else
-	  return next_cmp_toggle_flag
-	end
-      end
-    }
+          return normal_buftype
+        else
+          return next_cmp_toggle_flag
+        end
+      end,
+    })
   else
     print("completion not available")
   end
@@ -554,7 +556,7 @@ end
 -- toggle_signcolumn() -- <leader>tg -- signcolumn auto/no
 M.toggle_signcolumn = function()
   local signcolumn = vim.o.signcolumn
-  if  signcolumn == "no" then
+  if signcolumn == "no" then
     vim.o.signcolumn = "auto"
     print("signcolumn=auto")
   else
@@ -565,7 +567,11 @@ end
 
 -- set_indent() -- <leader>ti -- set the indent and tab related numbers
 M.set_indent = function()
-  local indent = tonumber(vim.fn.input("Set all tab related options to a specified number and set expandtab\n(0 to reset to vim defaults, ? to print current settings): "))
+  local indent = tonumber(
+    vim.fn.input(
+      "Set all tab related options to a specified number and set expandtab\n(0 to reset to vim defaults, ? to print current settings): "
+    )
+  )
   if (indent == nil) or (indent < 0) then
     vim.cmd("set softtabstop? tabstop? shiftwidth? expandtab?")
   elseif indent > 0 then

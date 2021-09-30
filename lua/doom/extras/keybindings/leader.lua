@@ -452,13 +452,13 @@ utils.map(
 )
 if not is_plugin_disabled("autopairs") then
   utils.map(
-  "n",
-  "<leader>tp",
-  '<cmd>lua require("doom.core.functions").toggle_autopairs()<CR>',
-  opts,
-  "Tweak",
-  "toggle_autopairs",
-  "Toggle autopairs"
+    "n",
+    "<leader>tp",
+    '<cmd>lua require("doom.core.functions").toggle_autopairs()<CR>',
+    opts,
+    "Tweak",
+    "toggle_autopairs",
+    "Toggle autopairs"
   )
 end
 utils.map(
