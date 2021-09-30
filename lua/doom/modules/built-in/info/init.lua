@@ -296,13 +296,19 @@ local function get_buffer_info()
       padding_level[3],
       vim.api.nvim_buf_get_option(curr_buffer, "fileformat"):upper()
     ),
-    string.format(
-      "%s• %s: %s%s",
-      padding_level[2],
-      "File encoding",
-      padding_level[2],
-      vim.api.nvim_buf_get_option(curr_buffer, "fileencoding"):upper()
-    ),
+  })
+  if vim.api.nvim_buf_get_option(curr_buffer, "fileencoding"):len() > 0 then
+    vim.list_extend(buffer_info, {
+      string.format(
+        "%s• %s: %s%s",
+        padding_level[2],
+        "File encoding",
+        padding_level[2],
+        vim.api.nvim_buf_get_option(curr_buffer, "fileencoding"):upper()
+      ),
+    })
+  end
+  vim.list_extend(buffer_info, {
     string.format(
       "%s• %s: %s",
       padding_level[2],
