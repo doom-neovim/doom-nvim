@@ -433,13 +433,6 @@ M.load_config = function()
   return config
 end
 
--- install_servers will install the language servers for the languages with
--- the +lsp flag.
---
--- @param langs The list of languages in the doomrc
-M.install_servers = function(langs)
-end
-
 -- install_dap_clients will install the DAP clients for the languages with
 -- the +debug flag.
 --
