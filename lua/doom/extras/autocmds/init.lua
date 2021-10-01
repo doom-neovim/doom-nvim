@@ -19,11 +19,17 @@ local autocmds = {
       "*/doom-*.lua,doom_modules.lua,doom_userplugins.lua",
       "PackerCompile profile=true",
     },
-    -- Reload user-defined settings when 'doom_config.lua' file was modified
+    -- Live-reload user-defined settings when 'doom_config.lua' file was modified
     {
       "BufWritePost",
       "doom_config.lua",
       "lua require('doom.core.functions').reload_custom_settings()",
+    },
+    -- Live-reload plugins configuration files
+    {
+      "BufWritePost",
+      "*/doom-*.lua",
+      "lua require('doom.modules.built-in.reloader').reload_plugin_config(vim.fn.expand('%:p'))",
     },
     -- Automatically change colorscheme and background on exit
     {
