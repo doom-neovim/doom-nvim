@@ -84,7 +84,15 @@ mappings.map(
 ---[[-----------------]]---
 --    Select Movement    --
 ---]]-----------------[[---
-mappings.map("x", "K", ":move '<-2<CR>gv-gv", opts, "Editor", "select_right", "Move selection right")
+mappings.map(
+  "x",
+  "K",
+  ":move '<-2<CR>gv-gv",
+  opts,
+  "Editor",
+  "select_right",
+  "Move selection right"
+)
 mappings.map("x", "J", ":move '>+1<CR>gv-gv", opts, "Editor", "select_left", "Move selection left")
 
 -- get out of terminal insert mode into normal mode with Esc

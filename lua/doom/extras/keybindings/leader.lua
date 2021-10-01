@@ -187,7 +187,15 @@ mappings.map(
   "help_doom",
   "Open Doom user manual"
 )
-mappings.map("n", "<leader>du", "<cmd>DoomUpdate<CR>", opts, "Doom", "update_doom", "Update Doom Nvim")
+mappings.map(
+  "n",
+  "<leader>du",
+  "<cmd>DoomUpdate<CR>",
+  opts,
+  "Doom",
+  "update_doom",
+  "Update Doom Nvim"
+)
 mappings.map(
   "n",
   "<leader>dr",
@@ -490,7 +498,15 @@ mappings.map("n", "<leader>wh", "<C-W>h", opts, "Window", "window_left", "Window
 mappings.map("n", "<leader>wj", "<C-W>j", opts, "Window", "window_below", "Window below")
 mappings.map("n", "<leader>wl", "<C-W>l", opts, "Window", "window_right", "Window right")
 mappings.map("n", "<leader>wk", "<C-W>k", opts, "Window", "window_up", "Window up")
-mappings.map("n", "<leader>wH", "<C-W>5<", opts, "Window", "expand_window_left", "Expand window left")
+mappings.map(
+  "n",
+  "<leader>wH",
+  "<C-W>5<",
+  opts,
+  "Window",
+  "expand_window_left",
+  "Expand window left"
+)
 mappings.map(
   "n",
   "<leader>wJ",

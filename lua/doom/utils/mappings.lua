@@ -25,9 +25,10 @@ if mod_utils.is_module_available("nvim-mapper") then
   mappings.map_virtual = function(mode, lhs, rhs, opts, category, unique_identifier, description)
     mapper.map_virtual(mode, lhs, rhs, opts, category, unique_identifier, description)
   end
-  mappings.map_buf_virtual = function(mode, lhs, rhs, opts, category, unique_identifier, description)
-    mapper.map_buf_virtual(mode, lhs, rhs, opts, category, unique_identifier, description)
-  end
+  mappings.map_buf_virtual =
+    function(mode, lhs, rhs, opts, category, unique_identifier, description)
+      mapper.map_buf_virtual(mode, lhs, rhs, opts, category, unique_identifier, description)
+    end
 else
   local config = require("doom.core.config").config
 
@@ -58,9 +59,7 @@ mappings.functions = {}
 mappings.execute = function(id)
   local func = mappings.functions[id]
   if not func then
-    require("doom.extras.logging").error(
-      "Function doest not exist: " .. id
-    )
+    require("doom.extras.logging").error("Function doest not exist: " .. id)
   end
   return func()
 end

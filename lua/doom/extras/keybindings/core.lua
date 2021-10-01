@@ -17,7 +17,15 @@ mappings.map(
 )
 
 -- ESC to turn off search highlighting
-mappings.map("n", "<esc>", ":noh<CR>", opts, "Editor", "no_highlight", "Turn off search highlighting")
+mappings.map(
+  "n",
+  "<esc>",
+  ":noh<CR>",
+  opts,
+  "Editor",
+  "no_highlight",
+  "Turn off search highlighting"
+)
 
 ---[[-----------------]]---
 --     Disable keys      --
@@ -62,7 +70,15 @@ if not is_plugin_disabled("symbols") then
   )
 end
 if not is_plugin_disabled("explorer") then
-  mappings.map("n", "<F3>", ":NvimTreeToggle<CR>", opts, "Editor", "open_tree", "Toggle file explorer")
+  mappings.map(
+    "n",
+    "<F3>",
+    ":NvimTreeToggle<CR>",
+    opts,
+    "Editor",
+    "open_tree",
+    "Toggle file explorer"
+  )
 end
 if not is_plugin_disabled("minimap") then
   mappings.map(
