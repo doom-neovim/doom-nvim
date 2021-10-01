@@ -1,5 +1,5 @@
 return function()
-  local util = require("doom.utils")
+  local mappings = require("doom.utils.mappings")
   local luasnip = require("luasnip")
 
   luasnip.config.set_config({
@@ -12,16 +12,16 @@ return function()
 
   --- <tab> to jump to next snippet's placeholder
   local function on_tab()
-    return luasnip.jump(1) and "" or util.t("<Tab>")
+    return luasnip.jump(1) and "" or mappings.t("<Tab>")
   end
 
   --- <s-tab> to jump to next snippet's placeholder
   local function on_s_tab()
-    return luasnip.jump(-1) and "" or util.t("<S-Tab>")
+    return luasnip.jump(-1) and "" or mappings.t("<S-Tab>")
   end
 
-  util.imap("<Tab>", on_tab, { expr = true })
-  util.smap("<Tab>", on_tab, { expr = true })
-  util.imap("<S-Tab>", on_s_tab, { expr = true })
-  util.smap("<S-Tab>", on_s_tab, { expr = true })
+  mappings.imap("<Tab>", on_tab, { expr = true })
+  mappings.smap("<Tab>", on_tab, { expr = true })
+  mappings.imap("<S-Tab>", on_s_tab, { expr = true })
+  mappings.smap("<S-Tab>", on_s_tab, { expr = true })
 end

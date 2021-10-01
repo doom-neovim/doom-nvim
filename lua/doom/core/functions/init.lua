@@ -5,7 +5,7 @@
 ---[[---------------------------------------]]---
 
 local log = require("doom.extras.logging")
-local utils = require("doom.utils")
+local utils, fs = require("doom.utils"), require("doom.utils.fs")
 local system = require("doom.core.system")
 local config = require("doom.core.config").config
 
@@ -111,23 +111,23 @@ M.change_colors_and_bg = function()
     local doom_config_path = require("doom.core.config").source
 
     if target_colorscheme ~= config.doom.colorscheme then
-      local doom_config = utils.read_file(doom_config_path)
+      local doom_config = fs.read_file(doom_config_path)
       doom_config = string.gsub(
         doom_config,
         string.format('"%s"', config.doom.colorscheme:gsub("[%-]", "%%%1")),
         string.format('"%s"', target_colorscheme:gsub("[%-]", "%%%1"))
       )
-      utils.write_file(doom_config_path, doom_config, "w+")
+      fs.write_file(doom_config_path, doom_config, "w+")
       log.debug("Colorscheme successfully changed to " .. target_colorscheme)
     end
     if target_background ~= config.doom.colorscheme_bg then
-      local doom_config = utils.read_file(doom_config_path)
+      local doom_config = fs.read_file(doom_config_path)
       doom_config = string.gsub(
         doom_config,
         string.format('"%s"', config.doom.colorscheme_bg),
         string.format('"%s"', target_background)
       )
-      utils.write_file(doom_config_path, doom_config, "w+")
+      fs.write_file(doom_config_path, doom_config, "w+")
       log.debug("Background successfully changed to " .. target_background)
     end
   end)
@@ -174,7 +174,7 @@ M.open_docs = function()
 
   -- Get the documentation path
   local docs_path
-  if utils.file_exists(string.format("%s/doc/doom_nvim.norg", system.doom_root)) then
+  if fs.file_exists(string.format("%s/doc/doom_nvim.norg", system.doom_root)) then
     docs_path = string.format("%s/doc/doom_nvim.norg", system.doom_root)
   else
     docs_path = string.format("%s/doc/doom_nvim.norg", system.doom_configs_root)
@@ -210,7 +210,7 @@ M.create_report = function()
   local created_report, err = pcall(function()
     -- Get and save only the warning and error logs from today
     local today_logs = {}
-    local doom_logs = vim.split(utils.read_file(system.doom_logs), "\n")
+    local doom_logs = vim.split(fs.read_file(system.doom_logs), "\n")
     for _, doom_log in ipairs(doom_logs) do
       if
         string.find(doom_log, "ERROR " .. log_date_format)
@@ -276,7 +276,7 @@ M.create_report = function()
       system.doom_configs_root,
       table.concat(today_logs, "\n")
     )
-    utils.write_file(system.doom_report, report, "w+")
+    fs.write_file(system.doom_report, report, "w+")
     log.info("Report created at " .. system.doom_report)
   end)
 
@@ -320,23 +320,23 @@ local function save_backup_hashes()
       --
       -- If the database does not exist yet then we will create it
       if vim.fn.filereadable(releases_database_path) == 1 then
-        local current_releases = utils.read_file(releases_database_path)
+        local current_releases = fs.read_file(releases_database_path)
         if current_releases ~= doom_releases then
           -- Write the first release in the list with 'w+' so the
           -- actual content will be overwritten by this one
-          utils.write_file(releases_database_path, sorted_releases[1] .. "\n", "w+")
+          fs.write_file(releases_database_path, sorted_releases[1] .. "\n", "w+")
           -- Write the rest of the releases
           for idx, release in ipairs(sorted_releases) do
             -- Exclude the first release because we have already
             -- written it in the database file
             if idx ~= 1 then
-              utils.write_file(releases_database_path, release .. "\n", "a+")
+              fs.write_file(releases_database_path, release .. "\n", "a+")
             end
           end
         end
       else
         for _, release in ipairs(sorted_releases) do
-          utils.write_file(releases_database_path, release .. "\n", "a+")
+          fs.write_file(releases_database_path, release .. "\n", "a+")
         end
       end
     end)
@@ -393,7 +393,7 @@ M.rollback_doom = function()
   -- Check if there's a rollback file and sets the rollback type
   if vim.fn.filereadable(releases_database_path) == 1 then
     -- Get the releases database and split it into a table
-    local doom_releases = utils.read_file(releases_database_path)
+    local doom_releases = fs.read_file(releases_database_path)
 
     -- Put all the releases into a table so we can sort them later
     local releases = {}
@@ -468,7 +468,7 @@ M.rollback_doom = function()
         .. "), please restart"
     )
   elseif vim.fn.filereadable(rolling_backup) == 1 then
-    local backup_commit = utils.read_file(rolling_backup):gsub("[\r\n]+", "")
+    local backup_commit = fs.read_file(rolling_backup):gsub("[\r\n]+", "")
     log.info("Reverting back to commit " .. backup_commit .. " ...")
     local rolled_back, rolled_err = pcall(function()
       os.execute(system.git_workspace .. "checkout " .. backup_commit)

@@ -4,7 +4,7 @@
 
 require("doom.extras.logging").debug("Loading Doom extras ...")
 
-require("doom.utils").load_modules("doom.extras", {
+require("doom.utils.modules").load_modules("doom.extras", {
   "autocmds",
   "keybindings",
 })

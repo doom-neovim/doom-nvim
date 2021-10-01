@@ -1,11 +1,11 @@
-local utils = require("doom.utils")
+local mappings = require("doom.utils.mappings")
 
 -- Additional options for mappings
 local opts = { silent = true }
 
 -- TAB to cycle buffers too, why not?
-utils.map("n", "<Tab>", ":bnext<CR>", opts, "Movement", "cycle_next_buffer", "Goto next buffer")
-utils.map(
+mappings.map("n", "<Tab>", ":bnext<CR>", opts, "Movement", "cycle_next_buffer", "Goto next buffer")
+mappings.map(
   "n",
   "<S-Tab>",
   ":bprevious<CR>",
@@ -18,15 +18,15 @@ utils.map(
 ---[[-------------------------]]---
 --     Window Movements keys     --
 ---]]-------------------------]]---
-utils.map("n", "<C-h>", "<C-w>h", opts, "Movement", "left_window", "Goto left window")
-utils.map("n", "<C-j>", "<C-w>j", opts, "Movement", "down_window", "Goto down window")
-utils.map("n", "<C-k>", "<C-w>k", opts, "Movement", "up_window", "Goto upper window")
-utils.map("n", "<C-l>", "<C-w>l", opts, "Movement", "right_window", "Goto right window")
+mappings.map("n", "<C-h>", "<C-w>h", opts, "Movement", "left_window", "Goto left window")
+mappings.map("n", "<C-j>", "<C-w>j", opts, "Movement", "down_window", "Goto down window")
+mappings.map("n", "<C-k>", "<C-w>k", opts, "Movement", "up_window", "Goto upper window")
+mappings.map("n", "<C-l>", "<C-w>l", opts, "Movement", "right_window", "Goto right window")
 
 ---[[-----------------]]---
 --       Move Lines      --
 ---]]-----------------[[---
-utils.map(
+mappings.map(
   "n",
   "<a-j>",
   ":m .+1<CR>==",
@@ -35,7 +35,7 @@ utils.map(
   "normal_move_line_down",
   "Normal Move line down"
 )
-utils.map(
+mappings.map(
   "n",
   "<a-k>",
   ":m .-2<CR>==",
@@ -44,7 +44,7 @@ utils.map(
   "normal_move_line_up",
   "Normal Move line up"
 )
-utils.map(
+mappings.map(
   "i",
   "<a-j>",
   "<esc>:m .+1<CR>==gi",
@@ -53,7 +53,7 @@ utils.map(
   "instert_move_line_down",
   "Insert Move line down"
 )
-utils.map(
+mappings.map(
   "i",
   "<a-k>",
   "<esc>:m .-2<CR>==gi",
@@ -62,7 +62,7 @@ utils.map(
   "instert_move_line_up",
   "Insert Move line up"
 )
-utils.map(
+mappings.map(
   "v",
   "<a-j>",
   ":m '>+1<CR>gv=gv",
@@ -71,7 +71,7 @@ utils.map(
   "visual_move_line_down",
   "Visual Move line down"
 )
-utils.map(
+mappings.map(
   "v",
   "<a-k>",
   ":m '<-2<CR>gv=gv",
@@ -84,11 +84,11 @@ utils.map(
 ---[[-----------------]]---
 --    Select Movement    --
 ---]]-----------------[[---
-utils.map("x", "K", ":move '<-2<CR>gv-gv", opts, "Editor", "select_right", "Move selection right")
-utils.map("x", "J", ":move '>+1<CR>gv-gv", opts, "Editor", "select_left", "Move selection left")
+mappings.map("x", "K", ":move '<-2<CR>gv-gv", opts, "Editor", "select_right", "Move selection right")
+mappings.map("x", "J", ":move '>+1<CR>gv-gv", opts, "Editor", "select_left", "Move selection left")
 
 -- get out of terminal insert mode into normal mode with Esc
-utils.map(
+mappings.map(
   "t",
   "<Esc>",
   "<C-\\><C-n>",
@@ -101,7 +101,7 @@ utils.map(
 ---[[-----------------]]---
 --    Resizing Splits    --
 ---]]-----------------[[---
-utils.map(
+mappings.map(
   "n",
   "<C-Up>",
   ":resize +2<CR>",
@@ -110,7 +110,7 @@ utils.map(
   "resize_up",
   "Resize window (increase width)"
 )
-utils.map(
+mappings.map(
   "n",
   "<C-Down>",
   ":resize -2<CR>",
@@ -119,7 +119,7 @@ utils.map(
   "resize_down",
   "Resize window (decrease width)"
 )
-utils.map(
+mappings.map(
   "n",
   "<C-Right>",
   ":vertical resize -2<CR>",
@@ -128,7 +128,7 @@ utils.map(
   "resize_right",
   "Resize window (decrease height)"
 )
-utils.map(
+mappings.map(
   "n",
   "<C-Left>",
   ":vertical resize +2<CR>",

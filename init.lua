@@ -10,7 +10,7 @@
 vim.g.start_time = vim.fn.reltime()
 -- Lua modules loader, when loading our modules with this
 -- we avoid breaking all the configuration if something fails
-local load_modules = require("doom.utils").load_modules
+local load_modules = require("doom.utils.modules").load_modules
 
 -- Disable some unused built-in Neovim plugins
 vim.g.loaded_gzip = false

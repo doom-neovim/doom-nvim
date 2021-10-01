@@ -2,14 +2,14 @@
 --    LSP Keybindings    --
 ---]]-----------------[[---
 
-local utils = require("doom.utils")
+local mappings = require("doom.utils.mappings")
 local check_plugin = require("doom.core.functions").check_plugin
 
 local opts = { silent = true }
 local lsp_opts = vim.tbl_extend("force", opts, { expr = true })
 
 -- gd: jump to definition
-utils.map(
+mappings.map(
   "n",
   "gd",
   ":lua vim.lsp.buf.definition()<CR>",
@@ -19,7 +19,7 @@ utils.map(
   "Jump to definition"
 )
 -- gr: go to reference
-utils.map(
+mappings.map(
   "n",
   "gr",
   ":lua vim.lsp.buf.references()<CR>",
@@ -29,7 +29,7 @@ utils.map(
   "Goto reference"
 )
 -- gi: buf implementation
-utils.map(
+mappings.map(
   "n",
   "gi",
   ":lua vim.lsp.buf.implementation()<CR>",
@@ -39,7 +39,7 @@ utils.map(
   "List implementations"
 )
 -- ca: code actions
-utils.map(
+mappings.map(
   "n",
   "ca",
   ":lua vim.lsp.buf.code_action()<CR>",
@@ -49,9 +49,9 @@ utils.map(
   "Code action"
 )
 -- K: hover doc
-utils.map("n", "K", ":lua vim.lsp.buf.hover()<CR>", opts, "LSP", "hover_doc", "Hover documentation")
+mappings.map("n", "K", ":lua vim.lsp.buf.hover()<CR>", opts, "LSP", "hover_doc", "Hover documentation")
 -- Control+p: Jump to previous diagnostic
-utils.map(
+mappings.map(
   "n",
   "<C-p>",
   ":lua vim.lsp.diagnostic.goto_prev()<CR>",
@@ -61,7 +61,7 @@ utils.map(
   "Jump to previous diagnostic"
 )
 -- Control+n: Jump to next diagnostic
-utils.map(
+mappings.map(
   "n",
   "<C-n>",
   ":lua vim.lsp.diagnostic.goto_next()<CR>",
@@ -74,8 +74,8 @@ utils.map(
 vim.cmd('command! -nargs=0 LspVirtualTextToggle lua require("lsp/virtual_text").toggle()')
 
 -- LuaSnip mappings
-if check_plugin("LuaSnip", "start") then
-  utils.map(
+if check_plugin("LuaSnip", "opt") then
+  mappings.map(
     "n",
     "<Tab>",
     'luasnip#expand_or_jumpable() ? "<Plug>luasnip-expand-or-jump" : "<Tab>"',
@@ -84,7 +84,7 @@ if check_plugin("LuaSnip", "start") then
     "luasnip_expand",
     "Expand snippet"
   )
-  utils.map(
+  mappings.map(
     "i",
     "<S-Tab>",
     '<cmd>lua require("luasnip").jump(-1)<CR>',
@@ -94,7 +94,7 @@ if check_plugin("LuaSnip", "start") then
     "Previous snippet"
   )
 
-  utils.map(
+  mappings.map(
     "s",
     "<Tab>",
     '<cmd>lua require("luasnip").jump(1)<CR>',
@@ -103,7 +103,7 @@ if check_plugin("LuaSnip", "start") then
     "luasnip_next_sel",
     "Next snippet"
   )
-  utils.map(
+  mappings.map(
     "s",
     "<S-Tab>",
     '<cmd>lua require("luasnip").jump(-1)<CR>',
@@ -113,7 +113,7 @@ if check_plugin("LuaSnip", "start") then
     "Previous snippet (Select mode)"
   )
 
-  utils.map(
+  mappings.map(
     "i",
     "<C-E>",
     'luasnip#choice_active() ? "<Plug>luasnip-next-choice" : "<C-E>"',
@@ -122,7 +122,7 @@ if check_plugin("LuaSnip", "start") then
     "luasnip_next_choice",
     "Next snippets field"
   )
-  utils.map(
+  mappings.map(
     "s",
     "<C-E>",
     'luasnip#choice_active() ? "<Plug>luasnip-next-choice" : "<C-E>"',
