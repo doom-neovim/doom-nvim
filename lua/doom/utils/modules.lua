@@ -27,26 +27,26 @@ end
 
 --- Load the specified Lua modules
 --- @param module_path string The path to Lua modules, e.g. 'doom' → 'lua/doom'
---- @param modules table The modules that we want to load
-modules.load_modules = function(module_path, modules)
-  for i = 1, #modules, 1 do
+--- @param mods table The modules that we want to load
+modules.load_modules = function(module_path, mods)
+  for i = 1, #mods, 1 do
     local ok, err = xpcall(
       require,
       debug.traceback,
-      string.format("%s.%s", module_path, modules[i])
+      string.format("%s.%s", module_path, mods[i])
     )
     if not ok then
       require("doom.extras.logging").error(
         string.format(
           "There was an error loading the module '%s.%s'. Traceback:\n%s",
           module_path,
-          modules[i],
+          mods[i],
           err
         )
       )
     else
       require("doom.extras.logging").debug(
-        string.format("Successfully loaded '%s.%s' module", module_path, modules[i])
+        string.format("Successfully loaded '%s.%s' module", module_path, mods[i])
       )
     end
   end
