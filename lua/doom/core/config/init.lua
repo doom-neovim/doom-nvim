@@ -438,30 +438,6 @@ end
 --
 -- @param langs The list of languages in the doomrc
 M.install_servers = function(langs)
-  -- selene: allow(undefined_variable)
-  if packer_plugins and packer_plugins["lspinstall"] and packer_plugins["lspinstall"].loaded then
-    local lspinstall = require("lspinstall")
-    local installed_servers = lspinstall.installed_servers()
-    local available_servers = lspinstall.available_servers()
-
-    for _, lang in ipairs(langs) do
-      local lang_str = lang
-      lang = lang:gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
-
-      -- If the +lsp flag exists and the language server is not installed yet
-      if lang_str:find("%+lsp") and (not utils.has_value(installed_servers, lang)) then
-        -- Try to install the server only if there is a server available for
-        -- the language, oterwise raise a warning
-        if utils.has_value(available_servers, lang) then
-          lspinstall.install_server(lang)
-        else
-          log.warn(
-            "The language " .. lang .. ' does not have a server, please remove the "+lsp" flag'
-          )
-        end
-      end
-    end
-  end
 end
 
 -- install_dap_clients will install the DAP clients for the languages with
