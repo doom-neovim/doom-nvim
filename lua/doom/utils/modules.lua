@@ -30,11 +30,7 @@ end
 --- @param mods table The modules that we want to load
 modules.load_modules = function(module_path, mods)
   for i = 1, #mods, 1 do
-    local ok, err = xpcall(
-      require,
-      debug.traceback,
-      string.format("%s.%s", module_path, mods[i])
-    )
+    local ok, err = xpcall(require, debug.traceback, string.format("%s.%s", module_path, mods[i]))
     if not ok then
       require("doom.extras.logging").error(
         string.format(
