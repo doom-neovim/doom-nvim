@@ -18,7 +18,9 @@ reloader.reload_plugin_config = function(mod_path)
     -- Call the loaded module function so the reloading will take effect as expected
     package.loaded[mod_path]()
 
-    require("doom.extras.logging").info(string.format("Successfully reloaded '%s' module", mod_path))
+    require("doom.extras.logging").info(
+      string.format("Successfully reloaded '%s' module", mod_path)
+    )
   else
     require("doom.extras.logging").error(string.format("Failed to reload '%s' module", mod_path))
   end
