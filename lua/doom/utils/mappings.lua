@@ -8,7 +8,6 @@
 local mappings = {}
 
 local mod_utils = require("doom.utils.modules")
-local system = require("doom.core.system")
 
 --- Mappings wrapper, extracted from
 --- https://github.com/ojroques/dotfiles/blob/master/nvim/init.lua#L8-L12
