@@ -1,4 +1,5 @@
 return function()
+  local log = require("doom.extras.logging")
   local utils = require("doom.utils")
   local nvim_lsp = require("lspconfig")
   local lua_lsp = require("lua-dev").setup({
@@ -13,13 +14,11 @@ return function()
     },
   })
 
-  log.info('Importing LSP install')
   local lspinstall = require("lspinstall")
   lspinstall.setup()
 
   -- Load langs from doomrc and install servers with +lsp 
   local function install_servers()
-    log.info('Installing servers now ...')
     local installed_servers = lspinstall.installed_servers()
     local available_servers = lspinstall.available_servers()
 
