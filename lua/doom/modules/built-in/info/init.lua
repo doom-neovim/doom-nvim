@@ -216,6 +216,7 @@ local function get_doom_info()
             string.format(
               "%s",
               body_part
+                :gsub("^", string.format("%s", padding_level[3]))
                 :gsub("^%s+", string.format("%s", padding_level[3]))
                 :gsub("^%s+%-", string.format("%s-", padding_level[3]))
             ),
