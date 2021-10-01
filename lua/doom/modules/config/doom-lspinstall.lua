@@ -17,13 +17,13 @@ return function()
   local lspinstall = require("lspinstall")
   lspinstall.setup()
 
-  -- Load langs from doomrc and install servers with +lsp 
+  -- Load langs from doomrc and install servers with +lsp
   local function install_servers()
     local installed_servers = lspinstall.installed_servers()
     local available_servers = lspinstall.available_servers()
 
     local doomrc = require("doom.core.config.doomrc").load_doomrc()
-    local langs = doomrc.langs;
+    local langs = doomrc.langs
 
     for _, lang in ipairs(langs) do
       local lang_str = lang
