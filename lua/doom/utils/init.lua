@@ -9,7 +9,7 @@ local system = require("doom.core.system")
 
 -------------------- HELPERS --------------------
 -- Doom Nvim version
-M.doom_version = "3.1.1"
+M.doom_version = "3.1.2"
 
 -- file_exists checks if the given file exists
 -- @tparam string path The path to the file

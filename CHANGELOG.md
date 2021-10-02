@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.2] - 2021-10-01
+
+### Changed
+
+- Updated `dap-ui` plugin configurations to match recent breaking changes.
+  See [#114](https://github.com/NTBBloodbath/doom-nvim/pull/114) and [#137](https://github.com/NTBBloodbath/doom-nvim/pull/137)
+- Updated `gitsigns` plugin configurations to match recent breaking changes. See [#115](https://github.com/NTBBloodbath/doom-nvim/pull/122)
+- Updated `nvim-tree.lua` plugin configurations
+- Updated Neorg URL, neorg is now under `nvim-neorg` organization. See [#115](https://github.com/NTBBloodbath/doom-nvim/pull/115)
+- Updated some other plugins URLs
+- Use `,o` instead of `<leader>o` as Neorg leader. Fixes [#110](https://github.com/NTBBloodbath/doom-nvim/issues/110)
+
+### Fixed
+
+- Proper conditional for triggering dashboard-nvim plugin (re-apply)
+- Correct description for splits in documentation. See [#128](https://github.com/NTBBloodbath/doom-nvim/pull/128)
+- Do not try to load which-key.nvim if not installed. Fixes [#124](https://github.com/NTBBloodbath/doom-nvim/issues/124)
+- Language servers not being installed with `+lsp` flag in `doomrc`.
+  Fixes [#87](https://github.com/NTBBloodbath/doom-nvim/issues/87), see [#149](https://github.com/NTBBloodbath/doom-nvim/pull/149)
+
+### Removed
+
+- Non-needed `bufdo e`, this was causing issues with `nvim -d file1 file2`. Fixes [#127](https://github.com/NTBBloodbath/doom-nvim/issues/127)
+
 ## [3.1.1] - 2021-09-02
 
 ### Fixed
@@ -533,7 +557,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.1...develop
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.2...develop
+[3.1.2]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.1...v3.1.2
 [3.1.1]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.13...v3.1.0
 [3.0.13]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.12...v3.0.13
