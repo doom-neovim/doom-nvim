@@ -1,4 +1,6 @@
 return function()
+  local log = require("doom.extras.logging")
+  local utils = require("doom.utils")
   local nvim_lsp = require("lspconfig")
   local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
 
@@ -31,6 +33,40 @@ return function()
       },
     },
   }
+
+  -- Load langs from doom_modules and install servers with +lsp 
+  local function install_servers()
+    local lspinstall = require("lspinstall")
+    lspinstall.setup()
+
+    local installed_servers = lspinstall.installed_servers()
+    local available_servers = lspinstall.available_servers()
+
+    local modules = require("doom.core.config.modules").modules
+    local langs = modules.langs;
+
+    for _, lang in ipairs(langs) do
+      local lang_str = lang
+      lang = lang:gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
+
+      -- If the +lsp flag exists and the language server is not installed yet
+      if lang_str:find("%+lsp") and (not utils.has_value(installed_servers, lang)) then
+        -- Try to install the server only if there is a server available for
+        -- the language, oterwise raise a warning
+        if utils.has_value(available_servers, lang) then
+          lspinstall.install_server(lang)
+        else
+          log.warn(
+            "The language " .. lang .. ' does not have a server, please remove the "+lsp" flag'
+          )
+        end
+      end
+    end
+  end
+
+  install_servers()
+
+
 
   --- Intelligent highlighting of word under cursor
   local on_attach
