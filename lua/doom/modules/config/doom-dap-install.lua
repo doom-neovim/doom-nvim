@@ -4,7 +4,6 @@ return function()
   -- Init dap-install
   local dap_install = require("dap-install")
   dap_install.setup({
-	  verbosely_call_debuggers = true,
 	  installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
   })
 
