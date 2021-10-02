@@ -7,7 +7,6 @@
 local M = {}
 
 local log = require("doom.extras.logging")
-local utils = require("doom.utils")
 local system = require("doom.core.system")
 
 log.debug("Loading Doom config module ...")
