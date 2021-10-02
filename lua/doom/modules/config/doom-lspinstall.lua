@@ -57,6 +57,9 @@ return function()
 
         -- Uninstall the default LSP to avoid conflicts
         if (utils.has_value(installed_servers, lang)) then
+          log.warn(
+            "Uninstalling " .. lang .. " LSP due to " .. lsp_override .. " LSP being supplied in config.  If you want to revert back to " .. lang .. " LSP you will have to manually uninstall " .. lsp_override .."."
+          )
           lspinstall.uninstall_server(lang)
         end
       end
