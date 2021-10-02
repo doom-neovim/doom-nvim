@@ -1,4 +1,11 @@
 return function()
+  -- Init dap-install
+  local dap_install = require("dap-install")
+  dap_install.setup({
+	  verbosely_call_debuggers = true,
+	  installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+  })
+
   local log = require("doom.extras.logging")
   local utils = require("doom.utils")
   local installed_clients = require("dap-install.api.debuggers").get_installed_debuggers()
@@ -14,11 +21,11 @@ return function()
     lang = lang:gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
 
     -- If the +debug flag exists and the language client is not installed yet
-    if lang_str:find("%+debug") and (not utils.has_value(installed_clients, lang .. "_dbg")) then
+    if lang_str:find("%+debug") and (not utils.has_value(installed_clients, lang)) then
       -- Try to install the client only if there is a client available for
       -- the language, oterwise raise a warning
-      if utils.has_value(available_clients, lang .. "_dbg") then
-        require("dap-install.tools.tool_install").install_debugger(lang .. "_dbg")
+      if utils.has_value(available_clients, lang) then
+        require('dap-install.core.install').install_debugger(lang)
       else
         log.warn(
           "The language "
