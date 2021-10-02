@@ -47,18 +47,36 @@ return function()
 
     for _, lang in ipairs(langs) do
       local lang_str = lang
-      lang = lang:gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
+      lang = lang:gsub("%s+%+lsp(%(%a+%))", ""):gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
+      local lsp_name = lang
+
+      -- Allow overriding of LSP using `+lsp(OVERRIDE_LSP_NAME)` syntax
+      local lsp_override = lang_str:match("+lsp%((%a+)%)")
+      if lsp_override ~= nil then
+        lsp_name = lsp_override
+
+        -- Uninstall the default LSP to avoid conflicts
+        if (utils.has_value(installed_servers, lang)) then
+          lspinstall.uninstall_server(lang)
+        end
+      end
 
       -- If the +lsp flag exists and the language server is not installed yet
-      if lang_str:find("%+lsp") and (not utils.has_value(installed_servers, lang)) then
+      if lang_str:find("%+lsp") and (not utils.has_value(installed_servers, lsp_name)) then
         -- Try to install the server only if there is a server available for
         -- the language, oterwise raise a warning
-        if utils.has_value(available_servers, lang) then
-          lspinstall.install_server(lang)
+        if utils.has_value(available_servers, lsp_name) then
+          lspinstall.install_server(lsp_name)
         else
-          log.warn(
-            "The language " .. lang .. ' does not have a server, please remove the "+lsp" flag'
-          )
+          if lsp_override == nil then
+            log.warn(
+              "The language " .. lang .. ' does not have a server, please remove the "+lsp" flag'
+            )
+          else
+            log.warn(
+              "The LSP override supplied in \"" .. lang_str .. "\" does not exist, please remove \"("..lsp_name.. ")\""
+            )
+          end
         end
       end
     end
