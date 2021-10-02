@@ -510,9 +510,6 @@ To enable the language server for a certain programming language and automatical
 install it, just append a `+lsp` flag at the end of the language field in your `doom_modules.lua`,
 e.g. for enabling Rust support in Doom and install `rust-analyzer`:
 
-If you want a different language server, you can override the name using the following syntax `+lsp(OVERRIDE_LSP_NAME)`.
-Where `OVERRIDE_LSP_NAME` is a different option in [kabouzeid/nvim-lspinstall's Bundled Installers](https://github.com/kabouzeid/nvim-lspinstall).
-
 ```lua
 local doom = {
     langs = {
@@ -522,6 +519,9 @@ local doom = {
 ```
 
 > **NOTE**: You can see a list of currently supported languages at [bundled installers](https://github.com/kabouzeid/nvim-lspinstall#bundled-installers).
+
+> **NOTE**: If you want a different language server, you can override the name using the following syntax `+lsp(OVERRIDE_LSP_NAME)`.
+Where `OVERRIDE_LSP_NAME` is a different option in [kabouzeid/nvim-lspinstall's Bundled Installers](https://github.com/kabouzeid/nvim-lspinstall).
 
 ### Binding keys
 
