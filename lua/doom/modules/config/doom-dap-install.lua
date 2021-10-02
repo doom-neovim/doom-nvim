@@ -20,20 +20,23 @@ return function()
 
   -- Iterates through langs and installs clients where possible
   local install_dap_clients = function()
-    local installed_clients = require("dap-install.api.debuggers").get_installed_debuggers()
-    -- NOTE: not all the clients follows the 'language_dbg' standard and this
-    --       can give some problems to us (maybe?)
-    local available_clients = vim.tbl_keys(require("dap-install.api.debuggers").get_debuggers())
-
     local modules = require("doom.core.config.modules").modules
     local langs = modules.langs
 
+    local installed_clients = require("dap-install.api.debuggers").get_installed_debuggers()
+    local available_clients = vim.tbl_keys(require("dap-install.api.debuggers").get_debuggers())
+
+    local daps_to_install = {}
+
+    -- Iterate over each lang, get the required daps and push it to daps_to_install (to avoid duplicates)
     for _, lang in ipairs(langs) do
       local lang_str = lang
       lang = lang:gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
 
+      log.info(string.format('Checking DAP for %s , has override? ', lang, dap_lang_lookup[lang] ~= nil ))
       -- DAPInstall.nvim has different names for the DAPs so sometimes we need to lookup the correct DAP to install
-      if utils.has_value(dap_lang_lookup, lang) then
+      if dap_lang_lookup[lang] ~= nil then
+        log.info('Overwritting ' .. lang .. ' with ' .. string.format('%s', dap_lang_lookup[lang]))
         lang = dap_lang_lookup[lang]
       else
         lang = { lang }
@@ -47,7 +50,10 @@ return function()
           -- Try to install the client only if there is a client available for
           -- the language, oterwise raise a warning
           if utils.has_value(available_clients, dap_name) then
-            require('dap-install.core.install').install_debugger(dap_name)
+              -- Avoid installing duplicate daps
+            if (not utils.has_value(daps_to_install, dap_name)) then
+              table.insert(daps_to_install, dap_name)
+            end
           else
             log.warn(
               "The language "
@@ -57,6 +63,11 @@ return function()
           end
         end
       end
+    end
+
+    -- Install the daps one by one
+    for _, dap_name in ipairs(daps_to_install) do
+      require('dap-install.core.install').install_debugger(dap_name)
     end
   end
 
