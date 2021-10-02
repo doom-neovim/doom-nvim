@@ -8,7 +8,6 @@
 local utils = {}
 
 -------------------- HELPERS --------------------
-
 --- Doom Nvim version
 utils.doom_version = "3.2.0-beta2"
 
