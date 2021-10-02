@@ -17,11 +17,6 @@ for i = 1, #core_modules, 1 do
       require("doom.core.settings").custom_options()
       -- Doom Nvim custom commands
       require("doom.core.settings").doom_commands()
-    elseif core_modules[i] == "config" then
-      -- Automatically install language DAP clients
-      require("doom.core.config").install_dap_clients(
-        require("doom.core.config.modules").modules.langs
-      )
     end
     log.debug(string.format("Successfully loaded 'doom.core.%s' module", core_modules[i]))
   else

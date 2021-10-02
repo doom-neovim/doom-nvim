@@ -440,43 +440,6 @@ else
   end
 end
 
--- install_dap_clients will install the DAP clients for the languages with
--- the +debug flag.
---
--- @param langs The list of languages in the doom_modules.lua
-M.install_dap_clients = function(langs)
-  if
-    packer_plugins
-    and packer_plugins["DAPInstall.nvim"]
-    and packer_plugins["DAPInstall.nvim"].loaded
-  then
-    local installed_clients = require("dap-install.api.debuggers").get_installed_debuggers()
-    -- NOTE: not all the clients follows the 'language_dbg' standard and this
-    --       can give some problems to us (maybe?)
-    local available_clients = vim.tbl_keys(require("dap-install.api.debuggers").get_debuggers())
-
-    for _, lang in ipairs(langs) do
-      local lang_str = lang
-      lang = lang:gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
-
-      -- If the +debug flag exists and the language client is not installed yet
-      if lang_str:find("%+debug") and (not utils.has_value(installed_clients, lang .. "_dbg")) then
-        -- Try to install the client only if there is a client available for
-        -- the language, oterwise raise a warning
-        if utils.has_value(available_clients, lang .. "_dbg") then
-          require("dap-install.tools.tool_install").install_debugger(lang .. "_dbg")
-        else
-          log.warn(
-            "The language "
-              .. lang
-              .. ' does not have a DAP client, please remove the "+debug" flag'
-          )
-        end
-      end
-    end
-  end
-end
-
 -- Check plugins updates on start if enabled
 if M.config.doom.check_updates then
   require("doom.core.functions").check_updates()
