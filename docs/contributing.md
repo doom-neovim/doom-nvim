@@ -37,7 +37,7 @@ not work as expected otherwise. Eg. you will see 'Dashboard' text on vim load in
 ### Acquire a backtrace from errors
 
 All the errors ocurred in Doom Nvim are saved into a `doom.log` file inside the
-`~/.local/share/nvim/` directory. If the logs are very long, please paste it
+`~/.local/share/nvim/` directory. If the logs are very long, please paste them
 using a [gist].
 
 ### Create a step-by-step reproduction guide
@@ -73,7 +73,8 @@ Doom Nvim follows some code style rules like ones the mentioned below:
 
 - Double quotes over single quotes.
 - Spaces over tabs.
-- Variable names in `snake_case`, except in the BASH installation script.
+- Two spaces indentation
+- Variable names in `snake_case`
 - Function names in `snake_case`.
 - [stylua] is used to format lua files with the following configuration:
 
@@ -85,20 +86,21 @@ indent_width = 2
 quote_style = "AutoPreferDouble"
 ```
 
-> **NOTE:** use `--config-path /path/to/doom/nvim/stylua.toml` to use doom's
+> **NOTE:** use `--config-path /path/to/doom/nvim/.stylua.toml` to use doom's
 > stylua configuration.
 
-- [selene] is a blazing-fast modern Lua linter written in Rust which is used for
-  linting doom's source code. We make use of some custom rules so we can be sure
-  that selene will not raise false errors.
+- [luacheck] is a static analyzer and a linter for Lua. Luacheck detects various issues such as usage
+  of undefined global variables, unused variables and values, accessing uninitialized variables,
+  unreachable code and more.
 
-> **NOTE:** use `selene .` in doom's root dir and selene will automatically
-> detect the `selene.toml` and `doom.toml` files.
+> **NOTE:** use `luacheck .` in doom's root dir and luacheck will automatically
+> detect the `.luacheckrc` file.
 
 #### Commits & PRs
 
 - Target `develop` instead of `main`.
-  The only exception are hotfixes!
+  The only exception are hotfixes (plugins breaking changes, Doom bugs)
+  and documentation improvements!
 
 #### Keybind conventions
 
@@ -113,4 +115,4 @@ your pull request :)
 
 [gist]: https://gist.github.com/
 [stylua]: https://github.com/JohnnyMorganz/StyLua
-[selene]: https://github.com/Kampfkarren/selene
+[luacheck]:https://github.com/luarocks/luacheck
