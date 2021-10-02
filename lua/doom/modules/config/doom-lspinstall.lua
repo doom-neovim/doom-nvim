@@ -34,7 +34,7 @@ return function()
     },
   }
 
-  -- Load langs from doom_modules and install servers with +lsp 
+  -- Load langs from doom_modules and install servers with +lsp flag
   local function install_servers()
     local lspinstall = require("lspinstall")
     lspinstall.setup()
@@ -65,8 +65,6 @@ return function()
   end
 
   install_servers()
-
-
 
   --- Intelligent highlighting of word under cursor
   local on_attach
