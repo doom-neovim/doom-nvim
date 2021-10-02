@@ -33,10 +33,8 @@ return function()
       local lang_str = lang
       lang = lang:gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
 
-      log.info(string.format('Checking DAP for %s , has override? ', lang, dap_lang_lookup[lang] ~= nil ))
       -- DAPInstall.nvim has different names for the DAPs so sometimes we need to lookup the correct DAP to install
       if dap_lang_lookup[lang] ~= nil then
-        log.info('Overwritting ' .. lang .. ' with ' .. string.format('%s', dap_lang_lookup[lang]))
         lang = dap_lang_lookup[lang]
       else
         lang = { lang }
