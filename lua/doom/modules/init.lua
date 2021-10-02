@@ -425,7 +425,7 @@ packer.startup(function(use)
   use({
     "mfussenegger/nvim-dap",
     disable = disabled_dap,
-    event = "ColorScheme",
+    event = "BufWinEnter",
   })
 
   use({
@@ -437,6 +437,7 @@ packer.startup(function(use)
 
   use({
     "Pocco81/DAPInstall.nvim",
+    config = require("doom.modules.config.doom-dap-install"),
     disable = disabled_dap,
     after = "nvim-dap",
   })
