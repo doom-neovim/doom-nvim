@@ -13,7 +13,7 @@ return function()
         table.insert(langs, "yaml")
         table.insert(langs, "toml")
       else
-        lang = lang:gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
+        lang = lang:gsub("%s+%+lsp(%(%a+%))", ""):gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
         table.insert(langs, lang)
       end
     end
