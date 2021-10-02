@@ -43,7 +43,7 @@ return function()
     local available_servers = lspinstall.available_servers()
 
     local modules = require("doom.core.config.modules").modules
-    local langs = modules.langs;
+    local langs = modules.langs
 
     for _, lang in ipairs(langs) do
       local lang_str = lang
