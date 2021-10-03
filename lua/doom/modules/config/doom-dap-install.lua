@@ -4,17 +4,17 @@ return function()
   -- Init dap-install
   local dap_install = require("dap-install")
   dap_install.setup({
-	  installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
+    installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
   })
 
   local dap_lang_lookup = {
-    cpp = {'ccppr_vsc'},
-    c = {'ccppr_vsc'},
-    rust = {'ccppr_vsc'},
-    go = {'go_delve'},
-    javascript = { 'chrome', 'jsnode' },
-    typescript = { 'chrome', 'jsnode' },
-    ruby = {'ruby_vsc'}
+    cpp = { "ccppr_vsc" },
+    c = { "ccppr_vsc" },
+    rust = { "ccppr_vsc" },
+    go = { "go_delve" },
+    javascript = { "chrome", "jsnode" },
+    typescript = { "chrome", "jsnode" },
+    ruby = { "ruby_vsc" },
   }
 
   -- Iterates through langs and installs clients where possible
@@ -43,12 +43,11 @@ return function()
       for _, dap_name in ipairs(lang) do
         -- If the +debug flag exists and the language client is not installed yet
         if lang_str:find("%+debug") and (not utils.has_value(installed_clients, dap_name)) then
-
           -- Try to install the client only if there is a client available for
           -- the language, oterwise raise a warning
           if utils.has_value(available_clients, dap_name) then
-              -- Avoid installing duplicate daps
-            if (not utils.has_value(daps_to_install, dap_name)) then
+            -- Avoid installing duplicate daps
+            if not utils.has_value(daps_to_install, dap_name) then
               table.insert(daps_to_install, dap_name)
             end
           else
@@ -64,7 +63,7 @@ return function()
 
     -- Install the daps one by one
     for _, dap_name in ipairs(daps_to_install) do
-      require('dap-install.core.install').install_debugger(dap_name)
+      require("dap-install.core.install").install_debugger(dap_name)
     end
   end
 
