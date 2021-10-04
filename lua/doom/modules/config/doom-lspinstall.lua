@@ -56,9 +56,17 @@ return function()
         lsp_name = lsp_override
 
         -- Uninstall the default LSP to avoid conflicts
-        if (utils.has_value(installed_servers, lang)) then
+        if utils.has_value(installed_servers, lang) then
           log.warn(
-            "Uninstalling " .. lang .. " LSP due to " .. lsp_override .. " LSP being supplied in config.  If you want to revert back to " .. lang .. " LSP you will have to manually uninstall " .. lsp_override .."."
+            "Uninstalling "
+              .. lang
+              .. " LSP due to "
+              .. lsp_override
+              .. " LSP being supplied in config.  If you want to revert back to "
+              .. lang
+              .. " LSP you will have to manually uninstall "
+              .. lsp_override
+              .. "."
           )
           lspinstall.uninstall_server(lang)
         end
@@ -77,7 +85,11 @@ return function()
             )
           else
             log.warn(
-              "The LSP override supplied in \"" .. lang_str .. "\" does not exist, please remove \"("..lsp_name.. ")\""
+              'The LSP override supplied in "'
+                .. lang_str
+                .. '" does not exist, please remove "('
+                .. lsp_name
+                .. ')"'
             )
           end
         end
