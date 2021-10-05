@@ -7,33 +7,33 @@
 
 -- Helpers {{{
 
+local doom_one = {}
+
 local utils = require('colors.utils')
+local config = require('colors.doom-one.config')
 
 -- }}}
 
 -- Customization variables {{{
 
--- Set default values for doom_one variables if they don't exists
-if vim.g.doom_one_cursor_coloring == nil then
-	vim.g.doom_one_cursor_coloring = false
-end
-if vim.g.doom_one_terminal_colors == nil then
-	vim.g.doom_one_terminal_colors = false
-end
-if vim.g.doom_one_enable_treesitter == nil then
-	vim.g.doom_one_enable_treesitter = true
-end
-if vim.g.doom_one_transparent_background == nil then
-	vim.g.doom_one_transparent_background = false
-end
-if vim.g.doom_one_italic_comments == nil then
-	vim.g.doom_one_italic_comments = false
-end
-if vim.g.doom_one_telescope_highlights == nil then
-	vim.g.doom_one_telescope_highlights = true
+local configuration = config.get()
+
+--- Establish the user configurations
+--- @param user_configs table
+doom_one.setup = function(user_configs)
+    configuration = config.set(user_configs or {})
 end
 
-local transparent_bg = vim.g.doom_one_transparent_background
+local transparent_bg = configuration.transparent_background
+
+if configuration.cursor_coloring then
+	vim.opt.guicursor =
+		'n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor25-Cursor'
+end
+
+if configuration.pumblend.enable then
+    vim.opt.pumblend = configuration.pumblend.transparency_amount
+end
 
 -- }}}
 
@@ -202,11 +202,6 @@ if current_bg == 'light' then
 	gh_danger_bg1 = utils.Mix('#ffdce0', bg, 0.9)
 end
 
-if vim.g.doom_one_cursor_coloring then
-	vim.opt.guicursor =
-		'n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor25-Cursor'
-end
-
 -- }}}
 
 -- General UI {{{
@@ -365,7 +360,7 @@ local main_syntax = {
 
 	Comment = {
 		fg = fg_alt,
-		gui = vim.g.doom_one_italic_comments and 'italic' or 'NONE',
+		gui = configuration.italic_comments and 'italic' or 'NONE',
 	},
 	CommentBold = { fg = fg_alt, gui = 'bold' },
 	SpecialComment = { fg = base7, gui = 'bold' },
@@ -482,42 +477,44 @@ apply_highlight(markdown)
 
 -- barbar.nvim {{{
 
-local barbar = {
-	BufferCurrent = { fg = base9, bg = bg },
-	BufferCurrentIndex = { fg = base6, bg = bg },
-	BufferCurrentMod = { fg = yellow, bg = bg },
-	BufferCurrentSign = { fg = blue, bg = bg },
-	BufferCurrentTarget = { fg = red, bg = bg, gui = 'bold' },
+if configuration.plugins_integrations.barbar then
+    local barbar = {
+	    BufferCurrent = { fg = base9, bg = bg },
+	    BufferCurrentIndex = { fg = base6, bg = bg },
+	    BufferCurrentMod = { fg = yellow, bg = bg },
+	    BufferCurrentSign = { fg = blue, bg = bg },
+	    BufferCurrentTarget = { fg = red, bg = bg, gui = 'bold' },
 
-	BufferVisible = { fg = base7, bg = bg },
-	BufferVisibleIndex = { fg = base9, bg = bg },
-	BufferVisibleMod = { fg = yellow, bg = bg },
-	BufferVisibleSign = { fg = base4, bg = bg },
-	BufferVisibleTarget = { fg = red, bg = bg, gui = 'bold' },
+	    BufferVisible = { fg = base7, bg = bg },
+	    BufferVisibleIndex = { fg = base9, bg = bg },
+	    BufferVisibleMod = { fg = yellow, bg = bg },
+	    BufferVisibleSign = { fg = base4, bg = bg },
+	    BufferVisibleTarget = { fg = red, bg = bg, gui = 'bold' },
 
-	BufferInactive = { fg = base6, bg = base1 },
-	BufferInactiveIndex = { fg = base6, bg = base1 },
-	BufferInactiveMod = { fg = yellow, bg = base1 },
-	BufferInactiveSign = { fg = base4, bg = base1 },
-	BufferInactiveTarget = { fg = red, bg = base1, gui = 'bold' },
+	    BufferInactive = { fg = base6, bg = base1 },
+	    BufferInactiveIndex = { fg = base6, bg = base1 },
+	    BufferInactiveMod = { fg = yellow, bg = base1 },
+	    BufferInactiveSign = { fg = base4, bg = base1 },
+	    BufferInactiveTarget = { fg = red, bg = base1, gui = 'bold' },
 
-	BufferTabpages = { fg = blue, bg = bg_statusline, gui = 'bold' },
-	BufferTabpageFill = { fg = base4, bg = base1, gui = 'bold' },
+	    BufferTabpages = { fg = blue, bg = bg_statusline, gui = 'bold' },
+	    BufferTabpageFill = { fg = base4, bg = base1, gui = 'bold' },
 
-	BufferPart = { fg = diff_info_fg, bg = diff_info_bg0, gui = 'bold' },
-}
+	    BufferPart = { fg = diff_info_fg, bg = diff_info_bg0, gui = 'bold' },
+    }
 
-apply_highlight(barbar)
+    apply_highlight(barbar)
+end
 
 -- }}}
 
 -- BufferLine {{{
 
--- NOTE: this is a temporal workaround for using bufferline with a transparent
---       background and having highlighting, please refer to
---       https://github.com/NTBBloodbath/doom-one.nvim/issues/8#issuecomment-883737667
---       for more information about this
-if transparent_bg then
+if configuration.plugins_integrations.bufferline and transparent_bg then
+    -- NOTE: this is a temporal workaround for using bufferline with a transparent
+    --       background and having highlighting, please refer to
+    --       https://github.com/NTBBloodbath/doom-one.nvim/issues/8#issuecomment-883737667
+    --       for more information about this
     local bufferline = {
 	    BufferLineTab = { fg = fg, bg = bg },
 	    BufferLineTabClose = { fg = fg, bg = bg, gui = 'bold' },
@@ -596,30 +593,34 @@ end
 
 -- Gitgutter {{{
 
-high_link('GitGutterAdd', 'DiffAddedGutter')
-high_link('GitGutterChange', 'DiffModifiedGutter')
-high_link('GitGutterDelete', 'DiffRemovedGutter')
-high_link('GitGutterChangeDelete', 'DiffModifiedGutter')
+if configuration.plugins_integrations.gitgutter then
+    high_link('GitGutterAdd', 'DiffAddedGutter')
+    high_link('GitGutterChange', 'DiffModifiedGutter')
+    high_link('GitGutterDelete', 'DiffRemovedGutter')
+    high_link('GitGutterChangeDelete', 'DiffModifiedGutter')
 
-high_link('GitGutterAddLineNr', 'DiffAddedGutterLineNr')
-high_link('GitGutterChangeLineNr', 'DiffModifiedGutterLineNr')
-high_link('GitGutterDeleteLineNr', 'DiffRemovedGutterLineNr')
-high_link('GitGutterChangeDeleteLineNr', 'DiffModifiedGutterLineNr')
+    high_link('GitGutterAddLineNr', 'DiffAddedGutterLineNr')
+    high_link('GitGutterChangeLineNr', 'DiffModifiedGutterLineNr')
+    high_link('GitGutterDeleteLineNr', 'DiffRemovedGutterLineNr')
+    high_link('GitGutterChangeDeleteLineNr', 'DiffModifiedGutterLineNr')
+end
 
 -- }}}
 
 -- Gitsigns {{{
 
-high_link('GitSignsAdd', 'DiffAddedGutter')
-high_link('GitSignsChange', 'DiffModifiedGutter')
-high_link('GitSignsDelete', 'DiffRemovedGutter')
-high_link('GitSignsChangeDelete', 'DiffModifiedGutter')
+if configuration.plugins_integrations.gitsigns then
+    high_link('GitSignsAdd', 'DiffAddedGutter')
+    high_link('GitSignsChange', 'DiffModifiedGutter')
+    high_link('GitSignsDelete', 'DiffRemovedGutter')
+    high_link('GitSignsChangeDelete', 'DiffModifiedGutter')
+end
 
 -- }}}
 
 -- Telescope {{{
 
-if vim.g.doom_one_telescope_highlights then
+if configuration.plugins_integrations.telescope then
 	local telescope = {
 		TelescopeSelection = { fg = yellow, gui = 'bold' },
 		TelescopeSelectionCaret = { fg = light_bg and orange or blue },
@@ -641,133 +642,195 @@ end
 
 -- Neogit {{{
 
-local neogit = {
-	NeogitDiffAdd = { fg = ng_add_fg, bg = ng_add_bg},
-	NeogitDiffAddHighlight = { fg = ng_add_fg_hl, bg = ng_add_bg_hl, gui = 'bold' },
-	NeogitDiffDelete = { fg = ng_delete_fg, bg = ng_delete_bg },
-	NeogitDiffDeleteHighlight = { fg = ng_delete_fg_hl, bg = ng_delete_bg_hl, gui = 'bold' },
-	NeogitDiffContext = { fg = fg_alt, bg = bg },
-	NeogitDiffContextHighlight = { fg = fg, bg = bg_alt },
-	NeogitHunkHeader = { fg = bg, bg = ng_header_bg },
-	NeogitHunkHeaderHighlight = { fg = bg_alt, bg = ng_header_bg_hl, gui = 'bold' },
-	NeogitStagedChanges = { fg = blue, gui = 'bold' },
-	NeogitStagedChangesRegion = { bg = bg_highlight },
-	NeogitStashes = { fg = blue, gui = 'bold' },
-	NeogitUnstagedChanges = { fg = blue, gui = 'bold' },
-	NeogitUntrackedfiles = { fg = blue, gui = 'bold' },
-}
+if configuration.plugins_integrations.neogit then
+    local neogit = {
+	    NeogitDiffAdd = { fg = ng_add_fg, bg = ng_add_bg},
+	    NeogitDiffAddHighlight = { fg = ng_add_fg_hl, bg = ng_add_bg_hl, gui = 'bold' },
+	    NeogitDiffDelete = { fg = ng_delete_fg, bg = ng_delete_bg },
+	    NeogitDiffDeleteHighlight = { fg = ng_delete_fg_hl, bg = ng_delete_bg_hl, gui = 'bold' },
+	    NeogitDiffContext = { fg = fg_alt, bg = bg },
+	    NeogitDiffContextHighlight = { fg = fg, bg = bg_alt },
+	    NeogitHunkHeader = { fg = bg, bg = ng_header_bg },
+	    NeogitHunkHeaderHighlight = { fg = bg_alt, bg = ng_header_bg_hl, gui = 'bold' },
+	    NeogitStagedChanges = { fg = blue, gui = 'bold' },
+	    NeogitStagedChangesRegion = { bg = bg_highlight },
+	    NeogitStashes = { fg = blue, gui = 'bold' },
+	    NeogitUnstagedChanges = { fg = blue, gui = 'bold' },
+	    NeogitUntrackedfiles = { fg = blue, gui = 'bold' },
+    }
 
-apply_highlight(neogit)
+    apply_highlight(neogit)
+end
 
 -- }}}
 
 -- NvimTree {{{
 
-local nvim_tree = {
-	NvimTreeFolderName = { fg = light_bg and base9 or blue, gui = 'bold' },
-	NvimTreeRootFolder = { fg = green },
-	NvimTreeEmptyFolderName = { fg = fg_alt, gui = 'bold' },
-	NvimTreeSymlink = { fg = fg, gui = 'underline' },
-	NvimTreeExecFile = { fg = green, gui = 'bold' },
-	NvimTreeImageFile = { fg = light_bg and orange or blue },
-	NvimTreeOpenedFile = { fg = fg_alt },
-	NvimTreeSpecialFile = { fg = fg, gui = 'underline' },
-	NvimTreeMarkdownFile = { fg = fg, gui = 'underline' },
-}
+if configuration.plugins_integrations.nvim_tree then
+    local nvim_tree = {
+	    NvimTreeFolderName = { fg = light_bg and base9 or blue, gui = 'bold' },
+	    NvimTreeRootFolder = { fg = green },
+	    NvimTreeEmptyFolderName = { fg = fg_alt, gui = 'bold' },
+	    NvimTreeSymlink = { fg = fg, gui = 'underline' },
+	    NvimTreeExecFile = { fg = green, gui = 'bold' },
+	    NvimTreeImageFile = { fg = light_bg and orange or blue },
+	    NvimTreeOpenedFile = { fg = fg_alt },
+	    NvimTreeSpecialFile = { fg = fg, gui = 'underline' },
+	    NvimTreeMarkdownFile = { fg = fg, gui = 'underline' },
+    }
 
-apply_highlight(nvim_tree)
-high_link('NvimTreeGitDirty', 'DiffModifiedGutter')
-high_link('NvimTreeGitStaged', 'DiffModifiedGutter')
-high_link('NvimTreeGitMerge', 'DiffModifiedGutter')
-high_link('NvimTreeGitRenamed', 'DiffModifiedGutter')
-high_link('NvimTreeGitNew', 'DiffAddedGutter')
-high_link('NvimTreeGitDeleted', 'DiffRemovedGutter')
+    apply_highlight(nvim_tree)
+    high_link('NvimTreeGitDirty', 'DiffModifiedGutter')
+    high_link('NvimTreeGitStaged', 'DiffModifiedGutter')
+    high_link('NvimTreeGitMerge', 'DiffModifiedGutter')
+    high_link('NvimTreeGitRenamed', 'DiffModifiedGutter')
+    high_link('NvimTreeGitNew', 'DiffAddedGutter')
+    high_link('NvimTreeGitDeleted', 'DiffRemovedGutter')
 
-high_link('NvimTreeIndentMarker', 'IndentGuide')
-high_link('NvimTreeOpenedFolderName', 'NvimTreeFolderName')
+    high_link('NvimTreeIndentMarker', 'IndentGuide')
+    high_link('NvimTreeOpenedFolderName', 'NvimTreeFolderName')
+end
 
 -- }}}
 
 -- Dashboard {{{
 
-local dashboard = {
-	dashboardHeader = { fg = '#586268' },
-	dashboardCenter = { fg = light_bg and orange or blue },
-	dashboardShortcut = { fg = '#9788b9' },
-}
+if configuration.plugins_integrations.dashboard then
+    local dashboard = {
+	    dashboardHeader = { fg = '#586268' },
+	    dashboardCenter = { fg = light_bg and orange or blue },
+	    dashboardShortcut = { fg = '#9788b9' },
+    }
 
-apply_highlight(dashboard)
-high_link('dashboardFooter', 'dashboardHeader')
+    apply_highlight(dashboard)
+    high_link('dashboardFooter', 'dashboardHeader')
+end
 
 -- }}}
 
 -- Startify {{{
 
-local startify = {
-	StartifyHeader = { fg = bg_popup },
-	StartifyBracket = { fg = bg_popup },
-	StartifyNumber = { fg = blue },
-	StartifyPath = { fg = violet },
-	StartifySlash = { fg = violet },
-	StartifyFile = { fg = green },
-}
+if configuration.plugins_integrations.startify then
+    local startify = {
+	    StartifyHeader = { fg = bg_popup },
+	    StartifyBracket = { fg = bg_popup },
+	    StartifyNumber = { fg = blue },
+	    StartifyPath = { fg = violet },
+	    StartifySlash = { fg = violet },
+	    StartifyFile = { fg = green },
+    }
 
-apply_highlight(startify)
+    apply_highlight(startify)
+end
 
 -- }}}
 
 -- WhichKey {{{
 
-local whichkey = {
-	WhichKey = { fg = light_bg and orange or blue },
-	WhichKeyGroup = { fg = magenta },
-	WhichKeyDesc = { fg = magenta },
-	WhichKeySeparator = { fg = base5 },
-	WhichKeyFloat = { bg = base2 },
-	WhichKeyValue = { fg = grey },
-}
+if configuration.plugins_integrations.whichkey then
+    local whichkey = {
+	    WhichKey = { fg = light_bg and orange or blue },
+	    WhichKeyGroup = { fg = magenta },
+	    WhichKeyDesc = { fg = magenta },
+	    WhichKeySeparator = { fg = base5 },
+	    WhichKeyFloat = { bg = base2 },
+	    WhichKeyValue = { fg = grey },
+    }
 
-apply_highlight(whichkey)
+    apply_highlight(whichkey)
+end
 
 -- }}}
 
 -- indent-blankline {{{
 
-local indent_blankline = {
-	IndentBlanklineChar = {
-		fg = base4,
-		cterm = 'nocombine',
-		gui = 'nocombine',
-	},
-	IndentBlanklineContextChar = {
-		fg = blue,
-		cterm = 'nocombine',
-		gui = 'nocombine',
-	},
-	IndentBlanklineSpaceChar = {
-		fg = base4,
-		cterm = 'nocombine',
-		gui = 'nocombine',
-	},
-	IndentBlanklineSpaceCharBlankline = {
-		fg = base4,
-		cterm = 'nocombine',
-		gui = 'nocombine',
-	},
-}
+if configuration.plugins_integrations.indent_blankline then
+    local indent_blankline = {
+	    IndentBlanklineChar = {
+		    fg = base4,
+		    cterm = 'nocombine',
+		    gui = 'nocombine',
+	    },
+	    IndentBlanklineContextChar = {
+		    fg = blue,
+		    cterm = 'nocombine',
+		    gui = 'nocombine',
+	    },
+	    IndentBlanklineSpaceChar = {
+		    fg = base4,
+		    cterm = 'nocombine',
+		    gui = 'nocombine',
+	    },
+	    IndentBlanklineSpaceCharBlankline = {
+		    fg = base4,
+		    cterm = 'nocombine',
+		    gui = 'nocombine',
+	    },
+    }
 
-apply_highlight(indent_blankline)
+    apply_highlight(indent_blankline)
+end
 
 -- }}}
 
-local illuminated = {
-  illuminatedWord = {
-    cterm = 'underline',
-    gui = 'underline',
-  },
-}
+-- vim-illuminate {{{
 
-apply_highlight(illuminated)
+if configuration.plugins_integrations.vim_illuminate then
+    local illuminated = {
+      illuminatedWord = {
+        cterm = 'underline',
+        gui = 'underline',
+      },
+    }
+
+    apply_highlight(illuminated)
+end
+
+-- }}}
+
+-- LspSaga {{{
+
+if configuration.plugins_integrations.lspsaga then
+    local lspsaga = {
+	    SagaShadow = { bg = bg },
+	    LspSagaDiagnosticHeader = { fg = red },
+    }
+
+    apply_highlight(lspsaga)
+    high_link('LspSagaDiagnosticBorder', 'Normal')
+    high_link('LspSagaDiagnosticTruncateLine', 'Normal')
+    high_link('LspFloatWinBorder', 'Normal')
+    high_link('LspSagaBorderTitle', 'Title')
+    high_link('TargetWord', 'Error')
+    high_link('ReferencesCount', 'Title')
+    high_link('ReferencesIcon', 'Special')
+    high_link('DefinitionCount', 'Title')
+    high_link('TargetFileName', 'Comment')
+    high_link('DefinitionIcon', 'Special')
+    high_link('ProviderTruncateLine', 'Normal')
+    high_link('LspSagaFinderSelection', 'Search')
+    high_link('DiagnosticTruncateLine', 'Normal')
+    high_link('DiagnosticError', 'LspDiagnosticsDefaultError')
+    high_link('DiagnosticWarn', 'LspDiagnosticsDefaultWarning')
+    high_link('DiagnosticInfo', 'LspDiagnosticsDefaultInformation')
+    high_link('DiagnosticHint', 'LspDiagnosticsDefaultHint')
+    high_link('DefinitionPreviewTitle', 'Title')
+    high_link('LspSagaShTruncateLine', 'Normal')
+    high_link('LspSagaDocTruncateLine', 'Normal')
+    high_link('LineDiagTuncateLine', 'Normal')
+    high_link('LspSagaCodeActionTitle', 'Title')
+    high_link('LspSagaCodeActionTruncateLine', 'Normal')
+    high_link('LspSagaCodeActionContent', 'Normal')
+    high_link('LspSagaRenamePromptPrefix', 'Normal')
+    high_link('LspSagaRenameBorder', 'Bold')
+    high_link('LspSagaHoverBorder', 'Bold')
+    high_link('LspSagaSignatureHelpBorder', 'Bold')
+    high_link('LspSagaCodeActionBorder', 'Bold')
+    high_link('LspSagaDefPreviewBorder', 'Bold')
+    high_link('LspLinesDiagBorder', 'Bold')
+end
+
+-- }}}
 
 -- }}}
 
@@ -829,53 +892,11 @@ high_link('healthError', 'ErrorMsg')
 high_link('healthSuccess', 'Msg')
 high_link('healthWarning', 'WarningMsg')
 
--- LspSaga {{{
-
-local lspsaga = {
-	SagaShadow = { bg = bg },
-	LspSagaDiagnosticHeader = { fg = red },
-}
-
-apply_highlight(lspsaga)
-high_link('LspSagaDiagnosticBorder', 'Normal')
-high_link('LspSagaDiagnosticTruncateLine', 'Normal')
-high_link('LspFloatWinBorder', 'Normal')
-high_link('LspSagaBorderTitle', 'Title')
-high_link('TargetWord', 'Error')
-high_link('ReferencesCount', 'Title')
-high_link('ReferencesIcon', 'Special')
-high_link('DefinitionCount', 'Title')
-high_link('TargetFileName', 'Comment')
-high_link('DefinitionIcon', 'Special')
-high_link('ProviderTruncateLine', 'Normal')
-high_link('LspSagaFinderSelection', 'Search')
-high_link('DiagnosticTruncateLine', 'Normal')
-high_link('DiagnosticError', 'LspDiagnosticsDefaultError')
-high_link('DiagnosticWarn', 'LspDiagnosticsDefaultWarning')
-high_link('DiagnosticInfo', 'LspDiagnosticsDefaultInformation')
-high_link('DiagnosticHint', 'LspDiagnosticsDefaultHint')
-high_link('DefinitionPreviewTitle', 'Title')
-high_link('LspSagaShTruncateLine', 'Normal')
-high_link('LspSagaDocTruncateLine', 'Normal')
-high_link('LineDiagTuncateLine', 'Normal')
-high_link('LspSagaCodeActionTitle', 'Title')
-high_link('LspSagaCodeActionTruncateLine', 'Normal')
-high_link('LspSagaCodeActionContent', 'Normal')
-high_link('LspSagaRenamePromptPrefix', 'Normal')
-high_link('LspSagaRenameBorder', 'Bold')
-high_link('LspSagaHoverBorder', 'Bold')
-high_link('LspSagaSignatureHelpBorder', 'Bold')
-high_link('LspSagaCodeActionBorder', 'Bold')
-high_link('LspSagaDefPreviewBorder', 'Bold')
-high_link('LspLinesDiagBorder', 'Bold')
-
--- }}}
-
 -- }}}
 
 -- TreeSitter {{{
 
-if vim.g.doom_one_enable_treesitter then
+if configuration.enable_treesitter then
     -- We will set a special definition for TSStrike here
     local treesitter = {
         TSStrike = { fg = utils.Darken(violet, 0.2), cterm = 'strikethrough', gui = 'strikethrough' },
@@ -931,7 +952,7 @@ end
 
 -- Neovim Terminal Colors {{{
 
-if vim.g.doom_one_terminal_colors then
+if configuration.terminal_colors then
 	vim.g.terminal_color_0 = bg
 	vim.g.terminal_color_1 = red
 	vim.g.terminal_color_2 = green
@@ -953,3 +974,5 @@ if vim.g.doom_one_terminal_colors then
 end
 
 -- }}}
+
+return doom_one
