@@ -18,7 +18,7 @@ local ok, ret = pcall(require, "doom_config")
 if ok then
   logging_level = ret.config.doom.logging or logging_level
 else
-  ok, ret = pcall(dofile, system.doom_configs_root .. "/doom_config.lua")
+  ok, ret = xpcall(dofile, debug.traceback, system.doom_configs_root .. "/doom_config.lua")
   if ok then
     logging_level = ret.config.doom.logging or logging_level
   end
