@@ -498,10 +498,16 @@ M.edit_config = function()
       if selected_config_idx == 1 then
         vim.cmd(("%s%s %s"):format(direction, open_command, require("doom.core.config").source))
       elseif selected_config_idx == 2 then
-        vim.cmd(("%s%s %s"):format(direction, open_command, require("doom.core.config.modules").source))
+        vim.cmd(
+          ("%s%s %s"):format(direction, open_command, require("doom.core.config.modules").source)
+        )
       elseif selected_config_idx == 3 then
         vim.cmd(
-          ("%s%s %s"):format(direction, open_command, require("doom.core.config.userplugins").source)
+          ("%s%s %s"):format(
+            direction,
+            open_command,
+            require("doom.core.config.userplugins").source
+          )
         )
       elseif selected_config_idx == nil then
         log.error("Invalid option selected")
