@@ -210,6 +210,14 @@ M.config = {
       completion = true,
     },
 
+    -- Disable or enable Doom autocommands, this can break some configuration options (they will stop working)
+    -- e.g. preserve_edit_pos or autosave
+    --
+    -- false : enable autocommands module
+    -- true  : disable autocommands module
+    -- @default = false
+    disable_autocommands = false,
+
     -- Default indent size
     -- @default = 4
     indent = 4,
