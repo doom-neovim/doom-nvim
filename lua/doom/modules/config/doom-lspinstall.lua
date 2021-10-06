@@ -118,6 +118,9 @@ return function()
           workspace = {
             preloadFileSize = 200,
           },
+          diagnostics = {
+            globals = { "packer_plugins" },
+          }
         },
       },
       capabilities = capabilities,
