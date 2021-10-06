@@ -120,7 +120,7 @@ return function()
           },
           diagnostics = {
             globals = { "packer_plugins" },
-          }
+          },
         },
       },
       capabilities = capabilities,
