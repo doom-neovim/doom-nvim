@@ -3,7 +3,8 @@ local reloader = {}
 
 --- Reload a Lua module
 --- @param mod_path string The configuration module path
-reloader.reload_lua_module = function(mod_path)
+--- @param quiet boolean If the reloader should send an info log or not
+reloader.reload_lua_module = function(mod_path, quiet)
   -- Remove the Neovim config dir and the file extension from the path,
   -- also replace '/' with '.' so we can access the modules by using package table
   -- e.g. doom.modules.config.doom-neorg
@@ -21,9 +22,11 @@ reloader.reload_lua_module = function(mod_path)
       package.loaded[mod_path]()
     end
 
-    require("doom.extras.logging").info(
-      string.format("Successfully reloaded '%s' module", mod_path)
-    )
+    if not quiet then
+      require("doom.extras.logging").info(
+        string.format("Successfully reloaded '%s' module", mod_path)
+      )
+    end
   else
     require("doom.extras.logging").error(string.format("Failed to reload '%s' module", mod_path))
   end
