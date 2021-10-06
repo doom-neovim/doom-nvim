@@ -608,7 +608,13 @@ info.open = function()
   }
 
   -- Set the buffer keybinds
-  vim.api.nvim_buf_set_keymap(info_buffer, "n", "q", "<cmd>bdelete<CR>", { noremap = true, silent = true })
+  vim.api.nvim_buf_set_keymap(
+    info_buffer,
+    "n",
+    "q",
+    "<cmd>bdelete<CR>",
+    { noremap = true, silent = true }
+  )
 
   -- Set the buffer syntax
   set_syntax_highlighting(info_buffer)
