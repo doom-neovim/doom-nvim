@@ -4,25 +4,25 @@ return function()
   local config = require("doom.core.config").config
 
   -- Lsp Symbols
-  fn.sign_define("LspDiagnosticsSignError", {
-    texthl = "LspDiagnosticsSignError",
+  fn.sign_define("DiagnosticSignError", {
+    texthl = "DiagnosticSignError",
     text = config.doom.lsp_error,
-    numhl = "LspDiagnosticsSignError",
+    numhl = "DiagnosticSignError",
   })
-  fn.sign_define("LspDiagnosticsSignWarning", {
-    texthl = "LspDiagnosticsSignWarning",
+  fn.sign_define("DiagnosticSignWarn", {
+    texthl = "DiagnosticSignWarn",
     text = config.doom.lsp_warning,
-    numhl = "LspDiagnosticsSignWarning",
+    numhl = "DiagnosticSignWarn",
   })
-  fn.sign_define("LspDiagnosticsSignHint", {
-    texthl = "LspDiagnosticsSignHint",
+  fn.sign_define("DiagnosticSignHint", {
+    texthl = "DiagnosticSignHint",
     text = config.doom.lsp_hint,
-    numhl = "LspDiagnosticsSignHint",
+    numhl = "DiagnosticSignHint",
   })
-  fn.sign_define("LspDiagnosticsSignInformation", {
-    texthl = "LspDiagnosticsSignInformation",
+  fn.sign_define("DiagnosticSignInfo", {
+    texthl = "DiagnosticSignInfo",
     text = config.doom.lsp_information,
-    numhl = "LspDiagnosticsSignInformation",
+    numhl = "DiagnosticSignInfo",
   })
 
   lsp.handlers["textDocument/publishDiagnostics"] =

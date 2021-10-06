@@ -157,7 +157,7 @@
       *NOTE*: You can see a list of currently supported languages at [bundled installers](https://github.com/kabouzeid/nvim-lspinstall#bundled-installers).
 
  ** Autocompletion
-    Doom Nvim uses the [built-in LSP](https://neovim.io/doc/user/lsp.html) plus [nvim-compe](https://github.com/hrsh7th/nvim-compe) plugin as completion engine.
+    Doom Nvim uses the [built-in LSP](https://neovim.io/doc/user/lsp.html) plus [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) plugin as completion engine.
 
     Use `<C-n>` to select the next suggestion and `<CR>` to select the current one.
 
@@ -579,7 +579,7 @@
   │  └── doom-one.lua       	-> doom-one colorscheme ported to Nvim (default one)
   ├── doc                   	-> Docs to be used inside Nvim
   │  └── doom_nvim.norg     	-> Doom Nvim User Manual
-  ├── docs                  	-> Docs meant to be readed on GitHub
+  ├── docs                  	-> Docs meant to be read on GitHub
   ├── doom_modules.lua      	-> Doom modules configurations file
   ├── doom_config.lua       	-> Doom main configurations file
   ├── doom_userplugins.lua    -> User defined plugins
