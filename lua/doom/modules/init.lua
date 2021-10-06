@@ -54,6 +54,7 @@ packer.startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     opt = true,
     run = ":TSUpdate",
+    branch = vim.fn.has("nvim-0.6.0") == 1 and "master" or "0.5-compat",
     config = require("doom.modules.config.doom-treesitter"),
   })
   use({
