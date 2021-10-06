@@ -13,10 +13,17 @@ log.debug("Loading Doom autocmds module ...")
 
 local autocmds = {
   doom_core = {
-    -- Compile new plugins changes at save
+    -- Compile new plugins configurations changes at save
     {
       "BufWritePost",
-      "*/config/doom-*.lua,doom_modules.lua,doom_userplugins.lua",
+      "*/config/doom-*.lua",
+      "PackerCompile profile=true",
+    },
+    -- Compile modules and custom plugins changes at exit, in that way we avoid
+    -- weird errors of Packer complaining about uninstalled plugins
+    {
+      "VimLeavePre",
+      "doom_modules.lua,doom_userplugins.lua",
       "PackerCompile profile=true",
     },
     -- Live-reload user-defined settings when 'doom_config.lua' file was modified
