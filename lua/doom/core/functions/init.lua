@@ -99,6 +99,34 @@ M.reload_custom_settings = function()
   end
 end
 
+--- Reload the plugins definitions modules like doom_modules.lua to automatically
+--- install or uninstall plugins on changes
+M.reload_plugins_definitions = function()
+  local reload = require("doom.modules.built-in.reloader").reload_lua_module
+  -- Silently reload plugins modules
+  reload("doom.core.config.modules", true)
+  reload("doom.core.config.userplugins", true)
+  reload("doom.modules", true)
+
+  -- Cleanup disabled plugins
+  vim.cmd("PackerClean")
+  -- Defer the installation of new plugins to avoid a weird bug where packer
+  -- tries to clean the plugins that are being installed right now
+  vim.defer_fn(function()
+    vim.cmd("PackerInstall")
+  end, 200)
+  vim.defer_fn(function()
+    -- Compile plugins changes and simulate a new Neovim launch
+    -- to load recently installed plugins
+    -- NOTE: this won't work to live disable uninstalled plugins,
+    --       they will keep working until you relaunch Neovim
+    vim.cmd([[
+      PackerCompile
+      doautocmd VimEnter
+    ]])
+  end, 800)
+end
+
 -- Change the 'doom_config.lua' file configurations for the colorscheme and the
 -- background if they were changed by the user within Neovim
 M.change_colors_and_bg = function()

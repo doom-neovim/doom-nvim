@@ -20,11 +20,17 @@ local autocmds = {
       "PackerCompile profile=true",
     },
     -- Compile modules and custom plugins changes at exit, in that way we avoid
-    -- weird errors of Packer complaining about uninstalled plugins
+    -- weird errors of Packer complaining about uninstalled plugins on startup
     {
       "VimLeavePre",
       "doom_modules.lua,doom_userplugins.lua",
       "PackerCompile profile=true",
+    },
+    -- Live-reload plugins and automatically install or clean them at save
+    {
+      "BufWritePost",
+      "doom_modules.lua,doom_userplugins.lua",
+      "lua require('doom.core.functions').reload_plugins_definitions()",
     },
     -- Live-reload user-defined settings when 'doom_config.lua' file was modified
     {
@@ -80,10 +86,14 @@ if config.doom.auto_install_plugins then
     else
       -- Clean disabled plugins
       vim.cmd("PackerClean")
-      -- Install the plugins
-      vim.cmd("PackerInstall")
+      -- Defer the installation of new plugins to avoid a weird bug where packer
+      -- tries to clean the plugins that are being installed right now
+      vim.defer_fn(function()
+        -- Install the plugins
+        vim.cmd("PackerInstall")
+      end, 200)
     end
-  end, 200)
+  end, 400)
 end
 
 -- Set autosave
