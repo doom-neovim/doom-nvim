@@ -36,7 +36,7 @@ local autocmds = {
     {
       "BufWritePost",
       "*/config/doom-*.lua",
-      "lua require('doom.modules.built-in.reloader').reload_plugin_config(vim.fn.expand('%:p'))",
+      "lua require('doom.modules.built-in.reloader').reload_lua_module(vim.fn.expand('%:p'))",
     },
     -- Automatically change colorscheme and background on exit
     {

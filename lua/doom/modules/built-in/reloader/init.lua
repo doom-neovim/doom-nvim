@@ -1,9 +1,9 @@
 --- @class Reloader
 local reloader = {}
 
---- Reload a plugin configuration module
+--- Reload a Lua module
 --- @param mod_path string The configuration module path
-reloader.reload_plugin_config = function(mod_path)
+reloader.reload_lua_module = function(mod_path)
   -- Remove the Neovim config dir and the file extension from the path,
   -- also replace '/' with '.' so we can access the modules by using package table
   -- e.g. doom.modules.config.doom-neorg
@@ -11,12 +11,15 @@ reloader.reload_plugin_config = function(mod_path)
   -- Get the module from package table
   local mod = package.loaded[mod_path]
 
-  if type(mod) == "function" then
+  if type(mod) ~= "nil" then
     -- Unload the module and load it again
     package.loaded[mod_path] = nil
     require(mod_path)
-    -- Call the loaded module function so the reloading will take effect as expected
-    package.loaded[mod_path]()
+
+    if type(mod) == "function" then
+      -- Call the loaded module function so the reloading will take effect as expected
+      package.loaded[mod_path]()
+    end
 
     require("doom.extras.logging").info(
       string.format("Successfully reloaded '%s' module", mod_path)
