@@ -607,6 +607,9 @@ info.open = function()
     fold = " ", -- supress dots between folds info
   }
 
+  -- Set the buffer keybinds
+  vim.api.nvim_buf_set_keymap(info_buffer, "n", "q", "<cmd>bdelete<CR>", { noremap = true, silent = true })
+
   -- Set the buffer syntax
   set_syntax_highlighting(info_buffer)
 end
