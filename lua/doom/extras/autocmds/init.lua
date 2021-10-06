@@ -30,7 +30,7 @@ local autocmds = {
     {
       "BufWritePost",
       "doom_modules.lua,doom_userplugins.lua",
-      "lua require('doom.core.functions').reload_plugins_definitions()",
+      "lua require('doom.modules.built-in.reloader').reload_plugins_definitions()",
     },
     -- Live-reload user-defined settings when 'doom_config.lua' file was modified
     {

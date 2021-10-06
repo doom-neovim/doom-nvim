@@ -32,4 +32,31 @@ reloader.reload_lua_module = function(mod_path, quiet)
   end
 end
 
+--- Reload the plugins definitions modules like doom_modules.lua to automatically
+--- install or uninstall plugins on changes
+reloader.reload_plugins_definitions = function()
+  -- Silently reload plugins modules
+  reloader.reload_lua_module("doom.core.config.modules", true)
+  reloader.reload_lua_module("doom.core.config.userplugins", true)
+  reloader.reload_lua_module("doom.modules", true)
+
+  -- Cleanup disabled plugins
+  vim.cmd("PackerClean")
+  -- Defer the installation of new plugins to avoid a weird bug where packer
+  -- tries to clean the plugins that are being installed right now
+  vim.defer_fn(function()
+    vim.cmd("PackerInstall")
+  end, 200)
+  vim.defer_fn(function()
+    -- Compile plugins changes and simulate a new Neovim launch
+    -- to load recently installed plugins
+    -- NOTE: this won't work to live disable uninstalled plugins,
+    --       they will keep working until you relaunch Neovim
+    vim.cmd([[
+      PackerCompile
+      doautocmd VimEnter
+    ]])
+  end, 800)
+end
+
 return reloader
