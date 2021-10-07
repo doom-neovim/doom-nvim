@@ -79,8 +79,8 @@ return function()
     },
     lsp = {
       hint = config.doom.lsp_hint,
-      info = config.doom.lsp_information,
-      warning = config.doom.lsp_warning,
+      info = config.doom.lsp_info,
+      warning = config.doom.lsp_warn,
       error = config.doom.lsp_error,
     },
   }

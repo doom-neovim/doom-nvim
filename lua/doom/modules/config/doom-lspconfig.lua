@@ -4,26 +4,34 @@ return function()
   local config = require("doom.core.config").config
 
   -- Lsp Symbols
-  fn.sign_define("DiagnosticSignError", {
-    texthl = "DiagnosticSignError",
-    text = config.doom.lsp_error,
-    numhl = "DiagnosticSignError",
-  })
-  fn.sign_define("DiagnosticSignWarn", {
-    texthl = "DiagnosticSignWarn",
-    text = config.doom.lsp_warning,
-    numhl = "DiagnosticSignWarn",
-  })
-  fn.sign_define("DiagnosticSignHint", {
-    texthl = "DiagnosticSignHint",
-    text = config.doom.lsp_hint,
-    numhl = "DiagnosticSignHint",
-  })
-  fn.sign_define("DiagnosticSignInfo", {
-    texthl = "DiagnosticSignInfo",
-    text = config.doom.lsp_information,
-    numhl = "DiagnosticSignInfo",
-  })
+  local signs, hl
+  if vim.fn.has("nvim-0.6.0") == 1 then
+    signs = {
+      Error = config.doom.lsp_error,
+      Warn = config.doom.lsp_warn,
+      Info = config.doom.lsp_info,
+      Hint = config.doom.lsp_hint,
+    }
+    hl = "DiagnosticSign"
+  else
+    signs = {
+      Error = config.doom.lsp_error,
+      Warning = config.doom.lsp_warn,
+      Information = config.doom.lsp_info,
+      Hint = config.doom.lsp_hint,
+    }
+    hl = "LspDiagnosticsSign"
+  end
+
+  for severity, icon in pairs(signs) do
+    local highlight = hl .. severity
+
+    fn.sign_define(highlight, {
+      text = icon,
+      texthl = highlight,
+      numhl = highlight,
+    })
+  end
 
   lsp.handlers["textDocument/publishDiagnostics"] =
     lsp.with(lsp.diagnostic.on_publish_diagnostics, {
