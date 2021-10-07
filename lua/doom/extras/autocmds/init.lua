@@ -158,7 +158,7 @@ if not config.doom.enable_lsp_virtual_text then
   table.insert(autocmds["doom_extras"], {
     "CursorHold,CursorHoldI",
     "<buffer>",
-    'lua vim.lsp.diagnostic.show_line_diagnostics({ focusable=false, border "single" })',
+    'lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false, border = "single" })',
   })
 end
 
