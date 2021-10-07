@@ -47,9 +47,10 @@ require("colors.doom-one").setup({
   transparent_background = config.doom.doom_one.transparent_background,
   pumblend = {
     enable = true,
-    transparency_amount = 20,
+    transparency_amount = config.doom.complete_transparency,
   },
   plugins_integrations = {
+    neorg = true,
     barbar = false,
     bufferline = true,
     gitgutter = false,
