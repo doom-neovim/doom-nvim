@@ -837,6 +837,23 @@ doom_one.load_colorscheme = function()
 
     -- }}}
 
+    -- Neorg {{{
+
+    if configuration.plugins_integrations.neorg then
+      local neorg = {
+        -- Colors are for nested quotes
+        Blue = { fg = cyan },
+        Yellow = { fg = yellow },
+        Red = { fg = red },
+        Green = { fg = green },
+        Brown = { fg = orange },
+      }
+
+      apply_highlight(neorg)
+    end
+
+    -- }}}
+
     -- }}}
 
     -- LSP {{{
