@@ -10,6 +10,7 @@ local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
 local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
 if vim.fn.empty(vim.fn.glob(packer_path)) > 0 then
+  log.info("Bootstrapping packer.nvim, please wait ...")
   vim.fn.system({
     "git",
     "clone",
