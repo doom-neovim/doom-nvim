@@ -4,6 +4,7 @@
 --       to our FAQ to see why.
 
 local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
+local use_floating_win_packer = require("doom.core.config").config.doom.use_floating_win_packer
 
 ---- Packer Bootstrap ---------------------------
 -------------------------------------------------
@@ -32,6 +33,11 @@ packer.init({
       -- for heavy size plugins like plenary (removed the '--no-single-branch' git flag)
       install = "clone --depth %i --progress",
     },
+  },
+  display = {
+    open_fn = use_floating_win_packer and function()
+      return require("packer.util").float({ border = "single" })
+    end or nil,
   },
   profile = {
     enable = true,
