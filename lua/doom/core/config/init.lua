@@ -472,7 +472,7 @@ log.debug("Loading Doom config module ...")
 --   1. <runtimepath>/doom_config.lua
 --   2. /home/user/.config/doom-nvim/doom_config.lua
 --   3. stdpath('config')/doom_config.lua
-local ok, ret = pcall(require, "doom_config")
+local ok, ret = xpcall(require, debug.traceback, "doom_config")
 if ok then
   M.config = ret.config
   M.source = ret.source

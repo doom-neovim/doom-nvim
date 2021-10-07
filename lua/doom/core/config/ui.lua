@@ -12,10 +12,10 @@ log.debug("Loading Doom UI module ...")
 
 -- If no colorscheme was established then fallback to defauls
 if not utils.is_empty(config.doom.colorscheme) then
-  local loaded_colorscheme = pcall(function()
+  local loaded_colorscheme = xpcall(function()
     vim.opt.background = config.doom.colorscheme_bg
     vim.api.nvim_command("colorscheme " .. config.doom.colorscheme)
-  end)
+  end, debug.traceback)
 
   if not loaded_colorscheme then
     log.warn("Colorscheme '" .. config.doom.colorscheme .. "' not found, falling to doom-one")
