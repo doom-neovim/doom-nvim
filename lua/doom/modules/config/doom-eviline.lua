@@ -140,7 +140,7 @@ return function()
     DiagnosticWarn = {
       provider = "DiagnosticWarn",
       condition = is_not_dashboard,
-      icon = config.doom.lsp_warning .. " ",
+      icon = config.doom.lsp_warn .. " ",
       highlight = { colors("orange"), colors("bg") },
     },
   }

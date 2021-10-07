@@ -351,9 +351,9 @@ M.config = {
 
     -- Set your custom lsp diagnostic symbols below
     lsp_error = "",
-    lsp_warning = "",
+    lsp_warn = "",
     lsp_hint = "",
-    lsp_information = "",
+    lsp_info = "",
     lsp_virtual_text = " ",
 
     -- Set your linters for the programming languages that you use,
