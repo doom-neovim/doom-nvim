@@ -445,4 +445,4 @@ M.config = {
 
 return M
 
--- vim: fdm=marker
+-- vim: sw=2 sts=2 ts=2 fdm=marker noexpandtab

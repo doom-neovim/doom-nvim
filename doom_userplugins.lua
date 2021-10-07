@@ -16,3 +16,5 @@ M.source = debug.getinfo(1, "S").source:sub(2)
 M.plugins = {}
 
 return M
+
+-- vim: sw=2 sts=2 ts=2 noexpandtab
