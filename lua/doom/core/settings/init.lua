@@ -29,14 +29,26 @@ M.load_default_options = function()
   vim.opt.shortmess:append("atsc")
   vim.opt.inccommand = "split"
   vim.opt.path = "**"
-  vim.opt.signcolumn = "yes"
+  vim.opt.signcolumn = "auto:2-9"
+  vim.opt.foldcolumn = "auto:9"
+
+  vim.opt.fillchars = {
+    vert = "▕",
+    fold = " ",
+    eob = " ",
+    diff = "─",
+    msgsep = "‾",
+    foldopen = "▾",
+    foldclose = "▸",
+    foldsep = "│",
+  }
 
   -- Buffer options
   vim.opt.smartindent = true
   vim.opt.copyindent = true
   vim.opt.preserveindent = true
 
-  -- set Gui Fonts
+  -- Set Gui Fonts
   vim.opt.guifont = config.doom.guifont .. ":h" .. config.doom.guifont_size
 
   -- Use clipboard outside vim
@@ -133,6 +145,9 @@ M.load_default_options = function()
   vim.opt.softtabstop = config.doom.indent
   vim.opt.colorcolumn = tostring(config.doom.max_columns)
   vim.opt.conceallevel = config.doom.conceallevel
+
+  -- Better folding
+  vim.cmd([[set foldtext=luaeval(\"require('doom.core.functions').sugar_folds()\")]])
 end
 
 -- Doom Nvim commands
