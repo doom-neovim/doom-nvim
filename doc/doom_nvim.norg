@@ -34,6 +34,8 @@
   --> [General](#General)
   ---> [Who is Doom Nvim intended for?](#Who is Doom Nvim intended for?)
   ---> [Why does Doom Nvim only support Neovim 0.5.0 (and beyond)?](#Why does Doom Nvim only support Neovim 0.5.0 and beyond?)
+  --> [Workaround](#Workaround)
+  ---> [Missing nvim help documentation](#Missing nvim help documentation)
   -> [Acknowledgements](#Acknowledgements)
   -> [Contributing](#Contributing)
   -> [License](#License)
@@ -639,5 +641,6 @@
 * License
   Doom Nvim is distributed under GPLv2 license.
 
+
 $comment
-vim:sw=2:ts=2:cole=3:cocu=n:tw=100:cc=100:norl:
+vim:sw=2:ts=2:cole=3:cocu=n:tw=100:norl:
