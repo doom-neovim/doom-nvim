@@ -47,8 +47,8 @@ M.config = {
     -- Disable Vim macros
     -- false : Enable Vim macros
     -- true  : Disable Vim macros
-    -- @default = true
-    disable_macros = true,
+    -- @default = false
+    disable_macros = false,
 
     -- Autosave sessions
     -- false : Disable session autosave
@@ -229,6 +229,14 @@ M.config = {
       completion = true,
     },
 
+    -- Disable or enable Doom autocommands, this can break some configuration options (they will stop working)
+    -- e.g. preserve_edit_pos or autosave
+    --
+    -- false : enable autocommands module
+    -- true  : disable autocommands module
+    -- @default = false
+    disable_autocommands = false,
+
     -- Default indent size
     -- @default = 4
     indent = 4,
@@ -294,7 +302,7 @@ M.config = {
     terminal_direction = "horizontal",
 
     -- NOTE: This will only be activated if 'backup' is true.
-    -- We don'recommend you put this outside of neovim so we've restricted to thepath: ~/.config/nvim
+    -- We don'recommend you put this outside of neovim so we've restricted to the path: ~/.config/nvim
     -- WARNING: only put the folder name that you want. (eg: undo_dir = '/undodir')
     -- @default_directory = '~/.config/nvim/undodir'
     undo_dir = "/undodir",
@@ -336,17 +344,34 @@ M.config = {
     guifont = "FiraCode Nerd Font",
     guifont_size = "15",
 
-    -- change Which Key background color
+    -- Change Which Key background color
     -- can use hex, or normal color names (eg: Red, Gree, Blue)
     -- @default = #202328
     whichkey_bg = "#202328",
 
-    -- set your custom lsp diagnostic symbols below
+    -- Set your custom lsp diagnostic symbols below
     lsp_error = "",
     lsp_warning = "",
     lsp_hint = "",
     lsp_information = "",
     lsp_virtual_text = " ",
+
+    -- Set your linters for the programming languages that you use,
+    -- see https://github.com/mfussenegger/nvim-lint#available-linters
+    linters = {
+      c = {},
+      cpp = {},
+      css = {},
+      html = {},
+      javascript = {},
+      lua = {},
+      markdown = {},
+      nix = {},
+      python = {},
+      ruby = {},
+      sh = {},
+      typescript = {},
+    },
 
     -- Set your dashboard custom colors below
     -- @default = doom emacs' default dashboard colors
@@ -368,7 +393,16 @@ M.config = {
     -- Set custom Neovim global variables
     -- @default = {}
     -- example:
-    --   { ['sonokai_style'] = 'andromeda' }
+    --   {
+    --     ['sonokai_style'] = 'andromeda',
+    --     ['modelineexpr'] = true,
+    --   }
+    --
+    --   modeline feature was turned off to reduce security exploit surfaces.
+    --   Since modeline now uses whitelist approach since nvim 0.4 /vim 8.1,
+    --   enabling this is as safe as external packages such as securemodelines.
+    --   See https://github.com/neovim/neovim/issues/2865
+    --
     global_variables = {},
 
     -- Set custom autocommands
@@ -406,11 +440,24 @@ M.config = {
     -- @default = {}
     -- example:
     --   {
-    --      hello_custom_func = function()
-    --        print("Hello, custom functions!")
-    --      end
+    --      {
+    --         hello_custom_func = function()
+    --           print("Hello, custom functions!")
+    --         end,
+    --         -- If the function should be ran on neovim launch or if it should
+    --         -- be a global function accesible from anywhere
+    --         run_on_start = false,
+    --      },
     --   }
     functions = {},
+
+    -- Set custom options
+    -- @default = {}
+    -- example:
+    --   {
+    --      { ['shiftwidth'] = 4 }
+    --   }
+    options = {},
   },
   -- }}}
 }
@@ -425,7 +472,7 @@ log.debug("Loading Doom config module ...")
 --   1. <runtimepath>/doom_config.lua
 --   2. /home/user/.config/doom-nvim/doom_config.lua
 --   3. stdpath('config')/doom_config.lua
-local ok, ret = pcall(require, "doom_config")
+local ok, ret = xpcall(require, debug.traceback, "doom_config")
 if ok then
   M.config = ret.config
   M.source = ret.source

@@ -325,17 +325,34 @@ M.config = {
     guifont = "FiraCode Nerd Font",
     guifont_size = "15",
 
-    -- change Which Key background color
+    -- Change Which Key background color
     -- can use hex, or normal color names (eg: Red, Gree, Blue)
     -- @default = #202328
     whichkey_bg = "#202328",
 
-    -- set your custom lsp diagnostic symbols below
+    -- Set your custom lsp diagnostic symbols below
     lsp_error = "",
     lsp_warning = "",
     lsp_hint = "",
     lsp_information = "",
     lsp_virtual_text = " ",
+
+    -- Set your linters for the programming languages that you use,
+    -- see https://github.com/mfussenegger/nvim-lint#available-linters
+    linters = {
+      c = {},
+      cpp = {},
+      css = {},
+      html = {},
+      javascript = {},
+      lua = {},
+      markdown = {},
+      nix = {},
+      python = {},
+      ruby = {},
+      sh = {},
+      typescript = {},
+    },
 
     -- Set your dashboard custom colors below
     -- @default = doom emacs' default dashboard colors
@@ -428,4 +445,4 @@ M.config = {
 
 return M
 
--- vim: fdm=marker
+-- vim: sw=2 sts=2 ts=2 fdm=marker noexpandtab

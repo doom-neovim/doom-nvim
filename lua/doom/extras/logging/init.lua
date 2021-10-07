@@ -14,7 +14,7 @@ local system = require("doom.core.system")
 local logging_level = "info"
 
 -- Manually load doom_config.lua to avoid circular dependencies
-local ok, ret = pcall(require, "doom_config")
+local ok, ret = xpcall(require, debug.traceback, "doom_config")
 if ok then
   logging_level = ret.config.doom.logging or logging_level
 else

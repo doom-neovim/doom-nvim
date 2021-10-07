@@ -23,6 +23,8 @@ vim.g.loaded_2html_plugin = false
 -- Load Doom core and UI related stuff (colorscheme, background)
 load_modules("doom", { "core" })
 
+-- Defer and schedule loading of plugins and extra functionalities until the
+-- Neovim API functions are safe to call to avoid weird errors with plugins stuff
 vim.defer_fn(function()
   -- Load Doom extra stuff and plugins (modules, extras)
   load_modules("doom", { "modules", "extras" })

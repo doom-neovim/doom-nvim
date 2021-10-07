@@ -23,7 +23,7 @@ M.compile = function()
   local filetype = vim.bo.filetype
   local lang_bin = languages[filetype]
 
-  local compiled_code, err = pcall(function()
+  local compiled_code, err = xpcall(function()
     if lang_bin then
       -- Set the properly builder command for the project
       local compiler_cmd
@@ -39,7 +39,7 @@ M.compile = function()
     else
       log.error("The filetype " .. filetype .. " is not yet supported in the Doom compiler plugin")
     end
-  end)
+  end, debug.traceback)
 
   if not compiled_code then
     log.error("Error while trying to compile the project. Traceback:\n" .. err)
@@ -51,7 +51,7 @@ M.compile_and_run = function()
   local filetype = vim.bo.filetype
   local lang_bin = languages[filetype]
 
-  local compiled_code, err = pcall(function()
+  local compiled_code, err = xpcall(function()
     if lang_bin then
       -- Set the properly builder command for the project
       local compiler_cmd
@@ -72,7 +72,7 @@ M.compile_and_run = function()
     else
       log.error("The filetype " .. filetype .. " is not yet supported in the Doom compiler plugin")
     end
-  end)
+  end, debug.traceback)
 
   if not compiled_code then
     log.error("Error while trying to compile and run the project. Traceback:\n" .. err)

@@ -12,6 +12,7 @@ local configuration = {
         transparency_amount = 20,
     },
     plugins_integrations = {
+        neorg = true,
         barbar = true,
         bufferline = false,
         gitgutter = false,

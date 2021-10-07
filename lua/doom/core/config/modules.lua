@@ -88,7 +88,7 @@ log.debug("Loading Doom modules module ...")
 --   1. <runtimepath>/doom_modules.lua
 --   2. /home/user/.config/doom-nvim/doom_modules.lua
 --   3. stdpath('config')/doom_modules.lua
-local ok, ret = pcall(require, "doom_modules")
+local ok, ret = xpcall(require, debug.traceback, "doom_modules")
 if ok then
   M.modules = ret.modules
   M.source = ret.source

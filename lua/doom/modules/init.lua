@@ -109,7 +109,6 @@ packer.startup(function(use)
   use({
     "GustavoPrietoP/doom-themes.nvim",
     disable = disabled_doom_themes,
-    event = "ColorSchemePre",
   })
 
   -- Development icons
@@ -480,7 +479,7 @@ packer.startup(function(use)
     "lukas-reineke/indent-blankline.nvim",
     config = require("doom.modules.config.doom-blankline"),
     disable = disabled_indent_lines,
-    event = "ColorScheme",
+    event = "BufWinEnter",
   })
 
   -- EditorConfig support
@@ -520,7 +519,7 @@ packer.startup(function(use)
     "norcalli/nvim-colorizer.lua",
     config = require("doom.modules.config.doom-colorizer"),
     disable = disabled_colorizer,
-    event = "ColorScheme",
+    event = "BufWinEnter",
   })
 
   -- HTTP Client support
@@ -565,7 +564,7 @@ packer.startup(function(use)
     requires = "nvim-lua/plenary.nvim",
     config = require("doom.modules.config.doom-todo"),
     disable = disabled_todo,
-    event = "ColorScheme",
+    event = "BufWinEnter",
   })
 
   local disabled_trouble = is_plugin_disabled("trouble")

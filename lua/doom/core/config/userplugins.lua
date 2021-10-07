@@ -18,7 +18,7 @@ log.debug("Loading Doom userplugins module...")
 --   1. <runtimepath>/doom_userplugins.lua
 --   2. /home/user/.config/doom-nvim/doom_userplugins.lua
 --   3. stdpath('config')/doom_userplugins.lua
-local ok, ret = pcall(require, "doom_userplugins")
+local ok, ret = xpcall(require, debug.traceback, "doom_userplugins")
 if ok then
   M.plugins = ret.plugins
   M.source = ret.source

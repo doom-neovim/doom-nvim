@@ -108,23 +108,6 @@ local get_lsp_clients = function(bufnr)
   return string.len(client_names) > 0 and client_names or msg
 end
 
---- Executes a git command and gets the output
---- @param command string
---- @param remove_newlines boolean
---- @return string
-local function get_git_output(command, remove_newlines)
-  local git_command_handler = io.popen(system.git_workspace .. command)
-  -- Read the command output and remove newlines if wanted
-  local command_output = git_command_handler:read("*a")
-  if remove_newlines then
-    command_output = command_output:gsub("[\r\n]", "")
-  end
-  -- Close child process
-  git_command_handler:close()
-
-  return command_output
-end
-
 local function get_doom_info()
   local doom_info = {}
 
@@ -133,7 +116,7 @@ local function get_doom_info()
   -- Doom version
   local doom_version = utils.doom_version
   -- Doom branch
-  local doom_branch = get_git_output("branch --show-current", true)
+  local doom_branch = utils.get_git_output("branch --show-current", true)
   -- Configurations path
   local config_path = require("doom.core.config").source
   local modules_path = require("doom.core.config.modules").source
@@ -156,8 +139,8 @@ local function get_doom_info()
   )
 
   -- Local commit and last update date
-  local current_commit = get_git_output("rev-parse HEAD", true)
-  local last_update_date = get_git_output("show -s --format=%cD " .. current_commit, true)
+  local current_commit = utils.get_git_output("rev-parse HEAD", true)
+  local last_update_date = utils.get_git_output("show -s --format=%cD " .. current_commit, true)
 
   vim.list_extend(doom_info, {
     "Doom Nvim Information",
@@ -179,12 +162,18 @@ local function get_doom_info()
   })
   if doom_branch == "develop" then
     -- Current commit relevant information
-    local current_commit_author = get_git_output(
+    local current_commit_author = utils.get_git_output(
       'show -s --format="%cN <%cE>" ' .. current_commit,
       true
     )
-    local current_commit_message = get_git_output("show -s --format=%s " .. current_commit, true)
-    local current_commit_body = get_git_output("show -s --format=%b " .. current_commit, false)
+    local current_commit_message = utils.get_git_output(
+      "show -s --format=%s " .. current_commit,
+      true
+    )
+    local current_commit_body = utils.get_git_output(
+      "show -s --format=%b " .. current_commit,
+      false
+    )
 
     vim.list_extend(doom_info, {
       "",

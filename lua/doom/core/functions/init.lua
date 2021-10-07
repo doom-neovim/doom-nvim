@@ -102,7 +102,7 @@ end
 -- Change the 'doom_config.lua' file configurations for the colorscheme and the
 -- background if they were changed by the user within Neovim
 M.change_colors_and_bg = function()
-  local changed_colorscheme, err = pcall(function()
+  local changed_colorscheme, err = xpcall(function()
     log.debug("Checking if the colorscheme or background were changed ...")
     local target_colorscheme = vim.g.colors_name
     local target_background = vim.opt.background:get()
@@ -130,7 +130,7 @@ M.change_colors_and_bg = function()
       fs.write_file(doom_config_path, doom_config, "w+")
       log.debug("Background successfully changed to " .. target_background)
     end
-  end)
+  end, debug.traceback)
 
   if not changed_colorscheme then
     log.error("Unable to write to the doom_config.lua file. Traceback:\n" .. err)
@@ -157,10 +157,10 @@ end
 
 -- check_updates checks for plugins updates
 M.check_updates = function()
-  local updated_plugins, err = pcall(function()
+  local updated_plugins, err = xpcall(function()
     log.info("Updating the outdated plugins ...")
     vim.cmd("PackerSync")
-  end)
+  end, debug.traceback)
 
   if not updated_plugins then
     log.error("Unable to update plugins. Traceback:\n" .. err)
@@ -207,7 +207,7 @@ M.create_report = function()
   local date = os.date("%Y-%m-%d %H:%M:%S")
   local log_date_format = os.date("%a %d %b %Y")
 
-  local created_report, err = pcall(function()
+  local created_report, err = xpcall(function()
     -- Get and save only the warning and error logs from today
     local today_logs = {}
     local doom_logs = vim.split(fs.read_file(system.doom_logs), "\n")
@@ -278,7 +278,7 @@ M.create_report = function()
     )
     fs.write_file(system.doom_report, report, "w+")
     log.info("Report created at " .. system.doom_report)
-  end)
+  end, debug.traceback)
 
   if not created_report then
     log.error("Error while writing report. Traceback:\n" .. err)
@@ -288,21 +288,17 @@ end
 -- save_backup_hashes saves the commits or releases SHA for future rollbacks
 local function save_backup_hashes()
   -- Check for the current branch
-  local branch_handler = io.popen(system.git_workspace .. "branch --show-current")
-  local git_branch = branch_handler:read("*a"):gsub("[\r\n]", "")
-  branch_handler:close()
+  local git_branch = utils.get_git_output("branch --show-current", true)
 
   if git_branch == "main" then
     local releases_database_path = string.format("%s%s.doom_releases", system.doom_root, system.sep)
 
     -- Fetch for a file containing the releases tags
     log.info("Saving the Doom releases for future rollbacks ...")
-    local saved_releases, releases_err = pcall(function()
+    local saved_releases, releases_err = xpcall(function()
       -- Get the releases
       log.debug('Executing "' .. system.git_workspace .. 'show-ref --tags"')
-      local releases_handler = io.popen(system.git_workspace .. "show-ref --tags")
-      local doom_releases = releases_handler:read("*a")
-      releases_handler:close()
+      local doom_releases = utils.get_git_output("show-ref --tags", false)
 
       -- Put all the releases into a table so we can sort them later
       local releases = {}
@@ -339,7 +335,7 @@ local function save_backup_hashes()
           fs.write_file(releases_database_path, release .. "\n", "a+")
         end
       end
-    end)
+    end, debug.traceback)
 
     if not saved_releases then
       log.error("Error while saving the Doom releases. Traceback:\n" .. releases_err)
@@ -347,7 +343,7 @@ local function save_backup_hashes()
   else
     -- Get the current commit SHA and store it into a hidden file
     log.info("Saving the current commit SHA for future rollbacks ...")
-    local saved_backup_hash, backup_err = pcall(function()
+    local saved_backup_hash, backup_err = xpcall(function()
       os.execute(
         system.git_workspace
           .. "rev-parse --short HEAD > "
@@ -355,7 +351,7 @@ local function save_backup_hashes()
           .. system.sep
           .. ".doom_backup_hash"
       )
-    end)
+    end, debug.traceback)
 
     if not saved_backup_hash then
       log.error("Error while saving the backup commit hash. Traceback:\n" .. backup_err)
@@ -369,9 +365,9 @@ M.update_doom = function()
   save_backup_hashes()
 
   log.info("Pulling Doom remote changes ...")
-  local updated_doom, update_err = pcall(function()
+  local updated_doom, update_err = xpcall(function()
     os.execute(system.git_workspace .. "pull -q")
-  end)
+  end, debug.traceback)
 
   if not updated_doom then
     log.error("Error while updating Doom. Traceback:\n" .. update_err)
@@ -409,9 +405,7 @@ M.rollback_doom = function()
     -- Check the current commit hash and compare it with the ones in the
     -- releases table
     local current_version
-    local commit_handler = io.popen(system.git_workspace .. "rev-parse HEAD")
-    local current_commit = commit_handler:read("*a"):gsub("[\r\n]", "")
-    commit_handler:close()
+    local current_commit = utils.get_git_output("rev-parse HEAD", true)
     for _, version_info in ipairs(sorted_releases) do
       for release_hash, version in version_info:gmatch("(%w+)%s(%w+%W+%w+%W+%w+)") do
         if release_hash == current_commit then
@@ -445,9 +439,9 @@ M.rollback_doom = function()
     end
 
     log.info("Reverting back to version " .. rollback_version .. " (" .. rollback_sha .. ") ...")
-    local rolled_back, rolled_err = pcall(function()
+    local rolled_back, rolled_err = xpcall(function()
       os.execute(system.git_workspace .. "checkout " .. rollback_sha)
-    end)
+    end, debug.traceback)
 
     if not rolled_back then
       log.error(
@@ -470,9 +464,9 @@ M.rollback_doom = function()
   elseif vim.fn.filereadable(rolling_backup) == 1 then
     local backup_commit = fs.read_file(rolling_backup):gsub("[\r\n]+", "")
     log.info("Reverting back to commit " .. backup_commit .. " ...")
-    local rolled_back, rolled_err = pcall(function()
+    local rolled_back, rolled_err = xpcall(function()
       os.execute(system.git_workspace .. "checkout " .. backup_commit)
-    end)
+    end, debug.traceback)
 
     if not rolled_back then
       log.error(
@@ -536,7 +530,7 @@ local normal_buftype = function()
   return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
 end
 M.toggle_completion = function()
-  local ok, cmp = pcall(require, "cmp")
+  local ok, cmp = xpcall(require, debug.traceback, "cmp")
   if ok then
     local next_cmp_toggle_flag = not vim.g.cmp_toggle_flag
     if next_cmp_toggle_flag then
@@ -620,7 +614,7 @@ end
 
 -- toggle_autopairs() -- <leader>tp -- toggle autopairs
 M.toggle_autopairs = function()
-  local ok, autopairs = pcall(require, "nvim-autopairs")
+  local ok, autopairs = xpcall(require, debug.traceback, "nvim-autopairs")
   if ok then
     if autopairs.state.disabled then
       autopairs.enable()
@@ -650,7 +644,7 @@ end
 
 -- change_syntax() -- <leader>tx -- toggle syntax/treesetter
 M.change_syntax = function()
-  local ok, parsers = pcall(require, "nvim-treesitter.parsers")
+  local ok, parsers = xpcall(require, debug.traceback, "nvim-treesitter.parsers")
   if ok and parsers and parsers.has_parser() then
     if vim.o.syntax then
       vim.cmd("TSBufDisable highlight")
