@@ -153,5 +153,14 @@ if not is_plugin_disabled("linter") and packer_plugins and packer_plugins["nvim-
   })
 end
 
+-- Show line diagnostics on hover
+if not config.doom.enable_lsp_virtual_text then
+  table.insert(autocmds["doom_extras"], {
+    "CursorHold,CursorHoldI",
+    "<buffer>",
+    'lua vim.lsp.diagnostic.show_line_diagnostics({ focusable=false, border "single" })',
+  })
+end
+
 -- Create augroups
 utils.create_augroups(autocmds)

@@ -219,6 +219,10 @@ M.config = {
     -- @default = false
     disable_autocommands = false,
 
+    -- Enable LSP diagnostics virtual text
+    -- @default = false
+    enable_lsp_virtual_text = false,
+
     -- Default indent size
     -- @default = 4
     indent = 4,
