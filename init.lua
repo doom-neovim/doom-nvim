@@ -29,6 +29,9 @@ vim.defer_fn(function()
   -- Load Doom extra stuff and plugins (modules, extras)
   load_modules("doom", { "modules", "extras" })
 
+  -- This loads certain plugins related to UI
+  vim.cmd("doautocmd ColorScheme")
+
   -- If the current buffer name is empty then trigger Dashboard.
   -- NOTE: this is done to avoid some weird issues with Dashboard and
   --       number / signcolumn when Dashboard gets triggered automatically
