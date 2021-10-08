@@ -235,7 +235,7 @@ local function get_doom_info()
   ----- LSP INFORMATION -------------------------
   -----------------------------------------------
   if
-    not require("doom.core.functions").is_plugin_disabled("lsp")
+    not require("doom.utils").is_plugin_disabled("lsp")
     and packer_plugins["nvim-lspinstall"]
   then
     vim.list_extend(doom_info, {
@@ -340,7 +340,7 @@ local function get_buffer_info()
   ----- LSP INFORMATION -------------------------
   -----------------------------------------------
   if
-    not require("doom.core.functions").is_plugin_disabled("lsp")
+    not require("doom.utils").is_plugin_disabled("lsp")
     and packer_plugins["nvim-lspinstall"]
   then
     vim.list_extend(buffer_info, {

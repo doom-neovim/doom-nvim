@@ -45,7 +45,7 @@ vim.defer_fn(function()
     doautocmd BufEnter
   ]])
 
-  if not require("doom.core.functions").is_plugin_disabled("which-key") then
+  if not require("doom.utils").is_plugin_disabled("which-key") then
     vim.cmd([[
       PackerLoad which-key.nvim
     ]])

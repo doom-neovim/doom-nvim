@@ -3,7 +3,7 @@
 ---]]-----------------[[---
 
 local mappings = require("doom.utils.mappings")
-local check_plugin = require("doom.core.functions").check_plugin
+local check_plugin = require("doom.utils").check_plugin
 
 local opts = { silent = true }
 local lsp_opts = vim.tbl_extend("force", opts, { expr = true })

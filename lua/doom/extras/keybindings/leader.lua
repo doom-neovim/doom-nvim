@@ -4,7 +4,7 @@
 
 local mappings = require("doom.utils.mappings")
 local config = require("doom.core.config").config
-local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
+local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
 -- Additional options for mappings
 local opts = { silent = true }

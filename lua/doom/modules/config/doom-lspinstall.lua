@@ -2,7 +2,7 @@ return function()
   local log = require("doom.extras.logging")
   local utils = require("doom.utils")
   local nvim_lsp = require("lspconfig")
-  local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
+  local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
   -- Snippets support
   local capabilities = vim.lsp.protocol.make_client_capabilities()

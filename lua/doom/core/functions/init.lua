@@ -8,40 +8,11 @@ local log = require("doom.extras.logging")
 local utils, fs = require("doom.utils"), require("doom.utils.fs")
 local system = require("doom.core.system")
 local config = require("doom.core.config").config
+local async = require("doom.modules.built-in.async")
 
 local M = {}
 
 log.debug("Loading Doom functions module ...")
-
--- check_plugin checks if the given plugin exists
--- @tparam string plugin_name The plugin name, e.g. nvim-tree.lua
--- @tparam string path Where should be searched the plugin in packer's path, defaults to `start`
--- @return bool
-M.check_plugin = function(plugin_name, path)
-  if not path then
-    path = "start"
-  end
-
-  return vim.fn.isdirectory(
-    vim.fn.stdpath("data") .. "/site/pack/packer/" .. path .. "/" .. plugin_name
-  ) == 1
-end
-
--- is_plugin_disabled checks if the given plugin is disabled in doom_modules.lua
--- @tparam string plugin The plugin identifier, e.g. statusline
--- @return bool
-M.is_plugin_disabled = function(plugin)
-  local modules = require("doom.core.config.modules").modules
-
-  -- Iterate over all modules sections (e.g. ui) and their plugins
-  for _, section in pairs(modules) do
-    if utils.has_value(section, plugin) then
-      return false
-    end
-  end
-
-  return true
-end
 
 -- Load user-defined settings from the Neovim field in the doom_config.lua
 -- @param settings_tbl The settings table to iterate over
@@ -365,17 +336,24 @@ M.update_doom = function()
   save_backup_hashes()
 
   log.info("Pulling Doom remote changes ...")
-  local updated_doom, update_err = xpcall(function()
-    os.execute(system.git_workspace .. "pull -q")
-  end, debug.traceback)
 
-  if not updated_doom then
-    log.error("Error while updating Doom. Traceback:\n" .. update_err)
-  end
-  -- Run syntax_on event to fix UI if it's broke after the git pull
-  vim.cmd("syntax on")
-
-  log.info("Successfully updated Doom, please restart")
+  local updater = async:new({
+    cmd = "git pull",
+    cwd = system.doom_root,
+    on_stdout = function(_, data)
+      if data then
+        log.info("Successfully updated Doom, please restart")
+      end
+    end,
+    on_stderr = function(err, data)
+      if err then
+        log.error("Error while updating Doom. Traceback:\n" .. err)
+      elseif data then
+        log.error("Error while updating Doom. Traceback:\n" .. data:gsub("[\r\n]", ""))
+      end
+    end,
+  })
+  updater:start()
 end
 
 -- rollback_doom will rollback the local doom version to an older one

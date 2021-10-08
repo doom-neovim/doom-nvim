@@ -3,7 +3,7 @@
 -- NOTE: We do not provide other LSP integration like coc.nvim, please refer
 --       to our FAQ to see why.
 
-local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
+local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 local use_floating_win_packer = require("doom.core.config").config.doom.use_floating_win_packer
 
 ---- Packer Bootstrap ---------------------------
@@ -11,7 +11,7 @@ local use_floating_win_packer = require("doom.core.config").config.doom.use_floa
 local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
 if vim.fn.empty(vim.fn.glob(packer_path)) > 0 then
-  log.info("Bootstrapping packer.nvim, please wait ...")
+  require("doom.extras.logging").info("Bootstrapping packer.nvim, please wait ...")
   vim.fn.system({
     "git",
     "clone",
@@ -85,7 +85,7 @@ packer.startup(function(use)
   local disabled_neorg = is_plugin_disabled("neorg")
   use({
     "nvim-neorg/neorg",
-    branch = "unstable",
+    branch = "pandoc-integration",
     config = require("doom.modules.config.doom-neorg"),
     disable = disabled_neorg,
     after = { "nvim-treesitter" },
