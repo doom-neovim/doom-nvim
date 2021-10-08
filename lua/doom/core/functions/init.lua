@@ -342,7 +342,9 @@ M.update_doom = function()
     cwd = system.doom_root,
     on_stdout = function(_, data)
       if data then
-        log.info("Successfully updated Doom, please restart")
+        log.info("Successfully updated Doom!")
+        --- Completely reload Doom Nvim
+        require("doom.modules.built-in.reloader").full_reload()
       end
     end,
     on_stderr = function(err, data)
