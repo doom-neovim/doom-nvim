@@ -201,10 +201,9 @@ reloader.full_reload = function()
   ]])
 
   log.info(
-    "Reloaded Doom in " .. vim.fn.printf(
-      "%.3f",
-      vim.fn.reltimefloat(vim.fn.reltime(reload_time))
-    ) .. " seconds"
+    "Reloaded Doom in "
+      .. vim.fn.printf("%.3f", vim.fn.reltimefloat(vim.fn.reltime(reload_time)))
+      .. " seconds"
   )
 end
 
