@@ -1,7 +1,7 @@
 local log = require("doom.extras.logging")
 local term
 
-if packer_plugins and packer_plugins["nvim-toggleterm.lua"] then
+if package.loaded["toggleterm"] then
   term = require("toggleterm.terminal").Terminal
 else
   log.error(
