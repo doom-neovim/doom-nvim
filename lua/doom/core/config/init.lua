@@ -237,6 +237,14 @@ M.config = {
     -- @default = false
     disable_autocommands = false,
 
+    -- Enable LSP diagnostics virtual text
+    -- @default = false
+    enable_lsp_virtual_text = false,
+
+    -- Use floating windows for plugins manager (packer) operations
+    -- @default = false
+    use_floating_win_packer = false,
+
     -- Default indent size
     -- @default = 4
     indent = 4,

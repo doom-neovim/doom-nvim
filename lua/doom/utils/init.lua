@@ -35,6 +35,25 @@ utils.is_empty = function(str)
   return str == "" or str == nil
 end
 
+utils.escape_str = function(str)
+  local escape_patterns = {
+    "%^",
+    "%$",
+    "%(",
+    "%)",
+    "%[",
+    "%]",
+    "%%",
+    "%.",
+    "%-",
+    "%*",
+    "%+",
+    "%?",
+  }
+
+  return str:gsub(("([%s])"):format(table.concat(escape_patterns)), "%%%1")
+end
+
 --- Search if a table have the value we are looking for,
 --- useful for plugins management
 --- @param tabl table
@@ -65,6 +84,36 @@ utils.get_git_output = function(command, remove_newlines)
   git_command_handler:close()
 
   return command_output
+end
+
+--- Check if the given plugin is disabled in doom_modules.lua
+--- @param plugin string The plugin identifier, e.g. statusline
+--- @return boolean
+utils.is_plugin_disabled = function(plugin)
+  local modules = require("doom.core.config.modules").modules
+
+  -- Iterate over all modules sections (e.g. ui) and their plugins
+  for _, section in pairs(modules) do
+    if utils.has_value(section, plugin) then
+      return false
+    end
+  end
+
+  return true
+end
+
+-- Check if the given plugin exists
+-- @param plugin_name string The plugin name, e.g. nvim-tree.lua
+-- @param path string Where should be searched the plugin in packer's path, defaults to `start`
+-- @return boolean
+utils.check_plugin = function(plugin_name, path)
+  if not path then
+    path = "start"
+  end
+
+  return vim.fn.isdirectory(
+    vim.fn.stdpath("data") .. "/site/pack/packer/" .. path .. "/" .. plugin_name
+  ) == 1
 end
 
 return utils

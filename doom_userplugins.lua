@@ -1,5 +1,3 @@
-local M = {}
-M.source = debug.getinfo(1, "S").source:sub(2)
 -- doom_userplugins - Doom nvim custom plugins
 --
 -- This file contains all the custom plugins that are not in Doom nvim but that
@@ -13,6 +11,11 @@ M.source = debug.getinfo(1, "S").source:sub(2)
 --     requires = { 'nvim-lua/telescope.nvim' },
 --   },
 -- }
+
+local M = {}
+
+M.source = debug.getinfo(1, "S").source:sub(2)
+
 M.plugins = {}
 
 return M

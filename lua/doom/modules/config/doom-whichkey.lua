@@ -218,7 +218,7 @@ return function()
       ["t"] = { "jump to tag" },
     },
   }
-  local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
+  local is_plugin_disabled = require("doom.utils").is_plugin_disabled
   if not is_plugin_disabled("autopairs") then
     mappings["t"]["p"] = { "autopairs" }
   end

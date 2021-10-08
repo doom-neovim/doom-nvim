@@ -7,7 +7,7 @@
 local utils = require("doom.utils")
 local log = require("doom.extras.logging")
 local config = require("doom.core.config").config
-local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
+local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
 log.debug("Loading Doom autocmds module ...")
 
@@ -150,6 +150,15 @@ if not is_plugin_disabled("linter") and packer_plugins and packer_plugins["nvim-
     "BufWritePost",
     "<buffer>",
     "lua require('lint').try_lint()",
+  })
+end
+
+-- Show line diagnostics on hover
+if not config.doom.enable_lsp_virtual_text then
+  table.insert(autocmds["doom_extras"], {
+    "CursorHold,CursorHoldI",
+    "<buffer>",
+    'lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false, border = "single" })',
   })
 end
 

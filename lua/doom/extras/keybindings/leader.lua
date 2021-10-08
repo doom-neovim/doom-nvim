@@ -4,7 +4,7 @@
 
 local mappings = require("doom.utils.mappings")
 local config = require("doom.core.config").config
-local is_plugin_disabled = require("doom.core.functions").is_plugin_disabled
+local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
 -- Additional options for mappings
 local opts = { silent = true }
@@ -770,7 +770,7 @@ mappings.map(
 mappings.map(
   "n",
   "<leader>cll",
-  "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>",
+  '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false, border = "single" })<CR>',
   opts,
   "LSP",
   "line_diagnostic",

@@ -35,9 +35,9 @@ return function()
 
   lsp.handlers["textDocument/publishDiagnostics"] =
     lsp.with(lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = {
+      virtual_text = config.doom.enable_lsp_virtual_text and {
         prefix = config.doom.lsp_virtual_text, -- change this to whatever you want your diagnostic icons to be
-      },
+      } or false,
     })
   -- symbols for autocomplete
   lsp.protocol.CompletionItemKind = {

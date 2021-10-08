@@ -234,10 +234,7 @@ local function get_doom_info()
 
   ----- LSP INFORMATION -------------------------
   -----------------------------------------------
-  if
-    not require("doom.core.functions").is_plugin_disabled("lsp")
-    and packer_plugins["nvim-lspinstall"]
-  then
+  if not require("doom.utils").is_plugin_disabled("lsp") and packer_plugins["nvim-lspinstall"] then
     vim.list_extend(doom_info, {
       "",
       string.format("%s▶ Installed language servers", padding_level[1]),
@@ -339,10 +336,7 @@ local function get_buffer_info()
 
   ----- LSP INFORMATION -------------------------
   -----------------------------------------------
-  if
-    not require("doom.core.functions").is_plugin_disabled("lsp")
-    and packer_plugins["nvim-lspinstall"]
-  then
+  if not require("doom.utils").is_plugin_disabled("lsp") and packer_plugins["nvim-lspinstall"] then
     vim.list_extend(buffer_info, {
       "",
       string.format("%s▶ Language Servers", padding_level[1]),

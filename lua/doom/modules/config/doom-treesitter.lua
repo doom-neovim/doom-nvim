@@ -1,7 +1,7 @@
 return function()
   local has_value = require("doom.utils").has_value
   local modules = require("doom.core.config.modules").modules
-  local functions = require("doom.core.functions")
+  local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
   local function get_ts_parsers(languages)
     local langs = {}
@@ -57,7 +57,7 @@ return function()
     ensure_installed = get_ts_parsers(modules.langs),
     highlight = { enable = true },
     autopairs = {
-      enable = functions.is_plugin_disabled("autopairs") and false or true,
+      enable = is_plugin_disabled("autopairs") and false or true,
     },
     indent = { enable = true },
     playground = { enable = true },

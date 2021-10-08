@@ -21,6 +21,7 @@ return function()
           },
         },
       },
+      ["core.integrations.pandoc"] = {},
     },
   })
 end
