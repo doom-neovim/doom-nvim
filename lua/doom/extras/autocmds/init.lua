@@ -153,6 +153,15 @@ if not is_plugin_disabled("linter") and packer_plugins and packer_plugins["nvim-
   })
 end
 
+-- Quickly exit Neovim on dashboard
+if not is_plugin_disabled("dashboard") then
+  table.insert(autocmds["doom_extras"], {
+    "FileType",
+    "dashboard",
+    "nnoremap <silent> <buffer> q :q<CR>",
+  })
+end
+
 -- Show line diagnostics on hover
 if not config.doom.enable_lsp_virtual_text then
   table.insert(autocmds["doom_extras"], {
