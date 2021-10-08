@@ -35,6 +35,25 @@ utils.is_empty = function(str)
   return str == "" or str == nil
 end
 
+utils.escape_str = function(str)
+  local escape_patterns = {
+    "%^",
+    "%$",
+    "%(",
+    "%)",
+    "%[",
+    "%]",
+    "%%",
+    "%.",
+    "%-",
+    "%*",
+    "%+",
+    "%?",
+  }
+
+  return str:gsub(("([%s])"):format(table.concat(escape_patterns)), "%%%1")
+end
+
 --- Search if a table have the value we are looking for,
 --- useful for plugins management
 --- @param tabl table
