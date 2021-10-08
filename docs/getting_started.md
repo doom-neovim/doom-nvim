@@ -517,7 +517,7 @@ local doom = {
 
 You can modify the default keybindings by modifying the following files:
 
-- `lua/doom/core/keybindings/init.lua` - General and SPC keybindings
+- `lua/doom/extras/keybindings/init.lua` - General and SPC keybindings
 - `lua/doom/modules/config` - lua plugins keybindings
 
 You can also define your own keybindings in your `doom_config.lua` with the `nvim.mappings` field.
