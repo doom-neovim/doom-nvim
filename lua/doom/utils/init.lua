@@ -67,7 +67,6 @@ utils.get_git_output = function(command, remove_newlines)
   return command_output
 end
 
-
 --- Check if the given plugin is disabled in doom_modules.lua
 --- @param plugin string The plugin identifier, e.g. statusline
 --- @return boolean
@@ -83,7 +82,6 @@ utils.is_plugin_disabled = function(plugin)
 
   return true
 end
-
 
 -- Check if the given plugin exists
 -- @param plugin_name string The plugin name, e.g. nvim-tree.lua
