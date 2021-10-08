@@ -53,11 +53,11 @@ end
 mappings.map(
   "n",
   "<leader>`",
-  "<cmd>Telescope find_files<CR>",
+  "<cmd>lua require('telescope.builtin').find_files({cwd=vim.fn.expand('%:p:h')})<CR>",
   opts,
   "Editor",
-  "find_files",
-  "Find file"
+  "cwd_file_browser",
+  "Find file from CWD of current file"
 )
 mappings.map(
   "n",
