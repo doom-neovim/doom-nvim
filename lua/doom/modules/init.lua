@@ -407,7 +407,6 @@ packer.startup(function(use)
     "kabouzeid/nvim-lspinstall",
     config = require("doom.modules.config.doom-lspinstall"),
     disable = disabled_lsp,
-    event = "BufWinEnter",
   })
 
   -- Show function signature when you type
@@ -468,7 +467,7 @@ packer.startup(function(use)
     "lukas-reineke/format.nvim",
     config = require("doom.modules.config.doom-format"),
     disable = disabled_formatter,
-    event = "BufWinEnter",
+    cmd = { "Format", "FormatWrite" },
   })
 
   -- Linting
@@ -477,7 +476,7 @@ packer.startup(function(use)
     "mfussenegger/nvim-lint",
     config = require("doom.modules.config.doom-lint"),
     disable = disabled_linter,
-    event = "BufWinEnter",
+    module = "lint",
   })
 
   -- Indent Lines
@@ -486,7 +485,7 @@ packer.startup(function(use)
     "lukas-reineke/indent-blankline.nvim",
     config = require("doom.modules.config.doom-blankline"),
     disable = disabled_indent_lines,
-    event = "BufWinEnter",
+    event = "ColorScheme",
   })
 
   -- EditorConfig support
@@ -526,7 +525,7 @@ packer.startup(function(use)
     "norcalli/nvim-colorizer.lua",
     config = require("doom.modules.config.doom-colorizer"),
     disable = disabled_colorizer,
-    event = "BufWinEnter",
+    event = "ColorScheme",
   })
 
   -- HTTP Client support
@@ -571,7 +570,7 @@ packer.startup(function(use)
     requires = "nvim-lua/plenary.nvim",
     config = require("doom.modules.config.doom-todo"),
     disable = disabled_todo,
-    event = "BufWinEnter",
+    event = "ColorScheme",
   })
 
   local disabled_trouble = is_plugin_disabled("trouble")

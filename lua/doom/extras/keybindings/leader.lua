@@ -10,7 +10,9 @@ local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 local opts = { silent = true }
 
 -- Set Space key as leader
-mappings.map("n", "<Space>", "<Nop>", opts, "Editor", "open_whichkey", "Open WhichKey menu")
+if is_plugin_disabled("which-key") then
+  mappings.map("n", "<Space>", "<Nop>", opts, "Editor", "open_whichkey", "Open WhichKey menu")
+end
 vim.g.mapleader = " "
 
 if config.doom.new_file_split then
