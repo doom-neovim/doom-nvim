@@ -190,6 +190,7 @@ end
 reloader.full_reload = function()
   -- Store the time taken to reload Doom
   local reload_time = vim.fn.reltime()
+  log.info("Reloading Doom ...")
 
   --- Reload Neovim configurations
   reloader.reload_configs()
