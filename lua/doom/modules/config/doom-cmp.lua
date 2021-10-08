@@ -79,7 +79,7 @@ return function()
         select = true,
       }),
       ["<Tab>"] = cmp.mapping(function(fallback)
-        if vim.fn.pumvisible() == 1 then
+        if cmp.visible() then
           vim.fn.feedkeys(t("<C-n>"), "n")
         elseif luasnip.expand_or_jumpable() then
           vim.fn.feedkeys(t("<Plug>luasnip-expand-or-jump"), "")
@@ -93,7 +93,7 @@ return function()
         "s",
       }),
       ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if vim.fn.pumvisible() == 1 then
+        if cmp.visible() then
           vim.fn.feedkeys(t("<C-p>"), "n")
         elseif luasnip.jumpable(-1) then
           vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
