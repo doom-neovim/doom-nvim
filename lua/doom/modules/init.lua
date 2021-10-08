@@ -85,7 +85,7 @@ packer.startup(function(use)
   local disabled_neorg = is_plugin_disabled("neorg")
   use({
     "nvim-neorg/neorg",
-    branch = "pandoc-integration",
+    branch = "unstable",
     config = require("doom.modules.config.doom-neorg"),
     disable = disabled_neorg,
     after = { "nvim-treesitter" },
