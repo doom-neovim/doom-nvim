@@ -17,11 +17,16 @@ return function()
         config = {
           workspaces = {
             default_workspace = "~/neorg",
+            gtd = "~/neorg/gtd",
             doom_docs = string.format("%s/doc", doom_root),
           },
         },
       },
-      ["core.integrations.pandoc"] = {},
+      ["core.gtd.base"] = {
+        config = {
+          workspace = "gtd",
+        },
+      },
     },
   })
 end
