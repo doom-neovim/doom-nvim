@@ -228,7 +228,7 @@
         - `SPC - o - t` (only `NORMAL` mode!)
         - `<F4>`
 
-        Check [nvim-toggleterm.lua repository](https://github.com/akinsho/nvim-toggleterm.lua) for more information.
+        Check [toggleterm.nvim repository](https://github.com/akinsho/toggleterm.nvim) for more information.
 
   *** Minimap
       Doom Nvim uses `wfxr/minimap.vim` plugin as its minimap. It can be toggled by
