@@ -95,13 +95,13 @@ return function()
     update_cwd = true,
     -- show lsp diagnostics in the signcolumn
     diagnostics = {
-	    enable = require("doom.core.functions").is_plugin_disabled("lsp") and false or true,
-	    icons = {
-		    hint = config.doom.lsp_hint,
-		    info = config.doom.lsp_information,
-		    warning = config.doom.lsp_warning,
-		    error = config.doom.lsp_error,
-	    },
+      enable = require("doom.core.functions").is_plugin_disabled("lsp") and false or true,
+      icons = {
+        hint = config.doom.lsp_hint,
+        info = config.doom.lsp_information,
+        warning = config.doom.lsp_warning,
+        error = config.doom.lsp_error,
+      },
     },
     -- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
     update_focused_file = {
