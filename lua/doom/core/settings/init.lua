@@ -167,6 +167,9 @@ M.doom_commands = function()
   -- Set a custom command to reload Doom Nvim custom mappings, autocommands, etc
   -- can be called by using :DoomConfigsReload
   vim.cmd('command! DoomConfigsReload lua require("doom.core.functions").reload_custom_settings()')
+  -- Set a custom command to fully reload Doom Nvim and simulate a new Neovim run
+  -- can be called by using :DoomReload
+  vim.cmd('command! DoomReload lua require("doom.modules.built-in.reloader").full_reload()')
   -- Set a custom command to create a crash report
   -- can be called by using :DoomReport
   vim.cmd('command! DoomReport lua require("doom.core.functions").create_report()')

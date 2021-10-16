@@ -252,23 +252,25 @@
  ** Commands
     Doom Nvim has its own commands, to make your life easier when developing on it.
 
-    ┌──────────────────┬────────────────────────────────────────────┐
-    │Command           │ Description                                │
-    ├──────────────────┼────────────────────────────────────────────┤
-    │DoomUpdate        │ Update Doom Nvim if there are updates      │
-    ├──────────────────┼────────────────────────────────────────────┤
-    │DoomRollback      │ Rollback Doom Nvim to a previous version   │
-    ├──────────────────┼────────────────────────────────────────────┤
-    │DoomManual        │ Open Doom Nvim User Manual                 │
-    ├──────────────────┼────────────────────────────────────────────┤
-    │DoomConfigs       │ Open a selection menu to edit Doom configs │
-    ├──────────────────┼────────────────────────────────────────────┤
-    │DoomConfigsReload │ Reload user-defined keybindings, etc       │
-    ├──────────────────┼────────────────────────────────────────────┤
-    │DoomReport        │ Create a Doom Nvim markdown crash report   │
-    ├──────────────────┼────────────────────────────────────────────┤
-    │DoomInfo          │ Open Doom Nivm information dashboard       │
-    └──────────────────┴────────────────────────────────────────────┘
+    ┌──────────────────┬────────────────────────────────────────────────┐
+    │Command           │ Description                                    │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomUpdate        │ Update Doom Nvim if there are updates          │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomRollback      │ Rollback Doom Nvim to a previous version       │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomManual        │ Open Doom Nvim User Manual                     │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomConfigs       │ Open a selection menu to edit Doom configs     │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomConfigsReload │ Reload user-defined keybindings, etc           │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomReload        │ Reload Doom Nvim and simulate a new Neovim run │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomReport        │ Create a Doom Nvim markdown crash report       │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomInfo          │ Open Doom Nivm information dashboard           │
+    └──────────────────┴────────────────────────────────────────────────┘
 
     Doom Nvim also uses [which-key.nvim](https://github.com/folke/which-key.nvim) as a commands manager, inspired by emacs' guide-key.
     To open it, press `SPC` and wait for the popup to show, it should not take much time.
