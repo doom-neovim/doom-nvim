@@ -85,20 +85,26 @@ M.source = nil
 log.debug("Loading Doom modules module ...")
 
 -- Path cases:
---   1. <runtimepath>/doom_modules.lua
---   2. /home/user/.config/doom-nvim/doom_modules.lua
---   3. stdpath('config')/doom_modules.lua
-local ok, ret = xpcall(require, debug.traceback, "doom_modules")
+--   1. /home/user/.config/doom-nvim/doom_modules.lua
+--   2. stdpath('config')/doom_modules.lua
+--   3. <runtimepath>/doom_modules.lua
+local ok, ret = xpcall(dofile, debug.traceback, system.doom_configs_root .. "/doom_modules.lua")
 if ok then
   M.modules = ret.modules
   M.source = ret.source
 else
-  ok, ret = xpcall(dofile, debug.traceback, system.doom_configs_root .. "/doom_modules.lua")
+  local ok, ret = xpcall(dofile, debug.traceback, system.doom_root .. "/doom_modules.lua")
   if ok then
     M.modules = ret.modules
     M.source = ret.source
   else
-    log.error("Error while loading doom_modules.lua. Traceback:\n" .. ret)
+    ok, ret = xpcall(require, debug.traceback, "doom_modules")
+    if ok then
+      M.modules = ret.modules
+      M.source = ret.source
+    else
+      log.error("Error while loading doom_modules.lua. Traceback:\n" .. ret)
+    end
   end
 end
 
