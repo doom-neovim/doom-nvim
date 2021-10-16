@@ -402,10 +402,10 @@ packer.startup(function(use)
     after = "nvim-cmp",
   })
 
-  -- provides the missing `:LspInstall` for `nvim-lspconfig`.
+  -- Manage Language serverss with ease.
   use({
-    "kabouzeid/nvim-lspinstall",
-    config = require("doom.modules.config.doom-lspinstall"),
+    "MordechaiHadad/nvim-lspmanager",
+    config = require("doom.modules.config.doom-lspmanager"),
     disable = disabled_lsp,
   })
 
