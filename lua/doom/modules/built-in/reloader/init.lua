@@ -7,7 +7,15 @@ local log = require("doom.extras.logging")
 local system = require("doom.core.system")
 
 --- Paths to reload plugins
-local plugins_files_path = string.format("%s/site/pack/packer/start/*", vim.fn.stdpath("data"))
+local plugins_files_path = string.format(
+  "%s%ssite%spack%spacker%sstart%s*",
+  vim.fn.stdpath("data"),
+  system.sep,
+  system.sep,
+  system.sep,
+  system.sep,
+  system.sep
+)
 local vim_subdirs = { "doc", "after", "syntax", "plugin" }
 
 local installed_plenary, _ = pcall(require, "plenary")
@@ -22,16 +30,16 @@ local scan_dir = require("plenary.scandir").scan_dir
 --- @param module_path string The path to the module
 --- @return string
 local function path_to_lua_module(module_path)
-  local lua_path = string.format("%s/lua", system.doom_root)
+  local lua_path = string.format("%s%slua", system.doom_root, system.sep)
 
   -- Remove the Neovim config dir and the file extension from the path
   module_path = string.match(
     module_path,
-    string.format("%s/(.*)%%.lua", utils.escape_str(lua_path))
+    string.format("%s%s(.*)%%.lua", utils.escape_str(lua_path), system.sep)
   )
 
   -- Replace '/' with '.' to follow the common Lua modules format
-  module_path = module_path:gsub("/", ".")
+  module_path = module_path:gsub(system.sep, ".")
 
   -- Remove '.init' if the module ends with it
   module_path = module_path:gsub("%.init$", "")
@@ -47,7 +55,7 @@ local function get_runtime_files(parent_path)
 
   -- Look in each Neovim subdir for runtime files (documentation, syntax files, etc)
   for _, subdir in ipairs(vim_subdirs) do
-    local path = string.format("%s/%s", parent_path, subdir)
+    local path = string.format("%s%s%s", parent_path, system.sep, subdir)
 
     if fs.file_exists(path) then
       local dir_files = {}
@@ -125,7 +133,7 @@ end
 --- Reload all Lua modules
 --- @param quiet boolean If the reloader should send an info log or not
 reloader.reload_lua_modules = function(quiet)
-  local paths = vim.fn.glob(system.doom_root .. "/lua", 0, 1)
+  local paths = vim.fn.glob(system.doom_root .. system.sep .. "lua", 0, 1)
 
   for _, path in ipairs(paths) do
     local modules = get_lua_modules(path)
