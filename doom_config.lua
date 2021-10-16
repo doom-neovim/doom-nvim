@@ -109,8 +109,8 @@ M.config = {
     line_highlight = true,
 
     -- Automatically split right
-    -- false : splits right (vertically)
-    -- true  : splits left (vertically)
+    -- false : splits left (vertically)
+    -- true  : splits right (vertically)
     -- @default = true
     split_right = true,
 
