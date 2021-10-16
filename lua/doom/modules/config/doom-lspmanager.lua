@@ -4,6 +4,20 @@ return function()
   local nvim_lsp = require("lspconfig")
   local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
+  local servers = {
+    lua = { "sumneko_lua" },
+    angular = { "angularls" },
+    bash = { "bashls" },
+    c = { "clangd" },
+    cpp = { "clangd" },
+    css = { "cssls" },
+    html = { "html" },
+    json = { "jsonls" },
+    docker = { "dockerls" },
+    python = { "pyright" },
+    rust = { "rust_analyser" },
+  }
+
   -- Snippets support
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.preselectSupport = true
@@ -36,11 +50,11 @@ return function()
 
   -- Load langs from doom_modules and install servers with +lsp flag
   local function install_servers()
-    local lspinstall = require("lspinstall")
-    lspinstall.setup()
+    local lspmanager = require("lspmanager")
+    lspmanager.setup()
 
-    local installed_servers = lspinstall.installed_servers()
-    local available_servers = lspinstall.available_servers()
+    local installed_servers = lspmanager.installed_servers()
+    local available_servers = lspmanager.available_servers()
 
     local modules = require("doom.core.config.modules").modules
     local langs = modules.langs
@@ -68,7 +82,7 @@ return function()
               .. lsp_override
               .. "."
           )
-          lspinstall.uninstall_server(lang)
+          lspmanager.uninstall_server(lang)
         end
       end
 
@@ -77,7 +91,7 @@ return function()
         -- Try to install the server only if there is a server available for
         -- the language, oterwise raise a warning
         if utils.has_value(available_servers, lsp_name) then
-          lspinstall.install_server(lsp_name)
+          lspmanager.install_server(lsp_name)
         else
           if lsp_override == nil then
             log.warn(
@@ -128,12 +142,11 @@ return function()
     },
   })
 
-  -- https://github.com/kabouzeid/nvim-lspinstall#advanced-configuration-recommended
   local function setup_servers()
     -- Provide the missing :LspInstall
     require("lspmanager").setup()
 
-    local servers = require("lspinstall").installed_servers()
+    local servers = require("lspmanager").installed_servers()
     for _, server in pairs(servers) do
       -- Configure sumneko for neovim lua development
       if server == "sumneko_lua" then
