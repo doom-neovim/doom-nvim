@@ -82,7 +82,7 @@ return function()
               .. lsp_override
               .. "."
           )
-          lspmanager.uninstall_server(lang)
+          lspmanager.uninstall_server(servers[lang][1])
         end
       end
 
