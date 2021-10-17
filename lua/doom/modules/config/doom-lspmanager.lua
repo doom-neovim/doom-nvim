@@ -113,7 +113,7 @@ return function()
 
   install_servers()
 
-  --- Intelligent highlighting of word under cursor
+  --- Intelligent highlighting of w ord under cursor
   local on_attach
   if not is_plugin_disabled("illuminated") and packer_plugins["vim-illuminate"] then
     on_attach = function(client)
@@ -146,8 +146,8 @@ return function()
     -- Provide the missing :LspInstall
     require("lspmanager").setup()
 
-    local servers = require("lspmanager").installed_servers()
-    for _, server in pairs(servers) do
+    local installed_servers = require("lspmanager").installed_servers()
+    for _, server in pairs(installed_servers) do
       -- Configure sumneko for neovim lua development
       if server == "sumneko_lua" then
         nvim_lsp.sumneko_lua.setup(lua_lsp)
