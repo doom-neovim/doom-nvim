@@ -62,7 +62,7 @@ return function()
     for _, lang in ipairs(langs) do
       local lang_str = lang
       lang = lang:gsub("%s+%+lsp(%(%a+%))", ""):gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
-      local lsp_name = lang
+      local lsp_name = servers[lang][1]
 
       -- Allow overriding of LSP using `+lsp(OVERRIDE_LSP_NAME)` syntax
       local lsp_override = lang_str:match("+lsp%((%a+)%)")
@@ -82,7 +82,7 @@ return function()
               .. lsp_override
               .. "."
           )
-          lspmanager.uninstall_server(servers[lang][1])
+          lspmanager.uninstall_server(lsp_name)
         end
       end
 
