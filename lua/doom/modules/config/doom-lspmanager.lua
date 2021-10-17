@@ -79,7 +79,9 @@ return function()
             log.warn(
               "Uninstalling "
                 .. lang
-                .. " (" .. lsp_name .. ") "
+                .. " ("
+                .. lsp_name
+                .. ") "
                 .. " LSP due to "
                 .. lsp_override
                 .. " LSP being supplied in config.  If you want to revert back to "
