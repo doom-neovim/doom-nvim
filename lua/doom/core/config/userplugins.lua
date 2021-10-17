@@ -23,7 +23,7 @@ if ok then
   M.plugins = ret.plugins
   M.source = ret.source
 else
-  local ok, ret = xpcall(dofile, debug.traceback, system.doom_root .. "/doom_userplugins.lua")
+  ok, ret = xpcall(dofile, debug.traceback, system.doom_root .. "/doom_userplugins.lua")
   if ok then
     M.plugins = ret.plugins
     M.source = ret.source

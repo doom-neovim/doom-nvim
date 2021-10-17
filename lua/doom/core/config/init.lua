@@ -485,7 +485,7 @@ if ok then
   M.config = ret.config
   M.source = ret.source
 else
-  local ok, ret = xpcall(dofile, debug.traceback, system.doom_root .. "/doom_config.lua")
+  ok, ret = xpcall(dofile, debug.traceback, system.doom_root .. "/doom_config.lua")
   if ok then
     M.config = ret.config
     M.source = ret.source

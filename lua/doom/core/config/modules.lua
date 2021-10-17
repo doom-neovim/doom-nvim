@@ -93,7 +93,7 @@ if ok then
   M.modules = ret.modules
   M.source = ret.source
 else
-  local ok, ret = xpcall(dofile, debug.traceback, system.doom_root .. "/doom_modules.lua")
+  ok, ret = xpcall(dofile, debug.traceback, system.doom_root .. "/doom_modules.lua")
   if ok then
     M.modules = ret.modules
     M.source = ret.source
