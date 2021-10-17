@@ -39,6 +39,13 @@ return function()
         prefix = config.doom.lsp_virtual_text, -- change this to whatever you want your diagnostic icons to be
       } or false,
     })
+  -- Border for lsp_popups
+  lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      border = "single",
+    })
+  lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+      border = "single",
+    })
   -- symbols for autocomplete
   lsp.protocol.CompletionItemKind = {
     "   (Text) ",

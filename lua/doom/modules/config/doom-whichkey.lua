@@ -43,6 +43,7 @@ return function()
     },
     window = {
       padding = { 0, 0, 0, 0 }, -- extra window padding [top, right, bottom, left]
+      border = "single",
     },
     layout = {
       height = { min = 1, max = 10 }, -- min and max height of the columns
