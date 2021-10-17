@@ -69,6 +69,21 @@ utils.has_value = function(tabl, val)
   return false
 end
 
+--- Search if a table have the key we are looking for,
+--- useful for plugins management
+--- @param tabl table
+--- @param key string
+--- @return boolean
+utils.has_key = function(tabl, key)
+  for _, k in ipairs(vim.tbl_keys(tabl)) do
+    if k == key then
+      return true
+    end
+  end
+
+  return false
+end
+
 --- Executes a git command and gets the output
 --- @param command string
 --- @param remove_newlines boolean

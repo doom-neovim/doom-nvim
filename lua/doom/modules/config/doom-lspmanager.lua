@@ -2,6 +2,7 @@ return function()
   local log = require("doom.extras.logging")
   local utils = require("doom.utils")
   local nvim_lsp = require("lspconfig")
+  local lspmanager = require("lspmanager")
   local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
   local servers = {
@@ -10,12 +11,18 @@ return function()
     bash = { "bashls" },
     c = { "clangd" },
     cpp = { "clangd" },
+    cmake = { "cmake" },
     css = { "cssls" },
     html = { "html" },
+    javascript = { "tsserver" },
+    typescript = { "tsserver" },
     json = { "jsonls" },
     docker = { "dockerls" },
     python = { "pyright" },
-    rust = { "rust_analyser" },
+    rust = { "rust_analyzer" },
+    elixir = { "elixirls" },
+    haskell = { "hls" },
+    vue = { "vuels" },
   }
 
   -- Snippets support
@@ -50,9 +57,6 @@ return function()
 
   -- Load langs from doom_modules and install servers with +lsp flag
   local function install_servers()
-    local lspmanager = require("lspmanager")
-    lspmanager.setup()
-
     local installed_servers = lspmanager.installed_servers()
     local available_servers = lspmanager.available_servers()
 
@@ -62,50 +66,55 @@ return function()
     for _, lang in ipairs(langs) do
       local lang_str = lang
       lang = lang:gsub("%s+%+lsp(%(%a+%))", ""):gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
-      local lsp_name = servers[lang][1]
+      if utils.has_key(servers, lang) then
+        local lsp_name = servers[lang][1]
 
-      -- Allow overriding of LSP using `+lsp(OVERRIDE_LSP_NAME)` syntax
-      local lsp_override = lang_str:match("+lsp%((%a+)%)")
-      if lsp_override ~= nil then
-        lsp_name = lsp_override
+        -- Allow overriding of LSP using `+lsp(OVERRIDE_LSP_NAME)` syntax
+        local lsp_override = lang_str:match("+lsp%((%a+)%)")
+        if lsp_override ~= nil then
+          lsp_name = lsp_override
 
-        -- Uninstall the default LSP to avoid conflicts
-        if utils.has_value(installed_servers, lang) then
-          log.warn(
-            "Uninstalling "
-              .. lang
-              .. " LSP due to "
-              .. lsp_override
-              .. " LSP being supplied in config.  If you want to revert back to "
-              .. lang
-              .. " LSP you will have to manually uninstall "
-              .. lsp_override
-              .. "."
-          )
-          lspmanager.uninstall_server(lsp_name)
-        end
-      end
-
-      -- If the +lsp flag exists and the language server is not installed yet
-      if lang_str:find("%+lsp") and (not utils.has_value(installed_servers, lsp_name)) then
-        -- Try to install the server only if there is a server available for
-        -- the language, oterwise raise a warning
-        if utils.has_value(available_servers, lsp_name) then
-          lspmanager.install_server(lsp_name)
-        else
-          if lsp_override == nil then
+          -- Uninstall the default LSP to avoid conflicts
+          if utils.has_value(installed_servers, lsp_name) then
             log.warn(
-              "The language " .. lang .. ' does not have a server, please remove the "+lsp" flag'
-            )
-          else
-            log.warn(
-              'The LSP override supplied in "'
-                .. lang_str
-                .. '" does not exist, please remove "('
+              "Uninstalling "
+                .. lang
+                .. " (" .. lsp_name .. ") "
+                .. " LSP due to "
+                .. lsp_override
+                .. " LSP being supplied in config.  If you want to revert back to "
                 .. lsp_name
-                .. ')"'
+                .. " LSP you will have to manually uninstall "
+                .. lsp_override
+                .. "."
             )
+            lspmanager.uninstall_server(lsp_name)
           end
+        end
+
+        -- If the +lsp flag exists and the language server is not installed yet
+        if lang_str:find("%+lsp") and (not utils.has_value(installed_servers, lsp_name)) then
+          -- Try to install the server only if there is a server available for
+          -- the language, oterwise raise a warning
+          if utils.has_value(available_servers, lsp_name) then
+            lspmanager.install(lsp_name)
+          else
+            if lsp_override ~= nil then
+              log.warn(
+                'The LSP override supplied in "'
+                  .. lang_str
+                  .. '" does not exist, please remove "('
+                  .. lsp_name
+                  .. ')"'
+              )
+            end
+          end
+        end
+      else
+        if lang_str:find("%+lsp") then
+          log.warn(
+            "The language " .. lang .. ' does not have a server, please remove the "+lsp" flag'
+          )
         end
       end
     end
@@ -144,9 +153,9 @@ return function()
 
   local function setup_servers()
     -- Provide the missing :LspInstall
-    require("lspmanager").setup()
+    lspmanager.setup()
 
-    local installed_servers = require("lspmanager").installed_servers()
+    local installed_servers = lspmanager.installed_servers()
     for _, server in pairs(installed_servers) do
       -- Configure sumneko for neovim lua development
       if server == "sumneko_lua" then
