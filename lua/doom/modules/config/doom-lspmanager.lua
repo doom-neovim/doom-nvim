@@ -11,6 +11,7 @@ return function()
     bash = { "bashls" },
     c = { "clangd" },
     cpp = { "clangd" },
+    go = { "gopls" },
     cmake = { "cmake" },
     css = { "cssls" },
     html = { "html" },
