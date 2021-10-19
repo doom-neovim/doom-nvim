@@ -32,6 +32,12 @@ M.config = {
     -- @default = false
     disable_macros = false,
 
+		-- Use netrw as files explorer
+		-- false : Use nvim-tree.lua
+		-- true  : Use netrw
+		-- @default = false
+		use_netrw = false,
+
     -- Autosave sessions
     -- false : Disable session autosave
     -- true  : Enable session autosave

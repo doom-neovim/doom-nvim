@@ -17,6 +17,7 @@ return function()
     "minimap",
     "Outline",
     "toggleterm",
+    "netrw",
   }
 
   if not config.doom.dashboard_statline then

@@ -588,15 +588,30 @@ mappings.map(
   "open_dashboard",
   "Open start screen"
 )
-mappings.map(
-  "n",
-  "<leader>oe",
-  "<cmd>NvimTreeToggle<CR>",
-  opts,
-  "Editor",
-  "open_tree_alt",
-  "Toggle file explorer"
-)
+if not config.doom.use_netrw then
+  mappings.map(
+    "n",
+    "<leader>oe",
+    "<cmd>NvimTreeToggle<CR>",
+    opts,
+    "Editor",
+    "open_tree_alt",
+    "Toggle file explorer"
+  )
+else
+  mappings.map(
+    "n",
+    "<leader>oe",
+    string.format(
+      "<cmd>Lexplore%s<CR>",
+      config.doom.explorer_right and "!" or ""
+    ),
+    opts,
+    "Editor",
+    "open_tree_alt",
+    "Toggle file explorer"
+  )
+end
 mappings.map(
   "n",
   "<leader>om",

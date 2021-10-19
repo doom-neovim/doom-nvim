@@ -66,6 +66,11 @@ return function()
           text_align = "center",
         },
         {
+          filetype = "netrw",
+          text = "File Explorer",
+          text_align = "center",
+        },
+        {
           filetype = "minimap",
           text = "Minimap",
           text_align = "center",

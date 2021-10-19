@@ -171,5 +171,19 @@ if not config.doom.enable_lsp_virtual_text then
   })
 end
 
+-- Eye candy netrw (add icons)
+if config.doom.use_netrw then
+  table.insert(autocmds["doom_extras"], {
+    "FileType",
+    "netrw",
+    "lua require('doom.core.settings.netrw').draw_icons()",
+  })
+  table.insert(autocmds["doom_extras"], {
+    "TextChanged",
+    "*",
+    "lua require('doom.core.settings.netrw').draw_icons()",
+  })
+end
+
 -- Create augroups
 utils.create_augroups(autocmds)

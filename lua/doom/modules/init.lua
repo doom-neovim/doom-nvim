@@ -125,7 +125,7 @@ packer.startup(function(use)
   })
 
   -- File tree
-  local disabled_tree = is_plugin_disabled("explorer")
+  local disabled_tree = is_plugin_disabled("explorer") and config.doom.use_netrw
   use({
     "kyazdani42/nvim-tree.lua",
     requires = "nvim-web-devicons",

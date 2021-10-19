@@ -477,6 +477,18 @@ doom_one.load_colorscheme = function()
 
   -- Plugins {{{
 
+  -- netrw {{{
+  local netrw = {
+   netrwClassify = { fg = blue },
+   netrwDir = { fg = blue },
+   netrwExe = { fg = green },
+   netrwMakefile = { fg = yellow },
+  }
+
+  apply_highlight(netrw)
+  high_link("netrwTreeBar", "Comment")
+  -- }}}
+
   -- barbar.nvim {{{
 
   if configuration.plugins_integrations.barbar then

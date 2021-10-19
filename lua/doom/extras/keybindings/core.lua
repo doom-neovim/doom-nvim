@@ -69,11 +69,24 @@ if not is_plugin_disabled("symbols") then
     "Toggle SymbolsOutline (LSP tags)"
   )
 end
-if not is_plugin_disabled("explorer") then
+if not is_plugin_disabled("explorer") and not config.doom.use_netrw then
   mappings.map(
     "n",
     "<F3>",
     ":NvimTreeToggle<CR>",
+    opts,
+    "Editor",
+    "open_tree",
+    "Toggle file explorer"
+  )
+else
+  mappings.map(
+    "n",
+    "<F3>",
+    string.format(
+      ":Lexplore%s<CR>",
+      config.doom.explorer_right and "!" or ""
+    ),
     opts,
     "Editor",
     "open_tree",
