@@ -134,7 +134,7 @@ local function draw_icons()
         local filetype = line:match("^.*%.(.*)")
         if not filetype and line:find("LICENSE") then
           filetype = "md"
-        elseif not filetype and line:find("rc$") then
+        elseif line:find("rc$") then
           filetype = "conf"
         end
 
