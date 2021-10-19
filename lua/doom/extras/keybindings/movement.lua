@@ -95,6 +95,26 @@ mappings.map(
 )
 mappings.map("x", "J", ":move '>+1<CR>gv-gv", opts, "Editor", "select_left", "Move selection left")
 
+-- stay in visual mode after indenting with < or >
+mappings.map(
+  "v",
+  ">",
+  ">gv",
+  opts,
+  "Editor",
+  "stay_vselect_indent",
+  "Stay in visual mode after indenting a selection"
+)
+mappings.map(
+  "v",
+  "<",
+  "<gv",
+  opts,
+  "Editor",
+  "stay_vselect_deindent",
+  "Stay in visual mode after unindenting a selection"
+)
+
 -- get out of terminal insert mode into normal mode with Esc
 mappings.map(
   "t",
