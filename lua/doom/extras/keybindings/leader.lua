@@ -602,10 +602,7 @@ else
   mappings.map(
     "n",
     "<leader>oe",
-    string.format(
-      "<cmd>Lexplore%s<CR>",
-      config.doom.explorer_right and "!" or ""
-    ),
+    string.format("<cmd>Lexplore%s<CR>", config.doom.explorer_right and "!" or ""),
     opts,
     "Editor",
     "open_tree_alt",

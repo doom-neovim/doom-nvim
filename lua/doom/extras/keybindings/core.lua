@@ -83,10 +83,7 @@ else
   mappings.map(
     "n",
     "<F3>",
-    string.format(
-      ":Lexplore%s<CR>",
-      config.doom.explorer_right and "!" or ""
-    ),
+    string.format(":Lexplore%s<CR>", config.doom.explorer_right and "!" or ""),
     opts,
     "Editor",
     "open_tree",
