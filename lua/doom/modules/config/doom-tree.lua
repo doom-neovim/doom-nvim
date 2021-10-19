@@ -106,7 +106,7 @@ return function()
     update_cwd = true,
     -- show lsp diagnostics in the signcolumn
     diagnostics = {
-      enable = require("doom.core.functions").is_plugin_disabled("lsp") and false or true,
+      enable = require("doom.utils").is_plugin_disabled("lsp") and false or true,
       icons = {
         hint = config.doom.lsp_hint,
         info = config.doom.lsp_info,
