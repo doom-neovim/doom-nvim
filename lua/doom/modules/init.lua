@@ -406,6 +406,7 @@ packer.startup(function(use)
   -- Manage Language serverss with ease.
   use({
     "MordechaiHadad/nvim-lspmanager",
+    branch = "dev",
     config = require("doom.modules.config.doom-lspmanager"),
     disable = disabled_lsp,
   })
