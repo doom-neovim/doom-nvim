@@ -41,7 +41,7 @@ vim.g.netrw_list_hide = vim.fn["netrw_gitignore#Hide"]()
 vim.g.netrw_hide = config.show_hidden and 0 or 1
 
 -- Change the size of the Netrw window when it creates a split
-vim.g.netrw_winsize = config.sidebar_width
+vim.g.netrw_winsize = (0 - config.sidebar_width)
 
 -- Preview files in a vertical split window
 vim.g.netrw_preview = 1
