@@ -176,6 +176,11 @@ if config.doom.use_netrw then
   table.insert(autocmds["doom_extras"], {
     "FileType",
     "netrw",
+    "lua require('doom.core.settings.netrw').set_maps()",
+  })
+  table.insert(autocmds["doom_extras"], {
+    "FileType",
+    "netrw",
     "lua require('doom.core.settings.netrw').draw_icons()",
   })
   table.insert(autocmds["doom_extras"], {
