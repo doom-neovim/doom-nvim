@@ -10,14 +10,14 @@ local system = require("doom.core.system")
 local config = require("doom.core.config").config
 local async = require("doom.modules.built-in.async")
 
-local M = {}
+local functions = {}
 
 log.debug("Loading Doom functions module ...")
 
 -- Load user-defined settings from the Neovim field in the doom_config.lua
 -- @param settings_tbl The settings table to iterate over
 -- @param scope The settings scope, e.g. autocmds
-M.load_custom_settings = function(settings_tbl, scope)
+functions.load_custom_settings = function(settings_tbl, scope)
   -- If the provided settings table is not empty
   if next(settings_tbl) ~= nil then
     log.debug("Loading custom " .. scope .. " ...")
@@ -61,18 +61,18 @@ end
 
 -- reload_custom_settings reloads all the user-defined configurations
 -- in the 'doom_config.lua' file.
-M.reload_custom_settings = function()
+functions.reload_custom_settings = function()
   -- Get the user-defined settings, the 'nvim' field in our 'doom_config.lua'
   local custom_settings = require("doom.core.config").config.nvim
   -- iterate over all the custom settings fields, e.g. global_variables, mappings, etc.
   for scope, _ in pairs(custom_settings) do
-    M.load_custom_settings(custom_settings[scope], scope)
+    functions.load_custom_settings(custom_settings[scope], scope)
   end
 end
 
 -- Change the 'doom_config.lua' file configurations for the colorscheme and the
 -- background if they were changed by the user within Neovim
-M.change_colors_and_bg = function()
+functions.change_colors_and_bg = function()
   local changed_colorscheme, err = xpcall(function()
     log.debug("Checking if the colorscheme or background were changed ...")
     local target_colorscheme = vim.g.colors_name
@@ -112,8 +112,8 @@ end
 -- dump all messages to doom.log file
 -- @tparam bool write If doom should save before exiting
 -- @tparam bool force If doom should force the exiting
-M.quit_doom = function(write, force)
-  M.change_colors_and_bg()
+functions.quit_doom = function(write, force)
+  functions.change_colors_and_bg()
 
   local quit_cmd = ""
   if write then
@@ -127,7 +127,7 @@ M.quit_doom = function(write, force)
 end
 
 -- check_updates checks for plugins updates
-M.check_updates = function()
+functions.check_updates = function()
   local updated_plugins, err = xpcall(function()
     log.info("Updating the outdated plugins ...")
     vim.cmd("PackerSync")
@@ -139,7 +139,7 @@ M.check_updates = function()
 end
 
 -- Open Doom Nvim user manual and set extra options to buffer
-M.open_docs = function()
+functions.open_docs = function()
   -- NOTE: we aren't using the default Neovim way with ':h doom' because of some bugs
   -- with the tags and Neovim overriding the filetype, causing some highlighting issues
 
@@ -175,7 +175,7 @@ end
 
 -- create_report creates a markdown report. It's meant to be used when a bug
 -- occurs, useful for debugging issues.
-M.create_report = function()
+functions.create_report = function()
   local date = os.date("%Y-%m-%d %H:%M:%S")
   local log_date_format = os.date("%a %d %b %Y")
 
@@ -333,7 +333,7 @@ end
 
 -- update_doom saves the current commit/release hash into a file for future
 -- restore if needed and then updates Doom.
-M.update_doom = function()
+functions.update_doom = function()
   save_backup_hashes()
 
   log.info("Pulling Doom remote changes ...")
@@ -361,7 +361,7 @@ end
 
 -- rollback_doom will rollback the local doom version to an older one
 -- in case that the local one is broken
-M.rollback_doom = function()
+functions.rollback_doom = function()
   -- Backup file for main (stable) branch
   local releases_database_path = string.format("%s%s.doom_releases", system.doom_root, system.sep)
   -- Backup file for development branch
@@ -462,7 +462,7 @@ M.rollback_doom = function()
 end
 
 -- edit_config creates a prompt to modify a doom configuration file
-M.edit_config = function()
+functions.edit_config = function()
   vim.ui.select(
     { "doom_config.lua", "doom_modules.lua", "doom_userplugins.lua" },
     { prompt = "Select a configuration file to edit:" },
@@ -494,7 +494,7 @@ end
 -- followings are called from lua/doom/extras/keybindings/leader.lua
 --
 -- toggle_background() -- <leader>tb -- toggle background light/dark
-M.toggle_background = function()
+functions.toggle_background = function()
   local background = vim.go.background
   if background == "light" then
     vim.go.background = "dark"
@@ -510,7 +510,7 @@ vim.g.cmp_toggle_flag = true -- initialize
 local normal_buftype = function()
   return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
 end
-M.toggle_completion = function()
+functions.toggle_completion = function()
   local ok, cmp = xpcall(require, debug.traceback, "cmp")
   if ok then
     local next_cmp_toggle_flag = not vim.g.cmp_toggle_flag
@@ -535,7 +535,7 @@ M.toggle_completion = function()
 end
 
 -- toggle_signcolumn() -- <leader>tg -- signcolumn auto/no
-M.toggle_signcolumn = function()
+functions.toggle_signcolumn = function()
   local signcolumn = vim.o.signcolumn
   if signcolumn == "no" then
     vim.o.signcolumn = "auto"
@@ -547,7 +547,7 @@ M.toggle_signcolumn = function()
 end
 
 -- set_indent() -- <leader>ti -- set the indent and tab related numbers
-M.set_indent = function()
+functions.set_indent = function()
   local indent = tonumber(
     vim.fn.input(
       "Set all tab related options to a specified number and set expandtab\n(0 to reset to vim defaults, ? to print current settings): "
@@ -571,7 +571,7 @@ M.set_indent = function()
 end
 
 -- change_number() -- <leader>tn -- change the number display modes
-M.change_number = function()
+functions.change_number = function()
   local number = vim.o.number
   local relativenumber = vim.o.relativenumber
   if (number == false) and (relativenumber == false) then
@@ -594,7 +594,7 @@ M.change_number = function()
 end
 
 -- toggle_autopairs() -- <leader>tp -- toggle autopairs
-M.toggle_autopairs = function()
+functions.toggle_autopairs = function()
   local ok, autopairs = xpcall(require, debug.traceback, "nvim-autopairs")
   if ok then
     if autopairs.state.disabled then
@@ -610,7 +610,7 @@ M.toggle_autopairs = function()
 end
 
 -- toggle_spell() -- <leader>ts -- toggle spell
-M.toggle_spell = function()
+functions.toggle_spell = function()
   if vim.o.spell then
     vim.o.spell = false
     print("spell off")
@@ -624,7 +624,7 @@ M.toggle_spell = function()
 end
 
 -- change_syntax() -- <leader>tx -- toggle syntax/treesetter
-M.change_syntax = function()
+functions.change_syntax = function()
   local ok, parsers = xpcall(require, debug.traceback, "nvim-treesitter.parsers")
   if ok and parsers and parsers.has_parser() then
     if vim.o.syntax then
@@ -647,9 +647,9 @@ M.change_syntax = function()
   end
 end
 
-M.sugar_folds = function()
+functions.sugar_folds = function()
   local start_line = vim.fn.getline(vim.v.foldstart):gsub("\t", ("\t"):rep(vim.opt.tabstop:get()))
   return string.format("%s ... (%d lines)", start_line, vim.v.foldend - vim.v.foldstart + 1)
 end
 
-return M
+return functions
