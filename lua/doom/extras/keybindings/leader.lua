@@ -799,6 +799,15 @@ mappings.map(
   "diagnostic_list",
   "Diagnostics into location list"
 )
+mappings.map(
+  "n",
+  "<leader>clr",
+  "<cmd>lua vim.lsp.buf.rename()<CR>",
+  opts,
+  "LSP",
+  "rename_reference",
+  "Rename the reference under cursor"
+)
 
 -- jumps
 mappings.map("n", "<leader>ja", "<C-^>", opts, "Jumps", "jump_alternate_file", "Alternate file")
