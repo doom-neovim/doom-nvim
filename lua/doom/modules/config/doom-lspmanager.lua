@@ -106,7 +106,7 @@ return function()
             log.warn('Error while installing LSP ('..lsp_name..') for '..lang..': ' .. err .. '.')
           end
         end
-      else if lspmanager.is_lsp_installed(servers[lang][1]) then
+      elseif lspmanager.is_lsp_installed(servers[lang][1]) then
         lspmanager.uninstall(servers[lang[1]])
       end
     end
@@ -164,3 +164,5 @@ return function()
 
   setup_servers()
 end
+
+
