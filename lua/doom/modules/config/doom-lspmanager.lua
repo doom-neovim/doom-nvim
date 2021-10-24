@@ -98,7 +98,6 @@ return function()
         -- If not installed, install it catching errors to be logged to terminal
         if lspmanager.is_lsp_installed(lsp_name) == 0 then
           local status, err = pcall(function () 
-            print('Installing ' .. lsp_name)
             lspmanager.install(lsp_name);
           end)
 
