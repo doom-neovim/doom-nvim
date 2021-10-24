@@ -3,7 +3,6 @@ return function()
   local config = require("doom.core.config").config
   local colors = require("galaxyline.themes.colors").get_color
 
-  local bo = vim.bo
   local gl = require("galaxyline")
   local lsp = require("galaxyline.providers.lsp")
   local buffer = require("galaxyline.providers.buffer")
@@ -181,15 +180,15 @@ return function()
         -- Check if there's a LSP client running to avoid redundant
         -- statusline elements
         if lsp.get_lsp_client() ~= "No Active Lsp" then
-          return " " .. lsp.get_lsp_client():gsub("^%l", string.upper)
+          return string.format(" %s » %s ", vim.bo.filetype, lsp.get_lsp_client())
         else
-          -- Use the filetype instead and capitalize it
-          return " " .. (vim.bo.filetype:gsub("^%l", string.upper))
+          -- Use the filetype instead
+          return string.format(" %s ", vim.bo.filetype)
         end
       end,
       condition = function()
         local tbl = { ["dashboard"] = true, [""] = true }
-        if tbl[bo.filetype] then
+        if tbl[vim.bo.filetype] then
           return false
         end
         return true
@@ -220,7 +219,7 @@ return function()
   gls.right[6] = {
     DiffSeparator = {
       provider = function()
-        return "  "
+        return "   "
       end,
       condition = condition.hide_in_width,
       highlight = { colors("bg"), colors("bg") },
