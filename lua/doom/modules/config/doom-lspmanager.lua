@@ -1,6 +1,5 @@
 return function()
   local log = require("doom.extras.logging")
-  local utils = require("doom.utils")
   local nvim_lsp = require("lspconfig")
   local lspmanager = require("lspmanager")
   local is_plugin_disabled = require("doom.utils").is_plugin_disabled
@@ -97,7 +96,7 @@ return function()
 
         -- If not installed, install it catching errors to be logged to terminal
         if lspmanager.is_lsp_installed(lsp_name) == 0 then
-          local status, err = pcall(function () 
+          local _, err = pcall(function ()
             lspmanager.install(lsp_name);
           end)
 
