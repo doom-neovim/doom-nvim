@@ -4,7 +4,7 @@
 --           License: GPLv2           --
 ---[[------------------------------]]---
 
-local M = {}
+local config = {}
 
 local log = require("doom.extras.logging")
 local system = require("doom.core.system")
@@ -29,7 +29,7 @@ end
 
 -- {{{ Default doom_config values
 
-M.config = {
+config.config = {
   -- {{{ Doom
   doom = {
     -- Autosave
@@ -472,7 +472,7 @@ M.config = {
 
 -- }}}
 
-M.source = nil
+config.source = nil
 
 log.debug("Loading Doom config module ...")
 
@@ -482,18 +482,18 @@ log.debug("Loading Doom config module ...")
 --   3. <runtimepath>/doom_config.lua
 local ok, ret = xpcall(dofile, debug.traceback, system.doom_configs_root .. "/doom_config.lua")
 if ok then
-  M.config = ret.config
-  M.source = ret.source
+  config.config = ret.config
+  config.source = ret.source
 else
   ok, ret = xpcall(dofile, debug.traceback, system.doom_root .. "/doom_config.lua")
   if ok then
-    M.config = ret.config
-    M.source = ret.source
+    config.config = ret.config
+    config.source = ret.source
   else
     ok, ret = xpcall(require, debug.traceback, "doom_config")
     if ok then
-      M.config = ret.config
-      M.source = ret.source
+      config.config = ret.config
+      config.source = ret.source
     else
       log.error("Error while loading doom_config.lua. Traceback:\n" .. ret)
     end
@@ -501,10 +501,10 @@ else
 end
 
 -- Check plugins updates on start if enabled
-if M.config.doom.check_updates then
+if config.config.doom.check_updates then
   require("doom.core.functions").check_updates()
 end
 
-return M
+return config
 
 -- vim: fdm=marker

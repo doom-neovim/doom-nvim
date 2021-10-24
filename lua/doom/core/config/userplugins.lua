@@ -1,4 +1,3 @@
-local M = {}
 ---[[---------------------------------------]]---
 --     userplugins - Load Doom Nvim doom_userplugins      --
 --              Author: NTBBloodbath           --
@@ -8,9 +7,11 @@ local M = {}
 local system = require("doom.core.system")
 local log = require("doom.extras.logging")
 
-M.plugins = {}
+local userplugins = {}
 
-M.source = nil
+userplugins.plugins = {}
+
+userplugins.source = nil
 
 log.debug("Loading Doom userplugins module...")
 
@@ -20,22 +21,22 @@ log.debug("Loading Doom userplugins module...")
 --   3. <runtimepath>/doom_userplugins.lua
 local ok, ret = xpcall(dofile, debug.traceback, system.doom_configs_root .. "/doom_userplugins.lua")
 if ok then
-  M.plugins = ret.plugins
-  M.source = ret.source
+  userplugins.plugins = ret.plugins
+  userplugins.source = ret.source
 else
   ok, ret = xpcall(dofile, debug.traceback, system.doom_root .. "/doom_userplugins.lua")
   if ok then
-    M.plugins = ret.plugins
-    M.source = ret.source
+    userplugins.plugins = ret.plugins
+    userplugins.source = ret.source
   else
     ok, ret = xpcall(require, debug.traceback, "doom_userplugins")
     if ok then
-      M.plugins = ret.plugins
-      M.source = ret.source
+      userplugins.plugins = ret.plugins
+      userplugins.source = ret.source
     else
       log.error("Error while loading doom_userplugins.lua. Traceback:\n" .. ret)
     end
   end
 end
 
-return M
+return userplugins

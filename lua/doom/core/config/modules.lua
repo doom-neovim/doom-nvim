@@ -7,9 +7,9 @@
 local system = require("doom.core.system")
 local log = require("doom.extras.logging")
 
-local M = {}
+local modules = {}
 
-M.modules = {
+modules.modules = {
   ui = {
     "dashboard", -- Start screen
     -- "doom-themes",     -- Additional doom emacs' colorschemes
@@ -80,7 +80,7 @@ M.modules = {
   },
 }
 
-M.source = nil
+modules.source = nil
 
 log.debug("Loading Doom modules module ...")
 
@@ -90,22 +90,22 @@ log.debug("Loading Doom modules module ...")
 --   3. <runtimepath>/doom_modules.lua
 local ok, ret = xpcall(dofile, debug.traceback, system.doom_configs_root .. "/doom_modules.lua")
 if ok then
-  M.modules = ret.modules
-  M.source = ret.source
+  modules.modules = ret.modules
+  modules.source = ret.source
 else
   ok, ret = xpcall(dofile, debug.traceback, system.doom_root .. "/doom_modules.lua")
   if ok then
-    M.modules = ret.modules
-    M.source = ret.source
+    modules.modules = ret.modules
+    modules.source = ret.source
   else
     ok, ret = xpcall(require, debug.traceback, "doom_modules")
     if ok then
-      M.modules = ret.modules
-      M.source = ret.source
+      modules.modules = ret.modules
+      modules.source = ret.source
     else
       log.error("Error while loading doom_modules.lua. Traceback:\n" .. ret)
     end
   end
 end
 
-return M
+return modules
