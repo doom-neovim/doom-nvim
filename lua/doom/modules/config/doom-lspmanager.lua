@@ -58,25 +58,24 @@ return function()
 
   -- Load langs from doom_modules and install servers with +lsp flag
   local function install_servers()
-    local installed_servers = lspmanager.installed_servers()
-    local available_servers = lspmanager.available_servers()
-
     local modules = require("doom.core.config.modules").modules
     local langs = modules.langs
 
     for _, lang in ipairs(langs) do
       local lang_str = lang
-      lang = lang:gsub("%s+%+lsp(%(%a+%))", ""):gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
-      if utils.has_key(servers, lang) then
+
+      local should_try_install = lang_str:find('%+lsp')
+      if should_try_install ~= nil then
+
+        -- Get the Lang name without flags
+        lang = lang:gsub("%s+%+lsp(%(%a+%))", ""):gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
         local lsp_name = servers[lang][1]
 
         -- Allow overriding of LSP using `+lsp(OVERRIDE_LSP_NAME)` syntax
         local lsp_override = lang_str:match("+lsp%((%a+)%)")
         if lsp_override ~= nil then
-          lsp_name = lsp_override
-
           -- Uninstall the default LSP to avoid conflicts
-          if utils.has_value(installed_servers, lsp_name) then
+          if lspmanager.is_lsp_installed(lsp_name) == 1 then
             log.warn(
               "Uninstalling "
                 .. lang
@@ -91,34 +90,24 @@ return function()
                 .. lsp_override
                 .. "."
             )
-            lspmanager.uninstall_server(lsp_name)
+            lspmanager.uninstall(lsp_name)
           end
+          lsp_name = lsp_override
         end
 
-        -- If the +lsp flag exists and the language server is not installed yet
-        if lang_str:find("%+lsp") and (not utils.has_value(installed_servers, lsp_name)) then
-          -- Try to install the server only if there is a server available for
-          -- the language, oterwise raise a warning
-          if utils.has_value(available_servers, lsp_name) then
-            lspmanager.install(lsp_name)
-          else
-            if lsp_override ~= nil then
-              log.warn(
-                'The LSP override supplied in "'
-                  .. lang_str
-                  .. '" does not exist, please remove "('
-                  .. lsp_name
-                  .. ')"'
-              )
-            end
+        -- If not installed, install it catching errors to be logged to terminal
+        if lspmanager.is_lsp_installed(lsp_name) == 0 then
+          local status, err = pcall(function () 
+            print('Installing ' .. lsp_name)
+            lspmanager.install(lsp_name);
+          end)
+
+          if (err) then
+            log.warn('Error while installing LSP ('..lsp_name..') for '..lang..': ' .. err .. '.')
           end
         end
-      else
-        if lang_str:find("%+lsp") then
-          log.warn(
-            "The language " .. lang .. ' does not have a server, please remove the "+lsp" flag'
-          )
-        end
+      else if lspmanager.is_lsp_installed(servers[lang][1]) then
+        lspmanager.uninstall(servers[lang[1]])
       end
     end
   end
