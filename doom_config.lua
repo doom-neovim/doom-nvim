@@ -56,6 +56,12 @@ M.config = {
     -- @default = false
     swap_files = false,
 
+    -- Enable folding
+    -- true : fold is enabled
+    -- false : fold is disabled
+    -- @default = true
+    foldenable = true,
+
     -- Undo Directories
     -- the backup variable enables backup related settings (undofile, undodir)
     -- false : ignores undo Directories (this code block will be ignored)
