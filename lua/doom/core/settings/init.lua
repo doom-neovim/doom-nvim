@@ -145,6 +145,7 @@ settings.load_default_options = function()
   vim.opt.softtabstop = config.doom.indent
   vim.opt.colorcolumn = tostring(config.doom.max_columns)
   vim.opt.conceallevel = config.doom.conceallevel
+  vim.opt.foldenable = config.doom.foldenable
 
   -- Better folding
   vim.cmd([[set foldtext=luaeval(\"require('doom.core.functions').sugar_folds()\")]])
