@@ -147,7 +147,7 @@ end
 -- Linting
 if not is_plugin_disabled("linter") and packer_plugins and packer_plugins["nvim-lint"] then
   table.insert(autocmds["doom_extras"], {
-    "BufWritePost",
+    "BufWinEnter,BufWritePost",
     "<buffer>",
     "lua require('lint').try_lint()",
   })
