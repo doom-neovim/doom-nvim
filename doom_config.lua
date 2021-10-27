@@ -38,6 +38,12 @@ M.config = {
     -- @default = false
     use_netrw = false,
 
+    -- Enable folding
+    -- true : fold is enabled
+    -- false : fold is disabled
+    -- @default = true
+    foldenable = true,
+
     -- Autosave sessions
     -- false : Disable session autosave
     -- true  : Enable session autosave
@@ -55,12 +61,6 @@ M.config = {
     -- true  : enables swap files
     -- @default = false
     swap_files = false,
-
-    -- Enable folding
-    -- true : fold is enabled
-    -- false : fold is disabled
-    -- @default = true
-    foldenable = true,
 
     -- Undo Directories
     -- the backup variable enables backup related settings (undofile, undodir)
