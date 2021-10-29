@@ -41,7 +41,7 @@ WORKDIR /home/doom
 RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
-COPY entrypoint.sh /usr/local/bin/
+COPY _docker_entry.sh /usr/local/bin/
 
 # Doom-nvim-contrib
 VOLUME "~/.config/nvim"
@@ -50,4 +50,4 @@ VOLUME "~/.local/share/nvim"
 # Files and projects for testing on disk
 VOLUME "~/workspace"
 
-ENTRYPOINT ["sh", "/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["sh", "/usr/local/bin/_docker_entry.sh"]

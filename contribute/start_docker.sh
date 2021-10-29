@@ -13,7 +13,7 @@ Help()
    # Display Help
    echo "Bootstraps a docker image for contributing changes to doom-nvim"
    echo
-   echo "Syntax: ./bootstrap.sh [-b <branc_name>]"
+   echo "Syntax: ./start_docker.sh [-b <branc_name>]"
    echo "options:"
    echo "-b     Create a new branch for the contribution"
    echo "-h     Shows this help menu"
