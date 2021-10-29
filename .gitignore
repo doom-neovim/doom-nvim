@@ -10,3 +10,9 @@ tags
 # editor artifacts
 *~
 *.swp
+# OS files
+.DS_Store
+# Doom Nvim Contrib files
+docker/doom-nvim-contrib
+docker/local-share-nvim
+docker/workspace
