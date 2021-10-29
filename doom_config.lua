@@ -14,6 +14,10 @@ M.source = debug.getinfo(1, "S").source:sub(2)
 
 M.config = {
   doom = {
+    -- Pins plugins to a commit sha to prevent breaking changes
+    -- @default = true
+    freeze_dependencies = true,
+
     -- Autosave
     -- false : Disable autosave
     -- true  : Enable autosave
