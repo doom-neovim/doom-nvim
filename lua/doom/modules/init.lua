@@ -61,6 +61,7 @@ packer.startup(function(use)
   -- Tree-Sitter
   use({
     "nvim-treesitter/nvim-treesitter",
+    commit = vim.fn.has("nvim-0.6.0") == 1 and pin_commit('fe4e4aa286ba14e949948ef6e826d69c63048cdb') or pin_commit('47cfda2c6711077625c90902d7722238a8294982'),
     opt = true,
     run = ":TSUpdate",
     branch = vim.fn.has("nvim-0.6.0") == 1 and "master" or "0.5-compat",
