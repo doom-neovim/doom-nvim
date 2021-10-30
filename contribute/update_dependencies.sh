@@ -9,7 +9,7 @@
 
 index=0
 repo_regex='"([^"]+)"'
-pin_commit_regex='pin_commit[(][^()]*[)]'
+pin_commit_regex='commit = pin_commit[(][^()]*[)]'
 
 repo=''
 latest_commit=''
@@ -49,10 +49,10 @@ while read -r line; do
   if [[ $index -eq 2 ]]; then # 
     if [ ! -z "$repo" ] && [ ! -z "$latest_commit" ] && [[ $line =~ $pin_commit_regex ]]; then 
       line_number=`echo $line | awk -F "-" '{print $1}'`
-      sed -r -i -- "${line_number}s/pin_commit[(][^()]*[)]/pin_commit('${latest_commit}')/" "../lua/doom/modules/init.lua"
+      sed -r -i -- "${line_number}s/commit = pin_commit[(][^()]*[)]/commit = pin_commit('${latest_commit}')/" "../lua/doom/modules/init.lua"
       echo " - Updated to $latest_commit"
     else
-      echo " - ERROR: Did not update $repo because \`commit = pin_commit('...')\` was not immediately after the repo name."
+      echo " - ERROR: Did not update $repo because \`commit = pin_commit('...')\` was not immediately after the repo name or there is custom logic for determining the pinned commit.  Please update this entry manually."
     fi
   fi
 
