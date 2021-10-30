@@ -8,7 +8,7 @@ local use_floating_win_packer = require("doom.core.config").config.doom.use_floa
 
 -- Freeze dependencies and helper function for clean code
 local freeze_dependencies = require("doom.core.config").config.doom.freeze_dependencies
-local pin_commit = function(commit_sha) freeze_dependencies and commit_sha or nil end
+local pin_commit = function(commit_sha) return freeze_dependencies and commit_sha or nil end
 
 ---- Packer Bootstrap ---------------------------
 -------------------------------------------------
@@ -94,7 +94,7 @@ packer.startup(function(use)
   local disabled_neorg = is_plugin_disabled("neorg")
   use({
     "nvim-neorg/neorg",
-    commit = pin_commit('592fb0c9c220ca53238e6de7685c3151fe3a3085'),
+    commit = pin_commit('2fdce1aaf542d930df92d394e646f9bafe4e41a3'),
     branch = "unstable",
     config = require("doom.modules.config.doom-neorg"),
     disable = disabled_neorg,
@@ -445,7 +445,7 @@ packer.startup(function(use)
   -- Manage Language serverss with ease.
   use({
     "MordechaiHadad/nvim-lspmanager",
-    commit = pin_commit('9d0ecc5010bca0a78624e99bfffb64cab5ae390f'),
+    commit = pin_commit('817998fb83ad8c05e9a315d0a6d25fddae56fe23'),
     branch = "dev",
     config = require("doom.modules.config.doom-lspmanager"),
     disable = disabled_lsp,
