@@ -394,6 +394,7 @@ packer.startup(function(use)
     requires = {
       {
         "L3MON4D3/LuaSnip",
+        commit = pin_commit('a54b21aee0423dbdce121c858ad6a88a58ef6e0f'),
         event = "BufReadPre",
         wants = "friendly-snippets",
         config = require("doom.modules.config.doom-luasnip"),
@@ -402,6 +403,7 @@ packer.startup(function(use)
       },
       {
         "windwp/nvim-autopairs",
+        commit = pin_commit('e6b1870cd2e319f467f99188f99b1c3efc5824d2'),
         config = require("doom.modules.config.doom-autopairs"),
         disable = disabled_autopairs,
         event = "BufReadPre",
