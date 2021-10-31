@@ -32,6 +32,8 @@ will have less settings and plugins than you personal branch and therefore it wi
 not work as expected otherwise. Eg. you will see 'Dashboard' text on vim load instead of
 'Doom'.
 
+> Alternatively you can setup an isolated dev environment for contributing using our docker image [here](../contribute/README.md#doom-contrib-docker-image-start_dockersh).
+
 ## Reporting issues
 
 ### Acquire a backtrace from errors
@@ -116,3 +118,13 @@ your pull request :)
 [gist]: https://gist.github.com/
 [stylua]: https://github.com/JohnnyMorganz/StyLua
 [luacheck]:https://github.com/luarocks/luacheck
+
+### Tools
+
+A range of tools for contributors are currently housed in the `contribute/` folder. 
+Read the detailed [documentation](../contribute/README.md). 
+
+#### Notable Tools
+
+ - [`contribute/start_docker.sh`](../contribute/README.md#doom-contrib-docker-image-start_dockersh) Sets up a dev environment for contributing to doom-nvim.  Creates a git worktree to make changes and a docker image to test them within.
+
