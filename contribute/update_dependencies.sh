@@ -24,14 +24,22 @@ while read -r line; do
 
       # Sometimes the github api requests will fail, in which case we need to re-try after a delay.
       while [ -z "$latest_commit" ]; do
-        # Get the commit sha from github
-        api_result=`curl -s \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/$repo/commits?per_page=1`
-
-        is_array=`echo $api_result | jq -r 'if type=="array" then "yes" else "no" end'`
+        # Get the commit sha from github, use GITHUB_API_KEY if provided 
+        # GITHUB_API_KEY in this instance is an OAuth2 token
+        # https://docs.github.com/en/developers/apps/building-oauth-apps
+        if [ -z GITHUB_API_KEY ]; then
+          api_result=`curl -s \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/$repo/commits?per_page=1`
+        else
+          api_result=`curl -s \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authentication: token $GITHUB_API_KEY" \
+            https://api.github.com/repos/$repo/commits?per_page=1`
+        fi
 
         # If there's an error, log it and wait 30 seconds
+        is_array=`echo $api_result | jq -r 'if type=="array" then "yes" else "no" end'`
         if [ "$is_array" = "no" ]; then
           echo "- Github API Error: $( echo "$api_result" | jq -r .message )"
           echo "- Waiting 30 seconds before trying again..."
@@ -46,7 +54,8 @@ while read -r line; do
     fi
   fi
 
-  if [[ $index -eq 2 ]]; then # 
+  # Update the pinned commit if possible
+  if [[ $index -eq 2 ]]; then
     if [ ! -z "$repo" ] && [ ! -z "$latest_commit" ] && [[ $line =~ $pin_commit_regex ]]; then 
       line_number=`echo $line | awk -F "-" '{print $1}'`
       sed -r -i -- "${line_number}s/commit = pin_commit[(][^()]*[)]/commit = pin_commit('${latest_commit}')/" "../lua/doom/modules/init.lua"
