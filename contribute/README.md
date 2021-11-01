@@ -19,6 +19,9 @@ options:
 -h     Shows this help menu
 ```
 
+The script will start an instance of neovim that uses `./contribute/doom-nvim-contrib/` for configuration.  
+You will then be able to start making changes within `doom-nvim-contrib` without breaking your existing config.
+
 ### What this script does
 
 1. On first execution it will setup a git worktree of doom-nvim, this means your main config and this copy of the repo will share the same git history.
