@@ -61,64 +61,57 @@ return function()
     local installed_servers = lspmanager.installed_servers()
     local available_servers = lspmanager.available_servers()
 
+    print("Installed servers")
+    for _, s in ipairs(installed_servers) do
+      print(s)
+    end
+
     local modules = require("doom.core.config.modules").modules
     local langs = modules.langs
 
+    -- Find all LSPs that need to be installed
+    local ensure_installed = {}
     for _, lang in ipairs(langs) do
-      local lang_str = lang
-      lang = lang:gsub("%s+%+lsp(%(%a+%))", ""):gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
-      if utils.has_key(servers, lang) then
-        local lsp_name = servers[lang][1]
 
-        -- Allow overriding of LSP using `+lsp(OVERRIDE_LSP_NAME)` syntax
-        local lsp_override = lang_str:match("+lsp%((%a+)%)")
-        if lsp_override ~= nil then
-          lsp_name = lsp_override
+      -- Lang name used for key in servers table
+      local lang_name = lang:gsub("%s+%+lsp(%(%a+%))", ""):gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
+      -- Get LSP override +lsp(<override>) if it exists
+      local lsp_override = lang:match("+lsp%((.+)%)")
+      -- Array of lsps to ensure are installed
+      local lang_lsps = lsp_override ~= nil 
+        and vim.split(lsp_override, ',')
+        or servers[lang_name] ~= nil 
+          and servers[lang_name] 
+          or nil
 
-          -- Uninstall the default LSP to avoid conflicts
-          if utils.has_value(installed_servers, lsp_name) then
-            log.warn(
-              "Uninstalling "
-                .. lang
-                .. " ("
-                .. lsp_name
-                .. ") "
-                .. " LSP due to "
-                .. lsp_override
-                .. " LSP being supplied in config.  If you want to revert back to "
-                .. lsp_name
-                .. " LSP you will have to manually uninstall "
-                .. lsp_override
-                .. "."
-            )
-            lspmanager.uninstall_server(lsp_name)
-          end
-        end
+      local should_install_lsp = lang:find('+lsp')
 
-        -- If the +lsp flag exists and the language server is not installed yet
-        if lang_str:find("%+lsp") and (not utils.has_value(installed_servers, lsp_name)) then
-          -- Try to install the server only if there is a server available for
-          -- the language, oterwise raise a warning
-          if utils.has_value(available_servers, lsp_name) then
-            lspmanager.install(lsp_name)
-          else
-            if lsp_override ~= nil then
-              log.warn(
-                'The LSP override supplied in "'
-                  .. lang_str
-                  .. '" does not exist, please remove "('
-                  .. lsp_name
-                  .. ')"'
-              )
+      -- Save all lsps to ensure_installed
+      if should_install_lsp then
+        if lang_lsps ~= nil then
+          for _, lsp_name in ipairs(lang_lsps) do
+            local trimmed_lsp_name = vim.trim(lsp_name)
+            if utils.has_value(ensure_installed, trimmed_lsp_name) == false then
+              table.insert(ensure_installed, trimmed_lsp_name)
             end
           end
+        else
+          log.error("The language \"" .. lang .. '\" does not have an LSP, please remove the "+lsp" flag.')
         end
-      else
-        if lang_str:find("%+lsp") then
-          log.warn(
-            "The language " .. lang .. ' does not have a server, please remove the "+lsp" flag'
-          )
-        end
+      end
+    end
+
+    -- Uninstall all LSPs that shouldn't be installed
+    for i, server in ipairs(available_servers) do
+      if utils.has_value(ensure_installed, server) == false and utils.has_value(installed_servers, server) then
+        lspmanager.uninstall(server)
+      end
+    end
+
+    -- Install all LSPs that should be installed
+    for i, server in ipairs(ensure_installed) do
+      if utils.has_value(installed_servers, server) == false then
+        lspmanager.install(server)
       end
     end
   end
@@ -160,6 +153,7 @@ return function()
 
     local installed_servers = lspmanager.installed_servers()
     for _, server in pairs(installed_servers) do
+      print('Setting up server '..server)
       -- Configure sumneko for neovim lua development
       if server == "sumneko_lua" then
         nvim_lsp.sumneko_lua.setup(lua_lsp)

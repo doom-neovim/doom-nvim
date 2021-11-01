@@ -504,7 +504,7 @@ can use the packer's `config` field, e.g.
 [Language Server Protocols](https://microsoft.github.io/language-server-protocol/) is installed as a plugin.
 
 To easily install language servers and without having to do it system-wide or having to
-manually configure servers, Doom Nvim makes use of [kabouzeid/nvim-lspinstall](https://github.com/kabouzeid/nvim-lspinstall).
+manually configure servers, Doom Nvim makes use of [MordechaiHadad/nvim-lspmanager](https://github.com/MordechaiHadad/nvim-lspmanager).
 
 To enable the language server for a certain programming language and automatically
 install it, just append a `+lsp` flag at the end of the language field in your `doom_modules.lua`,
@@ -518,10 +518,18 @@ local doom = {
 }
 ```
 
-> **NOTE**: You can see a list of currently supported languages at [bundled installers](https://github.com/kabouzeid/nvim-lspinstall#bundled-installers).
+You can also override or add additional LSPs for a language using the `+lsp(OVERRIDE)` syntax.
 
-> **NOTE**: If you want a different language server, you can override the name using the following syntax `+lsp(OVERRIDE_LSP_NAME)`
-Where `OVERRIDE_LSP_NAME` is a different option at [bundled installers](https://github.com/kabouzeid/nvim-lspinstall).
+```lua
+local doom = {
+  langs = {
+    'html +lsp(html, tailwindcss)' -- Enable extra LSPs for a language
+    'vue +lsp(volar)' -- Or override the default
+  }
+}
+```
+
+> **NOTE**: You can see a list of currently supported languages at [bundled installers](https://github.com/MordechaiHadad/nvim-lspmanager#supported-language-servers).
 
 ### Binding keys
 
