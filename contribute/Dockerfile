@@ -22,7 +22,7 @@ RUN	pacman -Syy
 RUN pacman -Sy neovim --noconfirm
 
 # Install runtime dependencies of doom-nvim
-RUN pacman -Sy ripgrep nodejs-lts-fermium npm git bash gcc --noconfirm
+RUN pacman -Sy ripgrep nodejs-lts-fermium npm git bash gcc jq --noconfirm
 
 # Required for watching Doom-nvim-contrib for changes
 RUN npm i -g chokidar-cli
