@@ -46,7 +46,11 @@ cd "$SCRIPT_DIR" || exit
 # Create the worktree if it doesn't already exist
 if [[ ! -d "$SCRIPT_DIR"/doom-nvim-contrib ]]; then
   echo "0. Creating new git worktree of doom-nvim at $SCRIPT_DIR/doom-nvim-contrib"
-  git worktree add ./doom-nvim-contrib origin/develop -b "$BRANCH_NAME" -f 
+  if git show-ref --quiet refs/heads/"$BRANCH_NAME"; then
+    git worktree add ./doom-nvim-contrib "$BRANCH_NAME"
+  else
+    git worktree add ./doom-nvim-contrib origin/develop -b "$BRANCH_NAME" 
+  fi
 fi
 
 # CD into worktree
