@@ -24,6 +24,7 @@ return function()
     elixir = { "elixirls" },
     haskell = { "hls" },
     vue = { "vuels" },
+    config = { "jsonls" }
   }
 
   -- Snippets support
@@ -73,10 +74,10 @@ return function()
       -- Get LSP override +lsp(<override>) if it exists
       local lsp_override = lang:match("+lsp%((.+)%)")
       -- Array of lsps to ensure are installed
-      local lang_lsps = lsp_override ~= nil 
+      local lang_lsps = lsp_override ~= nil
         and vim.split(lsp_override, ',')
-        or servers[lang_name] ~= nil 
-          and servers[lang_name] 
+        or servers[lang_name] ~= nil
+          and servers[lang_name]
           or nil
 
       local should_install_lsp = lang:find('+lsp')
@@ -97,14 +98,14 @@ return function()
     end
 
     -- Uninstall all LSPs that shouldn't be installed
-    for i, server in ipairs(available_servers) do
+    for _, server in ipairs(available_servers) do
       if utils.has_value(ensure_installed, server) == false and utils.has_value(installed_servers, server) then
         lspmanager.uninstall(server)
       end
     end
 
     -- Install all LSPs that should be installed
-    for i, server in ipairs(ensure_installed) do
+    for _, server in ipairs(ensure_installed) do
       if utils.has_value(installed_servers, server) == false then
         lspmanager.install(server)
       end
