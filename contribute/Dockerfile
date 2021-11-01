@@ -37,10 +37,6 @@ RUN chown -R ${UNAME}:${GNAME} /usr/local/lib/node_modules/
 USER doom
 WORKDIR /home/doom
 
-# Install packer
-RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-
 COPY _docker_entry.sh /usr/local/bin/
 
 # Doom-nvim-contrib
