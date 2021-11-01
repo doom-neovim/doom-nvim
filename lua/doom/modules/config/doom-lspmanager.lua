@@ -61,11 +61,6 @@ return function()
     local installed_servers = lspmanager.installed_servers()
     local available_servers = lspmanager.available_servers()
 
-    print("Installed servers")
-    for _, s in ipairs(installed_servers) do
-      print(s)
-    end
-
     local modules = require("doom.core.config.modules").modules
     local langs = modules.langs
 
@@ -153,7 +148,6 @@ return function()
 
     local installed_servers = lspmanager.installed_servers()
     for _, server in pairs(installed_servers) do
-      print('Setting up server '..server)
       -- Configure sumneko for neovim lua development
       if server == "sumneko_lua" then
         nvim_lsp.sumneko_lua.setup(lua_lsp)
