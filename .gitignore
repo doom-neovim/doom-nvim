@@ -13,6 +13,6 @@ tags
 # OS files
 .DS_Store
 # Doom Nvim Contrib files
-docker/doom-nvim-contrib
-docker/local-share-nvim
-docker/workspace
+contribute/doom-nvim-contrib
+contribute/local-share-nvim
+contribute/workspace
