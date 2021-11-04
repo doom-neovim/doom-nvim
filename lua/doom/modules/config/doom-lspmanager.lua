@@ -24,7 +24,7 @@ return function()
     elixir = { "elixirls" },
     haskell = { "hls" },
     vue = { "vuels" },
-    config = { "jsonls" }
+    config = { "jsonls" },
   }
 
   -- Snippets support
@@ -74,19 +74,19 @@ return function()
     -- Find all LSPs that need to be installed
     local ensure_installed = {}
     for _, lang in ipairs(langs) do
-
       -- Lang name used for key in servers table
-      local lang_name = lang:gsub("%s+%+lsp(%(%a+%))", ""):gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
+      local lang_name = lang
+        :gsub("%s+%+lsp(%(%a+%))", "")
+        :gsub("%s+%+lsp", "")
+        :gsub("%s+%+debug", "")
       -- Get LSP override +lsp(<override>) if it exists
       local lsp_override = lang:match("+lsp%((.+)%)")
       -- Array of lsps to ensure are installed
-      local lang_lsps = lsp_override ~= nil
-        and vim.split(lsp_override, ',')
-        or servers[lang_name] ~= nil
-          and servers[lang_name]
-          or nil
+      local lang_lsps = lsp_override ~= nil and vim.split(lsp_override, ",")
+        or servers[lang_name] ~= nil and servers[lang_name]
+        or nil
 
-      local should_install_lsp = lang:find('+lsp')
+      local should_install_lsp = lang:find("+lsp")
 
       -- Save all lsps to ensure_installed
       if should_install_lsp then
@@ -98,14 +98,19 @@ return function()
             end
           end
         else
-          log.error("The language \"" .. lang .. '\" does not have an LSP, please remove the "+lsp" flag.')
+          log.error(
+            'The language "' .. lang .. '" does not have an LSP, please remove the "+lsp" flag.'
+          )
         end
       end
     end
 
     -- Uninstall all (default) LSPs that shouldn't be installed
     for _, lsp_name in ipairs(default_servers) do
-      if utils.has_value(ensure_installed, lsp_name) == false and utils.has_value(installed_servers, lsp_name) then
+      if
+        utils.has_value(ensure_installed, lsp_name) == false
+        and utils.has_value(installed_servers, lsp_name)
+      then
         lspmanager.uninstall(lsp_name)
       end
     end
