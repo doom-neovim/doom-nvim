@@ -37,3 +37,22 @@ These are the folders used by this docker image, they will be auto generated whe
 `contribute/doom-nvim-contrib/` - Git worktree for doom-nvim contributions
 `contribute/local-share-nvim/` - Stores the data from `~/.local/share/nvim/` 
 `contribute/workspace/` - Directory to store test files and project that you want to test your changes upon
+
+## Pinned Dependencies `./update_dependencies.sh`
+
+This script parses the `lua/doom/modules/init.lua` file and pins each plugin to the latest commit in the default branch.  
+We should update these dependencies with each release of doom-nvim, and test everything working together to ensure a stable experience for users.
+Pinned/frozen dependencies can be disabled using the `freeze_dependencies` configuration option in `doom_config.lua`.
+
+### How to use
+
+Run the following command in the root of the neovim folder.
+```bash
+cd contribute && ./update_dependencies.sh`
+```
+
+### Issues
+- The `commit = pin_commit(...)` line must be immediately after the package name
+- It does not work if the dependency also has the `branch = '...'` option.  These will have to be updated manually.
+- It does not work if there is custom logic for determining pinned commits (such as depending on neovim version).  These will have to be updated manually.
+- Github API ratelimits requests, you can specify a GITHUB_API_KEY environment variable (docs)[https://docs.github.com/en/developers/apps/building-oauth-apps], or you can use a VPN to change IP addresses.
