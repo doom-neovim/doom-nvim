@@ -1053,6 +1053,31 @@ utils.map(
 -- debugging
 utils.map(
   "n",
+  "<leader>cdb",
+  "<cmd>lua require('dap').toggle_breakpoint()<CR>",
+  opts,
+  "DAP",
+  "dap_toggle_brkpt",
+  "Toggle breakpoint on current line"
+)
+utils.map(
+  "n",
+  "<leader>cdc",
+  "<cmd>lua require('dap').toggle_breakpoint()<CR>",
+  opts,
+  "DAP",
+  "dap_continue",
+  "Start (or continue) a debug session"
+)
+utils.map(
+  "n",
+  "<leader>cdd",
+  "<cmd>lua require('dap').disconnect()",
+  "DAP",
+  "dap_disconnect",
+  "End debugging session")
+utils.map(
+  "n",
   "<leader>cde",
   "<cmd>lua require('dapui').eval()<CR>",
   opts,
