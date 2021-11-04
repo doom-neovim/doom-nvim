@@ -60,7 +60,13 @@ return function()
   -- Load langs from doom_modules and install servers with +lsp flag
   local function install_servers()
     local installed_servers = lspmanager.installed_servers()
-    local available_servers = lspmanager.available_servers()
+    -- Flatten the array of default servers.  Default servers will be automatically uninstalled if no +lsp flag is provided.
+    local default_servers = {}
+    for _, lang_servers in pairs(servers) do
+      for _, lsp_name in ipairs(lang_servers) do
+        table.insert(default_servers, lsp_name)
+      end
+    end
 
     local modules = require("doom.core.config.modules").modules
     local langs = modules.langs
@@ -97,17 +103,17 @@ return function()
       end
     end
 
-    -- Uninstall all LSPs that shouldn't be installed
-    for _, server in ipairs(available_servers) do
-      if utils.has_value(ensure_installed, server) == false and utils.has_value(installed_servers, server) then
-        lspmanager.uninstall(server)
+    -- Uninstall all (default) LSPs that shouldn't be installed
+    for _, lsp_name in ipairs(default_servers) do
+      if utils.has_value(ensure_installed, lsp_name) == false and utils.has_value(installed_servers, lsp_name) then
+        lspmanager.uninstall(lsp_name)
       end
     end
 
     -- Install all LSPs that should be installed
-    for _, server in ipairs(ensure_installed) do
-      if utils.has_value(installed_servers, server) == false then
-        lspmanager.install(server)
+    for _, lsp_name in ipairs(ensure_installed) do
+      if utils.has_value(installed_servers, lsp_name) == false then
+        lspmanager.install(lsp_name)
       end
     end
   end
