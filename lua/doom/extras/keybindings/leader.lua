@@ -766,7 +766,8 @@ utils.map(
   "<cmd>lua require('dap').disconnect()",
   "DAP",
   "dap_disconnect",
-  "End debugging session")
+  "End debugging session"
+)
 utils.map(
   "n",
   "<leader>cde",
