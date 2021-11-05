@@ -1063,7 +1063,7 @@ utils.map(
 utils.map(
   "n",
   "<leader>cdc",
-  "<cmd>lua require('dap').toggle_breakpoint()<CR>",
+  "<cmd>lua require('dap').continue()<CR>",
   opts,
   "DAP",
   "dap_continue",
@@ -1073,6 +1073,7 @@ utils.map(
   "n",
   "<leader>cdd",
   "<cmd>lua require('dap').disconnect()",
+  opts,
   "DAP",
   "dap_disconnect",
   "End debugging session"
