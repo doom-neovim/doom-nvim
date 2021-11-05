@@ -97,9 +97,9 @@ return function()
       },
       ["d"] = {
         name = "+debug",
-        ["b"] = { "Toggle breakpoint on current line"},
+        ["b"] = { "Toggle breakpoint on current line" },
         ["c"] = { "Start (or continue) a debug session" },
-        ["t"] = { "Terminate debug session"},
+        ["t"] = { "Terminate debug session" },
         ["e"] = { "Evaluate word under cursor" },
         ["s"] = { "Evaluate selection" },
       },
