@@ -107,11 +107,13 @@ settings.load_default_options = function()
   end
 
   -- Set numbering
-  if config.doom.relative_num then
-    vim.opt.number = true
-    vim.opt.relativenumber = true
-  else
-    vim.opt.number = true
+  if config.doom.enable_numbering then
+    if config.doom.relative_num then
+      vim.opt.number = true
+      vim.opt.relativenumber = true
+    else
+      vim.opt.number = true
+    end
   end
 
   -- Enable winwidth

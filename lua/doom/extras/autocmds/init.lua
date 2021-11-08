@@ -57,19 +57,21 @@ local autocmds = {
   },
 }
 
--- Set relative numbers
-if config.doom.relative_num then
-  table.insert(autocmds["doom_core"], {
-    "BufEnter,WinEnter",
-    "*",
-    "if &nu | set rnu | endif",
-  })
-else
-  table.insert(autocmds["doom_core"], {
-    "BufEnter,WinEnter",
-    "*",
-    "if &nu | set nornu | endif",
-  })
+-- Set numbering
+if config.doom.enable_numbering then
+  if config.doom.relative_num then
+    table.insert(autocmds["doom_core"], {
+      "BufEnter,WinEnter",
+      "*",
+      "if &nu | set rnu | endif",
+    })
+  else
+    table.insert(autocmds["doom_core"], {
+      "BufEnter,WinEnter",
+      "*",
+      "if &nu | set nornu | endif",
+    })
+  end
 end
 
 -- Install plugins on launch
