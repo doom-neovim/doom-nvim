@@ -159,7 +159,7 @@ M.config = {
     -- @default = true
     expand_tabs = true,
 
-		-- Set numbering
+    -- Set numbering
     -- false : Disable number lines
     -- true  : Enable  number lines
     -- @default = true

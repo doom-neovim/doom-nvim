@@ -316,8 +316,7 @@ local function get_buffer_info()
       "%s• %s%s",
       padding_level[2],
       "Is parser installed?" .. padding_level[2]:rep(3),
-      utils.has_value(require("nvim-treesitter.info").installed_parsers(), buffer_ft)
-          and "yes"
+      utils.has_value(require("nvim-treesitter.info").installed_parsers(), buffer_ft) and "yes"
         or "no"
     ),
     string.format(
