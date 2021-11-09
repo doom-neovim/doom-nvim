@@ -118,16 +118,36 @@ The currently available flags are the following:
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes, by using TSServer.
   - DAP client: yes.
+- **PHP**
+  - PHP support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: no.
 - **typescript**
   - TypeScript support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
-  - DAP client: no.
+  - DAP client: yes (via javascript).
+- **Svelte**
+  - Svelte support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: yes (via javascript).
+- **Vue**
+  - Vue support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: yes (via javascript).
 
 #### Scripting
 
 - **bash**
   - BASH support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: no.
+- **clojure**
+  - Clojure support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
   - DAP client: no.
@@ -140,6 +160,11 @@ The currently available flags are the following:
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
   - DAP client: no (it has but isn't supported by Doom _yet_, requires extra setup).
+- **powershell**
+  - PowerShell support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: no.
 - **python**
   - Python support.
   - TreeSitter based syntax highlighting: yes.
@@ -158,6 +183,11 @@ The currently available flags are the following:
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
   - DAP client: yes (not supported _yet_ by Doom for automatic installation).
+- **c_sharp (C#)**
+  - C# support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: no.
 - **go**
   - Golang support.
   - TreeSitter based syntax highlighting: yes.
@@ -173,6 +203,11 @@ The currently available flags are the following:
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
   - DAP client: no.
+- **kotlin**
+  - Kotlin support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: no.
 - **rust**
   - Rust support.
   - TreeSitter based syntax highlighting: yes.
@@ -181,10 +216,22 @@ The currently available flags are the following:
 
 #### Configs & DevOps
 
-- **config**
-  - Configuration languages support (JSON, YAML, TOML).
+- **json**/**json5**
+  - JSON support.
   - TreeSitter based syntax highlighting: yes.
-  - LSP: not yet.
+  - LSP: yes.
+- **yaml**
+  - YAML support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **toml**
+  - TOML support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: no.
+- **xml**
+  - XML support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: no.
 - **dockerfile**
   - Docker support.
   - TreeSitter based syntax highlighting: yes.
@@ -254,7 +301,7 @@ changes for you!
 
 [lsp]: https://github.com/neovim/nvim-lspconfig
 [compe]: https://github.com/hrsh7th/nvim-compe
-[lspinstall]: https://github.com/kabouzeid/nvim-lspinstall
+[lsp-installer]: https://github.com/williamboman/nvim-lsp-installer
 [LuaSnip]: https://github.com/L3MON4D3/LuaSnip
 [friendly-snippets]: https://github.com/rafamadriz/friendly-snippets
 

@@ -95,6 +95,7 @@ Its design is guided by these mantras:
 - GNU `find`
 - [ripgrep] 11.0+ or [fd] 7.3.0+ (optional but highly recommended, improves file indexing performance for some commands)
 - `nodejs` and `npm` (optional, required to use some Language Server Protocols)
+- `wget`, `unzip` (optional, required for auto installing LSPs)
 
 Doom is comprised of [~40 optional plugins][modules], some of which may have
 additional dependencies. [Please visit their documentation][modules].
