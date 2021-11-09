@@ -45,7 +45,15 @@ end
 --     Escape Remaps     --
 ---]]-----------------[[---
 for _, esc_seq in pairs(config.doom.escape_sequences) do
-    mappings.map("i", esc_seq, "<ESC>", opts, "Editor", "exit_insert" .. esc_seq, "Exit insert mode `" .. esc_seq .. "`")
+  mappings.map(
+    "i",
+    esc_seq,
+    "<ESC>",
+    opts,
+    "Editor",
+    "exit_insert" .. esc_seq,
+    "Exit insert mode `" .. esc_seq .. "`"
+  )
 end
 
 ---[[-----------------]]---
