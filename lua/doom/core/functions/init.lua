@@ -173,88 +173,111 @@ functions.open_docs = function()
   vim.opt_local.rightleft = false
 end
 
+local function get_system_info_string()
+	-- Get the neovim version
+	local nvim_vinfo = vim.version()
+	local nvim_version = string.format(
+		"%d.%d.%d", nvim_vinfo.major, nvim_vinfo.minor, nvim_vinfo.patch
+	)
+	if nvim_vinfo.api_prerelease then
+		nvim_version = nvim_version .. " (dev)"
+	end
+	-- Get the current OS and if the user is running Linux then get also the
+	-- distribution name, e.g. Manjaro
+	local user_os = vim.loop.os_uname().sysname
+	if user_os == "Linux" then
+		user_os = vim.trim(
+			-- PRETTY_NAME="Distribution (Additional info)", e.g.
+			--   PRETTY_NAME="Fedora 34 (KDE Plasma)"
+			vim.fn.system(
+				'cat /etc/os-release | grep "^PRETTY_NAME" | sed '
+				.. "'s/^PRETTY_NAME=\"//' | sed "
+				.. "'s/\"//'"
+			)
+		)
+	end
+	return string.format(
+[[- **OS**: %s
+- **Neovim version**: %s
+- **Doom Nvim information**:
+- **version**: %s
+- **`doom_root` variable**: `%s`
+- **`doom_configs_root` variable**: `%s`]],
+user_os,
+		nvim_version,
+		utils.doom_version,
+		system.doom_root,
+		system.doom_configs_root)
+end
+
+local function get_error_log_dump()
+	local log_date_format = os.date("%a %d %b %Y")
+	-- Get and save only the warning and error logs from today
+	local today_logs = {}
+	local doom_logs = vim.split(fs.read_file(system.doom_logs), "\n")
+	for _, doom_log in ipairs(doom_logs) do
+		if
+			string.find(doom_log, "ERROR " .. log_date_format)
+			or string.find(doom_log, "WARN  " .. log_date_format)
+		then
+			table.insert(today_logs, doom_log)
+		end
+	end
+
+	return string.format(
+[[```
+%s
+```]], table.concat(today_logs, "\n"))
+end
+
 -- create_report creates a markdown report. It's meant to be used when a bug
 -- occurs, useful for debugging issues.
 functions.create_report = function()
-  local date = os.date("%Y-%m-%d %H:%M:%S")
-  local log_date_format = os.date("%a %d %b %Y")
-
-  local created_report, err = xpcall(function()
-    -- Get and save only the warning and error logs from today
-    local today_logs = {}
-    local doom_logs = vim.split(fs.read_file(system.doom_logs), "\n")
-    for _, doom_log in ipairs(doom_logs) do
-      if
-        string.find(doom_log, "ERROR " .. log_date_format)
-        or string.find(doom_log, "WARN  " .. log_date_format)
-      then
-        table.insert(today_logs, doom_log)
-      end
-    end
-
-    -- Get the neovim version
-    local nvim_version_info = vim.version()
-    local nvim_version = string.format(
-      "%d.%d.%d",
-      nvim_version_info.major,
-      nvim_version_info.minor,
-      nvim_version_info.patch
-    )
-    if nvim_version_info.api_prerelease then
-      nvim_version = nvim_version .. " (dev)"
-    end
-
-    -- Get the current OS and if the user is running Linux then get also the
-    -- distribution name, e.g. Manjaro
-    local user_os = vim.loop.os_uname().sysname
-    if user_os == "Linux" then
-      user_os = vim.trim(
-        -- PRETTY_NAME="Distribution (Additional info)", e.g.
-        --   PRETTY_NAME="Fedora 34 (KDE Plasma)"
-        vim.fn.system(
-          'cat /etc/os-release | grep "^PRETTY_NAME" | sed '
-            .. "'s/^PRETTY_NAME=\"//' | sed "
-            .. "'s/\"//'"
-        )
-      )
-    end
-
-    local report = string.format(
-      [[# Doom Nvim crash report
+	local date = os.date("%Y-%m-%d %H:%M:%S")
+	local created_report, err = xpcall(function()
+		local report = string.format(
+[[# Doom Nvim crash report
 
 > Report date: %s
 
 ## System and Doom Nvim information
 
-- **OS**: %s
-- **Neovim version**: %s
-- **Doom Nvim information**:
-  - **version**: %s
-  - **`doom_root` variable**: `%s`
-  - **`doom_configs_root` variable**: `%s`
+%s
 
 ### Begin error log dump
 
-```
 %s
-```
 
 ### End log dump]],
-      date,
-      user_os,
-      nvim_version,
-      utils.doom_version,
-      system.doom_root,
-      system.doom_configs_root,
-      table.concat(today_logs, "\n")
-    )
-    fs.write_file(system.doom_report, report, "w+")
-    log.info("Report created at " .. system.doom_report)
-  end, debug.traceback)
+            date,
+            get_system_info_string(),
+            get_error_log_dump()
+		)
+		fs.write_file(system.doom_report, report, "w+")
+		log.info("Report created at " .. system.doom_report)
+	end, debug.traceback)
 
-  if not created_report then
-    log.error("Error while writing report. Traceback:\n" .. err)
-  end
+	if not created_report then
+		log.error("Error while writing report. Traceback:\n" .. err)
+	end
+end
+
+-- open empty buffer and read crash report so that an issue can be
+-- documented fast when it occurs
+functions.report_an_issue = function()
+    functions.create_report()
+	vim.cmd([[ :vert new ]])
+	-- print(system.doom_report)
+	vim.cmd("read " .. system.doom_report)
+end
+
+-- open buffer and read feat req template so that one can quickly
+-- document
+functions.create_feat_request = function()
+	vim.cmd([[ :vert new ]])
+	vim.cmd("read " .. system.doom_root .. "/templates/feat_request.md")
+	local bufnr = vim.api.nvim_get_current_buf()
+	vim.api.nvim_buf_set_text(bufnr, 5,0,5,0, utils.str_2_table(get_system_info_string(), "\n"))
 end
 
 -- save_backup_hashes saves the commits or releases SHA for future rollbacks

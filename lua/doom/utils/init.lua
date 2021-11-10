@@ -84,6 +84,17 @@ utils.has_key = function(tabl, key)
   return false
 end
 
+-- Convert string to table.
+-- @param s         string
+-- @param delimiter string
+utils.str_2_table = function(s, delimiter)
+    local result = {};
+    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+        table.insert(result, match);
+    end
+    return result;
+end
+
 --- Executes a git command and gets the output
 --- @param command string
 --- @param remove_newlines boolean

@@ -176,6 +176,12 @@ settings.doom_commands = function()
   -- Set a custom command to create a crash report
   -- can be called by using :DoomReport
   vim.cmd('command! DoomReport lua require("doom.core.functions").create_report()')
+  -- Set a custom command to document an issue
+  -- can be called by using :DoomIssue
+  vim.cmd('command! DoomIssue lua require("doom.core.functions").report_an_issue()')
+  -- Set a custom command to create a feature request/idea.
+  -- can be called by using :DoomFeatReq
+  vim.cmd('command! DoomFeatReq lua require("doom.core.functions").create_feat_request()')
   -- Set a custom command to display an information dashboard
   -- can be called by using :DoomInfo
   vim.cmd('command! DoomInfo lua require("doom.modules.built-in.info").toggle()')

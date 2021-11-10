@@ -252,6 +252,33 @@ mappings.map(
   "display_info_dashboard",
   "Display information dashboard"
 )
+mappings.map(
+    "n",
+    "<leader>dR",
+    "<cmd>DoomReport<CR>",
+    opts,
+    "Doom",
+    "create_crash_report",
+    "Create crash report"
+)
+mappings.map(
+    "n",
+    "<leader>dI",
+    "<cmd>DoomIssue<CR>",
+    opts,
+    "Doom",
+    "document_issue",
+    "Document Issue"
+)
+mappings.map(
+    "n",
+    "<leader>dF",
+    "<cmd>DoomFeatReq<CR>",
+    opts,
+    "Doom",
+    "feat_request",
+    "Feat Request"
+)
 
 -- plugins
 mappings.map(

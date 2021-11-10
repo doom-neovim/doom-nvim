@@ -121,9 +121,11 @@ return function()
       ["i"] = { "Open Doom Nvim information dashboard" },
       ["u"] = { "Update Doom Nvim" },
       ["r"] = { "Rollback Doom Nvim version" },
-      ["R"] = { "Create crash report" },
       ["s"] = { "Change colorscheme" },
       ["l"] = { "Reload user custom settings" },
+      ["R"] = { "Create crash report" },
+      ["F"] = { "Document New Feature" },
+      ["I"] = { "Document an Issue" },
     },
     ["f"] = {
       name = "+file",
