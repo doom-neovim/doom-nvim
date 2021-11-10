@@ -124,6 +124,7 @@ return function()
       ["R"] = { "Create crash report" },
       ["s"] = { "Change colorscheme" },
       ["l"] = { "Reload user custom settings" },
+      ["D"] = { "Reload doom core" },
     },
     ["f"] = {
       name = "+file",
@@ -156,6 +157,7 @@ return function()
       ["C"] = { "Compile your plugins changes" },
       ["i"] = { "Install missing plugins" },
       ["p"] = { "Profile the time taken loading your plugins" },
+      ["r"] = { "Reload plugin" },
       ["s"] = { "Sync your plugins" },
       ["S"] = { "Plugins status" },
     },

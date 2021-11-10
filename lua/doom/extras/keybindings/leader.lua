@@ -244,6 +244,15 @@ mappings.map(
   "Reload user custom settings"
 )
 mappings.map(
+    "n",
+    "<leader>dD",
+    "<cmd>DoomReload<CR>",
+    opts,
+    "Doom",
+    "reload_doom_core",
+    "Reload doom core"
+)
+mappings.map(
   "n",
   "<leader>di",
   "<cmd>DoomInfo<CR>",
@@ -307,6 +316,15 @@ mappings.map(
   "Plugins",
   "packer_profile",
   "Profile the time taken loading your plugins"
+)
+mappings.map(
+    "n",
+    "<leader>pr",
+    "<cmd>Telescope reloader<CR>",
+    opts,
+    "Plugins",
+    "plugin_reloader",
+    "Plugins reloader picker"
 )
 
 -- files
