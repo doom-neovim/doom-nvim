@@ -44,8 +44,17 @@ end
 ---[[-----------------]]---
 --     Escape Remaps     --
 ---]]-----------------[[---
-mappings.map("i", "jk", "<ESC>", opts, "Editor", "exit_insert", "Exit insert mode")
-mappings.map("i", "kj", "<ESC>", opts, "Editor", "exit_insert_alt", "Exit insert mode")
+for _, esc_seq in pairs(config.doom.escape_sequences) do
+  mappings.map(
+    "i",
+    esc_seq,
+    "<ESC>",
+    opts,
+    "Editor",
+    "exit_insert" .. esc_seq,
+    "Exit insert mode `" .. esc_seq .. "`"
+  )
+end
 
 ---[[-----------------]]---
 --    Make inclusive     --
