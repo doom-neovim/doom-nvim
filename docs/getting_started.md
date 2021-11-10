@@ -199,7 +199,7 @@ brew install node
 
 #### On Windows
 
-```sh
+```powershell
 # Required dependencies
 # Windows needs mingw for gcc
 choco install git ripgrep mingw
