@@ -74,6 +74,7 @@ M.modules = {
     -- "haskell",         -- Because Functional programming is fun, isn't it?
     -- "java",            -- Java support
     -- "rust +lsp",       -- Let's get rusty!
+    -- "scala",           -- Java, but good
 
     -- "comment",         -- Better annotations and comments
     -- "config",          -- Configuration files (JSON, YAML, TOML)

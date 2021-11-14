@@ -59,6 +59,8 @@ return function()
     yaml = { "yamlls" },
     config = { "jsonls", "yamlls" },
   }
+  -- Add out-of-the-box support for Scala metals LSP
+  local should_setup_scala_lsp = false
 
   -- Snippets support
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -153,9 +155,14 @@ return function()
             end
           end
         else
-          log.error(
-            'The language "' .. lang .. '" does not have an LSP, please remove the "+lsp" flag.'
-          )
+          if lang:find("scala") then
+            -- Enable setup for Scala Metals LSP
+            should_setup_scala_lsp = true
+          else
+            log.error(
+              'The language "' .. lang .. '" does not have an LSP, please remove the "+lsp" flag.'
+            )
+          end
         end
       end
     end
@@ -198,6 +205,14 @@ return function()
           end
         end
       end
+    end
+
+    -- Setup Scala Metals LSP
+    if should_setup_scala_lsp then
+      require("lspconfig").metals.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
     end
 
     -- Print intalling/uninstalling information to user on startup
