@@ -58,7 +58,7 @@ local autocmds = {
 }
 
 -- Set numbering
-if config.doom.enable_numbering then
+if not config.doom.disable_numbering then
   if config.doom.relative_num then
     table.insert(autocmds["doom_core"], {
       "BufEnter,WinEnter",

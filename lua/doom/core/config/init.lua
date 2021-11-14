@@ -162,10 +162,10 @@ config.config = {
     expand_tabs = true,
 
     -- Set numbering
-    -- false : Disable number lines
-    -- true  : Enable  number lines
-    -- @default = true
-    enable_numbering = true,
+    -- false : Enable  number lines
+    -- true  : Disable number lines
+    -- @default = false
+    disable_numbering = false,
 
     -- Set numbering style
     -- false : Shows absolute number lines
