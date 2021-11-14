@@ -67,7 +67,7 @@ while read -r line; do
 
   let index+=1
   if [[ $line == '--' ]]; then
-    sleep 5
+    sleep 2
     index=0
     repo=''
     latest_commit=''
