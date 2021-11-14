@@ -44,7 +44,7 @@ end
 ---[[-----------------]]---
 --     Escape Remaps     --
 ---]]-----------------[[---
-for _, esc_seq in pairs(config.doom.escape_sequences) do
+for _, esc_seq in pairs(config.doom.escape_sequences or { "jk", "kj" }) do
   mappings.map(
     "i",
     esc_seq,
