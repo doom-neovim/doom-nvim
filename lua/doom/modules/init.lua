@@ -64,7 +64,7 @@ packer.startup(function(use)
   use({
     "nvim-treesitter/nvim-treesitter",
     commit = vim.fn.has("nvim-0.6.0") == 1 and pin_commit(
-      "fe4e4aa286ba14e949948ef6e826d69c63048cdb"
+      "a47df48e7d4232fd771f2537a4fb43f582c026c9"
     ) or pin_commit("47cfda2c6711077625c90902d7722238a8294982"),
     opt = true,
     run = ":TSUpdate",
@@ -98,7 +98,7 @@ packer.startup(function(use)
   local disabled_neorg = is_plugin_disabled("neorg")
   use({
     "nvim-neorg/neorg",
-    commit = pin_commit("592fb0c9c220ca53238e6de7685c3151fe3a3085"),
+    commit = --[[NO AUTO UPDATE]] pin_commit("17602389089d56907bbfc026c3dba19f9d24c2dd"),
     branch = "unstable",
     config = require("doom.modules.config.doom-neorg"),
     disable = disabled_neorg,
