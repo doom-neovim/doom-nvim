@@ -451,7 +451,7 @@ packer.startup(function(use)
   -- Manage Language serverss with ease.
   use({
     "williamboman/nvim-lsp-installer",
-    commit = pin_commit('35d4b08d60c17b79f8e16e9e66f0d7693c99d612'),
+    commit = pin_commit("35d4b08d60c17b79f8e16e9e66f0d7693c99d612"),
     config = require("doom.modules.config.doom-lsp-installer"),
     disable = disabled_lsp,
   })
