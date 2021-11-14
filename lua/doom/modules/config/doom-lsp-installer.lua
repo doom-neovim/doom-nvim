@@ -220,7 +220,7 @@ return function()
   -- Defer auto install to unblock startup
   vim.defer_fn(function ()
     setup_servers()
-  end, 100)
+  end, 50)
 
 
 end
