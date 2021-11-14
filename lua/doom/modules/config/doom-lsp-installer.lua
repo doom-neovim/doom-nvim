@@ -6,58 +6,58 @@ return function()
   -- Commented out defualt servers don't have treesitter configs
   local servers = {
     lua = { "sumneko_lua" },
-    ansible = { 'ansiblels' },
+    ansible = { "ansiblels" },
     angular = { "angularls" },
     bash = { "bashls" },
     -- bicep = { 'bicep' },
-    c_sharp = { 'omnisharp' },
+    c_sharp = { "omnisharp" },
     c = { "clangd" },
     cpp = { "clangd" },
     cmake = { "cmake" },
     css = { "cssls" },
-    clojure = { 'clojure_lsp' },
+    clojure = { "clojure_lsp" },
     -- codeql = { 'codeqlls' },
     -- deno = { 'denols' },
     -- dlang = { 'serve_d' },
-    dockerfile = { 'dockerls' },
-    dot = { 'dotls' },
-    elixer = { 'elixerls' },
-    elm = { 'elmls' },
-    ember = { 'ember' },
-    fortran = { 'fortls' },
+    dockerfile = { "dockerls" },
+    dot = { "dotls" },
+    elixer = { "elixerls" },
+    elm = { "elmls" },
+    ember = { "ember" },
+    fortran = { "fortls" },
     -- ['f#'] = { 'fsautocomplete' },
     go = { "gopls" },
-    graphql = { 'graphql' },
-    groovy = { 'groovyls' },
+    graphql = { "graphql" },
+    groovy = { "groovyls" },
     html = { "html" },
-    haskel = { 'hls' },
+    haskel = { "hls" },
     json = { "jsonls" },
-    json5 = { 'jsonls' },
-    java = { 'jdtls' },
+    json5 = { "jsonls" },
+    java = { "jdtls" },
     javascript = { "tsserver" },
-    kotlin = { 'kotlin_language_server' },
-    latex = { 'texlab' },
-    ocaml = { 'ocamells' },
-    php = { 'phpactor' },
-    powershell = { 'powershell_es' },
+    kotlin = { "kotlin_language_server" },
+    latex = { "texlab" },
+    ocaml = { "ocamells" },
+    php = { "phpactor" },
+    powershell = { "powershell_es" },
     -- prisma = { 'prismals' },
     -- puppet = { 'puppet' },
     -- purescript = { 'purescriptls' },
     python = { "pyright" },
     -- rescript = { 'rescriptls' },
     -- rome = { 'rome' },
-    ruby = { 'solargraph' },
+    ruby = { "solargraph" },
     rust = { "rust_analyzer" },
     -- solang = { 'solang' },
     -- sorbet = { 'sorbet' },
-    svelte = { 'svelte' },
+    svelte = { "svelte" },
     typescript = { "tsserver" },
     -- vala = { 'valals' },
-    vim = { 'vimls' },
+    vim = { "vimls" },
     vue = { "vuels" },
-    xml = { 'lemminx' },
-    yaml = { 'yamlls' },
-    config = { "jsonls", 'yamlls' },
+    xml = { "lemminx" },
+    yaml = { "yamlls" },
+    config = { "jsonls", "yamlls" },
   }
 
   -- Snippets support
@@ -177,17 +177,17 @@ return function()
     for _, lsp_name in ipairs(default_servers) do
       local ok, server = lsp_installer.get_server(lsp_name)
       if ok then
-
         if not utils.has_value(ensure_installed, lsp_name) then
           if server:is_installed() then
             table.insert(uninstalling_servers, lsp_name)
             server:uninstall()
           end
         else
-          local server_config = server.name == 'sumneko_lua' and lua_lsp or {
-            capabilities = capabilities,
-            on_attach = on_attach,
-          }
+          local server_config = server.name == "sumneko_lua" and lua_lsp
+            or {
+              capabilities = capabilities,
+              on_attach = on_attach,
+            }
           -- Setup server once it's ready
           server:on_ready(function()
             server:setup(server_config)
@@ -202,25 +202,22 @@ return function()
 
     -- Print intalling/uninstalling information to user on startup
     if next(installing_servers) ~= nil or next(uninstalling_servers) ~= nil then
-      local msg = 'Doom: '
+      local msg = "Doom: "
       local installing_count = #installing_servers
       if installing_count > 0 then
-        msg = msg .. 'Installing ' .. installing_count .. ' LSPs.  '
+        msg = msg .. "Installing " .. installing_count .. " LSPs.  "
       end
       local uninstalling_count = #uninstalling_servers
       if uninstalling_count > 0 then
-        msg = msg .. 'Uninstalling ' .. installing_count .. ' LSPs.  '
+        msg = msg .. "Uninstalling " .. installing_count .. " LSPs.  "
       end
-      msg = msg .. 'Use :LspInstallInfo to check status.  '
+      msg = msg .. "Use :LspInstallInfo to check status.  "
       vim.notify(msg)
     end
-
   end
 
   -- Defer auto install to unblock startup
-  vim.defer_fn(function ()
+  vim.defer_fn(function()
     setup_servers()
   end, 50)
-
-
 end
