@@ -207,6 +207,26 @@ return function()
       end
     end
 
+    -- Install and setup non-default LSPs
+    for _, lsp_name in ipairs(ensure_installed) do
+      if not utils.has_value(default_servers, lsp_name) then
+        local ok, server = lsp_installer.get_server(lsp_name)
+
+        if ok then
+          server:on_ready(function()
+            server:setup({
+              capabilities = capabilities,
+              on_attach = on_attach,
+            })
+          end)
+          if not server:is_installed() then
+            table.insert(installing_servers, lsp_name)
+            server:install()
+          end
+        end
+      end
+    end
+
     -- Setup Scala Metals LSP
     if should_setup_scala_lsp then
       require("lspconfig").metals.setup({
