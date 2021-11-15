@@ -98,7 +98,7 @@ packer.startup(function(use)
   local disabled_neorg = is_plugin_disabled("neorg")
   use({
     "nvim-neorg/neorg",
-    commit = --[[NO AUTO UPDATE]] pin_commit("17602389089d56907bbfc026c3dba19f9d24c2dd"),
+    commit =  --[[NO AUTO UPDATE]]pin_commit("17602389089d56907bbfc026c3dba19f9d24c2dd"),
     branch = "unstable",
     config = require("doom.modules.config.doom-neorg"),
     disable = disabled_neorg,
