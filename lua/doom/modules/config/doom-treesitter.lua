@@ -89,8 +89,8 @@ return function()
     local cc = select_executable(compilers)
     local version = vim.fn.systemlist(cc .. (cc == "cl" and "" or " --version"))[1]
 
-    if (version:match('Apple clang')) then
-      log.warn('doom-treesitter:  clang has poor compatibility compiling treesitter parsers.  We recommend using gcc on MacOS, see issue #246 for details.')
+    if (version:match('clang')) then
+      log.warn('doom-treesitter:  clang has poor compatibility compiling treesitter parsers.  We recommend using gcc, see issue #246 for details.')
     end
   end, 1000)
 end
