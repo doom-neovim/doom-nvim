@@ -37,7 +37,7 @@ utils.is_empty = function(str)
 end
 
 --- Escapes a string
---- @param str string String to escape 
+--- @param str string String to escape
 --- @return string
 utils.escape_str = function(str)
   local escape_patterns = {
@@ -137,7 +137,7 @@ end
 
 --- Rounds a number, optionally to the nearest decimal place
 --- @param num number - Value to round
---- @param decimalplace |number - Number of decimal places
+--- @param decimalplace number|nil - Number of decimal places
 --- @return number
 utils.round = function(num, decimalplace)
     local mult = 10^(decimalplace or 0)
