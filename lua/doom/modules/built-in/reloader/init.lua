@@ -1,6 +1,9 @@
 --- @class Reloader
 local reloader = {}
 
+--- Only show error reloading message once per session
+reloader.has_failed_reload = false
+
 local fs = require("doom.utils.fs")
 local utils = require("doom.utils")
 local log = require("doom.extras.logging")
@@ -28,7 +31,7 @@ local scan_dir = require("plenary.scandir").scan_dir
 
 --- Converts a Lua module path into an acceptable Lua module format
 --- @param module_path string The path to the module
---- @return string
+--- @return string|nil
 local function path_to_lua_module(module_path)
   local lua_path = string.format("%s%slua", system.doom_root, system.sep)
 
@@ -37,6 +40,10 @@ local function path_to_lua_module(module_path)
     module_path,
     string.format("%s%s(.*)%%.lua", utils.escape_str(lua_path), system.sep)
   )
+
+  if module_path == nil then
+    return nil
+  end
 
   -- Replace '/' with '.' to follow the common Lua modules format
   module_path = module_path:gsub(system.sep, ".")
@@ -108,6 +115,15 @@ end
 reloader.reload_lua_module = function(mod_path, quiet)
   if mod_path:find("/") then
     mod_path = path_to_lua_module(mod_path)
+  end
+
+  -- If doom-nvim fails to reload, warn user once per session
+  if mod_path == nil then
+    if reloader.has_failed_reload == false then
+      log.warn('reloader: Failed to reload doom config because this file is not in nvim config directory.  Is your doom nvim config directory symlinked?')
+      reloader.has_failed_reload = true
+    end
+    return
   end
 
   -- Get the module from package table
