@@ -13,9 +13,10 @@ local system = require("doom.core.system")
 --- Doom Nvim version
 utils.doom_version = "3.2.0-beta2"
 
+
 --- For autocommands, extracted from
 --- https://github.com/norcalli/nvim_utils
----
+--- @param definitions table<string, table<number, string>>
 utils.create_augroups = function(definitions)
   for group_name, definition in pairs(definitions) do
     vim.api.nvim_command("augroup " .. group_name)
@@ -35,6 +36,9 @@ utils.is_empty = function(str)
   return str == "" or str == nil
 end
 
+--- Escapes a string
+--- @param str string String to escape 
+--- @return string
 utils.escape_str = function(str)
   local escape_patterns = {
     "%^",

@@ -29,13 +29,21 @@ return function()
     Operator = "  ",
     TypeParameter = "  ",
   }
-  local function get_kind(kind_type)
+  --- Given an LSP item kind, returns a nerdfont icon
+  --- @param kind_type string LSP item kind
+  --- @return string Nerdfont Icon
+  local function get_kind_icon(kind_type)
     return kind_icons[kind_type]
   end
 
-  local function t(str)
+  --- Wraps nvim_replace_termcodes
+  --- @param str string
+  --- @return string
+  local function replace_termcodes(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
   end
+  --- Helper function to check what <Tab> behaviour to use
+  --- @return boolean
   local function check_backspace()
     local col = vim.fn.col(".") - 1
     return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
@@ -50,7 +58,7 @@ return function()
     },
     formatting = {
       format = function(entry, item)
-        item.kind = string.format("%s %s", get_kind(item.kind), item.kind)
+        item.kind = string.format("%s %s", get_kind_icon(item.kind), item.kind)
         item.menu = ({
           nvim_lsp = "[LSP]",
           luasnip = "[Snp]",
@@ -82,9 +90,9 @@ return function()
         if cmp.visible() then
           cmp.select_next_item()
         elseif luasnip.expand_or_jumpable() then
-          vim.fn.feedkeys(t("<Plug>luasnip-expand-or-jump"), "")
+          vim.fn.feedkeys(replace_termcodes("<Plug>luasnip-expand-or-jump"), "")
         elseif check_backspace() then
-          vim.fn.feedkeys(t("<Tab>"), "n")
+          vim.fn.feedkeys(replace_termcodes("<Tab>"), "n")
         else
           fallback()
         end
@@ -96,7 +104,7 @@ return function()
         if cmp.visible() then
           cmp.select_prev_item()
         elseif luasnip.jumpable(-1) then
-          vim.fn.feedkeys(t("<Plug>luasnip-jump-prev"), "")
+          vim.fn.feedkeys(replace_termcodes("<Plug>luasnip-jump-prev"), "")
         else
           fallback()
         end
