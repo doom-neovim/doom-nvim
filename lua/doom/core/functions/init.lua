@@ -177,8 +177,6 @@ end
 -- occurs, useful for debugging issues.
 functions.create_report = function()
   local date = os.date("%Y-%m-%d %H:%M:%S")
-  local log_date_format = os.date("%a %d %b %Y")
-
   local created_report, err = xpcall(function()
     -- Get and save only the warning and error logs from today
     local today_logs = {}
