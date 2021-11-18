@@ -10,6 +10,7 @@
 -----------------------------------------------------------
 
 local system = require("doom.core.system")
+local round = require("doom.utils").round
 -- logging defaults to "info" level
 local logging_level = "info"
 
@@ -64,6 +65,9 @@ local log = {}
 
 local unpack = unpack or table.unpack
 
+--- Sets up self
+--- @param config table
+--- @param standalone boolean
 log.new = function(config, standalone)
   config = vim.tbl_deep_extend("force", default_config, config)
 
@@ -86,7 +90,7 @@ log.new = function(config, standalone)
     x = x / increment
     return (x > 0 and math.floor(x + 0.5) or math.ceil(x - 0.5)) * increment
   end
-
+  -- Concatenates tables into a string, handling numbers and dumping tables
   local make_string = function(...)
     local t = {}
     for i = 1, select("#", ...) do

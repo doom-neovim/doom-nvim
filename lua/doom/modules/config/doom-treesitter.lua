@@ -3,6 +3,9 @@ return function()
   local modules = require("doom.core.config.modules").modules
   local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
+  --- Returns treesitter parsers from doom_modules.langs
+  --- @param languages table<number, string>
+  --- @return table<number, string>
   local function get_ts_parsers(languages)
     local langs = {}
 
