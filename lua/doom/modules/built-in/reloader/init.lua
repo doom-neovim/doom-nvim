@@ -41,7 +41,7 @@ local function path_to_lua_module(module_path)
     string.format("%s%s(.*)%%.lua", utils.escape_str(lua_path), system.sep)
   )
 
-  if module_path == nil then
+  if not module_path then
     return nil
   end
 
