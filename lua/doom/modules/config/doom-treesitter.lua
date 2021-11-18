@@ -76,7 +76,7 @@ return function()
   })
 
   --  Check if user is using clang and notify that it has poor compatibility with treesitter
-  --  WARN: 19/11/2021 | issues: #244, #246 clang compatibility could improve in future
+  --  WARN: 19/11/2021 | issues: #222, #246 clang compatibility could improve in future
   vim.defer_fn(function()
     local log = require('doom.extras.logging')
     local utils = require('doom.utils')
