@@ -182,10 +182,11 @@ functions.create_report = function()
     local today_logs = {}
     local doom_logs = vim.split(fs.read_file(system.doom_logs), "\n")
     for _, doom_log in ipairs(doom_logs) do
-      local preinfo = doom_log:match('%[(.+)%]')
+      local preinfo = doom_log:match("%[(.+)%]")
       if preinfo ~= nil then
-        local is_current_day = preinfo:find(os.date('%a %d %b')) ~= nil and preinfo:find(os.date('%Y')) ~= nil
-        local error_or_warn = preinfo:find('ERROR ') or preinfo:find('WARN ')
+        local is_current_day = preinfo:find(os.date("%a %d %b")) ~= nil
+          and preinfo:find(os.date("%Y")) ~= nil
+        local error_or_warn = preinfo:find("ERROR ") or preinfo:find("WARN ")
         if error_or_warn and is_current_day then
           table.insert(today_logs, doom_log)
         end
