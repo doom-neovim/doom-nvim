@@ -36,7 +36,7 @@ return function()
     local log = require('doom.extras.logging')
     -- Matches logic from nvim-treesitter
     local compilers = { vim.fn.getenv "CC", "cc", "gcc", "clang", "cl", "zig" }
-    function select_executable(executables)
+    local select_executable = function(executables)
       return vim.tbl_filter(function(c)
         return c ~= vim.NIL and vim.fn.executable(c) == 1
       end, executables)[1]
