@@ -50,9 +50,6 @@ return function()
     table.insert(modules.langs, "http")
   end
 
-  -- macos uses wrong c version
-  require("nvim-treesitter.install").compilers = { "gcc" }
-
   require("nvim-treesitter.configs").setup({
     ensure_installed = get_ts_parsers(modules.langs),
     highlight = { enable = true },
@@ -77,4 +74,23 @@ return function()
       },
     },
   })
+
+  --  If MacOS, check if user is using clang and notify that it has poor compatibility with treesitter
+  --  WARN: We probably won't need this forever.
+  vim.defer_fn(function()
+    local log = require('doom.extras.logging')
+    -- Matches logic from nvim-treesitter
+    local compilers = { vim.fn.getenv "CC", "cc", "gcc", "clang", "cl", "zig" }
+    function select_executable(executables)
+      return vim.tbl_filter(function(c)
+        return c ~= vim.NIL and vim.fn.executable(c) == 1
+      end, executables)[1]
+    end
+    local cc = select_executable(compilers)
+    local version = vim.fn.systemlist(cc .. (cc == "cl" and "" or " --version"))[1]
+
+    if (version:match('Apple clang')) then
+      log.warn('doom-treesitter:  clang has poor compatibility compiling treesitter parsers.  We recommend using gcc on MacOS, see issue #246 for details.')
+    end
+  end, 1000)
 end
