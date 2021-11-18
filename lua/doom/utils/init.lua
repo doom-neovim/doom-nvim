@@ -131,4 +131,13 @@ utils.check_plugin = function(plugin_name, path)
   ) == 1
 end
 
+--- Searches for a number of executables in the user's path
+--- @param executables table<number, string> Table of executables to search for
+--- @return string|nil First valid executable in table
+utils.find_executable_in_path = function (executables)
+  return vim.tbl_filter(function(c)
+    return c ~= vim.NIL and vim.fn.executable(c) == 1
+  end, executables)[1]
+end
+
 return utils

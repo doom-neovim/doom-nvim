@@ -30,22 +30,17 @@ return function()
     },
   })
 
-  --  If MacOS, check if user is using clang and notify that it has poor compatibility with treesitter
-  --  WARN: We probably won't need this forever.
+  --  Check if user is using clang and notify that it has poor compatibility with treesitter
+  --  WARN: 19/11/2021 | issues: #244, #246 clang compatibility could improve in future
   vim.defer_fn(function()
     local log = require('doom.extras.logging')
+    local utils = require('doom.utils')
     -- Matches logic from nvim-treesitter
-    local compilers = { vim.fn.getenv "CC", "cc", "gcc", "clang", "cl", "zig" }
-    local select_executable = function(executables)
-      return vim.tbl_filter(function(c)
-        return c ~= vim.NIL and vim.fn.executable(c) == 1
-      end, executables)[1]
-    end
-    local cc = select_executable(compilers)
-    local version = vim.fn.systemlist(cc .. (cc == "cl" and "" or " --version"))[1]
+    local compiler = utils.find_executable_in_path({ vim.fn.getenv "CC", "cc", "gcc", "clang", "cl", "zig" })
+    local version = vim.fn.systemlist(compiler .. (compiler == "cl" and "" or " --version"))[1]
 
     if (version:match('clang')) then
-      log.warn('doom-neorg:  clang has poor compatibility compiling treesitter parsers.  We recommend using gcc instead, see issue #246 for details.')
+      log.warn('doom-neorg:  clang has poor compatibility compiling treesitter parsers.  We recommend using gcc instead, see issue #246 for details.  (https://github.com/NTBBloodbath/doom-nvim/issues/246)')
     end
   end, 1000)
 end
