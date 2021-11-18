@@ -135,6 +135,15 @@ utils.check_plugin = function(plugin_name, path)
   ) == 1
 end
 
+--- Rounds a number, optionally to the nearest decimal place
+--- @param num number - Value to round
+--- @param decimalplace |number - Number of decimal places
+--- @return number
+utils.round = function(num, decimalplace)
+    local mult = 10^(decimalplace or 0)
+    return math.floor(num * mult + 0.5)/mult
+end
+
 --- Searches for a number of executables in the user's path
 --- @param executables table<number, string> Table of executables to search for
 --- @return string|nil First valid executable in table
