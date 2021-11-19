@@ -120,7 +120,9 @@ reloader.reload_lua_module = function(mod_path, quiet)
   -- If doom-nvim fails to reload, warn user once per session
   if mod_path == nil then
     if reloader.has_failed_reload == false then
-      log.warn('reloader: Failed to reload doom config because this file is not in nvim config directory.  Is your doom nvim config directory symlinked?')
+      log.warn(
+        "reloader: Failed to reload doom config because this file is not in nvim config directory.  Is your doom nvim config directory symlinked?"
+      )
       reloader.has_failed_reload = true
     end
     return
