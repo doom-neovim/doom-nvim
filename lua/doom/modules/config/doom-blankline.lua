@@ -5,8 +5,7 @@ return function()
     enabled = config.doom.show_indent,
     char = "│",
     -- If treesitter plugin is enabled then use its indentation
-    use_treesitter = require("doom.core.functions").check_plugin("nvim-treesitter", "opt")
-        and true
+    use_treesitter = require("doom.core.functions").check_plugin("nvim-treesitter", "opt") and true
       or false,
     show_first_indent_level = false,
     filetype_exclude = { "help", "dashboard", "packer", "norg" },
