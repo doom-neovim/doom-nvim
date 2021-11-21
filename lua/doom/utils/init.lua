@@ -13,7 +13,6 @@ local system = require("doom.core.system")
 --- Doom Nvim version
 utils.doom_version = "3.2.0-beta2"
 
-
 --- For autocommands, extracted from
 --- https://github.com/norcalli/nvim_utils
 --- @param definitions table<string, table<number, string>>
@@ -140,8 +139,8 @@ end
 --- @param decimalplace number|nil - Number of decimal places
 --- @return number
 utils.round = function(num, decimalplace)
-    local mult = 10^(decimalplace or 0)
-    return math.floor(num * mult + 0.5)/mult
+  local mult = 10 ^ (decimalplace or 0)
+  return math.floor(num * mult + 0.5) / mult
 end
 
 --- Searches for a number of executables in the user's path

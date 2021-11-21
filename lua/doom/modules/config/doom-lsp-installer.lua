@@ -188,7 +188,7 @@ return function()
           if server:is_installed() then
             table.insert(uninstalling_servers, lsp_name)
             server:uninstall()
-            log.info('doom-lsp-installer: Uninstalling server ' .. lsp_name .. '.')
+            log.info("doom-lsp-installer: Uninstalling server " .. lsp_name .. ".")
           end
         else
           local server_config = server.name == "sumneko_lua" and lua_lsp
@@ -203,7 +203,7 @@ return function()
           if not server:is_installed() then
             table.insert(installing_servers, lsp_name)
             server:install()
-            log.info('doom-lsp-installer: Installing server ' .. lsp_name .. '.')
+            log.info("doom-lsp-installer: Installing server " .. lsp_name .. ".")
           end
         end
       end
@@ -224,7 +224,7 @@ return function()
           if not server:is_installed() then
             table.insert(installing_servers, lsp_name)
             server:install()
-            log.info('doom-lsp-installer: Installing server ' .. lsp_name .. '.')
+            log.info("doom-lsp-installer: Installing server " .. lsp_name .. ".")
           end
         end
       end
