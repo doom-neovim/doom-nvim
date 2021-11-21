@@ -4,7 +4,7 @@
 <!-- If changes are complex, describe how you implemented / solved this issue -->
 
 <!-- Link the issue this PR fixes or addresses if relevant -->
-Fixes # (issue)
+Related issue: # (issue_number)
 
 ### Type of change
 
