@@ -41,14 +41,6 @@ return function()
     table.insert(modules.langs, "norg")
   end
 
-  -- Set up treesitter for HTTP
-  parser_configs.http = {
-    install_info = {
-      url = "https://github.com/NTBBloodbath/tree-sitter-http",
-      files = { "src/parser.c" },
-      branch = "main",
-    },
-  }
   if packer_plugins and packer_plugins["rest.nvim"] then
     table.insert(modules.langs, "http")
   end
