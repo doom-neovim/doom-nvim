@@ -11,7 +11,7 @@ local system = require("doom.core.system")
 
 -------------------- HELPERS --------------------
 --- Doom Nvim version
-utils.doom_version = "3.2.0-beta2"
+utils.doom_version = "3.2.0"
 
 --- For autocommands, extracted from
 --- https://github.com/norcalli/nvim_utils
