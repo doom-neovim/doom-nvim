@@ -7,6 +7,76 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.0] - 2021-11-24
+
+### Added
+
+- Install http tree-sitter parser if `rest.nvim` plugin is enabled
+- New languages in `doom_modules.lua` file
+- New `contrib` entry in `doom_modules.lua` file, contrib module enables some documentation plugins
+- Add `~/.config/nvim/doc` to neorg workspaces
+- Add `statusline_show_file_path` option in `doom_config.lua` file
+- Implement `keybinds_mdoules` option in `doom_config.lua`, enable or disable Doom keybindings modules as you wish
+  - Modularize keybindings
+- Add extra field to custom functions in order to choose if the function should be ran on startup or if should be a global function
+- Add modeline in `doom_config.lua` file [#139](https://github.com/NTBBloodbath/doom-nvim/pull/139)
+- Ignore editor artifacts [#141](https://github.com/NTBBloodbath/doom-nvim/pull/141)
+- Improve debugging messages
+- Better error catching
+- New plugins
+  - `nvim-lint`, async linter
+  - `vim-illuminate`, highlight word under cursor
+- New commands
+  - `DoomManual`, open Doom user manual
+  - `DoomReport`, create a Doom crash report
+  - `DoomConfigs`, open a prompt to edit Doom configuration files
+  - `DoomConfigsReload`, Reload Doom custom mappings, autocommands, etc
+  - `DoomInfo`, display a informational dashboard
+- New keybinds
+  - `<leader>di`, display a informational dashboard
+- New built-in plugins
+  - `info`, show an useful informational dashboard
+
+### Changed
+
+- Update doom-one colorscheme
+- Replace built-in Neovim `.txt` docs with Neorg-based docs
+- Refact configuration files handling [#108](https://github.com/NTBBloodbath/doom-nvim/pull/108)
+- Invert Doom Lua modules loading order, in that way we will load Neovim configurations first
+- Plugins
+  - Lazy-load more plugins
+  - Enable `neorg` by default
+  - Replace [nvim-compe](https://github.com/hrsh7th/nvim-compe) with [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) [#119](https://github.com/NTBBloodbath/doom-nvim/pull/119)
+  - Replace [nvim-lspinstall](https://github.com/kabouzeid/nvim-lspinstall) with [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer)
+  - Use NTBBloodbath's galaxyline fork
+  - Update `gitsigns` configurations
+  - Update `nvim-tree` configurations
+  - Update `bufferline` configurations
+  - Update `dap-ui` configurations [#114](https://github.com/NTBBloodbath/doom-nvim/pull/114)
+  - Update `neorg` tree-sitter parser files
+  - Use `,o` as neorg leader instead of `<leader>o`
+  - Drop a line from Doom logo in dashboard [#140](https://github.com/NTBBloodbath/doom-nvim/pull/140)
+  - Small statusline improvements for small windows
+
+### Fixed
+
+- Disable indent lines in norg files
+- Proper conditional for enabling undodir
+- Add missing entries for disabling certain plugins
+- Update some plugins links
+- Make sure plugins are loaded in a correct order [#120](https://github.com/NTBBloodbath/doom-nvim/pull/120)
+- Remove non-neeeded `bufdo e`. Fixes [#127](https://github.com/NTBBloodbath/doom-nvim/issues/127)
+- Do not try to load `which-key.nvim` plugin if not installed. Fixes [#124](https://github.com/NTBBloodbath/doom-nvim/issues/124)
+- Bufferline was not being loaded sometimes
+- Run `BufEnter` autocommand after loading tree-sitter, fixes concealing on norg files
+
+### Removed
+
+- Selene linter comments and references [#106](https://github.com/NTBBloodbath/doom-nvim/pull/106)
+- Do not disable syntax highlighting on launch. Closes [#131](https://github.com/NTBBloodbath/doom-nvim/issues/131)
+- Remove some built-in Neovim plugins loading logic to allow them to be used
+- Remove shada logic, we do not really need to temporarily disable it
+
 ## [3.1.2] - 2021-10-01
 
 ### Changed
@@ -51,7 +121,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `SPC - d - l` keybinding for manually reload configurations
 - Windows support (note that some plugins does not work well on Windows and that's not a doom issue!)
 - `SPC - d - s` keybinding now offers a live preview for the colorschemes
-- `tsx` treesitter parser is now installed alongside with the typescript one, see [#84](https://github.com/NTBBloodbath/doom-nvim/issues/84)
+- `tsx` tree-sitter parser is now installed alongside with the typescript one, see [#84](https://github.com/NTBBloodbath/doom-nvim/issues/84)
 - Allow to override default keymappings
 - Quick save with `SPC - v / m`
 - Jump keybindings on which-key
@@ -60,7 +130,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - You can now add your doom-nvim configurations to your dotfiles without having to use submodules!
     See [#79](https://github.com/NTBBloodbath/doom-nvim/issues/79)
 - Plugins:
-  - New plugin: treesitter companion plugins (autotag, docs, etc)
+  - New plugin: tree-sitter companion plugins (autotag, docs, etc)
   - New plugin: nvim-mapper, a keybindings cheatsheet
   - New plugin: DAP (Debugging Adapter Protocol) support
   - New plugin: trouble, better quickfix window
@@ -102,7 +172,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugins:
   - Occasional bug with autosessions
   - Properly lazy-load TrueZen
-  - Use GCC compiler for haskell treesitter parser
+  - Use GCC compiler for haskell tree-sitter parser
   - bufferline will not be shown when:
     1. Only one buffer is opened
     2. While being in the dashboard
