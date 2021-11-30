@@ -310,7 +310,7 @@ packer.startup(function(use)
     config = require("doom.modules.config.doom-lspconfig"),
     disable = disabled_lsp,
     event = "ColorScheme",
-    commit = '2e6c94069e92cb4a43416b3ac0267e941b3fd47e',
+    commit = "2e6c94069e92cb4a43416b3ac0267e941b3fd47e",
   })
 
   -- Completion plugin
