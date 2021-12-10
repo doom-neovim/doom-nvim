@@ -469,6 +469,7 @@ functions.edit_config = function()
     "1. doom_config.lua",
     "2. doom_modules.lua",
     "3. doom_userplugins.lua",
+    "4. doom_startup.lua"
   }))
   local direction = config.doom.vertical_split and "vert " or ""
   local open_command = config.doom.new_file_split and "split" or "edit"
@@ -480,6 +481,10 @@ functions.edit_config = function()
   elseif selected_config == 3 then
     vim.cmd(
       ("%s%s %s"):format(direction, open_command, require("doom.core.config.userplugins").source)
+    )
+  elseif selected_config == 4 then
+    vim.cmd(
+      ("%s%s %s"):format(direction, open_command, require("doom.core.config.startup").source)
     )
   elseif selected_config ~= 0 then
     log.error("Invalid option selected.")

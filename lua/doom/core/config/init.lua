@@ -9,19 +9,6 @@ local config = {}
 local log = require("doom.extras.logging")
 local system = require("doom.core.system")
 
-log.debug("Loading Doom config module ...")
-
--- Check if running Neovim or Vim and fails if:
--- 1. Running Vim instead of Neovim
--- 2. Running Neovim 0.4 or below
-if vim.fn.has("nvim") == 1 then
-  if vim.fn.has("nvim-0.5") ~= 1 then
-    log.fatal("Doom Nvim requires Neovim 0.5.0, please update it")
-  end
-else
-  log.fatal("Doom Nvim does not have support for Vim, please use it with Neovim instead")
-end
-
 -- Set termguicolors on load
 if vim.fn.has("vim_starting") then
   vim.opt.termguicolors = true

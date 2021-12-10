@@ -4,6 +4,19 @@
 --             License: GPLv2                  --
 ---[[---------------------------------------]]---
 
+-- Check if running Neovim or Vim and fails fast if:
+-- 1. Running Vim instead of Neovim
+-- 2. Running Neovim 0.4 or below
+local log = require("doom.extras.logging")
+if vim.fn.has("nvim") == 1 then
+  if vim.fn.has("nvim-0.5") ~= 1 then
+    log.fatal("Doom Nvim requires Neovim 0.5.0, please update it")
+  end
+else
+  log.fatal("Doom Nvim does not have support for Vim, please use it with Neovim instead")
+end
+
+
 ---- Doom Utilities -----------------------------
 -------------------------------------------------
 -- Store startup time in seconds
@@ -52,5 +65,10 @@ vim.defer_fn(function()
     vim.cmd([[
       PackerLoad which-key.nvim
     ]])
+  end
+
+  local startup_file = require("doom.core.config.startup").source
+  if require("doom.utils.fs").file_exists(startup_file) then
+    vim.cmd("luafile " .. startup_file)
   end
 end, 0)
