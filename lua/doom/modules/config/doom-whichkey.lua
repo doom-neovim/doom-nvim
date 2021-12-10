@@ -111,6 +111,7 @@ return function()
         ["d"] = { "Show type definition" },
         ["l"] = { "Show line diagnostics" },
         ["q"] = { "Diagnostics into location list" },
+        ["r"] = { "Rename symbol under cursor" },
       },
     },
     ["d"] = {
