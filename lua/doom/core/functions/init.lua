@@ -463,33 +463,27 @@ functions.rollback_doom = function()
 end
 
 -- edit_config creates a prompt to modify a doom configuration file
-functions.edit_config = function()
-  vim.ui.select(
-    { "doom_config.lua", "doom_modules.lua", "doom_userplugins.lua" },
-    { prompt = "Select a configuration file to edit:" },
-    function(_, selected_config_idx)
-      local direction = config.doom.vertical_split and "vert " or ""
-      local open_command = config.doom.new_file_split and "split" or "edit"
+M.edit_config = function()
+  local selected_config = tonumber(vim.fn.inputlist({
+    "Select a configuration file to edit:",
+    "1. doom_config.lua",
+    "2. doom_modules.lua",
+    "3. doom_userplugins.lua",
+  }))
+  local direction = config.doom.vertical_split and "vert " or ""
+  local open_command = config.doom.new_file_split and "split" or "edit"
 
-      if selected_config_idx == 1 then
-        vim.cmd(("%s%s %s"):format(direction, open_command, require("doom.core.config").source))
-      elseif selected_config_idx == 2 then
-        vim.cmd(
-          ("%s%s %s"):format(direction, open_command, require("doom.core.config.modules").source)
-        )
-      elseif selected_config_idx == 3 then
-        vim.cmd(
-          ("%s%s %s"):format(
-            direction,
-            open_command,
-            require("doom.core.config.userplugins").source
-          )
-        )
-      elseif selected_config_idx == nil then
-        log.error("Invalid option selected")
-      end
-    end
-  )
+  if selected_config == 1 then
+    vim.cmd(("%s%s %s"):format(direction, open_command, require("doom.core.config").source))
+  elseif selected_config == 2 then
+    vim.cmd(("%s%s %s"):format(direction, open_command, require("doom.core.config.modules").source))
+  elseif selected_config == 3 then
+    vim.cmd(
+      ("%s%s %s"):format(direction, open_command, require("doom.core.config.userplugins").source)
+    )
+  elseif selected_config ~= 0 then
+    log.error("Invalid option selected.")
+  end
 end
 
 -- followings are called from lua/doom/extras/keybindings/leader.lua
