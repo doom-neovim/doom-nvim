@@ -463,7 +463,7 @@ functions.rollback_doom = function()
 end
 
 -- edit_config creates a prompt to modify a doom configuration file
-M.edit_config = function()
+functions.edit_config = function()
   local selected_config = tonumber(vim.fn.inputlist({
     "Select a configuration file to edit:",
     "1. doom_config.lua",
