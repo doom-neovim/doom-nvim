@@ -6,23 +6,43 @@
 
 local utils = require("doom.utils")
 local log = require("doom.extras.logging")
-local config = require("doom.core.config").load_config()
+local config = require("doom.core.config").config
+local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
 log.debug("Loading Doom autocmds module ...")
 
 local autocmds = {
   doom_core = {
-    -- Compile new plugins changes at save
+    -- Compile new plugins configurations changes at save
     {
       "BufWritePost",
-      "*/doom-*.lua,doomrc.lua,plugins.lua",
+      "*/config/doom-*.lua",
       "PackerCompile profile=true",
     },
-    -- Reload user-defined settings when 'doom_config.lua' file was modified
+    -- Compile modules and custom plugins changes at exit, in that way we avoid
+    -- weird errors of Packer complaining about uninstalled plugins on startup
+    {
+      "VimLeavePre",
+      "doom_modules.lua,doom_userplugins.lua",
+      "PackerCompile profile=true",
+    },
+    -- Live-reload plugins and automatically install or clean them at save
+    {
+      "BufWritePost",
+      "doom_modules.lua,doom_userplugins.lua",
+      "lua require('doom.modules.built-in.reloader').reload_plugins_definitions()",
+    },
+    -- Live-reload user-defined settings when 'doom_config.lua' file was modified
     {
       "BufWritePost",
       "doom_config.lua",
       "lua require('doom.core.functions').reload_custom_settings()",
+    },
+    -- Live-reload plugins configuration files
+    {
+      "BufWritePost",
+      "*/config/doom-*.lua",
+      "lua require('doom.modules.built-in.reloader').reload_lua_module(vim.fn.expand('%:p'))",
     },
     -- Automatically change colorscheme and background on exit
     {
@@ -37,19 +57,21 @@ local autocmds = {
   },
 }
 
--- Set relative numbers
-if config.doom.relative_num then
-  table.insert(autocmds["doom_core"], {
-    "BufEnter,WinEnter",
-    "*",
-    "if &nu | set rnu | endif",
-  })
-else
-  table.insert(autocmds["doom_core"], {
-    "BufEnter,WinEnter",
-    "*",
-    "if &nu | set nornu | endif",
-  })
+-- Set numbering
+if not config.doom.disable_numbering then
+  if config.doom.relative_num then
+    table.insert(autocmds["doom_core"], {
+      "BufEnter,WinEnter",
+      "*",
+      "if &nu | set rnu | endif",
+    })
+  else
+    table.insert(autocmds["doom_core"], {
+      "BufEnter,WinEnter",
+      "*",
+      "if &nu | set nornu | endif",
+    })
+  end
 end
 
 -- Install plugins on launch
@@ -66,10 +88,14 @@ if config.doom.auto_install_plugins then
     else
       -- Clean disabled plugins
       vim.cmd("PackerClean")
-      -- Install the plugins
-      vim.cmd("PackerInstall")
+      -- Defer the installation of new plugins to avoid a weird bug where packer
+      -- tries to clean the plugins that are being installed right now
+      vim.defer_fn(function()
+        -- Install the plugins
+        vim.cmd("PackerInstall")
+      end, 200)
     end
-  end, 200)
+  end, 400)
 end
 
 -- Set autosave
@@ -117,6 +143,52 @@ if config.doom.preserve_edit_pos then
         exe "normal! g'\"" |
       endif
     ]],
+  })
+end
+
+-- Linting
+if not is_plugin_disabled("linter") and packer_plugins and packer_plugins["nvim-lint"] then
+  table.insert(autocmds["doom_extras"], {
+    "BufWinEnter,BufWritePost",
+    "<buffer>",
+    "lua require('lint').try_lint()",
+  })
+end
+
+-- Quickly exit Neovim on dashboard
+if not is_plugin_disabled("dashboard") then
+  table.insert(autocmds["doom_extras"], {
+    "FileType",
+    "dashboard",
+    "nnoremap <silent> <buffer> q :q<CR>",
+  })
+end
+
+-- Show line diagnostics on hover
+if not config.doom.enable_lsp_virtual_text then
+  table.insert(autocmds["doom_extras"], {
+    "CursorHold,CursorHoldI",
+    "<buffer>",
+    'lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false, border = "single" })',
+  })
+end
+
+-- Eye candy netrw (add icons)
+if config.doom.use_netrw then
+  table.insert(autocmds["doom_extras"], {
+    "FileType",
+    "netrw",
+    "lua require('doom.core.settings.netrw').set_maps()",
+  })
+  table.insert(autocmds["doom_extras"], {
+    "FileType",
+    "netrw",
+    "lua require('doom.core.settings.netrw').draw_icons()",
+  })
+  table.insert(autocmds["doom_extras"], {
+    "TextChanged",
+    "*",
+    "lua require('doom.core.settings.netrw').draw_icons()",
   })
 end
 

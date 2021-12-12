@@ -10,7 +10,7 @@ organized into a unit that can be toggled easily.
 
 ## Tweaking Doom Nvim Modules
 
-You can easily tweak Doom Nvim Modules by tweaking your `doomrc.lua` file
+You can easily tweak Doom Nvim Modules by tweaking your `doom_modules.lua` file
 (found in `~/.config/doom-nvim`).
 
 ## List of modules
@@ -37,56 +37,54 @@ without them. These plugins are the following:
   - Vim dashboard (start screen).
 - [doom-themes]
   - Additional doom emacs' colorschemes.
+- [indentlines]
+  - Show indent lines.
 - [statusline]
   - Neovim statusline.
 - [tabline]
   - Tabline, shows your buffers list at top.
-- [zen]
-  - Distraction free environment.
 - [which-key]
   - Keybindings popup like Emacs' guide-key.
-- [indentlines]
-  - Show indent lines.
+- [zen]
+  - Distraction free environment.
 
 ### Doom
 
+- [compiler] (built-in)
+  - Compile _and run_ your projects with only a few keystrokes.
 - [neorg]
   - Life Organization Tool.
 - [runner] (built-in)
   - A code runner for your interpreted code.
-- [compiler] (built-in)
-  - Compile _and run_ your projects with only a few keystrokes.
 
 ### Editor
 
-- [auto-session]
-  - A small automated session manager for Neovim.
-- [terminal]
-  - Terminal for Neovim.
-- [explorer]
-  - Tree explorer.
-- [symbols]
-  - LSP symbols and tags.
-- [minimap]
-  - Code minimap, requires [wfxr/code-minimap](https://github.com/wfxr/code-minimap).
-- [gitsigns]
-  - Git signs.
-- [telescope]
-  - Highly extendable fuzzy finder over lists.
-- [restclient]
-  - A fast Neovim http client.
-- [formatter]
-  - File formatting.
 - [autopairs]
   - Autopairs.
+- [auto-session]
+  - A small automated session manager for Neovim.
 - [editorconfig]
   - EditorConfig support for Neovim, let other argue about tabs vs spaces.
+- [explorer]
+  - Tree explorer.
+- [formatter]
+  - File formatting.
+- [gitsigns]
+  - Git signs.
 - [kommentary]
   - Comments plugin.
 - [lsp]
   - Language Server Protocols ([compe] + [lspinstall]).
+- [minimap]
+  - Code minimap, requires [wfxr/code-minimap](https://github.com/wfxr/code-minimap).
 - snippets
   - Code snippets ([LuaSnip] + [friendly-snippets]).
+- [symbols]
+  - LSP symbols and tags.
+- [telescope]
+  - Highly extendable fuzzy finder over lists.
+- [terminal]
+  - Terminal for Neovim.
 
 ### Langs
 
@@ -105,13 +103,13 @@ The currently available flags are the following:
 
 #### Web development
 
-- **html**
-  - HTML support.
+- **css**
+  - CSS support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
   - DAP client: no.
-- **css**
-  - CSS support.
+- **html**
+  - HTML support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
   - DAP client: no.
@@ -120,16 +118,50 @@ The currently available flags are the following:
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes, by using TSServer.
   - DAP client: yes.
+- **PHP**
+  - PHP support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: no.
 - **typescript**
   - TypeScript support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
-  - DAP client: no.
+  - DAP client: yes (via javascript).
+- **Svelte**
+  - Svelte support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: yes (via javascript).
+- **Vue**
+  - Vue support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: yes (via javascript).
 
 #### Scripting
 
 - **bash**
   - BASH support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: no.
+- **clojure**
+  - Clojure support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: no.
+- **elixir**
+  - Elixir support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **lua**
+  - Lua support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: no (it has but isn't supported by Doom _yet_, requires extra setup).
+- **powershell**
+  - PowerShell support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
   - DAP client: no.
@@ -143,20 +175,36 @@ The currently available flags are the following:
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
   - DAP client: yes.
-- **lua**
-  - Lua support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: no (it has but isn't supported by Doom _yet_, requires extra setup).
-- **elixir**
-  - Elixir support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
 
 #### Compiled
 
+- **cpp**
+  - CPP support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: yes (not supported _yet_ by Doom for automatic installation).
+- **c_sharp (C#)**
+  - C# support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: no.
+- **go**
+  - Golang support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: yes.
 - **haskell**
   - Haskell support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: no.
+- **java**
+  - Java support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+  - DAP client: no.
+- **kotlin**
+  - Kotlin support.
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
   - DAP client: no.
@@ -165,28 +213,25 @@ The currently available flags are the following:
   - TreeSitter based syntax highlighting: yes.
   - LSP: yes.
   - DAP client: yes (not supported _yet_ by Doom for automatic installation).
-- **go**
-  - Golang support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: yes.
-- **cpp**
-  - CPP support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: yes (not supported _yet_ by Doom for automatic installation).
-- **java**
-  - Java support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: no.
 
 #### Configs & DevOps
 
-- **config**
-  - Configuration languages support (JSON, YAML, TOML).
+- **json**/**json5**
+  - JSON support.
   - TreeSitter based syntax highlighting: yes.
-  - LSP: not yet.
+  - LSP: yes.
+- **yaml**
+  - YAML support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: yes.
+- **toml**
+  - TOML support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: no.
+- **xml**
+  - XML support.
+  - TreeSitter based syntax highlighting: yes.
+  - LSP: no.
 - **dockerfile**
   - Docker support.
   - TreeSitter based syntax highlighting: yes.
@@ -196,16 +241,21 @@ The currently available flags are the following:
 
 ### Utilities
 
-- [suda]
-  - Write and read files without sudo permissions.
 - [lazygit]
   - LazyGit integration for neovim, requires LazyGit.
 - [neogit]
   - Magit for Neovim.
-- [colorizer]
-  - Fastest colorizer for Neovim.
 - [range-highlight]
   - Highlights ranges you have entered in commandline
+- [suda]
+  - Write and read files without sudo permissions.
+
+### Web
+
+- [colorizer]
+  - Fastest colorizer for Neovim.
+- [restclient]
+  - A fast Neovim http client.
 
 ## Managing modules
 
@@ -251,7 +301,7 @@ changes for you!
 
 [lsp]: https://github.com/neovim/nvim-lspconfig
 [compe]: https://github.com/hrsh7th/nvim-compe
-[lspinstall]: https://github.com/kabouzeid/nvim-lspinstall
+[lsp-installer]: https://github.com/williamboman/nvim-lsp-installer
 [LuaSnip]: https://github.com/L3MON4D3/LuaSnip
 [friendly-snippets]: https://github.com/rafamadriz/friendly-snippets
 

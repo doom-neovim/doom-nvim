@@ -1,5 +1,5 @@
 return function()
-  local config = require("doom.core.config").load_config()
+  local config = require("doom.core.config").config
 
   require("toggleterm").setup({
     size = config.doom.terminal_height,

@@ -43,6 +43,7 @@ return function()
     },
     window = {
       padding = { 0, 0, 0, 0 }, -- extra window padding [top, right, bottom, left]
+      border = "single",
     },
     layout = {
       height = { min = 1, max = 10 }, -- min and max height of the columns
@@ -110,6 +111,7 @@ return function()
         ["d"] = { "Show type definition" },
         ["l"] = { "Show line diagnostics" },
         ["q"] = { "Diagnostics into location list" },
+        ["r"] = { "Rename symbol under cursor" },
       },
     },
     ["d"] = {
@@ -117,6 +119,7 @@ return function()
       ["b"] = { "Show Doom keybindings" },
       ["c"] = { "Edit your Doom Nvim configuration" },
       ["d"] = { "Open Doom Nvim documentation" },
+      ["i"] = { "Open Doom Nvim information dashboard" },
       ["u"] = { "Update Doom Nvim" },
       ["r"] = { "Rollback Doom Nvim version" },
       ["R"] = { "Create crash report" },
@@ -171,6 +174,17 @@ return function()
       ["h"] = { "Command history" },
       ["m"] = { "Jump to mark" },
     },
+    ["t"] = {
+      name = "+tweak",
+      ["b"] = { "background" },
+      ["c"] = { "completion" },
+      ["g"] = { "signcolumn" }, -- "g" for gitsigs (also for ale)
+      ["i"] = { "indent" },
+      ["n"] = { "number" },
+      -- ["p"] = { "autopairs" }, -- moved below as conditional
+      ["s"] = { "spell" },
+      ["x"] = { "syntax/treesetter" },
+    },
     ["w"] = {
       name = "+windows",
       ["w"] = { "Other window" },
@@ -209,6 +223,9 @@ return function()
       ["t"] = { "jump to tag" },
     },
   }
-
+  local is_plugin_disabled = require("doom.utils").is_plugin_disabled
+  if not is_plugin_disabled("autopairs") then
+    mappings["t"]["p"] = { "autopairs" }
+  end
   wk.register(mappings, { prefix = "<leader>" })
 end

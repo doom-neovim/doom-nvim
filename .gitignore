@@ -7,3 +7,12 @@ tags
 # Backup files
 .doom_releases
 .doom_backup_hash
+# editor artifacts
+*~
+*.swp
+# OS files
+.DS_Store
+# Doom Nvim Contrib files
+contribute/doom-nvim-contrib
+contribute/local-share-nvim
+contribute/workspace

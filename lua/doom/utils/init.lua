@@ -4,90 +4,19 @@
 --              License: GPLv2                 --
 ---[[---------------------------------------]]---
 
-local M = {}
+--- @class utils
+local utils = {}
+
 local system = require("doom.core.system")
 
 -------------------- HELPERS --------------------
--- Doom Nvim version
-M.doom_version = "3.1.2"
+--- Doom Nvim version
+utils.doom_version = "3.2.0"
 
--- file_exists checks if the given file exists
--- @tparam string path The path to the file
--- @return boolean
-M.file_exists = function(path)
-  local fd = vim.loop.fs_open(path, "r", 438)
-  if fd then
-    vim.loop.fs_close(fd)
-    return true
-  end
-
-  return false
-end
-
--- Mappings wrapper, extracted from
--- https://github.com/ojroques/dotfiles/blob/master/nvim/init.lua#L8-L12
--- https://github.com/lazytanuki/nvim-mapper#prevent-issues-when-module-is-not-installed
-local function is_module_available(name)
-  if package.loaded[name] then
-    return true
-  else
-    for _, searcher in ipairs(package.searchers or package.loaders) do
-      local loader = searcher(name)
-      if type(loader) == "function" then
-        package.preload[name] = loader
-        return true
-      end
-    end
-    return false
-  end
-end
-
-if is_module_available("nvim-mapper") then
-  local mapper = require("nvim-mapper")
-
-  M.map = function(mode, lhs, rhs, opts, category, unique_identifier, description)
-    mapper.map(mode, lhs, rhs, opts, category, unique_identifier, description)
-  end
-  M.map_buf = function(bufnr, mode, lhs, rhs, opts, category, unique_identifier, description)
-    mapper.map_buf(bufnr, mode, lhs, rhs, opts, category, unique_identifier, description)
-  end
-  M.map_virtual = function(mode, lhs, rhs, opts, category, unique_identifier, description)
-    mapper.map_virtual(mode, lhs, rhs, opts, category, unique_identifier, description)
-  end
-  M.map_buf_virtual = function(mode, lhs, rhs, opts, category, unique_identifier, description)
-    mapper.map_buf_virtual(mode, lhs, rhs, opts, category, unique_identifier, description)
-  end
-else
-  -- Manually load the doom_config.lua file to avoid circular dependencies
-  local doom_config_path
-  if M.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)) then
-    doom_config_path = string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)
-  elseif M.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep)) then
-    doom_config_path = string.format("%s%sdoom_config.lua", system.doom_root, system.sep)
-  end
-  local config = dofile(doom_config_path)
-
-  M.map = function(mode, lhs, rhs, opts, _, _, _)
-    local options = config.doom.allow_default_keymaps_overriding and {} or { noremap = true }
-    if opts then
-      options = vim.tbl_extend("force", options, opts)
-    end
-    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-  end
-  M.map_buf = function(mode, lhs, rhs, opts, _, _, _)
-    vim.api.nvim_buf_set_keymap(mode, lhs, rhs, opts)
-  end
-  M.map_virtual = function(_, _, _, _, _, _, _)
-    return
-  end
-  M.map_buf_virtual = function(_, _, _, _, _, _, _)
-    return
-  end
-end
-
--- For autocommands, extracted from
--- https://github.com/norcalli/nvim_utils
-M.create_augroups = function(definitions)
+--- For autocommands, extracted from
+--- https://github.com/norcalli/nvim_utils
+--- @param definitions table<string, table<number, string>>
+utils.create_augroups = function(definitions)
   for group_name, definition in pairs(definitions) do
     vim.api.nvim_command("augroup " .. group_name)
     vim.api.nvim_command("autocmd!")
@@ -99,15 +28,41 @@ M.create_augroups = function(definitions)
   end
 end
 
--- Check if string is empty or if it's nil
--- @return boolean
-M.is_empty = function(str)
+--- Check if string is empty or if it's nil
+--- @param str string The string to be checked
+--- @return boolean
+utils.is_empty = function(str)
   return str == "" or str == nil
 end
 
--- Search if a table have the value we are looking for,
--- useful for plugins management
-M.has_value = function(tabl, val)
+--- Escapes a string
+--- @param str string String to escape
+--- @return string
+utils.escape_str = function(str)
+  local escape_patterns = {
+    "%^",
+    "%$",
+    "%(",
+    "%)",
+    "%[",
+    "%]",
+    "%%",
+    "%.",
+    "%-",
+    "%*",
+    "%+",
+    "%?",
+  }
+
+  return str:gsub(("([%s])"):format(table.concat(escape_patterns)), "%%%1")
+end
+
+--- Search if a table have the value we are looking for,
+--- useful for plugins management
+--- @param tabl table
+--- @param val any
+--- @return boolean
+utils.has_value = function(tabl, val)
   for _, value in ipairs(tabl) do
     if value == val then
       return true
@@ -117,52 +72,84 @@ M.has_value = function(tabl, val)
   return false
 end
 
--- read_file returns the content of the given file
--- @tparam string path The path of the file
--- @return string
-M.read_file = function(path)
-  local fd = vim.loop.fs_open(path, "r", 438)
-  local stat = vim.loop.fs_fstat(fd)
-  local data = vim.loop.fs_read(fd, stat.size, 0)
-  vim.loop.fs_close(fd)
-
-  return data
-end
-
--- write_file writes the given string into given file
--- @tparam string path The path of the file
--- @tparam string content The content to be written in the file
--- @tparam string mode The mode for opening the file, e.g. 'w+'
-M.write_file = function(path, content, mode)
-  -- 644 sets read and write permissions for the owner, and it sets read-only
-  -- mode for the group and others.
-  vim.loop.fs_open(path, mode, tonumber("644", 8), function(err, fd)
-    if not err then
-      local fpipe = vim.loop.new_pipe(false)
-      vim.loop.pipe_open(fpipe, fd)
-      vim.loop.write(fpipe, content)
-    end
-  end)
-end
-
-M.load_modules = function(module_path, modules)
-  for i = 1, #modules, 1 do
-    local ok, err = xpcall(
-      require,
-      debug.traceback,
-      string.format("%s.%s", module_path, modules[i])
-    )
-    if not ok then
-      require("doom.extras.logging").error(
-        string.format(
-          "There was an error loading the module '%s.%s'. Traceback:\n%s",
-          module_path,
-          modules[i],
-          err
-        )
-      )
+--- Search if a table have the key we are looking for,
+--- useful for plugins management
+--- @param tabl table
+--- @param key string
+--- @return boolean
+utils.has_key = function(tabl, key)
+  for _, k in ipairs(vim.tbl_keys(tabl)) do
+    if k == key then
+      return true
     end
   end
+
+  return false
 end
 
-return M
+--- Executes a git command and gets the output
+--- @param command string
+--- @param remove_newlines boolean
+--- @return string
+utils.get_git_output = function(command, remove_newlines)
+  local git_command_handler = io.popen(system.git_workspace .. command)
+  -- Read the command output and remove newlines if wanted
+  local command_output = git_command_handler:read("*a")
+  if remove_newlines then
+    command_output = command_output:gsub("[\r\n]", "")
+  end
+  -- Close child process
+  git_command_handler:close()
+
+  return command_output
+end
+
+--- Check if the given plugin is disabled in doom_modules.lua
+--- @param plugin string The plugin identifier, e.g. statusline
+--- @return boolean
+utils.is_plugin_disabled = function(plugin)
+  local modules = require("doom.core.config.modules").modules
+
+  -- Iterate over all modules sections (e.g. ui) and their plugins
+  for _, section in pairs(modules) do
+    if utils.has_value(section, plugin) then
+      return false
+    end
+  end
+
+  return true
+end
+
+-- Check if the given plugin exists
+-- @param plugin_name string The plugin name, e.g. nvim-tree.lua
+-- @param path string Where should be searched the plugin in packer's path, defaults to `start`
+-- @return boolean
+utils.check_plugin = function(plugin_name, path)
+  if not path then
+    path = "start"
+  end
+
+  return vim.fn.isdirectory(
+    vim.fn.stdpath("data") .. "/site/pack/packer/" .. path .. "/" .. plugin_name
+  ) == 1
+end
+
+--- Rounds a number, optionally to the nearest decimal place
+--- @param num number - Value to round
+--- @param decimalplace number|nil - Number of decimal places
+--- @return number
+utils.round = function(num, decimalplace)
+  local mult = 10 ^ (decimalplace or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
+--- Searches for a number of executables in the user's path
+--- @param executables table<number, string> Table of executables to search for
+--- @return string|nil First valid executable in table
+utils.find_executable_in_path = function(executables)
+  return vim.tbl_filter(function(c)
+    return c ~= vim.NIL and vim.fn.executable(c) == 1
+  end, executables)[1]
+end
+
+return utils

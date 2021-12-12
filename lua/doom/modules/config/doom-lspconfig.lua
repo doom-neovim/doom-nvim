@@ -1,39 +1,43 @@
 return function()
   local fn = vim.fn
   local lsp = vim.lsp
-  local config = require("doom.core.config").load_config()
-
-  -- Snippets support
-  local capabilities = lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  local config = require("doom.core.config").config
 
   -- Lsp Symbols
-  fn.sign_define("LspDiagnosticsSignError", {
-    texthl = "LspDiagnosticsSignError",
-    text = config.doom.lsp_error,
-    numhl = "LspDiagnosticsSignError",
-  })
-  fn.sign_define("LspDiagnosticsSignWarning", {
-    texthl = "LspDiagnosticsSignWarning",
-    text = config.doom.lsp_warning,
-    numhl = "LspDiagnosticsSignWarning",
-  })
-  fn.sign_define("LspDiagnosticsSignHint", {
-    texthl = "LspDiagnosticsSignHint",
-    text = config.doom.lsp_hint,
-    numhl = "LspDiagnosticsSignHint",
-  })
-  fn.sign_define("LspDiagnosticsSignInformation", {
-    texthl = "LspDiagnosticsSignInformation",
-    text = config.doom.lsp_information,
-    numhl = "LspDiagnosticsSignInformation",
-  })
+  local signs, hl
+  if vim.fn.has("nvim-0.6.0") == 1 then
+    signs = {
+      Error = config.doom.lsp_error,
+      Warn = config.doom.lsp_warn,
+      Info = config.doom.lsp_info,
+      Hint = config.doom.lsp_hint,
+    }
+    hl = "DiagnosticSign"
+  else
+    signs = {
+      Error = config.doom.lsp_error,
+      Warning = config.doom.lsp_warn,
+      Information = config.doom.lsp_info,
+      Hint = config.doom.lsp_hint,
+    }
+    hl = "LspDiagnosticsSign"
+  end
+
+  for severity, icon in pairs(signs) do
+    local highlight = hl .. severity
+
+    fn.sign_define(highlight, {
+      text = icon,
+      texthl = highlight,
+      numhl = highlight,
+    })
+  end
 
   lsp.handlers["textDocument/publishDiagnostics"] =
     lsp.with(lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = {
+      virtual_text = config.doom.enable_lsp_virtual_text and {
         prefix = config.doom.lsp_virtual_text, -- change this to whatever you want your diagnostic icons to be
-      },
+      } or false,
     })
   -- Border for lsp_popups
   lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
@@ -47,18 +51,18 @@ return function()
     "   (Text) ",
     "   (Method)",
     "   (Function)",
-    "   (Constructor)",
+    "   (Constructor)",
     " ﴲ  (Field)",
-    "[] (Variable)",
+    "   (Variable)",
     "   (Class)",
     " ﰮ  (Interface)",
     "   (Module)",
-    " 襁 (Property)",
+    " ﰠ  (Property)",
     "   (Unit)",
     "   (Value)",
     " 練 (Enum)",
     "   (Keyword)",
-    "   (Snippet)",
+    "   (Snippet)",
     "   (Color)",
     "   (File)",
     "   (Reference)",
@@ -67,7 +71,7 @@ return function()
     " ﲀ  (Constant)",
     " ﳤ  (Struct)",
     "   (Event)",
-    "   (Operator)",
+    "   (Operator)",
     "   (TypeParameter)",
   }
 

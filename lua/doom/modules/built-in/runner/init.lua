@@ -1,12 +1,11 @@
 local log = require("doom.extras.logging")
 local term
 
--- selene: allow(undefined_variable)
 if packer_plugins and packer_plugins["toggleterm.nvim"] then
   term = require("toggleterm.terminal").Terminal
 else
   log.error(
-    "Doom runner needs toggleterm plugin, please uncomment the 'terminal' entry in your doomrc"
+    "Doom runner needs toggleterm plugin, please uncomment the 'terminal' entry in your doom_modules.lua"
   )
 end
 
@@ -29,7 +28,7 @@ M.start_repl = function()
   local filetype = vim.bo.filetype
   local repl_cmd = languages[filetype]
 
-  local opened_repl, err = pcall(function()
+  local opened_repl, err = xpcall(function()
     if repl_cmd then
       local repl = term:new({ cmd = repl_cmd, hidden = true })
       repl:open()
@@ -40,7 +39,7 @@ M.start_repl = function()
           .. ". Maybe it is not yet supported in the Doom runner plugin?"
       )
     end
-  end)
+  end, debug.traceback)
 
   if not opened_repl then
     log.error("Error while trying to opening a repl for " .. filetype .. ". Traceback:\n" .. err)
@@ -52,7 +51,7 @@ M.run_code = function()
   local filetype = vim.bo.filetype
   local lang_bin = languages[filetype]
 
-  local run_code, err = pcall(function()
+  local run_code, err = xpcall(function()
     if lang_bin then
       local runner = term:new({
         cmd = lang_bin .. " " .. vim.fn.expand("%"),
@@ -67,7 +66,7 @@ M.run_code = function()
           .. ". Maybe it is not yet supported in the Doom runner plugin?"
       )
     end
-  end)
+  end, debug.traceback)
 
   if not run_code then
     log.error("Error while trying to run the current file. Traceback:\n" .. err)

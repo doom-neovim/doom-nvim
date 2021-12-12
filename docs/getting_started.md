@@ -347,11 +347,11 @@ a previous release (for main branch) or a previous commit (for development branc
 
 ## Configuration
 
-You can configure Doom Nvim by tweaking the `doomrc.lua`, `doom_config.lua` and
-the `plugins.lua` files located in your Doom Nvim root directory
-(`$HOME/.config/doom-nvim/` by default).
+You can configure Doom Nvim by tweaking the `doom_config.lua`,
+`doom_modules.lua` and the `doom_userplugins.lua` files located in your
+Doom Nvim root directory (`$HOME/.config/doom-nvim/` by default).
 
-### doomrc.lua
+### doom_modules.lua
 
 This file handles all the Doom Nvim modules, its structure is really simple and
 easy to understand.
@@ -359,74 +359,81 @@ easy to understand.
 This one will look like that:
 
 ```lua
-local doom = {
-	ui = {
-		'dashboard',      -- Start screen
-		-- 'doom-themes', -- Additional doom emacs' colorschemes
-		'statusline',     -- Statusline
-		'tabline',        -- Tabline, shows your buffers list at top
-		-- 'zen',         -- Distraction free environment
-		'which-key',      -- Keybindings popup menu like Emacs' guide-key
-		-- 'indentlines', -- Show indent lines
-	},
-	doom = {
-		-- 'neorg',    -- Life Organization Tool
-		-- 'runner',   -- Open a REPL for the current language or run the current file
-		-- 'compiler', -- Compile (and run) your code with just pressing three keys!
-	},
-	editor = {
-		'auto-session',    -- A small automated session manager for Neovim
-		-- 'terminal',     -- Terminal for Neovim (NOTE: needed for runner and compiler)
-		'explorer',        -- Tree explorer
-		'symbols',         -- LSP symbols and tags
-		-- 'minimap',      -- Code minimap, requires github.com/wfxr/code-minimap
-		'gitsigns',        -- Git signs
-		'telescope',       -- Highly extendable fuzzy finderover lists
-		-- 'restclient',   -- A fast Neovim http client
-		'formatter',       -- File formatting
-		'autopairs',       -- Autopairs
-		-- 'editorconfig', -- EditorConfig support for Neovim
-		'kommentary',      -- Comments plugin
-		'lsp',             -- Language Server Protocols
-		'snippets',        -- LSP snippets
-	},
-	langs = {
-		-- To enable the language server for a language justadd the +lsp flag
-		-- at the end, e.g. 'rust +lsp'. This will install the rust TreeSitter
-		-- parser and rust-analyzer
-		--
-		-- 'html',        -- HTML support
-		-- 'css',         -- CSS support
-		-- 'javascript',  -- JavaScript support
-		-- 'typescript',  -- TypeScript support
-		-- 'bash',        -- The terminal gods language
-		-- 'python +lsp', -- Python support + lsp
-		-- 'ruby',        -- Look ma, I love the gems!
-		'lua',            -- Support for our gods language
-		-- 'elixir',      -- Build scalable and maintainablesoftware
-		-- 'haskell',     -- Because Functional programming is fun, isn't it?
+local M = {}
+M.source = debug.getinfo(1, "S").source:sub(2)
 
-		-- 'rust +lsp',   -- Let's get rusty!
-		-- 'go',          -- Hello, gopher
-		-- 'cpp',         -- C++ support
-		-- 'java',        -- Java support
-
-		-- 'config',      -- Configuration files (JSON, YAML, TOML)
-		-- 'dockerfile',  -- Do you like containers, right?
-	},
-	utilities = {
-		-- 'suda',            -- Write and read files without sudo permissions
-		-- 'lazygit',         -- LazyGit integration for Neovim, requires LazyGit
-		-- 'neogit',          -- Magit for Neovim
-		-- 'colorizer',       -- Fastets colorizer for Neovim
-		'range-highlight',    -- hightlights ranges you haveentered in commandline
-	},
+M.modules = {
+  ui = {
+    "dashboard",          -- Start screen
+    -- "doom-themes",     -- Additional doom emacs' colorschemes
+    -- "indentlines",     -- Show indent lines
+    -- "show_registers",  -- popup that shows register contents
+    "statusline",         -- Statusline
+    "tabline",            -- Tabline, shows your buffers list at top
+    "which-key",          -- Keybindings popup menu like Emacs' guide-key
+    -- "zen",             -- Distraction free environment
+  },
+  doom = {
+    -- "compiler",        -- Compile (and run) your code with just pressing three keys!
+    -- "neorg",           -- Life Organization Tool
+    -- "runner",          -- Open a REPL for the current language or run the current file
+  },
+  editor = {
+    "autopairs",          -- Autopairs
+    "auto-session",       -- A small automated session manager for Neovim
+    "dap",                -- Debug Adapter Protocol
+    -- "editorconfig",    -- EditorConfig support for Neovim
+    "explorer",           -- Tree explorer
+    "formatter",          -- File formatting
+    "gitsigns",           -- Git signs
+    "kommentary",         -- Comments plugin
+    "lsp",                -- Language Server Protocols
+    -- "minimap",         -- Code minimap, requires github.com/wfxr/code-minimap
+    -- "ranger",          -- Ranger File Browser, requires ranger file browser
+    "snippets",           -- LSP snippets
+    "symbols",            -- LSP symbols and tags
+    "telescope",          -- Highly extendable fuzzy finder over lists
+    -- "terminal",        -- Terminal for Neovim (NOTE: needed for runner and compiler)
+  },
+  langs = {
+    -- To enable the language server for a language just add the +lsp flag
+    -- at the end, e.g. 'rust +lsp'. This will install the rust TreeSitter
+    -- parser and rust-analyzer
+    --
+    -- "bash",            -- The terminal gods language
+    -- "config",          -- Configuration files (JSON, YAML, TOML)
+    -- "cpp",             -- C++ support
+    -- "css",             -- CSS support
+    -- "dockerfile",      -- Do you like containers, right?
+    -- "elixir",          -- Build scalable and maintainable software
+    -- "go",              -- Hello, gopher
+    -- "haskell",         -- Because Functional programming is fun, isn't it?
+    -- "html",            -- HTML support
+    -- "java",            -- Java support
+    -- "javascript",      -- JavaScript support
+    "lua",                -- Support for our gods language
+    -- "python +lsp",     -- Python support + lsp
+    -- "ruby",            -- Look ma, I love the gems!
+    -- "rust +lsp",       -- Let's get rusty!
+    -- "typescript",      -- TypeScript support
+  },
+  utilities = {
+    -- "lazygit",         -- LazyGit integration for Neovim, requires LazyGit
+    -- "neogit",          -- Magit for Neovim
+    "range-highlight",    -- hightlights ranges you have entered in commandline
+    -- "suda",            -- Write and read files without sudo permissions
+  },
+  web = {
+    -- "colorizer",       -- Fastest colorizer for Neovim
+    -- "firenvim",        -- requires firenvim browser extension; change fontsize by increasing guifontsize in doom_config
+    -- "restclient",      -- A fast Neovim http client
+  }
 }
 
-return doom
+return M
 ```
 
-And as the `doomrc.lua` file self-documentation says, you will only need to uncomment
+And as the `doom_modules.lua` file self-documentation says, you will only need to uncomment
 or comment the plugins names in order to enable or disable them. e.g. to enable the `terminal`
 plugin you will only need to uncomment the `-- 'terminal',` line and restart Neovim.
 Doom will automatically handle your changes and install the `terminal` plugin for you.
@@ -461,7 +468,7 @@ return {
 > **NOTE**: all your used-defined configurations here will be live-reloaded, e.g.
 > mappings, autocommands, etc.
 
-### plugins.lua
+### doom_userplugins.lua
 
 This file handles your custom plugins, in other words, it handles all the extra
 plugins you need that are not covered by Doom Nvim.
@@ -482,7 +489,7 @@ return {
 }
 ```
 
-And as with the `doomrc.lua` file, Doom Nvim will automatically handle your changes
+And as with the `doom_modules.lua` file, Doom Nvim will automatically handle your changes
 and install or uninstall the plugins declared on here.
 
 > **NOTE**: all the valid options for declaring plugins can be found in
@@ -492,7 +499,7 @@ and install or uninstall the plugins declared on here.
 
 Doom Nvim consists of around 5 modules. A Doom Nvim Module is a bundle of plugins,
 configuration and commands, organized into a unit that can be toggled easily by
-tweaking your `doomrc.lua` (found in `$HOME/.config/doom-nvim`).
+tweaking your `doom_modules.lua` (found in `$HOME/.config/doom-nvim`).
 
 Please see [Plugin Management](#plugin-management) for more information.
 
@@ -506,7 +513,7 @@ in your Doom Nvim root directory. Read on to learn how to use this system to ins
 your own plugins.
 
 > **WARNING:** Do not install plugins directly in `lua/doom/modules/init.lua`. Instead,
-> use your `doomrc.lua` and `plugins.lua` files to modify them.
+> use your `doom_modules.lua` and `doom_userplugins.lua` files to modify them.
 
 ### Configuring Doom
 
@@ -522,7 +529,7 @@ Do you want to change some configurations of some modules?
 Go to `lua/doom/modules/config` directory and you will find the configurations
 for the plugins.
 
-Otherwise if you want to configure a plugin declared in your `plugins.lua` you
+Otherwise if you want to configure a plugin declared in your `doom_userplugins.lua` you
 can use the packer's `config` field, e.g.
 
 ```lua
@@ -539,10 +546,10 @@ can use the packer's `config` field, e.g.
 [Language Server Protocols](https://microsoft.github.io/language-server-protocol/) is installed as a plugin.
 
 To easily install language servers and without having to do it system-wide or having to
-manually configure servers, Doom Nvim makes use of [kabouzeid/nvim-lspinstall](https://github.com/kabouzeid/nvim-lspinstall).
+manually configure servers, Doom Nvim makes use of [MordechaiHadad/nvim-lspmanager](https://github.com/MordechaiHadad/nvim-lspmanager).
 
 To enable the language server for a certain programming language and automatically
-install it, just append a `+lsp` flag at the end of the language field in your `doomrc.lua`,
+install it, just append a `+lsp` flag at the end of the language field in your `doom_modules.lua`,
 e.g. for enabling Rust support in Doom and install `rust-analyzer`:
 
 ```lua
@@ -553,7 +560,18 @@ local doom = {
 }
 ```
 
-> **NOTE**: You can see a list of currently supported languages at [bundled installers](https://github.com/kabouzeid/nvim-lspinstall#bundled-installers).
+You can also override or add additional LSPs for a language using the `+lsp(OVERRIDE)` syntax.
+
+```lua
+local doom = {
+  langs = {
+    'html +lsp(html, tailwindcss)' -- Enable extra LSPs for a language
+    'vue +lsp(volar)' -- Or override the default
+  }
+}
+```
+
+> **NOTE**: You can see a list of currently supported languages at [bundled installers](https://github.com/MordechaiHadad/nvim-lspmanager#supported-language-servers).
 
 ### Binding keys
 
@@ -587,7 +605,7 @@ But first let's see what's new:
 - New logging system powered by [vlog]. A faster and smaller logging system
   because complexity is not always the best choice.
 - Easily enable and disable plugins. Now toggling the doom default plugins is easier
-  than before, just comment or uncomment it in your `doomrc.lua`!
+  than before, just comment or uncomment it in your `doom_modules.lua`!
 - Better custom plugins management. Now the custom plugins are being directly
   handled by packer as it should be, no more nonsense wrappers around it.
 - Better updating mechanism. Forget these annoying merging issues and save the
@@ -606,8 +624,6 @@ But first let's see what's new:
   documentation is the core of all projects.
 - Restructured source code. Now the doom nvim source code is much cleaner and
   easier to understand.
-- Added selene linter CI for incoming pull requests and stylua CI for pushes.
-  Let's get a consistent way to maintain Doom Nvim source!
 
 Now that we know what's new we will surely want to update, isn't it?
 
@@ -662,12 +678,12 @@ And now, how can I start using the new configuration files?
 I'm going to explain you in a short way because the new configuration files has
 a rich documentation inside them.
 
-- `doomrc.lua`, this file handles the Doom Nvim modules, in other words, which
+- `doom_modules.lua`, this file handles the Doom Nvim modules, in other words, which
   plugins are being installed and loaded and which plugins are not.
 - `doom_config.lua`, this file handles the user configurations for doom nvim,
   e.g. if mouse is enabled or not. This one also handles user-defined Neovim
   configurations like global variables and mappings.
-- `plugins.lua`, this file handles the user-defined plugins, it is the
+- `doom_userplugins.lua`, this file handles the user-defined plugins, it is the
   replacement for the `custom_plugins` field in the old doomrc.
 
 > Are you having issues with the 3.0.0 version? Don't hesitate to [report them]

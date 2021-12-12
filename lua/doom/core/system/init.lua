@@ -4,44 +4,33 @@
 --              License: GPLv2                 --
 ---[[---------------------------------------]]---
 
-local M = {}
+local system = {}
+local stdpath = vim.fn.stdpath
+local config_dir = stdpath("config"):match(".*[/\\]"):sub(1, -2)
 
--- get_config_dir will get the config path based in the current system, e.g.
--- 'C:\Users\JohnDoe\AppData\Local' for windows and '~/.config' for *nix
--- @return string
-local function get_config_dir()
-  if string.find(vim.loop.os_uname().sysname, "Windows") then
-    return os.getenv("USERPROFILE") .. "\\AppData\\Local\\"
-  end
-
-  return (os.getenv("XDG_CONFIG_HOME") and os.getenv("XDG_CONFIG_HOME"))
-    or (os.getenv("HOME") .. "/.config")
-end
-
--- get_separator will return the system paths separator, e.g. \ for Windows and / for *nix
--- @return string
-local function get_separator()
-  if vim.loop.os_uname().sysname == "Windows" then
-    return "\\"
-  end
-
-  return "/"
-end
-
-M.config_dir = get_config_dir()
-
-M.sep = get_separator()
+system.sep = package.config:sub(1, 1)
 
 -- The doom-nvim root directory, works as a fallback for looking Doom Nvim configurations
 -- in case that doom_configs_root directory does not exists.
-M.doom_root = string.format("%s%snvim", M.config_dir, M.sep)
--- The doom-nvim configurations root directory
-M.doom_configs_root = string.format("%s%sdoom-nvim", M.config_dir, M.sep)
--- The doom-nvim logs file path
-M.doom_logs = vim.fn.stdpath("data") .. string.format("%sdoom.log", M.sep)
--- The doom-nvim bug report file path
-M.doom_report = vim.fn.stdpath("data") .. string.format("%sdoom_report.md", M.sep)
--- The git workspace for doom-nvim, e.g. 'git -C /home/JohnDoe/.config/nvim'
-M.git_workspace = string.format("git -C %s ", M.doom_root)
+system.doom_root = stdpath("config")
 
-return M
+-- The doom-nvim configurations root directory
+system.doom_configs_root = table.concat({ config_dir, "doom-nvim" }, system.sep)
+
+local testdir = vim.loop.fs_opendir(system.doom_configs_root)
+if testdir then
+  vim.loop.fs_closedir(testdir)
+else
+  system.doom_configs_root = stdpath("config")
+end
+
+-- The doom-nvim logs file path
+system.doom_logs = table.concat({ stdpath("data"), "doom.log" }, system.sep)
+
+-- The doom-nvim bug report file path
+system.doom_report = table.concat({ stdpath("data"), "doom_report.md" }, system.sep)
+
+-- The git workspace for doom-nvim, e.g. 'git -C /home/JohnDoe/.config/nvim'
+system.git_workspace = string.format("git -C %s ", stdpath("config"))
+
+return system

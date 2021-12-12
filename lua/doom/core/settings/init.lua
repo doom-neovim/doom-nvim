@@ -6,20 +6,15 @@
 
 local functions = require("doom.core.functions")
 local log = require("doom.extras.logging")
-local config = require("doom.core.config").load_config()
+local config = require("doom.core.config").config
 
-local M = {}
+local settings = {}
 
 log.debug("Loading Doom defaults module ...")
 
--- load_default_options sets and loads default Neovim options based on doomrc values
-M.load_default_options = function()
+-- load_default_options sets and loads default Neovim options based on doom_config.lua values
+settings.load_default_options = function()
   ----- Default Neovim configurations
-  -- Set colorscheme
-  vim.cmd("colorscheme " .. config.doom.colorscheme)
-  vim.opt.background = config.doom.colorscheme_bg
-  vim.cmd("highlight WhichKeyFloat guibg=" .. config.doom.whichkey_bg)
-
   -- Global options
   vim.opt.hidden = true
   vim.opt.updatetime = 200
@@ -34,14 +29,26 @@ M.load_default_options = function()
   vim.opt.shortmess:append("atsc")
   vim.opt.inccommand = "split"
   vim.opt.path = "**"
-  vim.opt.signcolumn = "yes"
+  vim.opt.signcolumn = "auto:2-3"
+  vim.opt.foldcolumn = "auto:9"
+
+  vim.opt.fillchars = {
+    vert = "▕",
+    fold = " ",
+    eob = " ",
+    diff = "─",
+    msgsep = "‾",
+    foldopen = "▾",
+    foldclose = "▸",
+    foldsep = "│",
+  }
 
   -- Buffer options
   vim.opt.smartindent = true
   vim.opt.copyindent = true
   vim.opt.preserveindent = true
 
-  -- set Gui Fonts
+  -- Set Gui Fonts
   vim.opt.guifont = config.doom.guifont .. ":h" .. config.doom.guifont_size
 
   -- Use clipboard outside vim
@@ -100,11 +107,13 @@ M.load_default_options = function()
   end
 
   -- Set numbering
-  if config.doom.relative_num then
-    vim.opt.number = true
-    vim.opt.relativenumber = true
-  else
-    vim.opt.number = true
+  if not config.doom.disable_numbering then
+    if config.doom.relative_num then
+      vim.opt.number = true
+      vim.opt.relativenumber = true
+    else
+      vim.opt.number = true
+    end
   end
 
   -- Enable winwidth
@@ -138,24 +147,49 @@ M.load_default_options = function()
   vim.opt.softtabstop = config.doom.indent
   vim.opt.colorcolumn = tostring(config.doom.max_columns)
   vim.opt.conceallevel = config.doom.conceallevel
+  vim.opt.foldenable = config.doom.foldenable
+
+  -- Better folding
+  vim.cmd([[set foldtext=luaeval(\"require('doom.core.functions').sugar_folds()\")]])
 end
 
--- Custom Doom Nvim commands
-M.custom_options = function()
+-- Doom Nvim commands
+settings.doom_commands = function()
   -- Set a custom command to update Doom Nvim
   -- can be called by using :DoomUpdate
   vim.cmd('command! DoomUpdate lua require("doom.core.functions").update_doom()')
   -- Set a custom command to rollback Doom Nvim version
   -- can be called by using :DoomRollback
   vim.cmd('command! DoomRollback lua require("doom.core.functions").rollback_doom()')
+  -- Set a custom command to open Doom Nvim user manual
+  -- can be called by using :DoomManual
+  vim.cmd('command! DoomManual lua require("doom.core.functions").open_docs()')
+  -- Set a custom command to edit Doom Nvim private configurations
+  -- can be called by using :DoomConfigs
+  vim.cmd('command! DoomConfigs lua require("doom.core.functions").edit_config()')
+  -- Set a custom command to reload Doom Nvim custom mappings, autocommands, etc
+  -- can be called by using :DoomConfigsReload
+  vim.cmd('command! DoomConfigsReload lua require("doom.core.functions").reload_custom_settings()')
+  -- Set a custom command to fully reload Doom Nvim and simulate a new Neovim run
+  -- can be called by using :DoomReload
+  vim.cmd('command! DoomReload lua require("doom.modules.built-in.reloader").full_reload()')
+  -- Set a custom command to create a crash report
+  -- can be called by using :DoomReport
+  vim.cmd('command! DoomReport lua require("doom.core.functions").create_report()')
+  -- Set a custom command to display an information dashboard
+  -- can be called by using :DoomInfo
+  vim.cmd('command! DoomInfo lua require("doom.modules.built-in.info").toggle()')
+end
 
-  -- Load user-defined settings from the Neovim field in the doomrc file
+-- Custom Doom Nvim options
+settings.custom_options = function()
+  -- Load user-defined settings from the Neovim field in the doom_config.lua file
+  functions.load_custom_settings(config.nvim.functions, "functions")
   functions.load_custom_settings(config.nvim.autocmds, "autocmds")
   functions.load_custom_settings(config.nvim.commands, "commands")
-  functions.load_custom_settings(config.nvim.functions, "functions")
   functions.load_custom_settings(config.nvim.mappings, "mappings")
   functions.load_custom_settings(config.nvim.global_variables, "variables")
   functions.load_custom_settings(config.nvim.options, "options")
 end
 
-return M
+return settings

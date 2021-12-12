@@ -9,22 +9,20 @@
 ----- CUSTOM SECTION --------------------------------------
 -----------------------------------------------------------
 
-local utils = require("doom.utils")
 local system = require("doom.core.system")
+local round = require("doom.utils").round
 -- logging defaults to "info" level
-local doom_config = {
-  doom = {
-    logging = "info",
-  },
-}
+local logging_level = "info"
 
--- /home/user/.config/doom-nvim/doom_config.lua
-if utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep)) then
-  doom_config = dofile(string.format("%s%sdoom_config.lua", system.doom_root, system.sep))
-elseif
-  utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep))
-then
-  doom_config = dofile(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep))
+-- Manually load doom_config.lua to avoid circular dependencies
+local ok, ret = xpcall(require, debug.traceback, "doom_config")
+if ok then
+  logging_level = ret.config.doom.logging or logging_level
+else
+  ok, ret = xpcall(dofile, debug.traceback, system.doom_configs_root .. "/doom_config.lua")
+  if ok then
+    logging_level = ret.config.doom.logging or logging_level
+  end
 end
 
 -----------------------------------------------------------
@@ -46,7 +44,7 @@ local default_config = {
 
   -- Any messages above this level will be logged.
   -- defaults to info
-  level = doom_config.doom.logging,
+  level = logging_level,
 
   -- Level configuration
   modes = {
@@ -58,25 +56,22 @@ local default_config = {
     { name = "fatal", hl = "ErrorMsg" },
   },
 
-  -- Can limit the number of decimals displayed for floats
-  float_precision = 0.01,
+  -- Can limit the number of decimals places for floats
+  decimal_places = 2,
 }
 
 -- {{{ NO NEED TO CHANGE
 local log = {}
 
--- selene: allow(incorrect_standard_library_use)
 local unpack = unpack or table.unpack
 
+--- Sets up self
+--- @param config table
+--- @param standalone boolean
 log.new = function(config, standalone)
   config = vim.tbl_deep_extend("force", default_config, config)
 
-  local outfile = string.format(
-    "%s%s%s.log",
-    vim.api.nvim_call_function("stdpath", { "data" }),
-    system.sep,
-    config.plugin
-  )
+  local outfile = ("%s/%s.log"):format(vim.fn.stdpath("data"), config.plugin)
 
   local obj
   if standalone then
@@ -90,19 +85,14 @@ log.new = function(config, standalone)
     levels[v.name] = i
   end
 
-  local round = function(x, increment)
-    increment = increment or 1
-    x = x / increment
-    return (x > 0 and math.floor(x + 0.5) or math.ceil(x - 0.5)) * increment
-  end
-
+  -- Concatenates tables into a string, handling numbers and dumping tables
   local make_string = function(...)
     local t = {}
     for i = 1, select("#", ...) do
       local x = select(i, ...)
 
-      if type(x) == "number" and config.float_precision then
-        x = tostring(round(x, config.float_precision))
+      if type(x) == "number" and config.decimal_places then
+        x = tostring(round(x, config.decimal_places))
       elseif type(x) == "table" then
         x = vim.inspect(x)
       else

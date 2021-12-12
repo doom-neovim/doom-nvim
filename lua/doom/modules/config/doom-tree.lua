@@ -1,5 +1,5 @@
 return function()
-  local config = require("doom.core.config").load_config()
+  local config = require("doom.core.config").config
   local tree_cb = require("nvim-tree.config").nvim_tree_callback
 
   ----- GLOBAL VARIABLES ------------------------
@@ -52,25 +52,36 @@ return function()
   -- if nvim-web-devicons is installed and on your runtimepath
   vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1, folder_arrows = 0 }
 
+  --- Tree icons
   -- default will show icon by default if no icon is provided
   -- default shows no icon by default
   vim.g.nvim_tree_icons = {
     default = "",
     symlink = "",
     git = {
-      unstaged = "✗",
-      staged = "✓",
+      unstaged = "",
+      staged = "",
       unmerged = "",
-      renamed = "➜",
-      untracked = "★",
+      renamed = "",
+      untracked = "",
+      deleted = "",
+      ignored = "◌",
     },
     folder = {
+      arrow_open = "",
+      arrow_closed = "",
       default = "",
       open = "",
       empty = "",
       empty_open = "",
       symlink = "",
       symlink_open = "",
+    },
+    lsp = {
+      hint = config.doom.lsp_hint,
+      info = config.doom.lsp_info,
+      warning = config.doom.lsp_warn,
+      error = config.doom.lsp_error,
     },
   }
 
@@ -95,11 +106,11 @@ return function()
     update_cwd = true,
     -- show lsp diagnostics in the signcolumn
     diagnostics = {
-      enable = require("doom.core.functions").is_plugin_disabled("lsp") and false or true,
+      enable = require("doom.utils").is_plugin_disabled("lsp") and false or true,
       icons = {
         hint = config.doom.lsp_hint,
-        info = config.doom.lsp_information,
-        warning = config.doom.lsp_warning,
+        info = config.doom.lsp_info,
+        warning = config.doom.lsp_warn,
         error = config.doom.lsp_error,
       },
     },

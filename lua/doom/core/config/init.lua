@@ -4,13 +4,12 @@
 --           License: GPLv2           --
 ---[[------------------------------]]---
 
-local M = {}
+local config = {}
 
 local log = require("doom.extras.logging")
-local utils = require("doom.utils")
 local system = require("doom.core.system")
 
-log.debug("Loading Doom core config module ...")
+log.debug("Loading Doom config module ...")
 
 -- Check if running Neovim or Vim and fails if:
 -- 1. Running Vim instead of Neovim
@@ -30,11 +29,9 @@ end
 
 -- {{{ Default doom_config values
 
--- default_doom_config_values loads the default doom_config values
--- @return table
-local function default_doom_config_values()
+config.config = {
   -- {{{ Doom
-  local doom = {
+  doom = {
     -- Autosave
     -- false : Disable autosave
     -- true  : Enable autosave
@@ -50,8 +47,8 @@ local function default_doom_config_values()
     -- Disable Vim macros
     -- false : Enable Vim macros
     -- true  : Disable Vim macros
-    -- @default = true
-    disable_macros = true,
+    -- @default = false
+    disable_macros = false,
 
     -- Autosave sessions
     -- false : Disable session autosave
@@ -111,6 +108,12 @@ local function default_doom_config_values()
     -- @default = false
     preserve_edit_pos = false,
 
+    -- Allow overriding the default Doom Nvim keybinds
+    -- false : Default keybinds cannot be overwritten
+    -- true  : Default keybinds can be overwritten
+    -- @default = true
+    allow_default_keymaps_overriding = true,
+
     -- horizontal split on creating a new file (<Leader>fn)
     -- false : doesn't split the window when creating a new file
     -- true  : horizontal split on creating a new file
@@ -159,6 +162,12 @@ local function default_doom_config_values()
     expand_tabs = true,
 
     -- Set numbering
+    -- false : Enable  number lines
+    -- true  : Disable number lines
+    -- @default = false
+    disable_numbering = false,
+
+    -- Set numbering style
     -- false : Shows absolute number lines
     -- true  : Shows relative number lines
     -- @default = true
@@ -205,6 +214,46 @@ local function default_doom_config_values()
     -- true  : enables dashboard status line
     -- @default = true
     dashboard_statline = true,
+
+    -- Show the editing file path in your status line
+    -- false : show only file name on status line
+    -- true  : show file name and the updir in status line
+    statusline_show_file_path = true,
+
+    -- Set the keybindings modules that you want to use
+    -- false : disables keybindings module
+    -- true  : enables keybindings module
+    keybinds_modules = {
+      -- Core doom keybindings
+      core = true,
+      -- Movement keybindings, jump between your windows, buffers and code
+      movement = true,
+      -- Leader keybindings, a bunch of useful keybindings managed by space key
+      -- WARNING: disabling this will break which-key plugin if the plugin is enabled
+      leader = true,
+      -- Completion and snippets keybindings
+      completion = true,
+    },
+
+    -- sequences used for escaping insert mode
+    -- @default = { 'jk', 'kj' }
+    escape_sequences = { "jk", "kj" },
+
+    -- Disable or enable Doom autocommands, this can break some configuration options (they will stop working)
+    -- e.g. preserve_edit_pos or autosave
+    --
+    -- false : enable autocommands module
+    -- true  : disable autocommands module
+    -- @default = false
+    disable_autocommands = false,
+
+    -- Enable LSP diagnostics virtual text
+    -- @default = false
+    enable_lsp_virtual_text = false,
+
+    -- Use floating windows for plugins manager (packer) operations
+    -- @default = false
+    use_floating_win_packer = false,
 
     -- Default indent size
     -- @default = 4
@@ -271,7 +320,7 @@ local function default_doom_config_values()
     terminal_direction = "horizontal",
 
     -- NOTE: This will only be activated if 'backup' is true.
-    -- We don'recommend you put this outside of neovim so we've restricted to thepath: ~/.config/nvim
+    -- We don'recommend you put this outside of neovim so we've restricted to the path: ~/.config/nvim
     -- WARNING: only put the folder name that you want. (eg: undo_dir = '/undodir')
     -- @default_directory = '~/.config/nvim/undodir'
     undo_dir = "/undodir",
@@ -313,17 +362,34 @@ local function default_doom_config_values()
     guifont = "FiraCode Nerd Font",
     guifont_size = "15",
 
-    -- change Which Key background color
+    -- Change Which Key background color
     -- can use hex, or normal color names (eg: Red, Gree, Blue)
     -- @default = #202328
     whichkey_bg = "#202328",
 
-    -- set your custom lsp diagnostic symbols below
+    -- Set your custom lsp diagnostic symbols below
     lsp_error = "",
-    lsp_warning = "",
+    lsp_warn = "",
     lsp_hint = "",
-    lsp_information = "",
+    lsp_info = "",
     lsp_virtual_text = " ",
+
+    -- Set your linters for the programming languages that you use,
+    -- see https://github.com/mfussenegger/nvim-lint#available-linters
+    linters = {
+      c = {},
+      cpp = {},
+      css = {},
+      html = {},
+      javascript = {},
+      lua = {},
+      markdown = {},
+      nix = {},
+      python = {},
+      ruby = {},
+      sh = {},
+      typescript = {},
+    },
 
     -- Set your dashboard custom colors below
     -- @default = doom emacs' default dashboard colors
@@ -337,22 +403,31 @@ local function default_doom_config_values()
     -- Set your custom dashboard header below
     -- @default = doom emacs' default dashboard header
     dashboard_custom_header = {},
-  }
+  },
   -- }}}
 
   -- {{{ Nvim
-  local nvim = {
+  nvim = {
     -- Set custom Neovim global variables
     -- @default = {}
     -- example:
-    --   { ['sonokai_style'] = 'andromeda' }
+    --   {
+    --     ['sonokai_style'] = 'andromeda',
+    --     ['modelineexpr'] = true,
+    --   }
+    --
+    --   modeline feature was turned off to reduce security exploit surfaces.
+    --   Since modeline now uses whitelist approach since nvim 0.4 /vim 8.1,
+    --   enabling this is as safe as external packages such as securemodelines.
+    --   See https://github.com/neovim/neovim/issues/2865
+    --
     global_variables = {},
 
     -- Set custom autocommands
     -- @default = {}
     -- example:
     --   augroup_name = {
-    --      { 'BufNewFile,BufRead', 'doomrc', 'set ft=lua'}
+    --      { 'BufNewFile,BufRead', 'doom_modules.lua', 'set ft=lua'}
     --   }
     autocmds = {},
 
@@ -360,13 +435,15 @@ local function default_doom_config_values()
     -- @default = {}
     -- example:
     --   {
-    --      {'n', 'ca', ':Lspsaga code_action<CR>'}
+    --      {'n', 'ca', ':Lspsaga code_action<CR>', options}
     --   }
     --
     --   where
     --     'n' is the map scope
     --     'ca' is the map activator
     --     ':Lspsaga ...' is the command to be executed
+    --     options is a Lua table containing the mapping options, e.g.
+    --     { silent = true }, see ':h map-arguments'.
     mappings = {},
 
     -- Set custom commands
@@ -381,101 +458,63 @@ local function default_doom_config_values()
     -- @default = {}
     -- example:
     --   {
-    --      hello_custom_func = function()
-    --        print("Hello, custom functions!")
-    --      end
+    --      {
+    --         hello_custom_func = function()
+    --           print("Hello, custom functions!")
+    --         end,
+    --         -- If the function should be ran on neovim launch or if it should
+    --         -- be a global function accesible from anywhere
+    --         run_on_start = false,
+    --      },
     --   }
     functions = {},
-  }
-  -- }}}
 
-  return {
-    doom = doom,
-    nvim = nvim,
-  }
-end
+    -- Set custom options
+    -- @default = {}
+    -- example:
+    --   {
+    --      { ['shiftwidth'] = 4 }
+    --   }
+    options = {},
+  },
+  -- }}}
+}
 
 -- }}}
 
--- load_config Loads the doom_config.lua file if it exists
--- @return table
-M.load_config = function()
-  local config = {
-    doom = {},
-    nvim = {},
-  }
-  local doom_config_path
+config.source = nil
 
-  -- Path cases:
-  --   1. /home/user/.config/doom-nvim/doom_config.lua
-  --   2. /home/user/.config/nvim/doom_config.lua
-  if
-    utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep))
-  then
-    doom_config_path = string.format("%s%sdoom_config.lua", system.doom_configs_root, system.sep)
-  elseif utils.file_exists(string.format("%s%sdoom_config.lua", system.doom_root, system.sep)) then
-    doom_config_path = string.format("%s%sdoom_config.lua", system.doom_root, system.sep)
-  end
+log.debug("Loading Doom config module ...")
 
-  if doom_config_path then
-    local loaded_doom_config, err = pcall(function()
-      config = dofile(doom_config_path)
-    end)
-
-    if not loaded_doom_config then
-      log.error("Error while loading the doom_config file. Traceback:\n" .. err)
-    end
+-- Path cases:
+--   1. /home/user/.config/doom-nvim/doom_config.lua
+--   2. stdpath('config')/doom_config.lua
+--   3. <runtimepath>/doom_config.lua
+local ok, ret = xpcall(dofile, debug.traceback, system.doom_configs_root .. "/doom_config.lua")
+if ok then
+  config.config = ret.config
+  config.source = ret.source
+else
+  ok, ret = xpcall(dofile, debug.traceback, system.doom_root .. "/doom_config.lua")
+  if ok then
+    config.config = ret.config
+    config.source = ret.source
   else
-    log.warn("No doom_config.lua file found, falling to defaults")
-    default_doom_config_values()
-  end
-
-  return config
-end
-
--- install_dap_clients will install the DAP clients for the languages with
--- the +debug flag.
---
--- @param langs The list of languages in the doomrc
-M.install_dap_clients = function(langs)
-  -- selene: allow(undefined_variable)
-  if
-    packer_plugins
-    and packer_plugins["DAPInstall.nvim"]
-    and packer_plugins["DAPInstall.nvim"].loaded
-  then
-    local installed_clients = require("dap-install.api.debuggers").get_installed_debuggers()
-    -- NOTE: not all the clients follows the 'language_dbg' standard and this
-    --       can give some problems to us (maybe?)
-    local available_clients = vim.tbl_keys(require("dap-install.api.debuggers").get_debuggers())
-
-    for _, lang in ipairs(langs) do
-      local lang_str = lang
-      lang = lang:gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
-
-      -- If the +debug flag exists and the language client is not installed yet
-      if lang_str:find("%+debug") and (not utils.has_value(installed_clients, lang .. "_dbg")) then
-        -- Try to install the client only if there is a client available for
-        -- the language, oterwise raise a warning
-        if utils.has_value(available_clients, lang .. "_dbg") then
-          require("dap-install.tools.tool_install").install_debugger(lang .. "_dbg")
-        else
-          log.warn(
-            "The language "
-              .. lang
-              .. ' does not have a DAP client, please remove the "+debug" flag'
-          )
-        end
-      end
+    ok, ret = xpcall(require, debug.traceback, "doom_config")
+    if ok then
+      config.config = ret.config
+      config.source = ret.source
+    else
+      log.error("Error while loading doom_config.lua. Traceback:\n" .. ret)
     end
   end
 end
 
 -- Check plugins updates on start if enabled
-if M.load_config().doom.check_updates then
+if config.config.doom.check_updates then
   require("doom.core.functions").check_updates()
 end
 
-return M
+return config
 
 -- vim: fdm=marker

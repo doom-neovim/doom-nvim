@@ -1,12 +1,11 @@
 return function()
   local utils = require("doom.utils")
-  local config = require("doom.core.config").load_config()
-  local get_color = require("doom.modules.config.doom-eviline-palettes").get_color
+  local config = require("doom.core.config").config
+  local colors = require("galaxyline.themes.colors").get_color
 
-  local bo = vim.bo
   local gl = require("galaxyline")
-  local lsp = require("galaxyline.provider_lsp")
-  local buffer = require("galaxyline.provider_buffer")
+  local lsp = require("galaxyline.providers.lsp")
+  local buffer = require("galaxyline.providers.buffer")
   local condition = require("galaxyline.condition")
 
   local gls = gl.section
@@ -17,21 +16,22 @@ return function()
     "minimap",
     "Outline",
     "toggleterm",
+    "netrw",
   }
+
+  if not config.doom.dashboard_statline then
+    table.insert(gl.exclude_filetypes, "dashboard")
+  end
 
   -- {{{ Utility functions
   local function is_dashboard()
     local buftype = buffer.get_buffer_filetype()
-    if buftype == "DASHBOARD" then
-      return true
-    end
+    return buftype == "DASHBOARD"
   end
 
   local function is_not_dashboard()
     local buftype = buffer.get_buffer_filetype()
-    if buftype ~= "DASHBOARD" then
-      return true
-    end
+    return buftype ~= "DASHBOARD"
   end
   -- }}}
 
@@ -41,7 +41,7 @@ return function()
       provider = function()
         return "▊ "
       end,
-      highlight = { get_color("blue"), get_color("bg") },
+      highlight = { colors("blue"), colors("bg") },
     },
   }
   gls.left[2] = {
@@ -50,43 +50,43 @@ return function()
         -- auto change color according the vim mode
         -- TODO: find a less dirty way to set ViMode colors
         local mode_color = {
-          n = get_color("red")(),
-          i = get_color("green")(),
-          v = get_color("blue")(),
-          [""] = get_color("blue")(),
-          V = get_color("blue")(),
-          c = get_color("magenta")(),
-          no = get_color("red")(),
-          s = get_color("orange")(),
-          S = get_color("orange")(),
-          [""] = get_color("orange")(),
-          ic = get_color("yellow")(),
-          R = get_color("magenta")(),
-          Rv = get_color("magenta")(),
-          cv = get_color("red")(),
-          ce = get_color("red")(),
-          r = get_color("cyan")(),
-          rm = get_color("cyan")(),
-          ["r?"] = get_color("cyan")(),
-          ["!"] = get_color("red")(),
-          t = get_color("red")(),
+          n = colors("red"),
+          i = colors("green"),
+          v = colors("blue"),
+          [""] = colors("blue"),
+          V = colors("blue"),
+          c = colors("magenta"),
+          no = colors("red"),
+          s = colors("orange"),
+          S = colors("orange"),
+          [""] = colors("orange"),
+          ic = colors("yellow"),
+          R = colors("magenta"),
+          Rv = colors("magenta"),
+          cv = colors("red"),
+          ce = colors("red"),
+          r = colors("cyan"),
+          rm = colors("cyan"),
+          ["r?"] = colors("cyan"),
+          ["!"] = colors("red"),
+          t = colors("red"),
         }
-        vim.api.nvim_command("hi GalaxyViMode guifg=" .. mode_color[vim.fn.mode()])
+        vim.api.nvim_command("hi GalaxyViMode guifg=" .. mode_color[vim.fn.mode()]())
         return "  "
       end,
-      highlight = { get_color("red"), get_color("bg"), "bold" },
+      highlight = { colors("red"), colors("bg"), "bold" },
     },
   }
   gls.left[3] = {
     FileSize = {
       provider = "FileSize",
-      condition = condition.buffer_not_empty and is_not_dashboard,
+      condition = condition.buffer_not_empty and condition.hide_in_width,
       highlight = {
-        get_color("fg"),
-        get_color("bg"),
+        colors("fg"),
+        colors("bg"),
       },
       separator = " ",
-      separator_highlight = { get_color("bg"), get_color("bg") },
+      separator_highlight = { colors("bg"), colors("bg") },
     },
   }
   gls.left[4] = {
@@ -94,18 +94,18 @@ return function()
       provider = "FileIcon",
       condition = condition.buffer_not_empty and is_not_dashboard,
       highlight = {
-        require("galaxyline.provider_fileinfo").get_file_icon_color,
-        get_color("bg"),
+        require("galaxyline.providers.fileinfo").get_file_icon_color,
+        colors("bg"),
       },
     },
   }
   gls.left[5] = {
     FileName = {
-      provider = "FileName",
+      provider = config.doom.statusline_show_file_path and "FilePath" or "FileName",
       condition = condition.buffer_not_empty and is_not_dashboard,
-      highlight = { get_color("fg"), get_color("bg"), "bold" },
+      highlight = { colors("fg"), colors("bg"), "bold" },
       separator = " ",
-      separator_highlight = { get_color("bg"), get_color("bg") },
+      separator_highlight = { colors("bg"), colors("bg") },
     },
   }
   gls.left[6] = {
@@ -116,16 +116,16 @@ return function()
         return string.format("%3d : %2d  ", line, column)
       end,
       condition = is_not_dashboard,
-      highlight = { get_color("fg_alt"), get_color("bg") },
+      highlight = { colors("fg_alt"), colors("bg") },
     },
   }
   gls.left[7] = {
     LinePercent = {
       provider = "LinePercent",
       condition = is_not_dashboard,
-      highlight = { get_color("fg_alt"), get_color("bg") },
+      highlight = { colors("fg_alt"), colors("bg") },
       separator = "  ",
-      separator_highlight = { get_color("bg"), get_color("bg") },
+      separator_highlight = { colors("bg"), colors("bg") },
     },
   }
   gls.left[8] = {
@@ -133,15 +133,15 @@ return function()
       provider = "DiagnosticError",
       condition = is_not_dashboard,
       icon = config.doom.lsp_error .. " ",
-      highlight = { get_color("red"), get_color("bg") },
+      highlight = { colors("red"), colors("bg") },
     },
   }
   gls.left[9] = {
     DiagnosticWarn = {
       provider = "DiagnosticWarn",
       condition = is_not_dashboard,
-      icon = config.doom.lsp_warning .. " ",
-      highlight = { get_color("orange"), get_color("bg") },
+      icon = config.doom.lsp_warn .. " ",
+      highlight = { colors("orange"), colors("bg") },
     },
   }
   gls.left[10] = {
@@ -149,7 +149,7 @@ return function()
       provider = "DiagnosticInfo",
       condition = is_not_dashboard,
       icon = config.doom.lsp_hint .. " ",
-      highlight = { get_color("blue"), get_color("bg") },
+      highlight = { colors("blue"), colors("bg") },
     },
   }
 
@@ -159,18 +159,19 @@ return function()
     FileFormat = {
       provider = "FileFormat",
       condition = condition.hide_in_width and is_not_dashboard,
-      highlight = { get_color("fg"), get_color("bg") },
+      highlight = { colors("fg"), colors("bg") },
       separator = "  ",
-      separator_highlight = { get_color("bg"), get_color("bg") },
+      separator_highlight = { colors("bg"), colors("bg") },
     },
   }
+
   gls.right[2] = {
     FileEncode = {
       provider = "FileEncode",
       condition = condition.hide_in_width and is_not_dashboard,
-      highlight = { get_color("fg"), get_color("bg") },
+      highlight = { colors("fg"), colors("bg") },
       separator = " ",
-      separator_highlight = { get_color("bg"), get_color("bg") },
+      separator_highlight = { colors("bg"), colors("bg") },
     },
   }
   gls.right[3] = {
@@ -179,40 +180,40 @@ return function()
         -- Check if there's a LSP client running to avoid redundant
         -- statusline elements
         if lsp.get_lsp_client() ~= "No Active Lsp" then
-          return " " .. lsp.get_lsp_client():gsub("^%l", string.upper)
+          return string.format(" %s » %s ", vim.bo.filetype, lsp.get_lsp_client())
         else
-          -- Use the filetype instead and capitalize it
-          return " " .. (vim.bo.filetype:gsub("^%l", string.upper))
+          -- Use the filetype instead
+          return string.format(" %s ", vim.bo.filetype)
         end
       end,
       condition = function()
         local tbl = { ["dashboard"] = true, [""] = true }
-        if tbl[bo.filetype] then
+        if tbl[vim.bo.filetype] then
           return false
         end
         return true
       end,
-      highlight = { get_color("blue"), get_color("bg") },
+      highlight = { colors("blue"), colors("bg") },
       separator = "  ",
-      separator_highlight = { get_color("bg"), get_color("bg") },
+      separator_highlight = { colors("bg"), colors("bg") },
     },
   }
   gls.right[4] = {
     GitIcon = {
       provider = function()
-        return "  "
+        return " "
       end,
       condition = condition.check_git_workspace,
-      highlight = { get_color("red"), get_color("bg") },
+      highlight = { colors("red"), colors("bg") },
       separator = " ",
-      separator_highlight = { get_color("bg"), get_color("bg") },
+      separator_highlight = { colors("bg"), colors("bg") },
     },
   }
   gls.right[5] = {
     GitBranch = {
       provider = "GitBranch",
       condition = condition.check_git_workspace,
-      highlight = { get_color("green"), get_color("bg"), "bold" },
+      highlight = { colors("green"), colors("bg"), "bold" },
     },
   }
   gls.right[6] = {
@@ -220,32 +221,32 @@ return function()
       provider = function()
         return "   "
       end,
-      condition = is_not_dashboard,
-      highlight = { get_color("bg"), get_color("bg") },
+      condition = condition.hide_in_width,
+      highlight = { colors("bg"), colors("bg") },
     },
   }
   gls.right[7] = {
     DiffAdd = {
       provider = "DiffAdd",
-      condition = condition.hide_in_width and is_not_dashboard,
+      condition = condition.hide_in_width,
       icon = " ",
-      highlight = { get_color("green"), get_color("bg") },
+      highlight = { colors("green"), colors("bg") },
     },
   }
   gls.right[8] = {
     DiffModified = {
       provider = "DiffModified",
-      condition = condition.hide_in_width and is_not_dashboard,
+      condition = condition.hide_in_width,
       icon = " ",
-      highlight = { get_color("orange"), get_color("bg") },
+      highlight = { colors("orange"), colors("bg") },
     },
   }
   gls.right[9] = {
     DiffRemove = {
       provider = "DiffRemove",
-      condition = condition.hide_in_width and is_not_dashboard,
+      condition = condition.hide_in_width,
       icon = " ",
-      highlight = { get_color("red"), get_color("bg") },
+      highlight = { colors("red"), colors("bg") },
     },
   }
 
@@ -257,11 +258,11 @@ return function()
           return "DOOM v" .. utils.doom_version .. " "
         end,
         condition = is_dashboard,
-        highlight = { get_color("blue"), get_color("bg"), "bold" },
+        highlight = { colors("blue"), colors("bg"), "bold" },
         separator = "  ",
         separator_highlight = {
-          get_color("bg"),
-          get_color("bg"),
+          colors("bg"),
+          colors("bg"),
         },
       },
     }
@@ -271,7 +272,7 @@ return function()
       provider = function()
         return " ▊"
       end,
-      highlight = { get_color("blue"), get_color("bg") },
+      highlight = { colors("blue"), colors("bg") },
     },
   }
 
@@ -281,14 +282,14 @@ return function()
       provider = function()
         return "▊ "
       end,
-      highlight = { get_color("blue"), get_color("bg") },
+      highlight = { colors("blue"), colors("bg") },
     },
   }
   gls.short_line_left[2] = {
     BufferType = {
       provider = "FileTypeName",
       condition = is_not_dashboard,
-      highlight = { get_color("fg"), get_color("bg") },
+      highlight = { colors("fg"), colors("bg") },
     },
   }
 
@@ -296,7 +297,7 @@ return function()
     BufferIcon = {
       provider = "BufferIcon",
       condition = is_not_dashboard,
-      highlight = { get_color("yellow"), get_color("bg") },
+      highlight = { colors("yellow"), colors("bg") },
     },
   }
   gls.short_line_right[2] = {
@@ -304,7 +305,7 @@ return function()
       provider = function()
         return " ▊"
       end,
-      highlight = { get_color("blue"), get_color("bg") },
+      highlight = { colors("blue"), colors("bg") },
     },
   }
 end

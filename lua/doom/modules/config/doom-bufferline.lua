@@ -28,9 +28,45 @@ return function()
           return true
         end
       end,
+      groups = {
+        options = {
+          toggle_hidden_on_enter = true, -- when you re-enter a hidden group this options re-opens that group so the buffer is visible
+        },
+        items = {
+          {
+            name = "Tests",
+            auto_close = true,
+            matcher = function(buf)
+              return buf.filename:match("%_test") or buf.filename:match("%_spec")
+            end,
+          },
+          {
+            name = "Docs",
+            auto_close = true,
+            matcher = function(buf)
+              return buf.filename:match("%.md") or buf.filename:match("%.txt")
+            end,
+          },
+          {
+            name = "Doom",
+            auto_close = true,
+            matcher = function(buf)
+              if buf.filename:find("doom_") or buf.filename:find("doom-", 1, true) then
+                return true
+              end
+              return false
+            end,
+          },
+        },
+      },
       offsets = {
         {
           filetype = "NvimTree",
+          text = "File Explorer",
+          text_align = "center",
+        },
+        {
+          filetype = "netrw",
           text = "File Explorer",
           text_align = "center",
         },

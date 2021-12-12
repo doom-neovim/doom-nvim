@@ -1,0 +1,648 @@
+@document.meta
+	title: doom manual
+	description: Doom Nvim User Manual
+	author: NTBBloodbath
+	categories: doom neovim manual
+	created: 2021-08-15
+	version: 0.1
+@end
+
+= TOC Table of Contents
+
+* Table of Contents
+  -> [Introduction](#Introduction)
+  -> [Using Doom Nvim as your daily setup](#Using Doom Nvim as your daily setup)
+  --> [Moving around](#Moving around)
+  --> [Configuration](#Configuration)
+  ---> [Modules](#Modules)
+  ----> [Tweaking modules](#Tweaking modules)
+  ---> [Custom plugins](#Custom plugins)
+  ---> [Language Server Protocols](#Language Server Protocols)
+  --> [Autocompletion](#Autocompletion)
+  --> [Colorscheme](#Colorscheme)
+  --> [Layout](#Layout)
+  ---> [File Explorer](#File Explorer)
+  ---> [Main Buffer](#Main Buffer)
+  ---> [Terminal](#Terminal)
+  ---> [Minimap](#Minimap)
+  ---> [Outline](#Outline)
+  --> [Commands](#Commands)
+  --> [Keybindings](#Keybindings)
+  --> [Hacking Doom Nvim](#Hacking Doom Nvim)
+  -> [Known issues](#Known issues)
+  -> [FAQ](#FAQ)
+  --> [General](#General)
+  ---> [Who is Doom Nvim intended for?](#Who is Doom Nvim intended for?)
+  ---> [Why does Doom Nvim only support Neovim 0.5.0 (and beyond)?](#Why does Doom Nvim only support Neovim 0.5.0 and beyond?)
+  --> [Workaround](#Workaround)
+  ---> [Missing nvim help documentation](#Missing nvim help documentation)
+  -> [Acknowledgements](#Acknowledgements)
+  -> [Contributing](#Contributing)
+  -> [License](#License)
+
+* Introduction
+  Doom Nvim is a Neovim port of the [Doom Emacs](https://github.com/hlissner/doom-emacs) configuration framework, adapted for the Neovim user
+  that wants less framework in their framework and the performance of a hand-made configuration.
+  You can use it as your own setup or as a learning resource on how to achieve a great Neovim configuration.
+
+  Doom Nvim features an opinionated collection of reasonable and optional defaults, with a focus on
+  runtime and startup performance, and a clean, readable and very robust code base.
+
+* Using Doom Nvim as your daily setup
+  You can start Doom Nvim by typing `nvim` in a terminal emulator or by executing your preferred
+  Neovim GUI client.
+
+  By default, if no files were opened, Doom Nvim will show the start menu ([dashboard-nvim](https://github.com/glepnir/dashboard-nvim)) where you
+  can select files to edit or if you have a saved session in the current workspace, Doom Nvim will load
+  it automatically if you want to.
+
+ ** Moving around
+    Doom Nvim uses the default Neovim keybindings to move around: `k, j, k, l` and the cursor keys.
+    If you are in the insert mode, you must type `Esc`-key first to change into the normal mode.
+    Use `h` to go left, `j` to go down, `k` to go up and `l` to go right.
+
+    See `:Tutor` to know how to use Neovim and its keybindings.
+
+    To move around buffers press `SPC - b` to select the `Buffers` section of keybindings and then press
+    the key `g` to select a buffer or press `TAB` to cycle buffers.
+
+ ** Configuration
+    Doom Nvim offers easy access to the dynamic reconfiguration of some key editor featurs, such as
+    console background to be dark or light, auto-completion to be on or off, autopairs to be on or
+    off, indentation step width, line number display style, spell checker to be on or off, and more.
+    For these, press `SPC - t` and select the desired configuration item by another key stroke.
+
+    The Doom Nvim configuration files resides under the `$HOME/.config/nvim` directory by default.
+    See [Hacking Doom Nvim](**Hacking Doom Nvim) for more information.
+
+  *** Modules
+      Doom Nvim consists of around `6` modules. A Doom Nvim module is a bundle of plugins,
+      configurations and commands, organized into a unit that can be toggled easily.
+
+      To give a quick summary, the modules are as follows:
+      - UI, everything related to Neovim UI.
+      - Doom, neorg and built-in plugins.
+      - Editor, everything related to editing, e.g. tree explorer, git signs, lsp, debugging.
+      - Langs, languages support for Doom, languages servers and debuggers.
+      - Utilities, some utility plugins like `neogit`.
+      - Web, web development related plugins like `rest.nvim`.
+
+      You can see in a more detailed view the modules and its plugins at [modules.md](https://github.com/NTBBloodbath/doom-nvim/blob/main/docs/modules.md).
+
+   **** Tweaking modules
+        For persistently tweaking a module (enable / disable its plugins) you will only need to
+        comment or uncomment the desired plugin, e.g. for disabling the tree explorer you will only
+        need to comment it.
+
+@code lua
+  -- Right now the Tree explorer is enabled
+  "explorer",
+
+  -- Now the Tree Explorer is disabled
+  -- "explorer",
+@end
+
+        *NOTE*: after doing changes to your modules you will only need to restart Neovim
+              and Doom Nvim will automatically handle your changes on here.
+
+  *** Custom plugins
+      To use your own plugins in Doom Nvim you can use the `doom_userplugins.lua` file located
+      in the Doom Nvim root directory (`$HOME/.config/nvim` by default).
+
+      To add plugins without extra configurations (e.g. if a plugin does not depends on other plugins),
+      you can simply set it as follow:
+
+@code lua
+  M.plugins = {
+    "andweeb/presence.nvim",
+  }
+@end
+
+      Otherwise, if your plugin depends on other or you do not want to enable it then you can
+      do it as follow:
+
+@code lua
+  M.plugins = {
+    {
+      "andweeb/presence.nvim",
+      -- Plugin dependencies
+      requires = {
+        "JohnDoe/foo"
+      },
+      -- Disable plugin
+      disable = true,
+    },
+  }
+@end
+
+      *NOTE*: if you are familiar with [packer.nvim](https://github.com/wbthomason/packer.nvim) then you can see that the `doom_userplugins.lua` file
+            is just a wrapper for it.
+
+  *** Language Server Protocols
+      To easily install language servers and without having to do it system-wide or having to manually
+      configure servers, Doom Nvim makes use of [nvim-lspinstall](https://github.com/kabouzeid/nvim-lspinstall).
+
+      To enable the language server for a certain programming language and automatically install it,
+      just append a `+lsp` flag at the end of the language field in your `doom_modules.lua`,
+      e.g. for enabling Rust support in Doom Nvim and install `rust-analyzer`:
+
+@code lua
+  M.modules = {
+    langs = {
+      "rust +lsp", -- Let's get rusty!
+    },
+  }
+@end
+
+      *NOTE*: You can see a list of currently supported languages at [bundled installers](https://github.com/kabouzeid/nvim-lspinstall#bundled-installers).
+
+ ** Autocompletion
+    Doom Nvim uses the [built-in LSP](https://neovim.io/doc/user/lsp.html) plus [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) plugin as completion engine.
+
+    Use `<C-n>` to select the next suggestion and `<CR>` to select the current one.
+
+    Autocompletion for parenthesis can be disabled by disabling the [nvim-autopairs](https://github.com/windwp/nvim-autopairs)
+    plugin (see [Tweaking modules](***Tweaking modules) for more information).
+
+ ** Colorscheme
+    The colorscheme of Doom Nvim. Default is `doom-one`. There are some additional
+    doom emacs' colorschemes port for Neovim that can be enabled by uncommenting
+    the `doom-themes` entry in your `doom_modules.lua`.
+
+    You can switch between colorschemes by doing `SPC - d - s` and then type the name
+    of the colorscheme you want to use. You can also edit the `doom_config.lua`
+    file located at `$HOME/.config/nvim` (see [Hacking Doom Nvim](**Hacking Doom Nvim)).
+
+    *NOTE*: If you exit Neovim and you changed the colorscheme then Doom Nvim will automatically
+          update the `doom_config.lua` file to use the new colorscheme on next launch.
+
+ ** Layout
+    Excluding the statusline and the tabline, Doom Nvim will mostly have the
+    following layout:
+
+    ┌─────┬────────────────────┬────┬──────┐
+    │     │                    │    │      │
+    │     │                    │    │      │
+    │     │                    │    │      │
+    │  A* │          B         │ D* │  E*  │
+    │     │                    │    │      │
+    │     │                    │    │      │
+    │     │                    │    │      │
+    │     ├────────────────────┤    │      │
+    │     │          C*        │    │      │
+    └─────┴────────────────────┴────┴──────┘
+
+    Where:
+      - 'A' is the file explorer (plugin: [nvim-tree.lua](https://github.com/kyazdani42/nvim-tree.lua))
+      - 'B' is the main buffer
+      - 'C' is the terminal (plugin: [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim))
+      - 'D' is the minimap (plugin: [minimap.vim](https://github.com/wfxr/minimap.vim))
+      - 'E' is the symbol outline (plugin: [symbols-outline.nvim](https://github.com/simrat39/symbols-outline.nvim))
+
+      *NOTE*: Sections with `*` are not opened by default but can be toggled.
+          See [Commands](**Commands) for more information.
+
+  *** File Explorer
+      Doom Nvim uses the `nvim-tree.lua` plugin as a file explorer. It can be toggled by
+      running the following keybinds:
+        - `SPC - o - e`
+        - `<F3>`
+
+        To create a new file within the file explorer, press `a` and type the name of the
+      file. Append a `/` at the end if you want to create a directory.
+
+      Check [nvim-tree.lua repository](https://github.com/kyazdani42/nvim-tree.lua) for more information.
+
+  *** Main Buffer
+      The main buffer is the buffer where the code is opened.
+
+      To split the main buffer, do `SPC - w` and then select the split method you
+      want to use horizontally (`s`), or vertically (`v`).
+
+  *** Terminal
+      The terminal is placed like in others editors, e.g. Visual Studio Code. The
+      buffer of the terminal is automatically set to `INSERT` mode.
+
+      The only way to close it is to enter `exit` to close the shell session, or if you
+      just want to toggle it, you can use the following keybinds:
+        - `SPC - o - t` (only `NORMAL` mode!)
+        - `<F4>`
+
+        Check [toggleterm.nvim repository](https://github.com/akinsho/toggleterm.nvim) for more information.
+
+  *** Minimap
+      Doom Nvim uses `wfxr/minimap.vim` plugin as its minimap. It can be toggled by
+      performing the following keybinds:
+        - `SPC - o - m`
+        - `<F5>`
+
+        Check [minimap.vim repository](https://github.com/wfxr/minimap.vim) for more information.
+
+  *** Outline
+      `Symbols-Outline` is a plugin that can show the tags and structure of the opened
+      file, ordered by its scope.
+
+      For this function, Doom Nvim makes use of `simrat39/symbols-outline.nvim`.
+      It can be toggled by performing the following keybinds:
+        - `SPC - o - s`
+        - `<F2>`
+
+        Check [symbols-outline.nvim repository](https://github.com/simrat39/symbols-outline.nvim) for more information.
+
+ ** Commands
+    Doom Nvim has its own commands, to make your life easier when developing on it.
+
+    ┌──────────────────┬────────────────────────────────────────────────┐
+    │Command           │ Description                                    │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomUpdate        │ Update Doom Nvim if there are updates          │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomRollback      │ Rollback Doom Nvim to a previous version       │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomManual        │ Open Doom Nvim User Manual                     │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomConfigs       │ Open a selection menu to edit Doom configs     │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomConfigsReload │ Reload user-defined keybindings, etc           │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomReload        │ Reload Doom Nvim and simulate a new Neovim run │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomReport        │ Create a Doom Nvim markdown crash report       │
+    ├──────────────────┼────────────────────────────────────────────────┤
+    │DoomInfo          │ Open Doom Nivm information dashboard           │
+    └──────────────────┴────────────────────────────────────────────────┘
+
+    Doom Nvim also uses [which-key.nvim](https://github.com/folke/which-key.nvim) as a commands manager, inspired by emacs' guide-key.
+    To open it, press `SPC` and wait for the popup to show, it should not take much time.
+    Each section has a label and is mnemonic, e.g.
+
+      `Open Terminal` > `SPC - o - t`
+
+    There are multiple sections for Doom Nvim commands. Those sections create a path in the
+    decision tree that identifies any command.
+
+    Let's say you want to go to the next buffer you are working on. You will need to perform
+    the following keystrokes:
+
+      `SPC - b`
+
+    In order to open the `Buffers` section. There we want to go to the next buffer.
+
+      `SPC - b - n`
+
+    Finally, we changed our current buffer to the next one in our workspace. You can see more
+    keybindings in [Keybindings](**Keybindings).
+
+ ** Keybindings
+    In Doom Nvim, we make use of the `SPC` keystroke as the map leader.
+
+    This is the list of all Doom Nvim leader mappings, `SPC` is omitted here to avoid redundancy.
+
+    ┌─────────────────────┬────────────────────────────────────────────────────┐
+    │ Keybind             │ Description                                        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ ,                   │ Switch buffer                                      │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ .                   │ Browse files                                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ /                   │ Search                                             │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ :                   │ Command history                                    │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ `                   │ Find file                                          │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ h                   │ Man pages                                          │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ m                   │ Save                                               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ v                   │ Save                                               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ b - [               │ Previous buffer                                    │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ b - ]               │ Next Buffer                                        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ b - b               │ Switch to other buffer                             │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ b - c               │ Close current buffer                               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ b - f               │ Format buffer                                      │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ b - g               │ Goto buffer                                        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ b - n               │ Next buffer                                        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ b - p               │ Previous buffer                                    │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - b               │ Compile project                                    │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - c               │ Compile and run project                            │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - d               │ +debug                                             │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - d - e           │ Evaluate word under cursor                         │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - d - s           │ Evaluate selection                                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - h               │ Run rest client on the line that the cursor is     │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - i               │ Start a REPL                                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - r               │ Run current file                                   │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - l               │ +lsp                                               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - l - a           │ Code actions                                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - l - d           │ Show type definition                               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - l - i           │ Lsp info                                           │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - l - L           │ Diagnostics into location list                     │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ c - l - l           │ Show line diagnostics                              │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ d - c               │ Edit your Doom Nvim configurations                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ d - d               │ Open Doom Nvim documentation                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ d - i               │ Open Doom Nivm information dashboard               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ d - R               │ Create crash reports, useful for debugging issues  │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ d - r               │ Rollback Doom Nvim version                         │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ d - s               │ Change colorscheme                                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ d - u               │ Update Doom Nvim                                   │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ f - c               │ Edit Neovim configurations                         │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ f - f               │ Find files                                         │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ f - n               │ New unnamed buffer                                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ f - R               │ Re-open an unreadable file with sudo permissions   │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ f - r               │ Recently opened files                              │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ f - t               │ Help tags                                          │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ f - w               │ Write an unwritable file with sudo permissions     │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - B               │ Branches                                           │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - b               │ Blame line                                         │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - c               │ Commits                                            │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - h               │ Preview hunk                                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - R               │ Reset buffer                                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - r               │ Reset hunk                                         │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - o               │ Open LazyGit                                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - l               │ Pull                                               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - p               │ Push                                               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - S               │ Stage hunk                                         │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - s               │ Status                                             │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - u               │ Undo stage hunk                                    │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ j - a               │ Alternate file                                     │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ j - j               │ Jump back                                          │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ j - k               │ Jump forward                                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ j - p               │ Pop tag stack                                      │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ j - t               │ Jump to tag                                        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ o - d               │ Start screen                                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ o - e               │ Tree Explorer                                      │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ o - m               │ Minimap                                            │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ o - s               │ LSP Symbols                                        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ o - t               │ Terminal                                           │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ p - C               │ Compile your plugins changes                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ p - c               │ Clean unused plugins                               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ p - i               │ Install missing plugins                            │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ p - p               │ Profile the time taken loading your plugins        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ p - S               │ Sync plugins (runs Clean and Update)               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ p - s               │ Plugins status                                     │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ q - q               │ Quit Neovim                                        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ q - r               │ Restore previously saved session                   │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ q - w               │ Save and quit Neovim                               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ s - b               │ Buffer                                             │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ s - g               │ Grep                                               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ s - h               │ Command history                                    │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ s - m               │ Jump to mark                                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ s - s               │ Goto symbol                                        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - -               │ Tweak Neovim behavior                              │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - b               │ Toggle background light/dark                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - c               │ Turn on and off completion if available            │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - g               │ Turn on and off signcolumn for gitsigns, ...       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - i               │ Set tabstop and indent steps to any integer        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - n               │ Change line number display (4 types)               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - p               │ Turn on and off autopairs if available             │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - s               │ Spell check on/off                                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ t - x               │ Syntax/treesetter on/off                           │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - -               │ Split window below                                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - =               │ Balance windows size                               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - |               │ Split window right                                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - 2               │ Layout double columns                              │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - d               │ Delete window                                      │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - H               │ Expand window left                                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - h               │ Window left                                        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - J               │ Expand window below                                │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - j               │ Window below                                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - K               │ Expand window up                                   │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - k               │ Window up                                          │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - L               │ Expand window right                                │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - l               │ Window right                                       │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - s               │ Split window below                                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - v               │ Split window right                                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ w - w               │ Other window                                       │
+    └─────────────────────┴────────────────────────────────────────────────────┘
+
+    But there is still more, Doom Nvim knows that you love to use the keyboard but you do not
+    like to be typing so much so it has more keybindings that will make your life easier!
+
+    | The following keybindings does not use the leader key.
+
+    ┌─────────────────────┬────────────────────────────────────────────────────┐
+    │ Keybind             │ Description                                        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ TAB                 │ Cycle buffers (next buffer)                        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ Shift - TAB         │ Cycle buffers (prev buffer)                        │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ ESC                 │ Search highlighting off                            │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ F2                  │ Toggle Symbols-Outline                             │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ F3                  │ Toggle Tree Explorer                               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ F4                  │ Toggle Terminal                                    │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ F5                  │ Toggle Minimap                                     │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ F6                  │ Toggle Zen mode                                    │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ F7                  │ Run rest client on current cursor position         │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ Z - Z               │ Toggle Symbols-Outline                             │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ j - k               │ Toggle Tree Explorer                               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - c - c           │ Comment current line (NORMAL mode)                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ g - c               │ Comment selected block (VISUAL mode)               │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ Control + h         │ Select window left                                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ Control + j         │ Select window below                                │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ Control + k         │ Select window up                                   │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ Control + l         │ Select window right                                │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ Control + Up        │ Resize window up                                   │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ Control + Down      │ Resize window below                                │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ Control + Left      │ Resize window left                                 │
+    ├─────────────────────┼────────────────────────────────────────────────────┤
+    │ Control + Right     │ Resize window right                                │
+    └─────────────────────┴────────────────────────────────────────────────────┘
+
+    You can modify the default keybindings by modifying the following files:
+      - General keybindings: `lua/doom/extras/keybindings/init.lua`
+      - Plugins keybindings: `lua/doom/modules/config`
+      - which-key keybindings: `lua/doom/modules/config/doom-whichkey.lua`
+
+    *NOTE*: You can also make your own keybindings or override the default ones
+    by editing your `doom_config.lua` file.  If you override, you need to update which-key
+    keybindings to make it work properly.  This is known issue.
+
+ ** Hacking Doom Nvim
+    Doom Nvim aims to be hackable to suit everyone's needs. Therefore this is the structure of Doom Nvim:
+
+@code
+  .                         	-> Doom Nvim root
+  ├── colors                	-> Pre-installed colorschemes directory
+  │  └── doom-one.lua       	-> doom-one colorscheme ported to Nvim (default one)
+  ├── doc                   	-> Docs to be used inside Nvim
+  │  └── doom_nvim.norg     	-> Doom Nvim User Manual
+  ├── docs                  	-> Docs meant to be read on GitHub
+  ├── doom_modules.lua      	-> Doom modules configurations file
+  ├── doom_config.lua       	-> Doom main configurations file
+  ├── doom_userplugins.lua    -> User defined plugins
+  ├── init.lua              	-> Init file
+  ├── LICENSE               	-> License
+  └── lua                   	-> Location of Doom Nvim Lua files
+     ├── doom               	-> Doom Nvim core
+     │  ├── core            	-> Doom Nvim core functionality
+     │  │  ├── config       	-> Doom Nvim configuration files
+     │  │  ├── settings     	-> Doom Nvim Neovim settings
+     │  │  ├── functions    	-> Doom Nvim functions
+     │  │  └── system       	-> Doom Nvim system utilities
+     │  ├── extras          	-> Doom Nvim extra functionalities
+     │  │  ├── autocmds     	-> Doom Nvim autocommands
+     │  │  ├── keybindings  	-> Doom Nvim keybindings
+     │  │  └── logging      	-> Doom Nvim logging system
+     │  └── utils           	-> Doom Nvim utilities
+     └── modules            	-> Location of Doom Nvim plugins
+        ├── configs         	-> Plugins configurations
+        ├── built-in        	-> Doom Nvim built-in plugins
+        └── init.lua        	-> packer.nvim setup
+@end
+
+* Known issues
+  Nothing here but chickens ...
+
+  *NOTE*: If you are facing an undocummented issue, feel free to [open an issue](https://github.com/NTBBloodbath/doom-nvim/issues/new) at Doom Nvim repository on
+  GitHub and we will try to fix it together!
+
+* FAQ
+ ** General
+  *** Who is Doom Nvim intended for?
+      Doom Nvim is intended for anyone who wants a stable and efficient
+      development environment that just works without spending a lot of time setting everything up.
+
+  *** Why does Doom Nvim only support Neovim 0.5.0 and beyond?
+      Doom Nvim relies on lua for the configuration and use of many plugins. Since
+      lua is not available in neovim 0.4.4 and below, it is not possible to use Doom
+      Nvim with a neovim version lower than 0.5.0.
+
+ ** Workaround
+  *** Missing nvim help documentation
+      Since Doom Nvim extensively uses delayed loading of packages, their help documentation may not
+      show up under `LOCAL ADDITIONS:`. If this happens and you still wish to see them, you need to
+      make copies or symlinks of the help documentation of the affected packages in `doc/` of Doom
+      Nvim and update help tags file manually with `:helptags ALL` .
+
+* Acknowledgements
+  Doom Nvim would not have been possible had it not been for
+  - hlissner, creator of Doom Emacs
+  - All our contributors
+
+* Contributing
+  I really love pull requests and bug reports, please see the [Contributing Guidelines](https://github.com/NTBBloodbath/doom-nvim/blob/main/docs/contributing.md) on GitHub
+  before contributing.
+
+  Don't hesitate to tell me my Lua coding style sucks, but please tell me why.
+
+* License
+  Doom Nvim is distributed under GPLv2 license.
+
+
+$comment
+vim:sw=2:ts=2:cole=3:cocu=n:tw=100:norl:
