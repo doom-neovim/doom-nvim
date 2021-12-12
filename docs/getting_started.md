@@ -199,8 +199,17 @@ brew install node
 
 #### On Windows
 
-If you use Windows, please help by posting the steps to install the external
-dependencies here!
+```powershell
+# Required dependencies
+# Windows needs mingw for gcc
+choco install git ripgrep mingw
+
+# (Optional) Improves performance for many file indexing commands
+choco install fd
+
+# (Optional) Required by some Language Server Protocols
+choco install nodejs
+```
 
 ### Doom Nvim
 
@@ -209,6 +218,8 @@ Doom Nvim itself.
 
 > **IMPORTANT**: if you don't have a patched nerd font then you will need to
 > install one in your system so you will be able to see icons in Neovim.
+
+#### On MacOs or Linux
 
 First you'll want to backup your current Neovim configuration if you have one.
 
@@ -236,6 +247,37 @@ Or if you want to live in the bleeding-edge with the latest features:
 ```sh
 git clone --depth 1 -b develop https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_HOME:-$HOME/.config}/nvim
 ```
+
+#### On Windows
+
+First you'll want to backup your current Neovim configuration if you have one.
+
+> **NOTES**:
+>
+> 1. Your current configuration will be backed up to `C:\Users\%USERNAME%\AppData\Local`
+>    or where your `%LOCALAPPDATA%` environment variable points to.
+>
+> 2. If you're a cheovim user you can skip this step and go directly to
+>    [Using cheovim](#using-cheovim).
+
+```powershell
+# Using Powershell
+if (Test-Path -Path $env:LOCALAPPDATA\nvim) { Rename-Item $env:LOCALAPPDATA\nvim $env:LOCALAPPDATA\nvim.bak }
+```
+
+Now that you have backed up your current Neovim configuration you can proceed to install
+`doom-nvim`.
+
+```powershell
+git clone --depth 1 https://github.com/NTBBloodbath/doom-nvim.git $env:LOCALAPPDATA/nvim
+```
+
+Or if you want to live in the bleeding-edge with the latest features:
+
+```powershell
+git clone --depth 1 -b develop https://github.com/NTBBloodbath/doom-nvim.git $env:LOCALAPPDATA/nvim
+```
+
 
 #### Using cheovim
 
