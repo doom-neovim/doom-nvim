@@ -306,8 +306,9 @@ a previous release (for main branch) or a previous commit (for development branc
 ## Configuration
 
 You can configure Doom Nvim by tweaking the `doom_config.lua`,
-`doom_modules.lua` and the `doom_userplugins.lua` files located in your
-Doom Nvim root directory (`$HOME/.config/doom-nvim/` by default).
+`doom_modules.lua`, `doom_userplugins.lua` and the `doom_startup.lua` files
+located in your Doom Nvim root directory (`$HOME/.config/doom-nvim/` by
+default).
 
 ### doom_modules.lua
 
@@ -452,6 +453,30 @@ and install or uninstall the plugins declared on here.
 
 > **NOTE**: all the valid options for declaring plugins can be found in
 > [specifying plugins](https://github.com/wbthomason/packer.nvim#specifying-plugins).
+
+### doom_startup.lua
+
+This file allows you to configure and override settings not encompassed by
+`doom_config.lua`. Really, its just run with the `luafile` command, after Doom
+initialization, so its safe to `require` any modules and override their config.
+
+The only requirement is that a table is returned with a `source` field
+containing its real path. Therefore, the file would generally look like this:
+
+```lua
+local M = {}
+
+M.source = debug.getinfo(1, "S").source:sub(2)
+
+-- Your startup logic...
+
+return M
+```
+
+> **NOTE**: try to use `doom_config.lua` before falling back on this, as any
+> settings accounted for there are more likely to be well integrated into Doom.
+> Also, consider contributing an integration to suit your needs, we'd really
+> appreciate that!
 
 ### Modules
 
