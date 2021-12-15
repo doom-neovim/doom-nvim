@@ -397,7 +397,7 @@ packer.startup(function(use)
     requires = {
       {
         "L3MON4D3/LuaSnip",
-        commit = pin_commit("a54b21aee0423dbdce121c858ad6a88a58ef6e0f"),
+        commit = pin_commit("09e3bc6da5376aa87a29fde222f321f518e6c120"),
         event = "BufReadPre",
         wants = "friendly-snippets",
         config = require("doom.modules.config.doom-luasnip"),
