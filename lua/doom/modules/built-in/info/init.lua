@@ -127,7 +127,7 @@ local function get_doom_info()
   local nvim_dev_version = false
   -- Neovim version
   local version = vim.version()
-  if version.minor == 6 then
+  if version.minor == 7 then
     nvim_dev_version = true
   end
   local nvim_version = string.format(
