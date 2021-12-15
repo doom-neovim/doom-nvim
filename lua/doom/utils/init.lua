@@ -11,7 +11,11 @@ local system = require("doom.core.system")
 
 -------------------- HELPERS --------------------
 --- Doom Nvim version
-utils.doom_version = "3.2.0"
+utils.doom_version = "3.3.0-alpha1"
+
+-- Check if Neovim version is 0.5, will be used to provide
+-- backward compatibility for a while before nuking support for 0.5
+utils.nvim_is_05 = vim.version().minor == 5
 
 --- For autocommands, extracted from
 --- https://github.com/norcalli/nvim_utils
