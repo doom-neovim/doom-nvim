@@ -59,6 +59,7 @@ mappings.map(
   "Hover documentation"
 )
 -- Control+p: Jump to previous diagnostic
+-- TODO: Find the equivalent for the new vim.diagnostic api
 mappings.map(
   "n",
   "<C-p>",
@@ -69,6 +70,7 @@ mappings.map(
   "Jump to previous diagnostic"
 )
 -- Control+n: Jump to next diagnostic
+-- TODO: Find the equivalent for the new vim.diagnostic api
 mappings.map(
   "n",
   "<C-n>",
