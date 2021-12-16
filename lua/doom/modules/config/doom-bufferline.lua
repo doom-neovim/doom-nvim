@@ -97,11 +97,20 @@ return function()
       sort_by = "directory",
       custom_areas = {
         right = function()
+          local nvim_is_05 = require("doom.utils").nvim_is_05
+
           local result = {}
-          local error = vim.lsp.diagnostic.get_count(0, [[Error]])
-          local warning = vim.lsp.diagnostic.get_count(0, [[Warning]])
-          local info = vim.lsp.diagnostic.get_count(0, [[Information]])
-          local hint = vim.lsp.diagnostic.get_count(0, [[Hint]])
+          local error = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+          local warning =vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+          local info = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
+          local hint = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
+
+          if nvim_is_05 then
+            error = vim.lsp.diagnostic.get_count(0, [[Error]])
+            warning = vim.lsp.diagnostic.get_count(0, [[Warning]])
+            info = vim.lsp.diagnostic.get_count(0, [[Information]])
+            hint = vim.lsp.diagnostic.get_count(0, [[Hint]])
+          end
 
           if error ~= 0 then
             result[1] = {
