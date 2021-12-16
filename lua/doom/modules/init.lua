@@ -174,7 +174,7 @@ packer.startup(function(use)
   local disabled_statusline = is_plugin_disabled("statusline")
   use({
     "NTBBloodbath/galaxyline.nvim",
-    commit = pin_commit("7b812cfddfcac7d9031e2f8e03f2b71fe8b2558d"),
+    commit = pin_commit("5a2151da17d88403fe7ded65c07be266d8cbc800"),
     config = require("doom.modules.config.doom-eviline"),
     disable = disabled_statusline,
   })
