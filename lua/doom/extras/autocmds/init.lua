@@ -166,9 +166,10 @@ end
 
 -- Show line diagnostics on hover
 if not config.doom.enable_lsp_virtual_text then
-  local show_diagnostics_function = 'vim.diagnostic.open_float(nil, { focus = false })'
+  local show_diagnostics_function = "vim.diagnostic.open_float(nil, { focus = false })"
   if utils.nvim_is_05 then
-    show_diagnostics_function = 'vim.lsp.diagnostic.show_line_diagnostics({ focusable = false, border = "single" })'
+    show_diagnostics_function =
+      'vim.lsp.diagnostic.show_line_diagnostics({ focusable = false, border = "single" })'
   end
   table.insert(autocmds["doom_extras"], {
     "CursorHold,CursorHoldI",
