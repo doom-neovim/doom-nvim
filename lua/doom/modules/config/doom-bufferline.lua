@@ -101,7 +101,7 @@ return function()
 
           local result = {}
           local error = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-          local warning =vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+          local warning = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
           local info = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
           local hint = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
 
