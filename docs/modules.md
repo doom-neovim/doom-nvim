@@ -2,69 +2,76 @@
 
 ## Introduction
 
-Doom Nvim consists of around 5 modules with ~40 plugins and growing.
-A Doom Nvim module is a bundle of plugins, configurations and commands,
-organized into a unit that can be toggled easily.
+Doom Nvim consists of around 40 plugins and growing.
+A Doom Nvim module is a bundle of packages, configurations, autocommands and
+binds, organized into a unit that can be toggled easily.
 
 > **NOTE**: Doom Nvim uses [packer.nvim] as its plugins manager.
 
-## Tweaking Doom Nvim Modules
+## Toggling Doom Nvim Modules
 
-You can easily tweak Doom Nvim Modules by tweaking your `doom_modules.lua` file
-(found in `~/.config/doom-nvim`).
+You can easily toggle Doom Nvim Modules by tweaking your `doom-nvim/modules.lua` file
+(found in `~/.config/doom-nvim`). Return from this file a flat list of modules
+you want. The `core` module is required and need not be listed.
 
 ## List of modules
 
 First of all, we must know which modules are there and their plugins.
 
-> **NOTE:** all plugins can be disabled, including the UI ones.
+> **NOTE:** all modules can be disabled, except `core`. Also, anything can be
+overriden in `doom-nvim/config.lua`, from packer specs to vim options.
 
-### Essentials
+### Essentials in core
 
-This ones are implicit plugins so the end user cannot disable them. But why?
+This is the one module you cannot disable. But why?
 
-That is because these plugins are the core of Doom so in fact, things can break
-without them. These plugins are the following:
+That is because these plugins are the core of Doom, why would you want a
+framework without these basic functionalies? These plugins are the following:
 
 - [packer.nvim]
   - A use-package inspired plugin manager for Neovim.
-- [treesitter]
+- [nvim-treesitter and companions]
   - An incremental parsing system for programming tools.
+- [nest.nvim]
+  - A better way to set keybindings and create nvim-mapper structures.
+- [nvim-mapper]
+  - A cheatsheet generator for your binds.
 
-### UI
+### UI modules
 
+- [colorizer]
+  - Fastest colorizer for Neovim.
 - [dashboard]
   - Vim dashboard (start screen).
-- [doom-themes]
+- [doom_themes]
   - Additional doom emacs' colorschemes.
 - [indentlines]
   - Show indent lines.
+- [range_highlight]
+  - Highlights ranges you have entered in commandline
 - [statusline]
   - Neovim statusline.
 - [tabline]
   - Tabline, shows your buffers list at top.
-- [which-key]
-  - Keybindings popup like Emacs' guide-key.
+- [whichkey]
+  - Keybindings popup like Emacs' whichj-key.
 - [zen]
   - Distraction free environment.
 
-### Doom
 
-- [compiler] (built-in)
-  - Compile _and run_ your projects with only a few keystrokes.
+### Lang modules
+
 - [neorg]
   - Life Organization Tool.
-- [runner] (built-in)
-  - A code runner for your interpreted code.
 
-### Editor
+### Editor modules
 
 - [autopairs]
   - Autopairs.
-- [auto-session]
+- [auto_session]
   - A small automated session manager for Neovim.
 - [editorconfig]
-  - EditorConfig support for Neovim, let other argue about tabs vs spaces.
+  - EditorConfig support for Neovim, let other people argue about tabs vs spaces.
 - [explorer]
   - Tree explorer.
 - [formatter]
@@ -74,7 +81,7 @@ without them. These plugins are the following:
 - [kommentary]
   - Comments plugin.
 - [lsp]
-  - Language Server Protocols ([compe] + [lspinstall]).
+  - Language Server Protocols ([cmp] + [lspconfig]).
 - [minimap]
   - Code minimap, requires [wfxr/code-minimap](https://github.com/wfxr/code-minimap).
 - snippets
@@ -86,195 +93,52 @@ without them. These plugins are the following:
 - [terminal]
   - Terminal for Neovim.
 
-### Langs
-
-The languages module entries has some flags that improves their experience and
-makes your life easier.
-
-The currently available flags are the following:
-
-- `+lsp` - enables and installs the Language Server Protocol for the language.
-  e.g. `rust +lsp` will automatically install `rust-analyzer`.
-- `+debug` - enables and installs the Debug Adapter Protocol client for the
-  language. e.g. `python +debug` will automatically install `debugpy`.
-
-> **NOTE**: when the language entry is not commented, doom-nvim will automatically
-> install the TreeSitter parser for that language too.
-
-#### Web development
-
-- **css**
-  - CSS support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: no.
-- **html**
-  - HTML support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: no.
-- **javascript**
-  - JavaScript support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes, by using TSServer.
-  - DAP client: yes.
-- **PHP**
-  - PHP support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: no.
-- **typescript**
-  - TypeScript support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: yes (via javascript).
-- **Svelte**
-  - Svelte support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: yes (via javascript).
-- **Vue**
-  - Vue support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: yes (via javascript).
-
-#### Scripting
-
-- **bash**
-  - BASH support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: no.
-- **clojure**
-  - Clojure support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: no.
-- **elixir**
-  - Elixir support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-- **lua**
-  - Lua support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: no (it has but isn't supported by Doom _yet_, requires extra setup).
-- **powershell**
-  - PowerShell support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: no.
-- **python**
-  - Python support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: yes.
-- **ruby**
-  - Ruby support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: yes.
-
-#### Compiled
-
-- **cpp**
-  - CPP support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: yes (not supported _yet_ by Doom for automatic installation).
-- **c_sharp (C#)**
-  - C# support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: no.
-- **go**
-  - Golang support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: yes.
-- **haskell**
-  - Haskell support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: no.
-- **java**
-  - Java support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: no.
-- **kotlin**
-  - Kotlin support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: no.
-- **rust**
-  - Rust support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-  - DAP client: yes (not supported _yet_ by Doom for automatic installation).
-
-#### Configs & DevOps
-
-- **json**/**json5**
-  - JSON support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-- **yaml**
-  - YAML support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-- **toml**
-  - TOML support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: no.
-- **xml**
-  - XML support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: no.
-- **dockerfile**
-  - Docker support.
-  - TreeSitter based syntax highlighting: yes.
-  - LSP: yes.
-
-> **NOTE**: this group requires the `lsp` installed for the `+lsp` flags.
-
-### Utilities
+### Utilities modules
 
 - [lazygit]
   - LazyGit integration for neovim, requires LazyGit.
 - [neogit]
   - Magit for Neovim.
-- [range-highlight]
-  - Highlights ranges you have entered in commandline
 - [suda]
   - Write and read files without sudo permissions.
-
-### Web
-
-- [colorizer]
-  - Fastest colorizer for Neovim.
+- [superman]
+  - Manage man files.
 - [restclient]
   - A fast Neovim http client.
 
 ## Managing modules
 
-Since version 3.0.0 managing the modules plugins is really easy because you
-don't need to learn nothing anymore. Just comment the plugins that you don't
-want to use and uncomment the ones that you are going to use!
+Configurations go in `doom-nvim/config.lua`. In this file, a `doom` global variable
+is injected with defaults suh that you can override or insert to your liking.
 
-So by example, if you want to disable the tree explorer you can simply comment it.
+Common patterns:
 
-```lua
--- Before, the plugin is enabled
-'explorer',    -- Tree explorer
+> **NOTE**: prefer setting the leaf keys, setting an entire table will override
+> everything.
 
--- After, the plugin is disabled
--- 'explorer', -- Tree explorer
-```
-
-After doing the changes, just restart Neovim and Doom Nvim will handle the plugins
-changes for you!
+- Install package/override existing if name is already there:
+  ```lua
+  -- Use fork.
+  doom.packages[name][1] = "myfork/name.nvim"
+  -- Add config to be run after module config.
+  doom.packages[name].config = function()
+    require("name.whatever").do_something({
+      -- ..
+    })
+  end
+  ```
+- Add binds to your liking:
+  ```lua
+  table.insert(doom.binds, { 
+    { "RnT", "<cmd>RipAndTear<CR>", name = "Until it is done" },
+  })
+  ```
+- Add autocmds (`doom_` will be prefixed to the name):
+  ```lua
+  doom.autocmds[augroup_name] = { 
+    { "BufReadPre", "*.lua", --[[once and nested go here if needed]] "setlocal sw=2" },
+  }
+  ```
 
 <!-- links to plugins -->
 
@@ -300,7 +164,7 @@ changes for you!
 [neorg]: https://github.com/vhyrro/neorg
 
 [lsp]: https://github.com/neovim/nvim-lspconfig
-[compe]: https://github.com/hrsh7th/nvim-compe
+[cmp]: https://github.com/hrsh7th/nvim-cmp
 [lsp-installer]: https://github.com/williamboman/nvim-lsp-installer
 [LuaSnip]: https://github.com/L3MON4D3/LuaSnip
 [friendly-snippets]: https://github.com/rafamadriz/friendly-snippets

@@ -6,7 +6,7 @@ reloader.has_failed_reload = false
 
 local fs = require("doom.utils.fs")
 local utils = require("doom.utils")
-local log = require("doom.extras.logging")
+local log = require("doom.utils.logging")
 local system = require("doom.core.system")
 
 --- Paths to reload plugins
@@ -21,11 +21,8 @@ local plugins_files_path = string.format(
 )
 local vim_subdirs = { "doc", "after", "syntax", "plugin" }
 
-local installed_plenary, _ = pcall(require, "plenary")
-if not installed_plenary then
-  log.warn("Skipped reloader module loading, requires 'plenary.nvim' plugin to be installed")
-  return
-end
+-- Should cause error if plenary is not installed.
+xpcall(require, debug.traceback, "plenary")
 
 local scan_dir = require("plenary.scandir").scan_dir
 
@@ -137,7 +134,7 @@ reloader.reload_lua_module = function(mod_path, quiet)
 
   if type(mod) == "function" then
     -- Call the loaded module function so the reloading will take effect as expected
-    local ok, _ = pcall(package.loaded[mod_path])
+    local ok, _ = xpcall(package.loaded[mod_path], debug.traceback)
     if not ok then
       log.error(string.format("Failed to reload '%s' module", mod_path))
     end
@@ -162,31 +159,19 @@ reloader.reload_lua_modules = function(quiet)
   end
 end
 
---- Reload the plugins definitions modules like doom_modules.lua to automatically
+--- Reload the plugin definitions modules like modules.lua to automatically
 --- install or uninstall plugins on changes
 reloader.reload_plugins_definitions = function()
   -- Silently reload plugins modules
   reloader.reload_lua_module("doom.core.config.modules", true)
-  reloader.reload_lua_module("doom.core.config.userplugins", true)
   reloader.reload_lua_module("doom.modules", true)
 
-  -- Cleanup disabled plugins
-  vim.cmd("PackerClean")
-  -- Defer the installation of new plugins to avoid a weird bug where packer
-  -- tries to clean the plugins that are being installed right now
   vim.defer_fn(function()
-    vim.cmd("PackerInstall")
+    vim.cmd("PackerSync")
+  end, 0)
+  vim.defer_fn(function()
+    vim.cmd([[doautocmd VimEnter]])
   end, 200)
-  vim.defer_fn(function()
-    -- Compile plugins changes and simulate a new Neovim launch
-    -- to load recently installed plugins
-    -- NOTE: this won't work to live disable uninstalled plugins,
-    --       they will keep working until you relaunch Neovim
-    vim.cmd([[
-      PackerCompile
-      doautocmd VimEnter
-    ]])
-  end, 800)
 end
 
 --- Reload all Neovim configurations
@@ -200,7 +185,7 @@ reloader.reload_configs = function()
   end
 
   --- Source Doom init
-  vim.cmd("source $MYVIMRC")
+  vim.cmd("source " .. vim.g.doomrc)
 
   --- Reload all loaded Lua modules
   reloader.reload_lua_modules(true)

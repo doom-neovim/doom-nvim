@@ -5,8 +5,10 @@ be Doom.
 
 Those modules are the following:
 
-- config - Doom configurations, handles `doom_*` file and UI settings.
-- settings - Doom configurations for Neovim, e.g. `tabwidth`, `showmode`.
+- config - Doom configurations, handles `doom-nvim/*.lua` files.
+  - init - `config.lua` handler, initializes the `doom` global.
+  - modules - `modules.lua` handler.
 - functions - Doom core functions, e.g. `create_report`.
-- health - Doom health add-on.
 - system - Doom system detection utilities.
+- ui - Doom UI settings.
+- netrw - Optional netrw configs.

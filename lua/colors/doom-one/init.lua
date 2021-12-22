@@ -479,10 +479,10 @@ doom_one.load_colorscheme = function()
 
   -- netrw {{{
   local netrw = {
-   netrwClassify = { fg = blue },
-   netrwDir = { fg = blue },
-   netrwExe = { fg = green },
-   netrwMakefile = { fg = yellow },
+    netrwClassify = { fg = blue },
+    netrwDir = { fg = blue },
+    netrwExe = { fg = green },
+    netrwMakefile = { fg = yellow },
   }
 
   apply_highlight(netrw)
@@ -930,7 +930,11 @@ doom_one.load_colorscheme = function()
   if configuration.enable_treesitter then
     -- We will set a special definition for TSStrike here
     local treesitter = {
-      TSStrike = { fg = utils.Darken(violet, 0.2), cterm = "strikethrough", gui = "strikethrough" },
+      TSStrike = {
+        fg = utils.Darken(violet, 0.2),
+        cterm = "strikethrough",
+        gui = "strikethrough",
+      },
     }
 
     apply_highlight(treesitter)

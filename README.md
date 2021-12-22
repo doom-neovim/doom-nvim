@@ -97,7 +97,7 @@ Its design is guided by these mantras:
 - `nodejs` and `npm` (optional, required to use some Language Server Protocols)
 - `wget`, `unzip` (optional, required for auto installing LSPs)
 
-Doom is comprised of [~40 optional plugins][modules], some of which may have
+Doom is comprised of [~40 optional modules][modules], some of which may have
 additional dependencies. [Please visit their documentation][modules].
 
 ## Install
@@ -111,9 +111,6 @@ First you'll want to backup your current Neovim configuration if you have one.
 >
 > 1. Your current configuration will be backed up to `~/.config/nvim.bak`
 >    or where your `XDG_CONFIG_HOME` environment variable points to.
->
-> 2. If you're a cheovim user you can skip this step and go directly to
->    [installing with cheovim](#installing-with-cheovim).
 
 ```sh
 [ -d ${XDG_CONFIG_HOME:-$HOME/.config}/nvim ] && mv ${XDG_CONFIG_HOME:-$HOME/.config}/nvim ${XDG_CONFIG_HOME:-$HOME/.config}/nvim.bak
@@ -132,27 +129,6 @@ Or if you want to live in the bleeding-edge with the latest features:
 git clone --depth 1 -b develop https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_HOME:-$HOME/.config}/nvim
 ```
 
-### Installing with cheovim
-
-If you're using cheovim as your Neovim configurations manager you can install `doom-nvim` and then
-use the recipe listed in cheovim documentation:
-
-```sh
-# Clone doom-nvim under a specific directory under our '~/.config' directory
-git clone --depth 1 https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_HOME:-$HOME/.config}/doom-nvim
-
-# Change the doom-nvim internal path
-sed -i "37s/nvim/doom-nvim/" ${XDG_CONFIG_HOME:-$HOME/.config}/doom-nvim/lua/doom/core/system/init.lua
-```
-
-```lua
--- In your '~/.config/nvim/profiles.lua'
-doom_nvim = { "~/.config/doom-nvim", {
-        plugins = "packer",
-        preconfigure = "doom-nvim"
-    }
-}
-```
 ---
 
 Then [read our Getting Started guide][getting-started] to be walked through
@@ -160,7 +136,7 @@ installing, configuring and maintaining Doom Nvim.
 
 ## Getting help
 
-Neovim is not very difficult. Although you will occasionally run into problems
+Although Neovim is not very difficult, you will occasionally run into problems
 if you are not an advanced vimmer. When you do, here are some places you can look help:
 
 - [Our documentation][documentation] covers many use cases.
@@ -175,15 +151,14 @@ if you are not an advanced vimmer. When you do, here are some places you can loo
 
 ## Acknowledgements
 
-- [hlissner](https://github.com/hlissner) per doing Doom Emacs :heart:.
-- [romgrk](https://github.com/romgrk) per doing a port to Vim of Doom One
-  colorscheme from Doom Emacs (and everyone who improves the colorscheme!).
+- [hlissner](https://github.com/hlissner) for making Doom Emacs :heart:.
+- [romgrk](https://github.com/romgrk) for making a port of Doom One to Vim :heart:.
 - [All our contributors](#contributors) per helping improve Doom :heart:
 
 ## Contribute
 
 - I really :heart: pull requests and bug reports (please see the [Contributing Guidelines][contribute] before contributing)!
-- Don't hesitate to [tell me my Lua coding style sucks](https://github.com/NTBBloodbath/doom-nvim/issues/new),
+- Don't hesitate to [tell me my Lua sucks](https://github.com/NTBBloodbath/doom-nvim/issues/new),
   but please tell me why.
 
 ## Contributors

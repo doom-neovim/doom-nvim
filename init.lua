@@ -1,56 +1,37 @@
----[[---------------------------------------]]---
---      init.lua - Init file of Doom Nvim      --
---             Author: NTBBloodbath            --
---             License: GPLv2                  --
----[[---------------------------------------]]---
+-- Add ~/.local/share to runtimepath early, such that
+-- neovim autoloads plugin/packer_compiled.lua along with vimscript,
+-- before we start using the plugins it lazy-loads.
+vim.opt.runtimepath:append(vim.fn.stdpath("data"))
 
----- Doom Utilities -----------------------------
--------------------------------------------------
--- Store startup time in seconds
-vim.g.start_time = vim.fn.reltime()
--- Lua modules loader, when loading our modules with this
--- we avoid breaking all the configuration if something fails
-local load_modules = require("doom.utils.modules").load_modules
+-- Set logging if it's not set by neovim args.
+if not vim.g.doom_log then
+  vim.g.doom_log = "info"
+end
 
--- Disable some unused built-in Neovim plugins
-vim.g.loaded_gzip = false
-vim.g.loaded_tarPlugin = false
-vim.g.loaded_zipPlugin = false
-vim.g.loaded_2html_plugin = false
+-- Get init.lua path (used for reload)
+vim.g.doomrc = debug.getinfo(1, "S").source:sub(2)
 
----- Doom Configurations ------------------------
--------------------------------------------------
--- Load Doom core and UI related stuff (colorscheme, background)
-load_modules("doom", { "core" })
+-- From here on, we have a hidden global `_doom` that holds state the user
+-- shouldn't mess with.
+_G._doom = {}
 
--- Defer and schedule loading of plugins and extra functionalities until the
--- Neovim API functions are safe to call to avoid weird errors with plugins stuff
+-- From here on, we have a global `doom` with config.
+require("doom.core.config"):load()
+-- Load Doom core and UI related stuff (colorscheme, background).
+local utils = require("doom.utils")
+utils.load_modules("doom", { "core" })
+
+-- Defer and schedule loading of modules until the Neovim API functions are
+-- safe to call to avoid weird errors with plugins stuff.
 vim.defer_fn(function()
-  -- Load Doom extra stuff and plugins (modules, extras)
-  load_modules("doom", { "modules", "extras" })
+  -- Load Doom modules.
+  utils.load_modules("doom", { "modules" })
 
-  -- This loads certain plugins related to UI
-  vim.cmd("doautocmd ColorScheme")
-
-  -- If the current buffer name is empty then trigger Dashboard.
-  -- NOTE: this is done to avoid some weird issues with Dashboard and
-  --       number / signcolumn when Dashboard gets triggered automatically
+  -- Start dashboard if it is enabled and an empty buffer is opened initially.
   if
-    (vim.api.nvim_buf_get_name(0):len() == 0)
-    and (packer_plugins and packer_plugins["dashboard-nvim"])
+    not require("doom.utils").is_plugin_disabled("dashboard")
+    and vim.api.nvim_buf_get_name(0):len() == 0
   then
     vim.cmd("Dashboard")
-  end
-
-  vim.cmd([[
-    PackerLoad nvim-treesitter
-    " This BufEnter call should fix some issues with concealing in neorg
-    doautocmd BufEnter
-  ]])
-
-  if not require("doom.utils").is_plugin_disabled("which-key") then
-    vim.cmd([[
-      PackerLoad which-key.nvim
-    ]])
   end
 end, 0)

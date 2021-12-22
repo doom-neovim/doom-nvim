@@ -1,11 +1,11 @@
-local log = require("doom.extras.logging")
+local log = require("doom.utils.logging")
 local term
 
 if packer_plugins and packer_plugins["toggleterm.nvim"] then
   term = require("toggleterm.terminal").Terminal
 else
   log.error(
-    "Doom compiler needs toggleterm plugin, please uncomment the 'terminal' entry in your doom_modules.lua"
+    "Doom compiler needs toggleterm plugin, please uncomment the 'terminal' entry in your modules.lua"
   )
 end
 

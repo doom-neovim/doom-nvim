@@ -1,7 +1,6 @@
 local utils = require("doom.utils")
 local system = require("doom.core.system")
 
---- @class Info
 local info = {}
 
 --- Info buffer namespace
@@ -111,8 +110,6 @@ end
 local function get_doom_info()
   local doom_info = {}
 
-  ----- DOOM INFORMATION ------------------------
-  -----------------------------------------------
   -- Doom version
   local doom_version = utils.doom_version
   -- Doom branch
@@ -120,10 +117,7 @@ local function get_doom_info()
   -- Configurations path
   local config_path = require("doom.core.config").source
   local modules_path = require("doom.core.config.modules").source
-  local userplugins_path = require("doom.core.config.userplugins").source
 
-  ----- NVIM INFORMATION ------------------------
-  -----------------------------------------------
   local nvim_dev_version = false
   -- Neovim version
   local version = vim.version()
@@ -219,11 +213,8 @@ local function get_doom_info()
     string.format("%s▶ Doom configurations paths", padding_level[1]),
     string.format("%s- %s", padding_level[2], config_path),
     string.format("%s- %s", padding_level[2], modules_path),
-    string.format("%s- %s", padding_level[2], userplugins_path),
   })
 
-  ----- TREESITTER INFORMATION ------------------
-  -----------------------------------------------
   vim.list_extend(doom_info, {
     "",
     string.format("%s▶ Installed treesitter parsers", padding_level[1]),
@@ -232,8 +223,6 @@ local function get_doom_info()
     table.insert(doom_info, string.format("%s- %s", padding_level[2], parser))
   end
 
-  ----- LSP INFORMATION -------------------------
-  -----------------------------------------------
   if not require("doom.utils").is_plugin_disabled("lsp") and packer_plugins["nvim-lspinstall"] then
     vim.list_extend(doom_info, {
       "",
@@ -309,14 +298,13 @@ local function get_buffer_info()
       vim.api.nvim_buf_get_option(curr_buffer, "expandtab") and "Tabs" or "Spaces"
     ),
     "",
-    ----- TREESITTER INFORMATION ------------------
-    -----------------------------------------------
+
     string.format("%s▶ TreeSitter", padding_level[1]),
     string.format(
       "%s• %s%s",
       padding_level[2],
       "Is parser installed?" .. padding_level[2]:rep(3),
-      utils.has_value(require("nvim-treesitter.info").installed_parsers(), buffer_ft) and "yes"
+      vim.tbl_contains(require("nvim-treesitter.info").installed_parsers(), buffer_ft) and "yes"
         or "no"
     ),
     string.format(
@@ -333,8 +321,6 @@ local function get_buffer_info()
     ),
   })
 
-  ----- LSP INFORMATION -------------------------
-  -----------------------------------------------
   if not require("doom.utils").is_plugin_disabled("lsp") and packer_plugins["nvim-lspinstall"] then
     vim.list_extend(buffer_info, {
       "",
@@ -343,7 +329,7 @@ local function get_buffer_info()
         "%s• %s %s",
         padding_level[2],
         "Is language server installed?",
-        utils.has_value(require("lspinstall").installed_servers(), buffer_ft) and "yes" or "no"
+        vim.tbl_contains(require("lspinstall").installed_servers(), buffer_ft) and "yes" or "no"
       ),
       string.format(
         "%s• %s:%s%s",
@@ -361,8 +347,6 @@ end
 local function get_system_info()
   local sys_info = {}
 
-  ----- OS --------------------------------------
-  -----------------------------------------------
   -- Get the current OS and if the user is running Linux then get also the
   -- distribution name, e.g. Manjaro
   local sysname = vim.loop.os_uname().sysname
@@ -392,8 +376,6 @@ local function get_system_info()
     string.format("%s• %s: %s", padding_level[1], "Architecture", vim.loop.os_uname().machine),
   })
 
-  ----- PROGRAMS --------------------------------
-  -----------------------------------------------
   vim.list_extend(sys_info, {
     "",
     string.format("%s▶ Programs", padding_level[1]),
@@ -559,7 +541,7 @@ info.open = function()
   -- Set our floating window options
   local win_opts = {
     style = "minimal", -- Disable most UI options
-    border = "single", -- Single whitespace padding
+    border = doom.border_style, -- Single whitespace padding
     relative = "editor", -- Relative to global editor grid
     width = win_width, -- Width
     height = win_height, -- Height
