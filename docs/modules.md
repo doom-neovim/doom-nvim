@@ -136,7 +136,8 @@ Common patterns:
 - Add autocmds (`doom_` will be prefixed to the name):
   ```lua
   doom.autocmds[augroup_name] = { 
-    { "BufReadPre", "*.lua", --[[once and nested go here if needed]] "setlocal sw=2" },
+    { "BufReadPre", "*.lua", "setlocal sw=2", --[[once and nested are boolean keys here]] },
+    { "InsertEnter", "*", function() print("Lua functions are valid!") end, once = true }
   }
   ```
 

@@ -109,19 +109,61 @@ utils.get_capabilities = function()
   return capabilities
 end
 
---- For autocommands, extracted from
---- https://github.com/norcalli/nvim_utils
---- @param definitions table<string, table<number, string>>
-utils.create_augroups = function(definitions)
-  for group_name, definition in pairs(definitions) do
+utils.make_autocmd = function(event, pattern, action, group, nested, once)
+  local cmd = "autocmd "
+
+  if group then
+    cmd = cmd .. group .. " "
+  end
+
+  cmd = cmd .. event .. " "
+  cmd = cmd .. pattern .. " "
+
+  if nested then
+    cmd = cmd .. "++nested "
+  end
+  if once then
+    cmd = cmd .. "++once "
+  end
+
+  if type(action) == "function" then
+    if not _G._doom then
+      _G._doom = {}
+    end
+    if not _doom.autocmd_funcs then
+      _doom.autocmd_funcs = {}
+    end
+    -- Nobody is going to need more than a million of these, right?
+    local unique_number = utils.unique_index()
+    _doom.autocmd_funcs[unique_number] = action
+    cmd = cmd .. ("lua _doom.autocmd_funcs[%d]()"):format(unique_number)
+  else
+    cmd = cmd .. action
+  end
+
+  vim.cmd(cmd)
+end
+
+utils.make_augroup = function(group_name, cmds, existing_group)
+  if not existing_group then
     vim.cmd("augroup " .. group_name)
     vim.cmd("autocmd!")
-    for _, def in ipairs(definition) do
-      local command = table.concat(vim.tbl_flatten({ "autocmd", def }), " ")
-      vim.cmd(command)
-    end
+  end
+
+  for _, cmd in ipairs(cmds) do
+    utils.make_autocmd(cmd[1], cmd[2], cmd[3], existing_group and group_name, cmd.nested, cmd.once)
+  end
+
+  if not existing_group then
     vim.cmd("augroup END")
   end
+end
+
+local index = 0
+utils.unique_index = function()
+  local ret = index
+  index = index + 1
+  return ret
 end
 
 --- Wraps nvim_replace_termcodes

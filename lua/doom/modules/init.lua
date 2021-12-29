@@ -80,7 +80,5 @@ end
 -- user.
 for module, cmds in pairs(doom.autocmds) do
   local augroup_name = ("doom_%s"):format(module)
-  utils.create_augroups({
-    [augroup_name] = cmds,
-  })
+  utils.make_augroup(augroup_name, cmds)
 end

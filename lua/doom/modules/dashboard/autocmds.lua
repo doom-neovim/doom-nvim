@@ -2,7 +2,9 @@ local autocmds = {
   {
     "FileType",
     "dashboard",
-    [[lua require("nest").applyKeymaps({ "q", "<cmd>q<CR>", buffer = true })]],
+    function()
+      require("nest").applyKeymaps({ "q", "<cmd>q<CR>", buffer = true })
+    end,
   },
 }
 
