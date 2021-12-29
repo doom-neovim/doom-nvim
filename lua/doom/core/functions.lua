@@ -1,8 +1,9 @@
-local log = require("doom.utils.logging")
+-- NOTE: Can't require "doom.utils.logging" in the top level, because `doom`
+-- may not exist here.
 local utils = require("doom.utils")
 local fs = require("doom.utils.fs")
 local system = require("doom.core.system")
-local async = require("doom.modules.built-in.async")
+local async = require("doom.utils.async")
 local is_plugin_disabled = utils.is_plugin_disabled
 
 local functions = {}
@@ -24,6 +25,7 @@ end
 
 -- check_updates checks for plugins updates
 functions.check_updates = function()
+  local log = require("doom.utils.logging")
   local updated_plugins, err = xpcall(function()
     log.info("Updating the outdated plugins ...")
     vim.cmd("PackerSync")
@@ -72,6 +74,7 @@ end
 -- create_report creates a markdown report. It's meant to be used when a bug
 -- occurs, useful for debugging issues.
 functions.create_report = function()
+  local log = require("doom.utils.logging")
   local date = os.date("%Y-%m-%d %H:%M:%S")
   local created_report, err = xpcall(function()
     -- Get and save only the warning and error logs from today
@@ -156,6 +159,7 @@ end
 
 -- save_backup_hashes saves the commits or releases SHA for future rollbacks
 local function save_backup_hashes()
+  local log = require("doom.utils.logging")
   -- Check for the current branch
   local git_branch = utils.get_git_output("branch --show-current", true)
 
@@ -232,6 +236,7 @@ end
 -- restore if needed and then updates Doom.
 -- TODO: Port to module architecture
 functions.update_doom = function()
+  local log = require("doom.utils.logging")
   save_backup_hashes()
 
   log.info("Pulling Doom remote changes ...")
@@ -243,7 +248,7 @@ functions.update_doom = function()
       if data then
         log.info("Successfully updated Doom!")
         --- Completely reload Doom Nvim
-        require("doom.modules.built-in.reloader").full_reload()
+        require("doom.utils.reloader").full_reload()
       end
     end,
     on_stderr = function(err, data)
@@ -261,6 +266,7 @@ end
 -- in case that the local one is broken
 -- TODO: Port to module architecture
 functions.rollback_doom = function()
+  local log = require("doom.utils.logging")
   -- Backup file for main (stable) branch
   local releases_database_path = string.format("%s%s.doom_releases", system.doom_root, system.sep)
   -- Backup file for development branch

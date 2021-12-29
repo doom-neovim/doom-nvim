@@ -113,7 +113,7 @@ config.defaults = {
   --   · error
   --   · fatal
   -- @default = 'info'
-  logging = "info",
+  logging = "warn",
 
   -- Default colorscheme
   -- @default = doom-one

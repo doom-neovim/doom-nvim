@@ -27,7 +27,7 @@ lua.defaults = {
 }
 
 lua.packer_config = {}
-lua.packer_config["lua-dev.nvim"] = function ()
+lua.packer_config["lua-dev.nvim"] = function()
   require("lua-dev").setup(doom.lua.dev)
 end
 

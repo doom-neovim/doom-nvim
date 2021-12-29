@@ -2,10 +2,6 @@ local dashboard = {}
 
 dashboard.defaults = {
   entries = {
-    a = {
-      description = { "  Load Last Session              SPC s r" },
-      command = "lua require('persistence').load({ last = true })",
-    },
     b = {
       description = { "  Recently Opened Files          SPC f r" },
       command = "Telescope oldfiles",
@@ -15,20 +11,16 @@ dashboard.defaults = {
       command = "Telescope marks",
     },
     d = {
-      description = { "  Find File                      SPC f f" },
-      command = "Telescope find_files",
+      description = { "  Open Configuration             SPC d c" },
+      command = "e " .. require("doom.core.config").source,
     },
     e = {
-      description = { "  Find Word                      SPC s g" },
-      command = "Telescope live_grep",
+      description = { "  Open Modules                   SPC d m" },
+      command = "e " .. require("doom.core.config.modules").source,
     },
     f = {
-      description = { "  Open Private Configuration     SPC d c" },
-      command = 'lua require("doom.core.functions").edit_config()',
-    },
-    g = {
       description = { "  Open Documentation             SPC d d" },
-      command = 'lua require("doom.core.functions").open_docs()',
+      command = [[lua require("doom.core.functions").open_docs()]],
     },
   },
   header = {
@@ -53,14 +45,7 @@ dashboard.defaults = {
     "\\   _-'                                                                `-_   /",
     " `''                                                                      ``'  ",
   },
-  footer = function()
-    return {
-      "Doom Nvim loaded in " .. vim.fn.printf(
-        "%.3f",
-        vim.fn.reltimefloat(vim.fn.reltime(vim.g.start_time))
-      ) .. " seconds.",
-    }
-  end,
+  footer = { "Doom Nvim loaded" },
   colors = {
     header = "#586268",
     center = "#51afef",
@@ -79,6 +64,12 @@ dashboard.packer_config["dashboard-nvim"] = function()
   end
   if not is_plugin_disabled("telescope") then
     vim.g.dashboard_default_executive = "telescope"
+  end
+  if not is_plugin_disabled("auto_session") then
+    doom.dashboard.entries.a = {
+      description = { "  Load Last Session              SPC s r" },
+      command = [[lua require("persistence").load({ last = true })]],
+    }
   end
 
   vim.g.dashboard_custom_section = doom.dashboard.entries

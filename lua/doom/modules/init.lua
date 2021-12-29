@@ -42,42 +42,45 @@ packer.init({
   profile = {
     enable = true,
   },
+  log = {
+    level = doom.logging,
+  },
 })
 
-packer.startup(function(use)
-  local packer_config = {}
-  -- Flatten the multiple packer config tables into one to rule them all.
-  for _, module in ipairs(enabled_modules) do
-    local new_configs = require(("doom.modules.%s"):format(module)).packer_config
-    for name, value in pairs(new_configs) do
-      packer_config[name] = value
-    end
-  end
-  -- Iterate packages. These can be added by modules or by the user in
-  -- `config.lua`. See `load()` in doom/core/config/init.lua
-  for name, spec in pairs(doom.packages) do
-    -- Set empty defaults in case the functions don't exist.
-    if type(packer_config[name]) ~= "function" then
-      packer_config[name] = function() end
-    end
-    if type(spec.config) ~= "function" then
-      spec.config = function() end
-    end
-    use(vim.tbl_deep_extend("force", spec, {
-      -- First, run the module config (sometimes an empty function, see
-      -- above), then the hook passed by the user. This cannot be done with
-      -- a function that calls both sequentially, see packer's README on
-      -- captures and `string.dump`.
-      config = { packer_config[name], spec.config },
-    }))
-  end
+packer.reset()
 
-  -- Register autocmds, which, like packages, can come from modules or the
-  -- user.
-  for module, cmds in pairs(doom.autocmds) do
-    local augroup_name = ("doom_%s"):format(module)
-    utils.create_augroups({
-      [augroup_name] = cmds,
-    })
+-- Flatten the multiple packer config tables into one to rule them all.
+local packer_config = {}
+for _, module in ipairs(enabled_modules) do
+  local new_configs = require(("doom.modules.%s"):format(module)).packer_config
+  for name, value in pairs(new_configs) do
+    packer_config[name] = value
   end
-end)
+end
+-- Iterate packages. These can be added by modules or by the user in
+-- `config.lua`. See `load()` in doom/core/config/init.lua
+for name, spec in pairs(doom.packages) do
+  -- Set empty defaults in case the functions don't exist.
+  if type(packer_config[name]) ~= "function" then
+    packer_config[name] = function() end
+  end
+  if type(spec.config) ~= "function" then
+    spec.config = function() end
+  end
+  packer.use(vim.tbl_deep_extend("force", spec, {
+    -- First, run the module config (sometimes an empty function, see
+    -- above), then the hook passed by the user. This cannot be done with
+    -- a function that calls both sequentially, see packer's README on
+    -- captures and `string.dump`.
+    config = { packer_config[name], spec.config },
+  }))
+end
+
+-- Register autocmds, which, like packages, can come from modules or the
+-- user.
+for module, cmds in pairs(doom.autocmds) do
+  local augroup_name = ("doom_%s"):format(module)
+  utils.create_augroups({
+    [augroup_name] = cmds,
+  })
+end

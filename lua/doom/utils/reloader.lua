@@ -162,15 +162,27 @@ end
 --- Reload the plugin definitions modules like modules.lua to automatically
 --- install or uninstall plugins on changes
 reloader.reload_plugins_definitions = function()
+  local old_plugins = vim.deepcopy(packer_plugins)
+
   -- Silently reload plugins modules
+  reloader.reload_lua_module("doom.core.config", true)
   reloader.reload_lua_module("doom.core.config.modules", true)
   reloader.reload_lua_module("doom.modules", true)
+  dofile(require("doom.core.config").source)
+
+  -- Redo packer startup
+  dofile(vim.api.nvim_get_runtime_file("*/doom/modules/init.lua", false)[1])
 
   vim.defer_fn(function()
-    vim.cmd("PackerSync")
+    vim.cmd("PackerClean")
   end, 0)
+  if not vim.deep_equal(packer_plugins, old_plugins) then
+    vim.defer_fn(function()
+      vim.cmd("PackerInstall")
+    end, 200)
+  end
   vim.defer_fn(function()
-    vim.cmd([[doautocmd VimEnter]])
+    vim.cmd("PackerCompile")
   end, 200)
 end
 
@@ -184,8 +196,7 @@ reloader.reload_configs = function()
     vim.cmd("silent! LspRestart")
   end
 
-  --- Source Doom init
-  vim.cmd("source " .. vim.g.doomrc)
+  reloader.reload_plugins_definitions()
 
   --- Reload all loaded Lua modules
   reloader.reload_lua_modules(true)
@@ -193,7 +204,8 @@ reloader.reload_configs = function()
   --- Reload start plugins
   reload_runtime_files()
 
-  --- Fix some syntax highlighting issues caused by clearing highlighting
+  vim.cmd("doautocmd VimEnter")
+  vim.cmd("doautocmd ColorScheme")
   vim.cmd("doautocmd Syntax")
 end
 
@@ -205,12 +217,6 @@ reloader.full_reload = function()
 
   --- Reload Neovim configurations
   reloader.reload_configs()
-
-  --- Run VimEnter autocommand to simulate a new Neovim launch
-  --- and reload all buffers
-  vim.cmd([[
-    doautocmd VimEnter
-  ]])
 
   log.info(
     "Reloaded Doom in "

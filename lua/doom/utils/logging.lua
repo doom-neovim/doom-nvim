@@ -5,8 +5,6 @@
 -- under the terms of the MIT license. See LICENSE for details.
 
 local round = require("doom.utils").round
--- logging defaults to "info" level
-local logging_level = vim.g.doom_log
 
 -- Configuration section
 local default_config = {
@@ -14,7 +12,7 @@ local default_config = {
   use_console = true,
   highlights = true,
   use_file = true,
-  level = logging_level,
+  level = doom.logging,
   modes = {
     { name = "trace", hl = "Comment" },
     { name = "debug", hl = "Comment" },

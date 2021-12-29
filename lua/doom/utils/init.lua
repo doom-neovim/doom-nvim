@@ -27,6 +27,7 @@ utils.find_config = function(filename)
     return candidates[1]
   end
   -- TODO: Consider copying the default to the user config dir.
+  -- Can't use log yet, doom doesn't exist.
   print(("Error while loading %s: Not found"):format(filename))
   vim.cmd("qa!")
 end

@@ -3,14 +3,6 @@
 -- before we start using the plugins it lazy-loads.
 vim.opt.runtimepath:append(vim.fn.stdpath("data"))
 
--- Set logging if it's not set by neovim args.
-if not vim.g.doom_log then
-  vim.g.doom_log = "info"
-end
-
--- Get init.lua path (used for reload)
-vim.g.doomrc = debug.getinfo(1, "S").source:sub(2)
-
 -- From here on, we have a hidden global `_doom` that holds state the user
 -- shouldn't mess with.
 _G._doom = {}

@@ -1,17 +1,11 @@
 local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
 local autocmds = {
-  { "BufWritePost", "*/doom/**/*.lua,", "PackerCompile profile=true" },
-  { "VimLeavePre", "*/doom-nvim/modules.lua", "PackerCompile profile=true" },
+  { "BufWritePost", "*/doom/**/*.lua", [[lua require("doom.utils.reloader").full_reload()]] },
   {
     "BufWritePost",
-    "*/doom-nvim/modules.lua",
-    "lua require('doom.modules.built-in.reloader').reload_plugins_definitions()",
-  },
-  {
-    "BufWritePost",
-    "*/doom-nvim/*.lua",
-    "lua require('doom.modules.built-in.reloader').reload_lua_module(vim.fn.expand('%:p'))",
+    "*/doom-nvim/modules.lua,*/doom-nvim/config.lua",
+    [[lua require("doom.utils.reloader").full_reload()]],
   },
 }
 
