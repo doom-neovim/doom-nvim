@@ -19,7 +19,6 @@ comment.defaults = {
 
 comment.packer_config = {}
 comment.packer_config['comment'] = function()
-  print('comment config')
   local config = vim.tbl_extend('force', doom.comment, {
     -- Disable mappings as we'll handle it in binds.lua
     mappings = {

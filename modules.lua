@@ -20,7 +20,7 @@ return {
   "gitsigns",
   "illuminate",
   "indentlines",
-  "kommentary",
+  "comment",
   -- "lazygit",
   "linter",
   "lsp",
