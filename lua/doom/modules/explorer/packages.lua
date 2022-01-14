@@ -12,8 +12,4 @@ return {
       "NvimTreeToggle",
     },
   },
-  ["nvim-web-devicons"] = {
-    "kyazdani42/nvim-web-devicons",
-    commit = "8df4988ecf8599fc1f8f387bbf2eae790e4c5ffb",
-  },
 }
