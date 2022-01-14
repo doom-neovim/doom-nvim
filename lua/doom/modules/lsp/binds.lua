@@ -13,7 +13,6 @@ local binds = {
       { "r", vim.lsp.buf.references, name = "Jump to references" },
       { "i", vim.lsp.buf.implementation, name = "Jump to implementation" },
       { "a", vim.lsp.buf.code_action, name = "Do code action" },
-      { "d", vim.lsp.buf.hover, name = "Show hover doc" },
     },
   },
   {
