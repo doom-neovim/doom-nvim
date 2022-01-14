@@ -53,4 +53,9 @@ return {
     "lazytanuki/nvim-mapper",
     before = "telescope.nvim",
   },
+  ['nvim-web-devicons'] = {
+    'kyazdani42/nvim-web-devicons',
+    commit = "8df4988ecf8599fc1f8f387bbf2eae790e4c5ffb",
+    module = "nvim-web-devicons",
+  }
 }
