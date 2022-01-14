@@ -78,7 +78,7 @@ telescope.packer_config["telescope.nvim"] = function()
   }, doom.telescope))
 
   for _, ext in ipairs(doom.telescope.extensions) do
-    telescope.load_extension(ext)
+    telescope_package.load_extension(ext)
   end
 end
 
