@@ -1,7 +1,7 @@
 return {
   ["nvim-lspconfig"] = {
     "neovim/nvim-lspconfig",
-    commit = "1cb8583d186d28f2959eac5d74a74dc745fae099",
+    commit = "5dc61fa6bf837b91c4de2ed95ba6c840e47d25ac",
     opt = true,
     cmd = {
       "LspStart",

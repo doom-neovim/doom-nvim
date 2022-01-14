@@ -12,7 +12,7 @@ return {
   },
   ["nvim-lsp-installer"] = {
     "williamboman/nvim-lsp-installer",
-    commit = "bcce5db53b966e2dbd97fc8d1bbfa7db4a405f13",
+    commit = "7a4f43beaf579f48b190e4a0784d4b3317157495",
     opt = true,
     module = "nvim-lsp-install",
   },
