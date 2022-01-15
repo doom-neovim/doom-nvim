@@ -3,7 +3,7 @@ local required = {}
 required.defaults = {
   mapper = {},
   treesitter = {
-    hightlight = {
+    highlight = {
       enable = true,
     },
     incremental_selection = {
