@@ -1,3 +1,5 @@
+local is_plugin_disabled = require("doom.utils").is_plugin_disabled
+
 return {
   ["packer.nvim"] = {
     "wbthomason/packer.nvim",
@@ -45,7 +47,7 @@ return {
   },
   ["nvim-mapper"] = {
     "lazytanuki/nvim-mapper",
-    before = "telescope.nvim",
+    before = is_plugin_disabled("telescope") or "telescope.nvim",
   },
   ['nvim-web-devicons'] = {
     'kyazdani42/nvim-web-devicons',

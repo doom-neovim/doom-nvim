@@ -1,3 +1,5 @@
+local is_plugin_disabled = require("doom.utils").is_plugin_disabled
+
 return {
   ["DAPInstall.nvim"] = {
     "Pocco81/DAPInstall.nvim",
@@ -8,12 +10,14 @@ return {
       "DIList",
       "DIUninstall",
     },
+    disabled = is_plugin_disabled("dap"),
     module = "dap-install",
   },
   ["nvim-lsp-installer"] = {
     "williamboman/nvim-lsp-installer",
     commit = "7a4f43beaf579f48b190e4a0784d4b3317157495",
     opt = true,
+    disabled = is_plugin_disabled("lsp"),
     module = "nvim-lsp-install",
   },
 }
