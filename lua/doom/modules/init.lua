@@ -184,7 +184,7 @@ packer.startup(function(use)
   local disabled_tabline = is_plugin_disabled("tabline")
   use({
     "akinsho/bufferline.nvim",
-    commit = pin_commit("463637a3ac86dcaacbcd47aa608f53aaad749696"),
+    commit = pin_commit("00a98203a38dd38b670aa70ef965c4e9be5573ef"),
     config = require("doom.modules.config.doom-bufferline"),
     disable = disabled_tabline,
     event = "BufWinEnter",
@@ -237,7 +237,7 @@ packer.startup(function(use)
   local disabled_whichkey = is_plugin_disabled("which-key")
   use({
     "folke/which-key.nvim",
-    commit = pin_commit("d3032b6d3e0adb667975170f626cb693bfc66baa"),
+    commit = pin_commit("387fd676d3f9b419d38890820f6e262dc0fadb46"),
     opt = true,
     config = require("doom.modules.config.doom-whichkey"),
     disable = disabled_whichkey,
