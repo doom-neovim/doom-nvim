@@ -37,6 +37,7 @@ return {
   -- "superman",
   -- "symbols",
   "auto_install",
+  "annotations",
 
   -- LANGS
   "lua",
