@@ -16,12 +16,6 @@ return {
     opt = true,
     after = "nvim-treesitter",
   },
-  ["nvim-tree-docs"] = {
-    "nvim-treesitter/nvim-tree-docs",
-    commit = "15135bd18c8f0c4d67dd1b36d3b2cd64579aab6f",
-    opt = true,
-    after = "nvim-treesitter",
-  },
   ["nvim-ts-autotag"] = {
     "windwp/nvim-ts-autotag",
     commit = "80d427af7b898768c8d8538663d52dee133da86f",
