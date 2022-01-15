@@ -36,13 +36,14 @@ return {
   -- "suda",
   -- "superman",
   -- "symbols",
+  "auto_install",
 
   -- LANGS
-  "auto_install",
   "lua",
-  "vue",
+  "javascript",
   "typescript",
   "css",
+  "vue",
 
 
   "tabline",
