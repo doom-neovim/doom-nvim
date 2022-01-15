@@ -19,21 +19,21 @@ comment.defaults = {
   --- Passes to ts-context-commentstring to get commentstring in JSX
   pre_hook = function(ctx)
     -- Only calculate commentstring for tsx filetypes
-    if vim.bo.filetype == 'typescriptreact' then
-      local comment_utils = require('Comment.utils')
+    if vim.bo.filetype == "typescriptreact" then
+      local comment_utils = require("Comment.utils")
 
       -- Detemine whether to use linewise or blockwise commentstring
-      local type = ctx.ctype == comment_utils.ctype.line and '__default' or '__multiline'
+      local type = ctx.ctype == comment_utils.ctype.line and "__default" or "__multiline"
 
       -- Determine the location where to calculate commentstring from
       local location = nil
       if ctx.ctype == comment_utils.ctype.block then
-        location = require('ts_context_commentstring.utils').get_cursor_location()
+        location = require("ts_context_commentstring.utils").get_cursor_location()
       elseif ctx.cmotion == comment_utils.cmotion.v or ctx.cmotion == comment_utils.cmotion.V then
-        location = require('ts_context_commentstring.utils').get_visual_start_location()
+        location = require("ts_context_commentstring.utils").get_visual_start_location()
       end
 
-      return require('ts_context_commentstring.internal').calculate_commentstring({
+      return require("ts_context_commentstring.internal").calculate_commentstring({
         key = type,
         location = location,
       })
@@ -42,8 +42,8 @@ comment.defaults = {
 }
 
 comment.packer_config = {}
-comment.packer_config['Comment.nvim'] = function()
-  local config = vim.tbl_extend('force', doom.comment, {
+comment.packer_config["Comment.nvim"] = function()
+  local config = vim.tbl_extend("force", doom.comment, {
     -- Disable mappings as we'll handle it in binds.lua
     mappings = {
       basic = false,
@@ -52,7 +52,7 @@ comment.packer_config['Comment.nvim'] = function()
     },
   })
 
-  require('Comment').setup(config)
+  require("Comment").setup(config)
 end
 
 return comment
