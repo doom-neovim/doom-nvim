@@ -6,4 +6,8 @@
 --
 doom.indent = 2
 
+table.insert(doom.packages, {
+  'rafcamlet/nvim-luapad'
+})
+
 -- vim: sw=2 sts=2 ts=2 expandtab
