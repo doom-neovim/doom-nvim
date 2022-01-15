@@ -2,13 +2,14 @@ return {
   ["DAPInstall.nvim"] = {
     "Pocco81/DAPInstall.nvim",
     commit = "dd09e9dd3a6e29f02ac171515b8a089fb82bb425",
-    after = "nvim-dap",
+    -- after = "nvim-dap",
     cmd = {
       "DIInstall",
       "DIList",
       "DIUninstall",
     },
     module = "dap-install",
+    disable = true,
   },
   ["nvim-lsp-installer"] = {
     "williamboman/nvim-lsp-installer",
