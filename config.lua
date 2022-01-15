@@ -4,10 +4,23 @@
 -- Just override stuff in the `doom` global table (it's injected into scope
 -- automatically).
 --
-doom.indent = 2
 
+-- Editor config
+doom.indent = 2
+doom.escape_sequences = {}
+
+-- Colourscheme
+table.insert(doom.packages, {
+  'sainnhe/sonokai'
+})
+doom.colorscheme = 'sonokai'
+
+-- Extra packages
 table.insert(doom.packages, {
   'rafcamlet/nvim-luapad'
+})
+table.insert(doom.packages, {
+  'nvim-treesitter/playground'
 })
 
 -- vim: sw=2 sts=2 ts=2 expandtab
