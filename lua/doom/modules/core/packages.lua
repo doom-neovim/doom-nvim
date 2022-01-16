@@ -41,7 +41,7 @@ return {
     module = "popup",
   },
   ["nest.nvim"] = {
-    "LuigiPiucco/nest.nvim",
+    "connorgmeehan/nest.nvim",
     branch = "integrations-api",
     after = "nvim-mapper",
   },
