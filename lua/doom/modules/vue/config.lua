@@ -63,6 +63,20 @@ local start_lsp = function()
   lspconfig.volar_html.setup(config)
 end
 
+local attach_buffers = function()
+  local servers = { 'volar_api', 'volar_doc', 'volar_html' }
+  for _, server_name in ipairs(servers) do
+  local lsp_server = require("lspconfig")[server_name]
+    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+      if lsp_server.filetypes then
+          lsp_server.manager.try_add_wrapper(bufnr)
+      else
+          lsp_server.manager.try_add(bufnr)
+      end
+    end
+  end
+end
+
 if not is_plugin_disabled("auto_install") then
   local lsp_installer = require("nvim-lsp-installer.servers")
   local server_available, server = lsp_installer.get_server("volar")
@@ -76,6 +90,7 @@ if not is_plugin_disabled("auto_install") then
 
     server:on_ready(function()
       start_lsp();
+      attach_buffers();
     end)
   end
 else
