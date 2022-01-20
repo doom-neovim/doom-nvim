@@ -290,6 +290,7 @@ git clone --depth 1 https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_H
 
 # Change the doom-nvim internal path
 sed -i "37s/nvim/doom-nvim/" ${XDG_CONFIG_HOME:-$HOME/.config}/doom-nvim/lua/doom/core/system/init.lua
+# MacOS users will snag here. `brew install gnu-sed` will let you run the above command with `gsed` vice `sed`
 ```
 
 ```lua
