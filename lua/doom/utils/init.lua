@@ -159,7 +159,7 @@ utils.make_augroup = function(group_name, cmds, existing_group)
   end
 end
 
-local index = 0
+local index = 1
 utils.unique_index = function()
   local ret = index
   index = index + 1
