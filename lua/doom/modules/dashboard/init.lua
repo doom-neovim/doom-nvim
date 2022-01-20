@@ -11,15 +11,15 @@ dashboard.defaults = {
       command = "Telescope marks",
     },
     d = {
-      description = { "  Open Configuration             SPC d c" },
+      description = { "  Open Configuration             SPC D c" },
       command = "e " .. require("doom.core.config").source,
     },
     e = {
-      description = { "  Open Modules                   SPC d m" },
+      description = { "  Open Modules                   SPC D m" },
       command = "e " .. require("doom.core.config.modules").source,
     },
     f = {
-      description = { "  Open Documentation             SPC d d" },
+      description = { "  Open Documentation             SPC D d" },
       command = [[lua require("doom.core.functions").open_docs()]],
     },
   },
