@@ -1,11 +1,11 @@
 local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
 local autocmds = {
-  { "BufWritePost", "*/doom/**/*.lua", require("doom.utils.reloader").full_reload },
+  { "BufWritePost", "*/doom/**/*.lua", function() require("doom.utils.reloader").full_reload() end },
   {
     "BufWritePost",
     "*/doom-nvim/modules.lua,*/doom-nvim/config.lua",
-    require("doom.utils.reloader").full_reload,
+    function() require("doom.utils.reloader").full_reload() end,
   },
 }
 
@@ -35,17 +35,17 @@ if is_plugin_disabled("explorer") then
   table.insert(autocmds, {
     "FileType",
     "netrw",
-    require("doom.core.settings.netrw").set_maps,
+    require("doom.core.netrw").set_maps,
   })
   table.insert(autocmds, {
     "FileType",
     "netrw",
-    require("doom.core.settings.netrw").draw_icons(),
+    require("doom.core.netrw").draw_icons,
   })
   table.insert(autocmds, {
     "TextChanged",
     "*",
-    require("doom.core.settings.netrw").draw_icons(),
+    require("doom.core.netrw").draw_icons,
   })
 end
 
