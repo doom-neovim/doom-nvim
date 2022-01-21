@@ -21,9 +21,6 @@ required.defaults = {
     playground = {
       enable = true,
     },
-    tree_docs = {
-      enable = true,
-    },
     context_commentstring = {
       enable = true,
     },

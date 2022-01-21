@@ -1,3 +1,5 @@
+local is_plugin_disabled = require("doom.utils").is_plugin_disabled
+
 return {
   ["packer.nvim"] = {
     "wbthomason/packer.nvim",
@@ -39,13 +41,18 @@ return {
     module = "popup",
   },
   ["nest.nvim"] = {
-    "LuigiPiucco/nest.nvim",
+    "connorgmeehan/nest.nvim",
     branch = "integrations-api",
     after = "nvim-mapper",
   },
   ["nvim-mapper"] = {
     "lazytanuki/nvim-mapper",
-    before = "telescope.nvim",
+    before = is_plugin_disabled("telescope") or "telescope.nvim",
+  },
+  ["nvim-web-devicons"] = {
+    "kyazdani42/nvim-web-devicons",
+    commit = "8df4988ecf8599fc1f8f387bbf2eae790e4c5ffb",
+    module = "nvim-web-devicons",
   },
   ['nvim-web-devicons'] = {
     'kyazdani42/nvim-web-devicons',

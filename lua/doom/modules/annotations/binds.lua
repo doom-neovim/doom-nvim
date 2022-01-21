@@ -1,7 +1,17 @@
 local binds = {
-  { "<leader>c", name = '+code', {
-    { 'g', ':lua require("neogen").generate()<CR>', name = 'Generate annotations'}
-  } },
+  {
+    "<leader>",
+    name = "+prefix",
+    {
+      {
+        "c",
+        name = "+code",
+        {
+          { "g", require("neogen").generate, name = "Generate annotations" },
+        },
+      },
+    },
+  },
 }
 
 return binds

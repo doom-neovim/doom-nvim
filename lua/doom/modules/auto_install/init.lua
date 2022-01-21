@@ -3,7 +3,6 @@ local auto_install = {}
 auto_install.defaults = {
   lsp_dir = vim.fn.stdpath("data") .. "/lsp-install/",
   dap_dir = vim.fn.stdpath("data") .. "/dap-install/",
-  treesitter_dir = vim.fn.stdpath("data") .. "/treesitter-install/",
 }
 
 auto_install.packer_config = {}

@@ -3,22 +3,17 @@ local annotations = {}
 annotations.defaults = {
   enabled = true,
   languages = {
-	  lua = {
-	    template = {
-        annotation_convention = "emmylua",
-		  }
-    },
-    python = {
+    lua = {
       template = {
-        annotation_convention = 'google_docstrings',
-      }
-    }
-	}
+        annotation_convention = "ldoc",
+      },
+    },
+  },
 }
 
 annotations.packer_config = {}
 annotations.packer_config["neogen"] = function()
-  require('neogen').setup(doom.annotations)
+  require("neogen").setup(doom.annotations)
 end
 
 return annotations

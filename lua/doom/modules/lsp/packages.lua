@@ -1,3 +1,5 @@
+local is_plugin_disabled = require("doom.utils").is_plugin_disabled
+
 return {
   ["nvim-lspconfig"] = {
     "neovim/nvim-lspconfig",
@@ -13,7 +15,7 @@ return {
   ["nvim-cmp"] = {
     "hrsh7th/nvim-cmp",
     commit = "2e4270d02843d15510b3549354e238788ca07ca5",
-    after = "LuaSnip",
+    after = is_plugin_disabled("snippets") or "LuaSnip",
   },
   ["cmp-nvim-lua"] = {
     "hrsh7th/cmp-nvim-lua",
@@ -38,10 +40,8 @@ return {
   ["cmp_luasnip"] = {
     "saadparwaiz1/cmp_luasnip",
     commit = "16832bb50e760223a403ffa3042859845dd9ef9d",
-    after = {
-      "nvim-cmp",
-      "LuaSnip",
-    },
+    after = "nvim-cmp",
+    disabled = is_plugin_disabled("snippets"),
   },
   ["lsp_signature.nvim"] = {
     "ray-x/lsp_signature.nvim",

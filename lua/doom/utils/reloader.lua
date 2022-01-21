@@ -172,7 +172,7 @@ reloader.reload_plugins_definitions = function()
   reloader.reload_lua_module("doom.core.config", true)
   reloader.reload_lua_module("doom.core.config.modules", true)
   reloader.reload_lua_module("doom.modules", true)
-  dofile(require("doom.core.config").source)
+  require("doom.core.config"):load()
 
   -- Redo packer startup
   dofile(vim.api.nvim_get_runtime_file("*/doom/modules/init.lua", false)[1])
