@@ -29,14 +29,6 @@ return function()
   end
 
   -- Set up treesitter for Neorg
-  local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
-  parser_configs.norg = {
-    install_info = {
-      url = "https://github.com/nvim-neorg/tree-sitter-norg",
-      files = { "src/parser.c", "src/scanner.cc" },
-      branch = "main",
-    },
-  }
   if packer_plugins and packer_plugins["neorg"] then
     table.insert(modules.langs, "norg")
   end
