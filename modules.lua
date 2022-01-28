@@ -36,7 +36,7 @@ return {
   -- "suda",
   -- "superman",
   -- "symbols",
-  "auto_install",
+  -- "auto_install",
   "annotations",
 
   -- LANGS
@@ -45,6 +45,7 @@ return {
   "typescript",
   "css",
   "vue",
+  "rust",
 
 
   "tabline",

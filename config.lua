@@ -8,6 +8,7 @@
 -- Editor config
 doom.indent = 2
 doom.escape_sequences = {}
+-- vim.lsp.set_log_level('trace')
 
 -- Colourscheme
 table.insert(doom.packages, {
