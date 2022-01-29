@@ -7,8 +7,7 @@ return {
   },
   ["nvim-treesitter"] = {
     "nvim-treesitter/nvim-treesitter",
-    commit = vim.fn.has("nvim-0.6.0") == 1 and "afed686e6a8fc1035475d8c56c1b5ff252c346e5"
-      or "47cfda2c6711077625c90902d7722238a8294982",
+    commit = "d91d94aa9f55631855efb46a2b4a459a4a1439",
     run = ":TSUpdate",
     branch = vim.fn.has("nvim-0.6.0") == 1 and "master" or "0.5-compat",
   },
