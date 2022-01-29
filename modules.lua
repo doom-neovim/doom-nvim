@@ -22,7 +22,7 @@ return {
   "indentlines",
   "comment",
   -- "lazygit",
-  -- "linter",
+  "linter",
   "lsp",
   -- "minimap",
   -- "neogit",
@@ -39,6 +39,13 @@ return {
   -- "symbols",
   "auto_install",
   "annotations",
+  "tabline",
+  "telescope",
+  -- "terminal",
+  "todo_comments",
+  "trouble",
+  "whichkey",
+  -- "zen",
 
   -- LANGS
   "lua",
@@ -47,15 +54,6 @@ return {
   "css",
   "vue",
   "rust",
-
-
-  "tabline",
-  "telescope",
-  -- "terminal",
-  "todo_comments",
-  "trouble",
-  "whichkey",
-  -- "zen",
 }
 
 -- vim: sw=2 sts=2 ts=2 fdm=indent expandtab
