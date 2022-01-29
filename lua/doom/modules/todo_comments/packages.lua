@@ -1,7 +1,7 @@
 return {
   ["todo-comments.nvim"] = {
     "folke/todo-comments.nvim",
-    commit = "9983edc5ef38c7a035c17c85f60ee13dbd75dcc8",
+    commit = "98b1ebf198836bdc226c0562b9f906584e6c400e",
     event = "ColorScheme",
   },
 }

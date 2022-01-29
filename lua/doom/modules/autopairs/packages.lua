@@ -1,7 +1,7 @@
 return {
   ["nvim-autopairs"] = {
     "windwp/nvim-autopairs",
-    commit = "e6b1870cd2e319f467f99188f99b1c3efc5824d2",
+    commit = "97e454ce9b1371373105716d196c1017394bc947",
     event = "BufReadPost",
   },
 }

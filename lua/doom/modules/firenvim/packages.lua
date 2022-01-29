@@ -1,7 +1,7 @@
 return {
   ["firenvim"] = {
     "glacambre/firenvim",
-    commit = "7320a805f51b4cf03de4e3b30088838d3f84adda",
+    commit = "1f9159710d98bbe1e3ef2ce60a4886e2e0ec11c9",
     run = function()
       vim.fn["firenvim#install"](0)
     end,

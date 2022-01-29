@@ -3,7 +3,7 @@ local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 return {
   ["DAPInstall.nvim"] = {
     "Pocco81/DAPInstall.nvim",
-    commit = "dd09e9dd3a6e29f02ac171515b8a089fb82bb425",
+    commit = "24923c3819a450a772bb8f675926d530e829665f",
     -- after = "nvim-dap",
     cmd = {
       "DIInstall",
@@ -16,7 +16,7 @@ return {
   },
   ["nvim-lsp-installer"] = {
     "williamboman/nvim-lsp-installer",
-    commit = "7a4f43beaf579f48b190e4a0784d4b3317157495",
+    commit = "8649d9ce34e796da27fcb7bb84249375e69d34d5",
     opt = true,
     disabled = is_plugin_disabled("lsp"),
     module = "nvim-lsp-install",

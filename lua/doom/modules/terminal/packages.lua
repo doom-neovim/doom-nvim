@@ -1,7 +1,7 @@
 return {
   ["toggleterm.nvim"] = {
     "akinsho/toggleterm.nvim",
-    commit = "265bbff68fbb8b2a5fb011272ec469850254ec9f",
+    commit = "d2ceb2ca3268d09db3033b133c0ee4642e07f059",
     cmd = { "ToggleTerm", "TermExec" },
     opt = true,
   },

@@ -1,7 +1,7 @@
 return {
   ["trouble.nvim"] = {
     "folke/trouble.nvim",
-    commit = "756f09de113a775ab16ba6d26c090616b40a999d",
+    commit = "20469be985143d024c460d95326ebeff9971d714",
     cmd = { "Trouble", "TroubleClose", "TroubleRefresh", "TroubleToggle" },
     opt = true,
   },

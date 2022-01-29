@@ -1,7 +1,7 @@
 return {
   ["nvim-tree.lua"] = {
     "kyazdani42/nvim-tree.lua",
-    commit = "5d8453dfbd34ab00cb3e8ce39660f9a54cdd35f3",
+    commit = "2dfed89af7724f9e71d2fdbe3cde791a93e9b9e0",
     cmd = {
       "NvimTreeClipboard",
       "NvimTreeClose",

@@ -1,7 +1,7 @@
 return {
   ["symbols-outline.nvim"] = {
     "simrat39/symbols-outline.nvim",
-    commit = "552b67993ed959993279e0b0f8a1da9f3c5e6fc0",
+    commit = "034792838579c4b1515c8a5037aba58ecd1d9b35",
     cmd = {
       "SymbolsOutline",
       "SymbolsOutlineOpen",

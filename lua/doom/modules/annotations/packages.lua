@@ -1,7 +1,7 @@
 return {
   ["neogen"] = {
     "danymat/neogen",
-    commit = "966d09146857af9ba23a4633dce0e83ad51f2b23",
+    commit = "a03cbd18f4375f749e69ca98dfb8f6e7deae2e90",
     after = "nvim-treesitter",
   },
 }

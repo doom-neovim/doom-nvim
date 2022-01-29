@@ -1,7 +1,7 @@
 return {
   ["gitsigns.nvim"] = {
     "lewis6991/gitsigns.nvim",
-    commit = "95845ef39ce0a98f68cdfdcf7dd586c5e965acc7",
+    commit = "4a2d30f5fb77750c7a42be9bb58a9cc2c6c7f31d",
     event = "BufReadPre",
   },
 }

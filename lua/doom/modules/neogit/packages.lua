@@ -1,7 +1,7 @@
 return {
   ["neogit"] = {
     "TimUntersberger/neogit",
-    commit = "ab772d21b108127ad6c703f7457c279f5817f379",
+    commit = "c8a320359cea86834f62225849a75632258a7503",
     cmd = "Neogit",
     opt = true,
   },

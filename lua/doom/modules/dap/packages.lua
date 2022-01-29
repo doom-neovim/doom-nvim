@@ -1,12 +1,12 @@
 return {
   ["nvim-dap"] = {
     "mfussenegger/nvim-dap",
-    commit = "4e8bb7ca12dc8ca6f7a500cbb4ecea185665c7f1",
+    commit = "c9a58267524f560112ecb6faa36ab2b5bc2f78a3",
     module = "dap",
   },
   ["nvim-dap-ui"] = {
     "rcarriga/nvim-dap-ui",
-    commit = "649e0fee4f0b8dc6305dd29065c7623c3dc6a032",
+    commit = "ae3b003af6c6646832dfe704a1137fd9110ab064",
     after = { "nvim-dap", "nest.nvim" },
   },
 }

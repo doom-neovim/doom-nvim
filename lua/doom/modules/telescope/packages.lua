@@ -1,7 +1,7 @@
 return {
   ["telescope.nvim"] = {
     "nvim-telescope/telescope.nvim",
-    commit = "1c57cc6140644695f0d9bd71b63de45feeca6ae7",
+    commit = "3a3c9a3c8ba3fb14121ef5c50a87173dcb969416",
     cmd = "Telescope",
     opt = true,
   },

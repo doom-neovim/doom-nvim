@@ -1,7 +1,7 @@
 return {
   ["bufferline.nvim"] = {
     "akinsho/bufferline.nvim",
-    commit = "463637a3ac86dcaacbcd47aa608f53aaad749696",
+    commit = "7451dfc97d28e6783dbeb1cdcff12619a9323c98",
     event = "BufAdd",
   },
 }

@@ -1,6 +1,6 @@
 return {
   ["vim-illuminate"] = {
     "RRethy/vim-illuminate",
-    commit = "2beae0581caa66cf8c09fad7c7c557f92d49d2bd",
+    commit = "db98338285574265a6ce54370b54d9f939e091bb",
   },
 }

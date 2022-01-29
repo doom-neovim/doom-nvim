@@ -1,6 +1,6 @@
 return {
   ["galaxyline.nvim"] = {
     "NTBBloodbath/galaxyline.nvim",
-    commit = "7b812cfddfcac7d9031e2f8e03f2b71fe8b2558d",
+    commit = "4d4f5fc8e20a10824117e5beea7ec6e445466a8f",
   },
 }
