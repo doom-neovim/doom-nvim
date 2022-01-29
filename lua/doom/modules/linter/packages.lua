@@ -1,7 +1,7 @@
 return {
-  ["nvim-lint"] = {
-    "mfussenegger/nvim-lint",
-    commit = "e83f80295737e8f470329d768f6ae325bcd0bb23",
-    module = "lint",
+  ["null-ls.nvim"] = {
+    "jose-elias-alvarez/null-ls.nvim",
+    commit = "2ae4a5e2e2b35716c44c104ef1afa35ecb40c444",
+    after = 'nvim-lspconfig',
   },
 }

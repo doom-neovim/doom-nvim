@@ -33,7 +33,13 @@ else
   lspconfig.sumneko_lua.setup(config)
 end
 
-
 vim.defer_fn(function()
-  require("nvim-treesitter.install").ensure_installed('css')
+  require("nvim-treesitter.install").ensure_installed("css")
 end, 0)
+
+-- Setup null-ls
+if doom.linter then
+  local null_ls = require("null-ls")
+  null_ls.register({ null_ls.builtins.formatting.stylelint })
+  null_ls.register({ null_ls.builtins.diagnostics.stylelint })
+end

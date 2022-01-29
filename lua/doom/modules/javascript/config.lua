@@ -33,7 +33,14 @@ else
   lspconfig.sumneko_lua.setup(config)
 end
 
-
 vim.defer_fn(function()
   require("nvim-treesitter.install").update()("javascript")
 end, 0)
+
+-- Setup null-ls
+if doom.linter then
+  local null_ls = require("null-ls")
+  null_ls.register({ null_ls.builtins.formatting.eslint_d })
+  null_ls.register({ null_ls.builtins.code_actions.eslint_d })
+  null_ls.register({ null_ls.builtins.diagnostics.eslint_d })
+end

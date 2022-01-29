@@ -50,3 +50,11 @@ end
 vim.defer_fn(function()
   require("nvim-treesitter.install").ensure_installed("lua")
 end, 0)
+
+-- Setup null-ls
+if doom.linter then
+  print('registering stylua ')
+  local null_ls = require('null-ls')
+  null_ls.register( null_ls.builtins.formatting.stylua )
+end
+

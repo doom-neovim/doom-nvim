@@ -2,26 +2,32 @@ local utils = require("doom.utils")
 local is_plugin_disabled = utils.is_plugin_disabled
 local lspconfig = require("lspconfig")
 local lspconfig_configs = require("lspconfig.configs")
-local lspconfig_util = require 'lspconfig/util'
-
+local lspconfig_util = require("lspconfig/util")
 
 -- volar needs works with typescript server, needs to get the typescript server from the project's node_modules
 local function on_new_config(new_config, new_root_dir)
   local function get_typescript_server_path(root_dir)
     local project_root = lspconfig_util.find_node_modules_ancestor(root_dir)
-    return project_root and (lspconfig_util.path.join(project_root, 'node_modules', 'typescript', 'lib', 'tsserverlibrary.js'))
-      or ''
+    return project_root
+        and (lspconfig_util.path.join(
+          project_root,
+          "node_modules",
+          "typescript",
+          "lib",
+          "tsserverlibrary.js"
+        ))
+      or ""
   end
 
   if
     new_config.init_options
     and new_config.init_options.typescript
-    and new_config.init_options.typescript.serverPath == ''
+    and new_config.init_options.typescript.serverPath == ""
   then
     new_config.init_options.typescript.serverPath = get_typescript_server_path(new_root_dir)
   end
 end
-local volar_root_dir = lspconfig_util.root_pattern 'package.json'
+local volar_root_dir = lspconfig_util.root_pattern("package.json")
 
 -- Runtime config with extra capabilities
 local config = {
@@ -46,15 +52,15 @@ local base_config = {
     on_new_config = on_new_config,
     init_options = {
       typescript = {
-        serverPath = ''
-      }
-    }
-  }
+        serverPath = "",
+      },
+    },
+  },
 }
 
-lspconfig_configs.volar_api = vim.tbl_deep_extend('keep', base_config, doom.vue.volar_api)
-lspconfig_configs.volar_doc = vim.tbl_deep_extend('keep', base_config, doom.vue.volar_doc)
-lspconfig_configs.volar_html = vim.tbl_deep_extend('keep', base_config, doom.vue.volar_html)
+lspconfig_configs.volar_api = vim.tbl_deep_extend("keep", base_config, doom.vue.volar_api)
+lspconfig_configs.volar_doc = vim.tbl_deep_extend("keep", base_config, doom.vue.volar_doc)
+lspconfig_configs.volar_html = vim.tbl_deep_extend("keep", base_config, doom.vue.volar_html)
 
 --
 local start_lsp = function()
@@ -64,14 +70,14 @@ local start_lsp = function()
 end
 
 local attach_buffers = function()
-  local servers = { 'volar_api', 'volar_doc', 'volar_html' }
+  local servers = { "volar_api", "volar_doc", "volar_html" }
   for _, server_name in ipairs(servers) do
-  local lsp_server = require("lspconfig")[server_name]
+    local lsp_server = require("lspconfig")[server_name]
     for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
       if lsp_server.filetypes then
-          lsp_server.manager.try_add_wrapper(bufnr)
+        lsp_server.manager.try_add_wrapper(bufnr)
       else
-          lsp_server.manager.try_add(bufnr)
+        lsp_server.manager.try_add(bufnr)
       end
     end
   end
@@ -89,8 +95,8 @@ if not is_plugin_disabled("auto_install") then
     end
 
     server:on_ready(function()
-      start_lsp();
-      attach_buffers();
+      start_lsp()
+      attach_buffers()
     end)
   end
 else
@@ -98,6 +104,14 @@ else
 end
 
 vim.defer_fn(function()
-  local ts_install = require('nvim-treesitter.install')
-  ts_install.ensure_installed('vue', 'css', 'html', 'scss')
+  local ts_install = require("nvim-treesitter.install")
+  ts_install.ensure_installed("vue", "css", "html", "scss")
 end, 0)
+
+-- Setup null-ls
+if doom.linter then
+  local null_ls = require("null-ls")
+  null_ls.register({ null_ls.builtins.formatting.eslint_d })
+  null_ls.register({ null_ls.builtins.code_actions.eslint_d })
+  null_ls.register({ null_ls.builtins.diagnostics.eslint_d })
+end
