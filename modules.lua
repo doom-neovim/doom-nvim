@@ -22,7 +22,7 @@ return {
   "indentlines",
   "comment",
   -- "lazygit",
-  "linter",
+  -- "linter",
   "lsp",
   -- "minimap",
   -- "neogit",
