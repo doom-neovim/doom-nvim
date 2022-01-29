@@ -18,12 +18,23 @@ latest_commit=''
 find ../lua/doom/modules -name 'packages.lua' |
   while read -r file_path; do
     # Update commit shas
+    echo ""
+    echo "----------------------------------------------- Updating module $file_path..."
+    # grep -n "^(\s+)\[\".*\"\]\s?=\s?\{" -A 2 -E "$file_path"
+    id=0
     while read -r line; do
+      # If index reaches three, we assume it's the next entry
+      if [[ $index -eq 3 ]]; then
+        sleep 1
+        index=0
+        repo=''
+        latest_commit=''
+      fi
+
       if [[ $index -eq 1 ]]; then
         # Get the repository name as `<username>/reponame`
         if [[ $line =~ $repo_regex ]]; then # Regex $line against $repo_regex
           repo="${BASH_REMATCH[1]}" # Get first capture group
-          echo ""
           echo "Updating $repo:"
 
           # Sometimes the github api requests will fail, in which case we need to re-try after a delay.
@@ -46,7 +57,7 @@ find ../lua/doom/modules -name 'packages.lua' |
             is_array=`echo $api_result | jq -r 'if type=="array" then "yes" else "no" end'`
             if [ "$is_array" = "no" ]; then
               echo "- Github API Error: $( echo "$api_result" | jq -r .message )"
-              echo "- Waiting 30 seconds before trying again..."
+              echo "- Waiting 30 seconds before trying again... for $repo"
               sleep 30
             else
               latest_commit=`echo $api_result | jq -r .[0].sha`
@@ -62,25 +73,26 @@ find ../lua/doom/modules -name 'packages.lua' |
       if [[ $index -eq 2 ]]; then
         if [ ! -z "$repo" ] && [ ! -z "$latest_commit" ] && [[ $line =~ $pin_commit_regex ]]; then
           line_number=`echo $line | awk -F "-" '{print $1}'`
-          sed -r -i -bak "${line_number}s/commit = \"[A-z0-9]*\"/commit = \"${latest_commit}\"/" "$file_path"
+          sed -r -i ".bak" "${line_number}s/commit = \"[A-z0-9]*\"/commit = \"${latest_commit}\"/" "$file_path"
           echo " - Updated to $latest_commit"
         else
-          echo " - ERROR: Did not update $repo because \`commit = pin_commit('...')\` was not immediately after the repo name or there is custom logic for determining the pinned commit.  Please update this entry manually."
+          echo " - ERROR: Did not update $repo because \`commit = "...""\` was not immediately after the repo name or there is custom logic for determining the pinned commit.  Please update this entry manually."
         fi
       fi
 
       let index+=1
+      # Grep uses -- to seperate nearby matches
       if [[ $line == '--' ]]; then
-        sleep 2
+        sleep 1
         index=0
         repo=''
         latest_commit=''
       fi
-    done < <(grep -n "  \[\".*\"\]" -A 2 -E "$file_path")
+    done < <(grep -n "^(\s+)\[\".*\"\]\s?=\s?\{" -A 2 -E "$file_path")
   done
 
 
 # Delete backup files
-find ../lua/doom/modules "packages.lua-bak" -type f -delete
+find ../lua/doom/modules -name "*.bak" -type f -delete
 
 
