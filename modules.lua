@@ -33,6 +33,7 @@ return {
   -- "show_registers",
   "snippets",
   "statusline",
+  "projects",
   -- "suda",
   -- "superman",
   -- "symbols",
