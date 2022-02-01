@@ -37,8 +37,7 @@ vim.defer_fn(function()
   --       number / signcolumn when Dashboard gets triggered automatically
   if
     (packer_plugins and packer_plugins["dashboard-nvim"])
-    and (vim.api.nvim_buf_get_number(0) > 1
-    or vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]:len() == 0)
+    and (vim.api.nvim_buf_get_number(0) > 1 or vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]:len() == 0)
     and vim.api.nvim_buf_get_name(0):len() == 0 -- Empty buffer name
   then
     vim.cmd("Dashboard")
