@@ -53,6 +53,7 @@ return {
   "typescript",
   "css",
   "vue",
+  "tailwindcss",
   "rust",
 }
 
