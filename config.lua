@@ -9,6 +9,11 @@
 doom.indent = 2
 doom.escape_sequences = {}
 -- vim.lsp.set_log_level('trace')
+vim.diagnostic.config({
+  float = {
+    source = 'always',
+  },
+})
 
 -- Colourscheme
 table.insert(doom.packages, {
@@ -23,5 +28,9 @@ table.insert(doom.packages, {
 table.insert(doom.packages, {
   'nvim-treesitter/playground'
 })
+table.insert(doom.packages, {
+  'tpope/vim-surround'
+})
+
 
 -- vim: sw=2 sts=2 ts=2 expandtab
