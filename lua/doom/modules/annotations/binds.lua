@@ -1,13 +1,19 @@
 local binds = {
-  {
     "<leader>",
+  {
     name = "+prefix",
     {
       {
         "c",
         name = "+code",
         {
-          { "g", require("neogen").generate, name = "Generate annotations" },
+          {
+            "g",
+            function()
+              require("neogen").generate()
+            end,
+            name = "Generate annotations"
+          },
         },
       },
     },
