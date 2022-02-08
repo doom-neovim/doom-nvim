@@ -53,8 +53,10 @@ end, 0)
 
 -- Setup null-ls
 if doom.linter then
-  print('registering stylua ')
-  local null_ls = require('null-ls')
-  null_ls.register( null_ls.builtins.formatting.stylua )
-end
+  local langs_utils = require('doom.modules.langs_utils')
+  local null_ls = require("null-ls")
 
+  langs_utils.use_null_ls_source({
+    null_ls.builtins.formatting.stylua,
+  })
+end

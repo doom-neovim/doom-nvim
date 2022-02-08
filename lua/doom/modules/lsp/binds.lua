@@ -62,7 +62,7 @@ if not is_plugin_disabled("whichkey") then
               {
                 "L",
                 function()
-                  vim.lsp.diagnostic.show_line_diagnostics({
+                  vim.diagnostic.open_float(0, {
                     focusable = false,
                     border = doom.border_style,
                   })

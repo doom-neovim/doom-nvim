@@ -6,7 +6,7 @@ if doom.lsp.hint_enable then
   end
   if vim.fn.has("nvim-0.6.0") ~= 1 then
     show_diagnostics_function = function()
-      vim.lsp.diagnostic.show_line_diagnostics({ focusable = false, border = doom.border_style })
+      vim.lsp.diagnostic.open_float(0, { focusable = false, border = doom.border_style })
     end
   end
   table.insert(autocmds, {
