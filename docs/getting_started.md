@@ -350,7 +350,7 @@ a previous release (for main branch) or a previous commit (for development branc
 
 You can configure Doom Nvim by tweaking the `doom_config.lua`,
 `doom_modules.lua` and the `doom_userplugins.lua` files located in your
-Doom Nvim root directory (`$HOME/.config/doom-nvim/` by default).
+Doom Nvim root directory (`$HOME/.config/nvim/` by default).
 
 ### doom_modules.lua
 
