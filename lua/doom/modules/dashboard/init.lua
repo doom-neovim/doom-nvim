@@ -54,8 +54,18 @@ dashboard.defaults = {
   },
 }
 
-dashboard.packer_config = {}
-dashboard.packer_config["dashboard-nvim"] = function()
+dashboard.packages = {
+  ["dashboard-nvim"] = {
+    "glepnir/dashboard-nvim",
+    commit = "ba98ab86487b8eda3b0934b5423759944b5f7ebd",
+    cmd = "Dashboard",
+    opt = true,
+  },
+}
+
+
+dashboard.configure_functions = {}
+dashboard.configure_functions["dashboard-nvim"] = function()
   local utils = require("doom.utils")
   local is_plugin_disabled = utils.is_plugin_disabled
 
@@ -87,5 +97,29 @@ dashboard.packer_config["dashboard-nvim"] = function()
   vim.cmd("hi! dashboardShortcut guifg=" .. doom.dashboard.colors.shortcut)
   vim.cmd("hi! dashboardFooter   guifg=" .. doom.dashboard.colors.footer)
 end
+
+dashboard.binds = {
+  "<leader>",
+  name = "+prefix",
+  {
+    {
+      "o",
+      name = "+open/close",
+      {
+        { "D", "<cmd>Dashboard<CR>", name = "Dashboard" },
+      },
+    },
+  },
+}
+
+dashboard.autocommands = {
+  {
+    "FileType",
+    "dashboard",
+    function()
+      require("nest").applyKeymaps({ "q", "<cmd>q<CR>", buffer = true })
+    end,
+  },
+}
 
 return dashboard

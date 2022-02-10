@@ -8,8 +8,16 @@ indentlines.defaults = {
   buftype_exclude = { "terminal" },
 }
 
-indentlines.packer_config = {}
-indentlines.packer_config["indent-blankline.nvim"] = function()
+indentlines.packages = {
+  ["indent-blankline.nvim"] = {
+    "lukas-reineke/indent-blankline.nvim",
+    commit = "2e35f7dcdc72f39b37c21e43cdb538d7a41c7e07",
+    event = "ColorScheme",
+  },
+}
+
+indentlines.configure_functions = {}
+indentlines.configure_functions["indent-blankline.nvim"] = function()
   require("indent_blankline").setup(vim.tbl_deep_extend("force", doom.indentlines, {
     -- To remove indent lines, remove the module. Having the module and
     -- disabling it makes no sense.

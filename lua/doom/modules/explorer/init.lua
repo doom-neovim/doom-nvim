@@ -74,8 +74,24 @@ explorer.defaults = {
   },
 }
 
-explorer.packer_config = {}
-explorer.packer_config["nvim-tree.lua"] = function()
+explorer.packages = {
+  ["nvim-tree.lua"] = {
+    "kyazdani42/nvim-tree.lua",
+    commit = "2dfed89af7724f9e71d2fdbe3cde791a93e9b9e0",
+    cmd = {
+      "NvimTreeClipboard",
+      "NvimTreeClose",
+      "NvimTreeFindFile",
+      "NvimTreeOpen",
+      "NvimTreeRefresh",
+      "NvimTreeToggle",
+    },
+  },
+}
+
+
+explorer.configure_functions = {}
+explorer.configure_functions["nvim-tree.lua"] = function()
   local utils = require("doom.utils")
   local is_plugin_disabled = utils.is_plugin_disabled
 
@@ -178,5 +194,22 @@ explorer.packer_config["nvim-tree.lua"] = function()
     },
   }, doom.explorer, override_table))
 end
+
+explorer.binds = {
+  { "<F3>", ":NvimTreeToggle<CR>", name = "Toggle file explorer" },
+  {
+    "<leader>",
+    name = "+prefix",
+    {
+      {
+        "o",
+        name = "+open/close",
+        {
+          { "e", "<cmd>NvimTreeToggle<CR>", name = "Explorer" },
+        },
+      },
+    },
+  }
+}
 
 return explorer

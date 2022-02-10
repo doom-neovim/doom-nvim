@@ -139,9 +139,59 @@ tabline.defaults = {
   },
 }
 
-tabline.packer_config = {}
-tabline.packer_config["bufferline.nvim"] = function()
+tabline.packages = {
+  ["bufferline.nvim"] = {
+    "akinsho/bufferline.nvim",
+    commit = "7451dfc97d28e6783dbeb1cdcff12619a9323c98",
+    event = "BufAdd",
+  },
+}
+
+
+tabline.configure_functions = {}
+tabline.configure_functions["bufferline.nvim"] = function()
   require("bufferline").setup(doom.tabline)
 end
+
+tabline.binds = {
+  "<leader>",
+  name = "+prefix",
+  {
+    {
+      "b",
+      name = "+buffer",
+      {
+        {
+          "n",
+          function()
+            require("bufferline").cycle(1)
+          end,
+          name = "Jump to next",
+        },
+        {
+          "]",
+          function()
+            require("bufferline").cycle(1)
+          end,
+          name = "Jump to next",
+        },
+        {
+          "p",
+          function()
+            require("bufferline").cycle(-1)
+          end,
+          name = "Jump to prev",
+        },
+        {
+          "[",
+          function()
+            require("bufferline").cycle(-1)
+          end,
+          name = "Jump to prev",
+        },
+      },
+    },
+  },
+}
 
 return tabline

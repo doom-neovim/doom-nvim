@@ -29,8 +29,29 @@ neorg.defaults = {
   },
 }
 
-neorg.packer_config = {}
-neorg.packer_config["neorg"] = function()
+neorg.packages = {
+  "<leader>",
+  name = "+prefix",
+  {
+    {
+      "o",
+      name = "+open/close",
+      {
+        { "g", "<cmd>Neogit<CR>", name = "Neogit" },
+      },
+    },
+    {
+      "g",
+      name = "+git",
+      {
+        { "g", "<cmd>Neogit<CR>", name = "Open neogit" },
+      },
+    },
+  },
+}
+
+neorg.configure_functions = {}
+neorg.configure_functions["neorg"] = function()
   require("neorg").setup(doom.neorg)
 end
 

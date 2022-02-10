@@ -16,9 +16,41 @@ symbols.defaults = {
   width = 25,
 }
 
-symbols.packer_config = {}
-symbols.packer_config["symbols_outline.nvim"] = function()
+symbols.packages = {
+  ["symbols-outline.nvim"] = {
+    "simrat39/symbols-outline.nvim",
+    commit = "034792838579c4b1515c8a5037aba58ecd1d9b35",
+    cmd = {
+      "SymbolsOutline",
+      "SymbolsOutlineOpen",
+      "SymbolsOutlineClose",
+    },
+    opt = true,
+  },
+}
+
+
+
+symbols.configure_functions = {}
+symbols.configure_functions["symbols_outline.nvim"] = function()
   vim.g.symbols_outline = doom.symbols
 end
+
+symbols.binds = {
+  { "<F2>", ":SymbolsOutline<CR>", name = "Toggle symbols outline" },
+  {
+    "<leader>",
+    name = "+prefix",
+    {
+      {
+        "o",
+        name = "+open/close",
+        {
+          { "c", "<cmd>SymbolsOutline<CR>", name = "Symbol outline" },
+        },
+      },
+    },
+  }
+}
 
 return symbols

@@ -22,8 +22,19 @@ firenvim.defaults = {
   },
 }
 
-firenvim.packer_config = {}
-firenvim.packer_config["firenvim"] = function()
+firenvim.packages = {
+  ["firenvim"] = {
+    "glacambre/firenvim",
+    commit = "1f9159710d98bbe1e3ef2ce60a4886e2e0ec11c9",
+    run = function()
+      vim.fn["firenvim#install"](0)
+    end,
+    opt = true,
+  },
+}
+
+firenvim.configure_functions = {}
+firenvim.configure_functions["firenvim"] = function()
   vim.g.firenvim_config = doom.firenvim
 
   for _, command in ipairs(doom.firenvim.autocmds) do

@@ -1,34 +1,45 @@
-local lua = {}
+local rust = {}
 
-lua.defaults = {
-  settings = {
-    Lua = {
-      runtime = {
-        version = "LuaJIT",
-      },
-      diagnostics = {
-        globals = { "vim", "doom" },
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-  dev = {
-    library = {
-      vimruntime = true,
-      types = true,
-      plugins = true,
-    },
+rust.defaults = {
+}
+
+rust.autocommands = {
+  {
+    "FileType",
+    "rust",
+    function()
+      local utils = require("doom.utils")
+      local langs_utils = require('doom.modules.langs_utils')
+      local is_plugin_disabled = utils.is_plugin_disabled
+      
+      local config = vim.tbl_deep_extend("force", {
+        capabilities = utils.get_capabilities(),
+        on_attach = function(client)
+          if not is_plugin_disabled("illuminate") then
+            utils.illuminate_attach(client)
+          end
+        end,
+      })
+      
+      langs_utils.use_lsp('rust_analyzer', {
+        config = config,
+      })
+      
+      vim.defer_fn(function()
+        require("nvim-treesitter.install").ensure_installed("rust")
+      end, 0)
+      
+      -- Setup null-ls
+      if doom.linter then
+        local null_ls = require("null-ls")
+      
+        langs_utils.use_null_ls_source({
+          null_ls.builtins.formatting.rustfmt
+        })
+      end
+    end,
+    once = true,
   },
 }
 
-lua.packer_config = {}
-lua.packer_config["lua-dev.nvim"] = function()
-  require("lua-dev").setup(doom.lua.dev)
-end
-
-return lua
+return rust

@@ -198,54 +198,17 @@ config.load = function()
     vim.opt.foldenable = true
     vim.opt.foldtext = require("doom.core.functions").sugar_folds()
     doom = config.defaults
-    doom.packages = {}
-    doom.autocmds = {}
-    doom.binds = {}
-    for _, module in ipairs(enabled_modules) do
-      local init = require(("doom.modules.%s"):format(module))
-      doom[module] = init.defaults
-      doom.packages = vim.tbl_extend(
-        "force",
-        doom.packages,
-        require(("doom.modules.%s.packages"):format(module))
-      )
-      doom.autocmds[module] = {}
+    doom.packages = {} -- Extra packages
+    doom.autocmds = {} -- Extra autocommands
+    doom.binds = {} -- Extra binds
+    doom.modules = {} -- Modules 
+    for _, module_name in ipairs(enabled_modules) do
+      local module = require(("doom.modules.%s"):format(module_name))
+      doom.modules[module_name] = module
     end
   end
 
   dofile(config.source)
-
-  for module, _ in pairs(doom.autocmds) do
-    local ok, cmds = xpcall(require, debug.traceback, ("doom.modules.%s.autocmds"):format(module))
-
-    if ok then
-      for _, cmd in ipairs(cmds) do
-        table.insert(doom.autocmds[module], cmd)
-      end
-    end
-  end
-  local module_binds = {}
-  for _, module in ipairs(enabled_modules) do
-    local ok, binds = xpcall(require, debug.traceback, ("doom.modules.%s.binds"):format(module))
-
-    if ok and not vim.tbl_isempty(binds) then
-      table.insert(module_binds, binds)
-    end
-  end
-  if not vim.tbl_isempty(module_binds) then
-    if not vim.tbl_isempty(doom.binds) then
-      doom.binds = { module_binds, doom.binds }
-    else
-      doom.binds = module_binds
-    end
-  end
-
-  -- If we shouldn't freeze, remove commit SHAs.
-  if not doom.freeze_dependencies then
-    for _, spec in pairs(doom.packages) do
-      spec.commit = nil
-    end
-  end
 
   -- Check plugins updates on start if enabled.
   if doom.check_updates then

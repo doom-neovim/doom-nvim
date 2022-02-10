@@ -22,9 +22,32 @@ terminal.defaults = {
   },
 }
 
-terminal.packer_config = {}
-terminal.packer_config["toggleterm.nvim"] = function()
+terminal.packages {
+  ["toggleterm.nvim"] = {
+    "akinsho/toggleterm.nvim",
+    commit = "d2ceb2ca3268d09db3033b133c0ee4642e07f059",
+    cmd = { "ToggleTerm", "TermExec" },
+    opt = true,
+  },
+}
+
+terminal.configure_functions = {}
+terminal.configure_functions["toggleterm.nvim"] = function()
   require("toggleterm").setup(doom.terminal)
 end
+
+terminal.binds = {
+  "<leader>",
+  name = "+prefix",
+  {
+    {
+      "o",
+      name = "+open/close",
+      {
+        { "t", "<cmd>ToggleTerm<CR>", name = "Terminal" },
+      },
+    },
+  },
+}
 
 return terminal

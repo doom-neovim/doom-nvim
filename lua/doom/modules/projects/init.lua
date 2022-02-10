@@ -34,11 +34,24 @@ projects.defaults ={
   -- telescope
   datapath = vim.fn.stdpath("data"),
 }
-projects.packer_config = {}
-projects.packer_config["project.nvim"] = function()
+
+projects.packages = {
+  ["project.nvim"] = {
+    "ahmedkhalf/project.nvim",
+    commit = "cef52b8da07648b750d7f1e8fb93f12cb9482988",
+    requires = { "nvim-treesitter/nvim-treesitter" },
+  },
+}
+
+projects.configure_functions = {}
+projects.configure_functions["project.nvim"] = function()
   require("project_nvim").setup(doom.projects)
 
   table.insert(doom.telescope.extensions, 'projects')
 end
+
+projects.binds = {
+  { '<leader>fp', '<cmd>Telescope projects<CR>', name = 'Switch project' }
+}
 
 return projects

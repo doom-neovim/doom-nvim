@@ -49,36 +49,29 @@ packer.init({
 
 packer.reset()
 
--- Flatten the multiple packer config tables into one to rule them all.
-local packer_config = {}
-for _, module in ipairs(enabled_modules) do
-  local new_configs = require(("doom.modules.%s"):format(module)).packer_config
-  for name, value in pairs(new_configs) do
-    packer_config[name] = value
+-- Handle the Modules
+for module_name, module in pairs(doom.modules) do
+  -- Import dependencies with packer from module.packages
+  if module.packages then
+    for dependency_name, packer_spec in pairs(module.packages) do
+      -- Set packer_spec to configure function
+      packer_spec.config = module.configure_functions[dependency_name] 
+        and module.configure_functions[dependency_name] or function() end
+      
+      -- Set/unset frozen packer dependencies
+      packer_spec.commit = doom.freeze_dependencies and packer_spec.commit or nil
+
+      -- Initialise packer
+      packer.use(packer_spec)
+    end
   end
-end
--- Iterate packages. These can be added by modules or by the user in
--- `config.lua`. See `load()` in doom/core/config/init.lua
-for name, spec in pairs(doom.packages) do
-  -- Set empty defaults in case the functions don't exist.
-  if type(packer_config[name]) ~= "function" then
-    packer_config[name] = function() end
+  -- Setup package autogroups
+  if module.autogroups then
+    utils.make_augroup(module_name, module.autogroups)
   end
-  if type(spec.config) ~= "function" then
-    spec.config = function() end
-  end
-  packer.use(vim.tbl_deep_extend("force", spec, {
-    -- First, run the module config (sometimes an empty function, see
-    -- above), then the hook passed by the user. This cannot be done with
-    -- a function that calls both sequentially, see packer's README on
-    -- captures and `string.dump`.
-    config = { packer_config[name], spec.config },
-  }))
 end
 
--- Register autocmds, which, like packages, can come from modules or the
--- user.
-for module, cmds in pairs(doom.autocmds) do
-  local augroup_name = ("doom_%s"):format(module)
-  utils.make_augroup(augroup_name, cmds)
+-- Handle extra user modules
+for _, packer_spec in ipairs(doom.packages) do
+  packer.use(packer_spec)
 end

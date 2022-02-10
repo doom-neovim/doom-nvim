@@ -119,8 +119,61 @@ lsp.defaults = {
   },
 }
 
-lsp.packer_config = {}
-lsp.packer_config["nvim-lspconfig"] = function()
+local is_plugin_disabled = require("doom.utils").is_plugin_disabled
+lsp.packages = {
+  ["nvim-lspconfig"] = {
+    "neovim/nvim-lspconfig",
+    commit = "e7df7ecae0b0d2f997ea65e951ddbe98ca3e154b",
+    opt = true,
+    cmd = {
+      "LspStart",
+      "LspRestart",
+      "LspStop",
+    },
+    module = "lspconfig",
+  },
+  ["nvim-cmp"] = {
+    "hrsh7th/nvim-cmp",
+    commit = "d93104244c3834fbd8f3dd01da9729920e0b5fe7",
+    after = is_plugin_disabled("snippets") or "LuaSnip",
+  },
+  ["cmp-nvim-lua"] = {
+    "hrsh7th/cmp-nvim-lua",
+    commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21",
+    after = "nvim-cmp",
+  },
+  ["cmp-nvim-lsp"] = {
+    "hrsh7th/cmp-nvim-lsp",
+    commit = "ebdfc204afb87f15ce3d3d3f5df0b8181443b5ba",
+    after = "nvim-cmp",
+  },
+  ["cmp-path"] = {
+    "hrsh7th/cmp-path",
+    commit = "c5230cb439df9547294678d0f1c1465ad7989e5f",
+    after = "nvim-cmp",
+  },
+  ["cmp-buffer"] = {
+    "hrsh7th/cmp-buffer",
+    commit = "f83773e2f433a923997c5faad7ea689ec24d1785",
+    after = "nvim-cmp",
+  },
+  ["cmp_luasnip"] = {
+    "saadparwaiz1/cmp_luasnip",
+    commit = "d6f837f4e8fe48eeae288e638691b91b97d1737f",
+    after = "nvim-cmp",
+    disabled = is_plugin_disabled("snippets"),
+  },
+  ["lsp_signature.nvim"] = {
+    "ray-x/lsp_signature.nvim",
+    commit = "1178ad69ce5c2a0ca19f4a80a4048a9e4f748e5f",
+    after = "nvim-lspconfig",
+    opt = true,
+  },
+}
+
+
+lsp.configure_functions = {}
+lsp.configure_functions["nvim-lspconfig"] = function()
   -- Lsp Symbols
   local signs, hl
   if vim.fn.has("nvim-0.6.0") == 1 then
@@ -183,7 +236,7 @@ lsp.packer_config["nvim-lspconfig"] = function()
     end
   end
 end
-lsp.packer_config["nvim-cmp"] = function()
+lsp.configure_functions["nvim-cmp"] = function()
   local cmp = require("cmp")
   local luasnip = require("luasnip")
   local replace_termcodes = require("doom.utils").replace_termcodes
@@ -268,7 +321,7 @@ lsp.packer_config["nvim-cmp"] = function()
     end,
   }))
 end
-lsp.packer_config["lsp_signature.nvim"] = function()
+lsp.configure_functions["lsp_signature.nvim"] = function()
   -- Signature help
   require("lsp_signature").setup(vim.tbl_deep_extend("force", doom.lsp.signature, {
     handler_opts = {
@@ -276,5 +329,86 @@ lsp.packer_config["lsp_signature.nvim"] = function()
     },
   }))
 end
+
+lsp.binds = {
+  { "K", vim.lsp.buf.hover, name = "Show hover doc" },
+  { "[d", vim.diagnostic.goto_prev, name = "Jump to prev diagnostic" },
+  { "]d", vim.diagnostic.goto_next, name = "Jump to next diagnostic" },
+  {
+    "g",
+    {
+      { "D", vim.lsp.buf.declaration, "Jump to declaration" },
+      { "d", vim.lsp.buf.definition, name = "Jump to definition" },
+      { "r", vim.lsp.buf.references, name = "Jump to references" },
+      { "i", vim.lsp.buf.implementation, name = "Jump to implementation" },
+      { "a", vim.lsp.buf.code_action, name = "Do code action" },
+    },
+  },
+  {
+    "<C-",
+    {
+      { "p>", vim.lsp.diagnostic.goto_prev, name = "Jump to prev diagnostic" },
+      { "n>", vim.lsp.diagnostic.goto_next, name = "Jump to next diagnostic" },
+      { "k>", vim.lsp.buf.signature_help, name = "Show signature help" },
+    },
+  },
+  {
+    "<leader>",
+    name = "+prefix",
+    {
+      {
+        "c",
+        name = "+code",
+        {
+          { "r", vim.lsp.buf.rename, name = "Rename" },
+          { "a", vim.lsp.buf.code_action, name = "Do action" },
+          { "t", vim.lsp.buf.type_definition, name = "Jump to type" },
+          { "D", vim.lsp.buf.declaration, "Jump to declaration" },
+          { "d", vim.lsp.buf.definition, name = "Jump to definition" },
+          { "R", vim.lsp.buf.references, name = "Jump to references" },
+          { "i", vim.lsp.buf.implementation, name = "Jump to implementation" },
+          {
+            "l",
+            name = "+lsp",
+            {
+              { "i", "<cmd>LspInfo<CR>", name = "Inform" },
+              { "r", "<cmd>LspRestart<CR>", name = "Restart" },
+              { "s", "<cmd>LspStart<CR>", name = "Start" },
+              { "d", "<cmd>LspStop<CR>", name = "Disconnect" },
+            },
+          },
+          {
+            "d",
+            name = "+diagnostics",
+            {
+              { "[", vim.diagnostic.goto_prev, name = "Jump to prev" },
+              { "]", vim.diagnostic.goto_next, name = "Jump to next" },
+              { "p", vim.diagnostic.goto_prev, name = "Jump to prev" },
+              { "n", vim.diagnostic.goto_next, name = "Jump to next" },
+              {
+                "L",
+                function()
+                  vim.diagnostic.open_float(0, {
+                    focusable = false,
+                    border = doom.border_style,
+                  })
+                end,
+                name = "Line",
+              },
+              { "l", vim.lsp.diagnostic.set_loclist, name = "Loclist" },
+            },
+          },
+        },
+      },
+      {
+        "t",
+        name = "+tweak",
+        {
+          { "c", function() require("doom.core.functions").toggle_completion() end, name = "Toggle completion" },
+        },
+      },
+    },
+  }
+}
 
 return lsp

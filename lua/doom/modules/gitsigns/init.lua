@@ -72,8 +72,8 @@ gitsigns.defaults = {
   },
 }
 
-gitsigns.packer_config = {}
-gitsigns.packer_config["gitsigns.nvim"] = function()
+gitsigns.configure_functions = {}
+gitsigns.configure_functions["gitsigns.nvim"] = function()
   require("gitsigns").setup(doom.gitsigns)
 end
 

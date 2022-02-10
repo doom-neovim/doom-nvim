@@ -14,8 +14,15 @@ statusline.defaults = {
   sections = {},
 }
 
-statusline.packer_config = {}
-statusline.packer_config["galaxyline.nvim"] = function()
+statusline.packages = {
+  ["galaxyline.nvim"] = {
+    "NTBBloodbath/galaxyline.nvim",
+    commit = "4d4f5fc8e20a10824117e5beea7ec6e445466a8f",
+  },
+}
+
+statusline.configure_functions = {}
+statusline.configure_functions["galaxyline.nvim"] = function()
   local utils = require("doom.utils")
   local is_plugin_disabled = utils.is_plugin_disabled
 

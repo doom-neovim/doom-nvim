@@ -2,6 +2,15 @@ local doom_themes = {}
 
 doom_themes.defaults = {}
 
-doom_themes.packer_config = {}
+doom_themes.configure_functions = {}
+
+doom_themes.packages = {
+  ["doom-themes.nvim"] = {
+    "GustavoPrietoP/doom-themes.nvim",
+    commit = "03d417d3eab71c320744f8da22251715ba6cee53",
+    event = "ColorScheme",
+    opt = true,
+  },
+}
 
 return doom_themes

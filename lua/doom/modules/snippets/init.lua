@@ -5,8 +5,17 @@ snippets.defaults = {
   updateevents = "TextChanged,TextChangedI",
 }
 
-snippets.packer_config = {}
-snippets.packer_config["LuaSnip"] = function()
+snippets.packages = {
+  ["LuaSnip"] = {
+    "L3MON4D3/LuaSnip",
+    commit = "35322c97b041542f95c85e87a8215892ea4137d5",
+    requires = { "rafamadriz/friendly-snippets", opt = true },
+    event = "InsertEnter",
+  },
+}
+
+snippets.configure_functions = {}
+snippets.configure_functions["LuaSnip"] = function()
   require("luasnip").config.set_config(doom.snippets)
   require("luasnip.loaders.from_vscode").load()
 end

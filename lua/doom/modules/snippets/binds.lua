@@ -1,3 +1,0 @@
-local binds = {}
-
-return binds

@@ -48,9 +48,23 @@ zen.defaults = {
   },
 }
 
-zen.packer_config = {}
-zen.packer_config["TrueZen.nvim"] = function()
+zen.packages = {
+  ["TrueZen.nvim"] = {
+    "Pocco81/TrueZen.nvim",
+    commit = "508b977d71650da5c9243698614a9a1416f116d4",
+    module = "true-zen",
+    event = "BufWinEnter",
+  },
+}
+ 
+
+zen.configure_functions = {}
+zen.configure_functions["TrueZen.nvim"] = function()
   require("true-zen").setup(doom.zen)
 end
+
+zen.binds = {
+  { "<F5>", ":TZAtaraxis<CR>", name = "Enter Nirvana" },
+}
 
 return zen
