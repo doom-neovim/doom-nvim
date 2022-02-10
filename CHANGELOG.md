@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.3.0]
+- Removed support for Neovim 0.5
+- Fixed bug where the Dashboard would show instead of piped contents
+- Updated pinned dependencies to latest versions solving quite a few smaller and undocumented bugs.
+
 ## [3.2.0] - 2021-11-24
 
 ### Added
