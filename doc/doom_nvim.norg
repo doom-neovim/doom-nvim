@@ -33,7 +33,6 @@
   -> [FAQ](#FAQ)
   --> [General](#General)
   ---> [Who is Doom Nvim intended for?](#Who is Doom Nvim intended for?)
-  ---> [Why does Doom Nvim only support Neovim 0.5.0 (and beyond)?](#Why does Doom Nvim only support Neovim 0.5.0 and beyond?)
   --> [Workaround](#Workaround)
   ---> [Missing nvim help documentation](#Missing nvim help documentation)
   -> [Acknowledgements](#Acknowledgements)
@@ -616,11 +615,6 @@
   *** Who is Doom Nvim intended for?
       Doom Nvim is intended for anyone who wants a stable and efficient
       development environment that just works without spending a lot of time setting everything up.
-
-  *** Why does Doom Nvim only support Neovim 0.5.0 and beyond?
-      Doom Nvim relies on lua for the configuration and use of many plugins. Since
-      lua is not available in neovim 0.4.4 and below, it is not possible to use Doom
-      Nvim with a neovim version lower than 0.5.0.
 
  ** Workaround
   *** Missing nvim help documentation
