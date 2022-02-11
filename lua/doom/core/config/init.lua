@@ -209,8 +209,13 @@ config.load = function()
   
     for section_name, section_modules in pairs(all_modules) do
       for _, module_name in pairs(section_modules) do
-        local module = require(("doom.modules.%s.%s"):format(section_name, module_name))
-        doom.modules[module_name] = module
+        local ok, module, err = xpcall(require, debug.traceback, ("doom.modules.%s.%s"):format(section_name, module_name))
+        if err then
+          print(vim.inspect(err))
+        end
+        if ok then
+          doom.modules[module_name] = module
+        end
       end
     end
   end

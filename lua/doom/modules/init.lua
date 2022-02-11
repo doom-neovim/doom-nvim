@@ -57,20 +57,13 @@ for module_name, module in pairs(doom.modules) do
     for dependency_name, packer_spec in pairs(module.packages) do
       -- Set packer_spec to configure function
       if module.configure_functions[dependency_name] then
-        print(module_name .. ' ' .. dependency_name .. ' has config.')
-        packer_spec.config = function()
-           print(module_name .. ' ' .. dependency_name .. ' running.')
-           module.configure_functions[dependency_name]()
-        end
-      else
-        print('no config')
+        packer_spec.config = module.configure_functions[dependency_name]
       end
       
       -- Set/unset frozen packer dependencies
       packer_spec.commit = doom.freeze_dependencies and packer_spec.commit or nil
 
       -- Initialise packer
-      print(module_name .. ' ' .. dependency_name .. ' -> ' .. vim.inspect(packer_spec))
       use(packer_spec)
     end
   end

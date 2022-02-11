@@ -1,6 +1,6 @@
 local todo_comments = {}
 
-todo_comments.defaults = {}
+todo_comments.settings = {}
 
 todo_comments.packages = {
   ["todo-comments.nvim"] = {

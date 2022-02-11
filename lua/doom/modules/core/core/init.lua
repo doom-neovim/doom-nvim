@@ -89,11 +89,6 @@ required.packages = {
     "lazytanuki/nvim-mapper",
     before = is_plugin_disabled("telescope") or "telescope.nvim",
   },
-  ["nvim-web-devicons"] = {
-    "kyazdani42/nvim-web-devicons",
-    commit = "634e26818f2bea9161b7efa76735746838971824",
-    module = "nvim-web-devicons",
-  },
   ['nvim-web-devicons'] = {
     'kyazdani42/nvim-web-devicons',
     commit = "8df4988ecf8599fc1f8f387bbf2eae790e4c5ffb",
@@ -114,18 +109,18 @@ required.configure_functions["nest.nvim"] = function()
     nest_package.enable(whichkey_integration)
   end
 
-  for module_name, module in pairs(_doom.modules) do
+  for _, module in pairs(doom.modules) do
     if module.binds then
       nest_package.applyKeymaps(type(module.binds) == 'function' and module.binds() or module.binds)
     end
   end
 end
 required.configure_functions["nvim-mapper"] = function()
-  require("nvim-mapper").setup(doom.core.mapper)
+  require("nvim-mapper").setup(doom.modules.core.settings.mapper)
 end
 required.configure_functions["nvim-treesitter"] = function()
   local is_plugin_disabled = require("doom.utils").is_plugin_disabled
-  require("nvim-treesitter.configs").setup(vim.tbl_deep_extend("force", doom.core.treesitter, {
+  require("nvim-treesitter.configs").setup(vim.tbl_deep_extend("force", doom.modules.core.settings.treesitter, {
     autopairs = {
       enable = not is_plugin_disabled("autopairs"),
     },

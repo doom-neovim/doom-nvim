@@ -1,6 +1,6 @@
 local whichkey = {}
 
-whichkey.defaults = {
+whichkey.settings = {
   leader = " ",
   plugins = {
     marks = false,

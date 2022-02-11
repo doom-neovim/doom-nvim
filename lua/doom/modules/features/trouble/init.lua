@@ -1,6 +1,6 @@
 local trouble = {}
 
-trouble.defaults = {}
+trouble.settings = {}
 
 trouble.packages = {
   ["trouble.nvim"] = {
