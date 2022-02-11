@@ -1,6 +1,6 @@
 local dashboard = {}
 
-dashboard.defaults = {
+dashboard.settings = {
   entries = {
     b = {
       description = { "  Recently Opened Files          SPC f r" },
@@ -70,32 +70,32 @@ dashboard.configure_functions["dashboard-nvim"] = function()
   local is_plugin_disabled = utils.is_plugin_disabled
 
   if not is_plugin_disabled("auto_session") then
-    vim.g.dashboard_session_directory = doom.auto_session.dir
+    vim.g.dashboard_session_directory = doom.modules.auto_session.settings.dir
   end
   if not is_plugin_disabled("telescope") then
     vim.g.dashboard_default_executive = "telescope"
   end
   if not is_plugin_disabled("auto_session") then
-    doom.dashboard.entries.a = {
+    doom.modules.dashboard.settings.entries.a = {
       description = { "  Load Last Session              SPC s r" },
       command = [[lua require("persistence").load({ last = true })]],
     }
   end
 
-  vim.g.dashboard_custom_section = doom.dashboard.entries
+  vim.g.dashboard_custom_section = doom.modules.dashboard.settings.entries
 
-  if type(doom.dashboard.footer) ~= "function" then
-    vim.g.dashboard_custom_footer = doom.dashboard.footer
+  if type(doom.modules.dashboard.settings.footer) ~= "function" then
+    vim.g.dashboard_custom_footer = doom.modules.dashboard.settings.footer
   end
 
-  if type(doom.dashboard.header) ~= "function" then
-    vim.g.dashboard_custom_header = doom.dashboard.header
+  if type(doom.modules.dashboard.settings.header) ~= "function" then
+    vim.g.dashboard_custom_header = doom.modules.dashboard.settings.header
   end
   -- Header color
-  vim.cmd("hi! dashboardHeader   guifg=" .. doom.dashboard.colors.header)
-  vim.cmd("hi! dashboardCenter   guifg=" .. doom.dashboard.colors.center)
-  vim.cmd("hi! dashboardShortcut guifg=" .. doom.dashboard.colors.shortcut)
-  vim.cmd("hi! dashboardFooter   guifg=" .. doom.dashboard.colors.footer)
+  vim.cmd("hi! dashboardHeader   guifg=" .. doom.modules.dashboard.settings.colors.header)
+  vim.cmd("hi! dashboardCenter   guifg=" .. doom.modules.dashboard.settings.colors.center)
+  vim.cmd("hi! dashboardShortcut guifg=" .. doom.modules.dashboard.settings.colors.shortcut)
+  vim.cmd("hi! dashboardFooter   guifg=" .. doom.modules.dashboard.settings.colors.footer)
 end
 
 dashboard.binds = {

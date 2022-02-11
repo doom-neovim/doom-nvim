@@ -1,6 +1,6 @@
 local minimap = {}
 
-minimap.defaults = {}
+minimap.settings = {}
 
 minimap.packages = {
   ["minimap.vim"] = {

@@ -1,6 +1,6 @@
 local typescript = {}
 
-typescript.defaults = {
+typescript.settings = {
 }
 
 typescript.autocommands = {
@@ -17,9 +17,6 @@ typescript.autocommands = {
         on_attach = function(client)
           if not is_plugin_disabled("illuminate") then
             utils.illuminate_attach(client)
-          end
-          if type(doom.lua.on_attach) == "function" then
-            doom.lua.on_attach(client)
           end
         end,
       })

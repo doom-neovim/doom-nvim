@@ -1,6 +1,6 @@
 local vue = {}
 
-vue.defaults = {
+vue.settings = {
   -- Volar API lspconfig options
   volar_api = {
     default_config = {
@@ -133,19 +133,19 @@ vue.autocommands = {
       })
       
       
-      local volar_api_config = vim.tbl_deep_extend('force', {}, doom.vue.volar_api, base_config)
+      local volar_api_config = vim.tbl_deep_extend('force', {}, doom.modules.vue.settings.volar_api, base_config)
       langs_utils.use_lsp('volar', {
         name = 'volar_api',
         config = volar_api_config,
       })
       
-      local volar_doc_config = vim.tbl_deep_extend('force', {}, doom.vue.volar_doc, base_config)
+      local volar_doc_config = vim.tbl_deep_extend('force', {}, doom.modules.vue.settings.volar_doc, base_config)
       langs_utils.use_lsp('volar', {
         name = 'volar_doc',
         config = volar_doc_config,
       })
       
-      local volar_html_config = vim.tbl_deep_extend('force', {}, doom.vue.volar_html, base_config)
+      local volar_html_config = vim.tbl_deep_extend('force', {}, doom.modules.vue.settings.volar_html, base_config)
       langs_utils.use_lsp('volar', {
         name = 'volar_html',
         config = volar_html_config,

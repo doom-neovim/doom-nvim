@@ -238,8 +238,10 @@ utils.is_plugin_disabled = function(plugin)
   local modules = require("doom.core.config.modules").modules
 
   -- Iterate over all modules sections (e.g. ui) and their plugins
-  if vim.tbl_contains(modules, plugin) then
-    return false
+  for _, section in pairs(modules) do
+    if vim.tbl_contains(section, plugin) then
+      return false
+    end
   end
 
   return true

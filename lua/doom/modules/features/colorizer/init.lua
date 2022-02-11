@@ -1,6 +1,6 @@
 local colorizer = {}
 
-colorizer.defaults = {
+colorizer.settings = {
   "*",
   css = { rgb_fn = true },
   html = { names = false },
@@ -16,7 +16,7 @@ colorizer.packages = {
 
 colorizer.configure_functions = {}
 colorizer.configure_functions["nvim-colorizer.lua"] = function()
-  require("colorizer").setup(doom.colorizer)
+  require("colorizer").setup(doom.modules.colorizer.settings)
 end
 
 return colorizer

@@ -1,6 +1,6 @@
 local dap = {}
 
-dap.defaults = {
+dap.settings = {
   debugger_dir = vim.fn.stdpath("data") .. "/dapinstall/",
   debugger_map = {},
   dapui = {
@@ -61,7 +61,7 @@ dap.configure_functions["nvim-dap-ui"] = function()
   dap_package.listeners.before.event_exited["dapui_config"] = function()
     dapui.close()
   end
-  dapui.setup(doom.dap.dapui)
+  dapui.setup(doom.modules.dap.settings.dapui)
 end
 
 dap.binds = {

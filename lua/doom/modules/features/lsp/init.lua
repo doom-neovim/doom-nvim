@@ -1,6 +1,6 @@
 local lsp = {}
 
-lsp.defaults = {
+lsp.settings = {
   signature = {
     bind = true,
     doc_lines = 10,
@@ -178,18 +178,18 @@ lsp.configure_functions["nvim-lspconfig"] = function()
   local signs, hl
   if vim.fn.has("nvim-0.6.0") == 1 then
     signs = {
-      Error = doom.lsp.icons.error,
-      Warn = doom.lsp.icons.warn,
-      Info = doom.lsp.icons.info,
-      Hint = doom.lsp.icons.hint,
+      Error = doom.modules.lsp.settings.icons.error,
+      Warn = doom.modules.lsp.settings.icons.warn,
+      Info = doom.modules.lsp.settings.icons.info,
+      Hint = doom.modules.lsp.settings.icons.hint,
     }
     hl = "DiagnosticSign"
   else
     signs = {
-      Error = doom.lsp.icons.error,
-      Warning = doom.lsp.icons.warn,
-      Information = doom.lsp.icons.info,
-      Hint = doom.lsp.icons.hint,
+      Error = doom.modules.lsp.settings.icons.error,
+      Warning = doom.modules.lsp.settings.icons.warn,
+      Information = doom.modules.lsp.settings.icons.info,
+      Hint = doom.modules.lsp.settings.icons.hint,
     }
     hl = "LspDiagnosticsSign"
   end
@@ -207,7 +207,7 @@ lsp.configure_functions["nvim-lspconfig"] = function()
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
     {
-      virtual_text = doom.lsp.virtual_text,
+      virtual_text = doom.modules.lsp.settings.virtual_text,
     }
   )
   -- Border for lsp_popups
@@ -219,7 +219,7 @@ lsp.configure_functions["nvim-lspconfig"] = function()
   })
   -- symbols for autocomplete
   local kinds = {}
-  for typ, icon in pairs(doom.lsp.completion.kinds) do
+  for typ, icon in pairs(doom.modules.lsp.settings.completion.kinds) do
     table.insert(kinds, " " .. icon .. " (" .. typ .. ") ")
   end
   vim.lsp.protocol.CompletionItemKind = kinds
@@ -261,14 +261,14 @@ lsp.configure_functions["nvim-cmp"] = function()
     _doom.cmp_enable = true
   end
 
-  cmp.setup(vim.tbl_deep_extend("force", doom.lsp.completion, {
+  cmp.setup(vim.tbl_deep_extend("force", doom.modules.lsp.settings.completion, {
     completeopt = nil,
     completion = {
-      completeopt = doom.lsp.completion.completeopt,
+      completeopt = doom.modules.lsp.settings.completion.completeopt,
     },
     formatting = {
       format = function(entry, item)
-        item.kind = string.format("%s %s", doom.lsp.completion.kinds[item.kind], item.kind)
+        item.kind = string.format("%s %s", doom.modules.lsp.settings.completion.kinds[item.kind], item.kind)
         item.menu = source_map[entry.source.name]
         item.dup = vim.tbl_contains({ "path", "buffer" }, entry.source.name)
         return item
@@ -314,8 +314,8 @@ lsp.configure_functions["nvim-cmp"] = function()
       }),
     },
   }, {
-    mapping = type(doom.lsp.completion.mapping) == "function" and doom.lsp.completion.mapping(cmp)
-      or doom.lsp.completion.mapping,
+    mapping = type(doom.modules.lsp.settings.completion.mapping) == "function" and doom.modules.lsp.settings.completion.mapping(cmp)
+      or doom.modules.lsp.settings.completion.mapping,
     enabled = function()
       return _doom.cmp_enable and vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
     end,
@@ -323,7 +323,7 @@ lsp.configure_functions["nvim-cmp"] = function()
 end
 lsp.configure_functions["lsp_signature.nvim"] = function()
   -- Signature help
-  require("lsp_signature").setup(vim.tbl_deep_extend("force", doom.lsp.signature, {
+  require("lsp_signature").setup(vim.tbl_deep_extend("force", doom.modules.lsp.settings.signature, {
     handler_opts = {
       border = doom.border_style,
     },

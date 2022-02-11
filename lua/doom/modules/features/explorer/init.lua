@@ -1,6 +1,6 @@
 local explorer = {}
 
-explorer.defaults = {
+explorer.settings = {
   refresh_wait = true,
   disable_netrw = true,
   hijack_netrw = true,
@@ -99,34 +99,34 @@ explorer.configure_functions["nvim-tree.lua"] = function()
 
   vim.g.nvim_tree_ignore = { ".git", "node_modules.editor", ".cache", "__pycache__" }
 
-  vim.g.nvim_tree_indent_markers = utils.bool2num(doom.explorer.indent_markers)
+  vim.g.nvim_tree_indent_markers = utils.bool2num(doom.modules.explorer.settings.indent_markers)
 
-  vim.g.nvim_tree_respect_buf_cwd = utils.bool2num(doom.explorer.respect_buf_cwd)
+  vim.g.nvim_tree_respect_buf_cwd = utils.bool2num(doom.modules.explorer.settings.respect_buf_cwd)
 
   vim.g.nvim_tree_hide_dotfiles = utils.bool2num(not doom.show_hidden)
 
-  vim.g.nvim_tree_git_hl = utils.bool2num(doom.explorer.git_highlight)
+  vim.g.nvim_tree_git_hl = utils.bool2num(doom.modules.explorer.settings.git_highlight)
 
   vim.g.nvim_tree_gitignore = utils.bool2num(doom.hide_gitignore)
 
   vim.g.nvim_tree_root_folder_modifier = ":~"
 
-  vim.g.nvim_tree_add_trailing = utils.bool2num(doom.explorer.trailing_dir_slash)
+  vim.g.nvim_tree_add_trailing = utils.bool2num(doom.modules.explorer.settings.trailing_dir_slash)
 
-  vim.g.nvim_tree_group_empty = utils.bool2num(doom.explorer.group_empty)
+  vim.g.nvim_tree_group_empty = utils.bool2num(doom.modules.explorer.settings.group_empty)
 
-  vim.g.nvim_tree_refresh_wait = utils.bool2num(doom.explorer.refresh_wait)
+  vim.g.nvim_tree_refresh_wait = utils.bool2num(doom.modules.explorer.settings.refresh_wait)
 
-  vim.g.nvim_tree_window_picker_exclude = doom.explorer.window_picker_exclude
+  vim.g.nvim_tree_window_picker_exclude = doom.modules.explorer.settings.window_picker_exclude
 
   local special_files = {}
-  for _, file in ipairs(doom.explorer.special_files) do
+  for _, file in ipairs(doom.modules.explorer.settings.special_files) do
     special_files[file] = 1
   end
   vim.g.nvim_tree_special_files = special_files
 
   local show_icons = {}
-  for key, value in pairs(doom.explorer.show_icons) do
+  for key, value in pairs(doom.modules.explorer.settings.show_icons) do
     show_icons[key] = utils.bool2num(value)
   end
   vim.g.nvim_tree_show_icons = show_icons
@@ -135,14 +135,14 @@ explorer.configure_functions["nvim-tree.lua"] = function()
   if not is_plugin_disabled("lsp") then
     override_icons = {
       lsp = {
-        hint = doom.lsp.icons.hint,
-        info = doom.lsp.icons.info,
-        warning = doom.lsp.icons.warn,
-        error = doom.lsp.icons.error,
+        hint = doom.modules.lsp.settings.icons.hint,
+        info = doom.modules.lsp.settings.icons.info,
+        warning = doom.modules.lsp.settings.icons.warn,
+        error = doom.modules.lsp.settings.icons.error,
       },
     }
   end
-  vim.g.nvim_tree_icons = vim.tbl_deep_extend("force", doom.explorer.icons, override_icons)
+  vim.g.nvim_tree_icons = vim.tbl_deep_extend("force", doom.modules.explorer.settings.icons, override_icons)
 
   local override_table = {
     diagnostics = {
@@ -154,10 +154,10 @@ explorer.configure_functions["nvim-tree.lua"] = function()
       diagnostics = {
         enable = true,
         icons = {
-          hint = doom.lsp.icons.hint,
-          info = doom.lsp.icons.info,
-          warning = doom.lsp.icons.warn,
-          error = doom.lsp.icons.error,
+          hint = doom.modules.lsp.settings.icons.hint,
+          info = doom.modules.lsp.settings.icons.info,
+          warning = doom.modules.lsp.settings.icons.warn,
+          error = doom.modules.lsp.settings.icons.error,
         },
       },
     }
@@ -192,7 +192,7 @@ explorer.configure_functions["nvim-tree.lua"] = function()
         },
       },
     },
-  }, doom.explorer, override_table))
+  }, doom.modules.explorer.settings, override_table))
 end
 
 explorer.binds = {

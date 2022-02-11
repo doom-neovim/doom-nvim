@@ -27,16 +27,20 @@ linter.binds = {
 }
 
 linter.autocommands = function ()
-  if doom.modules.linter.settings.format_on_save then
-    return {
+  local autocmds = {}
+  
+  if doom.linter.format_on_save then
+    table.insert(autocmds, {
       "BufWritePre",
       "<buffer>",
       function()
         vim.lsp.buf.formatting_sync()
       end,
-    }
+    })
   end
-  return {}
+
+  return autocmds
+
 end
 
 

@@ -2,9 +2,9 @@ local neorg = {}
 
 local doom_root = require("doom.core.system").doom_root
 
-neorg.defaults = {
+neorg.settings = {
   load = {
-    ["core.defaults"] = {},
+    ["core.settings"] = {},
     ["core.keybinds"] = {
       config = {
         default_keybinds = true,
@@ -52,7 +52,7 @@ neorg.packages = {
 
 neorg.configure_functions = {}
 neorg.configure_functions["neorg"] = function()
-  require("neorg").setup(doom.neorg)
+  require("neorg").setup(doom.modules.neorg.settings)
 end
 
 return neorg

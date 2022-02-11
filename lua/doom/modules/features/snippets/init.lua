@@ -1,6 +1,6 @@
 local snippets = {}
 
-snippets.defaults = {
+snippets.settings = {
   history = true,
   updateevents = "TextChanged,TextChangedI",
 }
@@ -16,7 +16,7 @@ snippets.packages = {
 
 snippets.configure_functions = {}
 snippets.configure_functions["LuaSnip"] = function()
-  require("luasnip").config.set_config(doom.snippets)
+  require("luasnip").config.set_config(doom.modules.snippets.settings)
   require("luasnip.loaders.from_vscode").load()
 end
 

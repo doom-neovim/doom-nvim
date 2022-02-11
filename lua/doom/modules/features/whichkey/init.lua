@@ -73,11 +73,11 @@ whichkey.packages = {
 
 whichkey.configure_functions = {}
 whichkey.configure_functions["which-key.nvim"] = function()
-  vim.g.mapleader = doom.whichkey.leader
+  vim.g.mapleader = doom.modules.whichkey.settings.leader
 
   local wk = require("which-key")
 
-  wk.setup(doom.whichkey)
+  wk.setup(doom.modules.whichkey.settings)
 end
 
 return whichkey

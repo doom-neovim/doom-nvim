@@ -33,7 +33,7 @@ terminal.packages {
 
 terminal.configure_functions = {}
 terminal.configure_functions["toggleterm.nvim"] = function()
-  require("toggleterm").setup(doom.terminal)
+  require("toggleterm").setup(doom.modules.terminal.settings)
 end
 
 terminal.binds = {

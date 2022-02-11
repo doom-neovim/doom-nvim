@@ -1,6 +1,6 @@
 local telescope = {}
 
-telescope.defaults = {
+telescope.settings = {
   defaults = {
     find_command = {
       "rg",
@@ -85,9 +85,9 @@ telescope.configure_functions["telescope.nvim"] = function()
         },
       },
     },
-  }, doom.telescope))
+  }, doom.modules.telescope.settings))
 
-  for _, ext in ipairs(doom.telescope.extensions) do
+  for _, ext in ipairs(doom.modules.telescope.settings.extensions) do
     telescope_package.load_extension(ext)
   end
 end

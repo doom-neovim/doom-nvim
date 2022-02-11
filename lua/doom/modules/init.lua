@@ -47,6 +47,7 @@ packer.init({
   },
 })
 
+local use = packer.use
 packer.reset()
 
 -- Handle the Modules
@@ -55,14 +56,22 @@ for module_name, module in pairs(doom.modules) do
   if module.packages then
     for dependency_name, packer_spec in pairs(module.packages) do
       -- Set packer_spec to configure function
-      packer_spec.config = module.configure_functions[dependency_name] 
-        and module.configure_functions[dependency_name] or function() end
+      if module.configure_functions[dependency_name] then
+        print(module_name .. ' ' .. dependency_name .. ' has config.')
+        packer_spec.config = function()
+           print(module_name .. ' ' .. dependency_name .. ' running.')
+           module.configure_functions[dependency_name]()
+        end
+      else
+        print('no config')
+      end
       
       -- Set/unset frozen packer dependencies
       packer_spec.commit = doom.freeze_dependencies and packer_spec.commit or nil
 
       -- Initialise packer
-      packer.use(packer_spec)
+      print(module_name .. ' ' .. dependency_name .. ' -> ' .. vim.inspect(packer_spec))
+      use(packer_spec)
     end
   end
   -- Setup package autogroups
@@ -73,5 +82,5 @@ end
 
 -- Handle extra user modules
 for _, packer_spec in ipairs(doom.packages) do
-  packer.use(packer_spec)
+  use(packer_spec)
 end

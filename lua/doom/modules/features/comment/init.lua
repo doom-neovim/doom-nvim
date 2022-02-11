@@ -1,6 +1,6 @@
 local comment = {}
 
-comment.defaults = {
+comment.settings = {
   --- Add a space b/w comment and the line
   --- @type boolean
   padding = true,
@@ -51,7 +51,7 @@ comment.packages = {
 
 comment.configure_functions = {}
 comment.configure_functions["Comment.nvim"] = function()
-  local config = vim.tbl_extend("force", doom.comment, {
+  local config = vim.tbl_extend("force", doom.modules.comment.settings, {
     -- Disable mappings as we'll handle it in binds.lua
     mappings = {
       basic = false,

@@ -13,7 +13,7 @@ trouble.packages = {
 
 trouble.configure_functions = {}
 trouble.configure_functions["trouble.nvim"] = function()
-  require("trouble").setup(doom.trouble)
+  require("trouble").setup(doom.modules.trouble.settings)
 end
 
 trouble.binds = {

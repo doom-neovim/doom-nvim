@@ -1,6 +1,6 @@
 local lazygit = {}
 
-lazygit.defaults = {}
+lazygit.settings = {}
 
 lazygit.packages = {
   ["lazygit.nvim"] = {

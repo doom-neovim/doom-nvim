@@ -1,6 +1,6 @@
 local doom_themes = {}
 
-doom_themes.defaults = {}
+doom_themes.settings = {}
 
 doom_themes.configure_functions = {}
 

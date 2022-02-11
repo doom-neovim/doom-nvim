@@ -1,6 +1,6 @@
 local illuminate = {}
 
-illuminate.defaults = {
+illuminate.settings = {
   blacklist = {
     "help",
     "dashboard",
@@ -22,7 +22,7 @@ illuminate.packages = {
 
 illuminate.configure_functions = {}
 illuminate.configure_functions["vim-illuminate"] = function()
-  vim.g.Illuminate_ftblacklist = doom.illuminate.blacklist
+  vim.g.Illuminate_ftblacklist = doom.modules.illuminate.settings.blacklist
 end
 
 return illuminate

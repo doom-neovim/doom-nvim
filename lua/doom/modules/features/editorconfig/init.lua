@@ -1,6 +1,6 @@
 local editorconfig = {}
 
-editorconfig.defaults = {}
+editorconfig.settings = {}
 
 editorconfig.packages = {
   ["editorconfig-vim"] = {

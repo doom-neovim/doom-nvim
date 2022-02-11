@@ -1,6 +1,6 @@
 local restclient = {}
 
-restclient.defaults = {}
+restclient.settings = {}
 
 restclient.packages = {
   ["rest.nvim"] = {
@@ -17,7 +17,7 @@ restclient.packages = {
 
 restclient.configure_functions = {}
 restclient.configure_functions["rest.nvim"] = function()
-  require("rest-nvim").setup(doom.restclient)
+  require("rest-nvim").setup(doom.modules.restclient.settings)
 end
 
 restclient.binds = {

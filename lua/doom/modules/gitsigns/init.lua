@@ -72,9 +72,18 @@ gitsigns.settings = {
   },
 }
 
+gitsigns.packages = {
+  ["gitsigns.nvim"] = {
+    "lewis6991/gitsigns.nvim",
+    commit = "4a2d30f5fb77750c7a42be9bb58a9cc2c6c7f31d",
+    event = "BufReadPre",
+  },
+}
+
+
 gitsigns.configure_functions = {}
 gitsigns.configure_functions["gitsigns.nvim"] = function()
-  require("gitsigns").setup(doom.modules.gitsigns.settings)
+  require("gitsigns").setup(doom.gitsigns)
 end
 
 return gitsigns

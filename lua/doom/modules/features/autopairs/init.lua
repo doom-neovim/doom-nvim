@@ -1,6 +1,6 @@
 local autopairs = {}
 
-autopairs.defaults = {
+autopairs.settings = {
   enable_afterquote = true,
   enable_check_bracket_line = true,
   enable_moveright = true,
@@ -16,7 +16,7 @@ autopairs.packages = {
 
 autopairs.configure_functions = {}
 autopairs.configure_functions["nvim-autopairs"] = function()
-  require("nvim-autopairs").setup(vim.tbl_deep_extend("force", doom.autopairs, { check_ts = true }))
+  require("nvim-autopairs").setup(vim.tbl_deep_extend("force", doom.modules.autopairs.settings, { check_ts = true }))
 end
 
 autopairs.binds = {

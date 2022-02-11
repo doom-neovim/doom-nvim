@@ -1,6 +1,6 @@
 local css = {}
 
-css.defaults = {
+css.settings = {
   language_server_name = 'cssls',
 }
 
@@ -19,13 +19,10 @@ css.autocommands = {
           if not is_plugin_disabled("illuminate") then
             utils.illuminate_attach(client)
           end
-          if type(doom.lua.on_attach) == "function" then
-            doom.lua.on_attach(client)
-          end
         end,
       })
       
-      langs_utils.use_lsp(doom.css.language_server_name, {
+      langs_utils.use_lsp(doom.modules.css.settings.language_server_name, {
         config = config,
       })
       

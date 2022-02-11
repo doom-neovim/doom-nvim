@@ -1,6 +1,6 @@
 local range_highlight = {}
 
-range_highlight.defaults = {}
+range_highlight.settings = {}
 
 range_highlight.packages = {
   ["range-highlight.nvim"] = {
@@ -15,7 +15,7 @@ range_highlight.packages = {
 
 range_highlight.configure_functions = {}
 range_highlight.configure_functions["range-highlight.nvim"] = function()
-  require("range-highlight").setup(doom.range_highlight)
+  require("range-highlight").setup(doom.modules.range_highlight.settings)
 end
 
 return range_highlight

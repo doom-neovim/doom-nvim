@@ -1,6 +1,6 @@
 local rust = {}
 
-rust.defaults = {
+rust.settings = {
 }
 
 rust.autocommands = {

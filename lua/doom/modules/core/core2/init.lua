@@ -1,6 +1,6 @@
 local required = {}
 
-required.defaults = {
+required.settings = {
   mapper = {},
   treesitter = {
     highlight = {

@@ -1,6 +1,6 @@
 local suda = {}
 
-suda.defaults = {}
+suda.settings = {}
 
 suda.packages = {
   ["suda.vim"] = {

@@ -1,6 +1,6 @@
 local lua = {}
 
-lua.defaults = {
+lua.settings = {
   settings = {
     Lua = {
       runtime = {
@@ -36,7 +36,7 @@ lua.packages = {
 
 lua.configure_functions = {}
 lua.configure_functions["lua-dev.nvim"] = function()
-  require("lua-dev").setup(doom.lua.dev)
+  require("lua-dev").setup(doom.modules.lua.settings.dev)
 end
 
 lua.autocommands = {
@@ -52,7 +52,7 @@ lua.autocommands = {
       table.insert(runtime_path, "lua/?.lua")
       table.insert(runtime_path, "lua/?/init.lua")
 
-      local config = vim.tbl_deep_extend("force", doom.lua, {
+      local config = vim.tbl_deep_extend("force", doom.modules.lua.settings, {
         settings = {
           Lua = {
             runtime = {
@@ -65,8 +65,8 @@ lua.autocommands = {
           if not is_plugin_disabled("illuminate") then
             utils.illuminate_attach(client)
           end
-          if type(doom.lua.on_attach) == "function" then
-            doom.lua.on_attach(client)
+          if type(doom.modules.lua.settings.on_attach) == "function" then
+            doom.modules.lua.settings.on_attach(client)
           end
         end,
       })

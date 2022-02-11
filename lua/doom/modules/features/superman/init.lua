@@ -1,6 +1,6 @@
 local superman = {}
 
-superman.defaults = {}
+superman.settings = {}
 
 superman.packages = {
   ["vim-superman"] = {

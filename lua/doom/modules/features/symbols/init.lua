@@ -1,6 +1,6 @@
 local symbols = {}
 
-symbols.defaults = {
+symbols.settings = {
   highlight_hovered_item = true,
   show_guides = true,
   position = "right",
@@ -33,7 +33,7 @@ symbols.packages = {
 
 symbols.configure_functions = {}
 symbols.configure_functions["symbols_outline.nvim"] = function()
-  vim.g.symbols_outline = doom.symbols
+  vim.g.symbols_outline = doom.modules.symbols.settings
 end
 
 symbols.binds = {

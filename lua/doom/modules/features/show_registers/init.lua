@@ -1,6 +1,6 @@
 local show_registers = {}
 
-show_registers.defaults = {}
+show_registers.settings = {}
 
 show_registers.packages = {
   ["registers.nvim"] = {

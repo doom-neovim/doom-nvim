@@ -1,6 +1,6 @@
 local zen = {}
 
-zen.defaults = {
+zen.settings = {
   ui = {
     bottom = {
       laststatus = 0,
@@ -60,7 +60,7 @@ zen.packages = {
 
 zen.configure_functions = {}
 zen.configure_functions["TrueZen.nvim"] = function()
-  require("true-zen").setup(doom.zen)
+  require("true-zen").setup(doom.modules.zen.settings)
 end
 
 zen.binds = {

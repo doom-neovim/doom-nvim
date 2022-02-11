@@ -1,9 +1,6 @@
 local utils = require("doom.utils")
 local enabled_modules = require("doom.core.config.modules").modules
 -- `core` is required, doom wouldn't make sense without it.
-if not vim.tbl_contains(enabled_modules, "core") then
-  table.insert(enabled_modules, "core")
-end
 
 local config = {}
 local filename = "config.lua"
@@ -201,8 +198,16 @@ config.load = function()
     doom.packages = {} -- Extra packages
     doom.autocmds = {} -- Extra autocommands
     doom.binds = {} -- Extra binds
-    doom.modules = {} -- Modules 
-    for section_name, section_modules in pairs(enabled_modules) do
+    doom.modules = {} -- Modules
+
+    -- Combine core modules with user-enabled modules
+    local all_modules = vim.tbl_deep_extend('keep', {
+      core = {
+        'core'
+      }
+    }, enabled_modules)
+  
+    for section_name, section_modules in pairs(all_modules) do
       for _, module_name in pairs(section_modules) do
         local module = require(("doom.modules.%s.%s"):format(section_name, module_name))
         doom.modules[module_name] = module

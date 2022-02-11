@@ -1,6 +1,6 @@
 local projects = {}
 
-projects.defaults ={
+projects.settings ={
   -- Manual mode doesn't automatically change your root directory, so you have
   -- the option to manually do so using `:ProjectRoot` command.
   manual_mode = false,
@@ -45,9 +45,9 @@ projects.packages = {
 
 projects.configure_functions = {}
 projects.configure_functions["project.nvim"] = function()
-  require("project_nvim").setup(doom.projects)
+  require("project_nvim").setup(doom.modules.projects.settings)
 
-  table.insert(doom.telescope.extensions, 'projects')
+  table.insert(doom.modules.telescope.settings.extensions, 'projects')
 end
 
 projects.binds = {

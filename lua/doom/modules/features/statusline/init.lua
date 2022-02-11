@@ -1,6 +1,6 @@
 local statusline = {}
 
-statusline.defaults = {
+statusline.settings = {
   short_line_list = {
     "NvimTree",
     "packer",
@@ -43,9 +43,9 @@ statusline.configure_functions["galaxyline.nvim"] = function()
     return buftype ~= "DASHBOARD"
   end
 
-  gl.short_line_list = doom.statusline.short_line_list
+  gl.short_line_list = doom.modules.statusline.settings.short_line_list
 
-  if not is_plugin_disabled("dashboard") and not doom.statusline.on_dashboard then
+  if not is_plugin_disabled("dashboard") and not doom.modules.statusline.settings.on_dashboard then
     table.insert(gl.exclude_filetypes, "dashboard")
   end
 
@@ -133,7 +133,7 @@ statusline.configure_functions["galaxyline.nvim"] = function()
       },
       {
         FileName = {
-          provider = doom.statusline.show_file_path and "FilePath" or "FileName",
+          provider = doom.modules.statusline.settings.show_file_path and "FilePath" or "FileName",
           condition = condition.buffer_not_empty and is_not_dashboard,
           highlight = { colors("fg"), colors("bg"), "bold" },
           separator = " ",
@@ -302,7 +302,7 @@ statusline.configure_functions["galaxyline.nvim"] = function()
       DiagnosticError = {
         provider = "DiagnosticError",
         condition = is_not_dashboard,
-        icon = doom.lsp.icons.error .. " ",
+        icon = doom.modules.lsp.settings.icons.error .. " ",
         highlight = { colors("red"), colors("bg") },
       },
     })
@@ -310,7 +310,7 @@ statusline.configure_functions["galaxyline.nvim"] = function()
       DiagnosticWarn = {
         provider = "DiagnosticWarn",
         condition = is_not_dashboard,
-        icon = doom.lsp.icons.warn .. " ",
+        icon = doom.modules.lsp.settings.icons.warn .. " ",
         highlight = { colors("orange"), colors("bg") },
       },
     })
@@ -318,13 +318,13 @@ statusline.configure_functions["galaxyline.nvim"] = function()
       DiagnosticInfo = {
         provider = "DiagnosticInfo",
         condition = is_not_dashboard,
-        icon = doom.lsp.icons.hint .. " ",
+        icon = doom.modules.lsp.settings.icons.hint .. " ",
         highlight = { colors("blue"), colors("bg") },
       },
     })
   end
 
-  local merged_sections = vim.tbl_extend("force", default_sections, doom.statusline.sections)
+  local merged_sections = vim.tbl_extend("force", default_sections, doom.modules.statusline.settings.sections)
 
   gls.left = merged_sections.left
   gls.right = merged_sections.right

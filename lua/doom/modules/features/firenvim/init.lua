@@ -1,6 +1,6 @@
 local firenvim = {}
 
-firenvim.defaults = {
+firenvim.settings = {
   globalSettings = {
     alt = "all",
   },
@@ -35,9 +35,9 @@ firenvim.packages = {
 
 firenvim.configure_functions = {}
 firenvim.configure_functions["firenvim"] = function()
-  vim.g.firenvim_config = doom.firenvim
+  vim.g.firenvim_config = doom.modules.firenvim.settings
 
-  for _, command in ipairs(doom.firenvim.autocmds) do
+  for _, command in ipairs(doom.modules.firenvim.settings.autocmds) do
     vim.cmd(("autocmd %s %s_*.txt %s"):format(command[1], command[2], command[3]))
   end
 end

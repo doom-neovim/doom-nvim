@@ -1,6 +1,6 @@
 local ranger = {}
 
-ranger.defaults = {}
+ranger.settings = {}
 
 ranger.packages = {
   ["ranger.vim"] = {

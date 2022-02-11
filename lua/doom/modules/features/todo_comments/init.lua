@@ -14,7 +14,7 @@ todo_comments.packages = {
 
 todo_comments.configure_functions = {}
 todo_comments.configure_functions["todo-comments.nvim"] = function()
-  require("todo-comments").setup(doom.todo_comments)
+  require("todo-comments").setup(doom.modules.todo_comments.settings)
 end
 
 return todo_comments

@@ -2,7 +2,7 @@ local tabline = {}
 
 local utils_g = require("doom.utils")
 
-tabline.defaults = {
+tabline.settings = {
   options = {
     numbers = function(opts)
       return string.format("%s", opts.id)
@@ -150,7 +150,7 @@ tabline.packages = {
 
 tabline.configure_functions = {}
 tabline.configure_functions["bufferline.nvim"] = function()
-  require("bufferline").setup(doom.tabline)
+  require("bufferline").setup(doom.modules.tabline.settings)
 end
 
 tabline.binds = {

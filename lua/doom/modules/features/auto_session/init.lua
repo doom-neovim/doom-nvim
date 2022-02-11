@@ -1,6 +1,6 @@
 local auto_session = {}
 
-auto_session.defaults = {
+auto_session.settings = {
   dir = vim.fn.stdpath("data") .. "/sessions/",
 }
 
@@ -13,7 +13,7 @@ auto_session.packages = {
 
 auto_session.configure_functions = {}
 auto_session.configure_functions["persistence.nvim"] = function()
-  require("persistence").setup(doom.auto_session)
+  require("persistence").setup(doom.modules.auto_session.settings)
 end
 
 auto_session.binds = {

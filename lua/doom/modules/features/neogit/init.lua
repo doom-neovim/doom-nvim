@@ -1,6 +1,6 @@
 local neogit = {}
 
-neogit.defaults = {}
+neogit.settings = {}
 
 neogit.packages = {
   ["neogit"] = {
@@ -13,7 +13,7 @@ neogit.packages = {
 
 neogit.configure_functions = {}
 neogit.configure_functions["neogit"] = function()
-  require("neogit").setup(doom.neogit)
+  require("neogit").setup(doom.modules.neogit.settings)
 end
 
 neogit.binds = {

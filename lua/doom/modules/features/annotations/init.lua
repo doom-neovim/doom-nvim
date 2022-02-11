@@ -1,6 +1,6 @@
 local annotations = {}
 
-annotations.defaults = {
+annotations.settings = {
   enabled = true,
   languages = {
     lua = {
@@ -21,7 +21,7 @@ annotations.packages = {
 
 annotations.configure_functions = {}
 annotations.configure_functions["neogen"] = function()
-  require("neogen").setup(doom.annotations)
+  require("neogen").setup(doom.modules.annotations.settings)
 end
 
 return annotations
