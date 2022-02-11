@@ -81,7 +81,7 @@ vue.autocommands = {
       local is_plugin_disabled = utils.is_plugin_disabled
       local lspconfig = require("lspconfig")
       local lspconfig_util = require("lspconfig/util")
-      local langs_utils = require('doom.modules.langs_utils')
+      local langs_utils = require('doom.modules.langs.utils')
       
       -- volar needs works with typescript server, needs to get the typescript server from the project's node_modules
       local function on_new_config(new_config, new_root_dir)

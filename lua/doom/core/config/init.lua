@@ -202,9 +202,11 @@ config.load = function()
     doom.autocmds = {} -- Extra autocommands
     doom.binds = {} -- Extra binds
     doom.modules = {} -- Modules 
-    for _, module_name in ipairs(enabled_modules) do
-      local module = require(("doom.modules.%s"):format(module_name))
-      doom.modules[module_name] = module
+    for section_name, section_modules in pairs(enabled_modules) do
+      for _, module_name in pairs(section_modules) do
+        local module = require(("doom.modules.%s.%s"):format(section_name, module_name))
+        doom.modules[module_name] = module
+      end
     end
   end
 

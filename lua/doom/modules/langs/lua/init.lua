@@ -46,7 +46,7 @@ lua.autocommands = {
     function()
       local utils = require("doom.utils")
       local is_plugin_disabled = utils.is_plugin_disabled
-      local langs_utils = require('doom.modules.langs_utils')
+      local langs_utils = require('doom.modules.langs.utils')
 
       local runtime_path = vim.split(package.path, ";")
       table.insert(runtime_path, "lua/?.lua")
