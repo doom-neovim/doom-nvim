@@ -59,7 +59,7 @@ for module_name, module in pairs(doom.modules) do
       if module.configure_functions[dependency_name] then
         packer_spec.config = module.configure_functions[dependency_name]
       end
-      
+
       -- Set/unset frozen packer dependencies
       packer_spec.commit = doom.freeze_dependencies and packer_spec.commit or nil
 
@@ -68,8 +68,9 @@ for module_name, module in pairs(doom.modules) do
     end
   end
   -- Setup package autogroups
-  if module.autogroups then
-    utils.make_augroup(module_name, module.autogroups)
+  if module.autocommands then
+    local autocommands = type(module.autocommands) == 'function' and module.autocommands() or module.autocommands
+    utils.make_augroup(module_name, autocommands)
   end
 end
 

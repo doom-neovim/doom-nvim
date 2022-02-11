@@ -126,6 +126,7 @@ lsp.packages = {
     commit = "e7df7ecae0b0d2f997ea65e951ddbe98ca3e154b",
     opt = true,
     cmd = {
+      "LspInfo",
       "LspStart",
       "LspRestart",
       "LspStop",
