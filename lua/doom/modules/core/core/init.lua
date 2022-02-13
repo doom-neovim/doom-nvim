@@ -48,7 +48,7 @@ required.packages = {
   },
   ["nvim-treesitter"] = {
     "nvim-treesitter/nvim-treesitter",
-    commit = "d91d94aa9f55631855efb46a2b4a459a4a1439",
+    commit = "97cc325a173439366cdb5f181acb83c7836e6bb9",
     run = ":TSUpdate",
     branch = vim.fn.has("nvim-0.6.0") == 1 and "master" or "0.5-compat",
   },
@@ -60,7 +60,7 @@ required.packages = {
   },
   ["nvim-ts-autotag"] = {
     "windwp/nvim-ts-autotag",
-    commit = "32bc46ee8b21f88f87d97b976ae6674595b311b5",
+    commit = "5149f0c6557fa4a492d82895a564f4cd4a9c7715",
     opt = true,
     after = "nvim-treesitter",
   },
@@ -72,7 +72,7 @@ required.packages = {
   },
   ["plenary.nvim"] = {
     "nvim-lua/plenary.nvim",
-    commit = "563d9f6d083f0514548f2ac4ad1888326d0a1c66",
+    commit = "66472128c3191b786966798fc956a689705ab1be",
     module = "plenary",
   },
   ["popup.nvim"] = {

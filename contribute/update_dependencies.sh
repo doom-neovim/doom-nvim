@@ -15,7 +15,7 @@ repo=''
 latest_commit=''
 
 # Find all module package declaration files
-find ../lua/doom/modules -name 'packages.lua' |
+find ../lua/doom/modules -name 'init.lua' |
   while read -r file_path; do
     # Update commit shas
     echo ""
@@ -29,6 +29,7 @@ find ../lua/doom/modules -name 'packages.lua' |
         index=0
         repo=''
         latest_commit=''
+        retry=''
       fi
 
       if [[ $index -eq 1 ]]; then
@@ -38,7 +39,7 @@ find ../lua/doom/modules -name 'packages.lua' |
           echo "Updating $repo:"
 
           # Sometimes the github api requests will fail, in which case we need to re-try after a delay.
-          while [ -z "$latest_commit" ]; do
+          while [[ -z "$latest_commit" &&  "$retry" != "n" ]]; do
             # Get the commit sha from github, use GITHUB_API_KEY if provided
             # GITHUB_API_KEY in this instance is an OAuth2 token
             # https://docs.github.com/en/developers/apps/building-oauth-apps
@@ -58,7 +59,9 @@ find ../lua/doom/modules -name 'packages.lua' |
             if [ "$is_array" = "no" ]; then
               echo "- Github API Error: $( echo "$api_result" | jq -r .message )"
               echo "- Waiting 30 seconds before trying again... for $repo"
-              sleep 30
+
+              read -t 30 -p "retry? (y/n)" retry </dev/tty
+              echo "retry is $retry"
             else
               latest_commit=`echo $api_result | jq -r .[0].sha`
             fi
@@ -76,7 +79,9 @@ find ../lua/doom/modules -name 'packages.lua' |
           sed -r -i ".bak" "${line_number}s/commit = \"[A-z0-9]*\"/commit = \"${latest_commit}\"/" "$file_path"
           echo " - Updated to $latest_commit"
         else
-          echo " - ERROR: Did not update $repo because \`commit = "...""\` was not immediately after the repo name or there is custom logic for determining the pinned commit.  Please update this entry manually."
+          if [[ "$retry" != "y" ]]; then
+            echo " - ERROR: Did not update $repo because \`commit = \"...\"\` was not immediately after the repo name or there is custom logic for determining the pinned commit.  Please update this entry manually."
+          fi
         fi
       fi
 
@@ -87,6 +92,7 @@ find ../lua/doom/modules -name 'packages.lua' |
         index=0
         repo=''
         latest_commit=''
+        retry=''
       fi
     done < <(grep -n "^(\s+)\[\".*\"\]\s?=\s?\{" -A 2 -E "$file_path")
   done

@@ -7,7 +7,7 @@ linter.settings = {
 linter.packages = {
   ["null-ls.nvim"] = {
     "jose-elias-alvarez/null-ls.nvim",
-    commit = "2ae4a5e2e2b35716c44c104ef1afa35ecb40c444",
+    commit = "c56bf9ed31433cde3cf279b609d0480620817afa",
     after = 'nvim-lspconfig',
   },
 }
