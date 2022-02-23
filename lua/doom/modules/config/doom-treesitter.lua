@@ -15,6 +15,9 @@ return function()
         table.insert(langs, "json")
         table.insert(langs, "yaml")
         table.insert(langs, "toml")
+      -- If the lang is Terraform then add parser for HCL
+      elseif lang:find("terraform") then
+        table.insert(langs, "hcl")
       else
         lang = lang:gsub("%s+%+lsp(%(%a+%))", ""):gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
         table.insert(langs, lang)

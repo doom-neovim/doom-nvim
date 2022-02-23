@@ -79,6 +79,7 @@ M.modules = {
     -- "comment",         -- Better annotations and comments
     -- "config",          -- Configuration files (JSON, YAML, TOML)
     -- "dockerfile",      -- Do you like containers, right?
+    -- "terraform",       -- Terraform and HCL support
   },
   utilities = {
     -- "lazygit",         -- LazyGit integration for Neovim, requires LazyGit

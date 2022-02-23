@@ -51,6 +51,7 @@ return function()
     -- solang = { 'solang' },
     -- sorbet = { 'sorbet' },
     svelte = { "svelte" },
+    terraform = { "terraformls" },
     typescript = { "tsserver" },
     -- vala = { 'valals' },
     vim = { "vimls" },
