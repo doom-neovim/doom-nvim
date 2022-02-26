@@ -77,8 +77,6 @@ brew install neovim --HEAD
 nvim --version
 ```
 
-MacPorts currently only has Neovim v0.4.4
-
 #### On Windows
 
 ##### [Chocolatey](https://community.chocolatey.org/)
