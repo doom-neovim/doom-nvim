@@ -166,7 +166,6 @@ end
 
 -- Show line diagnostics on hover
 if not config.doom.enable_lsp_virtual_text then
-  local show_diagnostics_function = ""
   table.insert(autocmds["doom_extras"], {
     "CursorHold,CursorHoldI",
     "<buffer>",
