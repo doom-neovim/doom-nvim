@@ -1,8 +1,8 @@
 local auto_install = {}
 
 auto_install.settings = {
-  lsp_dir = vim.fn.stdpath("data") .. "/lsp-install/",
-  dap_dir = vim.fn.stdpath("data") .. "/dap-install/",
+  lsp_dir = vim.fn.stdpath("data") .. "/lsp-install",
+  dap_dir = vim.fn.stdpath("data") .. "/dap-install",
 }
 
 local is_plugin_disabled = require("doom.utils").is_plugin_disabled
