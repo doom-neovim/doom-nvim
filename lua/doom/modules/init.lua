@@ -18,7 +18,6 @@ if vim.fn.empty(vim.fn.glob(packer_path)) > 0 then
 end
 
 -- Load packer
-vim.cmd([[packadd packer.nvim]])
 local packer = require("packer")
 
 -- Change some defaults

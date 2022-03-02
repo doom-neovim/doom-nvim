@@ -44,7 +44,6 @@ local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 required.packages = {
   ["packer.nvim"] = {
     "wbthomason/packer.nvim",
-    opt = true,
   },
   ["nvim-treesitter"] = {
     "nvim-treesitter/nvim-treesitter",
