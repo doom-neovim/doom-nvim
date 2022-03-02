@@ -56,6 +56,7 @@ return {
     "vue",
     "tailwindcss",
     "rust",
+    "c_sharp",
   }
 }
 
