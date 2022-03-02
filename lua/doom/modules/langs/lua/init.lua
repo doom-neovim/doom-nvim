@@ -60,15 +60,6 @@ lua.autocommands = {
             },
           },
         },
-        capabilities = utils.get_capabilities(),
-        on_attach = function(client)
-          if not is_plugin_disabled("illuminate") then
-            utils.illuminate_attach(client)
-          end
-          if type(doom.modules.lua.settings.on_attach) == "function" then
-            doom.modules.lua.settings.on_attach(client)
-          end
-        end,
       })
 
       langs_utils.use_lsp('sumneko_lua', {

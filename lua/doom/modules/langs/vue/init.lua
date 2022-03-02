@@ -77,13 +77,12 @@ vue.autocommands = {
     "FileType",
     "vue",
     function()
-      local utils = require("doom.utils")
-      local is_plugin_disabled = utils.is_plugin_disabled
       local lspconfig = require("lspconfig")
       local lspconfig_util = require("lspconfig/util")
       local langs_utils = require('doom.modules.langs.utils')
       
       -- volar needs works with typescript server, needs to get the typescript server from the project's node_modules
+      local volar = lspconfig.volar -- Get the volar config to set the `cmd`
       local function on_new_config(new_config, new_root_dir)
         local function get_typescript_server_path(root_dir)
           local project_root = lspconfig_util.find_node_modules_ancestor(root_dir)
@@ -108,18 +107,8 @@ vue.autocommands = {
       end
       local volar_root_dir = lspconfig_util.root_pattern("package.json")
       
-      -- Runtime config with extra capabilities
-      local config = langs_utils.lsp_ensure_client_capabilities({
-        on_attach = function(client)
-          if not is_plugin_disabled("illuminate") then
-            utils.illuminate_attach(client)
-          end
-        end
-      })
-      local volar = lspconfig.volar -- Get the volar config to set the `cmd`
-      
       -- Contains base configuration necessary for volar to start
-      local base_config = vim.tbl_deep_extend('keep', config, {
+      local base_config = {
         default_config = {
           cmd = volar.document_config.default_config.cmd,
           root_dir = volar_root_dir,
@@ -130,7 +119,7 @@ vue.autocommands = {
             },
           },
         },
-      })
+      }
       
       
       local volar_api_config = vim.tbl_deep_extend('force', {}, doom.modules.vue.settings.volar_api, base_config)
@@ -155,7 +144,7 @@ vue.autocommands = {
       
       vim.defer_fn(function()
         local ts_install = require("nvim-treesitter.install")
-        ts_install.ensure_installed("vue", "css", "html", "scss")
+        ts_install.ensure_installed("vue", "css", "scss", "html", "scss", "javascript", "typescript")
       end, 0)
       
       -- Setup null-ls
@@ -168,7 +157,7 @@ vue.autocommands = {
           null_ls.builtins.diagnostics.eslint_d,
         })
       end
-          end,
+    end,
     once = true,
   },
 }

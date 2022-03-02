@@ -8,25 +8,12 @@ typescript.autocommands = {
     "FileType",
     "typescript",
     function()
-      local utils = require("doom.utils")
-      local is_plugin_disabled = utils.is_plugin_disabled
       local langs_utils = require('doom.modules.langs.utils')
-      
-      local config = vim.tbl_deep_extend("force", {
-        capabilities = utils.get_capabilities(),
-        on_attach = function(client)
-          if not is_plugin_disabled("illuminate") then
-            utils.illuminate_attach(client)
-          end
-        end,
-      })
-      
-      langs_utils.use_lsp('tsserver', {
-        config = config,
-      })
+      langs_utils.use_lsp('tsserver')
       
       vim.defer_fn(function()
-        require("nvim-treesitter.install").update()("typescript")
+        local ts_install = require("nvim-treesitter.install")
+        ts_install.ensure_installed("typescript")
       end, 0)
       
       -- Setup null-ls

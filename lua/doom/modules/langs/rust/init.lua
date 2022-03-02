@@ -8,22 +8,9 @@ rust.autocommands = {
     "FileType",
     "rust",
     function()
-      local utils = require("doom.utils")
       local langs_utils = require('doom.modules.langs.utils')
-      local is_plugin_disabled = utils.is_plugin_disabled
       
-      local config = vim.tbl_deep_extend("force", {
-        capabilities = utils.get_capabilities(),
-        on_attach = function(client)
-          if not is_plugin_disabled("illuminate") then
-            utils.illuminate_attach(client)
-          end
-        end,
-      })
-      
-      langs_utils.use_lsp('rust_analyzer', {
-        config = config,
-      })
+      langs_utils.use_lsp('rust_analyzer')
       
       vim.defer_fn(function()
         require("nvim-treesitter.install").ensure_installed("rust")
@@ -32,7 +19,6 @@ rust.autocommands = {
       -- Setup null-ls
       if doom.linter then
         local null_ls = require("null-ls")
-      
         langs_utils.use_null_ls_source({
           null_ls.builtins.formatting.rustfmt
         })
