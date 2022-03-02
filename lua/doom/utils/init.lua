@@ -116,6 +116,10 @@ utils.make_augroup = function(group_name, cmds, existing_group)
   end
 end
 
+utils.get_sysname = function ()
+  return vim.loop.os_uname().sysname
+end
+
 local index = 1
 utils.unique_index = function()
   local ret = index
