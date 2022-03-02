@@ -142,7 +142,7 @@ tabline.settings = {
 tabline.packages = {
   ["bufferline.nvim"] = {
     "akinsho/bufferline.nvim",
-    commit = "305d4fd693b6ebcb9ac95cf16c0693ce64960162",
+    commit = "871495d9e2dbe3314a421fd2d5e46f47de7ee537",
     event = "BufAdd",
   },
 }

@@ -5,7 +5,7 @@ show_registers.settings = {}
 show_registers.packages = {
   ["registers.nvim"] = {
     "tversteeg/registers.nvim",
-    commit = "941a36e99bccc48fa9569a03b02ec95fb9c5222c",
+    commit = "dd2bfa41b2c43d65f1f715e07acf1f1d34b37de8",
     opt = true,
   },
 }

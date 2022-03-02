@@ -50,7 +50,7 @@ telescope.settings = {
 telescope.packages = {
   ["telescope.nvim"] = {
     "nvim-telescope/telescope.nvim",
-    commit = "f262e7d56d37625613c5de0df5a933cccacf13c5",
+    commit = "567ec85b157f1606b500a0f755181f284810a28e",
     cmd = "Telescope",
     opt = true,
   },
@@ -95,7 +95,6 @@ end
 telescope.binds = function ()
   local utils = require("doom.utils")
   local is_plugin_disabled = utils.is_plugin_disabled
-
 
   local binds = {
     "<leader>",

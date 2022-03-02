@@ -123,7 +123,7 @@ local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 lsp.packages = {
   ["nvim-lspconfig"] = {
     "neovim/nvim-lspconfig",
-    commit = "830bc031e2b82d7882b610c6e90f00b1d08bcb2e",
+    commit = "cdc2ec53e028d32f06c51ef8b2837ebb8460ef45",
     opt = true,
     cmd = {
       "LspInfo",
@@ -135,7 +135,7 @@ lsp.packages = {
   },
   ["nvim-cmp"] = {
     "hrsh7th/nvim-cmp",
-    commit = "26a9184c888d6c6a5d9782f5b15e02ddd3e8a663",
+    commit = "1001683bee3a52a7b7e07ba9d391472961739c7b",
     after = is_plugin_disabled("snippets") or "LuaSnip",
   },
   ["cmp-nvim-lua"] = {
@@ -155,7 +155,7 @@ lsp.packages = {
   },
   ["cmp-buffer"] = {
     "hrsh7th/cmp-buffer",
-    commit = "f83773e2f433a923997c5faad7ea689ec24d1785",
+    commit = "d66c4c2d376e5be99db68d2362cd94d250987525",
     after = "nvim-cmp",
   },
   ["cmp_luasnip"] = {
@@ -166,7 +166,7 @@ lsp.packages = {
   },
   ["lsp_signature.nvim"] = {
     "ray-x/lsp_signature.nvim",
-    commit = "42eb06b5903dc212acb03f276e6e3fd24f92593c",
+    commit = "f7c308e99697317ea572c6d6bafe6d4be91ee164",
     after = "nvim-lspconfig",
     opt = true,
   },

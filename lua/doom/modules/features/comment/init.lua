@@ -44,7 +44,7 @@ comment.settings = {
 comment.packages = {
   ["Comment.nvim"] = {
     "numToStr/Comment.nvim",
-    commit = "84648f1d2d1c69b693437c9b0b12e84f526c3671",
+    commit = "18a8dc0bbdfc089d5f5a850e4640d8e75381c598",
     module = "Comment",
   },
 }
