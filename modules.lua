@@ -57,6 +57,7 @@ return {
     "tailwindcss",
     "rust",
     "c_sharp",
+    "bash",
   }
 }
 
