@@ -320,14 +320,7 @@ end
 required.autocommands = function ()
   local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
-  local autocmds = {
-    { "BufWritePost", "*/doom/**/*.lua", function() require("doom.utils.reloader").full_reload() end },
-    {
-      "BufWritePost",
-      "*/doom-nvim/modules.lua,*/doom-nvim/config.lua",
-      function() require("doom.utils.reloader").full_reload() end,
-    },
-  }
+  local autocmds = {}
 
   if doom.autosave then
     table.insert(autocmds, { "TextChanged,InsertLeave", "<buffer>", "silent! write" })
