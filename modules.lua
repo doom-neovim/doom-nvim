@@ -48,14 +48,16 @@ return {
     -- "zen",
   },
   langs = {
-    -- LANGS
     "lua",
+
     "javascript",
     "typescript",
     "css",
     "vue",
     "tailwindcss",
+
     "rust",
+    "cpp",
     "c_sharp",
     "bash",
   }
