@@ -203,18 +203,19 @@ config.load = function()
     -- Combine core modules with user-enabled modules
     local all_modules = vim.tbl_deep_extend('keep', {
       core = {
-        'core'
+        'core',
+        'nest',
+        'treesitter',
       }
     }, enabled_modules)
   
     for section_name, section_modules in pairs(all_modules) do
       for _, module_name in pairs(section_modules) do
-        local ok, module, err = xpcall(require, debug.traceback, ("doom.modules.%s.%s"):format(section_name, module_name))
-        if err then
-          print(vim.inspect(err))
-        end
+        local ok, result = xpcall(require, debug.traceback, ("doom.modules.%s.%s"):format(section_name, module_name))
         if ok then
-          doom.modules[module_name] = module
+          doom.modules[module_name] = result
+        else 
+          print(vim.inspect(result))
         end
       end
     end

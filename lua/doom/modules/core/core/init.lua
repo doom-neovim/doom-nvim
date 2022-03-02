@@ -2,42 +2,6 @@ local required = {}
 
 required.settings = {
   mapper = {},
-  treesitter = {
-    highlight = {
-      enable = true,
-    },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "gnn",
-        node_incremental = "grn",
-        scope_incremental = "grc",
-        node_decremental = "grm",
-      },
-    },
-    indent = {
-      enable = true,
-    },
-    playground = {
-      enable = true,
-    },
-    context_commentstring = {
-      enable = true,
-    },
-    autotag = {
-      enable = true,
-      filetypes = {
-        "html",
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact",
-        "svelte",
-        "vue",
-        "markdown",
-      },
-    },
-  },
 }
 local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
@@ -45,44 +9,21 @@ required.packages = {
   ["packer.nvim"] = {
     "wbthomason/packer.nvim",
   },
-  ["nvim-treesitter"] = {
-    "nvim-treesitter/nvim-treesitter",
-    commit = "97cc325a173439366cdb5f181acb83c7836e6bb9",
-    run = ":TSUpdate",
-    branch = vim.fn.has("nvim-0.6.0") == 1 and "master" or "0.5-compat",
-  },
-  ["nvim-ts-context-commentstring"] = {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    commit = "097df33c9ef5bbd3828105e4bee99965b758dc3f",
-    opt = true,
-    after = "nvim-treesitter",
-  },
-  ["nvim-ts-autotag"] = {
-    "windwp/nvim-ts-autotag",
-    commit = "5149f0c6557fa4a492d82895a564f4cd4a9c7715",
-    opt = true,
-    after = "nvim-treesitter",
-  },
   -- Required by some treesitter modules
   ["aniseed"] = {
     "Olical/aniseed",
-    commit = "7968693e841ea9d2b4809e23e8ec5c561854b6d6",
+    commit = "a955096c566843302a0a509680b92ab276488add",
     module_pattern = "aniseed",
   },
   ["plenary.nvim"] = {
     "nvim-lua/plenary.nvim",
-    commit = "66472128c3191b786966798fc956a689705ab1be",
+    commit = "2a278c8a12a399e25b78a43ebcd4f3996cd4e4b6",
     module = "plenary",
   },
   ["popup.nvim"] = {
     "nvim-lua/popup.nvim",
     commit = "b7404d35d5d3548a82149238289fa71f7f6de4ac",
     module = "popup",
-  },
-  ["nest.nvim"] = {
-    "connorgmeehan/nest.nvim",
-    branch = "integrations-api",
-    after = "nvim-mapper",
   },
   ["nvim-mapper"] = {
     "lazytanuki/nvim-mapper",
@@ -96,57 +37,8 @@ required.packages = {
 }
 
 required.configure_functions = {}
-required.configure_functions["nest.nvim"] = function()
-  local utils = require("doom.utils")
-  local is_plugin_disabled = utils.is_plugin_disabled
-
-  local nest_package = require("nest")
-
-  nest_package.enable(require("nest.integrations.mapper"))
-  if not is_plugin_disabled("whichkey") then
-    local whichkey_integration = require("nest.integrations.whichkey")
-    nest_package.enable(whichkey_integration)
-  end
-
-  for _, module in pairs(doom.modules) do
-    if module.binds then
-      nest_package.applyKeymaps(type(module.binds) == 'function' and module.binds() or module.binds)
-    end
-  end
-end
 required.configure_functions["nvim-mapper"] = function()
   require("nvim-mapper").setup(doom.modules.core.settings.mapper)
-end
-required.configure_functions["nvim-treesitter"] = function()
-  local is_plugin_disabled = require("doom.utils").is_plugin_disabled
-  require("nvim-treesitter.configs").setup(vim.tbl_deep_extend("force", doom.modules.core.settings.treesitter, {
-    autopairs = {
-      enable = not is_plugin_disabled("autopairs"),
-    },
-  }))
-
-  --  Check if user is using clang and notify that it has poor compatibility with treesitter
-  --  WARN: 19/11/2021 | issues: #222, #246 clang compatibility could improve in future
-  vim.defer_fn(function()
-    local log = require("doom.utils.logging")
-    local utils = require("doom.utils")
-    -- Matches logic from nvim-treesitter
-    local compiler = utils.find_executable_in_path({
-      vim.fn.getenv("CC"),
-      "cc",
-      "gcc",
-      "clang",
-      "cl",
-      "zig",
-    })
-    local version = vim.fn.systemlist(compiler .. (compiler == "cl" and "" or " --version"))[1]
-
-    if version:match("clang") then
-      log.warn(
-        "doom-treesitter:  clang has poor compatibility compiling treesitter parsers.  We recommend using gcc, see issue #246 for details.  (https://github.com/NTBBloodbath/doom-nvim/issues/246)"
-      )
-    end
-  end, 1000)
 end
 
 required.binds = function ()
