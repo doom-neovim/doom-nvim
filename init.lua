@@ -28,4 +28,7 @@ vim.defer_fn(function()
   then
     vim.cmd("Dashboard")
   end
+  -- Fix langs not starting on first file load
+  local ft = vim.bo.filetype
+  vim.cmd('doautocmd FileType ' .. ft)
 end, 0)
