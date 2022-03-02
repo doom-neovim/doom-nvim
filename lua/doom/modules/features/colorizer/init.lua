@@ -1,6 +1,5 @@
 local colorizer = {}
 
-null[1]
 colorizer.settings = {
   "*",
   css = { rgb_fn = true },
