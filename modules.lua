@@ -33,6 +33,7 @@ return {
     -- "show_registers",
     "snippets",
     "statusline",
+    "fidget",
     "projects",
     -- "suda",
     -- "superman",
@@ -50,6 +51,8 @@ return {
   langs = {
     "lua",
     "python",
+    "bash",
+    "config",
 
     "javascript",
     "typescript",
@@ -59,8 +62,10 @@ return {
 
     "rust",
     "cpp",
+
     "c_sharp",
-    "bash",
+    "kotlin",
+    "java",
   }
 }
 
