@@ -24,7 +24,7 @@ haskell.autocommands = {
       end, 0)
 
       -- Setup null-ls
-      if doom.linter then
+      if doom.modules.linter then
         local null_ls = require("null-ls")
 
         langs_utils.use_null_ls_source({

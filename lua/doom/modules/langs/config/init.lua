@@ -42,6 +42,7 @@ config.autocommands = {
     "FileType",
     "json,yaml,toml",
     function()
+      local langs_utils = require('doom.modules.langs.utils')
       -- langs_utils.use_lsp(doom.modules.config.settings.toml_language_server_name)
       -- langs_utils.use_lsp(doom.modules.config.settings.yaml_language_server_name)
 
@@ -50,7 +51,7 @@ config.autocommands = {
       end, 0)
 
       -- Setup null-ls
-      if doom.linter then
+      if doom.modules.linter then
         local null_ls = require("null-ls")
 
         langs_utils.use_null_ls_source({

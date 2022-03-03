@@ -13,8 +13,8 @@ module.use_null_ls_source = function(sources)
     local methods = type(source.method) == 'string' and source.method or table.concat(source.method, ' ')
     local key = source.name .. methods
     -- If it's unique, register it
-    if not table[key] then
-      table[key] = source
+    if not registered_sources[key] then
+      registered_sources[key] = source
       null_ls.register(source)
     else
       log.warn(string.format('Attempted to register a duplicate null_ls source. ( %s with methods %s).', source.name, methods))
@@ -30,7 +30,7 @@ module.use_lsp = function(lsp_name, _opts)
   local opts = _opts or {}
   local config_name = opts.name and opts.name or lsp_name
   local is_custom_config = opts.name ~= nil or lsp_configs[config_name] ~= nil
-  
+
   if opts.config and is_custom_config then
     lsp_configs[config_name] = opts.config
   end
@@ -56,7 +56,7 @@ module.use_lsp = function(lsp_name, _opts)
   -- Start server and bind to buffers
   local start_lsp = function(server)
     local final_config = vim.tbl_deep_extend('keep', opts.config or {}, capabilities_config)
-    if server and not is_custom_config then -- If using lsp-installer 
+    if server and not is_custom_config then -- If using lsp-installer
       server:setup(final_config)
     else
       lsp[config_name].setup(final_config)

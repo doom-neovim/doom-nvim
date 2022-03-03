@@ -1,17 +1,16 @@
 local linter = {}
 
 linter.settings = {
-  format_on_save = true,
+  format_on_save = false,
 }
 
 linter.packages = {
   ["null-ls.nvim"] = {
     "jose-elias-alvarez/null-ls.nvim",
     commit = "a1804de23ce354c982aa08c57d3ed89aad8a15a9",
-    after = 'nvim-lspconfig',
+    after = "nvim-lspconfig",
   },
 }
-
 
 linter.configure_functions = {}
 linter.configure_functions["null-ls.nvim"] = function()
@@ -19,7 +18,10 @@ linter.configure_functions["null-ls.nvim"] = function()
 
   null_ls.setup({
     on_attach = function(client)
-      if client.resolved_capabilities.document_formatting and doom.modules.linter.settings.format_on_save then
+      if
+        client.resolved_capabilities.document_formatting
+        and doom.modules.linter.settings.format_on_save
+      then
         vim.cmd([[
         augroup LspFormatting
           autocmd! * <buffer>
@@ -27,12 +29,18 @@ linter.configure_functions["null-ls.nvim"] = function()
         augroup END
         ]])
       end
-    end
+    end,
   })
 end
 
 linter.binds = {
-  { '<leader>cf', function() vim.lsp.buf.formatting_sync() end, name = 'Format/Fix' },
+  {
+    "<leader>cf",
+    function()
+      vim.lsp.buf.formatting_sync()
+    end,
+    name = "Format/Fix",
+  },
 }
 
 return linter

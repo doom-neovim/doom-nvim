@@ -1,6 +1,9 @@
 local lua = {}
 
 lua.settings = {
+  formatter = {
+    enabled = true,
+  },
   settings = {
     Lua = {
       runtime = {
@@ -44,9 +47,7 @@ lua.autocommands = {
     "FileType",
     "lua",
     function()
-      local utils = require("doom.utils")
-      local is_plugin_disabled = utils.is_plugin_disabled
-      local langs_utils = require('doom.modules.langs.utils')
+      local langs_utils = require("doom.modules.langs.utils")
 
       local runtime_path = vim.split(package.path, ";")
       table.insert(runtime_path, "lua/?.lua")
@@ -62,7 +63,7 @@ lua.autocommands = {
         },
       })
 
-      langs_utils.use_lsp('sumneko_lua', {
+      langs_utils.use_lsp("sumneko_lua", {
         config = config,
       })
 
@@ -71,11 +72,12 @@ lua.autocommands = {
       end, 0)
 
       -- Setup null-ls
-      if doom.linter then
+      if doom.modules.linter then
         local null_ls = require("null-ls")
 
         langs_utils.use_null_ls_source({
           null_ls.builtins.formatting.stylua,
+          null_ls.builtins.diagnostics.luacheck,
         })
       end
     end,
