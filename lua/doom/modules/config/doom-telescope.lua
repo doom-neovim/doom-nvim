@@ -19,7 +19,6 @@ return function()
       sorting_strategy = "descending",
       layout_strategy = "horizontal",
       prompt_prefix = "   ",
-      selection_caret = " ",
       layout_config = {
         width = 0.75,
         preview_cutoff = 120,
