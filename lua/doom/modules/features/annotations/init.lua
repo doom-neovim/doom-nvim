@@ -24,4 +24,10 @@ annotations.configure_functions["neogen"] = function()
   require("neogen").setup(doom.modules.annotations.settings)
 end
 
+annotations.binds = {
+  { '<leader>c', name = '+code', {
+    { 'g', function() require('neogen').generate() end}
+  }}
+}
+
 return annotations
