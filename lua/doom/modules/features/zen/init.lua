@@ -56,7 +56,7 @@ zen.packages = {
     event = "BufWinEnter",
   },
 }
- 
+
 
 zen.configure_functions = {}
 zen.configure_functions["TrueZen.nvim"] = function()
@@ -65,6 +65,9 @@ end
 
 zen.binds = {
   { "<F5>", ":TZAtaraxis<CR>", name = "Enter Nirvana" },
+  { "<leader>t", name = "+tweaks", {
+    { "z", ":TZAtaraxis<CR>", name = 'Toggle Zen' }
+  } }
 }
 
 return zen
