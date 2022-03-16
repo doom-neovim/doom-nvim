@@ -53,31 +53,30 @@ return {
     -- "superman",        -- Read unix man pages in neovim
     -- "symbols",         -- Navigate between code symbols using telescope
     -- "terminal",        -- Integrated terminal in neovim
-    -- "zen",             -- Distractionless coding
   },
   langs = {
     -- Scripts
     "lua",
-    "python",
-    "bash",
+    -- "python",
+    -- "bash",
 
     -- Web
-    "javascript",
-    "typescript",
-    "css",
-    "vue",
-    "tailwindcss",
+    -- "javascript",
+    -- "typescript",
+    -- "css",
+    -- "vue",
+    -- "tailwindcss",
 
     -- Compiled
-    "rust",
-    "cpp",
+    -- "rust",
+    -- "cpp",
 
     -- JIT
-    "c_sharp",
-    "kotlin",
-    "java",
+    -- "c_sharp",
+    -- "kotlin",
+    -- "java",
 
-    "config",             -- JSON, YAML, TOML
+    -- "config",             -- JSON, YAML, TOML
   }
 }
 
