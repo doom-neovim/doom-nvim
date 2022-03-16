@@ -55,7 +55,7 @@ for module_name, module in pairs(doom.modules) do
   if module.packages then
     for dependency_name, packer_spec in pairs(module.packages) do
       -- Set packer_spec to configure function
-      if module.configure_functions[dependency_name] then
+      if module.configure_functions and module.configure_functions[dependency_name] then
         packer_spec.config = module.configure_functions[dependency_name]
       end
 
