@@ -46,7 +46,7 @@ symbols.binds = {
         "o",
         name = "+open/close",
         {
-          { "c", "<cmd>SymbolsOutline<CR>", name = "Symbol outline" },
+          { "s", "<cmd>SymbolsOutline<CR>", name = "Symbol outline" },
         },
       },
     },
