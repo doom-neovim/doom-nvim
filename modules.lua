@@ -1,5 +1,5 @@
--- modules.lua - Doom nvim module selection
 --
+-- modules.lua - Doom nvim module selection
 -- modules.lua controls what Doom nvim plugins modules are enabled and
 -- what features are being used.
 --
@@ -31,7 +31,7 @@ return {
     "tabline",            -- Tab bar buffer switcher
     "dashboard",          -- A pretty dashboard upon opening
     "trouble",            -- A pretty diagnostic viewer
-    "statusline",         -- A pretty status line at the bottom of the buffer
+    "statusline2",         -- A pretty status line at the bottom of the buffer
     -- "minimap",         -- Shows current position in document
 
     -- Tools

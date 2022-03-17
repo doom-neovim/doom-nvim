@@ -37,25 +37,31 @@ local options = {
   dim_inactive = true,
 }
 local pallets = {
+  dawnfox = {
+    bg2 = '#F9EFEC',
+    bg3 = '#ECE3DE',
+    sel1 = '#EEF1F1',
+    sel2 = '#D8DDDD',
+  }
 }
 local specs = {
 }
 local groups = {
   TelescopeNormal = { fg = 'fg0', bg = 'bg0' },
-  TelescopePromptTitle = { fg = "bg0", bg = "pallet.green" },
+  TelescopePromptTitle = { fg = "pallet.green", bg = "bg1" },
   TelescopePromptBorder = { fg = "bg1", bg = "bg1" },
   TelescopePromptNormal = { fg = "fg1", bg = "bg1" },
   TelescopePromptPrefix = { fg = "fg1", bg = "bg1" },
 
-  TelescopeResultsTitle = { fg = "bg3", bg = "pallet.green" },
-  TelescopeResultsBorder = { fg = 'bg3', bg = 'bg3' },
-  TelescopeResultsNormal = { fg = 'fg1', bg = 'bg3' },
+  TelescopeResultsTitle = { fg = "pallet.green", bg = "bg2" },
+  TelescopeResultsBorder = { fg = 'bg2', bg = 'bg2' },
+  TelescopeResultsNormal = { fg = 'fg1', bg = 'bg2' },
 
-  TelescopePreviewTitle = { fg = "bg1", bg = "pallet.green" },
+  TelescopePreviewTitle = { fg = "pallet.green", bg = "bg1" },
   TelescopePreviewNormal = { bg = 'bg1' },
   TelescopePreviewBorder = { fg = "bg1", bg = "bg1" },
   TelescopeMatching = { fg = "error" },
-  CursorLine = { bg = "bg2" },
+  CursorLine = { bg = "sel1", link = "" },
 }
 require('nightfox').setup({
   options = options,
