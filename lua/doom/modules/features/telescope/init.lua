@@ -147,6 +147,7 @@ telescope.binds = function ()
         "s",
         name = "+search",
         {
+          { "r", "<cmd>Telescope resume<CR>", name = "Resume previous search" },
           { "t", "<cmd>Telescope live_grep<CR>", name = "Search text" },
           { "b", "<cmd>Telescope current_buffer_fuzzy_find<CR>", name = "Text in buffer" },
           { "h", "<cmd>Telescope command_history<CR>", name = "Recent commands" },
