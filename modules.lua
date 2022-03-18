@@ -18,7 +18,7 @@ return {
 
     -- Editor
     "auto_session",       -- Remember sessions between loads
-    "colorizer",          -- Show colours in neovim
+    "colorizer",          -- Show colors in neovim
     "editorconfig",       -- Support editorconfig files
     "gitsigns",           -- Show git changes in sidebar
     "illuminate",         -- Highlight other copies of the word you're hovering on
