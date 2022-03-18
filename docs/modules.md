@@ -6,180 +6,178 @@ Doom Nvim consists of around 40 plugins and growing.
 A Doom Nvim module is a bundle of packages, configurations, autocommands and
 binds, organized into a unit that can be toggled easily.
 
-> **NOTE**: Doom Nvim uses [packer.nvim] as its plugins manager.
+Modules are grouped into 3 categories:
+- `features` (optional, extend doom-nvim with extra capabilities)
+- `langs` (optional, add support for a language)
+- `core` (cannot be disabled, required for core functionality).
 
-## Toggling Doom Nvim Modules
+ You can enable or disable doom modules by commenting them out in the `modules.lua` file
+(`<leader>Dm` or `~/.config/nvim/modules.lua`).
 
-You can easily toggle Doom Nvim Modules by tweaking your `doom-nvim/modules.lua` file
-(found in `~/.config/doom-nvim`). Return from this file a flat list of modules
-you want. The `core` module is required and need not be listed.
+## All modules
 
-## List of modules
+### `core` modules
 
-First of all, we must know which modules are there and their plugins.
+- [`treesitter`](../lua/doom/modules/core/treesitter) An incremental parsing system for programming tools.
+- [`nest`](../lua/doom/modules/core/nest) Used for keybind management, integrates with `whichkey` and `mapper`.
 
-> **NOTE:** all modules can be disabled, except `core`. Also, anything can be
-overriden in `doom-nvim/config.lua`, from packer specs to vim options.
+### `features` modules
 
-### Essentials in core
+- **Language related modules**
+  - [`annotations`](../lua/doom/modules/features/annotations) Code annotation generator
+  - [`auto_install`](../lua/doom/modules/features/auto_install) Auto install LSP providers
+  - [`autopairs`](../lua/doom/modules/features/autopairs) Automatically close character pairs
+  - [`comment`](../lua/doom/modules/features/comment) Generate comments in any language.
+  - [`linter`](../lua/doom/modules/features/linter) Format and lint your code
+  - [`snippets`](../lua/doom/modules/features/snippets) Code snippets for all languages
 
-This is the one module you cannot disable. But why?
+- **Editor modules**
+  - [`auto_session`](../lua/doom/modules/features/auto_session) Return to previous sessions
+  - [`colorizer`](../lua/doom/modules/features/colorizer) Show colors in editor
+  - [`editorconfig`](../lua/doom/modules/features/editorconfig) .editorconfig file support
+  - [`gitsigns`](../lua/doom/modules/features/gitsigns) Show changes near linenumber
+  - [`illuminate`](../lua/doom/modules/features/illuminate) Highlight other occurances of the hovered word
+  - [`indentlines`](../lua/doom/modules/features/indentlines) Explicitly show indentation
+  - [`range_highlight`](../lua/doom/modules/features/range_highlight) Highlight selected range as you type commands
+  - [`todo_comments`](../lua/doom/modules/features/todo_comments) Highlights TODO: comments and more
+- **UI modules**
+  - [`fidget`](../lua/doom/modules/features/fidget) Shows LSP loading status
+  - [`tabline`](../lua/doom/modules/features/tabline) Tabbed buffer switcher
+  - [`dashboard`](../lua/doom/modules/features/dashboard) A pretty dashboard upon opening doom-nvim.
+  - [`trouble`](../lua/doom/modules/features/trouble) A pretty diagnostics viewer
+  - [`minimap`](../lua/doom/modules/features/minimap) Shows current position in document
+  - [`whichkey`](../lua/doom/modules/features/whichkey) An interactive keybind cheatsheet
+- **Tool modules**
+  - [`dap`](../lua/doom/modules/features/dap) Debug adapter protocol for neovim
+  - [`explorer`](../lua/doom/modules/features/explorer) File explorer in the sidebar
+  - [`neorg`](../lua/doom/modules/features/neorg) Organise your life
+  - [`telescope`](../lua/doom/modules/features/telescope) Search files, text, commands and more
+  - [`projects`](../lua/doom/modules/features/projects) Quick project switching
 
-That is because these plugins are the core of Doom, why would you want a
-framework without these basic functionalies? These plugins are the following:
+<!--
+  TODO: Add remaining modules
+-->
 
-- [packer.nvim]
-  - A use-package inspired plugin manager for Neovim.
-- [nvim-treesitter and companions]
-  - An incremental parsing system for programming tools.
-- [nest.nvim]
-  - A better way to set keybindings and create nvim-mapper structures.
-- [nvim-mapper]
-  - A cheatsheet generator for your binds.
+### `langs` modules
 
-### UI modules
+- [`lua`](../lua/doom/modules/langs/lua) Lua language support, we recommend keeping this enabled as it also provides LSP completion for all config options.
+- [`python`](../lua/doom/modules/langs/python)
+- [`bash`](../lua/doom/modules/langs/bash)
+- [`javascript`](../lua/doom/modules/langs/javascript)
+- [`typescript`](../lua/doom/modules/langs/typescript)
+- [`css`](../lua/doom/modules/langs/css)
+- [`vue`](../lua/doom/modules/langs/vue)
+- [`tailwindcss`](../lua/doom/modules/langs/tailwindcss)
+- [`rust`](../lua/doom/modules/langs/rust)
+- [`cpp`](../lua/doom/modules/langs/cpp)
+- [`c_sharp`](../lua/doom/modules/langs/c_sharp)
+- [`kotlin`](../lua/doom/modules/langs/kotlin)
+- [`java`](../lua/doom/modules/langs/java)
+- [`config`](../lua/doom/modules/langs/config) Adds JSON, YAML, TOML support
+- Missing a language? Submit a feature request issue.
 
-- [colorizer]
-  - Fastest colorizer for Neovim.
-- [dashboard]
-  - Vim dashboard (start screen).
-- [doom_themes]
-  - Additional doom emacs' colorschemes.
-- [indentlines]
-  - Show indent lines.
-- [range_highlight]
-  - Highlights ranges you have entered in commandline
-- [statusline]
-  - Neovim statusline.
-- [tabline]
-  - Tabline, shows your buffers list at top.
-- [whichkey]
-  - Keybindings popup like Emacs' whichj-key.
-- [zen]
-  - Distraction free environment.
+## Configuring modules
 
+### Quick Guide
 
-### Lang modules
+You can access, override and configure all modules by using the `config.lua` file (`<leader>Dc` or `~/.config/nvim/config.lua`).
+This is done through the `doom.modules` global object.  Here we'll use the [`comment`](../lua/doom/modules/features/comment) module as an example.
+Compare the source file with the example overrides below.
+```lua
+--- config.lua
 
-- [neorg]
-  - Life Organization Tool.
+-- Here `comment_module` is just a reference to `../lua/doom/modules/features/comment/init.lua`
+local comment_module = doom.modules.comment
+-- Override default settings (provided by doom-nvim)
+comment_module.settings.padding = false
+-- Override package source with a fork
+comment_module.packages['Comment.nvim'] = {
+  'my_fork/Comment.nvim',
+  module = "Comment"
+}
+-- If you need more customisability than overriding the settings, you can override the configure function
+comment_module.configs["Comment.nvim"] = function () end
+-- Replace keybinds
+comment_module.binds = {
+  { "gc", "<cmd>echo Do something<CR>", name = "Comment motion"}
+}
+```
 
-### Editor modules
+> **NOTE:** If you have the `lua` language module and `lsp` feature module enabled,
+all of these properties should be auto completeable.
 
-- [autopairs]
-  - Autopairs.
-- [auto_session]
-  - A small automated session manager for Neovim.
-- [editorconfig]
-  - EditorConfig support for Neovim, let other people argue about tabs vs spaces.
-- [explorer]
-  - Tree explorer.
-- [formatter]
-  - File formatting.
-- [gitsigns]
-  - Git signs.
-- [kommentary]
-  - Comments plugin.
-- [lsp]
-  - Language Server Protocols ([cmp] + [lspconfig]).
-- [minimap]
-  - Code minimap, requires [wfxr/code-minimap](https://github.com/wfxr/code-minimap).
-- snippets
-  - Code snippets ([LuaSnip] + [friendly-snippets]).
-- [symbols]
-  - LSP symbols and tags.
-- [telescope]
-  - Highly extendable fuzzy finder over lists.
-- [terminal]
-  - Terminal for Neovim.
+### Advanced
+<!-- TODO: Proof-read and finalise this section -->
 
-### Utilities modules
+#### Limitations
 
-- [lazygit]
-  - LazyGit integration for neovim, requires LazyGit.
-- [neogit]
-  - Magit for Neovim.
-- [suda]
-  - Write and read files without sudo permissions.
-- [superman]
-  - Manage man files.
-- [restclient]
-  - A fast Neovim http client.
+#### Module lifecycle
+1. Modules are defined in `modules.lua`.
+2. Doom loads the config for each module, saves it to `doom.modules`.
+3. User can override the settings for a module in `config.lua`
+4. Doom executes the module, loads and installs the dependencies, sets the keybinds and autocommands.
 
-## Managing modules
+#### Module spec
 
-Configurations go in `doom-nvim/config.lua`. In this file, a `doom` global variable
-is injected with defaults suh that you can override or insert to your liking.
+These are the possible values a
 
-Common patterns:
+```lua
+module.settings:  table                             -- Table of settings that can be tweaked
+module.packages:  table<string,table<PackerSpec>>   -- Table of packer specs
+module.configs:   table<string,function>            -- Table of plugin config functions relating to the packer specs
+module.binds:     table<NestConfig>|function -> table<NestConfig> -- Table of NestConfig or function that returns Table of NestConfig
+module.autocmds:  table<AutoCmd>|function -> table<AutoCmd>       -- Table of AutoCmds (see below) or function that returns a table of AutoCmds
+```
 
-> **NOTE**: prefer setting the leaf keys, setting an entire table will override
-> everything.
+```lua
+local module = {}
 
-- Install package/override existing if name is already there:
-  ```lua
-  -- Use fork.
-  doom.packages[name][1] = "myfork/name.nvim"
-  -- Add config to be run after module config.
-  doom.packages[name].config = function()
-    require("name.whatever").do_something({
-      -- ..
+module.settings = {...} -- Doom-nvim provided object to change settings
+
+-- Stores the packer.nvim config for all of the plugin dependencies
+module.packages = {
+  ["example-plugin.nvim"] = { -- Use the repository name as the key
+    "GithubUser/example-plugin.nvim",
+    commit = "..." -- We like to pin plugins to commits to avoid issues upgrading.
+  }
+}
+
+module.configs = {
+  ["example-plugin.nvim"] = function() -- key matches `module.packages` entry
+    require('example-plugin').setup( doom.modules.example.settings ) -- Consumes `module.settings` and uses it to config the plugin
+  end
+}
+
+-- Keybinds are defined using a modified nest.nvim table syntax.
+-- https://github.com/connorgmeehan/nest.nvim/tree/integrations-api
+module.binds = {
+  { '<leader>ff', '<cmd>:Telescope find_files<CR>', name = 'Find files'} -- `name = "..."` For `whichkey` and `mapper` integrations
+  { '<leader>cc', function() print('custom command') end, name = 'Find files' }, -- Can trigger either a `<cmd>` string or a function
+}
+
+-- If you need conditional keybinds it's recommended you use a function that returns a table instead.
+module.binds = function()
+  local binds = { ... }
+  if doom.modules.other_module then
+    table.insert(binds, {
+      '<leader>ff', function() print('this is a conditional keybind') end, name = 'My conditional keybind'
     })
   end
-  ```
-- Add binds to your liking:
-  ```lua
-  table.insert(doom.binds, { 
-    { "RnT", "<cmd>RipAndTear<CR>", name = "Until it is done" },
-  })
-  ```
-- Add autocmds (`doom_` will be prefixed to the name):
-  ```lua
-  doom.autocmds[augroup_name] = { 
-    { "BufReadPre", "*.lua", "setlocal sw=2", --[[once and nested are boolean keys here]] },
-    { "InsertEnter", "*", function() print("Lua functions are valid!") end, once = true }
-  }
-  ```
+  return binds
+end
 
-<!-- links to plugins -->
-
-[packer.nvim]: https://github.com/wbthomason/packer.nvim
-[treesitter]: https://github.com/nvim-treesitter/nvim-treesitter
-
-[auto-session]: https://github.com/rmagatti/auto-session
-[dashboard]: https://github.com/glepnir/dashboard-nvim
-[explorer]: https://github.com/kyazdani42/nvim-tree.lua
-[statusline]: https://github.com/glepnir/galaxyline.nvim
-[tabline]: https://github.com/akinsho/nvim-bufferline.lua
-[terminal]: https://github.com/akinsho/nvim-toggleterm.lua
-[symbols]: https://github.com/simrat39/symbols-outline.nvim
-[minimap]: https://github.com/wfxr/minimap.vim
-[which-key]: https://github.com/folke/which-key.nvim
-[zen]: https://github.com/kdav5758/TrueZen.nvim
-[telescope]: https://github.com/nvim-telescope/telescope.nvim
-[doom-themes]: https://github.com/GustavoPrietoP/doom-themes.nvim
-
-[gitsigns]: https://github.com/lewis6991/gitsigns.nvim
-[lazygit]: https://github.com/kdheepak/lazygit.nvim
-[neogit]: https://github.com/TimUntersberger/neogit
-[neorg]: https://github.com/vhyrro/neorg
-
-[lsp]: https://github.com/neovim/nvim-lspconfig
-[cmp]: https://github.com/hrsh7th/nvim-cmp
-[lsp-installer]: https://github.com/williamboman/nvim-lsp-installer
-[LuaSnip]: https://github.com/L3MON4D3/LuaSnip
-[friendly-snippets]: https://github.com/rafamadriz/friendly-snippets
-
-[suda]: https://github.com/lambdalisue/suda.vim
-[formatter]: https://github.com/lukas-reineke/format.nvim
-[autopairs]: https://github.com/windwp/nvim-autopairs
-[indentlines]: https://github.com/lukas-reineke/indent-blankline.nvim
-[editorconfig]: https://github.com/editorconfig/editorconfig-vim
-[kommentary]: https://github.com/b3nj5m1n/kommentary
-
-[restclient]: https://github.com/NTBBloodbath/rest.nvim
-[colorizer]: https://github.com/norcalli/nvim-colorizer.lua
-[range-highlight]: https://github.com/winston0410/range-highlight.nvim
-
-[runner]: ../lua/doom/modules/built-in/runner/README.md
-[compiler]: ../lua/doom/modules/built-in/compiler/README.md
+-- Autocmds are defined as a table with the following syntax
+-- { "event", "aupat", "command or function" }
+-- Example
+module.autocommands = {
+  { "FileType", "javascript", function() print("I'm in a javascript file now") end }
+}
+-- Similarly, autocmds can be conditional using a function
+module.autocommands = function()
+  local autocmds = {}
+  if condition then
+    table.insert(autocmds, { "FileType", "javascript", function() print("I'm in a javascript file now") end })
+  end
+  return autocmds
+end
+```
