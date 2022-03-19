@@ -231,7 +231,7 @@ config.load = function()
     -- Combine core modules with user-enabled modules
     local all_modules = vim.tbl_deep_extend('keep', {
       core = {
-        'core',
+        'doom',
         'nest',
         'treesitter',
       }
