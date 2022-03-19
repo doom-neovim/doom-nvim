@@ -2,7 +2,7 @@ local lazygit = {}
 
 lazygit.settings = {}
 
-lazygit.packages = {
+lazygit.uses = {
   ["lazygit.nvim"] = {
     "kdheepak/lazygit.nvim",
     commit = "9bceeab97668935cc6b91ab5190167d9771b5210",

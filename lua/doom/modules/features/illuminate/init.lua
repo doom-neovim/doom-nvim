@@ -13,15 +13,15 @@ illuminate.settings = {
   },
 }
 
-illuminate.packages = {
+illuminate.uses = {
   ["vim-illuminate"] = {
     "RRethy/vim-illuminate",
     commit = "db98338285574265a6ce54370b54d9f939e091bb",
   },
 }
 
-illuminate.configure_functions = {}
-illuminate.configure_functions["vim-illuminate"] = function()
+illuminate.configs = {}
+illuminate.configs["vim-illuminate"] = function()
   vim.g.Illuminate_ftblacklist = doom.modules.illuminate.settings.blacklist
 end
 

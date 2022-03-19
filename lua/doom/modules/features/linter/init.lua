@@ -4,7 +4,7 @@ linter.settings = {
   format_on_save = false,
 }
 
-linter.packages = {
+linter.uses = {
   ["null-ls.nvim"] = {
     "jose-elias-alvarez/null-ls.nvim",
     commit = "a1804de23ce354c982aa08c57d3ed89aad8a15a9",
@@ -12,8 +12,8 @@ linter.packages = {
   },
 }
 
-linter.configure_functions = {}
-linter.configure_functions["null-ls.nvim"] = function()
+linter.configs = {}
+linter.configs["null-ls.nvim"] = function()
   local null_ls = require("null-ls")
 
   null_ls.setup({

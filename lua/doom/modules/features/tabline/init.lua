@@ -139,7 +139,7 @@ tabline.settings = {
   },
 }
 
-tabline.packages = {
+tabline.uses = {
   ["bufferline.nvim"] = {
     "akinsho/bufferline.nvim",
     commit = "871495d9e2dbe3314a421fd2d5e46f47de7ee537",
@@ -148,8 +148,8 @@ tabline.packages = {
 }
 
 
-tabline.configure_functions = {}
-tabline.configure_functions["bufferline.nvim"] = function()
+tabline.configs = {}
+tabline.configs["bufferline.nvim"] = function()
   require("bufferline").setup(doom.modules.tabline.settings)
 end
 

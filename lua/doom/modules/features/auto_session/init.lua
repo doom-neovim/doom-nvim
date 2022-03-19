@@ -4,7 +4,7 @@ auto_session.settings = {
   dir = vim.fn.stdpath("data") .. "/sessions/",
 }
 
-auto_session.packages = {
+auto_session.uses = {
   ["persistence.nvim"] = {
     "folke/persistence.nvim",
     commit = "77cf5a6ee162013b97237ff25450080401849f85",
@@ -12,8 +12,8 @@ auto_session.packages = {
   },
 }
 
-auto_session.configure_functions = {}
-auto_session.configure_functions["persistence.nvim"] = function()
+auto_session.configs = {}
+auto_session.configs["persistence.nvim"] = function()
   require("persistence").setup(doom.modules.auto_session.settings)
 end
 

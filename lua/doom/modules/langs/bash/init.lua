@@ -4,7 +4,7 @@ bash.settings = {
   language_server_name = 'bashls',
 }
 
-bash.autocommands = {
+bash.autocmds = {
   {
     "FileType",
     "sh",

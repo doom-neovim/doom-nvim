@@ -35,7 +35,7 @@ dap.settings = {
   },
 }
 
-dap.packages = {
+dap.uses = {
   ["nvim-dap"] = {
     "mfussenegger/nvim-dap",
     commit = "9fcff6e02e1a549d47a2c559a4b833798537c0bc",
@@ -48,8 +48,8 @@ dap.packages = {
   },
 }
 
-dap.configure_functions = {}
-dap.configure_functions["nvim-dap-ui"] = function()
+dap.configs = {}
+dap.configs["nvim-dap-ui"] = function()
   local dap_package = require("dap")
   local dapui = require("dapui")
   dap_package.listeners.after.event_initialized["dapui_config"] = function()

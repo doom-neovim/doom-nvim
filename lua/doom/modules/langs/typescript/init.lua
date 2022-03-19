@@ -3,7 +3,7 @@ local typescript = {}
 typescript.settings = {
 }
 
-typescript.autocommands = {
+typescript.autocmds = {
   {
     "FileType",
     "typescript,typescriptreact",

@@ -61,7 +61,7 @@ whichkey.settings = {
   triggers = "auto",
 }
 
-whichkey.packages = {
+whichkey.uses = {
   ["which-key.nvim"] = {
     "folke/which-key.nvim",
     commit = "28d2bd129575b5e9ebddd88506601290bb2bb221",
@@ -69,8 +69,8 @@ whichkey.packages = {
 }
 
 
-whichkey.configure_functions = {}
-whichkey.configure_functions["which-key.nvim"] = function()
+whichkey.configs = {}
+whichkey.configs["which-key.nvim"] = function()
   vim.g.mapleader = doom.modules.whichkey.settings.leader
 
   local wk = require("which-key")

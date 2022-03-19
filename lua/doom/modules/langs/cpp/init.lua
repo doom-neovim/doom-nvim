@@ -5,7 +5,7 @@ cpp.settings = {
   language_server_name = utils.get_sysname() == 'Darwin' and 'clangd' or 'ccls',
 }
 
-cpp.autocommands = {
+cpp.autocmds = {
   {
     "FileType",
     "cpp",

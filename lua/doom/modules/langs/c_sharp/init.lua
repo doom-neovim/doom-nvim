@@ -4,7 +4,7 @@ c_sharp.settings = {
   language_server_name = 'omnisharp',
 }
 
-c_sharp.autocommands = {
+c_sharp.autocmds = {
   {
     "FileType",
     "cs",

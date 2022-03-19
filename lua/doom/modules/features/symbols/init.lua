@@ -16,7 +16,7 @@ symbols.settings = {
   width = 25,
 }
 
-symbols.packages = {
+symbols.uses = {
   ["symbols-outline.nvim"] = {
     "simrat39/symbols-outline.nvim",
     commit = "758944ebc6919c50557b6eb3a52bc41187041fe2",
@@ -31,8 +31,8 @@ symbols.packages = {
 
 
 
-symbols.configure_functions = {}
-symbols.configure_functions["symbols_outline.nvim"] = function()
+symbols.configs = {}
+symbols.configs["symbols_outline.nvim"] = function()
   vim.g.symbols_outline = doom.modules.symbols.settings
 end
 

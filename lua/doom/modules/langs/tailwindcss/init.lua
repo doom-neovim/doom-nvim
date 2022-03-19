@@ -3,7 +3,7 @@ local tailwindcss = {}
 tailwindcss.settings = {
 }
 
-tailwindcss.autocommands = {
+tailwindcss.autocmds = {
   {
     "FileType",
     "css,scss,vue,html",

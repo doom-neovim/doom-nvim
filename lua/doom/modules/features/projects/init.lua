@@ -35,7 +35,7 @@ projects.settings ={
   datapath = vim.fn.stdpath("data"),
 }
 
-projects.packages = {
+projects.uses = {
   ["project.nvim"] = {
     "ahmedkhalf/project.nvim",
     commit = "cef52b8da07648b750d7f1e8fb93f12cb9482988",
@@ -43,8 +43,8 @@ projects.packages = {
   },
 }
 
-projects.configure_functions = {}
-projects.configure_functions["project.nvim"] = function()
+projects.configs = {}
+projects.configs["project.nvim"] = function()
   require("project_nvim").setup(doom.modules.projects.settings)
 
   table.insert(doom.modules.telescope.settings.extensions, 'projects')

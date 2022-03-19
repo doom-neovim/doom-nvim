@@ -11,10 +11,10 @@ doom_reloader.settings = {
   },
 }
 
-doom_reloader.packages = {}
-doom_reloader.configure_functions = {}
+doom_reloader.uses = {}
+doom_reloader.configs = {}
 
-doom_reloader.autocommands = {
+doom_reloader.autocmds = {
   { "BufWritePost", "*/doom/**/*.lua", function() require("doom.utils.reloader").full_reload() end },
   {
     "BufWritePost",

@@ -4,7 +4,7 @@ css.settings = {
   language_server_name = 'cssls',
 }
 
-css.autocommands = {
+css.autocmds = {
   {
     "BufNewFile,BufRead",
     "*.css,*.scss,*.vue",

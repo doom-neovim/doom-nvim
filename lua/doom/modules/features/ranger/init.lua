@@ -2,7 +2,7 @@ local ranger = {}
 
 ranger.settings = {}
 
-ranger.packages = {
+ranger.uses = {
   ["ranger.vim"] = {
     "francoiscabrol/ranger.vim",
     commit = "91e82debdf566dfaf47df3aef0a5fd823cedf41c",
@@ -19,7 +19,7 @@ ranger.packages = {
   },
 }
  
-ranger.configure_functions = {}
+ranger.configs = {}
 
 ranger.binds = {
   "<leader>",

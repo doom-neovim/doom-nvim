@@ -29,7 +29,7 @@ lua.settings = {
   },
 }
 
-lua.packages = {
+lua.uses = {
   ["lua-dev.nvim"] = {
     "folke/lua-dev.nvim",
     commit = "a0ee77789d9948adce64d98700cc90cecaef88d5",
@@ -37,12 +37,12 @@ lua.packages = {
   },
 }
 
-lua.configure_functions = {}
-lua.configure_functions["lua-dev.nvim"] = function()
+lua.configs = {}
+lua.configs["lua-dev.nvim"] = function()
   require("lua-dev").setup(doom.modules.lua.settings.dev)
 end
 
-lua.autocommands = {
+lua.autocmds = {
   {
     "FileType",
     "lua",

@@ -4,7 +4,7 @@ kotlin.settings = {
   language_server_name = 'kotlin_language_server',
 }
 
-kotlin.autocommands = {
+kotlin.autocmds = {
   {
     "FileType",
     "kotlin",

@@ -3,7 +3,7 @@ local rust = {}
 rust.settings = {
 }
 
-rust.autocommands = {
+rust.autocmds = {
   {
     "FileType",
     "rust",

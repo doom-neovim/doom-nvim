@@ -7,7 +7,7 @@ auto_install.settings = {
 
 local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
-auto_install.packages = {
+auto_install.uses = {
   ["DAPInstall.nvim"] = {
     "Pocco81/DAPInstall.nvim",
     commit = "24923c3819a450a772bb8f675926d530e829665f",
@@ -30,14 +30,14 @@ auto_install.packages = {
   },
 }
 
-auto_install.configure_functions = {}
-auto_install.configure_functions["nvim-lsp-installer"] = function()
+auto_install.configs = {}
+auto_install.configs["nvim-lsp-installer"] = function()
   local lsp_installer = require("nvim-lsp-installer")
   lsp_installer.settings({
     install_root_dir = doom.modules.auto_install.settings.lsp_dir,
   })
 end
-auto_install.configure_functions["DAPInstall.nvim"] = function()
+auto_install.configs["DAPInstall.nvim"] = function()
   local dap_install = require("dap-install")
   dap_install.setup({
     installation_path = doom.modules.auto_install.settings.dap_dir,

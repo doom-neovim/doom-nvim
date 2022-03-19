@@ -54,7 +54,7 @@ dashboard.settings = {
   },
 }
 
-dashboard.packages = {
+dashboard.uses = {
   ["dashboard-nvim"] = {
     "glepnir/dashboard-nvim",
     commit = "ba98ab86487b8eda3b0934b5423759944b5f7ebd",
@@ -64,8 +64,8 @@ dashboard.packages = {
 }
 
 
-dashboard.configure_functions = {}
-dashboard.configure_functions["dashboard-nvim"] = function()
+dashboard.configs = {}
+dashboard.configs["dashboard-nvim"] = function()
   local utils = require("doom.utils")
   local is_plugin_disabled = utils.is_plugin_disabled
 
@@ -112,7 +112,7 @@ dashboard.binds = {
   },
 }
 
-dashboard.autocommands = {
+dashboard.autocmds = {
   {
     "FileType",
     "dashboard",

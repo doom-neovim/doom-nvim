@@ -74,7 +74,7 @@ explorer.settings = {
   },
 }
 
-explorer.packages = {
+explorer.uses = {
   ["nvim-tree.lua"] = {
     "kyazdani42/nvim-tree.lua",
     commit = "9b03ab40e843e251f01bccec2eca5ea9dcdebc0d",
@@ -90,8 +90,8 @@ explorer.packages = {
 }
 
 
-explorer.configure_functions = {}
-explorer.configure_functions["nvim-tree.lua"] = function()
+explorer.configs = {}
+explorer.configs["nvim-tree.lua"] = function()
   local utils = require("doom.utils")
   local is_plugin_disabled = utils.is_plugin_disabled
 

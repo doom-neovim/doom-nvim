@@ -48,7 +48,7 @@ zen.settings = {
   },
 }
 
-zen.packages = {
+zen.uses = {
   ["TrueZen.nvim"] = {
     "Pocco81/TrueZen.nvim",
     commit = "508b977d71650da5c9243698614a9a1416f116d4",
@@ -58,8 +58,8 @@ zen.packages = {
 }
 
 
-zen.configure_functions = {}
-zen.configure_functions["TrueZen.nvim"] = function()
+zen.configs = {}
+zen.configs["TrueZen.nvim"] = function()
   require("true-zen").setup(doom.modules.zen.settings)
 end
 

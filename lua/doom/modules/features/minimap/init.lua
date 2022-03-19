@@ -2,7 +2,7 @@ local minimap = {}
 
 minimap.settings = {}
 
-minimap.packages = {
+minimap.uses = {
   ["minimap.vim"] = {
     "wfxr/minimap.vim",
     commit = "c8ea2a5550b95b007631bc83908c48a3368eb57c",
@@ -18,7 +18,7 @@ minimap.packages = {
 }
 
 
-minimap.configure_functions = {}
+minimap.configs = {}
 
 minimap.binds = {
   { "<F5>", ":MinimapToggle<CR>", name = "Toggle minimap" },
