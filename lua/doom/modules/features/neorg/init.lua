@@ -33,6 +33,8 @@ neorg.packages = {
   ["neorg"] = {
     "nvim-neorg/neorg",
     commit = "acfa3929971d488afac9c392fb34b80bac4f4c71",
+    opt = "true",
+    cmd = "NeorgStart"
   }
 }
 
