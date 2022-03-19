@@ -4,8 +4,8 @@
 
 This is what you will have installed by the end of this section:
 
-- Git 2.23+
-- Neovim 0.5.0+ (Neovim 0.4.x not supported, see [faq](./faq.md#why-does-doom-nvim-only-support-neovim-05) to know why)
+- Git
+- Neovim 0.6.0+
 - GNU Find
 - **Optional**: ripgrep 11.0+ (highly recommended)
 - **Optional**: fd 7.3.0+ (known as `fd-find` on Debian, Ubuntu & derivates),
