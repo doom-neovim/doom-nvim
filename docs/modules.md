@@ -91,7 +91,7 @@ local comment_module = doom.modules.comment
 -- Override default settings (provided by doom-nvim)
 comment_module.settings.padding = false
 -- Override package source with a fork
-comment_module.packages['Comment.nvim'] = {
+comment_module.uses['Comment.nvim'] = {
   'my_fork/Comment.nvim',
   module = "Comment"
 }
@@ -123,7 +123,7 @@ These are the possible values a
 
 ```lua
 module.settings:  table                             -- Table of settings that can be tweaked
-module.packages:  table<string,table<PackerSpec>>   -- Table of packer specs
+module.uses:  table<string,table<PackerSpec>>   -- Table of packer specs
 module.configs:   table<string,function>            -- Table of plugin config functions relating to the packer specs
 module.binds:     table<NestConfig>|function -> table<NestConfig> -- Table of NestConfig or function that returns Table of NestConfig
 module.autocmds:  table<AutoCmd>|function -> table<AutoCmd>       -- Table of AutoCmds (see below) or function that returns a table of AutoCmds
@@ -135,7 +135,7 @@ local module = {}
 module.settings = {...} -- Doom-nvim provided object to change settings
 
 -- Stores the packer.nvim config for all of the plugin dependencies
-module.packages = {
+module.uses = {
   ["example-plugin.nvim"] = { -- Use the repository name as the key
     "GithubUser/example-plugin.nvim",
     commit = "..." -- We like to pin plugins to commits to avoid issues upgrading.
@@ -143,7 +143,7 @@ module.packages = {
 }
 
 module.configs = {
-  ["example-plugin.nvim"] = function() -- key matches `module.packages` entry
+  ["example-plugin.nvim"] = function() -- key matches `module.uses` entry
     require('example-plugin').setup( doom.modules.example.settings ) -- Consumes `module.settings` and uses it to config the plugin
   end
 }
@@ -169,11 +169,11 @@ end
 -- Autocmds are defined as a table with the following syntax
 -- { "event", "aupat", "command or function" }
 -- Example
-module.autocommands = {
+module.autocmds = {
   { "FileType", "javascript", function() print("I'm in a javascript file now") end }
 }
 -- Similarly, autocmds can be conditional using a function
-module.autocommands = function()
+module.autocmds = function()
   local autocmds = {}
   if condition then
     table.insert(autocmds, { "FileType", "javascript", function() print("I'm in a javascript file now") end })
