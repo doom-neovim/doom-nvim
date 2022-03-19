@@ -51,12 +51,12 @@ packer.reset()
 
 -- Handle the Modules
 for module_name, module in pairs(doom.modules) do
-  -- Import dependencies with packer from module.packages
-  if module.packages then
-    for dependency_name, packer_spec in pairs(module.packages) do
+  -- Import dependencies with packer from module.uses
+  if module.uses then
+    for dependency_name, packer_spec in pairs(module.uses) do
       -- Set packer_spec to configure function
-      if module.configure_functions and module.configure_functions[dependency_name] then
-        packer_spec.config = module.configure_functions[dependency_name]
+      if module.configs and module.configs[dependency_name] then
+        packer_spec.config = module.configs[dependency_name]
       end
 
       -- Set/unset frozen packer dependencies
@@ -67,13 +67,13 @@ for module_name, module in pairs(doom.modules) do
     end
   end
   -- Setup package autogroups
-  if module.autocommands then
-    local autocommands = type(module.autocommands) == 'function' and module.autocommands() or module.autocommands
-    utils.make_augroup(module_name, autocommands)
+  if module.autocmds then
+    local autocmds = type(module.autocmds) == 'function' and module.autocmds() or module.autocmds
+    utils.make_augroup(module_name, autocmds)
   end
 end
 
 -- Handle extra user modules
-for _, packer_spec in ipairs(doom.packages) do
+for _, packer_spec in ipairs(doom.uses) do
   use(packer_spec)
 end

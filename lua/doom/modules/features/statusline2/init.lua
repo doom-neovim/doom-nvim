@@ -3,14 +3,14 @@ local statusline = {}
 statusline.settings = {
 }
 
-statusline.packages = {
+statusline.uses = {
   ["lualine.nvim"] = {
     "nvim-lualine/lualine.nvim",
   },
 }
 
-statusline.configure_functions = {}
-statusline.configure_functions["lualine.nvim"] = function()
+statusline.configs = {}
+statusline.configs["lualine.nvim"] = function()
   require('lualine').setup {
     options = {
       icons_enabled = true,

@@ -2,7 +2,7 @@ local suda = {}
 
 suda.settings = {}
 
-suda.packages = {
+suda.uses = {
   ["suda.vim"] = {
     "lambdalisue/suda.vim",
     commit = "6bffe36862faa601d2de7e54f6e85c1435e832d0",
@@ -11,7 +11,7 @@ suda.packages = {
   },
 }
 
-suda.configure_functions = {}
+suda.configs = {}
 
 suda.binds = {
   "<leader>",

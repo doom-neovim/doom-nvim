@@ -4,7 +4,7 @@ glsl.settings = {
   language_server_name = 'bashls',
 }
 
-glsl.autocommands = {
+glsl.autocmds = {
   {
     "FileType",
     "glsl,vs,fs,frag,vert",

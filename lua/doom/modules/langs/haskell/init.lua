@@ -4,7 +4,7 @@ haskell.settings = {
   language_server_name = 'hls',
 }
 
-haskell.autocommands = {
+haskell.autocmds = {
   {
     "FileType",
     "haskell",

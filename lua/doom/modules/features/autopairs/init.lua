@@ -6,7 +6,7 @@ autopairs.settings = {
   enable_moveright = true,
 }
 
-autopairs.packages = {
+autopairs.uses = {
   ["nvim-autopairs"] = {
     "windwp/nvim-autopairs",
     commit = "771fda8d169384d345c8bbf2f871b75ba4a2dee5",
@@ -14,8 +14,8 @@ autopairs.packages = {
   },
 }
 
-autopairs.configure_functions = {}
-autopairs.configure_functions["nvim-autopairs"] = function()
+autopairs.configs = {}
+autopairs.configs["nvim-autopairs"] = function()
   require("nvim-autopairs").setup(vim.tbl_deep_extend("force", doom.modules.autopairs.settings, { check_ts = true }))
 end
 

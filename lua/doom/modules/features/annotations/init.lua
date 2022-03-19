@@ -11,7 +11,7 @@ annotations.settings = {
   },
 }
 
-annotations.packages = {
+annotations.uses = {
   ["neogen"] = {
     "danymat/neogen",
     commit = "b7d2ce8c1d17a0b90f557e5f94372f42193291a5",
@@ -19,8 +19,8 @@ annotations.packages = {
   },
 }
 
-annotations.configure_functions = {}
-annotations.configure_functions["neogen"] = function()
+annotations.configs = {}
+annotations.configs["neogen"] = function()
   require("neogen").setup(doom.modules.annotations.settings)
 end
 

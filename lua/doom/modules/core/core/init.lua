@@ -5,7 +5,7 @@ required.settings = {
 }
 local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
-required.packages = {
+required.uses = {
   ["packer.nvim"] = {
     "wbthomason/packer.nvim",
   },
@@ -36,8 +36,8 @@ required.packages = {
   }
 }
 
-required.configure_functions = {}
-required.configure_functions["nvim-mapper"] = function()
+required.configs = {}
+required.configs["nvim-mapper"] = function()
   require("nvim-mapper").setup(doom.modules.core.settings.mapper)
 end
 
@@ -317,7 +317,7 @@ required.binds = function ()
   return binds
 end
 
-required.autocommands = function ()
+required.autocmds = function ()
   local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
   local autocmds = {}

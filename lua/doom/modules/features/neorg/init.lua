@@ -29,7 +29,7 @@ neorg.settings = {
   },
 }
 
-neorg.packages = {
+neorg.uses = {
   ["neorg"] = {
     "nvim-neorg/neorg",
     commit = "acfa3929971d488afac9c392fb34b80bac4f4c71",
@@ -38,8 +38,8 @@ neorg.packages = {
   }
 }
 
-neorg.configure_functions = {}
-neorg.configure_functions["neorg"] = function()
+neorg.configs = {}
+neorg.configs["neorg"] = function()
   require("neorg").setup(doom.modules.neorg.settings)
 end
 

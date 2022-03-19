@@ -4,7 +4,7 @@ python.settings = {
   language_server_name = 'pyright',
 }
 
-python.autocommands = {
+python.autocmds = {
   {
     "FileType",
     "python",

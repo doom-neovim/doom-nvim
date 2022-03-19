@@ -46,7 +46,7 @@ telescope.settings = {
   extensions = { "mapper" },
 }
 
-telescope.packages = {
+telescope.uses = {
   ["telescope.nvim"] = {
     "nvim-telescope/telescope.nvim",
     commit = "567ec85b157f1606b500a0f755181f284810a28e",
@@ -56,8 +56,8 @@ telescope.packages = {
 }
 
 
-telescope.configure_functions = {}
-telescope.configure_functions["telescope.nvim"] = function()
+telescope.configs = {}
+telescope.configs["telescope.nvim"] = function()
   local telescope_package = require("telescope")
   local actions = require("telescope.actions")
 
@@ -187,7 +187,7 @@ telescope.binds = function ()
   return binds
 end
 
-telescope.autocommands = {
+telescope.autocmds = {
   { "User", "TelescopePreviewerLoaded", "setlocal wrap" },
 }
 

@@ -3,7 +3,7 @@ local nest = {}
 nest.settings = {
 }
 
-nest.packages = {
+nest.uses = {
   ["nest.nvim"] = {
     "connorgmeehan/nest.nvim",
     branch = "integrations-api",
@@ -11,8 +11,8 @@ nest.packages = {
   },
 }
 
-nest.configure_functions = {}
-nest.configure_functions["nest.nvim"] = function()
+nest.configs = {}
+nest.configs["nest.nvim"] = function()
   local utils = require("doom.utils")
   local is_plugin_disabled = utils.is_plugin_disabled
 

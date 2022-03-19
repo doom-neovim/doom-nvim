@@ -2,7 +2,7 @@ local restclient = {}
 
 restclient.settings = {}
 
-restclient.packages = {
+restclient.uses = {
   ["rest.nvim"] = {
     "NTBBloodbath/rest.nvim",
     commit = "2826f6960fbd9adb1da9ff0d008aa2819d2d06b3",
@@ -15,8 +15,8 @@ restclient.packages = {
 }
 
 
-restclient.configure_functions = {}
-restclient.configure_functions["rest.nvim"] = function()
+restclient.configs = {}
+restclient.configs["rest.nvim"] = function()
   require("rest-nvim").setup(doom.modules.restclient.settings)
 end
 

@@ -22,7 +22,7 @@ firenvim.settings = {
   },
 }
 
-firenvim.packages = {
+firenvim.uses = {
   ["firenvim"] = {
     "glacambre/firenvim",
     commit = "668b350ce88cc9a2257644c67945c9abbdd36cb5",
@@ -33,8 +33,8 @@ firenvim.packages = {
   },
 }
 
-firenvim.configure_functions = {}
-firenvim.configure_functions["firenvim"] = function()
+firenvim.configs = {}
+firenvim.configs["firenvim"] = function()
   vim.g.firenvim_config = doom.modules.firenvim.settings
 
   for _, command in ipairs(doom.modules.firenvim.settings.autocmds) do

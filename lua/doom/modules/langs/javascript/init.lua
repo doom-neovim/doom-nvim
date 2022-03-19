@@ -2,7 +2,7 @@ local javascript = {}
 
 javascript.settings = {}
 
-javascript.autocommands = {
+javascript.autocmds = {
   {
     "FileType",
     "javascript,javascriptreact",

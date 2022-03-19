@@ -39,7 +39,7 @@ treesitter.settings = {
   },
 }
 
-treesitter.packages = {
+treesitter.uses = {
   ["nvim-treesitter"] = {
     "nvim-treesitter/nvim-treesitter",
     commit = "82389e52b6b50f712593079255ee088f1631b9cd",
@@ -58,8 +58,8 @@ treesitter.packages = {
   },
 }
 
-treesitter.configure_functions = {}
-treesitter.configure_functions["nvim-treesitter"] = function()
+treesitter.configs = {}
+treesitter.configs["nvim-treesitter"] = function()
   local is_plugin_disabled = require("doom.utils").is_plugin_disabled
   require("nvim-treesitter.configs").setup(vim.tbl_deep_extend("force", doom.modules.treesitter.settings.treesitter, {
     autopairs = {

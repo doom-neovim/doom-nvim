@@ -2,7 +2,7 @@ local trouble = {}
 
 trouble.settings = {}
 
-trouble.packages = {
+trouble.uses = {
   ["trouble.nvim"] = {
     "folke/trouble.nvim",
     commit = "20469be985143d024c460d95326ebeff9971d714",
@@ -11,8 +11,8 @@ trouble.packages = {
   },
 }
 
-trouble.configure_functions = {}
-trouble.configure_functions["trouble.nvim"] = function()
+trouble.configs = {}
+trouble.configs["trouble.nvim"] = function()
   require("trouble").setup(doom.modules.trouble.settings)
 end
 

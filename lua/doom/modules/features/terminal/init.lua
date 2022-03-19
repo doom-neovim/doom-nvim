@@ -22,7 +22,7 @@ terminal.settings = {
   },
 }
 
-terminal.packages = {
+terminal.uses = {
   ["toggleterm.nvim"] = {
     "akinsho/toggleterm.nvim",
     commit = "e97d0c1046512e975a9f3fa95afe98f312752b1c",
@@ -31,8 +31,8 @@ terminal.packages = {
   },
 }
 
-terminal.configure_functions = {}
-terminal.configure_functions["toggleterm.nvim"] = function()
+terminal.configs = {}
+terminal.configs["toggleterm.nvim"] = function()
   require("toggleterm").setup(doom.modules.terminal.settings)
 end
 

@@ -14,15 +14,15 @@ config.settings = {
   -- yaml_language_server_name = 'yamlls', -- Currently broken
 }
 
-config.packages = {
+config.uses = {
   ["SchemaStore.nvim"] = {
     "b0o/SchemaStore.nvim",
     commit = "df5e98d3b3c93e9857908fce8a219360f81c5e32",
     ft = { "json", "yaml", "toml" }
   },
 }
-config.configure_functions = {}
-config.configure_functions["SchemaStore.nvim"] = function()
+config.configs = {}
+config.configs["SchemaStore.nvim"] = function()
   local langs_utils = require('doom.modules.langs.utils')
   langs_utils.use_lsp(doom.modules.config.settings.json_language_server_name, {
     config = {
@@ -37,7 +37,7 @@ config.configure_functions["SchemaStore.nvim"] = function()
   })
 end
 
-config.autocommands = {
+config.autocmds = {
   {
     "FileType",
     "json,yaml,toml",

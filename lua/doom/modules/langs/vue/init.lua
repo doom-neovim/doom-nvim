@@ -70,9 +70,9 @@ vue.settings = {
   }
 }
 
-vue.configure_functions = {}
+vue.configs = {}
 
-vue.autocommands = {
+vue.autocmds = {
   {
     "FileType",
     "vue",

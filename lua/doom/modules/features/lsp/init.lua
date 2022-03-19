@@ -78,7 +78,7 @@ lsp.settings = {
 }
 
 local is_plugin_disabled = require("doom.utils").is_plugin_disabled
-lsp.packages = {
+lsp.uses = {
   ["nvim-lspconfig"] = {
     "neovim/nvim-lspconfig",
     commit = "cdc2ec53e028d32f06c51ef8b2837ebb8460ef45",
@@ -131,8 +131,8 @@ lsp.packages = {
 }
 
 
-lsp.configure_functions = {}
-lsp.configure_functions["nvim-lspconfig"] = function()
+lsp.configs = {}
+lsp.configs["nvim-lspconfig"] = function()
   -- Lsp Symbols
   local signs, hl
   if vim.fn.has("nvim-0.6.0") == 1 then
@@ -195,7 +195,7 @@ lsp.configure_functions["nvim-lspconfig"] = function()
     end
   end
 end
-lsp.configure_functions["nvim-cmp"] = function()
+lsp.configs["nvim-cmp"] = function()
   local cmp = require("cmp")
   local luasnip = require("luasnip")
   local replace_termcodes = require("doom.utils").replace_termcodes
@@ -280,7 +280,7 @@ lsp.configure_functions["nvim-cmp"] = function()
     end,
   }))
 end
-lsp.configure_functions["lsp_signature.nvim"] = function()
+lsp.configs["lsp_signature.nvim"] = function()
   -- Signature help
   require("lsp_signature").setup(vim.tbl_deep_extend("force", doom.modules.lsp.settings.signature, {
     handler_opts = {

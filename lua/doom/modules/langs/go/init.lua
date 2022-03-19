@@ -4,7 +4,7 @@ go.settings = {
   language_server_name = 'gopls',
 }
 
-go.autocommands = {
+go.autocmds = {
   {
     "FileType",
     "go",

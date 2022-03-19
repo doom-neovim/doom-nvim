@@ -41,7 +41,7 @@ comment.settings = {
   end,
 }
 
-comment.packages = {
+comment.uses = {
   ["Comment.nvim"] = {
     "numToStr/Comment.nvim",
     commit = "18a8dc0bbdfc089d5f5a850e4640d8e75381c598",
@@ -49,8 +49,8 @@ comment.packages = {
   },
 }
 
-comment.configure_functions = {}
-comment.configure_functions["Comment.nvim"] = function()
+comment.configs = {}
+comment.configs["Comment.nvim"] = function()
   local config = vim.tbl_extend("force", doom.modules.comment.settings, {
     -- Disable mappings as we'll handle it in binds.lua
     mappings = {

@@ -3,7 +3,7 @@ local terraform = {}
 terraform.settings = {
 }
 
-terraform.autocommands = {
+terraform.autocmds = {
   {
     "FileType",
     "terraform",

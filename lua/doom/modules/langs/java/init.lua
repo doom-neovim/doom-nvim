@@ -4,7 +4,7 @@ java.settings = {
   language_server_name = 'jdtls',
 }
 
-java.autocommands = {
+java.autocmds = {
   {
     "FileType",
     "sh",
