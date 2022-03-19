@@ -200,6 +200,34 @@ config.load = function()
     doom.binds = {} -- Extra binds
     doom.modules = {} -- Modules
 
+    -- @type PackerSpec
+    -- @field 1 string Github `user/repositoryname`
+    -- @field opt boolean|nil Whether or not this package is optional (loaded manually or on startup)
+    -- @field commit string|nil Commit sha to pin this package to
+
+    -- Add doom.use helper function
+    -- @param  string|packer_spec PackerSpec
+    doom.use = function(...)
+      local arg = {...}
+      -- Get table of packages via git repository name
+      local packages_to_add = vim.tbl_map(function (t)
+        return type(t) == 'string' and t or t[1]
+      end, arg)
+
+      -- Predicate returns false if the package needs to be overriden
+      local package_override_predicate = function(t)
+        return not vim.tbl_contains(packages_to_add, t[1])
+      end
+
+      -- Iterate over existing packages, removing all packages that are about to be overriden
+      doom.packages = vim.tbl_filter(package_override_predicate, doom.packages)
+
+      for _, packer_spec in ipairs(arg) do
+        table.insert(doom.packages, type(packer_spec) == "string" and { packer_spec } or packer_spec)
+      end
+    end
+    --]]
+
     -- Combine core modules with user-enabled modules
     local all_modules = vim.tbl_deep_extend('keep', {
       core = {
@@ -208,13 +236,13 @@ config.load = function()
         'treesitter',
       }
     }, enabled_modules)
-  
+
     for section_name, section_modules in pairs(all_modules) do
       for _, module_name in pairs(section_modules) do
         local ok, result = xpcall(require, debug.traceback, ("doom.modules.%s.%s"):format(section_name, module_name))
         if ok then
           doom.modules[module_name] = result
-        else 
+        else
           print(vim.inspect(result))
         end
       end
