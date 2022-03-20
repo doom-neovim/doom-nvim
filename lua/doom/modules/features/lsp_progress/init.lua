@@ -12,7 +12,7 @@ fidget.uses = {
 
 fidget.configs = {}
 fidget.configs["fidget.nvim"] = function()
-  require("fidget").setup(doom.modules.fidget.settings)
+  require("fidget").setup(doom.modules.lsp_progress.settings)
 end
 
 return fidget
