@@ -7,8 +7,8 @@
 
 -- Editor config
 doom.indent = 2
+doom.autosave = false
 doom.escape_sequences = {}
-doom.modules.telescope.settings.defaults.layout_config.prompt_position = "top"
 -- vim.lsp.set_log_level('trace')
 vim.diagnostic.config({
   float = {
@@ -27,12 +27,7 @@ doom.modules.tabline.settings.options.diagnostics_indicator = function (_, _, di
 end
 
 -- Colourscheme
-table.insert(doom.packages, {
-  'sainnhe/sonokai'
-})
-table.insert(doom.packages, {
-  'EdenEast/nightfox.nvim',
-})
+doom.use('sainnhe/sonokai', 'EdenEast/nightfox.nvim')
 local options = {
   dim_inactive = true,
 }
@@ -72,19 +67,12 @@ require('nightfox').setup({
 doom.colorscheme = 'dawnfox'
 
 -- Extra packages
-table.insert(doom.packages, {
-  'rafcamlet/nvim-luapad'
-})
-table.insert(doom.packages, {
-  'nvim-treesitter/playground'
-})
-table.insert(doom.packages, {
-  'tpope/vim-surround'
-})
-
-table.insert(doom.packages, {
+doom.use(
+  'rafcamlet/nvim-luapad',
+  'nvim-treesitter/playground',
+  'tpope/vim-surround',
   'dstein64/vim-startuptime'
-})
+)
 vim.opt.guifont = { 'Hack Nerd Font', 'h12' }
 
 -- vim: sw=2 sts=2 ts=2 expandtab
