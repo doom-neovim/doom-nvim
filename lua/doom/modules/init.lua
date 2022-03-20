@@ -71,6 +71,12 @@ for module_name, module in pairs(doom.modules) do
     local autocmds = type(module.autocmds) == 'function' and module.autocmds() or module.autocmds
     utils.make_augroup(module_name, autocmds)
   end
+
+  if module.cmds then
+    for _, cmd_spec in ipairs(module.cmds) do
+      utils.make_cmd(cmd_spec[1], cmd_spec[2])
+    end
+  end
 end
 
 -- Handle extra user modules
