@@ -254,7 +254,11 @@ config.load = function()
     end
   end
 
-  dofile(config.source)
+  -- Execute user config
+  local ok, err = xpcall(dofile, debug.traceback, config.source)
+  if not ok then
+    print(vim.inspect(err))
+  end
 
   -- Check plugins updates on start if enabled.
   if doom.check_updates then
