@@ -164,8 +164,8 @@ end
 reloader.reload_plugins_definitions = function()
   local old_plugins = vim.deepcopy(packer_plugins)
 
-  if _doom and _doom.autocmd_funcs then
-    _doom.autocmd_funcs = {}
+  if _doom and _doom.cmd_funcs then
+    _doom.cmd_funcs = {}
   end
 
   -- Silently reload plugins modules

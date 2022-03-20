@@ -66,6 +66,33 @@ utils.load_modules = function(module_path, mods)
   end
 end
 
+--- Stores a function in a global table, returns a string to execute the function
+-- @param  fn function
+-- @return string
+utils.commandify_function = function(fn)
+  if not _G._doom then
+    _G._doom = {}
+  end
+  if not _doom.cmd_funcs then
+    _doom.cmd_funcs = {}
+  end
+  -- Nobody is going to need more than a million of these, right?
+  local unique_number = utils.unique_index()
+  _doom.cmd_funcs[unique_number] = fn
+  return ("lua _doom.cmd_funcs[%d]()"):format(unique_number)
+end
+
+--- Creates a new command that can be executed from the neovim command line
+-- @param  cmd_name string The name of the command, i.e. `:DoomReload`
+-- @param  action string|function The action to execute when the cmd is entered.
+utils.make_cmd = function(cmd_name, action)
+  local cmd = "command! " .. cmd_name .. " "
+  cmd = type(action) == "function"
+    and cmd .. utils.commandify_function(action)
+    or cmd .. action
+    vim.cmd(cmd)
+end
+
 utils.make_autocmd = function(event, pattern, action, group, nested, once)
   local cmd = "autocmd "
 
@@ -83,20 +110,9 @@ utils.make_autocmd = function(event, pattern, action, group, nested, once)
     cmd = cmd .. "++once "
   end
 
-  if type(action) == "function" then
-    if not _G._doom then
-      _G._doom = {}
-    end
-    if not _doom.autocmd_funcs then
-      _doom.autocmd_funcs = {}
-    end
-    -- Nobody is going to need more than a million of these, right?
-    local unique_number = utils.unique_index()
-    _doom.autocmd_funcs[unique_number] = action
-    cmd = cmd .. ("lua _doom.autocmd_funcs[%d]()"):format(unique_number)
-  else
-    cmd = cmd .. action
-  end
+  cmd = type(action) == "function"
+    and cmd .. utils.commandify_function(action)
+    or cmd .. action
 
   vim.cmd(cmd)
 end
