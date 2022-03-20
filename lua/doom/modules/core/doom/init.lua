@@ -38,7 +38,7 @@ required.uses = {
 
 required.configs = {}
 required.configs["nvim-mapper"] = function()
-  require("nvim-mapper").setup(doom.modules.core.settings.mapper)
+  require("nvim-mapper").setup(doom.modules.doom.settings.mapper)
 end
 
 required.binds = function ()
