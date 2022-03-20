@@ -94,7 +94,7 @@ lsp.uses = {
   ["nvim-cmp"] = {
     "hrsh7th/nvim-cmp",
     commit = "1001683bee3a52a7b7e07ba9d391472961739c7b",
-    after = is_plugin_disabled("snippets") or "LuaSnip",
+    after = not is_plugin_disabled("snippets") and "LuaSnip" or nil,
   },
   ["cmp-nvim-lua"] = {
     "hrsh7th/cmp-nvim-lua",
@@ -196,9 +196,12 @@ lsp.configs["nvim-lspconfig"] = function()
   end
 end
 lsp.configs["nvim-cmp"] = function()
+  local utils = require("doom.utils")
+  local snippets_enabled = not utils.is_plugin_disabled("snippets")
+
   local cmp = require("cmp")
-  local luasnip = require("luasnip")
-  local replace_termcodes = require("doom.utils").replace_termcodes
+  local luasnip = snippets_enabled and require("luasnip")
+  local replace_termcodes = utils.replace_termcodes
 
   local source_map = {
     nvim_lsp = "[LSP]",
@@ -248,7 +251,7 @@ lsp.configs["nvim-cmp"] = function()
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
+        elseif (snippets_enabled and luasnip.expand_or_jumpable()) then
           vim.fn.feedkeys(replace_termcodes("<Plug>luasnip-expand-or-jump"), "")
         elseif check_backspace() then
           vim.fn.feedkeys(replace_termcodes("<Tab>"), "n")
@@ -262,7 +265,7 @@ lsp.configs["nvim-cmp"] = function()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
+        elseif snippets_enabled and luasnip.jumpable(-1) then
           vim.fn.feedkeys(replace_termcodes("<Plug>luasnip-jump-prev"), "")
         else
           fallback()
