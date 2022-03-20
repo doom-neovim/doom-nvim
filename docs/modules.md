@@ -64,7 +64,7 @@ Modules are grouped into 3 categories:
   - [`illuminate`](../lua/doom/modules/features/illuminate) Highlight other occurances of the hovered word
   - [`indentlines`](../lua/doom/modules/features/indentlines) Explicitly show indentation
   - [`range_highlight`](../lua/doom/modules/features/range_highlight) Highlight selected range as you type commands
-  - [`todo_comments`](../lua/doom/modules/features/todo_comments) Highlights TODO: comments and more
+  - [`todo_comments`](../lua/doom/modules/features/todo_comments) Highlights TODO comments and more
 - **UI modules**
   - [`fidget`](../lua/doom/modules/features/fidget) Shows LSP loading status
   - [`tabline`](../lua/doom/modules/features/tabline) Tabbed buffer switcher
@@ -241,7 +241,7 @@ module.autocmds = function()
 end
 ```
 
-## Implementing your own doom module
+## Building your own module
 
 I will use an example of implementing a module that counts the number of chars that you've typed.
 This module will:
@@ -253,21 +253,15 @@ This module will:
 
 ### 1. Setting up
 
-> Modules are loaded from the `lua/doom/modules/` folder.  Within this folder there is a `features/`, `langs/` and `core/` directory.
-> If you look at [`modules.lua`](../modules.lua) you'll see that this maps 1:1 with the returned data structure (except for `core` modules which can't be disabled).
->
 > Because modules are implemented as folders with an `init.lua` inside, they must be named after valid folder names.
 > Best practices are:
 > - Seperate words with an underscore, this is so the plugin can be represented as a lua variable
 > - Name the module after the functionality rather than the plugin it uses.
->
-> If you're adding language support, add a new folder module to `lua/doom/modules/langs/`, else if
-> it's a new feature add a directory to `lua/doom/module/features/`.
 
-For our example of adding char counting plugin I will add a folder called `lua/doom/modules/langs/char_counter/` and create a new `init.lua`
-inside of it.
+For our example of adding char counting plugin I will create a folder called `lua/user/modules/char_counter/`
+and create a new `init.lua` inside of it.
 ```lua
--- lua/doom/modules/features/char_counter/init.lua
+-- lua/user/modules/char_counter/init.lua
 local char_counter = {}
 
 return char_counter
@@ -286,7 +280,7 @@ For our example we need to hook into the [InsertEnter](https://neovim.io/doc/use
 and [InsertLeave](https://neovim.io/doc/user/autocmd.html#InsertLeave) auto commands.
 
 ```lua
--- lua/doom/modules/features/char_counter/init.lua
+-- lua/user/modules/char_counter/init.lua
 char_counter.autocmds = {
   { "InsertEnter", "*", function ()
     print('Entered insert mode')
@@ -299,6 +293,8 @@ char_counter.autocmds = {
 
 ### 3. Enabling and testing your module
 
+
+
 Now you can enable the module in `modules.lua`!  Once enabled, restart your doom-nvim instance and check
 `:messages` to see if it's printing correctly.
 
@@ -306,8 +302,15 @@ Now you can enable the module in `modules.lua`!  Once enabled, restart your doom
 -- modules.lua
 return {
   features = {
-    "char_counter" -- Must match the name of the folder i.e. `lua/doom/modules/features/char_counter`
-  }
+    ...
+  },
+  langs = {
+    ...
+  },
+  -- user field is optional and will read from the `lua/user/modules` folder in your `.nvim/` folder.
+  user = {
+    "char_counter" -- Must match the name of the folder i.e. `lua/user/modules/char_counter/init.lua`
+  },
 }
 ```
 
@@ -324,7 +327,7 @@ We will also check if the [`buftype`](https://neovim.io/doc/user/options.html#'b
 means we wont count other interactive buffers like terminals, prompts or quick fix lists.
 
 ```lua
--- lua/doom/modules/features/char_counter/init.lua
+-- lua/user/modules/char_counter/init.lua
 
 local char_counter = {}
 
@@ -371,7 +374,7 @@ Using the `module.cmds` property we can define and expose vim commands to the us
 `:CountPrint` and `:CountReset` command.
 
 ```lua
--- lua/doom/modules/features/char_counter/init.lua
+-- lua/user/modules/char_counter/init.lua
 
 char_counter.cmds = {
   { "CountPrint", function ()
@@ -390,12 +393,10 @@ Now restart doom nvim and run `:CountPrint` and `:CountReset` to test it out.
 
 ### 6. Adding keybinds
 
-Keybinds are provided using the `module.binds` field.  We use a modified [nest.nvim]() config that integrates with whichkey and nvim-mapper.
-You can read more about it [here](https://github.com/connorgmeehan/nest.nvim/tree/integrations-api#quickstart-guide) but generally you should
-provide the `name` field for all entries so it displays in whichkey.
+Keybinds are provided using the `module.binds` field.  We use a modified [nest.nvim]() config that integrates with whichkey and nvim-mapper. You can read more about it [here](https://github.com/connorgmeehan/nest.nvim/tree/integrations-api#quickstart-guide) but generally you should provide the `name` field for all entries so it displays in whichkey.
 
 ```lua
--- lua/doom/modules/features/char_counter/init.lua
+-- lua/user/modules/char_counter/init.lua
 
 char_counter.binds = {
   { '<leader>i', name = '+info', { -- Adds a new `whichkey` folder called `+info`
@@ -416,7 +417,7 @@ In this example I will add [nui.nvim](https://github.com/MunifTanjim/nui.nvim) t
 the user uses the `CountPrint` command.
 
 ```lua
--- lua/doom/modules/features/char_counter/init.lua
+-- lua/user/modules/char_counter/init.lua
 
 -- Add these two fields to `char_counter` at the top of the file.
 char_counter.uses = {
@@ -486,7 +487,7 @@ object.  This will allow users to tweak the config in their `config.lua` file wi
 
 
 ```lua
--- lua/doom/modules/features/char_counter/init.lua
+-- lua/user/modules/char_counter/init.lua
 
 -- Copy the settings that are passed to the `Popup` function, place them in `char_counter.settings.popup`
 char_counter.settings = {
@@ -533,12 +534,30 @@ char_counter.cmds = {
 }
 ```
 
-### 9. You're done!  Final output
+### 9. Contributing your module upstream
+
+> Builtin modules are loaded from the `lua/doom/modules/` folder.  Within this folder there is a `features/`, `langs/` and `core/` directory.
+> If you look at [`modules.lua`](../modules.lua) you'll see that the table fields are used to lookup the subfolder.
+```lua
+return {
+  features = {
+    "lsp" -- Maps to `lua/doom/modules/features/lsp/`,
+  },
+  langs = {
+    "lua" -- Maps to `lua/doom/modules/langs/lua/`
+  }
+}
+```
+
+If you would like to contribute your module, just move it from `lua/user/modules/<module_name>` to
+`lua/user/modules/<langs|features>/<module_name>` and create a PR in accordance with our [Contributing Guidelines](./contributing.md).
+
+### 10. You're done!  Final output
 
 If you'd just like to look at the end result, or if you're comparing why your implementation didn't work, here is the final working output.
 
 ```lua
--- lua/doom/modules/features/char_counter/init.lua
+-- lua/user/modules/char_counter/init.lua
 local char_counter = {}
 
 char_counter.settings = {
