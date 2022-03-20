@@ -74,7 +74,6 @@ telescope.configs["telescope.nvim"] = function()
           ["<C-j>"] = actions.move_selection_next,
           ["<C-k>"] = actions.move_selection_previous,
           ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-          ["<Leader>f"] = actions.close, -- works like a toggle, sometimes can be buggy
           ["<CR>"] = actions.select_default + actions.center,
         },
         n = {
