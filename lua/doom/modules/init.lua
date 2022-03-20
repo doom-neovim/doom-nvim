@@ -12,6 +12,8 @@ if vim.fn.empty(vim.fn.glob(packer_path)) > 0 then
   vim.fn.system({
     "git",
     "clone",
+    "--depth",
+    "1",
     "https://github.com/wbthomason/packer.nvim",
     packer_path,
   })
@@ -19,7 +21,6 @@ end
 
 -- Load packer
 local packer = require("packer")
-vim.cmd [[packadd packer.nvim]]
 
 -- Change some defaults
 -- Of particular interest is compile_path: we use stdpath("data"), so as to not
