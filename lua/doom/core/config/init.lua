@@ -254,10 +254,11 @@ config.load = function()
     end
   end
 
-  -- Execute user config
+  -- Execute user config, log errors if any occur
   local ok, err = xpcall(dofile, debug.traceback, config.source)
-  if not ok then
-    print(vim.inspect(err))
+  local log = require("doom.utils.logging")
+  if not ok and err then
+    log.error("Error while running `config.lua. Traceback:\n" .. err)
   end
 
   -- Check plugins updates on start if enabled.
