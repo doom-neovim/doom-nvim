@@ -19,6 +19,7 @@ end
 
 -- Load packer
 local packer = require("packer")
+vim.cmd [[packadd packer.nvim]]
 
 -- Change some defaults
 -- Of particular interest is compile_path: we use stdpath("data"), so as to not
