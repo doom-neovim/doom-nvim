@@ -5,7 +5,7 @@
 This is what you will have installed by the end of this section:
 
 - Git 2.23+
-- Neovim 0.5.0+ (Neovim 0.4.x not supported, see [faq](./faq.md#why-does-doom-nvim-only-support-neovim-05) to know why)
+- Neovim 0.6.0+
 - GNU Find
 - **Optional**: ripgrep 11.0+ (highly recommended)
 - **Optional**: fd 7.3.0+ (known as `fd-find` on Debian, Ubuntu & derivates),
@@ -199,16 +199,27 @@ brew install node
 
 #### On Windows
 
-If you use Windows, please help by posting the steps to install the external
-dependencies here!
+```powershell
+# Required dependencies
+# Windows needs mingw for gcc
+choco install git ripgrep mingw
+
+# (Optional) Improves performance for many file indexing commands
+choco install fd
+
+# (Optional) Required by some Language Server Protocols
+choco install nodejs
+```
 
 ### Doom Nvim
 
-With Neovim v0.5.0 and Doom's dependencies installed, next is to install
+With Neovim v0.6.0 and Doom's dependencies installed, next is to install
 Doom Nvim itself.
 
 > **IMPORTANT**: if you don't have a patched nerd font then you will need to
 > install one in your system so you will be able to see icons in Neovim.
+
+#### On MacOs or Linux
 
 First you'll want to backup your current Neovim configuration if you have one.
 
@@ -237,6 +248,37 @@ Or if you want to live in the bleeding-edge with the latest features:
 git clone --depth 1 -b develop https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_HOME:-$HOME/.config}/nvim
 ```
 
+#### On Windows
+
+First you'll want to backup your current Neovim configuration if you have one.
+
+> **NOTES**:
+>
+> 1. Your current configuration will be backed up to `C:\Users\%USERNAME%\AppData\Local`
+>    or where your `%LOCALAPPDATA%` environment variable points to.
+>
+> 2. If you're a cheovim user you can skip this step and go directly to
+>    [Using cheovim](#using-cheovim).
+
+```powershell
+# Using Powershell
+if (Test-Path -Path $env:LOCALAPPDATA\nvim) { Rename-Item $env:LOCALAPPDATA\nvim $env:LOCALAPPDATA\nvim.bak }
+```
+
+Now that you have backed up your current Neovim configuration you can proceed to install
+`doom-nvim`.
+
+```powershell
+git clone --depth 1 https://github.com/NTBBloodbath/doom-nvim.git $env:LOCALAPPDATA/nvim
+```
+
+Or if you want to live in the bleeding-edge with the latest features:
+
+```powershell
+git clone --depth 1 -b develop https://github.com/NTBBloodbath/doom-nvim.git $env:LOCALAPPDATA/nvim
+```
+
+
 #### Using cheovim
 
 If you're using cheovim as your Neovim configurations manager you can install `doom-nvim` and then
@@ -248,6 +290,7 @@ git clone --depth 1 https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_H
 
 # Change the doom-nvim internal path
 sed -i "37s/nvim/doom-nvim/" ${XDG_CONFIG_HOME:-$HOME/.config}/doom-nvim/lua/doom/core/system/init.lua
+# MacOS users will snag here. `brew install gnu-sed` will let you run the above command with `gsed` vice `sed`
 ```
 
 ```lua

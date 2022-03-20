@@ -7,22 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.3.0]
+- Removed support for Neovim 0.5
+- Fixed bug where the Dashboard would show instead of piped contents
+- Updated pinned dependencies to latest versions solving quite a few smaller and undocumented bugs.
+
 ## [3.2.0] - 2021-11-24
 
 ### Added
 
+- Completely reload Doom after updating
+- Hot reload plugins configurations
+- Run `PackerCompile` on exit when Doom modulesor userplugins files were modified
+- Automatically install or uninstall plugins on save in plugins files
+- Improve debugging messages
+- Better error catching
 - Install http tree-sitter parser if `rest.nvim` plugin is enabled
 - New languages in `doom_modules.lua` file
 - New `contrib` entry in `doom_modules.lua` file, contrib module enables some documentation plugins
 - Add `~/.config/nvim/doc` to neorg workspaces
 - Add `statusline_show_file_path` option in `doom_config.lua` file
+- Add Scala language server support out of the box (Metals)
+- Override LSP using `+lsp(LSP_NAME)` syntax
+  - Use several LSPs using `+lsp(LSP_NAME, ANOTHER_LSP_NAME)` syntax
+- Improve `netrw` look and feel
+- Add `use_netrw` configuration option, decide if Doom sshoulduse netrw or nvim-tree as the file explorer
 - Implement `keybinds_mdoules` option in `doom_config.lua`, enable or disable Doom keybindings modules as you wish
   - Modularize keybindings
 - Add extra field to custom functions in order to choose if the function should be ran on startup or if should be a global function
 - Add modeline in `doom_config.lua` file [#139](https://github.com/NTBBloodbath/doom-nvim/pull/139)
 - Ignore editor artifacts [#141](https://github.com/NTBBloodbath/doom-nvim/pull/141)
-- Improve debugging messages
-- Better error catching
+- Use a better syntax for Neovim folds
+- Add `escape_str` function to utils module
+- Add GTD (Getting Things Done) setup in Neorg
+- Use `q` to quickly exit Neovim in dashboard
+- Stay in visual mode after indenting a selection with `<` or `>`
+- Add keybindings for `lsp_rename` functionality (`<leader>clr`)
+- Add an option to turn off folding
+- Improve statusline look and feel, show filetype + active language servers
+- Add helper script for contributors to setup and run a docker image and create a git worktree
+- Add helper script for contributors to update Doom plugins commits pins
+- Provide workaround for `clang` users who run into treesitter complation issues
+- Add debugging keybindings
+- Add `disable_numbering` confiugration option
+- Add user defined ESC sequences in `doom_config` file
 - New plugins
   - `nvim-lint`, async linter
   - `vim-illuminate`, highlight word under cursor
@@ -30,21 +58,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `DoomManual`, open Doom user manual
   - `DoomReport`, create a Doom crash report
   - `DoomConfigs`, open a prompt to edit Doom configuration files
-  - `DoomConfigsReload`, Reload Doom custom mappings, autocommands, etc
+  - `DoomConfigsReload`, reload Doom custom mappings, autocommands, etc
   - `DoomInfo`, display a informational dashboard
+  - `DoomReload`, hot reload Doom Nvim
 - New keybinds
   - `<leader>di`, display a informational dashboard
+  - `<leader>t` section to tweak editor behaviors like numbering and spelling
 - New built-in plugins
   - `info`, show an useful informational dashboard
+  - `async`, run async system commands (e.g. running Git)
+  - `reloader`, reload Lua modules on the fly
 
 ### Changed
 
+- General cleanup
+- `:DoomUpdate` is now asynchronous, keep coding while Doom updates itself!
 - Update doom-one colorscheme
+- Reduce delay on LSP startup
 - Replace built-in Neovim `.txt` docs with Neorg-based docs
 - Refact configuration files handling [#108](https://github.com/NTBBloodbath/doom-nvim/pull/108)
 - Invert Doom Lua modules loading order, in that way we will load Neovim configurations first
+- Use `xpcall` instead of `pcall` in all modules to provide a better tracback in case of an error
+- Rename all our Lua modules tables from `M` to a more logical name, e.g. `system` for system module
+- Improve EmmyLua annotations and comments
+- Fragment utilities module
+  - `fs`, filesystem utilities
+  - `mappings`, mappings utilities
+  - `modules`, Lua modules utilities
 - Plugins
+  - Pin plugins to a certain commit to improve stability
   - Lazy-load more plugins
+  - Do not lazy-load nvim-mapper
   - Enable `neorg` by default
   - Replace [nvim-compe](https://github.com/hrsh7th/nvim-compe) with [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) [#119](https://github.com/NTBBloodbath/doom-nvim/pull/119)
   - Replace [nvim-lspinstall](https://github.com/kabouzeid/nvim-lspinstall) with [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer)
@@ -64,11 +108,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Proper conditional for enabling undodir
 - Add missing entries for disabling certain plugins
 - Update some plugins links
+- Fix DAP auto installation
+- Fix telescope indexing `.git` directory
+- Fix Doom not respecting `CC` environment variable
+- Fix `:DoomReport` command not including `warning`/`error` logs
+- Provide Neovim 0.6 LSP API changes
+- Proper precedence in paths to source Doom configuration files
+- Proper example for custom options in `doom_config` file
 - Make sure plugins are loaded in a correct order [#120](https://github.com/NTBBloodbath/doom-nvim/pull/120)
 - Remove non-neeeded `bufdo e`. Fixes [#127](https://github.com/NTBBloodbath/doom-nvim/issues/127)
 - Do not try to load `which-key.nvim` plugin if not installed. Fixes [#124](https://github.com/NTBBloodbath/doom-nvim/issues/124)
 - Bufferline was not being loaded sometimes
 - Run `BufEnter` autocommand after loading tree-sitter, fixes concealing on norg files
+- Properly fallback to doom-one, better logging messages in UI module
+- Use `0.5-compat` branch for TreeSitter when using Neovim 0.5.x
+- Use `package.loaded` to check toggleterm existence in built-in modules
 
 ### Removed
 
@@ -627,7 +681,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.2...develop
+[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.2.0...develop
+[3.2.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.2...v3.2.0
 [3.1.2]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.1...v3.1.2
 [3.1.1]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.13...v3.1.0
