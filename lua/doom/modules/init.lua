@@ -5,7 +5,7 @@ local system = require("doom.core.system")
 local enabled_modules = require("doom.core.config.modules").modules
 
 -- Packer Bootstrapping
-local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
+local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 
 if vim.fn.empty(vim.fn.glob(packer_path)) > 0 then
   log.info("Bootstrapping packer.nvim, please wait ...")
