@@ -12,6 +12,7 @@
 -- nest.traverse(keymaps, nil, { keybind_doc_integration })
 --
 -- local table_of_lines_of_markdown = keybind_doc_integration.print_markdown()
+-- local 2d_list_of_table_data = keybind_doc_integration.get_rows()
 
 --- @type NestIntegration
 local module = {}
