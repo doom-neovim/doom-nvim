@@ -217,11 +217,11 @@ utils.is_module_enabled = function(plugin)
   -- Iterate over all modules sections (e.g. ui) and their plugins
   for _, section in pairs(modules) do
     if vim.tbl_contains(section, plugin) then
-      return false
+      return true
     end
   end
 
-  return true
+  return false
 end
 
 --- Rounds a number, optionally to the nearest decimal place
