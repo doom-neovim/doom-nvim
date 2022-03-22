@@ -224,6 +224,19 @@ utils.is_module_enabled = function(plugin)
   return false
 end
 
+--- Returns a function that can only be run once
+---@param fn function
+---@return function
+utils.make_run_once_function = function(fn)
+  local has_run = false
+  return function(...)
+    if not has_run then
+      fn(...)
+      has_run = true
+    end
+  end
+end
+
 --- Rounds a number, optionally to the nearest decimal place
 --- @param num number - Value to round
 --- @param decimalplace number|nil - Number of decimal places
