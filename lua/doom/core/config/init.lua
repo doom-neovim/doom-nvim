@@ -278,7 +278,15 @@ config.load = function()
         if ok then
           doom.modules[module_name] = result
         else
-          print(vim.inspect(result))
+          local log = require("doom.utils.logging")
+          log.error(
+            string.format(
+              "There was an error loading module '%s.%s'. Traceback:\n%s",
+              section_name,
+              module_name,
+              result
+            )
+          )
         end
       end
     end
