@@ -82,13 +82,6 @@ lsp.uses = {
   ["nvim-lspconfig"] = {
     "neovim/nvim-lspconfig",
     commit = "cdc2ec53e028d32f06c51ef8b2837ebb8460ef45",
-    opt = true,
-    cmd = {
-      "LspInfo",
-      "LspStart",
-      "LspRestart",
-      "LspStop",
-    },
     module = "lspconfig",
   },
   ["nvim-cmp"] = {

@@ -20,14 +20,9 @@ autopairs.configs["nvim-autopairs"] = function()
 end
 
 autopairs.binds = {
-  "<leader>",
-  name = "+prefix",
-  {
-    {
-      "t",
-      name = "+tweak",
-      {
-        { "p", require("doom.core.functions").toggle_autopairs, name = "Toggle autopairs" },
+  "<leader>", name = "+prefix", {
+    { "t", name = "+tweak", {
+        { "p", function() require("doom.core.functions").toggle_autopairs() end, name = "Toggle autopairs" },
       },
     },
   },

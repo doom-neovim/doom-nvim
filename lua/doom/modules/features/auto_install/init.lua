@@ -24,7 +24,6 @@ auto_install.uses = {
   ["nvim-lsp-installer"] = {
     "williamboman/nvim-lsp-installer",
     commit = "29154c2fe1147c8eed5d54a419841e5637a8c3b2",
-    opt = true,
     disabled = not is_module_enabled("lsp"),
     module = "nvim-lsp-install",
   },
