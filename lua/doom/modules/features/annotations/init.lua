@@ -5,7 +5,12 @@ annotations.settings = {
   languages = {
     lua = {
       template = {
-        annotation_convention = "ldoc",
+        annotation_convention = "emmylua",
+      },
+    },
+    typescript = {
+      template = {
+        annotation_convention = "tsdoc",
       },
     },
   },
