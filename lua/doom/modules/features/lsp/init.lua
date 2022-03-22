@@ -77,7 +77,7 @@ lsp.settings = {
   },
 }
 
-local is_plugin_disabled = require("doom.utils").is_plugin_disabled
+local is_module_enabled = require("doom.utils").is_module_enabled
 lsp.uses = {
   ["nvim-lspconfig"] = {
     "neovim/nvim-lspconfig",
@@ -94,7 +94,7 @@ lsp.uses = {
   ["nvim-cmp"] = {
     "hrsh7th/nvim-cmp",
     commit = "1001683bee3a52a7b7e07ba9d391472961739c7b",
-    after = not is_plugin_disabled("snippets") and "LuaSnip" or nil,
+    after = is_module_enabled("snippets") and "LuaSnip" or nil,
   },
   ["cmp-nvim-lua"] = {
     "hrsh7th/cmp-nvim-lua",
@@ -120,13 +120,12 @@ lsp.uses = {
     "saadparwaiz1/cmp_luasnip",
     commit = "d6f837f4e8fe48eeae288e638691b91b97d1737f",
     after = "nvim-cmp",
-    disabled = is_plugin_disabled("snippets"),
+    disabled = not is_module_enabled("snippets"),
   },
   ["lsp_signature.nvim"] = {
     "ray-x/lsp_signature.nvim",
     commit = "f7c308e99697317ea572c6d6bafe6d4be91ee164",
     after = "nvim-lspconfig",
-    opt = true,
   },
 }
 
@@ -197,7 +196,7 @@ lsp.configs["nvim-lspconfig"] = function()
 end
 lsp.configs["nvim-cmp"] = function()
   local utils = require("doom.utils")
-  local snippets_enabled = not utils.is_plugin_disabled("snippets")
+  local snippets_enabled = utils.is_module_enabled("snippets")
 
   local cmp = require("cmp")
   local luasnip = snippets_enabled and require("luasnip")

@@ -27,7 +27,7 @@ return {
     "todo_comments",      -- Highlight TODO: comments
 
     -- UI
-    "fidget",             -- Check status of LSP loading
+    "lsp_progress",             -- Check status of LSP loading
     "tabline",            -- Tab bar buffer switcher
     "dashboard",          -- A pretty dashboard upon opening
     "trouble",            -- A pretty diagnostic viewer

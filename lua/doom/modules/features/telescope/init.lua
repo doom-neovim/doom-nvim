@@ -92,7 +92,7 @@ end
 
 telescope.binds = function ()
   local utils = require("doom.utils")
-  local is_plugin_disabled = utils.is_plugin_disabled
+  local is_module_enabled = utils.is_module_enabled
 
   local binds = {
     "<leader>",
@@ -168,7 +168,7 @@ telescope.binds = function ()
       },
     },
   }
-  if not is_plugin_disabled("lsp") then
+  if is_module_enabled("lsp") then
     table.insert(binds, {
       "<leader>",
       name = "+prefix",

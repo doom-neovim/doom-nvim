@@ -4,7 +4,7 @@ local utils = require("doom.utils")
 local fs = require("doom.utils.fs")
 local system = require("doom.core.system")
 local async = require("doom.utils.async")
-local is_plugin_disabled = utils.is_plugin_disabled
+local is_module_enabled = utils.is_module_enabled
 
 local functions = {}
 
@@ -383,7 +383,7 @@ functions.toggle_background = function()
 end
 
 -- Only define if lsp enabled, it only makes sense there.
-if not is_plugin_disabled("lsp") then
+if is_module_enabled("lsp") then
   -- Toggle completion (by running cmp setup again).
   functions.toggle_completion = function()
     _doom.cmp_enable = not _doom.cmp_enable
@@ -440,7 +440,7 @@ functions.change_number = function()
 end
 
 -- Toggle autopairs.
-if not is_plugin_disabled("autopairs") then
+if is_module_enabled("autopairs") then
   functions.toggle_autopairs = function()
     local autopairs = require("nvim-autopairs")
     if autopairs.state.disabled then

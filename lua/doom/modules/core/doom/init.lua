@@ -3,7 +3,6 @@ local required = {}
 required.settings = {
   mapper = {},
 }
-local is_plugin_disabled = require("doom.utils").is_plugin_disabled
 
 required.uses = {
   ["packer.nvim"] = {
@@ -27,7 +26,6 @@ required.uses = {
   },
   ["nvim-mapper"] = {
     "lazytanuki/nvim-mapper",
-    before = is_plugin_disabled("telescope") or "telescope.nvim",
   },
   ['nvim-web-devicons'] = {
     'kyazdani42/nvim-web-devicons',
@@ -43,7 +41,7 @@ end
 
 required.binds = function ()
   local utils = require("doom.utils")
-  local is_plugin_disabled = utils.is_plugin_disabled
+  local is_module_enabled = utils.is_module_enabled
 
   local binds = {
     { "ZZ", require("doom.core.functions").quit_doom, name = "Fast exit" },
@@ -124,7 +122,7 @@ required.binds = function ()
     table.insert(binds, { esc_seq, "<ESC>", mode = "i" })
   end
 
-  if is_plugin_disabled("explorer") then
+  if is_module_enabled("explorer") then
     table.insert(binds, { "<F3>", ":Lexplore%s<CR>", name = "Toggle explorer" })
     table.insert(binds, {
       "<leader>",
@@ -314,7 +312,7 @@ required.binds = function ()
 end
 
 required.autocmds = function ()
-  local is_plugin_disabled = require("doom.utils").is_plugin_disabled
+  local is_module_enabled = require("doom.utils").is_module_enabled
 
   local autocmds = {}
 
@@ -340,7 +338,7 @@ required.autocmds = function ()
     })
   end
 
-  if is_plugin_disabled("explorer") then
+  if is_module_enabled("explorer") then
     table.insert(autocmds, {
       "FileType",
       "netrw",

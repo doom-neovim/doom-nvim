@@ -211,7 +211,7 @@ end
 --- Check if the given plugin is disabled in doom-nvim/modules.lua
 --- @param plugin string The plugin identifier, e.g. statusline
 --- @return boolean
-utils.is_plugin_disabled = function(plugin)
+utils.is_module_enabled = function(plugin)
   local modules = require("doom.core.config.modules").modules
 
   -- Iterate over all modules sections (e.g. ui) and their plugins

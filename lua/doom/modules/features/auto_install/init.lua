@@ -5,7 +5,7 @@ auto_install.settings = {
   dap_dir = vim.fn.stdpath("data") .. "/dap-install",
 }
 
-local is_plugin_disabled = require("doom.utils").is_plugin_disabled
+local is_module_enabled = require("doom.utils").is_module_enabled
 
 auto_install.uses = {
   ["DAPInstall.nvim"] = {
@@ -17,7 +17,7 @@ auto_install.uses = {
       "DIList",
       "DIUninstall",
     },
-    disabled = is_plugin_disabled("dap"),
+    disabled = not is_module_enabled("dap"),
     module = "dap-install",
     disable = true,
   },
@@ -25,7 +25,7 @@ auto_install.uses = {
     "williamboman/nvim-lsp-installer",
     commit = "29154c2fe1147c8eed5d54a419841e5637a8c3b2",
     opt = true,
-    disabled = is_plugin_disabled("lsp"),
+    disabled = not is_module_enabled("lsp"),
     module = "nvim-lsp-install",
   },
 }

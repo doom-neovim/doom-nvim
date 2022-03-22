@@ -93,7 +93,7 @@ explorer.uses = {
 explorer.configs = {}
 explorer.configs["nvim-tree.lua"] = function()
   local utils = require("doom.utils")
-  local is_plugin_disabled = utils.is_plugin_disabled
+  local is_module_enabled = utils.is_module_enabled
 
   local tree_cb = require("nvim-tree.config").nvim_tree_callback
 
@@ -132,7 +132,7 @@ explorer.configs["nvim-tree.lua"] = function()
   vim.g.nvim_tree_show_icons = show_icons
 
   local override_icons = {}
-  if not is_plugin_disabled("lsp") then
+  if is_module_enabled("lsp") then
     override_icons = {
       lsp = {
         hint = doom.modules.lsp.settings.icons.hint,
@@ -149,7 +149,7 @@ explorer.configs["nvim-tree.lua"] = function()
       enable = false,
     },
   }
-  if not is_plugin_disabled("lsp") then
+  if is_module_enabled("lsp") then
     override_table = {
       diagnostics = {
         enable = true,

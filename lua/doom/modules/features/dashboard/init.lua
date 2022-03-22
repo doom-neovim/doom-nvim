@@ -67,15 +67,15 @@ dashboard.uses = {
 dashboard.configs = {}
 dashboard.configs["dashboard-nvim"] = function()
   local utils = require("doom.utils")
-  local is_plugin_disabled = utils.is_plugin_disabled
+  local is_module_enabled = utils.is_module_enabled
 
-  if not is_plugin_disabled("auto_session") then
+  if is_module_enabled("auto_session") then
     vim.g.dashboard_session_directory = doom.modules.auto_session.settings.dir
   end
-  if not is_plugin_disabled("telescope") then
+  if is_module_enabled("telescope") then
     vim.g.dashboard_default_executive = "telescope"
   end
-  if not is_plugin_disabled("auto_session") then
+  if is_module_enabled("auto_session") then
     doom.modules.dashboard.settings.entries.a = {
       description = { "  Load Last Session              SPC s r" },
       command = [[lua require("persistence").load({ last = true })]],
