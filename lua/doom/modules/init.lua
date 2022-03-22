@@ -85,3 +85,18 @@ end
 for _, packer_spec in ipairs(doom.uses) do
   use(packer_spec)
 end
+
+-- Handle extra user cmds
+for _, cmd_spec in pairs(doom.cmds) do
+  print(cmd_spec[1])
+  utils.make_cmd(cmd_spec[1], cmd_spec[2])
+end
+
+-- Handle extra user autocmds
+local autocmds = {}
+for _, cmd_spec in pairs(doom.autocmds) do
+  table.insert(autocmds, cmd_spec)
+end
+utils.make_augroup('user', autocmds)
+
+-- User keybinds handled in `nest` module
