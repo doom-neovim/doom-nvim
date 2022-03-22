@@ -24,7 +24,7 @@ end
 
 module.use_lsp = function(lsp_name, _opts)
   local utils = require('doom.utils')
-  if utils.is_module_enabled("lsp") then
+  if not utils.is_module_enabled("lsp") then
     return
   end
   local lsp = require('lspconfig')

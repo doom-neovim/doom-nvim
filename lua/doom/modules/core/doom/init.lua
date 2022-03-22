@@ -11,12 +11,12 @@ required.uses = {
   -- Required by some treesitter modules
   ["aniseed"] = {
     "Olical/aniseed",
-    commit = "a955096c566843302a0a509680b92ab276488add",
+    commit = "bd79727af8a21037222a08ec9bcaf1c85488aaa4",
     module_pattern = "aniseed",
   },
   ["plenary.nvim"] = {
     "nvim-lua/plenary.nvim",
-    commit = "2a278c8a12a399e25b78a43ebcd4f3996cd4e4b6",
+    commit = "0d660152000a40d52158c155625865da2aa7aa1b",
     module = "plenary",
   },
   ["popup.nvim"] = {
