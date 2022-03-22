@@ -7,7 +7,7 @@
 
 return {
   features = {
-    -- Language features
+    -- Language features (33ms)
     "annotations",        -- Code annotation generator
     "auto_install",       -- Auto install LSP providers
     "autopairs",          -- Automatically close character pairs
@@ -16,7 +16,7 @@ return {
     "lsp",                -- Code completion
     "snippets",           -- Code snippets for all languages
 
-    -- Editor
+    -- Editor (34ms, 1ms)
     "auto_session",       -- Remember sessions between loads
     "colorizer",          -- Show colors in neovim
     "editorconfig",       -- Support editorconfig files
@@ -26,18 +26,18 @@ return {
     "range_highlight",    -- Highlight selected range from commands
     "todo_comments",      -- Highlight TODO: comments
 
-    -- UI
+    -- UI (44ms, 10ms)
     "lsp_progress",             -- Check status of LSP loading
     "tabline",            -- Tab bar buffer switcher
     "dashboard",          -- A pretty dashboard upon opening
     "trouble",            -- A pretty diagnostic viewer
     "statusline2",         -- A pretty status line at the bottom of the buffer
-    -- "minimap",         -- Shows current position in document
+    "minimap",         -- Shows current position in document
 
-    -- Tools
-    -- "dap",             -- Debug code through neovim
+    -- Tools (188ms, 144ms)
+    "dap",                -- Debug code through neovim
     "explorer",           -- An enhanced filetree explorer
-    -- "firenvim",        -- Embed neovim in your browser
+    -- "firenvim",           -- Embed neovim in your browser
     "telescope",          -- Fuzzy searcher to find files, grep code and more
     "neorg",              -- Organise your life
     "whichkey",           -- An interactive sheet
@@ -78,6 +78,10 @@ return {
     "java",
 
     "config",             -- JSON, YAML, TOML
+    "markdown",
+  },
+  user = {
+    -- 'char_counter',
   }
 }
 

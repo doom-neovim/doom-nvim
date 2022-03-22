@@ -16,18 +16,20 @@ vim.diagnostic.config({
   },
 })
 
-doom.modules.tabline.settings.options.numbers = nil; -- Hide buffer numbers
-doom.modules.tabline.settings.options.diagnostics_indicator = function (_, _, diagnostics_dict, _)
-  local s = ""
-  for e, _ in pairs(diagnostics_dict) do
-    local sym = e == "error" and " " or (e == "warning" and " " or " ")
-    s = s .. sym
+if doom.modules.tabline then
+  doom.modules.tabline.settings.options.diagnostics_indicator = function (_, _, diagnostics_dict, _)
+  doom.modules.tabline.settings.options.numbers = nil; -- Hide buffer numbers
+    local s = ""
+    for e, _ in pairs(diagnostics_dict) do
+      local sym = e == "error" and " " or (e == "warning" and " " or " ")
+      s = s .. sym
+    end
+    return s
   end
-  return s
 end
 
 -- Colourscheme
-doom.use('sainnhe/sonokai', 'EdenEast/nightfox.nvim')
+doom.use_package('sainnhe/sonokai', 'EdenEast/nightfox.nvim')
 local options = {
   dim_inactive = true,
 }
@@ -67,12 +69,20 @@ require('nightfox').setup({
 doom.colorscheme = 'dawnfox'
 
 -- Extra packages
-doom.use(
+doom.use_package(
   'rafcamlet/nvim-luapad',
   'nvim-treesitter/playground',
   'tpope/vim-surround',
   'dstein64/vim-startuptime'
 )
+
+doom.use_cmd({
+  'Test', function() print('test') end
+})
+
+doom.use_autocmd({
+  {"FileType", "lua", function() print('lua') end }
+})
 vim.opt.guifont = { 'Hack Nerd Font', 'h12' }
 
 -- vim: sw=2 sts=2 ts=2 expandtab
