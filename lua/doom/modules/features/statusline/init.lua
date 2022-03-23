@@ -24,7 +24,7 @@ statusline.uses = {
 statusline.configs = {}
 statusline.configs["galaxyline.nvim"] = function()
   local utils = require("doom.utils")
-  local is_plugin_disabled = utils.is_plugin_disabled
+  local is_module_enabled = utils.is_module_enabled
 
   local gl = require("galaxyline")
   local colors = require("galaxyline.themes.colors").get_color
@@ -45,7 +45,7 @@ statusline.configs["galaxyline.nvim"] = function()
 
   gl.short_line_list = doom.modules.statusline.settings.short_line_list
 
-  if not is_plugin_disabled("dashboard") and not doom.modules.statusline.settings.on_dashboard then
+  if is_module_enabled("dashboard") and not doom.modules.statusline.settings.on_dashboard then
     table.insert(gl.exclude_filetypes, "dashboard")
   end
 
@@ -297,7 +297,7 @@ statusline.configs["galaxyline.nvim"] = function()
     },
   }
 
-  if not is_plugin_disabled("lsp") then
+  if is_module_enabled("lsp") then
     table.insert(default_sections.left, {
       DiagnosticError = {
         provider = "DiagnosticError",

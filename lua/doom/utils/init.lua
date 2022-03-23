@@ -211,17 +211,30 @@ end
 --- Check if the given plugin is disabled in doom-nvim/modules.lua
 --- @param plugin string The plugin identifier, e.g. statusline
 --- @return boolean
-utils.is_plugin_disabled = function(plugin)
+utils.is_module_enabled = function(plugin)
   local modules = require("doom.core.config.modules").modules
 
   -- Iterate over all modules sections (e.g. ui) and their plugins
   for _, section in pairs(modules) do
     if vim.tbl_contains(section, plugin) then
-      return false
+      return true
     end
   end
 
-  return true
+  return false
+end
+
+--- Returns a function that can only be run once
+---@param fn function
+---@return function
+utils.make_run_once_function = function(fn)
+  local has_run = false
+  return function(...)
+    if not has_run then
+      fn(...)
+      has_run = true
+    end
+  end
 end
 
 --- Rounds a number, optionally to the nearest decimal place

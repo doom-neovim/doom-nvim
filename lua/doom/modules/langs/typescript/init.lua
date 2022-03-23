@@ -1,3 +1,5 @@
+local utils = require('doom.utils');
+
 local typescript = {}
 
 typescript.settings = {
@@ -7,7 +9,8 @@ typescript.autocmds = {
   {
     "FileType",
     "typescript,typescriptreact",
-    function()
+    utils.make_run_once_function(function()
+      print('Configuring typescript')
       local langs_utils = require('doom.modules.langs.utils')
       langs_utils.use_lsp('tsserver')
 
@@ -26,7 +29,7 @@ typescript.autocmds = {
           null_ls.builtins.diagnostics.eslint_d,
         })
       end
-    end,
+    end),
     once = true,
   },
 }

@@ -49,7 +49,7 @@ telescope.settings = {
 telescope.uses = {
   ["telescope.nvim"] = {
     "nvim-telescope/telescope.nvim",
-    commit = "567ec85b157f1606b500a0f755181f284810a28e",
+    commit = "1a72a92b641e1dab42036c07e2571b43c55bfaa1",
     cmd = "Telescope",
     opt = true,
   },
@@ -92,7 +92,7 @@ end
 
 telescope.binds = function ()
   local utils = require("doom.utils")
-  local is_plugin_disabled = utils.is_plugin_disabled
+  local is_module_enabled = utils.is_module_enabled
 
   local binds = {
     "<leader>",
@@ -168,7 +168,7 @@ telescope.binds = function ()
       },
     },
   }
-  if not is_plugin_disabled("lsp") then
+  if is_module_enabled("lsp") then
     table.insert(binds, {
       "<leader>",
       name = "+prefix",

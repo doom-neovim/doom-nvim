@@ -18,9 +18,11 @@ utils.load_modules("doom", { "modules" })
 -- Defer and schedule loading of modules until the Neovim API functions are
 -- safe to call to avoid weird errors with plugins stuff.
 vim.defer_fn(function()
+  -- Load Doom modules.
+  utils.load_modules("doom", { "modules" })
   -- Start dashboard if it is enabled and an empty buffer is opened initially.
   if
-    not require("doom.utils").is_plugin_disabled("dashboard")
+    require("doom.utils").is_module_enabled("dashboard")
     and (vim.api.nvim_buf_get_number(0) > 1
     or vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]:len() == 0)
     and vim.api.nvim_buf_get_name(0):len() == 0 -- Empty buffer name

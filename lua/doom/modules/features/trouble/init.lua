@@ -5,7 +5,7 @@ trouble.settings = {}
 trouble.uses = {
   ["trouble.nvim"] = {
     "folke/trouble.nvim",
-    commit = "20469be985143d024c460d95326ebeff9971d714",
+    commit = "691d490cc4eadc430d226fa7d77aaa84e2e0a125",
     cmd = { "Trouble", "TroubleClose", "TroubleRefresh", "TroubleToggle" },
     opt = true,
   },

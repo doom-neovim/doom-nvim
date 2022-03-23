@@ -1,5 +1,5 @@
--- modules.lua - Doom nvim module selection
 --
+-- modules.lua - Doom nvim module selection
 -- modules.lua controls what Doom nvim plugins modules are enabled and
 -- what features are being used.
 --

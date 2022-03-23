@@ -196,6 +196,7 @@ config.load = function()
     vim.opt.foldtext = require("doom.core.functions").sugar_folds()
     doom = config.defaults
     doom.uses = {} -- Extra packages
+    doom.cmds = {} -- Extra commands
     doom.autocmds = {} -- Extra autocommands
     doom.binds = {} -- Extra binds
     doom.modules = {} -- Modules
@@ -207,7 +208,7 @@ config.load = function()
 
     -- Add doom.use helper function
     -- @param  string|packer_spec PackerSpec
-    doom.use = function(...)
+    doom.use_package = function(...)
       local arg = {...}
       -- Get table of packages via git repository name
       local packages_to_add = vim.tbl_map(function (t)
@@ -226,7 +227,36 @@ config.load = function()
         table.insert(doom.uses, type(packer_spec) == "string" and { packer_spec } or packer_spec)
       end
     end
-    --]]
+
+    doom.use_keybind = function(...)
+      local arg = {...}
+      for _, bind in ipairs(arg) do
+        table.insert(doom.binds, bind)
+      end
+    end
+
+    doom.use_cmd = function(...)
+      local arg = {...}
+      for _, cmd in ipairs(arg) do
+        if type(cmd[1] == "string") then
+          doom.cmds[cmd[1]] = cmd;
+        elseif cmd ~= nil then
+          doom.use_cmd(unpack(cmd))
+        end
+      end
+    end
+
+    doom.use_autocmd = function(...)
+      local arg = {...}
+      for _, autocmd in ipairs(arg) do
+        if type(autocmd[1]) == 'string' and type(autocmd[2]) == 'string' then
+          local key = string.format('%s-%s', autocmd[1], autocmd[2])
+          doom.autocmds[key] = autocmd
+        elseif autocmd ~= nil then
+          doom.use_autocmd(unpack(autocmd))
+        end
+      end
+    end
 
     -- Combine core modules with user-enabled modules
     local all_modules = vim.tbl_deep_extend('keep', {
@@ -248,7 +278,15 @@ config.load = function()
         if ok then
           doom.modules[module_name] = result
         else
-          print(vim.inspect(result))
+          local log = require("doom.utils.logging")
+          log.error(
+            string.format(
+              "There was an error loading module '%s.%s'. Traceback:\n%s",
+              section_name,
+              module_name,
+              result
+            )
+          )
         end
       end
     end

@@ -24,7 +24,7 @@ end
 
 module.use_lsp = function(lsp_name, _opts)
   local utils = require('doom.utils')
-  if utils.is_plugin_disabled("lsp") then
+  if not utils.is_module_enabled("lsp") then
     return
   end
   local lsp = require('lspconfig')
@@ -40,7 +40,7 @@ module.use_lsp = function(lsp_name, _opts)
 
   -- Combine default on_attach with provided on_attach
   local on_attach_functions = {}
-  if not utils.is_plugin_disabled("illuminate") then
+  if utils.is_module_enabled("illuminate") then
     table.insert(on_attach_functions, utils.illuminate_attach)
   end
   if (opts.config and opts.config.on_attach) then
@@ -74,7 +74,7 @@ module.use_lsp = function(lsp_name, _opts)
   end
 
   -- Auto install if possible
-  if not utils.is_plugin_disabled('auto_install') and not opts.no_installer then
+  if utils.is_module_enabled('auto_install') and not opts.no_installer then
     local lsp_installer = require("nvim-lsp-installer.servers")
     local server_available, server = lsp_installer.get_server(lsp_name)
     if server_available then

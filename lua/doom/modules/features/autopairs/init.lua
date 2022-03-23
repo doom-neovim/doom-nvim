@@ -9,7 +9,7 @@ autopairs.settings = {
 autopairs.uses = {
   ["nvim-autopairs"] = {
     "windwp/nvim-autopairs",
-    commit = "771fda8d169384d345c8bbf2f871b75ba4a2dee5",
+    commit = "6617498bea01c9c628406d7e23030da57f2f8718",
     event = "BufReadPost",
   },
 }
@@ -20,14 +20,9 @@ autopairs.configs["nvim-autopairs"] = function()
 end
 
 autopairs.binds = {
-  "<leader>",
-  name = "+prefix",
-  {
-    {
-      "t",
-      name = "+tweak",
-      {
-        { "p", require("doom.core.functions").toggle_autopairs, name = "Toggle autopairs" },
+  "<leader>", name = "+prefix", {
+    { "t", name = "+tweak", {
+        { "p", function() require("doom.core.functions").toggle_autopairs() end, name = "Toggle autopairs" },
       },
     },
   },
