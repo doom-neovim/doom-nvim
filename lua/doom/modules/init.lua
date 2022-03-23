@@ -53,17 +53,6 @@ packer.reset()
 
 -- Handle the Modules
 for module_name, module in pairs(doom.modules) do
-  -- Setup package autogroups
-  if module.autocmds then
-    local autocmds = type(module.autocmds) == 'function' and module.autocmds() or module.autocmds
-    utils.make_augroup(module_name, autocmds)
-  end
-
-  if module.cmds then
-    for _, cmd_spec in ipairs(module.cmds) do
-      utils.make_cmd(cmd_spec[1], cmd_spec[2])
-    end
-  end
   -- Import dependencies with packer from module.uses
   if module.uses then
     for dependency_name, packer_spec in pairs(module.uses) do
@@ -77,6 +66,18 @@ for module_name, module in pairs(doom.modules) do
 
       -- Initialise packer
       use(packer_spec)
+    end
+  end
+
+  -- Setup package autogroups
+  if module.autocmds then
+    local autocmds = type(module.autocmds) == 'function' and module.autocmds() or module.autocmds
+    utils.make_augroup(module_name, autocmds)
+  end
+
+  if module.cmds then
+    for _, cmd_spec in ipairs(module.cmds) do
+      utils.make_cmd(cmd_spec[1], cmd_spec[2])
     end
   end
 end
