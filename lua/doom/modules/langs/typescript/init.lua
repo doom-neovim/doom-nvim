@@ -8,7 +8,7 @@ typescript.settings = {
 typescript.autocmds = {
   {
     "FileType",
-    "typescript,typescriptreact",
+    "typescript,typescriptreact,javascript,javascriptreact",
     utils.make_run_once_function(function()
       print('Configuring typescript')
       local langs_utils = require('doom.modules.langs.utils')
@@ -16,7 +16,7 @@ typescript.autocmds = {
 
       vim.defer_fn(function()
         local ts_install = require("nvim-treesitter.install")
-        ts_install.ensure_installed("typescript")
+        ts_install.ensure_installed("typescript", "javascript")
       end, 0)
 
       -- Setup null-ls
