@@ -4,7 +4,7 @@ vue.settings = {
   -- Volar API lspconfig options
   volar_api = {
     default_config = {
-      filetypes = { 'vue' },
+      filetypes = { "vue" },
       -- If you want to use Volar's Take Over Mode (if you know, you know)
       --filetypes = { 'vue', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
       init_options = {
@@ -20,37 +20,37 @@ vue.settings = {
           codeAction = true,
           workspaceSymbol = true,
           completion = {
-            defaultTagNameCase = 'both',
-            defaultAttrNameCase = 'kebabCase',
+            defaultTagNameCase = "both",
+            defaultAttrNameCase = "kebabCase",
             getDocumentNameCasesRequest = false,
             getDocumentSelectionRequest = false,
           },
-        }
+        },
       },
-    }
+    },
   },
   -- Volar Document lspconfig options
   volar_doc = {
     default_config = {
-      filetypes = { 'vue' },
+      filetypes = { "vue" },
       -- If you want to use Volar's Take Over Mode (if you know, you know):
       --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
       init_options = {
         languageFeatures = {
           documentHighlight = true,
           documentLink = true,
-          codeLens = { showReferencesNotification = true},
+          codeLens = { showReferencesNotification = true },
           -- not supported - https://github.com/neovim/neovim/pull/14122
           semanticTokens = false,
           diagnostics = true,
           schemaRequestService = true,
-        }
+        },
       },
-    }
+    },
   },
   volar_html = {
     default_config = {
-      filetypes = { 'vue' },
+      filetypes = { "vue" },
       -- If you want to use Volar's Take Over Mode (if you know, you know), intentionally no 'json':
       --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
       init_options = {
@@ -64,10 +64,10 @@ vue.settings = {
           documentFormatting = {
             defaultPrintWidth = 100,
           },
-        }
+        },
       },
-    }
-  }
+    },
+  },
 }
 
 vue.configs = {}
@@ -79,8 +79,8 @@ vue.autocmds = {
     function()
       local lspconfig = require("lspconfig")
       local lspconfig_util = require("lspconfig/util")
-      local langs_utils = require('doom.modules.langs.utils')
-      
+      local langs_utils = require("doom.modules.langs.utils")
+
       -- volar needs works with typescript server, needs to get the typescript server from the project's node_modules
       local volar = lspconfig.volar -- Get the volar config to set the `cmd`
       local function on_new_config(new_config, new_root_dir)
@@ -96,7 +96,7 @@ vue.autocmds = {
               ))
             or ""
         end
-      
+
         if
           new_config.init_options
           and new_config.init_options.typescript
@@ -106,11 +106,12 @@ vue.autocmds = {
         end
       end
       local volar_root_dir = lspconfig_util.root_pattern("package.json")
-      
+
       -- Contains base configuration necessary for volar to start
       local base_config = {
         default_config = {
-          cmd = volar.document_config.default_config.cmd,
+          cmd = { 'vue-language-server', '--stdio' },
+          -- cmd = volar.document_config.default_config.cmd,
           root_dir = volar_root_dir,
           on_new_config = on_new_config,
           init_options = {
@@ -120,37 +121,57 @@ vue.autocmds = {
           },
         },
       }
-      
-      
-      local volar_api_config = vim.tbl_deep_extend('force', {}, doom.modules.vue.settings.volar_api, base_config)
-      langs_utils.use_lsp('volar', {
-        name = 'volar_api',
+
+      local volar_api_config = vim.tbl_deep_extend(
+        "force",
+        {},
+        doom.modules.vue.settings.volar_api,
+        base_config
+      )
+      langs_utils.use_lsp("volar", {
+        name = "volar_api",
         config = volar_api_config,
       })
-      
-      local volar_doc_config = vim.tbl_deep_extend('force', {}, doom.modules.vue.settings.volar_doc, base_config)
-      langs_utils.use_lsp('volar', {
-        name = 'volar_doc',
+
+      local volar_doc_config = vim.tbl_deep_extend(
+        "force",
+        {},
+        doom.modules.vue.settings.volar_doc,
+        base_config
+      )
+      langs_utils.use_lsp("volar", {
+        name = "volar_doc",
         config = volar_doc_config,
       })
-      
-      local volar_html_config = vim.tbl_deep_extend('force', {}, doom.modules.vue.settings.volar_html, base_config)
-      langs_utils.use_lsp('volar', {
-        name = 'volar_html',
+
+      local volar_html_config = vim.tbl_deep_extend(
+        "force",
+        {},
+        doom.modules.vue.settings.volar_html,
+        base_config
+      )
+      langs_utils.use_lsp("volar", {
+        name = "volar_html",
         config = volar_html_config,
       })
-      
-      
-      
+
       vim.defer_fn(function()
         local ts_install = require("nvim-treesitter.install")
-        ts_install.ensure_installed("vue", "css", "scss", "html", "scss", "javascript", "typescript")
+        ts_install.ensure_installed(
+          "vue",
+          "css",
+          "scss",
+          "html",
+          "scss",
+          "javascript",
+          "typescript"
+        )
       end, 0)
-      
+
       -- Setup null-ls
       if doom.modules.linter then
         local null_ls = require("null-ls")
-      
+
         langs_utils.use_null_ls_source({
           null_ls.builtins.formatting.eslint_d,
           null_ls.builtins.code_actions.eslint_d,
