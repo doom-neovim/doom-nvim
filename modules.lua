@@ -77,6 +77,7 @@ return {
     -- "java",
 
     -- "config",             -- JSON, YAML, TOML
+    -- "markdown",
   }
 }
 
