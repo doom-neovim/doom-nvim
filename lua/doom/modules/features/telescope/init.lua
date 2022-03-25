@@ -46,7 +46,7 @@ telescope.settings = {
   extensions = { "mapper" },
 }
 
-telescope.uses = {
+telescope.packages = {
   ["telescope.nvim"] = {
     "nvim-telescope/telescope.nvim",
     commit = "1a72a92b641e1dab42036c07e2571b43c55bfaa1",

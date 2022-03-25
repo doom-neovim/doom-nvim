@@ -5,7 +5,7 @@ snippets.settings = {
   updateevents = "TextChanged,TextChangedI",
 }
 
-snippets.uses = {
+snippets.packagesages = {
   ["LuaSnip"] = {
     "L3MON4D3/LuaSnip",
     commit = "80e68242cf8127844653060fbada32dca15579fc",

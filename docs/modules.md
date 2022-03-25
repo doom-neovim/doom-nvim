@@ -116,7 +116,7 @@ local comment_module = doom.modules.comment
 -- Override default settings (provided by doom-nvim)
 comment_module.settings.padding = false
 -- Override package source with a fork
-comment_module.uses['Comment.nvim'] = {
+comment_module.packages['Comment.nvim'] = {
   'my_fork/Comment.nvim',
   module = "Comment"
 }
@@ -182,7 +182,7 @@ These are the possible values a
 
 ```lua
 module.settings:  table                             -- Table of settings that can be tweaked
-module.uses:      table<string,table<PackerSpec>>   -- Table of packer specs
+module.packages:      table<string,table<PackerSpec>>   -- Table of packer specs
 module.configs:   table<string,function>            -- Table of plugin config functions relating to the packer specs
 module.binds:     table<NestConfig>|function -> table<NestConfig> -- Table of NestConfig or function that returns Table of NestConfig
 module.autocmds:  table<AutoCmd>|function -> table<AutoCmd>       -- Table of AutoCmds (see below) or function that returns a table of AutoCmds
@@ -194,7 +194,7 @@ local module = {}
 module.settings = {...} -- Doom-nvim provided object to change settings
 
 -- Stores the packer.nvim config for all of the plugin dependencies
-module.uses = {
+module.packages = {
   ["example-plugin.nvim"] = { -- Use the repository name as the key
     "GithubUser/example-plugin.nvim",
     commit = "..." -- We like to pin plugins to commits to avoid issues upgrading.
@@ -202,7 +202,7 @@ module.uses = {
 }
 
 module.configs = {
-  ["example-plugin.nvim"] = function() -- key matches `module.uses` entry
+  ["example-plugin.nvim"] = function() -- key matches `module.packages` entry
     require('example-plugin').setup( doom.modules.example.settings ) -- Consumes `module.settings` and uses it to config the plugin
   end
 }
@@ -409,9 +409,9 @@ char_counter.binds = {
 
 ### 7. Adding and lazyloading a plugin
 
-Plugins are added using the `module.uses` field and are configured using the `module.configs` field.
+Plugins are added using the `module.packages` field and are configured using the `module.configs` field.
 We use the repository name as a key to connect the plugin to its config function.
-The API for `module.uses` is passed to Packer nvim's use function. [DOCS](https://github.com/wbthomason/packer.nvim#specifying-plugins)
+The API for `module.packages` is passed to Packer nvim's use function. [DOCS](https://github.com/wbthomason/packer.nvim#specifying-plugins)
 
 In this example I will add [nui.nvim](https://github.com/MunifTanjim/nui.nvim) to display the results in a popup when
 the user uses the `CountPrint` command.
@@ -420,7 +420,7 @@ the user uses the `CountPrint` command.
 -- lua/user/modules/char_counter/init.lua
 
 -- Add these two fields to `char_counter` at the top of the file.
-char_counter.uses = {
+char_counter.packages = {
   ["nui.nvim"] = {
     "MunifTanjim/nui.nvim",
     cmd = { "CountPrint" } -- Here, nui.nvim wont be loaded until user does the `<leader>ic` or `:CountPrint` command.
@@ -584,7 +584,7 @@ char_counter.settings = {
   }
 }
 
-char_counter.uses = {
+char_counter.packages = {
   ["nui.nvim"] = {
     "MunifTanjim/nui.nvim",
     cmd = { "CountPrint" }

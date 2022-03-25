@@ -2,7 +2,7 @@ local suda = {}
 
 suda.settings = {}
 
-suda.uses = {
+suda.packagesages = {
   ["suda.vim"] = {
     "lambdalisue/suda.vim",
     commit = "6bffe36862faa601d2de7e54f6e85c1435e832d0",

@@ -4,7 +4,7 @@ linter.settings = {
   format_on_save = false,
 }
 
-linter.uses = {
+linter.packages = {
   ["null-ls.nvim"] = {
     "jose-elias-alvarez/null-ls.nvim",
     commit = "71bb21da7faa6676629ebac5e8818b701da46f80",

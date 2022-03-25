@@ -139,7 +139,7 @@ tabline.settings = {
   },
 }
 
-tabline.uses = {
+tabline.packages = {
   ["bufferline.nvim"] = {
     "akinsho/bufferline.nvim",
     commit = "e1202c6569353d03ef0cb3da11b839dba26854dd",

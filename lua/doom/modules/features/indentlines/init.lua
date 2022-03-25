@@ -8,7 +8,7 @@ indentlines.settings = {
   buftype_exclude = { "terminal" },
 }
 
-indentlines.uses = {
+indentlines.packages = {
   ["indent-blankline.nvim"] = {
     "lukas-reineke/indent-blankline.nvim",
     commit = "9915d46ba9361784c70036bb7259c436249e5b0c",

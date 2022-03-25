@@ -195,7 +195,7 @@ config.load = function()
     vim.opt.foldenable = true
     vim.opt.foldtext = require("doom.core.functions").sugar_folds()
     doom = config.defaults
-    doom.uses = {} -- Extra packages
+    doom.packages = {} -- Extra packages
     doom.cmds = {} -- Extra commands
     doom.autocmds = {} -- Extra autocommands
     doom.binds = {} -- Extra binds
@@ -221,10 +221,10 @@ config.load = function()
       end
 
       -- Iterate over existing packages, removing all packages that are about to be overriden
-      doom.uses = vim.tbl_filter(package_override_predicate, doom.uses)
+      doom.packages = vim.tbl_filter(package_override_predicate, doom.packages)
 
       for _, packer_spec in ipairs(arg) do
-        table.insert(doom.uses, type(packer_spec) == "string" and { packer_spec } or packer_spec)
+        table.insert(doom.packages, type(packer_spec) == "string" and { packer_spec } or packer_spec)
       end
     end
 

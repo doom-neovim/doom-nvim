@@ -14,7 +14,7 @@ config.settings = {
   -- yaml_language_server_name = 'yamlls', -- Currently broken
 }
 
-config.uses = {
+config.packagesages = {
   ["SchemaStore.nvim"] = {
     "b0o/SchemaStore.nvim",
     commit = "0a3f765335acde2bdf33504a62fe944a5d6d907e",

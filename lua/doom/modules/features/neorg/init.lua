@@ -29,7 +29,7 @@ neorg.settings = {
   },
 }
 
-neorg.uses = {
+neorg.packages = {
   ["neorg"] = {
     "nvim-neorg/neorg",
     commit = "9aeaf79c5ad01930705a0534a35adbdba9eb5f13",

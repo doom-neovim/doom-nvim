@@ -24,7 +24,7 @@ char_counter.settings = {
   }
 }
 
-char_counter.uses = {
+char_counter.packages = {
   ["nui.nvim"] = {
     "MunifTanjim/nui.nvim",
     cmd = { "CountPrint" },

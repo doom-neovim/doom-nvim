@@ -2,7 +2,7 @@ local neogit = {}
 
 neogit.settings = {}
 
-neogit.uses = {
+neogit.packages = {
   ["neogit"] = {
     "TimUntersberger/neogit",
     commit = "9987421e0724ce704d0035f50a7080c677a85d71",
