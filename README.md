@@ -208,10 +208,10 @@ whichkey.autocmds = {
 }
 
 -- Modify the plugin source repo, plugins are indexed via the repository name.
-whichkey.uses["which-key.nvim"] = {
+whichkey.packages["which-key.nvim"] = {
     "myfork/which-key.nvim"
 }
--- Provide a different config function, the key has to match the entry in `whichkey.uses`
+-- Provide a different config function, the key has to match the entry in `whichkey.packages`
 whichkey.configs["which-key.nvim"] = function ()
   local wk = require("which-key")
 end

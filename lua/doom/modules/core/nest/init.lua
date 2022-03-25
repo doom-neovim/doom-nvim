@@ -3,7 +3,7 @@ local nest = {}
 nest.settings = {
 }
 
-nest.uses = {
+nest.packages = {
   ["nest.nvim"] = {
     "connorgmeehan/nest.nvim",
     branch = "integrations-api",

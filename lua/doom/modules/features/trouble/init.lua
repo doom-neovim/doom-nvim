@@ -2,7 +2,7 @@ local trouble = {}
 
 trouble.settings = {}
 
-trouble.uses = {
+trouble.packages = {
   ["trouble.nvim"] = {
     "folke/trouble.nvim",
     commit = "691d490cc4eadc430d226fa7d77aaa84e2e0a125",

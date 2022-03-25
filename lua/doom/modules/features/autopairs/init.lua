@@ -6,7 +6,7 @@ autopairs.settings = {
   enable_moveright = true,
 }
 
-autopairs.uses = {
+autopairs.packages = {
   ["nvim-autopairs"] = {
     "windwp/nvim-autopairs",
     commit = "6617498bea01c9c628406d7e23030da57f2f8718",

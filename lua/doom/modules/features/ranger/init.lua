@@ -2,7 +2,7 @@ local ranger = {}
 
 ranger.settings = {}
 
-ranger.uses = {
+ranger.packages = {
   ["ranger.vim"] = {
     "francoiscabrol/ranger.vim",
     commit = "91e82debdf566dfaf47df3aef0a5fd823cedf41c",

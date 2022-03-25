@@ -11,7 +11,7 @@ doom_reloader.settings = {
   },
 }
 
-doom_reloader.uses = {}
+doom_reloader.packages = {}
 doom_reloader.configs = {}
 
 doom_reloader.autocmds = {

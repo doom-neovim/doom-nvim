@@ -4,7 +4,7 @@ required.settings = {
   mapper = {},
 }
 
-required.uses = {
+required.packages = {
   ["packer.nvim"] = {
     "wbthomason/packer.nvim",
   },

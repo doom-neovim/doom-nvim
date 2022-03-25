@@ -3,7 +3,7 @@ local fidget = {}
 fidget.settings = {
 }
 
-fidget.uses = {
+fidget.packages = {
   ["fidget.nvim"] = {
     "j-hui/fidget.nvim",
     commit = "d47f2bbf7d984f69dc53bf2d37f9292e3e99ae8a",

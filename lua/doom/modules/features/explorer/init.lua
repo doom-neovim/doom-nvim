@@ -74,7 +74,7 @@ explorer.settings = {
   },
 }
 
-explorer.uses = {
+explorer.packages = {
   ["nvim-tree.lua"] = {
     "kyazdani42/nvim-tree.lua",
     commit = "7b0ebf8b17d85abecccfd1c924090a28d5935b88",

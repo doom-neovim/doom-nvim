@@ -16,7 +16,7 @@ annotations.settings = {
   },
 }
 
-annotations.uses = {
+annotations.packages = {
   ["neogen"] = {
     "danymat/neogen",
     commit = "778a8537865a2c692ba4909b72e1b14ea98999c6",

@@ -53,9 +53,9 @@ packer.reset()
 
 -- Handle the Modules
 for module_name, module in pairs(doom.modules) do
-  -- Import dependencies with packer from module.uses
-  if module.uses then
-    for dependency_name, packer_spec in pairs(module.uses) do
+  -- Import dependencies with packer from module.packages
+  if module.packages then
+    for dependency_name, packer_spec in pairs(module.packages) do
       -- Set packer_spec to configure function
       if module.configs and module.configs[dependency_name] then
         packer_spec.config = module.configs[dependency_name]
@@ -83,7 +83,7 @@ for module_name, module in pairs(doom.modules) do
 end
 
 -- Handle extra user modules
-for _, packer_spec in ipairs(doom.uses) do
+for _, packer_spec in ipairs(doom.packages) do
   use(packer_spec)
 end
 

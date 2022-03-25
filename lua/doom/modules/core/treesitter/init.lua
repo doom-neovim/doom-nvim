@@ -39,7 +39,7 @@ treesitter.settings = {
   },
 }
 
-treesitter.uses = {
+treesitter.packages = {
   ["nvim-treesitter"] = {
     "nvim-treesitter/nvim-treesitter",
     commit = "3e2ac54e1638da214dab58f9edf01ad93f57261d",

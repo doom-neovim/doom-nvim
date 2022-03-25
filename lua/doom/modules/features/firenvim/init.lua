@@ -22,7 +22,7 @@ firenvim.settings = {
   },
 }
 
-firenvim.uses = {
+firenvim.packagesages = {
   ["firenvim"] = {
     "glacambre/firenvim",
     commit = "668b350ce88cc9a2257644c67945c9abbdd36cb5",

@@ -41,7 +41,7 @@ comment.settings = {
   end,
 }
 
-comment.uses = {
+comment.packages = {
   ["Comment.nvim"] = {
     "numToStr/Comment.nvim",
     commit = "8a2b2f3b302e3a35184b1107dfb3781aa76e442a",

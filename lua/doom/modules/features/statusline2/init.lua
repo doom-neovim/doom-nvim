@@ -3,7 +3,7 @@ local statusline = {}
 statusline.settings = {
 }
 
-statusline.uses = {
+statusline.packagesages = {
   ["lualine.nvim"] = {
     "nvim-lualine/lualine.nvim",
   },

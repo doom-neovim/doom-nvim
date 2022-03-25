@@ -61,7 +61,7 @@ whichkey.settings = {
   triggers = "auto",
 }
 
-whichkey.uses = {
+whichkey.packages = {
   ["which-key.nvim"] = {
     "folke/which-key.nvim",
     commit = "a3c19ec5754debb7bf38a8404e36a9287b282430",

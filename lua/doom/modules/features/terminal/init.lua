@@ -22,7 +22,7 @@ terminal.settings = {
   },
 }
 
-terminal.uses = {
+terminal.packagesages = {
   ["toggleterm.nvim"] = {
     "akinsho/toggleterm.nvim",
     commit = "36704ddf3883842f3354e11da968d4c1201f0831",
