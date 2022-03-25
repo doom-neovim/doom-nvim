@@ -7,7 +7,7 @@ auto_install.settings = {
 
 local is_module_enabled = require("doom.utils").is_module_enabled
 
-auto_install.packagesages = {
+auto_install.packages = {
   ["DAPInstall.nvim"] = {
     "Pocco81/DAPInstall.nvim",
     commit = "24923c3819a450a772bb8f675926d530e829665f",
