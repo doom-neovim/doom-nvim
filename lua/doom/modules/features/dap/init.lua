@@ -35,7 +35,7 @@ dap.settings = {
   },
 }
 
-dap.packagesages = {
+dap.packages = {
   ["nvim-dap"] = {
     "mfussenegger/nvim-dap",
     commit = "3d0575a777610b364fea745b85ad497d56b8009a",

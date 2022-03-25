@@ -2,7 +2,7 @@ local restclient = {}
 
 restclient.settings = {}
 
-restclient.packagesages = {
+restclient.packages = {
   ["rest.nvim"] = {
     "NTBBloodbath/rest.nvim",
     commit = "2826f6960fbd9adb1da9ff0d008aa2819d2d06b3",
