@@ -32,6 +32,11 @@ nest.configs["nest.nvim"] = function()
         nest_package.applyKeymaps(type(module.binds) == 'function' and module.binds() or module.binds)
       end
     end
+    -- Apply user keybinds
+    last_module = 'user provided keybinds  (doom.use_keybind)'
+    for _, keybinds in ipairs(doom.binds) do
+      nest_package.applyKeymaps(keybinds)
+    end
   end, debug.traceback)
   if not ok and err then
     local log = require("doom.utils.logging")
@@ -43,6 +48,7 @@ nest.configs["nest.nvim"] = function()
       )
     )
   end
+
 end
 
 return nest
