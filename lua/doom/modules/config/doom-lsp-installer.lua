@@ -21,7 +21,7 @@ return function()
     -- dlang = { 'serve_d' },
     dockerfile = { "dockerls" },
     dot = { "dotls" },
-    elixer = { "elixerls" },
+    elixir = { "elixirls" },
     elm = { "elmls" },
     ember = { "ember" },
     fortran = { "fortls" },
