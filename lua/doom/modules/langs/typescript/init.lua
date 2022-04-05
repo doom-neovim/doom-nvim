@@ -10,7 +10,6 @@ typescript.autocmds = {
     "FileType",
     "typescript,typescriptreact,javascript,javascriptreact",
     utils.make_run_once_function(function()
-      print('Configuring typescript')
       local langs_utils = require('doom.modules.langs.utils')
       langs_utils.use_lsp('tsserver')
 

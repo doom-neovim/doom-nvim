@@ -2,7 +2,6 @@ local utils = require("doom.utils")
 local use_floating_win_packer = doom.use_floating_win_packer
 local log = require("doom.utils.logging")
 local system = require("doom.core.system")
-local enabled_modules = require("doom.core.config.modules").modules
 
 -- Packer Bootstrapping
 local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
@@ -89,7 +88,6 @@ end
 
 -- Handle extra user cmds
 for _, cmd_spec in pairs(doom.cmds) do
-  print(cmd_spec[1])
   utils.make_cmd(cmd_spec[1], cmd_spec[2])
 end
 
