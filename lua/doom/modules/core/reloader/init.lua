@@ -24,8 +24,6 @@ local vim_subdirs = { "doc", "after", "syntax", "plugin" }
 -- Should cause error if plenary is not installed.
 xpcall(require, debug.traceback, "plenary")
 
-local scan_dir = require("plenary.scandir").scan_dir
-
 --- Converts a Lua module path into an acceptable Lua module format
 --- @param module_path string The path to the module
 --- @return string|nil
@@ -55,6 +53,7 @@ end
 --- @param parent_path string The parent path to look for files
 --- @return table
 local function get_runtime_files(parent_path)
+  local scan_dir = require("plenary.scandir").scan_dir
   local runtime_files = {}
 
   -- Look in each Neovim subdir for runtime files (documentation, syntax files, etc)
@@ -81,6 +80,7 @@ end
 --- Gets all the Lua files found in '~/.config/nvim/lua' directory
 --- @return table
 local function get_lua_modules(path)
+  local scan_dir = require("plenary.scandir").scan_dir
   -- Look for Lua modules in Doom Nvim root
   local modules = scan_dir(path, { search_pattern = "%.lua$", hidden = true })
   for idx, module in ipairs(modules) do
@@ -229,4 +229,33 @@ reloader.full_reload = function()
   )
 end
 
+reloader.settings = {
+  reload_on_save = true,
+}
+reloader.packages = {}
+reloader.configs = {}
+
+reloader.cmds = {
+  {
+    "DoomReload",
+    function()
+      reloader.full_reload()
+    end,
+  },
+}
+
+reloader.autocmds = function()
+  local autocmds = {}
+
+  if reloader.settings.reload_on_save then
+    table.insert(autocmds, { "BufWritePost", "*/doom/**/*.lua", reloader.full_reload })
+    table.insert(autocmds, {
+      "BufWritePost",
+      "*/doom-nvim/modules.lua,*/doom-nvim/config.lua",
+      reloader.full_reload,
+    })
+  end
+
+  return autocmds
+end
 return reloader

@@ -264,6 +264,7 @@ config.load = function()
         'doom',
         'nest',
         'treesitter',
+        'reloader',
       }
     }, enabled_modules)
 
