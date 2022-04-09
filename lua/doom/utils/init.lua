@@ -66,6 +66,28 @@ utils.load_modules = function(module_path, mods)
   end
 end
 
+--- Wraps lua's require function in an xpcall and logs errors.
+---@param path string
+---@return any
+utils.safe_require = function (path)
+  local log = require("doom.utils.logging")
+  log.debug(string.format("Doom: loading '%s'... ", path))
+  local ok, result = xpcall(require, debug.traceback, path)
+  if not ok and result then
+      log.error(
+        string.format(
+          "There was an error requiring '%s'. Traceback:\n%s",
+          path,
+          result
+        )
+      )
+    return nil
+  else
+    log.debug(string.format("Successfully loaded '%s' module", path))
+    return result
+  end
+end
+
 --- Stores a function in a global table, returns a string to execute the function
 -- @param  fn function
 -- @return string

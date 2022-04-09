@@ -17,7 +17,10 @@ utils.load_modules("doom", { "core" })
 -- safe to call to avoid weird errors with plugins stuff.
 vim.defer_fn(function()
   -- Load Doom modules.
-  utils.load_modules("doom", { "modules" })
+  local modules = utils.safe_require("doom.modules")
+  modules.start()
+  modules.load_modules()
+  modules.handle_user_config()
   -- Start dashboard if it is enabled and an empty buffer is opened initially.
   if
     require("doom.utils").is_module_enabled("dashboard")
