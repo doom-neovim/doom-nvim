@@ -1,5 +1,5 @@
---
 -- modules.lua - Doom nvim module selection
+--
 -- modules.lua controls what Doom nvim plugins modules are enabled and
 -- what features are being used.
 --
@@ -27,12 +27,12 @@ return {
     "todo_comments",      -- Highlight TODO: comments
 
     -- UI (44ms, 10ms)
-    "lsp_progress",             -- Check status of LSP loading
+    "lsp_progress",       -- Check status of LSP loading
     "tabline",            -- Tab bar buffer switcher
     "dashboard",          -- A pretty dashboard upon opening
     "trouble",            -- A pretty diagnostic viewer
-    "statusline2",         -- A pretty status line at the bottom of the buffer
-    "minimap",         -- Shows current position in document
+    "statusline2",        -- A pretty status line at the bottom of the buffer
+    "minimap",            -- Shows current position in document
 
     -- Tools (188ms, 144ms)
     "dap",                -- Debug code through neovim
@@ -66,6 +66,7 @@ return {
     "typescript",
     "css",
     "vue",
+    "svelte",
     "tailwindcss",
 
     -- Compiled

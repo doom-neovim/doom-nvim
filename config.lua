@@ -10,6 +10,7 @@ doom.indent = 2
 doom.autosave = false
 doom.escape_sequences = {}
 -- vim.lsp.set_log_level('trace')
+
 vim.diagnostic.config({
   float = {
     source = 'always',
@@ -33,7 +34,7 @@ doom.use_package('sainnhe/sonokai', 'EdenEast/nightfox.nvim')
 local options = {
   dim_inactive = true,
 }
-local pallets = {
+local palettes = {
   dawnfox = {
     bg2 = '#F9EFEC',
     bg3 = '#ECE3DE',
@@ -62,7 +63,7 @@ local groups = {
 }
 require('nightfox').setup({
   options = options,
-  pallets = pallets,
+  palettes = palettes,
   specs = specs,
   groups = groups,
 })
@@ -76,13 +77,10 @@ doom.use_package(
   'dstein64/vim-startuptime'
 )
 
-doom.use_cmd({
-  'Test', function() print('test') end
-})
-
-doom.use_autocmd({
-  {"FileType", "lua", function() print('lua') end }
-})
 vim.opt.guifont = { 'Hack Nerd Font', 'h12' }
+
+vim.cmd('let g:neovide_refresh_rate=60')
+vim.cmd('let g:neovide_cursor_animation_length=0.03')
+vim.cmd("set laststatus=3")
 
 -- vim: sw=2 sts=2 ts=2 expandtab
