@@ -55,10 +55,6 @@ end
 
 function doom_modules.load_modules()
   local use = require("packer").use
-  if not use then
-    log.error("doom-nvim: Error intialising modules.")
-    return
-  end
   -- Handle the Modules
   for module_name, module in pairs(doom.modules) do
     -- Import dependencies with packer from module.packages

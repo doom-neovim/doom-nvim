@@ -1,5 +1,4 @@
 local utils = require("doom.utils")
-local enabled_modules = require("doom.core.config.modules").modules
 -- `core` is required, doom wouldn't make sense without it.
 
 local config = {}
@@ -238,7 +237,7 @@ config.load = function()
     doom.use_cmd = function(...)
       local arg = {...}
       for _, cmd in ipairs(arg) do
-        if type(cmd[1] == "string") then
+        if type(cmd[1]) == "string" then
           doom.cmds[cmd[1]] = cmd;
         elseif cmd ~= nil then
           doom.use_cmd(unpack(cmd))
@@ -257,38 +256,38 @@ config.load = function()
         end
       end
     end
+  end
+  -- Combine core modules with user-enabled modules
+  local enabled_modules = require("doom.core.config.modules").modules
+  local all_modules = vim.tbl_deep_extend('keep', {
+    core = {
+      'doom',
+      'nest',
+      'treesitter',
+      'reloader',
+    }
+  },enabled_modules)
 
-    -- Combine core modules with user-enabled modules
-    local all_modules = vim.tbl_deep_extend('keep', {
-      core = {
-        'doom',
-        'nest',
-        'treesitter',
-        'reloader',
-      }
-    }, enabled_modules)
+  for section_name, section_modules in pairs(all_modules) do
+    for _, module_name in pairs(section_modules) do
+      -- Special case for user folder, resolves to `lua/user/modules`
+      local root_folder = section_name == "user"
+        and "user.modules"
+        or ("doom.modules.%s"):format(section_name)
 
-    for section_name, section_modules in pairs(all_modules) do
-      for _, module_name in pairs(section_modules) do
-        -- Special case for user folder, resolves to `lua/user/modules`
-        local root_folder = section_name == "user"
-          and "user.modules"
-          or ("doom.modules.%s"):format(section_name)
-
-        local ok, result = xpcall(require, debug.traceback, ("%s.%s"):format(root_folder, module_name))
-        if ok then
-          doom.modules[module_name] = result
-        else
-          local log = require("doom.utils.logging")
-          log.error(
-            string.format(
-              "There was an error loading module '%s.%s'. Traceback:\n%s",
-              section_name,
-              module_name,
-              result
-            )
+      local ok, result = xpcall(require, debug.traceback, ("%s.%s"):format(root_folder, module_name))
+      if ok then
+        doom.modules[module_name] = result
+      else
+        local log = require("doom.utils.logging")
+        log.error(
+          string.format(
+            "There was an error loading module '%s.%s'. Traceback:\n%s",
+            section_name,
+            module_name,
+            result
           )
-        end
+        )
       end
     end
   end
