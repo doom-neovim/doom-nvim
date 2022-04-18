@@ -1,4 +1,3 @@
---- @class Reloader
 local reloader = {}
 
 --- Only show error reloading message once per session
@@ -34,22 +33,6 @@ local function path_to_lua_module(module_path)
   module_path = module_path:gsub("%.init$", "")
 
   return module_path
-end
-
---- Gets all the Lua files found in '~/.config/nvim/lua' directory
---- @return table
-local function get_lua_modules(path)
-  local scan_dir = require("plenary.scandir").scan_dir
-  -- Look for Lua modules in Doom Nvim root
-  local modules = scan_dir(path, { search_pattern = "%.lua$", hidden = true })
-  for idx, module in ipairs(modules) do
-    module = path_to_lua_module(module)
-
-    -- Override previous value with new value
-    modules[idx] = module
-  end
-
-  return modules
 end
 
 --- Reloads all Neovim runtime files found in plugins
@@ -92,35 +75,28 @@ reloader.reload_lua_module = function(mod_path, quiet)
   end
 end
 
---- Reload all Lua modules
---- @param quiet boolean If the reloader should send an info log or not
-reloader.reload_lua_modules = function(quiet)
-  local paths = vim.fn.glob(system.doom_root .. system.sep .. "lua", 0, 1)
-
-  for _, path in ipairs(paths) do
-    local modules = get_lua_modules(path)
-
-    for _, module in ipairs(modules) do
-      reloader.reload_lua_module(module, quiet)
-    end
+--- Reload all Neovim configurations
+reloader._reload_doom = function()
+  vim.cmd("hi clear")
+  if vim.fn.exists(":LspRestart") ~= 0 then
+    vim.cmd("silent! LspRestart")
   end
-end
 
---- Reload the plugin definitions modules like modules.lua to automatically
---- install or uninstall plugins on changes
-reloader.reload_plugins_definitions = function()
+  -- Remember which modules/packages installed to check if user needs to `:PackerSync`
   local old_modules = require("doom.core.config.modules").modules
   local old_packages = vim.tbl_map(function(t)
     return t[1]
   end, doom.packages)
 
+  -- Reset State
   if _doom and _doom.cmd_funcs then
     _doom.cmd_funcs = {}
   end
-
   doom.packages = {}
 
+  -- Unload doom.modules/doom.core lua files
   for k, _ in pairs(package.loaded) do
+    -- TODO: add `doom.user` here as well?
     if string.match(k, "^doom%.core") or string.match(k, "^doom%.modules") then
       package.loaded[k] = nil
     end
@@ -130,43 +106,28 @@ reloader.reload_plugins_definitions = function()
   reloader.reload_lua_module("doom.core", true)
   -- Reload which modules are enabled
   reloader.reload_lua_module("doom.core.config.modules", true)
-
   -- Prepare the enabled modules, reload the user config.lua
   reloader.reload_lua_module("doom.core.config", true)
   require("doom.core.config"):load()
-
   -- Install, bind, add autocmds etc for all modules and user configs
   reloader.reload_lua_module("doom.modules", true)
   require("doom.modules"):load_modules()
   require("doom.modules"):handle_user_config()
-
   -- VimEnter to emulate loading neovim
-  vim.cmd("doautocmd VimEnter")
 
-  -- Either re-compile plugin configs or install new plugins
   local modules = require("doom.core.config.modules").modules
   local packages = vim.tbl_map(function(t)
     return t[1]
   end, doom.packages)
-  local needs_install = vim.deep_equal(modules, old_modules) and vim.deep_equal(packages, old_packages) 
+  local needs_install = vim.deep_equal(modules, old_modules)
+    and vim.deep_equal(packages, old_packages)
   if needs_install then
-    log.warn('reloader: If you made changes to the config of a plugin, run `:PackerCompile` to execute these changes.')
-  else 
-    log.warn('reloader: Run `:PackerSync` to install and configure new plugins.')
+    log.warn(
+      "reloader: If you made changes to the config of a plugin, run `:PackerCompile` to execute these changes."
+    )
+  else
+    log.warn("reloader: Run `:PackerSync` to install and configure new plugins.")
   end
-end
-
---- Reload all Neovim configurations
-reloader.reload_configs = function()
-  --- Clear highlighting
-  vim.cmd("hi clear")
-
-  --- Restart running language servers
-  if vim.fn.exists(":LspRestart") ~= 0 then
-    vim.cmd("silent! LspRestart")
-  end
-
-  reloader.reload_plugins_definitions()
 
   vim.cmd("doautocmd VimEnter")
   -- vim.cmd("doautocmd BufEnter")
@@ -175,13 +136,13 @@ reloader.reload_configs = function()
 end
 
 --- Reload Neovim and simulate a new run
-reloader.full_reload = function()
+reloader.reload = function()
   -- Store the time taken to reload Doom
   local reload_time = vim.fn.reltime()
   log.info("Reloading Doom ...")
 
   --- Reload Neovim configurations
-  reloader.reload_configs()
+  reloader._reload_doom()
 
   log.info(
     "Reloaded Doom in "
@@ -200,7 +161,7 @@ reloader.cmds = {
   {
     "DoomReload",
     function()
-      reloader.full_reload()
+      reloader.reload()
     end,
   },
 }
@@ -208,16 +169,18 @@ reloader.cmds = {
 reloader.autocmds = function()
   local autocmds = {}
 
+  -- RELOAD DOOM ON SAVE
   if reloader.settings.reload_on_save then
-    -- table.insert(autocmds, { "BufWritePost", "*/doom/**/*.lua", function()
-    --   reloader.full_reload()
-    -- end, })
+    table.insert(
+      autocmds,
+      { "BufWritePost", "*/doom/**/*.lua,*/user/**/*.lua", reloader.reload }
+    )
     table.insert(autocmds, {
       "BufWritePost",
       "*/modules.lua,*/config.lua",
       function()
         if vim.fn.getcwd() == vim.fn.stdpath("config") then
-          reloader.full_reload()
+          reloader.reload()
         end
       end,
     })
@@ -225,4 +188,6 @@ reloader.autocmds = function()
 
   return autocmds
 end
+
 return reloader
+
