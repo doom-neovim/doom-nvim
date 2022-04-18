@@ -2,11 +2,6 @@
 
 -- Doom Nvim commands.
 
--- Set a custom command to update Doom Nvim can be called by using :DoomUpdate.
-vim.cmd([[command! DoomUpdate lua require("doom.core.functions").update_doom()]])
--- Set a custom command to rollback Doom Nvim version can be called by using
--- :DoomRollback.
-vim.cmd([[command! DoomRollback lua require("doom.core.functions").rollback_doom()]])
 -- Set a custom command to open Doom Nvim user manual can be called by using
 -- :DoomManual.
 vim.cmd([[command! DoomManual lua require("doom.core.functions").open_docs()]])

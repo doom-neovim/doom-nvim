@@ -4,7 +4,12 @@ local system = require("doom.core.system")
 local fs = require("doom.utils.fs")
 
 --- Doom Nvim version
-utils.doom_version = "4.0.0-alpha1"
+utils.version = {
+  major = 4,
+  minor = 0,
+  patch = 0,
+}
+utils.doom_version = string.format("%d.%d.%d", utils.version.major, utils.version.minor, utils.version.patch)
 
 -- Finds `filename` (where it is a doom config file).
 utils.find_config = function(filename)
