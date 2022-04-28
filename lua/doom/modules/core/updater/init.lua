@@ -1,3 +1,18 @@
+--[[
+--  Doom updater
+--
+--  Update your doom nvim config using the :DoomUpdate command.
+--  Currently disabled (not imported) because I'm not sure how nicely this will play
+--  with user's own changes to config.lua/modules.lua.  May re-enable in future once
+--  we land on a strategy to solve this.
+--
+--  One solution could be automatically creating a `user-config` branch on first load
+--  and automatically pulling from tags into the `user-config` branch.
+--
+--  Works by fetching tags from origin, comparing semantic versions and checking out
+--  the tag with the greatest semantic version.
+--
+--]]
 local updater = {}
 
 --- @class DoomVersion
@@ -143,17 +158,17 @@ updater._checkout_version = function(version)
 end
 
 updater.cmds = {
-  {
-    "DoomUpdate",
-    function()
-      updater._update()
-    end,
-  },
-  {
-    "DoomCheckUpdates",
-    function()
-      updater._check_updates()
-    end,
-  },
+  -- {
+  --   "DoomUpdate",
+  --   function()
+  --     updater._update()
+  --   end,
+  -- },
+  -- {
+  --   "DoomCheckUpdates",
+  --   function()
+  --     updater._check_updates()
+  --   end,
+  -- },
 }
 return updater

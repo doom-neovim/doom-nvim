@@ -64,7 +64,6 @@ config.load = function()
       'nest',
       'treesitter',
       'reloader',
-      'updater',
     }
   },enabled_modules)
 
