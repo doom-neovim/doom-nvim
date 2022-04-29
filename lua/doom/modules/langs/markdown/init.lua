@@ -10,7 +10,9 @@ markdown.autocmds = {
     function()
       local langs_utils = require("doom.modules.langs.utils")
 
-      langs_utils.use_lsp("remark_ls")
+      -- Disabled due to unreliability (only works in projects with `remark`
+      -- npm package installed).
+      -- langs_utils.use_lsp("remark_ls")
 
       vim.defer_fn(function()
         require("nvim-treesitter.install").ensure_installed("markdown")
