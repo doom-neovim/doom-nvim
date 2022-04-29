@@ -244,7 +244,22 @@ local function draw_icons()
   end
 end
 
-return {
-  draw_icons = draw_icons,
-  set_maps = netrw_maps,
+local netrw = {}
+
+netrw.autocmds = {
+  { "FileType", "netrw", function()
+    draw_icons()
+    netrw_maps()
+  end},
+  { "TextChanged", "*", function()
+    draw_icons()
+  end}
 }
+
+netrw.binds = {
+  '<leader>o', name = '+open/close', {
+    { 'e', ':Lexplore<CR>', name = 'Explorer' }
+  }
+}
+
+return netrw

@@ -337,25 +337,6 @@ required.autocmds = function ()
       [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]],
     })
   end
-
-  if is_module_enabled("explorer") then
-    table.insert(autocmds, {
-      "FileType",
-      "netrw",
-      require("doom.core.netrw").set_maps,
-    })
-    table.insert(autocmds, {
-      "FileType",
-      "netrw",
-      require("doom.core.netrw").draw_icons,
-    })
-    table.insert(autocmds, {
-      "TextChanged",
-      "*",
-      require("doom.core.netrw").draw_icons,
-    })
-  end
-
   return autocmds
 end
 
