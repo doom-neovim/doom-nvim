@@ -1,11 +1,26 @@
+
+--   doom.core.modules
+--
+--   Finds and returns user's `modules.lua` file.  Returned result is cached
+--   due to lua's `require` caching.
+
 local utils = require("doom.utils")
-local use_floating_win_packer = doom.use_floating_win_packer
+local filename = "modules.lua"
+
+local modules = {}
+
+-- Path cases:
+--   1. stdpath('config')/../doom-nvim/modules.lua
+--   2. stdpath('config')/modules.lua
+--   3. <runtimepath>/doom-nvim/modules.lua
+modules.source = utils.find_config(filename)
+modules.enabled_modules = dofile(modules.source)
+
 local log = require("doom.utils.logging")
 local system = require("doom.core.system")
 
-local doom_modules = {}
-
-function doom_modules.start()
+--- Initial bootstrapping of packer including auto-installation if necessary
+modules.start = function()
   -- Packer Bootstrapping
   local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 
@@ -38,7 +53,7 @@ function doom_modules.start()
       },
     },
     display = {
-      open_fn = use_floating_win_packer and function()
+      open_fn = doom.use_floating_win_packer and function()
         return require("packer.util").float({ border = doom.border_style })
       end,
     },
@@ -53,7 +68,8 @@ function doom_modules.start()
   packer.reset()
 end
 
-function doom_modules.load_modules()
+--- Applies commands, autocommands, packages from enabled modules (`modules.lua`).
+modules.load_modules = function()
   local use = require("packer").use
   -- Handle the Modules
   for module_name, module in pairs(doom.modules) do
@@ -87,7 +103,8 @@ function doom_modules.load_modules()
   end
 end
 
-function doom_modules.handle_user_config()
+--- Applies user's commands, autocommands, packages from `use_*` helper functions.
+modules.handle_user_config = function()
   local use = require("packer").use
 
   -- Handle extra user modules
@@ -110,4 +127,4 @@ function doom_modules.handle_user_config()
   -- User keybinds handled in `nest` module
 end
 
-return doom_modules
+return modules

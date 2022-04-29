@@ -169,7 +169,7 @@ required.binds = function ()
           },
           {
             "m",
-            ("<cmd>e %s<CR>"):format(require("doom.core.config.modules").source),
+            ("<cmd>e %s<CR>"):format(require("doom.core.modules").source),
             name = "Edit modules",
           },
           { "l", "<cmd>DoomConfigsReload<CR>", name = "Reload config" },

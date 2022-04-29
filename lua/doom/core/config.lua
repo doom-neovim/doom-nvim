@@ -1,12 +1,17 @@
-local utils = require("doom.utils")
--- `core` is required, doom wouldn't make sense without it.
+--  doom.core.config
+--
+--  Responsible for setting some vim global defaults, managing the `doom.field_name`
+--  config options, pre-configuring the user's modules from `modules.lua`, and
+--  running the user's `config.lua` file.
 
+local utils = require("doom.utils")
 local config = {}
 local filename = "config.lua"
 
-require('doom.core.config.globals')
-
 config.source = nil
+
+
+--- Entry point to bootstrap doom-nvim.
 config.load = function()
   -- Set vim defaults on first load. To override these, the user can just
   -- override vim.opt in their own config, no bells or whistles attached.
@@ -56,8 +61,9 @@ config.load = function()
   vim.opt.conceallevel = 0
   vim.opt.foldenable = true
   vim.opt.foldtext = require("doom.core.functions").sugar_folds()
-  -- Combine core modules with user-enabled modules
-  local enabled_modules = require("doom.core.config.modules").modules
+
+  -- Combine enabled modules (`modules.lua`) with core modules.
+  local enabled_modules = require("doom.core.modules").enabled_modules
   local all_modules = vim.tbl_deep_extend('keep', {
     core = {
       'doom',
@@ -67,10 +73,11 @@ config.load = function()
     }
   },enabled_modules)
 
+  -- Iterate over each module and save it to the doom global object
   for section_name, section_modules in pairs(all_modules) do
     for _, module_name in pairs(section_modules) do
-      -- print(("Addign module %s.%s"):format(section_name, module_name))
-      -- Special case for user folder, resolves to `lua/user/modules`
+
+      -- If the section is `user` resolves from `lua/user/modules`
       local root_folder = section_name == "user"
         and "user.modules"
         or ("doom.modules.%s"):format(section_name)
@@ -92,20 +99,14 @@ config.load = function()
     end
   end
 
-  -- Execute user config, log errors if any occur
+  -- Execute user's `config.lua` so they can modify the doom global object.
   local ok, err = xpcall(dofile, debug.traceback, config.source)
   local log = require("doom.utils.logging")
   if not ok and err then
     log.error("Error while running `config.lua. Traceback:\n" .. err)
   end
 
-  -- Check plugins updates on start if enabled.
-  if doom.check_updates then
-    require("doom.core.functions").check_updates()
-  end
-
-  -- These are the few vim options we wrap directly, because their usual
-  -- interface is either error-prone or verbose.
+  -- Apply the necessary `doom.field_name` options
   vim.opt.shiftwidth = doom.indent
   vim.opt.softtabstop = doom.indent
   vim.opt.tabstop = doom.indent
@@ -140,5 +141,3 @@ end
 config.source = utils.find_config(filename)
 
 return config
-
--- vim: fdm=marker

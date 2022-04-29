@@ -1,3 +1,8 @@
+--  doom.core.system
+--
+--  Evaluates and stores some filepaths for re-use arround the application.
+--  Due to lua's `require` caching results are cached.
+
 local system = {}
 local stdpath = vim.fn.stdpath
 local config_dir = stdpath("config"):match(".*[/\\]"):sub(1, -2)

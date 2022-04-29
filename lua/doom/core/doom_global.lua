@@ -1,3 +1,11 @@
+-- doom.core.doom_global
+-- 
+-- Sets the `doom` global object including defaults and helper functions.
+-- We set it directly within this file (rather than returning the object) and 
+-- setting it elsewhere to allow sumneko_lua to provide documented type
+-- completions.
+
+--- TYPE DEFINITIONS
 --- @class DoomKeybindOptions
 --- @field noremap boolean
 --- @field silent boolean
@@ -34,6 +42,7 @@
 --- @field config string|function Command or function to run after the plugin is loaded.
 --- @field setup string|function Command or function to run before the plugin is loaded.
 
+--- Global object
 doom = {
   -- Pins plugins to a commit sha to prevent breaking changes
   -- @default = true
@@ -263,7 +272,19 @@ doom = {
   end,
 
   binds = {},
+  --- Binds keybinds using a modified nest.nvim syntax.
   ---
+  --- Example:
+  --- 
+  --- doom.use_keybind({
+  ---   { '<leader>f', name = '+files', {
+  ---     { 'f', ':Telescope find_files', name = 'Find files' },
+  --      { 'g', ':Telescope grep_string', name = 'Grep files' }
+  ---   } },
+  ---   { '<leader>o', name = '+open', {
+  --      { 'f', ':!open .<CR>', name = 'Working directory'}
+  ---   }}
+  --- })
   ---@vararg DoomKeybind|DoomKeybind[]
   use_keybind = function(...)
     local arg = {...}

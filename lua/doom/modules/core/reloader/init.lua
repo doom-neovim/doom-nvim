@@ -83,7 +83,7 @@ reloader._reload_doom = function()
   end
 
   -- Remember which modules/packages installed to check if user needs to `:PackerSync`
-  local old_modules = require("doom.core.config.modules").modules
+  local old_modules = require("doom.core.modules").enabled_modules
   local old_packages = vim.tbl_map(function(t)
     return t[1]
   end, doom.packages)
@@ -105,7 +105,7 @@ reloader._reload_doom = function()
   -- Reload core entry point
   reloader.reload_lua_module("doom.core", true)
   -- Reload which modules are enabled
-  reloader.reload_lua_module("doom.core.config.modules", true)
+  reloader.reload_lua_module("doom.core.modules", true)
   -- Prepare the enabled modules, reload the user config.lua
   reloader.reload_lua_module("doom.core.config", true)
   require("doom.core.config"):load()
@@ -115,7 +115,7 @@ reloader._reload_doom = function()
   require("doom.modules"):handle_user_config()
   -- VimEnter to emulate loading neovim
 
-  local modules = require("doom.core.config.modules").modules
+  local modules = require("doom.core.modules").enabled_modules
   local packages = vim.tbl_map(function(t)
     return t[1]
   end, doom.packages)

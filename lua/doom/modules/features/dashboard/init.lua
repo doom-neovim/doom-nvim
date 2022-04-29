@@ -16,7 +16,7 @@ dashboard.settings = {
     },
     e = {
       description = { "  Open Modules                   SPC D m" },
-      command = "e " .. require("doom.core.config.modules").source,
+      command = "e " .. require("doom.core.modules").source,
     },
     f = {
       description = { "  Open Documentation             SPC D d" },
@@ -120,6 +120,20 @@ dashboard.autocmds = {
       require("nest").applyKeymaps({ "q", "<cmd>q<CR>", buffer = true })
     end,
   },
+  {
+    "VimEnter",
+    "*",
+    function()
+      if
+        (vim.api.nvim_buf_get_number(0) > 1
+        or vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]:len() == 0)
+        and vim.api.nvim_buf_get_name(0):len() == 0 -- Empty buffer name
+      then
+        vim.cmd("Dashboard")
+      end
+    end,
+    once = true,
+  }
 }
 
 return dashboard

@@ -247,7 +247,7 @@ end
 --- @param plugin string The plugin identifier, e.g. statusline
 --- @return boolean
 utils.is_module_enabled = function(plugin)
-  local modules = require("doom.core.config.modules").modules
+  local modules = require("doom.core.modules").enabled_modules
 
   -- Iterate over all modules sections (e.g. ui) and their plugins
   for _, section in pairs(modules) do
