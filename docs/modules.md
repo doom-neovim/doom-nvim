@@ -76,6 +76,7 @@ Modules are grouped into 3 categories:
   - [`dap`](../lua/doom/modules/features/dap) Debug adapter protocol for neovim
   - [`explorer`](../lua/doom/modules/features/explorer) File explorer in the sidebar
   - [`neorg`](../lua/doom/modules/features/neorg) Organise your life
+  - [`netrw`](../lua/doom/modules/features/netrw) Native file explorer in the sidebar
   - [`telescope`](../lua/doom/modules/features/telescope) Search files, text, commands and more
   - [`projects`](../lua/doom/modules/features/projects) Quick project switching
 
@@ -93,11 +94,13 @@ Modules are grouped into 3 categories:
 - [`css`](../lua/doom/modules/langs/css)
 - [`vue`](../lua/doom/modules/langs/vue)
 - [`tailwindcss`](../lua/doom/modules/langs/tailwindcss)
+- [`svelte`](../lua/doom/modules/langs/svelte)
 - [`rust`](../lua/doom/modules/langs/rust)
 - [`cpp`](../lua/doom/modules/langs/cpp)
 - [`c_sharp`](../lua/doom/modules/langs/c_sharp)
 - [`kotlin`](../lua/doom/modules/langs/kotlin)
 - [`java`](../lua/doom/modules/langs/java)
+- [`go`](../lua/doom/modules/langs/go)
 - [`config`](../lua/doom/modules/langs/config) Adds JSON, YAML, TOML support
 - Missing a language? Submit a feature request issue.
 
@@ -229,13 +232,13 @@ end
 -- { "event", "aupat", "command or function" }
 -- Example
 module.autocmds = {
-  { "FileType", "javascript", function() print("I'm in a javascript file now") end }
+  { "BufWinEnter", "*.js", function() print("I'm in a javascript file now") end }
 }
 -- Similarly, autocmds can be conditional using a function
 module.autocmds = function()
   local autocmds = {}
   if condition then
-    table.insert(autocmds, { "FileType", "javascript", function() print("I'm in a javascript file now") end })
+    table.insert(autocmds, { "BufWinEnter", "*.js", function() print("I'm in a javascript file now") end })
   end
   return autocmds
 end

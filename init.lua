@@ -5,6 +5,3 @@ vim.opt.runtimepath:append(vim.fn.stdpath("data"))
 
 -- Load the doom-nvim framework
 require("doom.core")
-
-
-
