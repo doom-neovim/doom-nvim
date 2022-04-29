@@ -110,9 +110,8 @@ reloader._reload_doom = function()
   reloader.reload_lua_module("doom.core.config", true)
   require("doom.core.config"):load()
   -- Install, bind, add autocmds etc for all modules and user configs
-  reloader.reload_lua_module("doom.modules", true)
-  require("doom.modules"):load_modules()
-  require("doom.modules"):handle_user_config()
+  require("doom.core.modules"):load_modules()
+  require("doom.core.modules"):handle_user_config()
   -- VimEnter to emulate loading neovim
 
   local modules = require("doom.core.modules").enabled_modules
