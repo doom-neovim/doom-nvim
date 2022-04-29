@@ -7,8 +7,8 @@ tailwindcss.settings = {
 
 tailwindcss.autocmds = {
   {
-    "FileType",
-    "css,scss,vue,html,svelte",
+    "BufWinEnter",
+    "*.css,*.scss,*.vue,*.html,*.svelte",
     utils.make_run_once_function(function()
       local langs_utils = require('doom.modules.langs.utils')
 

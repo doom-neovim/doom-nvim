@@ -6,8 +6,8 @@ haskell.settings = {
 
 haskell.autocmds = {
   {
-    "FileType",
-    "haskell",
+    "BufWinEnter",
+    "*.hs",
     function()
       local langs_utils = require('doom.modules.langs.utils')
       langs_utils.use_lsp(doom.modules.haskell.settings.language_server_name)

@@ -6,8 +6,8 @@ kotlin.settings = {
 
 kotlin.autocmds = {
   {
-    "FileType",
-    "kotlin",
+    "BufWinEnter",
+    "*.kt",
     function()
       local langs_utils = require('doom.modules.langs.utils')
       langs_utils.use_lsp(doom.modules.kotlin.settings.language_server_name)

@@ -5,8 +5,8 @@ markdown.settings = {
 
 markdown.autocmds = {
   {
-    "FileType",
-    "markdown",
+    "BufWinEnter",
+    "*.md",
     function()
       local langs_utils = require("doom.modules.langs.utils")
 

@@ -74,8 +74,8 @@ vue.configs = {}
 
 vue.autocmds = {
   {
-    "FileType",
-    "vue",
+    "BufWinEnter",
+    "*.vue",
     function()
       local lspconfig = require("lspconfig")
       local lspconfig_util = require("lspconfig/util")

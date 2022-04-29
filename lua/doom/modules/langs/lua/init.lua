@@ -44,8 +44,8 @@ end
 
 lua.autocmds = {
   {
-    "FileType",
-    "lua",
+    "BufWinEnter",
+    "*.lua",
     function()
       local langs_utils = require("doom.modules.langs.utils")
 

@@ -6,8 +6,8 @@ bash.settings = {
 
 bash.autocmds = {
   {
-    "FileType",
-    "sh",
+    "BufWinEnter",
+    "*.sh",
     function()
       local langs_utils = require('doom.modules.langs.utils')
       langs_utils.use_lsp(doom.modules.bash.settings.language_server_name)

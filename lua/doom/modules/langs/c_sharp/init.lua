@@ -6,8 +6,8 @@ c_sharp.settings = {
 
 c_sharp.autocmds = {
   {
-    "FileType",
-    "cs",
+    "BufWinEnter",
+    "*.cs",
     function()
       local langs_utils = require('doom.modules.langs.utils')
       local lsp_util = require 'lspconfig.util';

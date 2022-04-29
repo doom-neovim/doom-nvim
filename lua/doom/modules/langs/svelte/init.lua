@@ -6,8 +6,8 @@ svelte.settings = {
 
 svelte.autocmds = {
   {
-    "FileType",
-    "svelte",
+    "BufWinEnter",
+    "*.svelte",
     function()
       local langs_utils = require('doom.modules.langs.utils')
       langs_utils.use_lsp(doom.modules.svelte.settings.language_server_name)
