@@ -219,10 +219,6 @@ local function save_backup_hashes()
   end
 end
 
-local function bool2str(bool)
-  return bool and "on" or "off"
-end
-
 -- Toggle background="dark"|"light"
 functions.toggle_background = function()
   local background = vim.go.background
@@ -240,7 +236,7 @@ if is_module_enabled("lsp") then
   -- Toggle completion (by running cmp setup again).
   functions.toggle_completion = function()
     _doom.cmp_enable = not _doom.cmp_enable
-    print(string.format("completion=%s", bool2str(_doom.cmp_enable)))
+    print(string.format("completion=%s", utils.bool2str(_doom.cmp_enable)))
   end
 end
 
@@ -289,25 +285,13 @@ functions.change_number = function()
     vim.opt.number = false
     vim.opt.relativenumber = false
   end
-  print("number=%s, relativenumber=%s", bool2str(vim.opt.number), bool2str(vim.opt.relativenumber))
-end
-
--- Toggle autopairs.
-if is_module_enabled("autopairs") then
-  functions.toggle_autopairs = function()
-    local autopairs = require("nvim-autopairs")
-    if autopairs.state.disabled then
-      autopairs.enable()
-    else
-      autopairs.disable()
-    end
-  end
+  print("number=%s, relativenumber=%s", utils.bool2str(vim.opt.number), utils.bool2str(vim.opt.relativenumber))
 end
 
 -- Toggle spell.
 functions.toggle_spell = function()
   vim.opt.spell = not vim.opt.spell
-  print(string.format("spell=%s", bool2str(vim.opt.spell)))
+  print(string.format("spell=%s", utils.bool2str(vim.opt.spell)))
 end
 
 -- Toggle syntax/treesitter
@@ -321,7 +305,7 @@ functions.change_syntax = function()
       vim.cmd("TSBufEnable highlight")
       vim.cmd("syntax on")
     end
-    local state = bool2str(vim.opt.syntax)
+    local state = utils.bool2str(vim.opt.syntax)
     print(string.format("syntax=%s, treesitter=%s", state, state))
   else
     if vim.o.syntax then
@@ -329,7 +313,7 @@ functions.change_syntax = function()
     else
       vim.cmd("syntax on")
     end
-    local state = bool2str(vim.opt.syntax)
+    local state = utils.bool2str(vim.opt.syntax)
     print(string.format("syntax=%s", state))
   end
 end

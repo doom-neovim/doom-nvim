@@ -48,6 +48,14 @@ utils.bool2num = function(bool_or_num)
   return bool_or_num
 end
 
+--- Useful in vim `:set <option>` style commands
+---@param bool boolean Bool to convert to string
+---@return string "on" or "off"
+utils.bool2str = function(bool)
+  return bool and "on" or "off"
+end
+
+
 --- Load the specified Lua modules
 --- @param module_path string The path to Lua modules, e.g. 'doom' → 'lua/doom'
 --- @param mods table The modules that we want to load
