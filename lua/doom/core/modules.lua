@@ -3,6 +3,8 @@
 --
 --   Finds and returns user's `modules.lua` file.  Returned result is cached
 --   due to lua's `require` caching.
+--
+--   Later on it executes all of the enabled modules, loading their packer dependencies, autocmds and cmds.
 
 local utils = require("doom.utils")
 local filename = "modules.lua"
