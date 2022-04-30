@@ -6,7 +6,7 @@
 -- Uncomment a plugin to enable it and comment out to disable and uninstall it.
 
 return {
-  features = {
+  modules = {
     -- Language features (33ms)
     "annotations",        -- Code annotation generator
     "auto_install",       -- Auto install LSP providers

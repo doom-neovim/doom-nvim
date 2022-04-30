@@ -1,7 +1,7 @@
 -- doom.core.doom_global
--- 
+--
 -- Sets the `doom` global object including defaults and helper functions.
--- We set it directly within this file (rather than returning the object) and 
+-- We set it directly within this file (rather than returning the object) and
 -- setting it elsewhere to allow sumneko_lua to provide documented type
 -- completions.
 
@@ -275,7 +275,7 @@ doom = {
   --- Binds keybinds using a modified nest.nvim syntax.
   ---
   --- Example:
-  --- 
+  ---
   --- doom.use_keybind({
   ---   { '<leader>f', name = '+files', {
   ---     { 'f', ':Telescope find_files', name = 'Find files' },
@@ -298,6 +298,12 @@ doom = {
   end,
 
 
-  ---
+  -- This is where modules are stored.
+  -- The entire data structure will be stored in modules[module_name] = {}
+  -- The key (`user` vs `modules` vs `langs`) cooresponds with the section in
+  -- the user's modules.lua.
+  core = {},
+  user = {},
   modules = {},
+  langs = {},
 }

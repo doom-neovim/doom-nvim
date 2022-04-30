@@ -125,7 +125,7 @@ vue.autocmds = {
       local volar_api_config = vim.tbl_deep_extend(
         "force",
         {},
-        doom.modules.vue.settings.volar_api,
+        doom.langs.vue.settings.volar_api,
         base_config
       )
       langs_utils.use_lsp("volar", {
@@ -136,7 +136,7 @@ vue.autocmds = {
       local volar_doc_config = vim.tbl_deep_extend(
         "force",
         {},
-        doom.modules.vue.settings.volar_doc,
+        doom.langs.vue.settings.volar_doc,
         base_config
       )
       langs_utils.use_lsp("volar", {
@@ -147,7 +147,7 @@ vue.autocmds = {
       local volar_html_config = vim.tbl_deep_extend(
         "force",
         {},
-        doom.modules.vue.settings.volar_html,
+        doom.langs.vue.settings.volar_html,
         base_config
       )
       langs_utils.use_lsp("volar", {

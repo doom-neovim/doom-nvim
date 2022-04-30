@@ -39,7 +39,7 @@ lua.packages = {
 
 lua.configs = {}
 lua.configs["lua-dev.nvim"] = function()
-  require("lua-dev").setup(doom.modules.lua.settings.dev)
+  require("lua-dev").setup(doom.langs.lua.settings.dev)
 end
 
 lua.autocmds = {
@@ -53,7 +53,7 @@ lua.autocmds = {
       table.insert(runtime_path, "lua/?.lua")
       table.insert(runtime_path, "lua/?/init.lua")
 
-      local config = vim.tbl_deep_extend("force", doom.modules.lua.settings, {
+      local config = vim.tbl_deep_extend("force", doom.langs.lua.settings, {
         settings = {
           Lua = {
             runtime = {

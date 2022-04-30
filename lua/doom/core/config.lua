@@ -84,7 +84,7 @@ config.load = function()
 
       local ok, result = xpcall(require, debug.traceback, ("%s.%s"):format(root_folder, module_name))
       if ok then
-        doom.modules[module_name] = result
+        doom[section_name][module_name] = result
       else
         local log = require("doom.utils.logging")
         log.error(

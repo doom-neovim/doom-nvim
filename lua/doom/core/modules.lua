@@ -74,32 +74,34 @@ end
 modules.load_modules = function()
   local use = require("packer").use
   -- Handle the Modules
-  for module_name, module in pairs(doom.modules) do
-    -- Import dependencies with packer from module.packages
-    if module.packages then
-      for dependency_name, packer_spec in pairs(module.packages) do
-        -- Set packer_spec to configure function
-        if module.configs and module.configs[dependency_name] then
-          packer_spec.config = module.configs[dependency_name]
+  for _, section_name in ipairs({"core", "modules", "user", "langs",}) do
+    for module_name, module in pairs(doom[section_name]) do
+      -- Import dependencies with packer from module.packages
+      if module.packages then
+        for dependency_name, packer_spec in pairs(module.packages) do
+          -- Set packer_spec to configure function
+          if module.configs and module.configs[dependency_name] then
+            packer_spec.config = module.configs[dependency_name]
+          end
+
+          -- Set/unset frozen packer dependencies
+          packer_spec.commit = doom.freeze_dependencies and packer_spec.commit or nil
+
+          -- Initialise packer
+          use(packer_spec)
         end
-
-        -- Set/unset frozen packer dependencies
-        packer_spec.commit = doom.freeze_dependencies and packer_spec.commit or nil
-
-        -- Initialise packer
-        use(packer_spec)
       end
-    end
 
-    -- Setup package autogroups
-    if module.autocmds then
-      local autocmds = type(module.autocmds) == 'function' and module.autocmds() or module.autocmds
-      utils.make_augroup(module_name, autocmds)
-    end
+      -- Setup package autogroups
+      if module.autocmds then
+        local autocmds = type(module.autocmds) == 'function' and module.autocmds() or module.autocmds
+        utils.make_augroup(module_name, autocmds)
+      end
 
-    if module.cmds then
-      for _, cmd_spec in ipairs(module.cmds) do
-        utils.make_cmd(cmd_spec[1], cmd_spec[2])
+      if module.cmds then
+        for _, cmd_spec in ipairs(module.cmds) do
+          utils.make_cmd(cmd_spec[1], cmd_spec[2])
+        end
       end
     end
   end

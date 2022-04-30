@@ -24,12 +24,12 @@ config.packages = {
 config.configs = {}
 config.configs["SchemaStore.nvim"] = function()
   local langs_utils = require('doom.modules.langs.utils')
-  langs_utils.use_lsp(doom.modules.config.settings.json_language_server_name, {
+  langs_utils.use_lsp(doom.langs.config.settings.json_language_server_name, {
     config = {
       settings = {
         json = {
           schemas = require('schemastore').json.schemas {
-            select = doom.modules.config.settings.json_schemas,
+            select = doom.langs.config.settings.json_schemas,
           },
         },
       },
@@ -43,8 +43,8 @@ config.autocmds = {
     "*.json,*.yaml,*.toml",
     function()
       local langs_utils = require('doom.modules.langs.utils')
-      -- langs_utils.use_lsp(doom.modules.config.settings.toml_language_server_name)
-      -- langs_utils.use_lsp(doom.modules.config.settings.yaml_language_server_name)
+      -- langs_utils.use_lsp(doom.langs.config.settings.toml_language_server_name)
+      -- langs_utils.use_lsp(doom.langs.config.settings.yaml_language_server_name)
 
       vim.defer_fn(function()
         require("nvim-treesitter.install").ensure_installed("json5", "yaml", "toml")

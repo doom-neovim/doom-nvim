@@ -11,7 +11,7 @@ c_sharp.autocmds = {
     function()
       local langs_utils = require('doom.modules.langs.utils')
       local lsp_util = require 'lspconfig.util';
-      langs_utils.use_lsp(doom.modules.c_sharp.settings.language_server_name, {
+      langs_utils.use_lsp(doom.langs.c_sharp.settings.language_server_name, {
         config = {
           root_dir = function(fname)
             return lsp_util.root_pattern '*.sln'(fname)

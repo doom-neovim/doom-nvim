@@ -10,7 +10,7 @@ haskell.autocmds = {
     "*.hs",
     function()
       local langs_utils = require('doom.modules.langs.utils')
-      langs_utils.use_lsp(doom.modules.haskell.settings.language_server_name)
+      langs_utils.use_lsp(doom.langs.haskell.settings.language_server_name)
       
       local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
       parser_config.haskell = {
