@@ -26,7 +26,7 @@ nest.configs["nest.nvim"] = function()
 
   local last_module = '';
   local ok, err = xpcall(function()
-    for _, section_name in ipairs({"user", "modules", "langs"}) do
+    for _, section_name in ipairs({"user", "modules", "langs", "core"}) do
       for module_name, module in pairs(doom[section_name]) do
         last_module = module_name
         if module.binds then
