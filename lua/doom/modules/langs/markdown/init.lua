@@ -8,7 +8,7 @@ markdown.autocmds = {
     "BufWinEnter",
     "*.md",
     function()
-      local langs_utils = require("doom.modules.langs.utils")
+      -- local langs_utils = require("doom.modules.langs.utils")
 
       -- Disabled due to unreliability (only works in projects with `remark`
       -- npm package installed).
@@ -19,13 +19,14 @@ markdown.autocmds = {
       end, 0)
 
       -- Setup null-ls
-      if doom.modules.linter then
-        local null_ls = require("null-ls")
-
-        langs_utils.use_null_ls_source({
-          null_ls.builtins.diagnostics.markdownlint,
-        })
-      end
+      -- Disabled due to lsp being disabled. null-ls gets triggered by lspconfig
+      -- if doom.modules.linter then
+      --   local null_ls = require("null-ls")
+      --
+      --   langs_utils.use_null_ls_source({
+      --     null_ls.builtins.diagnostics.markdownlint,
+      --   })
+      -- end
     end,
     once = true,
   },
