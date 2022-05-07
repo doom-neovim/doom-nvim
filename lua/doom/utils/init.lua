@@ -55,30 +55,6 @@ utils.bool2str = function(bool)
   return bool and "on" or "off"
 end
 
-
---- Load the specified Lua modules
---- @param module_path string The path to Lua modules, e.g. 'doom' → 'lua/doom'
---- @param mods table The modules that we want to load
-utils.load_modules = function(module_path, mods)
-  local log = require("doom.utils.logging")
-  for i = 1, #mods, 1 do
-    log.debug(string.format("Loading '%s.%s' module", module_path, mods[i]))
-    local ok, err = xpcall(require, debug.traceback, string.format("%s.%s", module_path, mods[i]))
-    if not ok then
-      log.error(
-        string.format(
-          "There was an error loading the module '%s.%s'. Traceback:\n%s",
-          module_path,
-          mods[i],
-          err
-        )
-      )
-    else
-      log.debug(string.format("Successfully loaded '%s.%s' module", module_path, mods[i]))
-    end
-  end
-end
-
 --- Wraps lua's require function in an xpcall and logs errors.
 ---@param path string
 ---@return any
@@ -228,21 +204,6 @@ utils.get_diagnostic_count = function(bufnr, severity)
   end
 end
 
---- Search if a table have the key we are looking for,
---- useful for plugins management
---- @param tabl table
---- @param key string
---- @return boolean
-utils.has_key = function(tabl, key)
-  for k, _ in pairs(tabl) do
-    if k == key then
-      return true
-    end
-  end
-
-  return false
-end
-
 --- Check if the given plugin is disabled in doom-nvim/modules.lua
 --- @param plugin string The plugin identifier, e.g. statusline
 --- @return boolean
@@ -257,6 +218,32 @@ utils.is_module_enabled = function(plugin)
   end
 
   return false
+end
+
+local modules_list_cache = {}
+
+utils.get_all_modules_as_list = function()
+  if doom then
+    if #modules_list_cache ~= 0 then
+      return modules_list_cache
+    end
+    local all_modules = {}
+    for _, field_name in ipairs({"core", "modules", "langs", "user"}) do
+      for k, module in pairs(doom[field_name]) do
+        all_modules[k] = module
+        all_modules[k].name = field_name
+      end
+    end
+    modules_list_cache = table.sort(all_modules, function (a, b)
+      return (a.priority or 100) < (b.priority or 100)
+    end)
+    return modules_list_cache
+  end
+  return nil
+end
+
+utils.clear_module_cache = function()
+  modules_list_cache = {}
 end
 
 --- Returns a function that can only be run once
