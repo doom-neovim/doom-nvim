@@ -1,3 +1,12 @@
+-- Check if user is running Doom in a supported Neovim version before trying to load anything
+if vim.fn.has("nvim-0.6.0") ~= 1 then
+  vim.notify(
+    "You are using an unsupported Neovim version, doom-nvim requires at least Neovim 0.6.0 to work as expected.\nPlease consider upgrading Neovim before using doom-nvim",
+    vim.log.levels.ERROR
+  )
+  return
+end
+
 -- Add ~/.local/share to runtimepath early, such that
 -- neovim autoloads plugin/packer_compiled.lua along with vimscript,
 -- before we start using the plugins it lazy-loads.

@@ -195,13 +195,9 @@ end
 --- @param severity string The name of desired severity
 --- @return number The count of items
 utils.get_diagnostic_count = function(bufnr, severity)
-  if vim.fn.has("nvim-0.6") == 1 then
-    return vim.tbl_count(vim.diagnostic.get(bufnr, {
-      severity = severity,
-    }))
-  else
-    return vim.lsp.diagnostic.get_count(bufnr, severity)
-  end
+  return vim.tbl_count(vim.diagnostic.get(bufnr, {
+    severity = severity,
+  }))
 end
 
 --- Check if the given plugin is disabled in doom-nvim/modules.lua
