@@ -63,8 +63,10 @@ lsp.settings = {
       TypeParameter = " ",
     },
     completeopt = "menu,menuone,preview,noinsert",
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    window = {
+      documentation = {
+        border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      },
     },
     snippet = {
       expand = function(args)
@@ -370,7 +372,7 @@ lsp.binds = {
             "c",
             function()
               lsp.__completions_enabled = not lsp.__completions_enabled
-              local bool2str = require('doom.utils').bool2str
+              local bool2str = require("doom.utils").bool2str
               print(string.format("completion=%s", bool2str(lsp.__completions_enabled)))
             end,
             name = "Toggle completion",
