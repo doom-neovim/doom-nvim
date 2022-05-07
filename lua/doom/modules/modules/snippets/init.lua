@@ -8,7 +8,7 @@ snippets.settings = {
 snippets.packages = {
   ["LuaSnip"] = {
     "L3MON4D3/LuaSnip",
-    commit = "80e68242cf8127844653060fbada32dca15579fc",
+    commit = "cc0086390c6cd2eaebae1834b115c891649ec95f",
     requires = { "rafamadriz/friendly-snippets", opt = true },
   },
 }

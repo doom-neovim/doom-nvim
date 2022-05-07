@@ -42,18 +42,18 @@ treesitter.settings = {
 treesitter.packages = {
   ["nvim-treesitter"] = {
     "nvim-treesitter/nvim-treesitter",
-    commit = "3e2ac54e1638da214dab58f9edf01ad93f57261d",
+    commit = "868053edf587fd6f07111428b65cbd23144da860",
     run = ":TSUpdate",
     branch = "master",
   },
   ["nvim-ts-context-commentstring"] = {
     "JoosepAlviste/nvim-ts-context-commentstring",
-    commit = "7810f1fe706092290dd338f40e5e857bac4a03cf",
+    commit = "88343753dbe81c227a1c1fd2c8d764afb8d36269",
     after = "nvim-treesitter",
   },
   ["nvim-ts-autotag"] = {
     "windwp/nvim-ts-autotag",
-    commit = "57035b5814f343bc6110676c9ae2eacfcd5340c2",
+    commit = "044a05c4c51051326900a53ba98fddacd15fea22",
     after = "nvim-treesitter",
   },
 }

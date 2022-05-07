@@ -19,7 +19,7 @@ symbols.settings = {
 symbols.packages = {
   ["symbols-outline.nvim"] = {
     "simrat39/symbols-outline.nvim",
-    commit = "1361738c47892c3cee0d0b7a3b3bc7a8b48139c2",
+    commit = "15ae99c27360ab42e931be127d130611375307d5",
     cmd = {
       "SymbolsOutline",
       "SymbolsOutlineOpen",

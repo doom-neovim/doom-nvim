@@ -77,7 +77,7 @@ explorer.settings = {
 explorer.packages = {
   ["nvim-tree.lua"] = {
     "kyazdani42/nvim-tree.lua",
-    commit = "7b0ebf8b17d85abecccfd1c924090a28d5935b88",
+    commit = "483f1550d1c53f7dcf261d40af5f993ffcb8b9c3",
     cmd = {
       "NvimTreeClipboard",
       "NvimTreeClose",

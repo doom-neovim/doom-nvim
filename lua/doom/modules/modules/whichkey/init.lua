@@ -64,7 +64,7 @@ whichkey.settings = {
 whichkey.packages = {
   ["which-key.nvim"] = {
     "folke/which-key.nvim",
-    commit = "a3c19ec5754debb7bf38a8404e36a9287b282430",
+    commit = "bd4411a2ed4dd8bb69c125e339d837028a6eea71",
   },
 }
 

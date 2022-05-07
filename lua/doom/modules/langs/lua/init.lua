@@ -32,7 +32,7 @@ lua.settings = {
 lua.packages = {
   ["lua-dev.nvim"] = {
     "folke/lua-dev.nvim",
-    commit = "a0ee77789d9948adce64d98700cc90cecaef88d5",
+    commit = "fda3d256001b79c5659fb4d624b47ae712cee261",
     ft = "lua",
   },
 }

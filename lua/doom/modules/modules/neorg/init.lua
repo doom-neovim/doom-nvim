@@ -32,7 +32,7 @@ neorg.settings = {
 neorg.packages = {
   ["neorg"] = {
     "nvim-neorg/neorg",
-    commit = "9aeaf79c5ad01930705a0534a35adbdba9eb5f13",
+    commit = "633dfc9f0c3a00a32ee89d4ab826da2eecfe9bd8",
     opt = "true",
     cmd = "NeorgStart"
   }
