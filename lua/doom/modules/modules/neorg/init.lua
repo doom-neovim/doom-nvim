@@ -4,7 +4,7 @@ local doom_root = require("doom.core.system").doom_root
 
 neorg.settings = {
   load = {
-    ["core.settings"] = {},
+    ["core.defaults"] = {},
     ["core.keybinds"] = {
       config = {
         default_keybinds = true,
@@ -12,14 +12,24 @@ neorg.settings = {
       },
     },
     ["core.norg.concealer"] = {},
+    ["core.nor.qol.toc"] = {},
     ["core.norg.dirman"] = {
       config = {
         workspaces = {
-          default_workspace = "~/neorg",
+          main = "~/neorg",
           gtd = "~/neorg/gtd",
           doom_docs = string.format("%s/doc", doom_root),
         },
+        autodetect = true,
+        autochdir = true,
       },
+    },
+    ["core.norg.esupports.metagen"] = {
+      config = { type = "auto" },
+    },
+    ["core.export"] = {},
+    ["core.export.markdown"] = {
+      config = { extensions = "all" },
     },
     ["core.gtd.base"] = {
       config = {
