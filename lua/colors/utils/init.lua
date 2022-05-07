@@ -74,9 +74,9 @@ M.Darken = function(color, percentage)
   return hex
 end
 
-local function interpolate(start, _end, amount)
-  local diff = _end - start
-  return start + (diff * amount)
+local function interpolate(a, b, amount)
+  local diff = b - a
+  return a + (diff * amount)
 end
 
 M.Mix = function(first, second, percentage)
