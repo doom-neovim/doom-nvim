@@ -52,25 +52,45 @@ neorg.configs["neorg"] = function()
   require("neorg").setup(doom.modules.neorg.settings)
 end
 
-neorg.binds = {
-  "<leader>",
-  name = "+prefix",
+neorg.autocmds = {
   {
-    {
-      "o",
-      name = "+open/close",
-      {
-        { "g", "<cmd>Neogit<CR>", name = "Neogit" },
-      },
-    },
-    {
-      "g",
-      name = "+git",
-      {
-        { "g", "<cmd>Neogit<CR>", name = "Open neogit" },
-      },
-    },
-  },
+    "BufWinEnter",
+    "*.norg",
+    function()
+      -- Manually add norg parser to be always up-to-date
+      -- and add additional (opt-in) neorg parsers
+      local parsers = require("nvim-treesitter.parsers").get_parser_configs()
+
+      parsers.norg = {
+        install_info = {
+          url = "https://github.com/nvim-neorg/tree-sitter-norg",
+          files = { "src/parser.c", "src/scanner.cc" },
+          branch = "main"
+        }
+      }
+      parsers.norg_meta = {
+        install_info = {
+          url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
+          files = { "src/parser.c" },
+          branch = "main"
+        }
+      }
+      parsers.norg_table = {
+        install_info = {
+          url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
+          files = { "src/parser.c" },
+          branch = "main"
+        }
+      }
+
+      vim.defer_fn(function()
+        local ensure_installed = require("nvim-treesitter.install").ensure_installed
+        ensure_installed("norg")
+        ensure_installed("norg_meta")
+        ensure_installed("norg_table")
+      end, 0)
+    end,
+  }
 }
 
 return neorg
