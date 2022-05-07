@@ -77,12 +77,10 @@ vue.autocmds = {
     "BufWinEnter",
     "*.vue",
     function()
-      local lspconfig = require("lspconfig")
       local lspconfig_util = require("lspconfig/util")
       local langs_utils = require("doom.modules.langs.utils")
 
       -- volar needs works with typescript server, needs to get the typescript server from the project's node_modules
-      local volar = lspconfig.volar -- Get the volar config to set the `cmd`
       local function on_new_config(new_config, new_root_dir)
         local function get_typescript_server_path(root_dir)
           local project_root = lspconfig_util.find_node_modules_ancestor(root_dir)

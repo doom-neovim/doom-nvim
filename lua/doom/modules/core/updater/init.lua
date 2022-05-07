@@ -125,6 +125,7 @@ end
 updater._update = function()
   updater._fetch_versions(function(versions, err)
     if err then
+      local log = require("doom.utils.logging")
       log.error(("reloader: Failed to check for updates: %s."):format(err))
       return
     end

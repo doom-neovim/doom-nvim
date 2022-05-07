@@ -22,7 +22,7 @@ module.use_null_ls_source = function(sources)
   end
 end
 
-module.use_lsp = function(lsp_name, _opts)
+module.use_lsp = function(lsp_name, options)
   local utils = require('doom.utils')
   if not utils.is_module_enabled("lsp") then
     return
@@ -30,7 +30,7 @@ module.use_lsp = function(lsp_name, _opts)
   local lsp = require('lspconfig')
   local lsp_configs = require("lspconfig.configs")
 
-  local opts = _opts or {}
+  local opts = options or {}
   local config_name = opts.name and opts.name or lsp_name
   local is_custom_config = opts.name ~= nil or lsp_configs[config_name] ~= nil
 
@@ -63,9 +63,9 @@ module.use_lsp = function(lsp_name, _opts)
       server:setup(final_config)
     else
       lsp[config_name].setup(final_config)
-      local server = lsp[config_name]
-      if server.manager then
-        local buffer_handler = server.filetypes and server.manager.try_add_wrapper or server.manager.try_add
+      local lsp_config_server = lsp[config_name]
+      if lsp_config_server.manager then
+        local buffer_handler = lsp_config_server.filetypes and lsp_config_server.manager.try_add_wrapper or lsp_config_server.manager.try_add
         for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
           buffer_handler(bufnr)
         end

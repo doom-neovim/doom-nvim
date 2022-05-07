@@ -11,10 +11,8 @@ java.autocmds = {
     function()
       local langs_utils = require('doom.modules.langs.utils')
       langs_utils.use_lsp(doom.langs.java.settings.language_server_name)
-      
-      vim.defer_fn(function()
-        require("nvim-treesitter.install").ensure_installed("java")
-      end, 0)
+
+      require("nvim-treesitter.install").ensure_installed("java")
 
       -- Setup null-ls
       if doom.modules.linter then

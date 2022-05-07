@@ -20,10 +20,8 @@ c_sharp.autocmds = {
           end
         }
       })
-      
-      vim.defer_fn(function()
-        require("nvim-treesitter.install").ensure_installed("c_sharp")
-      end, 0)
+
+      require("nvim-treesitter.install").ensure_installed("c_sharp")
     end,
     once = true,
   },

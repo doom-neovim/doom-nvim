@@ -11,10 +11,8 @@ python.autocmds = {
     function()
       local langs_utils = require('doom.modules.langs.utils')
       langs_utils.use_lsp(doom.langs.python.settings.language_server_name)
-      
-      vim.defer_fn(function()
-        require("nvim-treesitter.install").ensure_installed("python")
-      end, 0)
+
+      require("nvim-treesitter.install").ensure_installed("python")
 
       -- Setup null-ls
       if doom.modules.linter then

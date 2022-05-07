@@ -11,7 +11,7 @@ haskell.autocmds = {
     function()
       local langs_utils = require('doom.modules.langs.utils')
       langs_utils.use_lsp(doom.langs.haskell.settings.language_server_name)
-      
+
       local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
       parser_config.haskell = {
         install_info = {
@@ -19,9 +19,7 @@ haskell.autocmds = {
           files = {"src/parser.c", "src/scanner.c"}
         }
       }
-      vim.defer_fn(function()
-        require("nvim-treesitter.install").ensure_installed("haskell")
-      end, 0)
+      require("nvim-treesitter.install").ensure_installed("haskell")
 
       -- Setup null-ls
       if doom.modules.linter then

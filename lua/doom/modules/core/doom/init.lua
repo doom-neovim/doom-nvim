@@ -312,8 +312,6 @@ required.binds = function ()
 end
 
 required.autocmds = function ()
-  local is_module_enabled = require("doom.utils").is_module_enabled
-
   local autocmds = {}
 
   if doom.autosave then

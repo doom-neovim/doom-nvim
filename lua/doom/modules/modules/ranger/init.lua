@@ -18,7 +18,7 @@ ranger.packages = {
     },
   },
 }
- 
+
 ranger.configs = {}
 
 ranger.binds = {

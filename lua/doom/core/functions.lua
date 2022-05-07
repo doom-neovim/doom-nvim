@@ -3,7 +3,6 @@
 local utils = require("doom.utils")
 local fs = require("doom.utils.fs")
 local system = require("doom.core.system")
-local async = require("doom.utils.async")
 local is_module_enabled = utils.is_module_enabled
 
 local functions = {}
@@ -40,7 +39,7 @@ functions.open_docs = function()
   vim.cmd(string.format("split %s", docs_path))
   -- Move cursor to table of contents section
   vim.api.nvim_buf_call(vim.fn.bufnr("doom_nvim.norg"), function()
-    vim.fn.cursor(12, 1)
+    vim.fn.cursor({12, 1})
   end)
   -- Set local documentation options
   vim.opt_local.modified = false
@@ -141,81 +140,6 @@ functions.create_report = function()
 
   if not created_report then
     log.error("Error while writing report. Traceback:\n" .. err)
-  end
-end
-
--- save_backup_hashes saves the commits or releases SHA for future rollbacks
-local function save_backup_hashes()
-  local log = require("doom.utils.logging")
-  -- Check for the current branch
-  local git_branch = utils.get_git_output("branch --show-current", true)
-
-  if git_branch == "main" then
-    local releases_database_path = string.format("%s%s.doom_releases", system.doom_root, system.sep)
-
-    -- Fetch for a file containing the releases tags
-    log.info("Saving the Doom releases for future rollbacks ...")
-    local saved_releases, releases_err = xpcall(function()
-      -- Get the releases
-      log.debug('Executing "' .. system.git_workspace .. 'show-ref --tags"')
-      local doom_releases = utils.get_git_output("show-ref --tags", false)
-
-      -- Put all the releases into a table so we can sort them later
-      local releases = {}
-      for release in doom_releases:gmatch("[^\r\n]+") do
-        table.insert(releases, release)
-      end
-      -- Sort the releases table
-      local sorted_releases = {}
-      for idx, release in ipairs(releases) do
-        sorted_releases[#releases + 1 - idx] = release:gsub("refs/tags/", "")
-      end
-
-      -- Check if the database already exists so we can check if the
-      -- database is up-to-date or if we should override it.
-      --
-      -- If the database does not exist yet then we will create it
-      if vim.fn.filereadable(releases_database_path) == 1 then
-        local current_releases = fs.read_file(releases_database_path)
-        if current_releases ~= doom_releases then
-          -- Write the first release in the list with 'w+' so the
-          -- actual content will be overwritten by this one
-          fs.write_file(releases_database_path, sorted_releases[1] .. "\n", "w+")
-          -- Write the rest of the releases
-          for idx, release in ipairs(sorted_releases) do
-            -- Exclude the first release because we have already
-            -- written it in the database file
-            if idx ~= 1 then
-              fs.write_file(releases_database_path, release .. "\n", "a+")
-            end
-          end
-        end
-      else
-        for _, release in ipairs(sorted_releases) do
-          fs.write_file(releases_database_path, release .. "\n", "a+")
-        end
-      end
-    end, debug.traceback)
-
-    if not saved_releases then
-      log.error("Error while saving the Doom releases. Traceback:\n" .. releases_err)
-    end
-  else
-    -- Get the current commit SHA and store it into a hidden file
-    log.info("Saving the current commit SHA for future rollbacks ...")
-    local saved_backup_hash, backup_err = xpcall(function()
-      os.execute(
-        system.git_workspace
-          .. "rev-parse --short HEAD > "
-          .. system.doom_root
-          .. system.sep
-          .. ".doom_backup_hash"
-      )
-    end, debug.traceback)
-
-    if not saved_backup_hash then
-      log.error("Error while saving the backup commit hash. Traceback:\n" .. backup_err)
-    end
   end
 end
 
