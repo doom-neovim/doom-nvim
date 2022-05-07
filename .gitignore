@@ -1,7 +1,4 @@
 # My temp files
-plugin/
-sessions/
-undodir/
 time_cost.txt
 tags
 # Backup files
@@ -16,3 +13,8 @@ tags
 contribute/doom-nvim-contrib
 contribute/local-share-nvim
 contribute/workspace
+
+# User modules
+user/modules/*
+# Editor files
+.luarc.json

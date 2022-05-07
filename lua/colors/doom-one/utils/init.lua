@@ -1,11 +1,4 @@
----[[------------------------]]---
---       COLOR UTILITIES        --
----]]------------------------[[---
-
 local M = {}
-
--------------------------------------------------------------------------------
--- Functions {{{
 
 -- Convert RGB to Hex color.
 -- @param r Red value
@@ -27,10 +20,6 @@ local function Hex_to_RGB(color)
     tonumber("0x" .. string.sub(color, 5, 6)),
   }
 end
-
--- }}}
--------------------------------------------------------------------------------
--- Composed functions {{{
 
 M.Lighten = function(color, percentage)
   local amount = percentage == nil and 5.0 or percentage
@@ -85,9 +74,9 @@ M.Darken = function(color, percentage)
   return hex
 end
 
-local function interpolate(start, _end, amount)
-  local diff = _end - start
-  return start + (diff * amount)
+local function interpolate(a, b, amount)
+  local diff = b - a
+  return a + (diff * amount)
 end
 
 M.Mix = function(first, second, percentage)
@@ -102,8 +91,5 @@ M.Mix = function(first, second, percentage)
 
   return RGB_to_Hex(r, g, b)
 end
--- }}}
 
 return M
-
--- vim: fdm=marker

@@ -1,9 +1,3 @@
----[[---------------------------------------]]---
---      fs utils - Doom Nvim fs utilities      --
---              Author: NTBBloodbath           --
---              License: GPLv2                 --
----[[---------------------------------------]]---
-
 local fs = {}
 
 --- Check if the given file exists

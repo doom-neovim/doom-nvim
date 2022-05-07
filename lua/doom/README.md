@@ -5,12 +5,10 @@ divided into three different sub-modules.
 
 - [core](./core/README.md) - The Doom core, herein lies the entire Doom core,
     e.g. configurations.
-- [extras](./extras/README.md) - Doom extras, herein lies the Doom keybindings,
-    autocommands, etc.
-- [modules](./modules/README.md) - The Doom modules, herein lies the Doom plugins
-    and their configurations.
-- [utils](./utils/README.md) - The Doom utilities, herein lies the Doom utility
-    functions.
+- [modules](./modules/README.md) - The Doom modules, herein lies the Doom modules
+    and their configurations, bindings, autocmds and package management.
+- [utils](./utils/README.md) - The Doom utilities, herein lies the glorious
+    Doom utility functions.
 
 ## Note: dev w/ctags
 

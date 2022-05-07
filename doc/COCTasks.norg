@@ -1,0 +1,14 @@
+** 7 / Mar / 2022
+ -- [ ] Unity integration, talk to tyler about building
+ -- [ ] Call about new project w lukasz, tim, alex
+ -- [ ] Re-implement old colour scheme for MODA NFT.
+  * TED talk
+    - WebAR floating sculpture
+    - People draw something on their screen and then that combines with the big artwork
+    - Can view the artwork in AR.
+      - Check the WebAR walking/moving example
+    - Backend Blockchain service
+      - Has Minting privilege on this token type or it could be a hic et nunc artwork.
+      - People receive an email with a link to claim their NFT.
+      - Link opens a page that allows them to sync and verify their wallet address.  This communicates with a serverside process that airdrops an NFT into their wallet.
+
