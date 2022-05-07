@@ -63,7 +63,6 @@ dashboard.packages = {
   },
 }
 
-
 dashboard.configs = {}
 dashboard.configs["dashboard-nvim"] = function()
   local utils = require("doom.utils")
@@ -124,16 +123,16 @@ dashboard.autocmds = {
     "VimEnter",
     "*",
     function()
-      if
-        (vim.api.nvim_buf_get_number(0) > 1
-        or vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]:len() == 0)
-        and vim.api.nvim_buf_get_name(0):len() == 0 -- Empty buffer name
-      then
+      -- Here we check for
+      -- 1. Number of files passed to Neovim as arguments during its launch
+      -- 2. Bytes count from the start of the buffer to the end (it should be non-existent, -1)
+      -- 3. Existence of the buffer
+      if vim.fn.argc() == 0 and vim.fn.line2byte("$") == -1 and vim.fn.bufexists(0) == 0 then
         vim.cmd("Dashboard")
       end
     end,
     once = true,
-  }
+  },
 }
 
 return dashboard
