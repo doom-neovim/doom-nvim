@@ -31,9 +31,8 @@ lsp.settings = {
     hint = "",
     info = "",
   },
-  virtual_text = {
-    prefix = " ",
-  },
+  virtual_text = false,
+  severity_sort = true,
   completion = {
     kinds = {
       Text = " ",
@@ -131,24 +130,13 @@ lsp.packages = {
 lsp.configs = {}
 lsp.configs["nvim-lspconfig"] = function()
   -- Lsp Symbols
-  local signs, hl
-  if vim.fn.has("nvim-0.6.0") == 1 then
-    signs = {
-      Error = doom.modules.lsp.settings.icons.error,
-      Warn = doom.modules.lsp.settings.icons.warn,
-      Info = doom.modules.lsp.settings.icons.info,
-      Hint = doom.modules.lsp.settings.icons.hint,
-    }
-    hl = "DiagnosticSign"
-  else
-    signs = {
-      Error = doom.modules.lsp.settings.icons.error,
-      Warning = doom.modules.lsp.settings.icons.warn,
-      Information = doom.modules.lsp.settings.icons.info,
-      Hint = doom.modules.lsp.settings.icons.hint,
-    }
-    hl = "LspDiagnosticsSign"
-  end
+  local signs = {
+    Error = doom.modules.lsp.settings.icons.error,
+    Warn = doom.modules.lsp.settings.icons.warn,
+    Info = doom.modules.lsp.settings.icons.info,
+    Hint = doom.modules.lsp.settings.icons.hint,
+  }
+  local hl = "DiagnosticSign"
 
   for severity, icon in pairs(signs) do
     local highlight = hl .. severity
@@ -160,12 +148,14 @@ lsp.configs["nvim-lspconfig"] = function()
     })
   end
 
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    {
-      virtual_text = doom.modules.lsp.settings.virtual_text,
-    }
-  )
+  vim.diagnostic.config({
+    virtual_text = doom.modules.lsp.settings.virtual_text,
+    severity_sort = doom.modules.lsp.settings.severity_sort,
+    float = {
+      show_header = false,
+      border = "rounded",
+    },
+  })
   -- Border for lsp_popups
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     border = doom.border_style,
