@@ -27,7 +27,7 @@ modules.start = function()
   local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 
   if vim.fn.empty(vim.fn.glob(packer_path)) > 0 then
-    log.info("Bootstrapping packer.nvim, please wait ...")
+    vim.notify("Bootstrapping packer.nvim, please wait ...")
     vim.fn.system({
       "git",
       "clone",
@@ -36,6 +36,8 @@ modules.start = function()
       "https://github.com/wbthomason/packer.nvim",
       packer_path,
     })
+    -- Load packer.nvim on first doom launch
+    vim.cmd("packadd packer.nvim")
   end
 
   -- Load packer
