@@ -33,6 +33,7 @@
         * [Adding plugins](#adding-plugins)
         * [Adding Keybinds](#adding-keybinds)
         * [Adding autocommands](#adding-autocommands)
+        * [Adding commands](#adding-commands)
       - [Overriding module defaults](#overriding-module-defaults)
   * [FAQ](#faq)
   * [Contributing](#contributing)
@@ -94,7 +95,7 @@ return {
 
 #### All modules
 
-Doom-nvim currently has 39 `features` modules and 14 `langs` modules.
+Doom-nvim currently has 35+ `features` modules and 20+ `langs` modules.
 You can find a full list of modules (here)[./docs/modules.md#all-modules]
 
 ### Configuring and personalising: `config.lua`
@@ -117,17 +118,17 @@ vim.opt.colorcolumn = 120         -- Regular vim options can also be set
 
 ##### Adding plugins
 
-Additional packages can be imported with the `doom.use()` function.
+Additional packages can be imported with the `doom.use_package()` function.
 This is a wrapper around `packer.use()` and provides the same API. [DOCS](https://github.com/wbthomason/packer.nvim#quickstart)
 
 ```lua
 -- config.lua
 
 -- Simple config
-doom.use('sainnhe/sonokai', 'EdenEast/nightfox.nvim')
+doom.use_package('sainnhe/sonokai', 'EdenEast/nightfox.nvim')
 
 -- Advanced config
-doom.use({
+doom.use_package({
   'rafcamlet/nvim-luapad',
   opt = true,
   cmd = 'Luapad'
@@ -136,13 +137,13 @@ doom.use({
 
 ##### Adding Keybinds
 
-Additional keybinds can be defined with the `doom.bind()` function.
+Additional keybinds can be defined with the `doom.use_keybind()` function.
 This is a wrapper around a custom `nest.nvim` implementation and provides the same API. [DOCS](https://github.com/connorgmeehan/nest.nvim/tree/integrations-api#quickstart-guide)
 
 ```lua
 -- config.lua
 
-doom.bind({
+doom.use_keybind({
   { '<leader>u', name = '+user', { -- Names this group in whichkey "+user"
     { 's', '<cmd>Telescope git_status<CR>', name = 'Git status' } -- Adds `<leader>us` keybind to trigger `Telescope git_status`
   }},
@@ -153,14 +154,31 @@ doom.bind({
 
 ##### Adding autocommands
 
-Additional autocommands can be defined with the `doom.autocmd()` function.
+Additional autocommands can be defined with the `doom.use_autocmd()` function.
 
 ```lua
 -- config.lua
 
-doom.autcmd({
+doom.use_autocmd({
   -- { "<event>", "<aupat>", "<command or function>"}
   { "FileType", "javascript", function() print('Yuck!') end}
+})
+```
+
+##### Adding commands
+
+Additional commands can be define with the `doom.use_cmd()` function.
+
+```lua
+-- config.lua
+
+-- Bind single
+doom.use_cmd( { 'Test', function() print('test') end } )
+
+-- Bind multiple
+doom.use_cmd({
+  { 'Test1', function() print('test1') end },
+  { 'Test2', function() print('test2') end },
 })
 ```
 
@@ -170,15 +188,19 @@ The settings and config for all modules are also exposed inside of the `doom` gl
 Here you can override the plugin git sources, pre-defined settings, keybinds or autocmds.
 
 
+Make sure that the module that you want to configure/override is enabled in `modules.lua`
 ```lua
 -- modules.lua
-
 return {
   features = {
     'whichkey' -- Whichkey module is enabled
   }
 }
+```
 
+The same module with be avaliable in your `config.lua` in the `doom.modules.module_name` field.
+The settings should have autocomplete from sumneko lua lsp.
+```lua
 -- config.lua
 local whichkey = doom.modules.whichkey -- Get the whichkey module
 
@@ -201,7 +223,7 @@ whichkey.binds = {
 }
 
 -- Add an additional autocommand
-table.insert(whichkey.autcmds, { "event", "aupat", "cmd"})
+table.insert(whichkey.autocmds, { "event", "aupat", "cmd"})
 -- Replace all autocommands
 whichkey.autocmds = {
   { "event", "aupat", "cmd"}

@@ -7,11 +7,11 @@ cpp.settings = {
 
 cpp.autocmds = {
   {
-    "FileType",
-    "cpp",
+    "BufWinEnter",
+    "*.cpp,*.c,*.h",
     function()
       local langs_utils = require('doom.modules.langs.utils')
-      langs_utils.use_lsp(doom.modules.cpp.settings.language_server_name)
+      langs_utils.use_lsp(doom.langs.cpp.settings.language_server_name)
       
       vim.defer_fn(function()
         require("nvim-treesitter.install").ensure_installed("cpp", "c")

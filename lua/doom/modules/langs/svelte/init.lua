@@ -1,21 +1,19 @@
-local utils = require('doom.utils');
+local svelte = {}
 
-local typescript = {}
-
-typescript.settings = {
+svelte.settings = {
+  language_server_name = 'svelte',
 }
 
-typescript.autocmds = {
+svelte.autocmds = {
   {
     "BufWinEnter",
-    "*.js,*.jsx,*.ts,*.tsx",
-    utils.make_run_once_function(function()
+    "*.svelte",
+    function()
       local langs_utils = require('doom.modules.langs.utils')
-      langs_utils.use_lsp('tsserver')
+      langs_utils.use_lsp(doom.langs.svelte.settings.language_server_name)
 
       vim.defer_fn(function()
-        local ts_install = require("nvim-treesitter.install")
-        ts_install.ensure_installed("typescript", "javascript")
+        require("nvim-treesitter.install").ensure_installed("svelte")
       end, 0)
 
       -- Setup null-ls
@@ -28,9 +26,9 @@ typescript.autocmds = {
           null_ls.builtins.diagnostics.eslint_d,
         })
       end
-    end),
+    end,
     once = true,
   },
 }
 
-return typescript
+return svelte

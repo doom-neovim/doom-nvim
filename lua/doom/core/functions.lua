@@ -23,19 +23,6 @@ functions.quit_doom = function(dont_write, force)
   end
 end
 
--- check_updates checks for plugins updates
-functions.check_updates = function()
-  local log = require("doom.utils.logging")
-  local updated_plugins, err = xpcall(function()
-    log.info("Updating the outdated plugins ...")
-    vim.cmd("PackerSync")
-  end, debug.traceback)
-
-  if not updated_plugins then
-    log.error("Unable to update plugins. Traceback:\n" .. err)
-  end
-end
-
 -- Open Doom Nvim user manual and set extra options to buffer
 functions.open_docs = function()
   -- NOTE: we aren't using the default Neovim way with ':h doom' because of some bugs
@@ -232,144 +219,6 @@ local function save_backup_hashes()
   end
 end
 
--- update_doom saves the current commit/release hash into a file for future
--- restore if needed and then updates Doom.
--- TODO: Port to module architecture
-functions.update_doom = function()
-  local log = require("doom.utils.logging")
-  save_backup_hashes()
-
-  log.info("Pulling Doom remote changes ...")
-
-  local updater = async:new({
-    cmd = "git pull",
-    cwd = system.doom_root,
-    on_stdout = function(_, data)
-      if data then
-        log.info("Successfully updated Doom!")
-        --- Completely reload Doom Nvim
-        require("doom.utils.reloader").full_reload()
-      end
-    end,
-    on_stderr = function(err, data)
-      if err then
-        log.error("Error while updating Doom. Traceback:\n" .. err)
-      elseif data then
-        log.error("Error while updating Doom. Traceback:\n" .. data:gsub("[\r\n]", ""))
-      end
-    end,
-  })
-  updater:start()
-end
-
--- rollback_doom will rollback the local doom version to an older one
--- in case that the local one is broken
--- TODO: Port to module architecture
-functions.rollback_doom = function()
-  local log = require("doom.utils.logging")
-  -- Backup file for main (stable) branch
-  local releases_database_path = string.format("%s%s.doom_releases", system.doom_root, system.sep)
-  -- Backup file for development branch
-  local rolling_backup = string.format("%s%s.doom_backup_hash", system.doom_root, system.sep)
-
-  -- Check if there's a rollback file and sets the rollback type
-  if vim.fn.filereadable(releases_database_path) == 1 then
-    -- Get the releases database and split it into a table
-    local doom_releases = fs.read_file(releases_database_path)
-
-    -- Put all the releases into a table so we can sort them later
-    local releases = {}
-    for release in doom_releases:gmatch("[^\r\n]+") do
-      table.insert(releases, release)
-    end
-    -- Sort the releases table
-    local sorted_releases = {}
-    for idx, release in ipairs(releases) do
-      sorted_releases[#releases + 1 - idx] = release:gsub("refs/tags/", "")
-    end
-
-    -- Check the current commit hash and compare it with the ones in the
-    -- releases table
-    local current_version
-    local current_commit = utils.get_git_output("rev-parse HEAD", true)
-    for _, version_info in ipairs(sorted_releases) do
-      for release_hash, version in version_info:gmatch("(%w+)%s(%w+%W+%w+%W+%w+)") do
-        if release_hash == current_commit then
-          current_version = version
-        end
-      end
-    end
-    -- If the current_version variable is still nil then
-    -- fallback to latest version
-    if not current_version then
-      -- next => index, SHA vX.Y.Z
-      local _, release_info = next(releases, nil)
-      -- split => { SHA, vX.Y.Z }, [2] => vX.Y.Z
-      current_version = vim.split(release_info, " ")[2]
-    end
-
-    local rollback_sha, rollback_version
-    local break_loop = false
-    for _, version_info in ipairs(releases) do
-      for commit_hash, release in version_info:gmatch("(%w+)%s(%w+%W+%w+%W+%w+)") do
-        if release:gsub("v", "") < current_version:gsub("v", "") then
-          rollback_sha = commit_hash
-          rollback_version = release
-          break_loop = true
-          break
-        end
-      end
-      if break_loop then
-        break
-      end
-    end
-
-    log.info("Reverting back to version " .. rollback_version .. " (" .. rollback_sha .. ") ...")
-    local rolled_back, rolled_err = xpcall(function()
-      os.execute(system.git_workspace .. "checkout " .. rollback_sha)
-    end, debug.traceback)
-
-    if not rolled_back then
-      log.error(
-        "Error while rolling back to version "
-          .. rollback_version
-          .. " ("
-          .. rollback_sha
-          .. "). Traceback:\n"
-          .. rolled_err
-      )
-    end
-
-    log.info(
-      "Successfully rolled back Doom to version "
-        .. rollback_version
-        .. " ("
-        .. rollback_sha
-        .. "), please restart"
-    )
-  elseif vim.fn.filereadable(rolling_backup) == 1 then
-    local backup_commit = fs.read_file(rolling_backup):gsub("[\r\n]+", "")
-    log.info("Reverting back to commit " .. backup_commit .. " ...")
-    local rolled_back, rolled_err = xpcall(function()
-      os.execute(system.git_workspace .. "checkout " .. backup_commit)
-    end, debug.traceback)
-
-    if not rolled_back then
-      log.error(
-        "Error while rolling back to commit " .. backup_commit .. ". Traceback:\n" .. rolled_err
-      )
-    end
-
-    log.info("Successfully rolled back Doom to commit " .. backup_commit .. ", please restart")
-  else
-    log.error("There are no backup files to rollback")
-  end
-end
-
-local function bool2str(bool)
-  return bool and "on" or "off"
-end
-
 -- Toggle background="dark"|"light"
 functions.toggle_background = function()
   local background = vim.go.background
@@ -387,7 +236,7 @@ if is_module_enabled("lsp") then
   -- Toggle completion (by running cmp setup again).
   functions.toggle_completion = function()
     _doom.cmp_enable = not _doom.cmp_enable
-    print(string.format("completion=%s", bool2str(_doom.cmp_enable)))
+    print(string.format("completion=%s", utils.bool2str(_doom.cmp_enable)))
   end
 end
 
@@ -436,25 +285,13 @@ functions.change_number = function()
     vim.opt.number = false
     vim.opt.relativenumber = false
   end
-  print("number=%s, relativenumber=%s", bool2str(vim.opt.number), bool2str(vim.opt.relativenumber))
-end
-
--- Toggle autopairs.
-if is_module_enabled("autopairs") then
-  functions.toggle_autopairs = function()
-    local autopairs = require("nvim-autopairs")
-    if autopairs.state.disabled then
-      autopairs.enable()
-    else
-      autopairs.disable()
-    end
-  end
+  print("number=%s, relativenumber=%s", utils.bool2str(vim.opt.number), utils.bool2str(vim.opt.relativenumber))
 end
 
 -- Toggle spell.
 functions.toggle_spell = function()
   vim.opt.spell = not vim.opt.spell
-  print(string.format("spell=%s", bool2str(vim.opt.spell)))
+  print(string.format("spell=%s", utils.bool2str(vim.opt.spell)))
 end
 
 -- Toggle syntax/treesitter
@@ -468,7 +305,7 @@ functions.change_syntax = function()
       vim.cmd("TSBufEnable highlight")
       vim.cmd("syntax on")
     end
-    local state = bool2str(vim.opt.syntax)
+    local state = utils.bool2str(vim.opt.syntax)
     print(string.format("syntax=%s, treesitter=%s", state, state))
   else
     if vim.o.syntax then
@@ -476,7 +313,7 @@ functions.change_syntax = function()
     else
       vim.cmd("syntax on")
     end
-    local state = bool2str(vim.opt.syntax)
+    local state = utils.bool2str(vim.opt.syntax)
     print(string.format("syntax=%s", state))
   end
 end

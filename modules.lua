@@ -1,12 +1,12 @@
---
 -- modules.lua - Doom nvim module selection
+--
 -- modules.lua controls what Doom nvim plugins modules are enabled and
 -- what features are being used.
 --
 -- Uncomment a plugin to enable it and comment out to disable and uninstall it.
 
 return {
-  features = {
+  modules = {
     -- Language features
     "annotations",        -- Code annotation generator
     "auto_install",       -- Auto install LSP providers
@@ -31,7 +31,7 @@ return {
     "lsp_progress",       -- Check status of LSP loading
     "tabline",            -- Tab bar buffer switcher
     "dashboard",          -- A pretty dashboard upon opening
-    "trouble",            -- A pretty diagnostic viewer
+    -- "trouble",            -- A pretty diagnostic viewer
     "statusline",         -- A pretty status line at the bottom of the buffer
     -- "minimap",         -- Shows current position in document
     -- "terminal",        -- Integrated terminal in neovim
@@ -52,7 +52,6 @@ return {
     -- "suda",            -- Save using sudo when necessary
     "telescope",          -- Fuzzy searcher to find files, grep code and more
     "whichkey",           -- An interactive sheet
-
   },
   langs = {
     -- Scripts

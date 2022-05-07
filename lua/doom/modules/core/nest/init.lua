@@ -26,10 +26,12 @@ nest.configs["nest.nvim"] = function()
 
   local last_module = '';
   local ok, err = xpcall(function()
-    for module_name, module in pairs(doom.modules) do
-      last_module = module_name
-      if module.binds then
-        nest_package.applyKeymaps(type(module.binds) == 'function' and module.binds() or module.binds)
+    for _, section_name in ipairs({"user", "modules", "langs", "core"}) do
+      for module_name, module in pairs(doom[section_name]) do
+        last_module = module_name
+        if module.binds then
+          nest_package.applyKeymaps(type(module.binds) == 'function' and module.binds() or module.binds)
+        end
       end
     end
     -- Apply user keybinds

@@ -1,3 +1,8 @@
+--  doom.core.ui
+--
+--  Responsible for safely setting the colorscheme and falling back to `doom-one`
+--  if necessary.
+
 local utils = require("doom.utils")
 local log = require("doom.utils.logging")
 

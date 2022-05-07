@@ -16,7 +16,7 @@ snippets.packages = {
 snippets.configs = {}
 snippets.configs["LuaSnip"] = function()
   require("luasnip").config.set_config(doom.modules.snippets.settings)
-  require("luasnip.loaders.from_vscode").load()
+  require("luasnip.loaders.from_vscode").lazy_load()
 end
 
 return snippets

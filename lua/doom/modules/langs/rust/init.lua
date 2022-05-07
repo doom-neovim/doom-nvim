@@ -5,8 +5,8 @@ rust.settings = {
 
 rust.autocmds = {
   {
-    "FileType",
-    "rust",
+    "BufWinEnter",
+    "*.rs",
     function()
       local langs_utils = require('doom.modules.langs.utils')
       

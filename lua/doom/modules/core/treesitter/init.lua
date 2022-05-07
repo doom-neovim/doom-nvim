@@ -61,7 +61,7 @@ treesitter.packages = {
 treesitter.configs = {}
 treesitter.configs["nvim-treesitter"] = function()
   local is_module_enabled = require("doom.utils").is_module_enabled
-  require("nvim-treesitter.configs").setup(vim.tbl_deep_extend("force", doom.modules.treesitter.settings.treesitter, {
+  require("nvim-treesitter.configs").setup(vim.tbl_deep_extend("force", doom.core.treesitter.settings.treesitter, {
     autopairs = {
       enable = is_module_enabled("autopairs"),
     },

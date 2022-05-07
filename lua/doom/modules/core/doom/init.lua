@@ -36,7 +36,7 @@ required.packages = {
 
 required.configs = {}
 required.configs["nvim-mapper"] = function()
-  require("nvim-mapper").setup(doom.modules.doom.settings.mapper)
+  require("nvim-mapper").setup(doom.core.doom.settings.mapper)
 end
 
 required.binds = function ()
@@ -169,7 +169,7 @@ required.binds = function ()
           },
           {
             "m",
-            ("<cmd>e %s<CR>"):format(require("doom.core.config.modules").source),
+            ("<cmd>e %s<CR>"):format(require("doom.core.modules").source),
             name = "Edit modules",
           },
           { "l", "<cmd>DoomConfigsReload<CR>", name = "Reload config" },
@@ -337,25 +337,6 @@ required.autocmds = function ()
       [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]],
     })
   end
-
-  if is_module_enabled("explorer") then
-    table.insert(autocmds, {
-      "FileType",
-      "netrw",
-      require("doom.core.netrw").set_maps,
-    })
-    table.insert(autocmds, {
-      "FileType",
-      "netrw",
-      require("doom.core.netrw").draw_icons,
-    })
-    table.insert(autocmds, {
-      "TextChanged",
-      "*",
-      require("doom.core.netrw").draw_icons,
-    })
-  end
-
   return autocmds
 end
 

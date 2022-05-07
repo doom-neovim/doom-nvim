@@ -1,5 +1,9 @@
 local lsp = {}
 
+--- Internal state of LSP module
+-- Flag to enable/disable completions for <leader>tc keybind.
+lsp.__completions_enabled = true
+
 lsp.settings = {
   signature = {
     bind = true,
@@ -122,7 +126,6 @@ lsp.packages = {
   },
 }
 
-
 lsp.configs = {}
 lsp.configs["nvim-lspconfig"] = function()
   -- Lsp Symbols
@@ -222,7 +225,11 @@ lsp.configs["nvim-cmp"] = function()
     },
     formatting = {
       format = function(entry, item)
-        item.kind = string.format("%s %s", doom.modules.lsp.settings.completion.kinds[item.kind], item.kind)
+        item.kind = string.format(
+          "%s %s",
+          doom.modules.lsp.settings.completion.kinds[item.kind],
+          item.kind
+        )
         item.menu = source_map[entry.source.name]
         item.dup = vim.tbl_contains({ "path", "buffer" }, entry.source.name)
         return item
@@ -243,7 +250,7 @@ lsp.configs["nvim-cmp"] = function()
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-        elseif (snippets_enabled and luasnip.expand_or_jumpable()) then
+        elseif snippets_enabled and luasnip.expand_or_jumpable() then
           vim.fn.feedkeys(replace_termcodes("<Plug>luasnip-expand-or-jump"), "")
         elseif check_backspace() then
           vim.fn.feedkeys(replace_termcodes("<Tab>"), "n")
@@ -268,7 +275,8 @@ lsp.configs["nvim-cmp"] = function()
       }),
     },
   }, {
-    mapping = type(doom.modules.lsp.settings.completion.mapping) == "function" and doom.modules.lsp.settings.completion.mapping(cmp)
+    mapping = type(doom.modules.lsp.settings.completion.mapping) == "function"
+        and doom.modules.lsp.settings.completion.mapping(cmp)
       or doom.modules.lsp.settings.completion.mapping,
     enabled = function()
       return _doom.cmp_enable and vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
@@ -358,11 +366,19 @@ lsp.binds = {
         "t",
         name = "+tweak",
         {
-          { "c", function() require("doom.core.functions").toggle_completion() end, name = "Toggle completion" },
+          {
+            "c",
+            function()
+              lsp.__completions_enabled = not lsp.__completions_enabled
+              local bool2str = require('doom.utils').bool2str
+              print(string.format("completion=%s", bool2str(lsp.__completions_enabled)))
+            end,
+            name = "Toggle completion",
+          },
         },
       },
     },
-  }
+  },
 }
 
 return lsp
