@@ -40,11 +40,6 @@ lua.packages = {
   },
 }
 
-lua.configs = {}
-lua.configs["lua-dev.nvim"] = function()
-  require("lua-dev").setup(doom.langs.lua.settings.dev)
-end
-
 lua.autocmds = {
   {
     "BufWinEnter",
@@ -56,15 +51,20 @@ lua.autocmds = {
       table.insert(runtime_path, "lua/?.lua")
       table.insert(runtime_path, "lua/?/init.lua")
 
-      local config = vim.tbl_deep_extend("force", doom.langs.lua.settings, {
-        settings = {
-          Lua = {
-            runtime = {
-              path = runtime_path,
+      local config = vim.tbl_deep_extend(
+        "force",
+        doom.langs.lua.settings,
+        require("lua-dev").setup(doom.langs.lua.settings.dev),
+        {
+          settings = {
+            Lua = {
+              runtime = {
+                path = runtime_path,
+              },
             },
           },
-        },
-      })
+        }
+      )
 
       langs_utils.use_lsp("sumneko_lua", {
         config = config,
