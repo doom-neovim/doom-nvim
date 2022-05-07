@@ -31,7 +31,7 @@ return {
     "lsp_progress",       -- Check status of LSP loading
     "tabline",            -- Tab bar buffer switcher
     "dashboard",          -- A pretty dashboard upon opening
-    -- "trouble",            -- A pretty diagnostic viewer
+    -- "trouble",         -- A pretty diagnostic viewer
     "statusline",         -- A pretty status line at the bottom of the buffer
     -- "minimap",         -- Shows current position in document
     -- "terminal",        -- Integrated terminal in neovim
@@ -75,7 +75,7 @@ return {
     -- "kotlin",
     -- "java",
 
-    -- "config",             -- JSON, YAML, TOML
+    -- "config",          -- JSON, YAML, TOML
     -- "markdown",
   }
 }
