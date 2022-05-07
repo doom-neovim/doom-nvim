@@ -50,16 +50,6 @@ tabline.settings = {
             return buf.filename:match("%.md") or buf.filename:match("%.txt")
           end,
         },
-        {
-          name = "Doom",
-          auto_close = true,
-          matcher = function(buf)
-            if buf.filename:find("doom_") or buf.filename:find("doom-", 1, true) then
-              return true
-            end
-            return false
-          end,
-        },
       },
     },
     offsets = {
