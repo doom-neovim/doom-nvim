@@ -12,7 +12,7 @@ neorg.settings = {
       },
     },
     ["core.norg.concealer"] = {},
-    ["core.nor.qol.toc"] = {},
+    ["core.norg.qol.toc"] = {},
     ["core.norg.dirman"] = {
       config = {
         workspaces = {
