@@ -14,6 +14,9 @@ lua.settings = {
       },
       workspace = {
         library = vim.api.nvim_get_runtime_file("", true),
+        maxPreload = 1000,
+        preloadFileSize = 150,
+        checkThirdParty = false,
       },
       telemetry = {
         enable = false,
