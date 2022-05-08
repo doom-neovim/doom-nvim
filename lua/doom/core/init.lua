@@ -10,10 +10,6 @@
 
 local utils = require("doom.utils")
 
--- From here on, we have a hidden global `_doom` that holds state the user
--- shouldn't mess with.
-_G._doom = {}
-
 -- Sets the `doom` global object
 require("doom.core.doom_global")
 

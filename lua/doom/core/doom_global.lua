@@ -42,6 +42,11 @@
 --- @field config string|function Command or function to run after the plugin is loaded.
 --- @field setup string|function Command or function to run before the plugin is loaded.
 
+-- From here on, we have a hidden global `_doom` that holds state the user
+-- shouldn't mess with.
+_G._doom = {
+}
+
 --- Global object
 doom = {
   -- Pins plugins to a commit sha to prevent breaking changes
