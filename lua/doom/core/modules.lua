@@ -22,21 +22,47 @@ local log = require("doom.utils.logging")
 local system = require("doom.core.system")
 
 --- Initial bootstrapping of packer including auto-installation if necessary
+--- Initial bootstrapping of impatient.nvim
 modules.start = function()
-  -- Packer Bootstrapping
-  local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+  if doom.impatient_enabled then
+    local has_impatient = pcall(require, 'impatient')
+    if not has_impatient then
+      -- Packer Bootstrapping
+      local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/impatient.nvim"
+      if vim.fn.empty(vim.fn.glob(packer_path)) > 0 then
+        vim.notify("Bootstrapping impatient.nvim, please wait ...")
+        vim.fn.system({
+          "git",
+          "clone",
+          "--depth",
+          "1",
+          "https://github.com/lewis6991/impatient.nvim",
+          packer_path,
+        })
+      end
 
-  if vim.fn.empty(vim.fn.glob(packer_path)) > 0 then
-    vim.notify("Bootstrapping packer.nvim, please wait ...")
-    vim.fn.system({
-      "git",
-      "clone",
-      "--depth",
-      "1",
-      "https://github.com/wbthomason/packer.nvim",
-      packer_path,
-    })
-    -- Load packer.nvim on first doom launch
+      vim.cmd("packadd impatient.nvim")
+
+      require("impatient")
+    end
+  end
+
+  local has_packer = pcall(require, 'packer')
+  if not has_packer then
+    -- Packer Bootstrapping
+    local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+    if vim.fn.empty(vim.fn.glob(packer_path)) > 0 then
+      vim.notify("Bootstrapping packer.nvim, please wait ...")
+      vim.fn.system({
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "https://github.com/wbthomason/packer.nvim",
+        packer_path,
+      })
+    end
+
     vim.cmd("packadd packer.nvim")
   end
 
