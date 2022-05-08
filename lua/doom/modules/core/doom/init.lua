@@ -24,9 +24,6 @@ required.packages = {
     commit = "b7404d35d5d3548a82149238289fa71f7f6de4ac",
     module = "popup",
   },
-  ["nvim-mapper"] = {
-    "lazytanuki/nvim-mapper",
-  },
   ['nvim-web-devicons'] = {
     'kyazdani42/nvim-web-devicons',
     commit = "8df4988ecf8599fc1f8f387bbf2eae790e4c5ffb",
@@ -35,9 +32,6 @@ required.packages = {
 }
 
 required.configs = {}
-required.configs["nvim-mapper"] = function()
-  require("nvim-mapper").setup(doom.core.doom.settings.mapper)
-end
 
 required.binds = function ()
   local utils = require("doom.utils")

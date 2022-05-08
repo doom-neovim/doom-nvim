@@ -7,8 +7,11 @@ nest.packages = {
   ["nest.nvim"] = {
     "connorgmeehan/nest.nvim",
     branch = "integrations-api",
-    after = "nvim-mapper",
   },
+  ["nvim-mapper"] = {
+    "lazytanuki/nvim-mapper",
+    after = "nest.nvim",
+  }
 }
 
 nest.configs = {}
@@ -18,24 +21,27 @@ nest.configs["nest.nvim"] = function()
 
   local nest_package = require("nest")
 
-  nest_package.enable(require("nest.integrations.mapper"))
   if is_module_enabled("whichkey") then
     local whichkey_integration = require("nest.integrations.whichkey")
     nest_package.enable(whichkey_integration)
   end
 
-  local last_module = '';
+  local last_module = ""
+
   local ok, err = xpcall(function()
-    for _, section_name in ipairs({"user", "modules", "langs", "core"}) do
-      for module_name, module in pairs(doom[section_name]) do
+    for _, section_name in ipairs({"core", "modules", "langs", "user"}) do
+      for module_name, module in ipairs(doom[section_name]) do
         last_module = module_name
         if module.binds then
-          nest_package.applyKeymaps(type(module.binds) == 'function' and module.binds() or module.binds)
+          -- table.insert(all_keymaps, type(module.binds) == "function" and module.binds() or module.binds)
+          nest_package.applyKeymaps(
+            type(module.binds) == "function" and module.binds() or module.binds
+          )
         end
       end
     end
     -- Apply user keybinds
-    last_module = 'user provided keybinds  (doom.use_keybind)'
+    last_module = "user provided keybinds  (doom.use_keybind)"
     for _, keybinds in ipairs(doom.binds) do
       nest_package.applyKeymaps(keybinds)
     end
@@ -50,7 +56,27 @@ nest.configs["nest.nvim"] = function()
       )
     )
   end
+end
 
+nest.configs["nvim-mapper"] = function()
+  require("nvim-mapper").setup(doom.core.doom.settings.mapper)
+  local nest_package = require("nest")
+  local mapper_integration = require("nest.integrations.mapper")
+
+  local count = 0
+  for _, section_name in ipairs({"core", "modules", "langs", "user"}) do
+    for _, module in pairs(doom[section_name]) do
+      if module.binds then
+        count = count + 1
+        vim.defer_fn(function()
+          -- table.insert(all_keymaps, type(module.binds) == "function" and module.binds() or module.binds)
+          nest_package.applyKeymaps(
+            type(module.binds) == "function" and module.binds() or module.binds
+          , nil, { mapper_integration })
+        end, count)
+      end
+    end
+  end
 end
 
 return nest
