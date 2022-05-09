@@ -49,6 +49,7 @@ _G._doom = {
 
 --- Global object
 doom = {
+  settings = {
   -- Pins plugins to a commit sha to prevent breaking changes
   -- @default = true
   freeze_dependencies = true,
@@ -146,7 +147,7 @@ doom = {
   indent = 4,
 
   -- Logging level
-  -- Set Doom logging level
+  -- Set doom.settings.logging level
   -- Available levels:
   --   · trace
   --   · debug
@@ -183,6 +184,7 @@ doom = {
     -- @default = false
     transparent_background = false,
   },
+},
 
   packages = {},
   --- Wrapper around packer.nvim `use` function

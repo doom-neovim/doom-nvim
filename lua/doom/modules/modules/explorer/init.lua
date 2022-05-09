@@ -103,11 +103,11 @@ explorer.configs["nvim-tree.lua"] = function()
 
   vim.g.nvim_tree_respect_buf_cwd = utils.bool2num(doom.modules.explorer.settings.respect_buf_cwd)
 
-  vim.g.nvim_tree_hide_dotfiles = utils.bool2num(not doom.show_hidden)
+  vim.g.nvim_tree_hide_dotfiles = utils.bool2num(not doom.settings.show_hidden)
 
   vim.g.nvim_tree_git_hl = utils.bool2num(doom.modules.explorer.settings.git_highlight)
 
-  vim.g.nvim_tree_gitignore = utils.bool2num(doom.hide_gitignore)
+  vim.g.nvim_tree_gitignore = utils.bool2num(doom.settings.hide_gitignore)
 
   vim.g.nvim_tree_root_folder_modifier = ":~"
 
