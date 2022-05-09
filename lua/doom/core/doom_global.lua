@@ -42,149 +42,165 @@
 --- @field config string|function Command or function to run after the plugin is loaded.
 --- @field setup string|function Command or function to run before the plugin is loaded.
 
+local utils = require("doom.utils")
+
 -- From here on, we have a hidden global `_doom` that holds state the user
 -- shouldn't mess with.
-_G._doom = {
-}
+_G._doom = {}
+
+local filename = "settings.lua"
+-- Path cases:
+--   1. stdpath('config')/../doom-nvim/modules.lua
+--   2. stdpath('config')/modules.lua
+--   3. <runtimepath>/doom-nvim/modules.lua
+settings_source = utils.find_config(filename)
+settings_user = dofile(settings_source)
 
 --- Global object
 doom = {
   settings = {
-  -- Pins plugins to a commit sha to prevent breaking changes
-  -- @default = true
-  freeze_dependencies = true,
-
-  -- Enables impatent.nvim caching to speed up start time.
-  -- Can cause more issues so disabled by default
-  -- @default false
-  impatient_enabled = false,
-
-  -- Autosave
-  -- false : Disable autosave
-  -- true  : Enable autosave
-  -- @default = false
-  autosave = false,
-
-  -- Disable Vim macros
-  -- false : Enable
-  -- true  : Disable
-  -- @default = false
-  disable_macros = false,
-
-  -- Disable ex mode
-  -- false : Enable
-  -- true  : Disable
-  -- @default = false
-  disable_ex = true,
-
-  -- Disable suspension
-  -- false : Enable
-  -- true  : Disable
-  -- @default = false
-  disable_suspension = true,
-
-  -- h,l, wrap lines
-  movement_wrap = true,
-
-  -- Undo directory (set to nil to disable)
-  -- @default = vim.fn.stdpath("data") .. "/undodir/"
-  undo_dir = vim.fn.stdpath("data") .. "/undodir/",
-
-  -- Set preferred border style across UI
-  border_style = "single",
-
-  -- Preserve last editing position
-  -- false : Disable preservation of last editing position
-  -- true  : Enable preservation of last editing position
-  -- @default = false
-  preserve_edit_pos = false,
-
-  -- horizontal split on creating a new file (<Leader>fn)
-  -- false : doesn't split the window when creating a new file
-  -- true  : horizontal split on creating a new file
-  -- @default = true
-  new_file_split = "vertical",
-
-  -- Enable auto comment (current line must be commented)
-  -- false : disables auto comment
-  -- true  : enables auto comment
-  -- @default = false
-  auto_comment = false,
-
-  -- Enable Highlight on yank
-  -- false : disables highligh on yank
-  -- true  : enables highlight on yank
-  -- @default = true
-  highlight_yank = true,
-
-  -- Enable guicolors
-  -- Enables gui colors on GUI versions of Neovim
-  -- @default = true
-  guicolors = true,
-
-  -- Show hidden files
-  -- @default = true
-  show_hidden = true,
-
-  -- Hide files listed in .gitignore from file browsers
-  -- @default = true
-  hide_gitignore = true,
-
-  -- Checkupdates on start
-  -- @default = false
-  check_updates = false,
-
-  -- sequences used for escaping insert mode
-  -- @default = { 'jk', 'kj' }
-  escape_sequences = { "jk", "kj" },
-
-  -- Use floating windows for plugins manager (packer) operations
-  -- @default = false
-  use_floating_win_packer = false,
-
-  -- Default indent size
-  -- @default = 4
-  indent = 4,
-
-  -- Logging level
-  -- Set doom.settings.logging level
-  -- Available levels:
-  --   · trace
-  --   · debug
-  --   · info
-  --   · warn
-  --   · error
-  --   · fatal
-  -- @default = 'info'
-  logging = "warn",
-
-  -- Default colorscheme
-  -- @default = doom-one
-  colorscheme = "doom-one",
-
-  -- Doom One colorscheme settings
-  doom_one = {
-    -- If the cursor color should be blue
-    -- @default = false
-    cursor_coloring = false,
-    -- If TreeSitter highlighting should be enabled
+    -- Pins plugins to a commit sha to prevent breaking changes
     -- @default = true
-    enable_treesitter = true,
-    -- If the comments should be italic
+    freeze_dependencies = true,
+
+    -- Enables impatent.nvim caching to speed up start time.
+    -- Can cause more issues so disabled by default
+    -- @default false
+    impatient_enabled = false,
+
+    -- Autosave
+    -- false : Disable autosave
+    -- true  : Enable autosave
     -- @default = false
-    italic_comments = false,
-    -- If the telescope plugin window should be colored
+    autosave = false,
+
+    -- Disable Vim macros
+    -- false : Enable
+    -- true  : Disable
+    -- @default = false
+    disable_macros = false,
+
+    -- Disable ex mode
+    -- false : Enable
+    -- true  : Disable
+    -- @default = false
+    disable_ex = true,
+
+    -- Disable suspension
+    -- false : Enable
+    -- true  : Disable
+    -- @default = false
+    disable_suspension = true,
+
+    -- h,l, wrap lines
+    movement_wrap = true,
+
+    -- Undo directory (set to nil to disable)
+    -- @default = vim.fn.stdpath("data") .. "/undodir/"
+    undo_dir = vim.fn.stdpath("data") .. "/undodir/",
+
+    -- Set preferred border style across UI
+    border_style = "single",
+
+    -- Preserve last editing position
+    -- false : Disable preservation of last editing position
+    -- true  : Enable preservation of last editing position
+    -- @default = false
+    preserve_edit_pos = false,
+
+    -- horizontal split on creating a new file (<Leader>fn)
+    -- false : doesn't split the window when creating a new file
+    -- true  : horizontal split on creating a new file
     -- @default = true
-    telescope_highlights = true,
-    -- If the built-in Neovim terminal should use the doom-one
-    -- colorscheme palette
+    new_file_split = "vertical",
+
+    -- Enable auto comment (current line must be commented)
+    -- false : disables auto comment
+    -- true  : enables auto comment
     -- @default = false
-    terminal_colors = true,
-    -- If the Neovim instance should be transparent
+    auto_comment = false,
+
+    -- Enable Highlight on yank
+    -- false : disables highligh on yank
+    -- true  : enables highlight on yank
+    -- @default = true
+    highlight_yank = true,
+
+    -- Enable guicolors
+    -- Enables gui colors on GUI versions of Neovim
+    -- @default = true
+    guicolors = true,
+
+    -- Show hidden files
+    -- @default = true
+    show_hidden = true,
+
+    -- Hide files listed in .gitignore from file browsers
+    -- @default = true
+    hide_gitignore = true,
+
+    -- Checkupdates on start
     -- @default = false
-    transparent_background = false,
+    check_updates = false,
+
+    -- sequences used for escaping insert mode
+    -- @default = { 'jk', 'kj' }
+    escape_sequences = { "jk", "kj" },
+
+    -- Use floating windows for plugins manager (packer) operations
+    -- @default = false
+    use_floating_win_packer = false,
+
+    -- Default indent size
+    -- @default = 4
+    indent = 4,
+
+    -- Logging level
+    -- Set doom.settings.logging level
+    -- Available levels:
+    --   · trace
+    --   · debug
+    --   · info
+    --   · warn
+    --   · error
+    --   · fatal
+    -- @default = 'info'
+    logging = "warn",
+
+    -- Default colorscheme
+    -- @default = doom-one
+    colorscheme = "doom-one",
+
+    -- Doom One colorscheme settings
+    doom_one = {
+      -- If the cursor color should be blue
+      -- @default = false
+      cursor_coloring = false,
+      -- If TreeSitter highlighting should be enabled
+      -- @default = true
+      enable_treesitter = true,
+      -- If the comments should be italic
+      -- @default = false
+      italic_comments = false,
+      -- If the telescope plugin window should be colored
+      -- @default = true
+      telescope_highlights = true,
+      -- If the built-in Neovim terminal should use the doom-one
+      -- colorscheme palette
+      -- @default = false
+      terminal_colors = true,
+      -- If the Neovim instance should be transparent
+      -- @default = false
+      transparent_background = false,
+    },
+
+    -- Automatically reload local plugins during development
+    reload_doom = true,
+    reload_local_plugins = true,
+
+    local_plugins_path = "~/code/repos/github.com/",
+    fork_package_cmd = "ghm clone",
   },
-},
 
   packages = {},
   --- Wrapper around packer.nvim `use` function
@@ -212,10 +228,10 @@ doom = {
   --- )
   ---@vararg DoomPackage[]|string[] Packages to install
   use_package = function(...)
-    local arg = {...}
+    local arg = { ... }
     -- Get table of packages via git repository name
-    local packages_to_add = vim.tbl_map(function (t)
-      return type(t) == 'string' and t or t[1]
+    local packages_to_add = vim.tbl_map(function(t)
+      return type(t) == "string" and t or t[1]
     end, arg)
 
     -- Predicate returns false if the package needs to be overriden
@@ -246,10 +262,10 @@ doom = {
   ---
   --- @vararg DoomAutocmd|DoomAutocmd[] Autocommands to setup
   use_autocmd = function(...)
-    local arg = {...}
+    local arg = { ... }
     for _, autocmd in ipairs(arg) do
-      if type(autocmd[1]) == 'string' and type(autocmd[2]) == 'string' then
-        local key = string.format('%s-%s', autocmd[1], autocmd[2])
+      if type(autocmd[1]) == "string" and type(autocmd[2]) == "string" then
+        local key = string.format("%s-%s", autocmd[1], autocmd[2])
         doom.autocmds[key] = autocmd
       elseif autocmd ~= nil then
         doom.use_autocmd(unpack(autocmd))
@@ -273,10 +289,10 @@ doom = {
   --- })
   ---@vararg DoomCmd|DoomCmd[] Commands to bind
   use_cmd = function(...)
-    local arg = {...}
+    local arg = { ... }
     for _, cmd in ipairs(arg) do
       if type(cmd[1]) == "string" then
-        doom.cmds[cmd[1]] = cmd;
+        doom.cmds[cmd[1]] = cmd
       elseif cmd ~= nil then
         doom.use_cmd(unpack(cmd))
       end
@@ -299,7 +315,7 @@ doom = {
   --- })
   ---@vararg DoomKeybind|DoomKeybind[]
   use_keybind = function(...)
-    local arg = {...}
+    local arg = { ... }
     for _, bind in ipairs(arg) do
       if type(bind[1]) == "string" then
         table.insert(doom.binds, { [1] = bind })
@@ -308,7 +324,6 @@ doom = {
       end
     end
   end,
-
 
   -- This is where modules are stored.
   -- The entire data structure will be stored in modules[module_name] = {}
@@ -319,3 +334,7 @@ doom = {
   modules = {},
   langs = {},
 }
+
+vim.tbl_deep_extend("force", {
+  doom.settings,
+}, settings_user)
