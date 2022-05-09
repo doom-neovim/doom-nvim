@@ -28,6 +28,12 @@ required.packages = {
     'kyazdani42/nvim-web-devicons',
     commit = "8df4988ecf8599fc1f8f387bbf2eae790e4c5ffb",
     module = "nvim-web-devicons",
+  },
+  -- Must include impatient.nvim here, even though it's bootstrapped in
+  -- core.modules.lua so that packer doesn't try and clean it up.
+  ['impatient.nvim'] = {
+    "lewis6991/impatient.nvim",
+    disabled = not doom.impatient_enabled
   }
 }
 
