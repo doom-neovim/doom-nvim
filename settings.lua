@@ -83,7 +83,7 @@ return {
 
   -- sequences used for escaping insert mode
   -- @default = { 'jk', 'kj' }
-  escape_sequences = { "zm" },
+  escape_sequences = { "jk", "kj" },
 
   -- Use floating windows for plugins manager (packer) operations
   -- @default = false
@@ -155,6 +155,6 @@ return {
   reload_doom = true,
   reload_local_plugins = true,
 
-  local_plugins_path = "~/code/repos/github.com/",
-  fork_package_cmd = "ghm clone",
+  local_plugins_path = "",
+  fork_package_cmd = "",
 }

@@ -53,8 +53,8 @@ local filename = "settings.lua"
 --   1. stdpath('config')/../doom-nvim/modules.lua
 --   2. stdpath('config')/modules.lua
 --   3. <runtimepath>/doom-nvim/modules.lua
-settings_source = utils.find_config(filename)
-settings_user = dofile(settings_source)
+local settings_source = utils.find_config(filename)
+local settings_user = dofile(settings_source)
 
 --- Global object
 doom = {
@@ -198,8 +198,9 @@ doom = {
     reload_doom = true,
     reload_local_plugins = true,
 
-    local_plugins_path = "~/code/repos/github.com/",
-    fork_package_cmd = "ghm clone",
+    -- NOTE: for later when my fork-package module works.
+    local_plugins_path = "",
+    fork_package_cmd = "",
   },
 
   packages = {},
