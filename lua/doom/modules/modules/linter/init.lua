@@ -19,7 +19,7 @@ linter.configs["null-ls.nvim"] = function()
   null_ls.setup({
     on_attach = function(client)
       if
-        client.resolved_capabilities.document_formatting
+        client.server_capabilities.documentFormattingProvider
         and doom.modules.linter.settings.format_on_save
       then
         vim.cmd([[
