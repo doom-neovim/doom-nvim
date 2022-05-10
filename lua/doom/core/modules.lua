@@ -17,7 +17,6 @@ local modules = {}
 modules.source = utils.find_config(filename)
 modules.enabled_modules = dofile(modules.source)
 
-local log = require("doom.utils.logging")
 local system = require("doom.core.system")
 
 --- Initial bootstrapping of packer including auto-installation if necessary
