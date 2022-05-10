@@ -116,16 +116,21 @@ whichkey.configs["which-key.nvim"] = function()
     return module
   end
 
-  local keymaps = require("doom.services.keymaps")
+  local keymaps_service = require("doom.services.keymaps")
   local whichkey_integration = get_whichkey_integration()
+  local count = 0
   for _, section_name in ipairs({ "core", "modules", "langs", "user" }) do
     for _, module in pairs(doom[section_name]) do
       if module.binds then
-        keymaps.applyKeymaps(
-          type(module.binds) == "function" and module.binds() or module.binds,
-          nil,
-          { whichkey_integration }
-        )
+        count = count + 1
+        vim.defer_fn(function()
+          -- table.insert(all_keymaps, type(module.binds) == "function" and module.binds() or module.binds)
+          keymaps_service.applyKeymaps(
+            type(module.binds) == "function" and module.binds() or module.binds,
+            nil,
+            { whichkey_integration }
+          )
+        end, count)
       end
     end
   end
