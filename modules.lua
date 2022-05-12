@@ -68,7 +68,7 @@ return {
 
     -- Compiled
     -- "rust",
-    -- "cpp",
+    -- "cc",
 
     -- JIT
     -- "c_sharp",

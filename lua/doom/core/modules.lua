@@ -1,4 +1,3 @@
-
 --   doom.core.modules
 --
 --   Finds and returns user's `modules.lua` file.  Returned result is cached
@@ -18,14 +17,13 @@ local modules = {}
 modules.source = utils.find_config(filename)
 modules.enabled_modules = dofile(modules.source)
 
-local log = require("doom.utils.logging")
 local system = require("doom.core.system")
 
 --- Initial bootstrapping of packer including auto-installation if necessary
 --- Initial bootstrapping of impatient.nvim
 modules.start = function()
   if doom.impatient_enabled then
-    local has_impatient = pcall(require, 'impatient')
+    local has_impatient = pcall(require, "impatient")
     if not has_impatient then
       -- Packer Bootstrapping
       local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/impatient.nvim"
@@ -47,7 +45,7 @@ modules.start = function()
     end
   end
 
-  local has_packer = pcall(require, 'packer')
+  local has_packer = pcall(require, "packer")
   if not has_packer then
     -- Packer Bootstrapping
     local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
@@ -98,11 +96,13 @@ modules.start = function()
   packer.reset()
 end
 
+local keymaps_service = require("doom.services.keymaps")
+
 --- Applies commands, autocommands, packages from enabled modules (`modules.lua`).
 modules.load_modules = function()
   local use = require("packer").use
   -- Handle the Modules
-  for _, section_name in ipairs({"core", "modules", "user", "langs",}) do
+  for _, section_name in ipairs({ "core", "modules", "user", "langs" }) do
     for module_name, module in pairs(doom[section_name]) do
       -- Import dependencies with packer from module.packages
       if module.packages then
@@ -122,7 +122,8 @@ modules.load_modules = function()
 
       -- Setup package autogroups
       if module.autocmds then
-        local autocmds = type(module.autocmds) == 'function' and module.autocmds() or module.autocmds
+        local autocmds = type(module.autocmds) == "function" and module.autocmds()
+          or module.autocmds
         utils.make_augroup(module_name, autocmds)
       end
 
@@ -130,6 +131,12 @@ modules.load_modules = function()
         for _, cmd_spec in ipairs(module.cmds) do
           utils.make_cmd(cmd_spec[1], cmd_spec[2])
         end
+      end
+
+      if module.binds then
+        keymaps_service.applyKeymaps(
+          type(module.binds) == "function" and module.binds() or module.binds
+        )
       end
     end
   end
@@ -154,9 +161,12 @@ modules.handle_user_config = function()
   for _, cmd_spec in pairs(doom.autocmds) do
     table.insert(autocmds, cmd_spec)
   end
-  utils.make_augroup('user', autocmds)
+  utils.make_augroup("user", autocmds)
 
-  -- User keybinds handled in `nest` module
+  -- Handle extra user keybinds
+  for _, keybinds in ipairs(doom.binds) do
+    keymaps_service.applyKeymaps(keybinds)
+  end
 end
 
 return modules
