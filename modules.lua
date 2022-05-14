@@ -25,30 +25,30 @@ return {
     "indentlines",        -- Show indent lines with special characters
     "range_highlight",    -- Highlight selected range from commands
     "todo_comments",      -- Highlight TODO: comments
-    -- "doom_themes",     -- Extra themes for doom
+    "doom_themes",     -- Extra themes for doom
 
     -- UI Components
     "lsp_progress",       -- Check status of LSP loading
     "tabline",            -- Tab bar buffer switcher
     "dashboard",          -- A pretty dashboard upon opening
-    -- "trouble",         -- A pretty diagnostic viewer
+    "trouble",         -- A pretty diagnostic viewer
     "statusline",         -- A pretty status line at the bottom of the buffer
-    -- "minimap",         -- Shows current position in document
-    -- "terminal",        -- Integrated terminal in neovim
-    -- "symbols",         -- Navigate between code symbols using telescope
-    -- "ranger",          -- File explorer in neovim (TODO: Test)
-    -- "restclient",      -- Test HTTP requests from neovim (TODO: Test)
-    -- "show_registers",  -- Show and navigate between registers
+    "minimap",         -- Shows current position in document
+    "terminal",        -- Integrated terminal in neovim
+    "symbols",         -- Navigate between code symbols using telescope
+    "ranger",          -- File explorer in neovim (TODO: Test)
+    "restclient",      -- Test HTTP requests from neovim (TODO: Test)
+    "show_registers",  -- Show and navigate between registers
 
     -- Tools
-    -- "dap",             -- Debug code through neovim
+    "dap",             -- Debug code through neovim
     "explorer",           -- An enhanced filetree explorer
-    -- "firenvim",        -- Embed neovim in your browser
-    -- "lazygit",         -- Lazy git integration
-    -- "neogit",          -- A git client for neovim
+    "firenvim",        -- Embed neovim in your browser
+    "lazygit",         -- Lazy git integration
+    "neogit",          -- A git client for neovim
     "neorg",              -- Organise your life
     "projects",           -- Quickly switch between projects
-    -- "superman",        -- Read unix man pages in neovim
+    "superman",        -- Read unix man pages in neovim
     -- "suda",            -- Save using sudo when necessary
     "telescope",          -- Fuzzy searcher to find files, grep code and more
     "whichkey",           -- An interactive sheet
@@ -56,27 +56,27 @@ return {
   langs = {
     -- Scripts
     "lua",
-    -- "python",
-    -- "bash",
+    "python",
+    "bash",
 
     -- Web
-    -- "javascript",
-    -- "typescript",
-    -- "css",
-    -- "vue",
-    -- "tailwindcss",
+    "javascript",
+    "typescript",
+    "css",
+    "vue",
+    "tailwindcss",
 
     -- Compiled
-    -- "rust",
-    -- "cc",
+    "rust",
+    "cc",
 
     -- JIT
     -- "c_sharp",
     -- "kotlin",
     -- "java",
 
-    -- "config",          -- JSON, YAML, TOML
-    -- "markdown",
+    "config",          -- JSON, YAML, TOML
+    "markdown",
   }
 }
 
