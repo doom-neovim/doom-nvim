@@ -183,7 +183,7 @@ return {
     -- "open_module_for_bind",
     -- "pandoc",
     -- "parse_module_cmd_args",
-    -- "paths",
+    "paths",
     -- "plugin_template",
     -- "plugins_fork",
     -- "plugins_local_reloader",
