@@ -77,6 +77,9 @@ return {
 
     "config",          -- JSON, YAML, TOML
     "markdown",
+  },
+  user = {
+    "motion",
   }
 }
 
