@@ -20,7 +20,7 @@ return {
     "auto_session",       -- Remember sessions between loads
     "colorizer",          -- Show colors in neovim
     "editorconfig",       -- Support editorconfig files
-    "gitsigns",           -- Show git changes in sidebar
+    -- "gitsigns",           -- Show git changes in sidebar
     "illuminate",         -- Highlight other copies of the word you're hovering on
     "indentlines",        -- Show indent lines with special characters
     "range_highlight",    -- Highlight selected range from commands
@@ -130,14 +130,14 @@ return {
     -- "games",
     -- "gdb",
     "ghq",
-    -- "git_diffview",
+    "git_diffview",
     "git_github",
     "git_neogit",
-    -- "git_various",
+    "git_various",
     -- "git_vgit",
     -- "gitsigns",
     -- "google_docs",
-    -- "gpg",
+    "gpg",
     -- "haskell",
     -- "help",
     -- "highlighting",
@@ -150,7 +150,7 @@ return {
     -- "latex",
     -- "legend",
     -- "libmodal",
-    -- "litee",
+    "litee",
     -- "logging",
     -- "lsp",
     -- "lsp_semantinc_tokens",
@@ -189,11 +189,11 @@ return {
     -- "plugins_local_reloader",
     -- "printer",
     -- "projects",
-    -- "quickfix",
+    "quickfix",
     -- "rayx",
     -- "read_file",
     -- "reaper_keys",
-    -- "refactor",
+    "refactor",
     -- "refactor_fn_into_utils",
     -- "regex",
     -- "registers",
@@ -206,7 +206,7 @@ return {
     -- "scheme_formatting",
     -- "scim",
     -- "scroll",
-    -- "search_and_replace",
+    "search_and_replace",
     -- "session",
     -- "snipets_create_edit",
     -- "snippets",
@@ -221,7 +221,7 @@ return {
     -- "tabs",
     -- "tabular",
     -- "telescope_doom_reloader",
-    -- "telescope_extensions",
+    "telescope_extensions",
     -- "telescope_mappings_legend",
     -- "terminal_integration",
     -- "test",
@@ -256,8 +256,8 @@ return {
     -- "virtual_types",
     -- "websearch",
     -- "wildmenu",
-    -- "windows",
-    -- "wm",
+    "windows",
+    "wm",
   }
 }
 
