@@ -41,7 +41,7 @@ return {
     "show_registers",  -- Show and navigate between registers
 
     -- Tools
-    "dap",             -- Debug code through neovim
+    -- "dap",             -- Debug code through neovim
     "explorer",           -- An enhanced filetree explorer
     "firenvim",        -- Embed neovim in your browser
     "lazygit",         -- Lazy git integration
