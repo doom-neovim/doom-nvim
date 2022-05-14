@@ -1,3 +1,11 @@
+@document.meta
+  title: index
+  description:
+  authors: hjalmarjakobsson
+  categories:
+  created: 2022-05-14
+  version: 0.0.11
+@end
 
 Code on Canvas TODO Lists
 * {./COCTasks.norg}

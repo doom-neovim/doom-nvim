@@ -176,12 +176,14 @@ B. TEST EDITORCONFIG ON DOROTHY
 
 https://github.com/VonHeikemen/dotfiles/blob/master/my-configs/neovim/lua/conf/keymaps.lua
 
-
 TODO: DEKLARERA -> TRANSFER MONEY?
 
 - debug luasnip
 
-_outdated
+now i should refactor all of my entry_makers into an entry makers file so that it is all refactored and moved away in a
+manner that allows for seeing patterns and what can happen if I do this shit more.
+creating good custom entry makers also allow for making things much clearer and separated, so tonight I am going to do this
+and start moving shit over there.
 
 --]]
 
