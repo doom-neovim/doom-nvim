@@ -1,0 +1,2 @@
+local figlet = {}
+return figlet

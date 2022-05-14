@@ -24,19 +24,6 @@ char_counter.settings = {
   }
 }
 
-char_counter.packages = {
-  ["nui.nvim"] = {
-    "MunifTanjim/nui.nvim",
-    cmd = { "CountPrint" },
-  }
-}
-
-char_counter.configs = {
-  ["nui.nvim"] = function()
-    vim.notify("char_counter: nui.nvim loaded", "info")
-  end
-}
-
 char_counter._insert_enter_char_count = nil
 char_counter._accumulated_difference = 0
 char_counter._get_current_buffer_char_count = function()

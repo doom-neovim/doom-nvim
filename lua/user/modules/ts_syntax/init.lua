@@ -1,0 +1,5 @@
+-- nvim-treesitter/nvim-treesitter - Neovim Treesitter configurations and abstraction layer.
+-- nvim-treesitter/nvim-treesitter-textobjects - Create your own textobjects using tree-sitter queries.
+-- RRethy/nvim-treesitter-textsubjects - Location and syntax aware text objects which do what you mean.
+-- mini.surround - Module of echasnovski/mini.nvim for working with text surroundings (add, delete, replace, find, highlight). Fully supports dot-repeat.
+-- m-demare/hlargs.nvim - Highlight arguments' definitions and usages, using Treesitter.

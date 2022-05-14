@@ -1,0 +1,1 @@
+-- https://github.com/Aadv1k/gdoc.vim

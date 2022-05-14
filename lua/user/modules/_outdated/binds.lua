@@ -1,0 +1,502 @@
+-- -------------------------
+-- ---       BINDS       ---
+-- -------------------------
+--
+-- -- i shall use functions in as many places as possible.
+-- -- rewrite my bindings when I can.
+--
+-- -- create a binds capture ui that allows you to create new bindings on the fly
+-- -- with a gtd similar workflow.
+-- -- A ui that allows you to step your way down the binds tree, and if you happen
+-- -- to create a new leaf node, then we display the branch and then
+-- -- allow user select what mode, action, name and etc. and then this is inserted
+-- -- into the binds.lua file, in the root folder. this could be quite fucking cool.
+--
+-- -- local binds = {}
+--
+-- local opts = {
+--   sf = { silent = false },
+--   n = { noremap = true },
+-- }
+--
+-- -- set / get visual selection
+-- local vs = '"zy'
+-- local viw = '"zyiw'
+-- local viW = '"zyiW'
+-- local vg = "<c-r>z"
+--
+--
+-- local bind = insert_binds_into_main_table -- doom.use_keybind
+-- local enabled = true
+--
+-- -- -- search regex
+-- -- {'n', '/', '/\\v'}, -- need to esc backsl
+-- -- {'v', '/', '/\\v'},
+--
+-- -- bind({
+-- --   enabled,
+-- --   normal = {
+-- --     { "<c-z>", [[<cmd>suspend<CR>]], name = "suspend vim" },
+-- --     { "<c-z>", [[<Esc><cmd>suspend<CR>]], name = "suspend vim", mode = "v" },
+-- --     { ";", ":", name = "colon", options = opts.sf },
+-- --     { ":", ";", name = "semi-colon" },
+-- --     --  {'n', 'dl', ':set wrap! linebreak!<CR>'},
+-- --     -- { 'x', 'z', '<Plug>VSurround' },
+-- --     -- { 'n', 'yzz', '<Plug>Yssurround' }, -- double ss
+-- --     -- { 'n', 'yz', '<Plug>Ysurround' }, -- single s
+-- --     -- { 'n', 'dz', '<Plug>Dsurround' },
+-- --     -- { 'n', 'cz', '<Plug>Csurround' },
+-- --   },
+-- -- })
+--
+-- -- - local binds_operator = {
+-- -- { 'o', 'b', 'vb', opts.ns },
+-- -- { 'o', 'B', 'vB', opts.ns },
+-- -- { 'o', 'F', 'vF', opts.ns },
+-- -- { 'o', 'T', 'vT', opts.ns },
+-- -- -- { 'o', 's', '<Plug>Lightspeed_s', opts.n },
+-- -- -- { 'o', 'S', '<Plug>Lightspeed_S', opts.ns },
+-- -- }
+--
+-- -- -- idea > use :[range]luado to filter visual selection.
+-- -- bind({ -- visual
+-- --   enabled,
+-- --   visual = {
+-- --     { "p", '"_dP', mode = "v", options = opts.fs },
+-- --     { "<c-z>", [[<Esc><cmd>suspend<CR>]], name = "suspend vim", mode = "v" },
+-- --     {
+-- --       "<C-l>v",
+-- --       vs .. ":lua doom.moll.funcs.inspect(" .. vg .. ")<Left>",
+-- --       name = "inspect",
+-- --       options = opts.sf,
+-- --       mode = "v",
+-- --     },
+-- --     {
+-- --       "<C-l>i",
+-- --       [[:lua doom.moll.funcs.inspect(loadstring(doom.moll.funcs.get_visual_selection()))<CR>]],
+-- --       name = "print vis sel",
+-- --       options = opts.sf,
+-- --       mode = "v",
+-- --     },
+-- --   },
+-- -- })
+--
+-- -- -- insert
+-- -- bind({
+-- --   enabled,
+-- --   insert = {
+-- --     -- { "i", "zm", "<ESC>:w<cr>", opts_s, "Editor", "exit_insert", "Exit insert mode" },
+-- --     { "zf", "<ESC>cF", mode = "i", name = "esc search back", opts.s },
+-- --     -- { "i", "zt", "<ESC>cT", opts_s, "Editor", "exit_insert_till_bkw", "Exit insert mode and change Until Backwards" },
+-- --     -- { "i", "zD", "<ESC>dF", opts_s, "Editor", "exit_insert_delete_bkw", "Exit insert mode and delete Backwards" },
+-- --     -- { "i", "zh", "<ESC>yF", opts_s, "Editor", "exit_insert_yank_bkw", "Exit insert mode and yank Backwards" },
+-- --     -- { "i", "zp", "<ESC>la", opts_s, "Editor", "exit_insert_and_append_tiny", "Exit Insert Mode and append right" },
+-- --     -- { "i", "zP", "<ESC>A ", opts_s, "Editor", "exit_insert_and_append_big", "Exit Insert Mode and (A)ppend" },
+-- --   },
+-- -- })
+--
+-- -- local lsp_opts = vim.tbl_extend("force", opts.sf, { expr = true })
+--
+-- -- bind({ -- lsp
+-- --   not enabled,
+-- --   lsp = {
+-- --     "<c-n>",
+-- --     'luasnip#expand_or_jumpable() ? "<Plug>luasnip-expand-or-jump" : "<Tab>"',
+-- --     "luasnip_expand",
+-- --     options = lsp_opts,
+-- --   },
+-- --   --     "s", "<c-n>", 'luasnip#expand_or_jumpable() ? "<Plug>luasnip-expand-or-jump" : "<Tab>"', lsp_opts, "luasnip_expand",
+-- --   --     "s", "<c-p>", 'luasnip#expand_or_jumpable() ? "<Plug>luasnip-expand-or-jump" : "<Tab>"', lsp_opts, "luasnip_expand",
+-- --   --     "s", "<c-k>", '<cmd>lua require("luasnip").jump(1)<CR>', opts, "luasnip_next_sel_s",
+-- --   --     "s", "<c-j>", '<cmd>lua require("luasnip").jump(-1)<CR>', opts, "luasnip_prev_sel_s",
+-- --   --     "i", "<c-k>", '<cmd>lua require("luasnip").jump(1)<CR>', opts, "luasnip_next_sel_i_insert",
+-- --   --     "i", "<c-j>", '<cmd>lua require("luasnip").jump(-1)<CR>', opts, "luasnip_prev_sel_i_insert",
+-- --   --     "i", "<C-E>", 'luasnip#choice_active() ? "<Plug>luasnip-next-choice" : "<C-E>"', lsp_opts, "luasnip_next_choice",
+-- --   --     "s", "<C-E>", 'luasnip#choice_active() ? "<Plug>luasnip-next-choice" : "<C-E>"', lsp_opts, "luasnip_next_choice_s",
+-- -- })
+--
+-- -- { 't', '<esc>', 'command', 'option'},
+-- -- local binds_terminal = {
+-- -- }
+--
+-- -- if is_module_enabled("whichkey") then
+-- --   bind({
+-- --     enabled,
+-- --     leader = {
+-- --       "<leader>",
+-- --       name = "+prefix",
+-- --       {
+-- --         -- {
+-- --         --     "h", name = "+help", {
+-- --         --       -- { "n", "<leader>hm", ":Man ", { silent = false }, "Man Page", "man_page", "Man Page" },
+-- --         --       -- { "n", "<leader>hl", ":help lua_reference_toc<CR>", { silent = false }, "Lua Reference", "lua_reference", "Lua Reference" },
+-- --         --       -- { "n", "<leader>hw", "\"zyiw:h <c-r>z<cr>", { silent = false }, "Help Inner Word", "help_inner_word", "Inner Word" },
+-- --         --       -- { "n", "<leader>hh", ":help ", { silent = false }, "Help", "help", "Help" },
+-- --         --       -- { "n", "<leader>hc", "<cmd>helpc<cr>", { silent = false }, "Close Help", "close_help", "Close Help" },
+-- --         --     }
+-- --         --   }, -- help
+-- --         -- {
+-- --         --     "n", name = "neorg", {
+-- --         --       -- { 'n', '<leader>nd', ':Neorg workspace default_workspace<cr>', opts.n },
+-- --         --       -- { 'n', '<leader>nn', ':Neorg workspace notes<cr>', opts.n },
+-- --         --       -- { 'n', '<leader>nG', ':Neorg workspace gtd<cr>', opts.n },
+-- --         --       -- { 'n', '<leader>nE', ':Neorg workspace example_gtd<cr>', opts.n },
+-- --         --       -- { 'n', '<leader>ng', ':Neorg gtd ', opts.n },
+-- --         --       -- { 'n', '<leader>nc', ':Neorg gtd capture<cr>', opts.n },
+-- --         --       -- { 'n', '<leader>ne', ':Neorg gtd edit', opts.n },
+-- --         --       -- { 'n', '<leader>nv', ':Neorg gtd views<cr>', opts.n },
+-- --         --     }
+-- --         --   }, -- neorg -> move to leader > open > neorg
+-- --         {
+-- --           "M",
+-- --           name = "+moll",
+-- --           {
+-- --             {
+-- --               "l",
+-- --               [[<cmd>lua require("luasnip_snippets").load_snippets()<CR>]],
+-- --               name = "load luasnip-snippets",
+-- --             },
+-- --             { "r", [[<cmd>DoomReload<CR>]], name = "doomReload" },
+-- --             {
+-- --               "R",
+-- --               function()
+-- --                 doom.moll.funcs.report_an_issue()
+-- --               end,
+-- --               name = "create_issue_from_templ",
+-- --             },
+-- --             {
+-- --               "p",
+-- --               [[:lua doom.moll.funcs.inspect(doom.)<Left>]],
+-- --               name = "inspect",
+-- --               options = opts.sf,
+-- --             },
+-- --             {
+-- --               "P",
+-- --               [[:lua doom.moll.funcs.inspect()<Left>]],
+-- --               name = "inspect",
+-- --               options = opts.sf,
+-- --             },
+-- --             {
+-- --               "w",
+-- --               '"zyiw:lua doom.moll.funcs.inspect(<c-r>z)<Left>',
+-- --               name = "inspect iw",
+-- --               options = opts.sf,
+-- --             },
+-- --             {
+-- --               "W",
+-- --               '"zyiW:lua doom.moll.funcs.inspect(<c-r>z)<Left>',
+-- --               name = "inspect iW",
+-- --               options = opts.sf,
+-- --             },
+-- --             { "t", '<cmd>TermExec cmd="zsh -il"<cr>', name = "terminal zsh -il" },
+-- --             -- {
+-- --             --     "e", name = "+TEST", {
+-- --             --       -- -- https://github.com/jbyuki/nabla.nvim#usage
+-- --             --       -- { 'n', '<F5>', '<cmd>lua require("nabla").action()<cr>', opts.n },
+-- --             --       -- { 'n', '<leader>Tp', '<cmd>lua require("nabla").popup()<cr>', opts.n },
+-- --             --       -- -- vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true})
+-- --             --       -- { 'n', '<leader>N', ':lua toggle_venn()<CR>', opts.n },
+-- --             --           --       -- require("plenary.reload").reload_module(selection.value)
+-- --             --           -- -- { 'n', '<leader>lr', ':lua require("telescope.builtin").reloader({ cwd = ' .. test_plugin_reload .. '})<cr>', opts.n },
+-- --             --           -- { 'n', '<leader>lr', ':lua require("plenary.reload").reload_module(' .. test_plugin_reload .. ')<cr>', opts.n },
+-- --             --           -- { 'n', '<leader>lR', ':lua report_an_issue()<cr>', opts.n },
+-- --             --           -- { 'n', '<leader>lp', ':lua pp()<left>', opts.n },
+-- --             --
+-- --             --     }
+-- --             --   },
+-- --             {
+-- --               "g",
+-- --               name = "+go",
+-- --               {
+-- --                 { "D", "<cmd>e " .. doom_log_path .. "<CR>" },
+-- --                 { "N", "<cmd>e " .. notes_rndm .. "<CR>" },
+-- --                 { "S", "<cmd>e " .. conf_skhd .. "<CR>" },
+-- --                 { "a", "<cmd>e " .. conf_alac .. "<CR>" },
+-- --                 { "d", "<cmd>e " .. conf_doom .. "<CR>" },
+-- --                 { "e", "<cmd>e " .. conf_setup .. "<CR>" },
+-- --                 { "g", "<cmd>e " .. aliases_git .. "<CR>" },
+-- --                 { "m", "<cmd>e " .. conf_tnx_main .. "<CR>" },
+-- --                 { "n", "<cmd>e " .. notes_todo .. "<CR>" },
+-- --                 { "s", "<cmd>e " .. conf_surf .. "<CR>" },
+-- --                 { "t", "<cmd>e " .. conf_tmux .. "<CR>" },
+-- --                 { "x", "<cmd>e " .. conf_scim .. "<CR>" },
+-- --                 { "y", "<cmd>e " .. conf_yabai .. "<CR>" },
+-- --                 { "z", "<cmd>e " .. aliases_zsh .. "<CR>" },
+-- --               },
+-- --             }, -- moll > go
+-- --             -- {
+-- --             --     "L", name = "+line operations", {
+-- --             --       -- -- line operations (testing)
+-- --             --       -- -- " run current line through shell
+-- --             --       -- { 'n', ',Zs', '!!$SHELL <CR>'},
+-- --             --       -- -- " run current line in commandline
+-- --             --       -- { 'n', ',Zl', 'yy:@" <CR>' },
+-- --             --       -- ??
+-- --             --       -- { 'n', ',ZZ', ':w !sudo tee %'},
+-- --             --     }
+-- --             --   }
+-- --           },
+-- --         }, -- moll
+-- --         -- {
+-- --         --     "P", name ="+path", { -- https://stackoverflow.com/questions/38081927/vim-cding-to-git-root
+-- --         -- -- - file path to global
+-- --         -- -- - file git root global nvim
+-- --         -- -- - active file buffer
+-- --         -- -- https://stackoverflow.com/questions/38081927/vim-cding-to-git-root
+-- --         -- { "n", "<leader>fpa", "<cmd>cd %:p:h<CR><cmd>pwd<CR>", opts.s, "Editor", "cwd_to_active_file", ":cd active file" },
+-- --         -- { "n", "<leader>fpg", "<cmd>cd %:h | cd `git rev-parse --show-toplevel`<CR><cmd>pwd<CR>", opts.s, "Editor", "cwd_to_current_git_root", ":cd active git root" },
+-- --         --       -- {
+-- --         --       -- 	"n",
+-- --         --       -- 	"<leader>fpa",
+-- --         --       -- 	"<cmd>cd %:p:h<CR><cmd>pwd<CR>",
+-- --         --       -- 	opts.s,
+-- --         --       -- 	"Editor",
+-- --         --       -- 	"cwd_to_active_file",
+-- --         --       -- 	":cd active file",
+-- --         --       -- },
+-- --         --       -- {
+-- --         --       -- 	"n",
+-- --         --       -- 	"<leader>fpg",
+-- --         --       -- 	"<cmd>cd %:h | cd `git rev-parse --show-toplevel`<CR><cmd>pwd<CR>",
+-- --         --       -- 	opts.s,
+-- --         --       -- 	"Editor",
+-- --         --       -- 	"cwd_to_current_git_root",
+-- --         --       -- 	":cd active git root",
+-- --         --       -- },
+-- --         --     }
+-- --         --   },
+-- --         {
+-- --           "s",
+-- --           name = "+search",
+-- --           {
+-- --             { "g", [[<cmd>Telescope repo cached_list<CR>]], name = "repos cached" },
+-- --             { "G", [[<cmd>Telescope repo list<CR>]], name = "repos build" },
+-- --             { "f", [[/\v\c]], name = "text case", options = opts.sf },
+-- --             {
+-- --               "r",
+-- --               name = "+replace",
+-- --               {
+-- --                 { "l", ":s//g<Left><Left>", name = "line", options = opts.sf },
+-- --                 { "L", '"zyiw:s/<c-r>z//g<Left><Left>', name = "line iw", options = opts.sf },
+-- --                 { "o", '"zyiW:s/<c-r>z//g<Left><Left>', name = "line iW", options = opts.sf },
+-- --                 {
+-- --                   "O",
+-- --                   '"zyiw:s/\\<<c-r>z\\>//g<Left><Left>',
+-- --                   name = "line iw solo",
+-- --                   options = opts.sf,
+-- --                 },
+-- --                 { "a", ":%s//g<Left><Left>", name = "file", options = opts.sf },
+-- --                 { "w", '"zyiw:%s/<c-r>z//g<Left><Left>', name = "word", options = opts.sf },
+-- --                 --
+-- --                 -- {
+-- --                 --    "n",
+-- --                 --    "<leader>rfs",
+-- --                 --    "\"zyiw:%s/\\<<c-r>z\\>//g<Left><Left>",
+-- --                 --    { silent = false },
+-- --                 --    "Replace Inner (w)ord Solo",
+-- --                 --    "replace_inner_word_solo",
+-- --                 --    "Replace (w)ord Solo"
+-- --                 -- },
+-- --                 -- {
+-- --                 --    "n",
+-- --                 --    "<leader>rfW",
+-- --                 --    "\"zyiW:%s/<c-r>z//g<Left><Left>",
+-- --                 --    { silent = false },
+-- --                 --    "Replace Inner (W)ord",
+-- --                 --    "replace_inner_word_big",
+-- --                 --    "Replace (W)ord"
+-- --                 -- },
+-- --               },
+-- --             }, -- search > replace
+-- --             {
+-- --               "R",
+-- --               name = "+grep/cdo",
+-- --               {
+-- --                 -- -- ripgrep search empty
+-- --                 -- {
+-- --                 --    "n",
+-- --                 --    "<leader>rg",
+-- --                 --    ":grep ",
+-- --                 --    { silent = false },
+-- --                 --    "Ripgrep Search Empty",
+-- --                 --    "ripgrep_search_empty",
+-- --                 --    "Ripgrep Search Empty"
+-- --                 -- },
+-- --                 -- -- ripgrep search word
+-- --                 -- {
+-- --                 --    "n",
+-- --                 --    "<leader>rw",
+-- --                 --    "\"zyiw:grep <c-r>z",
+-- --                 --    { silent = false },
+-- --                 --    "Ripgrep Search Empty",
+-- --                 --    "ripgrep_search_empty",
+-- --                 --    "Ripgrep Search Empty"
+-- --                 -- },
+-- --                 -- -- ripgrep search WORD
+-- --                 -- {
+-- --                 --    "n",
+-- --                 --    "<leader>rW",
+-- --                 --    "\"zyiW:grep <c-r>z",
+-- --                 --    { silent = false },
+-- --                 --    "Ripgrep Search Empty",
+-- --                 --    "ripgrep_search_empty",
+-- --                 --    "Ripgrep Search Empty"
+-- --                 -- },
+-- --
+-- --                 -- -- TODO: add vimgrep variants
+-- --                 -- -- vimgrep search empty
+-- --                 -- {
+-- --                 --    "n",
+-- --                 --    "<leader>rg",
+-- --                 --    ":grep ",
+-- --                 --    { silent = false },
+-- --                 --    "Ripgrep Search Empty",
+-- --                 --    "ripgrep_search_empty",
+-- --                 --    "Ripgrep Search Empty"
+-- --                 -- },
+-- --                 -- -- vimgrep search word
+-- --                 -- {
+-- --                 --    "n",
+-- --                 --    "<leader>rw",
+-- --                 --    "\"zyiw:grep <c-r>z",
+-- --                 --    { silent = false },
+-- --                 --    "Ripgrep Search Empty",
+-- --                 --    "ripgrep_search_empty",
+-- --                 --    "Ripgrep Search Empty"
+-- --                 -- },
+-- --                 -- -- vimgrep search WORD
+-- --                 -- {
+-- --                 --    "n",
+-- --                 --    "<leader>rW",
+-- --                 --    "\"zyiW:grep <c-r>z",
+-- --                 --    { silent = false },
+-- --                 --    "Ripgrep Search Empty",
+-- --                 --    "ripgrep_search_empty",
+-- --                 --    "Ripgrep Search Empty"
+-- --                 -- },
+-- --                 -- -- vimgrep search word solo
+-- --                 -- -- vimgrep search WORD solo
+-- --                 -- -- :cdo empty
+-- --                 -- {
+-- --                 --    "n",
+-- --                 --    "<leader>rce",
+-- --                 --    ":cdo s//gc<Left><Left><Left>",
+-- --                 --    { silent = false },
+-- --                 --    "Quickfix cdo Empty",
+-- --                 --    "quickfix_cdo_empty",
+-- --                 --    "Quickfix cdo Empty"
+-- --                 -- },
+-- --                 -- -- :cdo replace word
+-- --                 -- {
+-- --                 --    "n",
+-- --                 --    "<leader>rcw",
+-- --                 --    "\"zyiw:cdo s/<c-r>z//gc<Left><Left><Left>",
+-- --                 --    { silent = false },
+-- --                 --    "Quickfix cdo (w)ord",
+-- --                 --    "quickfix_cdo_word_small",
+-- --                 --    "Quickfix cdo (w)ord",
+-- --                 -- },
+-- --                 -- -- :cdo replace WORD
+-- --                 -- {
+-- --                 --    "n",
+-- --                 --    "<leader>rcW",
+-- --                 --    "\"zyiW:cdo s/<c-r>z//gc<Left><Left><Left>",
+-- --                 --    { silent = false },
+-- --                 --    "Quickfix cdo (W)ord",
+-- --                 --    "quickfix_cdo_word_big",
+-- --                 --    "Quickfix cdo (W)ord",
+-- --                 -- },
+-- --                 -- -- :cdo solo word
+-- --                 -- {
+-- --                 --    "n",
+-- --                 --    "<leader>rcs",
+-- --                 --    "\"zyiw:cdo s/\\<<c-r>z\\>//gc<Left><Left><Left>",
+-- --                 --    { silent = false },
+-- --                 --    "Quickfix cdo solo (w)ord",
+-- --                 --    "quickfix_cdo_solo_word_small",
+-- --                 --    "Quickfix cdo solo(w)ord",
+-- --                 -- },
+-- --                 -- -- :cdo solo WORD
+-- --                 -- {
+-- --                 --    "n",
+-- --                 --    "<leader>rcS",
+-- --                 --    "\"zyiW:cdo s/\\<<c-r>z\\>//gc<Left><Left><Left>",
+-- --                 --    { silent = false },
+-- --                 --    "Quickfix cdo solo (W)ord",
+-- --                 --    "quickfix_cdo_solo_word_big",
+-- --                 --    "Quickfix cdo solo (W)ord",
+-- --                 -- },
+-- --               },
+-- --             },
+-- --           },
+-- --         }, -- search
+-- --         {
+-- --           "g",
+-- --           name = "+git",
+-- --           {
+-- --             {
+-- --               "z",
+-- --               name = "+octo",
+-- --               {
+-- --                 { "i", ":Octo issue ", name = "issue", options = opts.sf },
+-- --                 { "l", "<cmd>Octo issue list<cr>", name = "issue list" },
+-- --               },
+-- --             }, -- git -> octo
+-- --             -- {
+-- --             --     "x", name = "+vgit", {
+-- --             --
+-- --             --     }
+-- --             --   }, -- git -> vgit
+-- --             -- {
+-- --             --     "Z", name = "+gitsigns", {
+-- --             --
+-- --             --     }
+-- --             --   }, -- git -> gitsigns
+-- --             -- {
+-- --             --     "d", name = "+diffview", {
+-- --             --
+-- --             --     }
+-- --             --   }, -- git -> gitsigns
+-- --           },
+-- --         }, -- git
+-- --         -- {
+-- --         --     "R", "+readf", {
+-- --         --       -- -- read file
+-- --         --       -- -- :r file               to after cursor
+-- --         --       -- -- :$r                   to end of buffer
+-- --         --       -- -- :0r                   to end of buffer
+-- --         --       -- -- :{x}r                 to after line x
+-- --         --       -- -- :/pattern/r file      to after pattern
+-- --         --       -- { 'n', ',Rf', ':r<space>' },
+-- --         --       -- { 'n', ',Re', ':$r<space>' },
+-- --         --       -- { 'n', ',Rb', ':0r<space>' },
+-- --         --       -- { 'n', ',Rl', ':r <Left><Left>' },
+-- --         --       -- { 'n', ',Rp', '://r <Left><Left><Left>' },
+-- --         --     }
+-- --         --   }, -- read
+-- --         {
+-- --           "w",
+-- --           name = "+windows",
+-- --           {
+-- --             { "z", [[<esc><cmd>suspend<CR>]], name = "suspend vim" },
+-- --             -- { "S", [[<esc><CR>]], name = "solo window / close all others" }, -- nvim get windows > compare some idx/name > close match set
+-- --             -- { "move"}
+-- --             -- { "new/rm"}
+-- --             -- {
+-- --             --     "t", name = "+tabs", {
+-- --             --       -- { 'n', ',tn', ':tabnew<cr>' },
+-- --             --       -- { 'n', 'gl', 'gt' },
+-- --             --       -- { 'n', 'gL', 'gT' },
+-- --             --       -- { 'n', ',g0', ':tabr<cr>' },
+-- --             --       -- { 'n', ',g$', ':tabl<cr>' },
+-- --             --       -- { 'n', ',gh', ':tabm -<cr>' },
+-- --             --       -- { 'n', ',gl', ':tabm +<cr>' },
+-- --             --     }
+-- --             --   }
+-- --           },
+-- --         }, -- windows
+-- --       }, -- leader
+-- --     },
+-- --   })
+-- -- end
+--

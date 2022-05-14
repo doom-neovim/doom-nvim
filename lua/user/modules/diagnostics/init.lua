@@ -1,0 +1,1 @@
+-- https://github.com/onsails/diaglist.nvim

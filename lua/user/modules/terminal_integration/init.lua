@@ -1,0 +1,16 @@
+-- https://github.com/rockerBOO/awesome-neovim#terminal-integration
+--
+-- https://github.com/zbirenbaum/nvim-chadterm
+-- https://github.com/oberblastmeister/termwrapper.nvim
+--
+--
+-- LoricAndre/OneTerm.nvim - Plugin framework for running commands in the terminal.
+-- nikvdp/neomux - Control Neovim from shells running inside Neovim.
+-- akinsho/nvim-toggleterm.lua - A Neovim Lua plugin to help easily manage multiple terminal windows.
+-- norcalli/nvim-terminal.lua - A high performance filetype mode for Neovim which leverages conceal and highlights your buffer with the correct color codes.
+-- numToStr/FTerm.nvim - No nonsense floating terminal written in Lua.
+-- oberblastmeister/termwrapper.nvim - Wrapper for Neovim's terminal features to make them more user friendly.
+-- pianocomposer321/consolation.nvim - A general-purpose terminal wrapper and management plugin for Neovim, written in Lua.
+-- jghauser/kitty-runner.nvim - Poor man's REPL. Easily send buffer lines and commands to a kitty terminal.
+-- jlesquembre/nterm.nvim - A Neovim plugin to interact with the terminal, with notifications.
+-- s1n7ax/nvim-terminal - A simple & easy to use multi-terminal plugin.

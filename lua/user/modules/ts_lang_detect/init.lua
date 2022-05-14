@@ -1,0 +1,1 @@
+-- https://github.com/spywhere/detect-language.nvim

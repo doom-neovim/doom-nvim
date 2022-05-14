@@ -1,0 +1,2 @@
+-- function that compares the doom globals function table and inserts any new values into the root file
+-- without destroying anything or overwriting anything.

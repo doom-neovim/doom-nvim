@@ -1,0 +1,16 @@
+        -- {
+        --     "R", "+readf", {
+        --       -- -- read file
+        --       -- -- :r file               to after cursor
+        --       -- -- :$r                   to end of buffer
+        --       -- -- :0r                   to end of buffer
+        --       -- -- :{x}r                 to after line x
+        --       -- -- :/pattern/r file      to after pattern
+        --       -- { 'n', ',Rf', ':r<space>' },
+        --       -- { 'n', ',Re', ':$r<space>' },
+        --       -- { 'n', ',Rb', ':0r<space>' },
+        --       -- { 'n', ',Rl', ':r <Left><Left>' },
+        --       -- { 'n', ',Rp', '://r <Left><Left><Left>' },
+        --     }
+        --   }, -- read
+

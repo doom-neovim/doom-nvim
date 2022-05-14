@@ -1,0 +1,4 @@
+-- make sure that module adheres to a specific pattern/syntax
+--
+--
+-- requires / locals / settings / packages / cmds / autocmds / binds

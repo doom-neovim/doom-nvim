@@ -1,0 +1,1 @@
+-- https://github.com/mrjones2014/legendary.nvim

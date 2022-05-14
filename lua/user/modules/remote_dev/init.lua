@@ -1,0 +1,2 @@
+-- https://github.com/chipsenkbeil/distant.nvim
+-- https://github.com/jamestthompson3/nvim-remote-containers

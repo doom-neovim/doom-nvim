@@ -1,0 +1,2 @@
+  -- ["nvim-plugin-template"] = {"ellisonleao/nvim-plugin-template"}, -- Another neovim plugin template, using GitHub's template feature.
+  -- m00qek/plugin-template.nvim -- A plugin template that setups test infrastructure and GitHub Actions.
