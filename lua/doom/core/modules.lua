@@ -82,14 +82,14 @@ modules.start = function()
     },
     display = {
       open_fn = doom.use_floating_win_packer and function()
-        return require("packer.util").float({ border = doom.border_style })
+        return require("packer.util").float({ border = doom.settings.border_style })
       end,
     },
     profile = {
       enable = true,
     },
     log = {
-      level = doom.logging,
+      level = doom.settings.logging,
     },
   })
 
@@ -113,7 +113,7 @@ modules.load_modules = function()
           end
 
           -- Set/unset frozen packer dependencies
-          packer_spec.commit = doom.freeze_dependencies and packer_spec.commit or nil
+          packer_spec.commit = doom.settings.freeze_dependencies and packer_spec.commit or nil
 
           -- Initialise packer
           use(packer_spec)

@@ -674,7 +674,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   see |doom_nvim_commands_keybindings|
 - `:DoomUpdate` command,
   see |doom_nvim_commands|
-- `g:doom_autosave_sessions`,
+- `g:doom.settings.autosave_sessions`,
   see |doom_nvim_options|
 
 ## [1.0.0] - 2021-03-19
