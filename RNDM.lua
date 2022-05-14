@@ -234,7 +234,11 @@ remove unnecessary queries.
 
 prepare for all other module components.
 
-- merge doom root settings.
+- merge doom root settings. <--- TODO!!
+  -> how do I select a PR and merge it into my custom branch
+    a. checkout PR branch
+    b. pull ustream/next
+    c. merge PR branch into `moll-next`
 - debug `config.lua`
 - enable user modules.
 - debug luasnip
