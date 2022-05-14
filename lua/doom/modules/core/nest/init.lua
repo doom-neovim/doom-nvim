@@ -1,82 +1,158 @@
-local nest = {}
+local mapper = {}
 
-nest.settings = {
-}
+mapper.settings = {}
 
-nest.packages = {
-  ["nest.nvim"] = {
-    "connorgmeehan/nest.nvim",
-    branch = "integrations-api",
-  },
+mapper.packages = {
   ["nvim-mapper"] = {
     "lazytanuki/nvim-mapper",
-    after = "nest.nvim",
-  }
+  },
 }
 
-nest.configs = {}
-nest.configs["nest.nvim"] = function()
-  local utils = require("doom.utils")
-  local is_module_enabled = utils.is_module_enabled
+-- TODO: Not happy with how messy the integrations are, refactor!
+mapper.configs = {}
+mapper.configs["nvim-mapper"] = function()
+  require("nvim-mapper").setup(doom.core.doom.settings.mapper)
+  local keymaps_service = require("doom.services.keymaps")
 
-  local nest_package = require("nest")
+  local get_mapper_integration = function()
+    local mapper_integration = {}
 
-  if is_module_enabled("whichkey") then
-    local whichkey_integration = require("nest.integrations.whichkey")
-    nest_package.enable(whichkey_integration)
-  end
+    mapper_integration.name = "mapper"
 
-  local last_module = ""
+    local unique_id_table = {}
 
-  local ok, err = xpcall(function()
-    for _, section_name in ipairs({"core", "modules", "langs", "user"}) do
-      for module_name, module in ipairs(doom[section_name]) do
-        last_module = module_name
-        if module.binds then
-          -- table.insert(all_keymaps, type(module.binds) == "function" and module.binds() or module.binds)
-          nest_package.applyKeymaps(
-            type(module.binds) == "function" and module.binds() or module.binds
-          )
+    --- Tries to create a unique keymap id given a lhs, rhs and name
+    --- lhs/rhs used as key
+    --- @param lhs string
+    --- @param rhs string
+    --- @return string|nil
+    local determine_uid = function(lhs, name, mode)
+      -- Format name to snake case no punctuation
+      local formatted_name = name:lower()
+      formatted_name = formatted_name:gsub("%p", "")
+      formatted_name = formatted_name:gsub("%s", "_")
+      if mode ~= "" then
+        formatted_name = formatted_name .. "_" .. mode
+      end
+
+      local n = formatted_name
+      local i = 0
+      -- If this command has already been added, return early
+      if unique_id_table[n] == lhs then
+        return nil
+      end
+      -- Find a free spot in the unique_id_table
+      while unique_id_table[n] ~= nil and i < 50 do
+        i = i + 1
+        n = formatted_name .. "_" .. i
+      end
+
+      -- Add to table
+      unique_id_table[n] = lhs
+
+      return n
+    end
+
+    -- Categories are generated from the name of the parent keymap group
+    local category_table = {}
+    --- Adds categories to a table to be searched using get_category_for_command
+    --- @param lhs string Left hand side string to trigger a keymap
+    --- @param name string Name of keymap group
+    local add_category = function(lhs, name)
+      category_table[lhs] = name
+    end
+    --- Tries to determin the category of a keymap by finding the name of the parent group
+    --- @param lhs string LHS string to trigger a keymap
+    --- @return string|nil
+    local get_category_for_command = function(lhs)
+      local key = lhs:sub(1, -2)
+      return category_table[key]
+    end
+
+    local Mapper = require("nvim-mapper")
+
+    --- @class NestMapperNode : NestIntegrationNode
+    --- @field category string|nil
+    --- @field uid string|nil
+
+    --- @description Handles the each node in the nest tree
+    --- @param node NestMapperNode
+    --- @param node_settings NestSettings
+    mapper_integration.handler = function(node, node_settings)
+      if node.name == nil then
+        return
+      end
+
+      if type(node.rhs) == "table" then
+        -- If a name is provided, save the category
+        local category = node.category or node.name
+        add_category(node.lhs, category)
+        return
+      end
+
+      local category = node.category or get_category_for_command(node.lhs) or "unknown"
+
+      -- Fallback to name if description not provided
+      local description = node.description or node.name
+
+      -- Ensure all required values have been found
+      if category == nil or description == nil then
+        return
+      end
+
+      for mode in string.gmatch(node_settings.mode, ".") do
+        local sanitizedMode = mode == "_" and "" or mode
+
+        local id = node.uid or determine_uid(node.lhs, node.name, sanitizedMode)
+
+        if id ~= nil then
+          if node_settings.buffer then
+            local bufnr = type(node_settings.buffer) == "number" and node_settings.buffer
+              or vim.api.nvim_get_current_buf()
+            Mapper.map_buf(
+              bufnr,
+              sanitizedMode,
+              node.lhs,
+              node.rhs,
+              node_settings.options,
+              category,
+              id,
+              description
+            )
+          else
+            Mapper.map(
+              sanitizedMode,
+              node.lhs,
+              node.rhs,
+              node_settings.options,
+              category,
+              id,
+              description
+            )
+          end
         end
       end
     end
-    -- Apply user keybinds
-    last_module = "user provided keybinds  (doom.use_keybind)"
-    for _, keybinds in ipairs(doom.binds) do
-      nest_package.applyKeymaps(keybinds)
-    end
-  end, debug.traceback)
-  if not ok and err then
-    local log = require("doom.utils.logging")
-    log.error(
-      string.format(
-        "There was an error setting keymaps for module '%s'. Traceback:\n%s",
-        last_module,
-        err
-      )
-    )
+    return mapper_integration
   end
-end
-
-nest.configs["nvim-mapper"] = function()
-  require("nvim-mapper").setup(doom.core.doom.settings.mapper)
-  local nest_package = require("nest")
-  local mapper_integration = require("nest.integrations.mapper")
+  local mapper_integration = get_mapper_integration()
 
   local count = 0
-  for _, section_name in ipairs({"core", "modules", "langs", "user"}) do
+  for _, section_name in ipairs({ "core", "modules", "langs", "user" }) do
     for _, module in pairs(doom[section_name]) do
       if module.binds then
         count = count + 1
         vim.defer_fn(function()
           -- table.insert(all_keymaps, type(module.binds) == "function" and module.binds() or module.binds)
-          nest_package.applyKeymaps(
-            type(module.binds) == "function" and module.binds() or module.binds
-          , nil, { mapper_integration })
+          keymaps_service.applyKeymaps(
+            type(module.binds) == "function" and module.binds() or module.binds,
+            nil,
+            { mapper_integration }
+          )
         end, count)
       end
     end
   end
 end
 
-return nest
+return mapper

@@ -1,17 +1,17 @@
 local utils = require("doom.utils")
-local cpp = {}
+local cc = {}
 
-cpp.settings = {
+cc.settings = {
   language_server_name = utils.get_sysname() == "Darwin" and "clangd" or "ccls",
 }
 
-cpp.autocmds = {
+cc.autocmds = {
   {
     "BufWinEnter",
-    "*.cpp,*.c,*.h",
+    "*.cpp,*.cc,*.cxx,*.c,*.hpp,*.hh,*.hxx,*.h",
     function()
       local langs_utils = require("doom.modules.langs.utils")
-      langs_utils.use_lsp(doom.langs.cpp.settings.language_server_name)
+      langs_utils.use_lsp(doom.langs.cc.settings.language_server_name)
 
       require("nvim-treesitter.install").ensure_installed("cpp", "c")
 
@@ -29,4 +29,4 @@ cpp.autocmds = {
   },
 }
 
-return cpp
+return cc

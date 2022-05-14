@@ -68,7 +68,7 @@ whichkey.packages = {
   },
 }
 
-
+-- TODO: Not happy with how messy the integrations are.  Refactor!
 whichkey.configs = {}
 whichkey.configs["which-key.nvim"] = function()
   vim.g.mapleader = doom.modules.whichkey.settings.leader
@@ -76,6 +76,64 @@ whichkey.configs["which-key.nvim"] = function()
   local wk = require("which-key")
 
   wk.setup(doom.modules.whichkey.settings)
+
+  local get_whichkey_integration = function()
+    --- @type NestIntegration
+    local module = {}
+    module.name = "whichkey"
+
+    local keymaps = {}
+
+    --- Handles each node of the nest keymap config (except the top level)
+    --- @param node NestIntegrationNode
+    --- @param node_settings NestSettings
+    module.handler = function(node, node_settings)
+      -- Only handle <leader> keys, which key needs a 'Name' field
+      if node.lhs:find("<leader>") == nil or node.name == nil then
+        return
+      end
+
+      for _, v in ipairs(vim.split(node_settings.mode or "n", "")) do
+        if keymaps[v] == nil then
+          keymaps[v] = {}
+        end
+        -- If this is a keymap group
+        if type(node.rhs) == "table" then
+          keymaps[v][node.lhs] = { name = node.name }
+          -- If this is an actual keymap
+        elseif type(node.rhs) == "string" then
+          keymaps[v][node.lhs] = { node.name }
+        end
+      end
+    end
+
+    module.on_complete = function()
+      for k, v in pairs(keymaps) do
+        require("which-key").register(v, { mode = k })
+      end
+    end
+
+    return module
+  end
+
+  local keymaps_service = require("doom.services.keymaps")
+  local whichkey_integration = get_whichkey_integration()
+  local count = 0
+  for _, section_name in ipairs({ "core", "modules", "langs", "user" }) do
+    for _, module in pairs(doom[section_name]) do
+      if module.binds then
+        count = count + 1
+        vim.defer_fn(function()
+          -- table.insert(all_keymaps, type(module.binds) == "function" and module.binds() or module.binds)
+          keymaps_service.applyKeymaps(
+            type(module.binds) == "function" and module.binds() or module.binds,
+            nil,
+            { whichkey_integration }
+          )
+        end, count)
+      end
+    end
+  end
 end
 
 return whichkey
