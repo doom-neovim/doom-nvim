@@ -176,9 +176,10 @@ reloader.autocmds = function()
     )
     table.insert(autocmds, {
       "BufWritePost",
-      "*/modules.lua,*/config.lua",
+      "*/modules.lua,*/config.lua,*/settings.lua",
       function()
-        if vim.fn.getcwd() == vim.fn.stdpath("config") then
+        if vim.fn.getcwd() == vim.fn.stdpath("config")
+            or system.doom_configs_root == vim.fn.stdpath("config") then
           reloader.reload()
         end
       end,

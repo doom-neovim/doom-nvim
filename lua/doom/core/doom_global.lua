@@ -42,19 +42,10 @@
 --- @field config string|function Command or function to run after the plugin is loaded.
 --- @field setup string|function Command or function to run before the plugin is loaded.
 
-local utils = require("doom.utils")
 
 -- From here on, we have a hidden global `_doom` that holds state the user
 -- shouldn't mess with.
 _G._doom = {}
-
-local filename = "settings.lua"
--- Path cases:
---   1. stdpath('config')/../doom-nvim/modules.lua
---   2. stdpath('config')/modules.lua
---   3. <runtimepath>/doom-nvim/modules.lua
-local settings_source = utils.find_config(filename)
-local settings_user = dofile(settings_source)
 
 --- Global object
 doom = {
@@ -335,7 +326,3 @@ doom = {
   modules = {},
   langs = {},
 }
-
-vim.tbl_deep_extend("force", {
-  doom.settings,
-}, settings_user)
