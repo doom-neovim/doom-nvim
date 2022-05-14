@@ -1,0 +1,13 @@
+--
+-- new method for compiling doom modules.
+--
+-- 1. use ts to parse `modules.lua`
+-- 2. and make sure all modules exist in the file.
+-- 3. then, collect all modules.
+-- 4. add attributes.
+-- 	a. path = string - sys.doom .. path to module.
+-- 	b. section = string
+-- 	c. enabled = bool.
+--
+-- 5. then this would make it more easy to use the doom global table
+--  	when setting up UI.

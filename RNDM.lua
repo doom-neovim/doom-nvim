@@ -234,7 +234,10 @@ remove unnecessary queries.
 
 prepare for all other module components.
 
-
-
+1. checkout all of my root dirs.
+2. checkout my `user`dir.
+3.
+..
+- merge root settings.
 
 --]]
