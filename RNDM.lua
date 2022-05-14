@@ -234,8 +234,10 @@ remove unnecessary queries.
 
 prepare for all other module components.
 
-- checkout my `user`dir.
 - merge doom root settings.
+- debug `config.lua`
+- enable user modules.
+- debug luasnip
 
 --]]
 
