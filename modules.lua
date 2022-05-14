@@ -45,7 +45,7 @@ return {
     "explorer",           -- An enhanced filetree explorer
     "firenvim",        -- Embed neovim in your browser
     "lazygit",         -- Lazy git integration
-    "neogit",          -- A git client for neovim
+    -- "neogit",          -- A git client for neovim
     "neorg",              -- Organise your life
     "projects",           -- Quickly switch between projects
     "superman",        -- Read unix man pages in neovim
@@ -79,6 +79,59 @@ return {
     "markdown",
   },
   user = {
+    "ai",
+    "architext",
+    -- "async_jobs",
+    -- "audio",
+    -- "autocmds",
+    -- "awk",
+    "binds",
+    -- "binds_debug",
+    -- "binds_make_fn_under_cursor_into_bind",
+    -- "binds_mini_syntax",
+    -- "char_counter",
+    -- "clipboard",
+    -- "cmdline",
+    -- "code_outline",
+    -- "codeql",
+    -- "coderunner",
+    -- "collaborate",
+    -- "color_scheme_creation",
+    "color_schemes",
+    -- "colors",
+    -- "community_configs",
+    -- "competitive",
+    -- "complementree",
+    -- "create_cmds",
+    -- "create_module_sync_root",
+    -- "create_plugin",
+    -- "create_snippet",
+    -- "crypto",
+    -- "cursor",
+    -- "data_science",
+    -- "debugging",
+    -- "diagnostics",
+    -- "diagrams",
+    -- "dim_unused",
+    -- "docker",
+    -- "docs",
+    -- "doom_config_ui",
+    -- "doom_module_formatting",
+    -- "doom_queries_manager",
+    -- "doom_user_settings_ui",
+    "editing",
+    -- "fennel",
+    -- "figlet",
+    -- "file_explorers",
+    -- "filetype",
+    -- "flutter",
+    -- "folds",
+    -- "formatting",
+    -- "games",
+    -- "gdb",
+    -- "ghq",
+    -- "git_diffview",
+    "git_neogit",
     "motion",
   }
 }

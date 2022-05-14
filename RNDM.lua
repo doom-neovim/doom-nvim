@@ -174,74 +174,141 @@ ANYTHING IF YOU'D LIKE.
 
 B. TEST EDITORCONFIG ON DOROTHY
 
-dude this is quite fucking nice because this allows you to auto reload
-
-this is by the way one of the most insane things ever because this allows you to do anything and have it autoreload everything.
-
-so this is actually quite an insane setup that allows you to have everything that you configure to be autoreloaded which is so fucking
-convenient.
-
-
-so this is a nice setup that is fast as fuck and if you roll with this then it will setup anything that you need in order to build shit.
-
-it is just fucking creepy and that is not something tha i want to give them and to whom you give it and so that is how it works.
-
-in the past two years that is including the us like france and lithuania. when the us first adopted the plan citing earmarked both in trade and
-other areas.
-
-
-fork connors nest branch.
-
-i had very interesting mentions that I didn't understand a t all and so that is a fucking stupid thing you know and so that is why they didn'
-
-so this is going to be so fucking fast that you cannot even understand how good this shit is and the best thing about this is
-that there is something that you mightn ever understand you know. so that would make it into something that you mightever understand
- so that would make it into something that you mightever understand
-
- i don't think i was at least didn't live here. i don't see anything on a superficial search. i tried to get him on my
- podcast. he talks to bussiness people and so that is quite fucking interesting.
-
- okay so the next thing to focus on is to learn tree-sitter as well as possible now. and so that is something that I really
- need to learn now. it is very nice to have a plan for how to act you know. but especially in those that are important for
- the special enforcement. very interesting.
-
- then you'd know you know and so that is actually quite fucking importnat that they see that shit and donfmt mess things up like a fucki retard.
-
-and so I just want to copy over functions from the nvim treesitter refactor and see if I can understand something.
-
-which one would be appropriate to copy over into the fork. all of the gun stuff that is just so fucking interesting and you don't really
-get scarred in the moment and there is like this moment where you are more surprised it is real or what is happening. so after that shit
-storm we wanted to see what could be done about running into that shit like a fucking cucksucker.
-
-this is quite fancy shit you know and so if this is done properly then it will make vim into such a fuckign fast system that you cannot
-even understand how fast it is. even if you have pain in you throat then you should not do shit because that is not the most dangerous
-thing in the world you know.
-
-i should really try to get this commandline to work you know so that is the thing you know.
-
 https://github.com/VonHeikemen/dotfiles/blob/master/my-configs/neovim/lua/conf/keymaps.lua
 
 
 TODO: DEKLARERA -> TRANSFER MONEY?
 
-READ: about how you test queries. https://tree-sitter.github.io/tree-sitter/code-navigation-systems#command-line-invocation
-
--- THERE IS A PROBLEM WITH PASSING THE CONFIG FROM MODULE MANAGER TO BINDS
-
--- move all queries into one file.
-
-remove unnecessary queries.
-
-prepare for all other module components.
-
-- merge doom root settings. <--- TODO!!
-  -> how do I select a PR and merge it into my custom branch
-    a. checkout PR branch
-    b. pull ustream/next
-    c. merge PR branch into `moll-next`
-- debug `config.lua`
-- enable user modules.
 - debug luasnip
+
+_outdated
+git_github
+git_neogit
+git_various
+git_vgit
+gitsigns
+google_docs
+gpg
+haskell
+help
+highlighting
+icons
+images
+increment
+indent
+kmonad
+lang_nav
+latex
+legend
+libmodal
+litee
+logging
+lsp
+lsp_semantinc_tokens
+lsp_testing
+lua_table_commands
+mappings
+markdown
+marks
+math_calculator
+module_create_edit
+module_disable
+module_manager
+module_merge
+module_package_configs
+module_package_toggle_fork
+module_refactor_any_extra_vars_into_settings
+module_remove
+module_syntax_enforce
+modules_edit
+modules_move_component
+monitor_mappings
+motion
+mouse
+move
+navigator
+neorg
+nodejs
+nvim_luadev
+nvim_queries
+open_module_for_bind
+pandoc
+parse_module_cmd_args
+paths
+plugin_template
+plugins_fork
+plugins_local_reloader
+printer
+projects
+quickfix
+rayx
+read_file
+reaper_keys
+refactor
+refactor_fn_into_utils
+regex
+registers
+remote_dev
+rename
+repl
+repo_search
+ripgrep
+rust
+scheme_formatting
+scim
+scroll
+search_and_replace
+session
+snipets_create_edit
+snippets
+solidity
+sort
+spellcheck
+ssh
+startup
+statusline
+stenography
+surround
+tabs
+tabular
+telescope_doom_reloader
+telescope_extensions
+telescope_mappings_legend
+terminal_integration
+test
+testing
+tmux
+todo
+ts_context
+ts_docs
+ts_jump_2_func
+ts_jump_to_module_part
+ts_lang_detect
+ts_mirror_doom_globals
+ts_mode
+ts_motions
+ts_navigation
+ts_playground
+ts_plugins
+ts_query_monitor
+ts_rainbow
+ts_refactor
+ts_syntax
+ts_testing
+ts_testing_locals
+ts_textobjects
+ts_treehopper
+ui
+ui_pipeline
+ui_toggle_components
+undo
+utilities
+vigoux_templar
+virtual_types
+websearch
+wildmenu
+windows
+wm
 
 --]]
 
