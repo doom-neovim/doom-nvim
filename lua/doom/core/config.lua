@@ -78,11 +78,18 @@ config.load = function()
     for _, module_name in pairs(section_modules) do
 
       -- If the section is `user` resolves from `lua/user/modules`
-      local root_folder = section_name == "user"
-        and "user.modules"
-        or ("doom.modules.%s"):format(section_name)
+      local search_paths = {
+        ("user.modules.%s.%s"):format(section_name, module_name),
+        ("doom.modules.%s.%s"):format(section_name, module_name)
+      }
 
-      local ok, result = xpcall(require, debug.traceback, ("%s.%s"):format(root_folder, module_name))
+      local ok, result
+      for _, path in ipairs(search_paths) do
+        ok, result = xpcall(require, debug.traceback, path)
+        if ok then
+          break;
+        end
+      end
       if ok then
         doom[section_name][module_name] = result
       else

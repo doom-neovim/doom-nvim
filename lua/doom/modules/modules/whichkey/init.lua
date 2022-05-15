@@ -119,7 +119,7 @@ whichkey.configs["which-key.nvim"] = function()
   local keymaps_service = require("doom.services.keymaps")
   local whichkey_integration = get_whichkey_integration()
   local count = 0
-  for _, section_name in ipairs({ "core", "modules", "langs", "user" }) do
+  for _, section_name in ipairs({ "core", "modules", "langs" }) do
     for _, module in pairs(doom[section_name]) do
       if module.binds then
         count = count + 1

@@ -313,7 +313,6 @@ doom = {
   -- The key (`user` vs `modules` vs `langs`) cooresponds with the section in
   -- the user's modules.lua.
   core = {},
-  user = {},
   modules = {},
   langs = {},
 }

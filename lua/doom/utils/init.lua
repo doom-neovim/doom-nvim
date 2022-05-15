@@ -224,7 +224,7 @@ utils.get_all_modules_as_list = function()
       return modules_list_cache
     end
     local all_modules = {}
-    for _, field_name in ipairs({"core", "modules", "langs", "user"}) do
+    for _, field_name in ipairs({"core", "modules", "langs"}) do
       for k, module in pairs(doom[field_name]) do
         all_modules[k] = module
         all_modules[k].name = field_name

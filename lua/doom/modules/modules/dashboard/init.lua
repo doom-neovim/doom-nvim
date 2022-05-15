@@ -116,7 +116,7 @@ dashboard.autocmds = {
     "FileType",
     "dashboard",
     function()
-      require("nest").applyKeymaps({ "q", "<cmd>q<CR>", buffer = true })
+      require("doom.services.keymaps").applyKeymaps({ "q", "<cmd>q<CR>", buffer = true })
     end,
   },
   {
