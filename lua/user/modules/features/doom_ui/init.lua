@@ -225,7 +225,24 @@ local function display_all_modules_list(entry)
 	}
 end
 
-local function display_doom_settings(entry) end
+local function display_doom_settings(entry)
+	    -- print((entry:named_child(1)):type())
+	    local function e() end
+	    local function d(node)
+		local f1 = node:named_child(0)
+		local f2 = node:named_child(1)
+		local f2x = ntext(f2, c.buf_ref)
+		local f2ccnt = f2:named_child_count()
+		if f2:type() == "table_constructor" then f2x = " >>> { #"..f2ccnt.." }" end
+		return (ntext(f1, c.buf_ref) .. " -> " .. f2x)
+	    end
+	    local function o() end
+	  return {
+	    value = entry,
+	    display = function(tbl) return d(tbl.value) end,
+	    ordinal = function(tbl) return d(tbl.value) end,
+	  }
+end
 
 local function display_single_module(entry) end
 
@@ -235,9 +252,39 @@ local function display_module_packages(entry) end
 local function display_module_cmds(entry) end
 local function display_module_autocmds(entry) end
 
-local function display_binds_table(entry) end
-local function display_binds_leaf(entry) end
-local function display_binds_branch(entry) end
+local function display_binds_table(entry)
+	-- print(vim.inspect(entry))
+	  local function make_display(t)
+	    local s = t.level .. " / " .. tsq.get_node_text(t.prefix,c.buf_ref) .. " / "
+	    -- print(s)
+	    return s
+	  end
+	  return {
+	    value = entry,
+	    display = function(tbl) return make_display(tbl.value) end,
+	    ordinal = entry.prefix,
+	  }
+end
+
+local function display_binds_leaf(entry)
+	  return {
+	    value = entry,
+	    display = function(tbl)
+	      return tbl.value.key
+	    end,
+	    ordinal = entry,
+	  }
+end
+
+local function display_binds_branch(entry)
+	  return {
+	    value = entry,
+	    display = function(tbl)
+	      return tbl.value.key
+	    end,
+	    ordinal = entry,
+	  }
+end
 
 --
 -- PARSE `MODULES.LUA` AND UPDATE MODULE.
@@ -684,16 +731,7 @@ local tlegend = "["
     prompt_title = "Doom Modules Manager" .. tlegend,
     finder = require("telescope.finders").new_table({
       results = c.data,
-      entry_maker = function(entry)
-	  local function make_display(t)
-	    return t.section .." > " .. t.name
-	  end
-	  return {
-	    value = entry,
-	    display = function(tbl) return make_display(tbl.value) end,
-	    ordinal = entry.name,
-	  }
-	end,
+      entry_maker = display_all_modules_list,
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(_, map)
@@ -822,24 +860,7 @@ conf_ui.doom_settings_picker = function(c)
     prompt_title = "create user module",
     finder = require("telescope.finders").new_table({
       results = c.settings_table,
-      entry_maker = function(entry)
-	    -- print((entry:named_child(1)):type())
-	    local function e() end
-	    local function d(node)
-		local f1 = node:named_child(0)
-		local f2 = node:named_child(1)
-		local f2x = ntext(f2, c.buf_ref)
-		local f2ccnt = f2:named_child_count()
-		if f2:type() == "table_constructor" then f2x = " >>> { #"..f2ccnt.." }" end
-		return (ntext(f1, c.buf_ref) .. " -> " .. f2x)
-	    end
-	    local function o() end
-	  return {
-	    value = entry,
-	    display = function(tbl) return d(tbl.value) end,
-	    ordinal = function(tbl) return d(tbl.value) end,
-	  }
-	end,
+      entry_maker = display_doom_settings,
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
@@ -922,6 +943,7 @@ conf_ui.doom_module_packages_picker = function(config)
     prompt_title = "create user module",
     finder = require("telescope.finders").new_table({
       results = config.entries,
+      entry_maker = display_module_packages,
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(_, map)
@@ -1068,19 +1090,7 @@ conf_ui.doom_binds_table_picker = function(c)
     title = c.opts.title,
     finder = finders.new_table({
       results = c.data,
-      entry_maker = function(entry)
-	-- print(vim.inspect(entry))
-	  local function make_display(t)
-	    local s = t.level .. " / " .. tsq.get_node_text(t.prefix,c.buf_ref) .. " / "
-	    -- print(s)
-	    return s
-	  end
-	  return {
-	    value = entry,
-	    display = function(tbl) return make_display(tbl.value) end,
-	    ordinal = entry.prefix,
-	  }
-	end,
+      entry_maker = display_binds_table,
     }),
     sorter = opts.sorter or conf.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
@@ -1159,15 +1169,7 @@ print(vim.inspect(pc))
     title = opts.title,
     finder = finders.new_table({
       results = prep_results,
-      entry_maker = function(entry)
-	  return {
-	    value = entry,
-	    display = function(tbl)
-	      return tbl.value.key
-	    end,
-	    ordinal = entry,
-	  }
-	end, -- child of results
+      entry_maker = display_binds_leaf, -- child of results
     }),
     sorter = opts.sorter or conf.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
@@ -1237,15 +1239,7 @@ conf_ui.doom_binds_branch_picker = function(c)
     title = opts.title,
     finder = finders.new_table({
       results = prep_results,
-      entry_maker = function(entry)
-	  return {
-	    value = entry,
-	    display = function(tbl)
-	      return tbl.value.key
-	    end,
-	    ordinal = entry,
-	  }
-	end, -- child of results
+      entry_maker = display_binds_branch, -- child of results
     }),
     sorter = opts.sorter or conf.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
