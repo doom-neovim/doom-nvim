@@ -42,7 +42,8 @@ return {
 
     -- Tools
     -- "dap",             -- Debug code through neovim
-    "explorer",           -- An enhanced filetree explorer
+    -- "explorer",           -- An enhanced filetree explorer
+    "netrw",
     -- "firenvim",        -- Embed neovim in your browser
     -- "lazygit",         -- Lazy git integration
     -- "neogit",          -- A git client for neovim
@@ -60,11 +61,12 @@ return {
     -- "bash",
 
     -- Web
-    -- "javascript",
-    -- "typescript",
-    -- "css",
-    -- "vue",
-    -- "tailwindcss",
+    "javascript",
+    "typescript",
+    "css",
+    "vue",
+    "tailwindcss",
+    "glsl",
 
     -- Compiled
     -- "rust",
