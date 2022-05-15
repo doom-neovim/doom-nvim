@@ -282,4 +282,71 @@ utils.iter_string_at = function(str, sep)
   return string.gmatch(str, "([^" .. sep .. "]+)")
 end
 
+utils.get_modules_flat_with_meta_data = function()
+  local config_path = vim.fn.stdpath("config")
+
+  local function glob_modules(cat)
+    if cat ~= "doom" or cat ~= "user" then return end
+    local glob = config_path .. "/lua/"..cat.."/modules/*/*/"
+    return vim.split(vim.fn.glob(glob), "\n")
+  end
+  local function get_all_module_paths()
+    local glob_doom_modules = glob_modules("doom")
+    local glob_user_modules = glob_modules("user")
+    local all = glob_doom_modules
+    for _, p in ipairs(glob_user_modules) do
+      table.insert(all, p)
+    end
+    return all
+  end
+  local all_m = get_all_module_paths()
+
+  local prep_all_m = { doom = {}, user = {} }
+  for _, p in ipairs(all_m) do
+    local m_origin, m_section, m_name =  p:match("/([_%w]-)/modules/([_%w]-)/([_%w]-)/$") -- capture only dirname
+    if prep_all_m[m_origin][m_section] == nil then
+      prep_all_m[m_origin][m_section] = {}
+    end
+    prep_all_m[m_origin][m_section][m_name] = {
+      failed = false,
+      enabled = false,
+      name = m_name,
+      section = m_section,
+      origin = m_origin,
+      path_real = p
+    }
+  end
+
+  local enabled_modules = require("doom.core.modules").enabled_modules
+  local all_modules = vim.tbl_deep_extend("keep", {
+    core = {
+      'doom',
+      'nest',
+      'treesitter',
+      'reloader',
+    }
+  },enabled_modules)
+
+  for section_name, section_modules in pairs(all_modules) do
+    for _, module_name in pairs(section_modules) do
+      local search_paths = {
+        ("user.modules.%s.%s"):format(section_name, module_name),
+        ("doom.modules.%s.%s"):format(section_name, module_name)
+      }
+      local ok, result, origin
+      for _, path in ipairs(search_paths) do
+        ok, result = xpcall(require, debug.traceback, path)
+        if ok then origin = path:sub(1,4) break; end
+      end
+      prep_all_m[origin][section_name][module_name] = vim.tbl_extend("keep",
+        doom[section_name][module_name],
+        prep_all_m[origin][section_name][module_name]
+      )
+    end
+  end
+
+ return prep_all_m
+
+end
+
 return utils

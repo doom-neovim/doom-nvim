@@ -63,7 +63,7 @@ config.load = function()
   vim.opt.foldenable = true
   vim.opt.foldtext = require("doom.core.functions").sugar_folds()
 
-  -- Combine enabled modules (`modules.lua`) with core modules.
+ -- Combine enabled modules (`modules.lua`) with core modules.
   local enabled_modules = require("doom.core.modules").enabled_modules
   local all_modules = vim.tbl_deep_extend('keep', {
     core = {
@@ -74,48 +74,9 @@ config.load = function()
     }
   },enabled_modules)
 
-  local config_path = vim.fn.stdpath("config")
-
-  local function glob_modules(cat)
-    local glob = config_path .. "/lua/"..cat.."/modules/*/*/"
-    return vim.split(vim.fn.glob(glob), "\n")
-  end
-
-  local function get_all_module_paths()
-    local glob_doom_modules = glob_modules("doom")
-    local glob_user_modules = glob_modules("user")
-
-    local all = glob_doom_modules
-
-    for _, p in ipairs(glob_user_modules) do
-      table.insert(all, p)
-    end
-    return all
-  end
-
-  local all_m = get_all_module_paths()
-
-  -- A. first create all of the module skeletons.
-  local prep_all_m = { doom = {}, user = {} }
-  for _, p in ipairs(all_m) do
-    local m_origin, m_section, m_name =  p:match("/([_%w]-)/modules/([_%w]-)/([_%w]-)/$") -- capture only dirname
-    if prep_all_m[m_origin][m_section] == nil then
-      prep_all_m[m_origin][m_section] = {}
-    end
-    prep_all_m[m_origin][m_section][m_name] = {
-      failed = false,
-      enabled = false,
-      name = m_name,
-      section = m_section,
-      origin = m_origin,
-      path_real = p
-    }
-  end
-
-  -- B. Iterate over each enabled module and extend the module skeleton.
+  -- Iterate over each module and save it to the doom global object
   for section_name, section_modules in pairs(all_modules) do
     for _, module_name in pairs(section_modules) do
-      local module, origin
 
       -- If the section is `user` resolves from `lua/user/modules`
       local search_paths = {
@@ -127,34 +88,22 @@ config.load = function()
       for _, path in ipairs(search_paths) do
         ok, result = xpcall(require, debug.traceback, path)
         if ok then
-          origin = path:sub(1,4)
           break;
         end
       end
-
-      -- get prepared module skeleton
-      -- if prep_all_m[origin][section_name][module_name] ~= nil then
-        module = prep_all_m[origin][section_name][module_name]
-      -- end
-
-      -- extend the module
       if ok then
-        module = vim.tbl_extend("force", module, result)
+        doom[section_name][module_name] = result
       else
-        module["failed"] = true
-        local msg = string.format(
-          "There was an error loading module '%s.%s'. Traceback:\n%s",
-          section_name,
-          module_name,
-          result
+        local log = require("doom.utils.logging")
+        log.error(
+          string.format(
+            "There was an error loading module '%s.%s'. Traceback:\n%s",
+            section_name,
+            module_name,
+            result
+          )
         )
-        module["msg"] = msg
-        require("doom.utils.logging").error(msg)
       end
-
-      -- print(vim.inspect(module))
-
-      doom[section_name][module_name] = module
     end
   end
 
