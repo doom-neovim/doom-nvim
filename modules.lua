@@ -92,7 +92,7 @@ return {
     -- "dim_unused",
     -- "docker",
     "docs",
-    -- "doom_config_ui",
+    -- "doom_ui",
     -- "doom_module_formatting",
     -- "doom_queries_manager",
     -- "doom_user_settings_ui",
