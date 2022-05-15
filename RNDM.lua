@@ -180,10 +180,8 @@ TODO: DEKLARERA -> TRANSFER MONEY?
 
 - debug luasnip
 
-now i should refactor all of my entry_makers into an entry makers file so that it is all refactored and moved away in a
-manner that allows for seeing patterns and what can happen if I do this shit more.
-creating good custom entry makers also allow for making things much clearer and separated, so tonight I am going to do this
-and start moving shit over there.
+and that don't give the slightest of the fuck about my person. he just doesn't share the same thoughts about me so why should i even
+try to have a discussion with them.
 
 --]]
 
