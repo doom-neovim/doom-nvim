@@ -3,6 +3,8 @@ local utils = require("doom.utils")
 local fs = require("doom.utils.fs")
 local system = require("doom.core.system")
 
+local pu = require("user.modules.features.doom_conf_ui.utils")
+
 -- USER
 -- local user_ts_utils = require("user.utils.ts")
 -- local user_utils_ui = require("user.utils.ui")
@@ -71,75 +73,6 @@ conf_ui.settings = {
   },
 }
 
--- TODO:
---
--- 	- copy in module manager, and packages picker into this one.
---
--- 	1. spawn_picker_on_doom_data_object()
--- 	2. call the correct picker based on c.data.category.
--- 	3. so that the pickers only prepare the picking of the current data
---
---
---
--- HELP:
---
---  	- module actions
---  		I someone to give me feedback so that we write to files correctly.
---  		async/sync/libuv/..??
---  		I am just unsure if I am writing and saving the files
---  		correctly. I believe most things in this module can
---  		be done in more correctly or smoothly. this is just
---  		a proof of concept atm.
---
---  	- i need feedback on everything.
---  		am I inventing any wheels??
---  		i don't understand how to use plenary sometimes so
---  		it would be nice to convert as much as possible to use
---  		plenry plugin.
---
---  	- I need help with picker esthetics and logic.
---  		need to make good entry_makers that give you good
---  		contextual awareness.
---
---  	- connect binds maker with luasnip so that you can
---  		create new mapping and enter luasnippet, and
---  		cycle through good choice nodes.
---
---  	- create nui popup inputs so that you don't have to enter a file
---  		that you want to change. just open a cool popup with syntax
---  		and error sandboxing and stuff? to make the config more
---  		error proof??
---
---  	- move stuff into util functions
--- 		i put everything in the same module so that we can discuss
--- 		what could and should be refactored into utils, core or
--- 		whatever.
---
--- 	- help with creating more commands for creating and
--- 		adding new module compenents
--- 		eg. what would be the fastest way of going from
--- 		thought to adding a new leader binding for module X..
---
--- 	- should we use something other than treesitter?
--- 		i started using treesitter because I wanted to learn
--- 		i don't know if treesitter is the best for this usecase.
---
---
--- 	- go back / history
--- 		i am not getting the go back (<C-z>) command
--- 		to work for navigating back in the picker history.
---
--- 	- improved legend
--- 		so that you are always aware of the possible mappings attached
--- 		to each picker.
--- 		IDEA: it would be cool if we could create a fourth window
--- 		that can be positionned under the preview window where we
--- 		show a tight legend of all possible binds.
--- 		so that you have essentially 4 floating windows per picker
--- 		input | entries | preview | legend
--- 		this could even be made into a PR for telescope later if it
--- 		becomes good so that one can display mappings always.
-
 --
 -- CONSTS
 --
@@ -159,147 +92,48 @@ local bind_params = {
 
 local function ntext(n,b) return tsq.get_node_text(n, b) end
 
+-- system.sep!!! -> util?
 conf_ui.get_query_file = function(lang, query_name)
   return fs.read_file(string.format("%s/queries/%s/%s.scm", system.doom_root, lang, query_name))
 end
 
-
-conf_ui.run_query_on_buf = function(lang, query_name, buf)
-  print("buf: ", buf)
-  local query_str = conf_ui.get_query_file(lang, query_name)
-  local language_tree = vim.treesitter.get_parser(buf, lang)
+local function ts_get_doom_captures(buf, doom_capture_name)
+  local t_matched_captures = {}
+  local query_str = conf_ui.get_query_file("lua", "doom_conf_ui")
+  local language_tree = vim.treesitter.get_parser(buf, "lua")
   local syntax_tree = language_tree:parse()
   local root = syntax_tree[1]:root()
-  local q = vim.treesitter.parse_query(lang, query_str)
-  return buf, root, q
-end
+  local qp = vim.treesitter.parse_query("lua", query_str)
 
-
--- if set handle to path or current buffer.
-local function get_buf_handle(path)
-  local buf
-  if path ~= nil then
-    -- print("LOAD PATH INTO BUF:", path)
-    buf = vim.uri_to_bufnr(vim.uri_from_fname(path))
-  else
-    buf = vim.api.nvim_get_current_buf()
-  end
-  return buf
-end
-
-local function check_if_module_name_exists(c, new_name)
-  print(vim.inspect(c.selected_module))
-  local already_exists = false
-  for _, v in pairs(c.all_modules_data) do
-    if v.section == c.selected_module.section and v.name == new_name then
-	print("module already exists!!!")
-      already_exists = true
-    end
-  end
-  return already_exists
-end
-
-
--- RENAME: ts_get_module_components_by_name(buf, mc_name)
---
--- so that you can pass either `binds` or `packages`, or whatever here.
---
---
--- 	definition.binds_table -> rename: module.binds_table
---
--- 	root.settings_table
-local function module_get_component_by_name(buf, mc_name)
-  local t_matched_captures = {}
-  local _, root, qp = conf_ui.run_query_on_buf("lua", "doom_conf_ui", buf)
-  for id, node, metadata in qp:iter_captures(root, buf, root:start(), root:end_()) do
-    local name = qp.captures[id] -- name of the capture in the query
-	if name == mc_name then
+  for id, node, _ in qp:iter_captures(root, buf, root:start(), root:end_()) do
+    local name = qp.captures[id]
+	if name == doom_capture_name then
       table.insert(t_matched_captures, node)
-    -- local type = node:type() -- type of the captured node
-    -- local row1, col1, row2, col2 = node:range() -- range of the capture
-    -- local nt = tsq.get_node_text(node, buf)
-    -- print(name, type, nt, row1+1, col1+1)
 	end
    end
    return t_matched_captures
 end
 
------------------------------------------------------------------------------
------------------------------------------------------------------------------
+-- filter the list of all modules
+conf_ui.filter_modules = function(filter)
+  local filtered = {}
+  -- if has each filter then return modules
 
--- TODO: redo this with plenary.path
-conf_ui.path_get_tail = function(p)
-  local tail = vim.tbl_map(function(s)
-    return s:match("/([_%w]-)$") -- capture only dirname
-  end, p)
-  return tail
+  -- -- with the new module extension util this will be much easier
+  -- local function check_if_module_name_exists(c, new_name)
+  --   print(vim.inspect(c.selected_module))
+  --   local already_exists = false
+  --   for _, v in pairs(c.all_modules_data) do
+  --     if v.section == c.selected_module.section and v.name == new_name then
+  -- 	print("module already exists!!!")
+  --       already_exists = true
+  --     end
+  --   end
+  --   return already_exists
+  -- end
+
+  return filtered
 end
-
-conf_ui.single_path_tail = function(s)
-  -- local tail = vim.tbl_map(function(s)
-    return s:match("/([_%w]-)$") -- capture only dirname
-  -- end, p)
-  -- return tail
-end
-
-
-conf_ui.get_dir_files_or_both_in_path_location = function(path)
-  local scan_dir = require("plenary.scandir").scan_dir
-  local scan_dir_opts = { search_pattern = ".", depth = 1, only_dirs = true }
-  local t_current_module_paths = scan_dir(path, scan_dir_opts)
-  return t_current_module_paths
-end
-
-
-conf_ui.get_formated_path = function(path_components)
-  local concat = table.concat(path_components, system.sep)
-  return string.format("%s%s%s", system.doom_root, system.sep, concat)
-end
-
-
-conf_ui.get_modules_path = function(section_name)
-  local pc = {}
-  if section_name == "core" then
-    pc = { "lua", "doom", "modules", "core" }
-  elseif section_name == "features" then
-    pc = { "lua", "doom", "modules", "features" }
-  elseif section_name == "langs" then
-    pc = { "lua", "doom", "modules", "langs" }
-  elseif section_name == "user" then
-    pc = { "lua", "user", "modules" }
-  end
-  local fp = conf_ui.get_formated_path(pc)
-  -- print(fp)
-  return fp
-end
-
-
-conf_ui.get_module_meta_data = function()
-  local t = {}
-
-  local sections = { "core", "features", "langs", "user" }
-
-  for _, sec in pairs(sections) do
-    local mp = conf_ui.get_modules_path(sec)
-    local t_paths = conf_ui.get_dir_files_or_both_in_path_location(mp)
-    vim.inspect(t_paths)
-    for _, p in pairs(t_paths) do
-      local tail = conf_ui.single_path_tail(p)
-      table.insert(t, {
-        path = p,
-        name = tail,
-        section = sec,
-      })
-    end
-  end
-
-  return t
-end
-
-
-
------------------------------------------------------------------------------
------------------------------------------------------------------------------
 
 --
 -- NUI
@@ -371,12 +205,6 @@ local function nui_menu(title, alternatives, callback)
   -- close menu when cursor leaves buffer
   menu:on(event.BufLeave, menu.menu_props.on_close, { once = true })
 end
-
-
------------------------------------------------------------------------------
------------------------------------------------------------------------------
-
-
 
 --
 -- MODULE ACTIONS
@@ -649,12 +477,20 @@ local function picker_get_state(prompt_bufnr)
   return fuzzy, line
 end
 
--- if data is a eg. a leaf table we need to wrap
--- all fields in a table because telescope only
--- uses subtables for results. no actual key/val pairs!
-local function tableify_data_for_results()
+-- -- if data is a eg. a leaf table we need to wrap
+-- -- all fields in a table because telescope only
+-- -- uses subtables for results. no actual key/val pairs!
+-- local function tableify_data_for_results()
+-- end
+
+local function flatten_regular_binds_tree(nest_tree)
+
 end
 
+local function flatten_ts_nest_tree(ts_nest_table)
+  local ts_nest_flat = {}
+  return ts_nest_flat
+end
 
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
@@ -669,7 +505,7 @@ end
 -- PICKER -> DOOM MODULES
 --
 
-conf_ui.doom_modules = function(c)
+conf_ui.doom_modules_picker = function(c)
 
 
   local function mappings_prepare(prompt_bufnr, c)
@@ -712,7 +548,7 @@ conf_ui.doom_modules = function(c)
 		c["selected_module"] = fuzzy.value
 		-- print("xxxxx")
 		-- print(vim.inspect(c.selected_module))
-		conf_ui.doom_binds_table(c)
+		conf_ui.doom_binds_table_picker(c)
 	      end}
 	}
 
@@ -729,8 +565,7 @@ local tlegend = "["
 
   if c == nil then
     c = {
-      data = conf_ui.get_module_meta_data(),
-      all_modules_data = conf_ui.get_module_meta_data(),
+      all_modules_flattened = utils.get_modules_flat_with_meta_data(),
       buf_ref = nil,
       history = {},
       opts = {
@@ -777,17 +612,17 @@ end
 -- of all available categories that you can enter and browse.
 --
 
-conf_ui.doom_picker_main_menu = function(c)
+conf_ui.doom_main_menu_picker = function(c)
   local function mappings_prepare(prompt_bufnr)
-	local fuzzy, line = picker_get_state(prompt_bufnr)
-	require("telescope.actions").close(prompt_bufnr)
-	return fuzzy, line
+	  local fuzzy, line = picker_get_state(prompt_bufnr)
+	  require("telescope.actions").close(prompt_bufnr)
+	  return fuzzy, line
   end
   local doom_menu_title = "DOOM > MAIN MENU"
   local doom_menu_items = {
 		{ "open config", function() vim.cmd(("e %s"):format(require("doom.core.config").source)) end },
-  		{ "edit settings",function() conf_ui.doom_picker_root_settings() end },
-  		{ "browse modules",  function() conf_ui.doom_modules() end },
+  		{ "edit settings",function() conf_ui.doom_settings_picker() end },
+  		{ "browse modules",  function() conf_ui.doom_modules_picker() end },
   		{ "binds    (todo..)",function() end },
   		{ "autocmds (todo..)", function() end },
   		{ "cmds     (todo..)", function() end },
@@ -795,20 +630,7 @@ conf_ui.doom_picker_main_menu = function(c)
   		{ "jobs 	  (todo..)",function() end },
   }
 
-  -- get_dropdown | get_cursor | get_ivy
   local doom_menu_theme = require("telescope.themes").get_dropdown()
-
- --  local t_mappings = {
-	-- { "<cr>:EDIT", "i", "<CR>", function(prompt_bufnr)
- --        	local c, fuzzy, line = mappings_prepare(prompt_bufnr, c)
-	-- 	c["selected_module"] = fuzzy.value
-	-- 	m_edit(c) end},
-	-- }
-
-  -- TODO: connect modules browser
-	--
-	-- use the same mappings loop to create good
-	-- stuff
 
   opts = opts or require("telescope.themes").get_ivy()
 
@@ -852,15 +674,15 @@ end
 --
 -- rename this to a generic `table_picker`,
 -- 	so that any table can be recursively pickyfied.
-conf_ui.doom_picker_root_settings = function(c)
+conf_ui.doom_settings_picker = function(c)
 
   if c == nil then c = {} end
   if c.settings_table == nil then
 	c["settings_table"] = {}
 
 	c["picker_depth"] = 1
-        c["buf_ref"] = get_buf_handle(utils.find_config("settings.lua"))
-	local ts_settings_table = module_get_component_by_name(c.buf_ref, "doom_root.settings_table")
+        c["buf_ref"] = utils.get_buf_handle(utils.find_config("settings.lua"))
+	local ts_settings_table = ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
 	local child = ts_settings_table[1]:named_child(0)
 	local gc2 = child:named_child(1)
 	-- filter out comments.
@@ -933,7 +755,7 @@ conf_ui.doom_picker_root_settings = function(c)
 		  f2x = " >>> { ... }"
 		  c.picker_depth = c.picker_depth + 1
 		  c.settings_table = f2
-		  conf_ui.doom_picker_root_settings(c)
+		  conf_ui.doom_settings_picker(c)
 	  else
 		  print(ntext(f1, c.buf_ref) .. " -> " .. f2x)
 	   	  local sr,sc,er,ec = f1:range()
@@ -956,14 +778,14 @@ end
 
 -- use same kind of table picker. this is a good opportunity
 -- to refactor the table settings picker
-conf_ui.doom_picker_module_settings = function(c)
+conf_ui.doom_module_settings_picker = function(c)
  --  if c == nil then c = {} end
  --  if c.settings_table == nil then
 	-- c["settings_table"] = {}
 	--
 	-- c["picker_depth"] = 1
- --        c["buf_ref"] = get_buf_handle(utils.find_config("settings.lua"))
-	-- local ts_settings_table = module_get_component_by_name(c.buf_ref, "doom_root.settings_table")
+ --        c["buf_ref"] = utils.get_buf_handle(utils.find_config("settings.lua"))
+	-- local ts_settings_table = ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
 	-- local child = ts_settings_table[1]:named_child(0)
 	-- local gc2 = child:named_child(1)
 	-- -- filter out comments.
@@ -986,7 +808,7 @@ end
 -- PICKER -> MODULE PACKAGES (specs and config/setups)
 --
 
-conf_ui.doom_module_packages = function(config)
+conf_ui.doom_module_packages_picker = function(config)
   local function pass_entry_to_callback(prompt_buf)
     local state = require("telescope.actions.state")
     local fuzzy_selection = state.get_selected_entry(prompt_bufnr)
@@ -1013,14 +835,14 @@ end
 -- PICKER -> MODULE CMDS
 --
 
-conf_ui.doom_picker_module_cmds = function(c)
+conf_ui.doom_module_cmd_picker = function(c)
  --  if c == nil then c = {} end
  --  if c.settings_table == nil then
 	-- c["settings_table"] = {}
 	--
 	-- c["picker_depth"] = 1
- --        c["buf_ref"] = get_buf_handle(utils.find_config("settings.lua"))
-	-- local ts_settings_table = module_get_component_by_name(c.buf_ref, "doom_root.settings_table")
+ --        c["buf_ref"] = utils.get_buf_handle(utils.find_config("settings.lua"))
+	-- local ts_settings_table = ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
 	-- local child = ts_settings_table[1]:named_child(0)
 	-- local gc2 = child:named_child(1)
 	-- -- filter out comments.
@@ -1041,14 +863,14 @@ end
 -- PICKER -> MODULE AUTOCMDS
 --
 
-conf_ui.doom_picker_module_autocmds = function(c)
+conf_ui.doom_module_autocmds_picker = function(c)
  --  if c == nil then c = {} end
  --  if c.settings_table == nil then
 	-- c["settings_table"] = {}
 	--
 	-- c["picker_depth"] = 1
- --        c["buf_ref"] = get_buf_handle(utils.find_config("settings.lua"))
-	-- local ts_settings_table = module_get_component_by_name(c.buf_ref, "doom_root.settings_table")
+ --        c["buf_ref"] = utils.get_buf_handle(utils.find_config("settings.lua"))
+	-- local ts_settings_table = ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
 	-- local child = ts_settings_table[1]:named_child(0)
 	-- local gc2 = child:named_child(1)
 	-- -- filter out comments.
@@ -1071,7 +893,7 @@ end
 
 -- i also need to merge all tables that I can find in a module into
 -- this shouldn't be too difficult.
--- one big table so that i can pass the data to `doom_binds_table`
+-- one big table so that i can pass the data to `doom_binds_table_picker`
 --
 -- 1. get all binds from the gloval doom table
 -- 2. make picker, attach module path to each mapping.
@@ -1098,7 +920,7 @@ conf_ui.doom_picker_all_autocmds = function(c) end
 --
 
 -- expects c.data to be array of (branch|leaf) mapping nest objects
-conf_ui.doom_binds_table = function(c)
+conf_ui.doom_binds_table_picker = function(c)
 
 
   -- first picker in sequence
@@ -1125,13 +947,13 @@ conf_ui.doom_binds_table = function(c)
     if c.selected_module ~= nil then
 	p = c.selected_module.path .. "/init.lua"
     end
-    c.buf_ref = get_buf_handle(p)
+    c.buf_ref = utils.get_buf_handle(p)
   end
 
     -- print(vim.inspect(c))
 
   if c.data == nil then
-    local t_nest_table_nodes = module_get_component_by_name(c.buf_ref, "doom_module.binds_table")
+    local t_nest_table_nodes = ts_get_doom_captures(c.buf_ref, "doom_module.binds_table")
     local nestdata =  conf_ui.parse_nest_tables_meta_data(c.buf_ref, t_nest_table_nodes[1])
 
     -- print("num nest: ", #t_nest_table_nodes, c.selected_module.path)
@@ -1172,15 +994,15 @@ conf_ui.doom_binds_table = function(c)
 	  -- print("######",vim.inspect(c))
 
 	  table.insert(new_c.history, {
-		prev_picker = conf_ui.doom_binds_table,
+		prev_picker = conf_ui.doom_binds_table_picker,
 
 	  })
 
 	  -- print(vim.inspect(fuzzy.value))
 	  if c.data.doom_category == "binds_branch" then
-	    conf_ui.doom_binds_branch(new_c)
+	    conf_ui.doom_binds_branch_picker(new_c)
 	  elseif c.data.doom_category == "binds_leaf" then
-	    conf_ui.doom_binds_leaf(new_c)
+	    conf_ui.doom_binds_leaf_picker(new_c)
 	  else
 	    -- print("stop")
 	  end
@@ -1209,7 +1031,7 @@ end
 -- PICKER -> MAPPINGS LEAF ------
 --
 
-conf_ui.doom_binds_leaf = function(c)
+conf_ui.doom_binds_leaf_picker = function(c)
 
 
   if c == nil then
@@ -1257,7 +1079,7 @@ print(vim.inspect(pc))
 	  local new_c = c
 
 	  table.insert(new_c.history, {
-		prev_picker = conf_ui.doom_binds_leaf,
+		prev_picker = conf_ui.doom_binds_leaf_picker,
 		prev_config = c
 	  })
 	  -- pass data including path and ts node
@@ -1294,7 +1116,7 @@ end
 -- PICKER -> MAPPINGS BRANCH
 --
 
-conf_ui.doom_binds_branch = function(c)
+conf_ui.doom_binds_branch_picker = function(c)
 
   if c == nil then
   end
@@ -1334,10 +1156,10 @@ conf_ui.doom_binds_branch = function(c)
  		local new_c = c
 	  	new_c.data = fuzzy.value.value[1]
 		  table.insert(new_c.history, {
-			prev_picker = conf_ui.doom_binds_branch,
+			prev_picker = conf_ui.doom_binds_branch_picker,
 			prev_config = c
 		  })
-	  	conf_ui.doom_binds_table(new_c)
+	  	conf_ui.doom_binds_table_picker(new_c)
 	  else
 	  	local sr,sc,er,ec = fuzzy.value.value:range()
 	  	vim.fn.cursor(er+1,ec)
@@ -1369,10 +1191,10 @@ end
 -----------------------------------------------------------------------------
 
 conf_ui.cmds = {
-	{ "DoomUIMain", 		function() conf_ui.doom_picker_main_menu() end, },
-	{ "DoomUISettings", 		function() conf_ui.doom_picker_root_settings() end, },
-	{ "DoomUIModules", 		function() conf_ui.doom_modules() end, },
-	{ "DoomUIModuleBinds", 		function() conf_ui.doom_binds_table() end, },
+	{ "DoomUIMain", 		function() conf_ui.doom_main_menu_picker() end, },
+	{ "DoomUISettings", 		function() conf_ui.doom_settings_picker() end, },
+	{ "DoomUIModules", 		function() conf_ui.doom_modules_picker() end, },
+	{ "DoomUIModuleBinds", 		function() conf_ui.doom_binds_table_picker() end, },
 }
 
 conf_ui.binds = {
