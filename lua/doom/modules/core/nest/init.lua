@@ -138,7 +138,7 @@ mapper.configs["nvim-mapper"] = function()
   local mapper_integration = get_mapper_integration()
 
   local count = 0
-  for _, section_name in ipairs({ "core", "modules", "langs" }) do
+  for section_name, _ in pairs(doom.modules) do
     for _, module in pairs(doom[section_name]) do
       if module.binds then
         count = count + 1

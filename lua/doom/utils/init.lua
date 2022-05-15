@@ -224,10 +224,10 @@ utils.get_all_modules_as_list = function()
       return modules_list_cache
     end
     local all_modules = {}
-    for _, field_name in ipairs({"core", "modules", "langs"}) do
-      for k, module in pairs(doom[field_name]) do
+    for section_name, _ in pairs(doom.modules) do
+      for k, module in pairs(doom[section_name]) do
         all_modules[k] = module
-        all_modules[k].name = field_name
+        all_modules[k].name = section_name
       end
     end
     modules_list_cache = table.sort(all_modules, function (a, b)

@@ -312,7 +312,13 @@ doom = {
   -- The entire data structure will be stored in modules[module_name] = {}
   -- The key (`user` vs `modules` vs `langs`) cooresponds with the section in
   -- the user's modules.lua.
-  core = {},
-  modules = {},
-  langs = {},
+  modules = {
+    core = {},
+    features = {},
+    langs = {},
+  }
 }
+-- Maintain backwards compatibility + provide a shorthand way to access modules
+doom.core = doom.modules.core
+doom.features = doom.modules.features
+doom.langs = doom.modules.langs
