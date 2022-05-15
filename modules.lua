@@ -32,7 +32,7 @@ return {
     "tabline",            -- Tab bar buffer switcher
     "dashboard",          -- A pretty dashboard upon opening
     "trouble",         -- A pretty diagnostic viewer
-    "statusline",         -- A pretty status line at the bottom of the buffer
+    -- "statusline",         -- A pretty status line at the bottom of the buffer
     "minimap",         -- Shows current position in document
     "terminal",        -- Integrated terminal in neovim
     "symbols",         -- Navigate between code symbols using telescope
@@ -46,39 +46,16 @@ return {
     "firenvim",        -- Embed neovim in your browser
     "lazygit",         -- Lazy git integration
     -- "neogit",          -- A git client for neovim
-    "neorg",              -- Organise your life
-    "projects",           -- Quickly switch between projects
+    -- "neorg",              -- Organise your life
+    --"projects",           -- Quickly switch between projects
     "superman",        -- Read unix man pages in neovim
     -- "suda",            -- Save using sudo when necessary
     "telescope",          -- Fuzzy searcher to find files, grep code and more
     "whichkey",           -- An interactive sheet
-  },
-  langs = {
-    -- Scripts
-    "lua",
-    "python",
-    "bash",
 
-    -- Web
-    "javascript",
-    "typescript",
-    "css",
-    "vue",
-    "tailwindcss",
 
-    -- Compiled
-    "rust",
-    "cc",
 
-    -- JIT
-    -- "c_sharp",
-    -- "kotlin",
-    -- "java",
-
-    "config",          -- JSON, YAML, TOML
-    "markdown",
-  },
-  user = {
+    -- Molleweide
     "ai",
     "architext",
     -- "async_jobs",
@@ -258,7 +235,32 @@ return {
     -- "wildmenu",
     "windows",
     "wm",
-  }
+  },
+  langs = {
+    -- Scripts
+    "lua",
+    "python",
+    "bash",
+
+    -- Web
+    "javascript",
+    "typescript",
+    "css",
+    "vue",
+    "tailwindcss",
+
+    -- Compiled
+    "rust",
+    "cc",
+
+    -- JIT
+    -- "c_sharp",
+    -- "kotlin",
+    -- "java",
+
+    "config",          -- JSON, YAML, TOML
+    "markdown",
+  },
 }
 
 -- vim: sw=2 sts=2 ts=2 fdm=indent expandtab

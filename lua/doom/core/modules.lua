@@ -105,6 +105,7 @@ modules.load_modules = function()
     for section_name, _ in pairs(doom.modules) do
     for module_name, module in pairs(doom[section_name]) do
       -- Import dependencies with packer from module.packages
+      -- print(module_name, module)
       if module.packages then
         for dependency_name, packer_spec in pairs(module.packages) do
           -- Set packer_spec to configure function
