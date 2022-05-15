@@ -44,7 +44,7 @@ dap.packages = {
   ["nvim-dap-ui"] = {
     "rcarriga/nvim-dap-ui",
     commit = "3eec5258c620e2b7b688676be8fb2e9a8ae436b2",
-    after = { "nvim-dap", "nest.nvim" },
+    after = { "nvim-dap" },
   },
 }
 
