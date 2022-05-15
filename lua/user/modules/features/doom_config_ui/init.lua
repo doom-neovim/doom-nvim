@@ -1286,10 +1286,20 @@ conf_ui.binds = {
     name = "+prefix",
     {
       {
-        "D",
-        name = "+doom",
+        "n",
+        name = "+nnn",
         {
-          { "F", [[ :DoomPickerMain<cr> ]], name = "Doom Picker", options = { silent = false }, },
+          { "l", [[ :DoomPickerMain<cr> ]], name = "main menu", options = { silent = false }, },
+          { "s", [[ :DoomPickerSettings<cr> ]], name = "settings", options = { silent = false }, },
+          { "d", [[ :DoomPickerModules<cr> ]], name = "all modules", options = { silent = false }, },
+
+          { "S", [[ :DoomPickerModuleSettings<cr> ]], name = "m settings", options = { silent = false }, },
+          { "p", [[ :DoomPickerModulePackages<cr> ]], name = "m pgks", options = { silent = false }, },
+          { "c", [[ :DoomPickerModuleCmds<cr> ]], name = "m cmds", options = { silent = false }, },
+          { "a", [[ :DoomPickerModuleAutocmds<cr> ]], name = "m autocmds", options = { silent = false }, },
+          { "f", [[ :DoomPickerModuleBindsTable<cr> ]], name = "m binds table", options = { silent = false }, },
+          { "b", [[ :DoomPickerModuleBindsBranch<cr> ]], name = "m binds branch", options = { silent = false }, },
+          { "w", [[ :DoomPickerModuleBindsLeaf<cr> ]], name = "m binds leaf", options = { silent = false }, },
         },
       },
     },
