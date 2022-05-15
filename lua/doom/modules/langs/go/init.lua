@@ -15,7 +15,7 @@ go.autocmds = {
       require("nvim-treesitter.install").ensure_installed("go")
 
       -- Setup null-ls
-      if doom.modules.linter then
+      if doom.features.linter then
         local null_ls = require("null-ls")
 
         langs_utils.use_null_ls_source({
