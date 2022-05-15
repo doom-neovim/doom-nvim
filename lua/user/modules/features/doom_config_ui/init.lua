@@ -3,6 +3,10 @@ local utils = require("doom.utils")
 local fs = require("doom.utils.fs")
 local system = require("doom.core.system")
 
+
+-- defaults. what to if you open a picker in a module, or from the menu, or from wherever. what should be
+-- displayed?
+
 local pu = require("user.modules.features.doom_conf_ui.utils")
 
 -- USER
@@ -204,6 +208,72 @@ local function nui_menu(title, alternatives, callback)
 
   -- close menu when cursor leaves buffer
   menu:on(event.BufLeave, menu.menu_props.on_close, { once = true })
+end
+
+--
+-- PARSE `MODULES.LUA` AND UPDATE MODULE.
+--
+
+local function transform_root_mod_file(m, cb)
+  local buf = load_path(buf, utils.find_config("modules.lua"))
+
+  local buf, root, qp = user_ts_utils.run_query_on_buf("lua", "doom_root_modules", buf)
+  local sm_ll = 0 -- section module last line
+  if qp ~= nil then
+    for id, node, metadata in qp:iter_captures(root, buf, root:start(), root:end_()) do
+      local cname = qp.captures[id] -- name of the capture in the query
+      local node_text = tsq.get_node_text(node, buf)
+      local p = node:parent()
+      local ps = p:prev_sibling()
+      if ps ~= nil then -- sometimes is nil, dunno why..
+        local pss = ps:prev_sibling()
+        if pss ~= nil then
+          local section_text = tsq.get_node_text(pss, buf)
+          if m.section == section_text then
+            sm_ll, _, _, _ = node:range()
+            if cb ~= nil then
+              cb(buf, node, cname, node_text)
+            end
+          end
+        end
+      end
+    end
+  end
+  -- vim.api.nvim_win_set_buf(0, buf)
+  return buf, sm_ll + 1
+end
+
+--
+-- SHELL COMMANDS
+--
+
+-- TODO: use libuv for all i/o > mv into utils/fs
+
+local function shell_mod_new(for_section, new_name)
+  local mp = user_utils_path.get_modules_path(for_section)
+  local nmp = string.format("%s%s%s", mp, system.sep, new_name)
+  local nmpi = string.format("%s%sinit.lua", nmp, system.sep)
+  local mkdir = string.format("!mkdir -p %s", nmp)
+  vim.cmd(mkdir)
+  local touch = string.format("!touch %s", nmpi)
+  vim.cmd(touch)
+  fs.write_file(nmpi, user_utils_modules.get_module_template_from_name(new_name), "w+")
+  vim.defer_fn(function()
+    vim.cmd(string.format(":e %s", nmpi))
+  end, 200)
+end
+
+local function shell_mod_rename_dir(for_section, old_dir, new_name)
+  local mp = user_utils_path.get_modules_path(for_section)
+  local nmp = string.format("%s%s%s", mp, system.sep, new_name)
+  local cmd = string.format("!mv %s %s", old_dir, nmp)
+  vim.cmd(cmd)
+end
+
+local function shell_mod_remove_dir(rm_path)
+  print("rm path:", rm_path)
+  local rm = string.format("!rm -r %s", rm_path)
+  vim.cmd(rm)
 end
 
 --
@@ -835,7 +905,7 @@ end
 -- PICKER -> MODULE CMDS
 --
 
-conf_ui.doom_module_cmd_picker = function(c)
+conf_ui.doom_module_cmds_picker = function(c)
  --  if c == nil then c = {} end
  --  if c.settings_table == nil then
 	-- c["settings_table"] = {}
@@ -1191,17 +1261,26 @@ end
 -----------------------------------------------------------------------------
 
 conf_ui.cmds = {
-	{ "DoomUIMain", 		function() conf_ui.doom_main_menu_picker() end, },
-	{ "DoomUISettings", 		function() conf_ui.doom_settings_picker() end, },
-	{ "DoomUIModules", 		function() conf_ui.doom_modules_picker() end, },
-	{ "DoomUIModuleBinds", 		function() conf_ui.doom_binds_table_picker() end, },
+	{ "DoomPickerMain", 		function() conf_ui.doom_main_menu_picker() end, },
+
+	{ "DoomPickerSettings", 		function() conf_ui.doom_settings_picker() end, },
+
+	{ "DoomPickerModules", 		function() conf_ui.doom_modules_picker() end, },
+
+	{ "DoomPickerModuleSettings", 		function() conf_ui.doom_module_settings_picker() end, },
+	{ "DoomPickerModulePackages", 		function() conf_ui.doom_module_packages_picker() end, },
+	{ "DoomPickerModuleCmds", 	      function() conf_ui.doom_module_cmds_picker() end, },
+	{ "DoomPickerModuleAutocmds", 		function() conf_ui.doom_module_autocmds_picker() end, },
+	{ "DoomPickerModuleBindsTable", 		function() conf_ui.doom_binds_table_picker() end, },
+	{ "DoomPickerModuleBindsBranch", 		function() conf_ui.doom_binds_branch_picker() end, },
+	{ "DoomPickerModuleBindsLeaf", 		function() conf_ui.doom_binds_leaf_picker() end, },
 }
 
 conf_ui.binds = {
-  { "[n", ":DoomUIMain<cr>", name = "doom main menu command"},
-  { "[s", ":DoomUISettings<cr>", name = "picker doom settings"},
-  { "[m", ":DoomUIModules<cr>", name = "picker doom modules"},
-  { "[b", ":DoomUIModuleBinds<cr>", name = "picker doom binds"},
+  { "[n", ":DoomPickerMain<cr>", name = "doom main menu command"},
+  { "[s", ":DoomPickerSettings<cr>", name = "picker doom settings"},
+  { "[m", ":DoomPickerModules<cr>", name = "picker doom modules"},
+  { "[b", ":DoomPickerModuleBinds<cr>", name = "picker doom binds"},
   {
     "<leader>",
     name = "+prefix",
@@ -1210,7 +1289,7 @@ conf_ui.binds = {
         "D",
         name = "+doom",
         {
-          { "F", [[ :DoomUIMain<cr> ]], name = "Doom Picker", options = { silent = false }, },
+          { "F", [[ :DoomPickerMain<cr> ]], name = "Doom Picker", options = { silent = false }, },
         },
       },
     },
