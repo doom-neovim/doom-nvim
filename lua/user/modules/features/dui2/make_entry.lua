@@ -7,7 +7,7 @@ local entry_makers = {}
 -- ENTRY MAKERS
 --
 
-function entry_makers.display_all_modules_list(entry)
+function entry_makers.display_all_modules(entry)
 	local function make_display(t)
 	  return t.section .." > " .. t.name
 	end

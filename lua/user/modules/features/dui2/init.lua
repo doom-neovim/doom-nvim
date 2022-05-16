@@ -55,7 +55,7 @@ local function reset()
 end
 
 doom_ui.cmds = {
-	{ "DoomPickerMain", 		          function() pickers.doom_main_menu_picker() end, },
+	{ "DoomPickerMain", 		          function() reset() pickers.doom_main_menu_picker() end, },
 	{
 	  "DoomPickerSettings",
 	  function()
@@ -63,7 +63,7 @@ doom_ui.cmds = {
 	    pickers.doom_settings_picker()
 	  end,
 	},
-	{ "DoomPickerModules", 		        function() pickers.doom_modules_picker() end, },
+	{ "DoomPickerModules", 		        function() reset() pickers.doom_modules_picker() end, },
 	{ "DoomPickerModuleSettings", 		function() pickers.doom_module_settings_picker() end, },
 	{ "DoomPickerModulePackages", 		function() pickers.doom_module_packages_picker() end, },
 	{ "DoomPickerModuleCmds", 	      function() pickers.doom_module_cmds_picker() end, },
