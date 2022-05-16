@@ -96,8 +96,14 @@ reloader._reload_doom = function()
 
   -- Unload doom.modules/doom.core lua files
   for k, _ in pairs(package.loaded) do
-    -- TODO: add `doom.user` here as well?
-    if string.match(k, "^doom%.core") or string.match(k, "^doom%.modules") then
+    if
+      -- this is just so you can toggle/test more easilly
+      string.match(k, "^doom%.core")
+      or string.match(k, "^doom%.modules")
+      or string.match(k, "^doom%.utils")
+      or string.match(k, "^user%.modules")
+      or string.match(k, "^user%.utils")
+      then
       package.loaded[k] = nil
     end
   end
