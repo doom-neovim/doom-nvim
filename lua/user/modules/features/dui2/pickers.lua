@@ -226,24 +226,23 @@ P.doom_settings_picker = function(c)
   if c == nil then c = {} end
   if c.settings_table == nil then
 	c["settings_table"] = {}
-
 	c["picker_depth"] = 1
-        c["buf_ref"] = utils.get_buf_handle(utils.find_config("settings.lua"))
+  c["buf_ref"] = utils.get_buf_handle(utils.find_config("settings.lua"))
+
 	local ts_settings_table = dui_ts.ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
-	local child = ts_settings_table[1]:named_child(0)
-	local gc2 = child:named_child(1)
-	-- filter out comments.
- 	-- pass the table to the picker.
-        for n in gc2:iter_children() do
-          if n:named() then
-	    local the_node = n
-	    local the_type = n:type(1)
-	    if the_type ~= "comment" then
-		table.insert(c.settings_table, n)
-            end
-	  end
+
+    for n in ts_settings_table[1]:iter_children() do
+      if n:named() then
+	      local the_node = n
+	      local the_type = n:type(1)
+	      if the_type ~= "comment" then
+		      table.insert(c.settings_table, n)
         end
+	    end
+    end
   end
+
+  print(vim.inspect(c))
 
   if c.picker_depth and c.picker_depth > 1 then
 	local passed_table = c.settings_table
@@ -261,7 +260,7 @@ P.doom_settings_picker = function(c)
         end
   end
 
-  opts = opts or require("telescope.themes").get_ivy()
+  opts = opts or require("telescope.themes").get_dropdown()
   -- local opts = require("telescope.themes").get_dropdown()
 
   require("telescope.pickers").new(opts, {

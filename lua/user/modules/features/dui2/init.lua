@@ -1,9 +1,3 @@
--- DOOM
-local utils = require("doom.utils")
-local fs = require("doom.utils.fs")
-local system = require("doom.core.system")
-
--- DOOM_UI
 local pickers = require("user.modules.features.dui2.pickers")
 
 local doom_ui = {}
@@ -52,6 +46,9 @@ doom_ui.settings = {
   },
 }
 
+-- doom_ui.packages = {
+--    https://github.com/nvim-telescope/telescope-ui-select.nvim
+-- }
 
 doom_ui.cmds = {
 	{ "DoomPickerMain", 		          function() pickers.doom_main_menu_picker() end, },

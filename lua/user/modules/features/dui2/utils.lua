@@ -12,27 +12,6 @@ M.check_if_module_name_exists = function(c, new_name)
   return already_exists
 end
 
--- system.sep!!! -> util?
-M.get_query_file = function(lang, query_name)
-  return fs.read_file(string.format("%s/queries/%s/%s.scm", system.doom_root, lang, query_name))
-end
-
-M.ts_get_doom_captures = function(buf, doom_capture_name)
-  local t_matched_captures = {}
-  local query_str = conf_ui.get_query_file("lua", "doom_conf_ui")
-  local language_tree = vim.treesitter.get_parser(buf, "lua")
-  local syntax_tree = language_tree:parse()
-  local root = syntax_tree[1]:root()
-  local qp = vim.treesitter.parse_query("lua", query_str)
-
-  for id, node, _ in qp:iter_captures(root, buf, root:start(), root:end_()) do
-    local name = qp.captures[id]
-	  if name == doom_capture_name then
-        table.insert(t_matched_captures, node)
-	  end
-   end
-   return t_matched_captures
-end
 
 -- filter the list of all modules
 M.filter_modules = function(filter)

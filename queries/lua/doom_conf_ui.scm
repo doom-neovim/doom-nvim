@@ -1,6 +1,19 @@
-;; i want to write the captures so that I recieve the table constructtor
-;; whose children can be iteraded instantly.
+;;;;;;;; CAPTURE ROOT SETTINGS ;;;;;;;;
 
+; expects there to be ONLY ONE returned table...
+(return_statement
+  (expression_list
+    (table_constructor) @doom_root.settings_table))
+
+;;;;;;;; CAPTURE ROOT MODULES ;;;;;;;;
+
+(table_constructor
+		(field) @modules.enabled
+)
+
+(table_constructor
+		(comment) @modules.disabled (#lua-match? @modules.disabled "%-%-%s\"[%w%-_]+\",")
+)
 
 ;;;;;;;; CAPTURE MODULE.BINDS TABLE ;;;;;;;;
 

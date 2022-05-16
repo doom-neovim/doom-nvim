@@ -72,4 +72,11 @@ M.transform_root_mod_file = function(m, cb)
   return buf, sm_ll + 1
 end
 
+M.gen_query_for_selection = function()
+  -- helper to allow for using the already existing doom table instead of having to
+  -- parse eg. the nest tree before initiating pickers.
+  -- on selection -> generate a query that targets the selection.
+  -- --> apply code actions.
+end
+
 return M
