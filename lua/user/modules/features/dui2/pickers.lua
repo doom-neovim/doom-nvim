@@ -103,6 +103,7 @@ local function next(picker)
     doom_ui_state.current.results_prepared = nil
     doom_ui_state.current.selection = nil
     store = vim.deepcopy(doom_ui_state.current)
+
     store.results_prepared = dres
     store.selection = dsel
   else
@@ -575,9 +576,9 @@ P.doom_binds_table_picker = function()
 
       return true
     end,
-    previewer = previewers.new_buffer_previewer({
-	  define_preview = function() return vim.inspect(c.data) end,
-	})
+ --    previewer = previewers.new_buffer_previewer({
+	--   define_preview = function() return vim.inspect(c.data) end,
+	-- })
   }):find()
 end
 
@@ -585,9 +586,10 @@ P.doom_binds_leaf_picker = function(c)
   ensure_doom_ui_state()
   doom_ui_state.current.title = "BINDS LEAF"
   doom_ui_state.current.picker = P.doom_binds_leaf_picker
+  if doom_ui_state.prev.selection.type ~= "binds_leaf" then
+    return
+  end
 
-
-  -- results
   local prep_results = {}
   for k, v in pairs(doom_ui_state.prev.selection) do
     if vim.tbl_contains(bind_params, k) then
@@ -613,32 +615,18 @@ P.doom_binds_leaf_picker = function(c)
         actions_set.select:replace(function()
           local fuzzy = selection(prompt_bufnr)
           actions.close(prompt_bufnr)
-	        -- print("-->>",vim.inspect(fuzzy.value))
 	        local sr,sc,er,ec = fuzzy.value.value:range()
-
-	        local new_c = c
-
-	        table.insert(new_c.history, {
-		      prev_picker = P.doom_binds_leaf_picker,
-		      prev_config = c
-	        })
-	        -- pass data including path and ts node
- 	        -- so that we can open the file and set the cursor.
-	        -- move_cursor_position()
-
-	        -- NOTE: SETS CORRESPONDING BUF AND CURSOR
-	        vim.api.nvim_win_set_buf(0, c.buf_ref)
+	        -- doom_ui_state.current.selection = ??
+	        vim.api.nvim_win_set_buf(0, doom_ui_state.current.buf_ref)
 	        vim.fn.cursor(er+1,ec)
-
         end)
 
         goback(prompt_bufnr, map)
-
         return true
       end,
-    previewer = previewers.new_buffer_previewer({
-	  define_preview = function() return vim.inspect(c.data) end,
-	})
+ --    previewer = previewers.new_buffer_previewer({
+	--   define_preview = function() return vim.inspect(c.data) end,
+	-- })
   }):find()
 end
 
@@ -646,9 +634,12 @@ P.doom_binds_branch_picker = function(c)
   ensure_doom_ui_state()
   doom_ui_state.current.title = "BINDS BRANCH"
   doom_ui_state.current.picker = P.doom_binds_branch_picker
+  if doom_ui_state.prev.selection.type ~= "binds_branch" then
+    return
+  end
 
   local prep_results = {}
-  for k, v in pairs(c.data) do
+  for k, v in pairs(doom_ui_state.prev.selection) do
     if vim.tbl_contains(bind_params, k) then
   	table.insert(prep_results,{
   	  key = k,
@@ -657,13 +648,15 @@ P.doom_binds_branch_picker = function(c)
     end
   end
 
+  doom_ui_state.current.results_prepared = prep_results
+
   local opts = opts or require("telescope.themes").get_dropdown()
 
   pickers.new(opts, {
-    title = opts.title,
+    title = doom_ui_state.current.title,
     finder = finders.new_table({
-      results = prep_results,
-      entry_maker = display_binds_branch, -- child of results
+      results = doom_ui_state.current.results_prepared,
+      entry_maker = dui_em.display_binds_branch, -- child of results
     }),
     sorter = opts.sorter or conf.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
@@ -672,13 +665,15 @@ P.doom_binds_branch_picker = function(c)
           actions.close(prompt_bufnr)
           if type(fuzzy.value.value) == "table" then
 	  	      -- print(vim.inspect(fuzzy.value.value))
- 		      local new_c = c
-	  	      new_c.data = fuzzy.value.value[1]
-		        table.insert(new_c.history, {
-			      prev_picker = P.doom_binds_branch_picker,
-			      prev_config = c
-		        })
-	  	      P.doom_binds_table_picker(new_c)
+
+	        doom_ui_state.current.selection = fuzzy.value.value
+ 		      -- local new_c = c
+	  	     --  new_c.data = fuzzy.value.value[1]
+		       --  table.insert(new_c.history, {
+			      -- prev_picker = P.doom_binds_branch_picker,
+			      -- prev_config = c
+		       --  })
+	  	      next(P.doom_binds_table_picker)
 	        else
 	  	      local sr,sc,er,ec = fuzzy.value.value:range()
 	  	      vim.fn.cursor(er+1,ec)
@@ -689,9 +684,9 @@ P.doom_binds_branch_picker = function(c)
 
         return true
       end,
-    previewer = previewers.new_buffer_previewer({
-	  define_preview = function() return "-----" end,
-	})
+ --    previewer = previewers.new_buffer_previewer({
+	--   define_preview = function() return "-----" end,
+	-- })
   }):find()
 end
 
