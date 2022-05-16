@@ -111,6 +111,15 @@ local function prev()
   end
 end
 
+local function goback(prompt_bufnr, map)
+	  return map("i", "<C-z>", function(prompt_bufnr)
+	    require("telescope.actions").close(prompt_bufnr)
+	    prev()
+	  end)
+end
+
+
+
 local function line(buf)
   return state.get_current_line(buf)
 end
@@ -126,33 +135,15 @@ local function picker_get_state(prompt_bufnr)
   return fuzzy, line
 end
 
--- -- if data is a eg. a leaf table we need to wrap
--- -- all fields in a table because telescope only
--- -- uses subtables for results. no actual key/val pairs!
--- local function tableify_data_for_results()
--- end
-
------------------------------------------------------------------------------
------------------------------------------------------------------------------
-
--- todo:
 --
--- 	in each picker write c to c.picker_history
--- 	so that we can always go back in the picker history
--- 	if # == 0 then close
-
---
--- PICKER -> DOOM MODULES
+-- PICKERS
 --
 
 -- @param filter
 P.doom_modules_picker = function(c)
-  -- print(":: doom modules picker ::")
   ensure_doom_ui_state()
   doom_ui_state_reset_modules()
-
   doom_ui_state.current.title = "ALL MODULES"
-
   local function mappings_prepare(prompt_bufnr)
 	  local fuzzy, line = picker_get_state(prompt_bufnr)
 	  require("telescope.actions").close(prompt_bufnr)
@@ -195,12 +186,6 @@ P.doom_modules_picker = function(c)
 		    m_toggle()
 	    end
 	  },
-	  {"^z:GOBACK","i", "<C-z>",
-	    function(prompt_bufnr)
-        local fuzzy, line = mappings_prepare(prompt_bufnr)
-	      prev()
-	    end
-	  },
 	  {"^b:BINDS","i", "<C-b>",
 	    function(prompt_bufnr)
         local fuzzy, line = mappings_prepare(prompt_bufnr)
@@ -213,23 +198,7 @@ P.doom_modules_picker = function(c)
   local function create_maps()
   end
 
-  -- if c == nil then
-  --   local doom_global_extended, all_modules_flattened = utils.get_modules_flat_with_meta_data()
-  --   c = {
-  --     doom_global_extended = doom_global_extended,
-  --     all_modules_flattened = all_modules_flattened,
-  --     buf_ref = nil,
-  --     history = {},
-  --     opts = {
-	 --    title = "Doom Modules"
-  --     }
-  --   }
-  -- end
-
   local function ts_table_picker_prepare(t)
-    -- prepare the results array here
-    -- I belive it should only be appending the buf_ref to each flattened module, so
-    -- they can all be transformed in the entry maker
   end
 
   local doom_modules_theme = require("telescope.themes").get_dropdown()
@@ -243,30 +212,25 @@ P.doom_modules_picker = function(c)
       entry_maker = dui_em.display_all_modules
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
-    attach_mappings = function(_, map)
+    attach_mappings = function(prompt_bufnr, map)
       for _,m in pairs(t_mappings) do
 	      map(m[2], m[3], m[4])
+	      goback(prompt_bufnr, map)
       end
       return true
     end,
   }):find()
 end
 
---
--- PICKER -> DOOM MAIN MENU
---
-
 P.doom_main_menu_picker = function(c)
   ensure_doom_ui_state()
   doom_ui_state.current.title = "MAIN MENU"
   doom_ui_state.current.picker = P.doom_main_menu_picker
-
   local function mappings_prepare(prompt_bufnr)
 	  local fuzzy, line = picker_get_state(prompt_bufnr)
 	  require("telescope.actions").close(prompt_bufnr)
 	  return fuzzy, line
   end
-
 
   local doom_menu_items = {
 		{ "open config", function() vim.cmd(("e %s"):format(require("doom.core.config").source)) end },
@@ -279,12 +243,8 @@ P.doom_main_menu_picker = function(c)
   		{ "jobs 	  (todo..)",function() end },
   }
 
-
-
   doom_ui_state.current.results_prepared = doom_menu_items
-
   local doom_menu_theme = require("telescope.themes").get_dropdown()
-
   opts = opts or require("telescope.themes").get_ivy()
 
   require("telescope.pickers").new(doom_menu_theme, {
@@ -292,25 +252,27 @@ P.doom_main_menu_picker = function(c)
     finder = require("telescope.finders").new_table({
       results = doom_menu_items,
       entry_maker = function(entry)
-	  local function make_display(t)
-	    local s = t.level .. " / " .. tsq.get_node_text(t.prefix,c.buf_ref) .. " / "
-	    -- print(s)
-	    return s
-	  end
-	  return {
-	    value = entry,
-	    display = entry[1],
-	    ordinal = entry[1],
-	  }
-	end,
+	      local function make_display(t)
+	        local s = t.level .. " / " .. tsq.get_node_text(t.prefix,c.buf_ref) .. " / "
+	        -- print(s)
+	        return s
+	      end
+	      return {
+	        value = entry,
+	        display = entry[1],
+	        ordinal = entry[1],
+	      }
+	    end,
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
         actions_set.select:replace(function()
-	  local fuzzy, line = picker_get_state(prompt_bufnr)
-	  require("telescope.actions").close(prompt_bufnr)
-	  for _,m in pairs(doom_menu_items) do if m[1] == fuzzy.value[1] then m[2]() end end
-	end)
+	        local fuzzy, line = picker_get_state(prompt_bufnr)
+	        require("telescope.actions").close(prompt_bufnr)
+	        for _,m in pairs(doom_menu_items) do if m[1] == fuzzy.value[1] then m[2]() end end
+
+	      end)
+	      goback(prompt_bufnr, map)
       return true
     end
   }):find()
@@ -372,6 +334,12 @@ P.doom_settings_picker = function()
 	  	      vim.fn.cursor(er+1,ec)
 	      end
       end)
+      goback(prompt_bufnr, map)
+
+	    -- map("i", "<C-z>", function(prompt_bufnr)
+	    --   require("telescope.actions").close(prompt_bufnr)
+	    --   prev()
+	    -- end)
       return true
     end,
   }):find()
@@ -433,9 +401,10 @@ P.doom_module_packages_picker = function(config)
       entry_maker = display_module_packages,
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
-    attach_mappings = function(_, map)
+    attach_mappings = function(prompt_bufnr, map)
       map("i", "<CR>", pass_entry_to_callback)
       map("n", "<CR>", pass_entry_to_callback)
+	    goback(prompt_bufnr, map)
       return true
     end,
   }):find()
@@ -573,6 +542,13 @@ P.doom_binds_table_picker = function(c)
   opts = c.opts or {} -- if the user didn't specify options
   local doom_binds_table_theme = require("telescope.themes").get_dropdown()
 
+  local function goback(prompt_bufnr, map)
+	    return map("i", "<C-z>", function(prompt_bufnr)
+	      require("telescope.actions").close(prompt_bufnr)
+	      prev()
+	    end)
+  end
+
   pickers.new(doom_binds_table_theme, {
     title = c.opts.title,
     finder = finders.new_table({
@@ -581,6 +557,12 @@ P.doom_binds_table_picker = function(c)
     }),
     sorter = opts.sorter or conf.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
+
+      goback(prompt_bufnr, map)
+	    -- map("i", "<C-z>", function(prompt_bufnr)
+	    --   require("telescope.actions").close(prompt_bufnr)
+	    --   prev()
+	    -- end)
 
       -- REFACTOR: into ts_binds_table_mappings()
         actions_set.select:replace(function()
@@ -608,16 +590,7 @@ P.doom_binds_table_picker = function(c)
 	        end
         end)
 
-         -- go back
-         map("i", "<C-z>", function(prompt_bufnr)
-           require("telescope.actions").close(prompt_bufnr)
-	   if #c.history > 0 then
-	     local  pp = c.history[#c.history].prev_picker
-	     local  pc = c.history[#c.history].prev_config
-	     -- table.remove(c.history, #c.history) -- not necessary i think
-	     pp(pc)
-	   end
-         end)
+	      goback(prompt_bufnr, map)
 
         return true
       end,
