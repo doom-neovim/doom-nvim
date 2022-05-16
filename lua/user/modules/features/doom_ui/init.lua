@@ -5,7 +5,7 @@ local system = require("doom.core.system")
 
 
 -- DOOM_UI
-local pickrs = require("user.modules.features.doom_ui.pickers")
+local pickers = require("user.modules.features.doom_ui.pickers")
 local sh = require("user.modules.features.doom_ui.shell")
 
 -- TREESITTER
@@ -23,10 +23,10 @@ local actions = require("telescope.actions")
 local previewers = require("telescope.previewers")
 
 
-local conf_ui = {}
+local doom_ui = {}
 
 
-conf_ui.settings = {
+doom_ui.settings = {
   confirm_alternatives = { "yes", "no" },
   section_alternatives = { "user", "features", "langs", "core" },
   popup = {
@@ -89,58 +89,6 @@ local bind_params = {
 
 local function ntext(n,b) return tsq.get_node_text(n, b) end
 
--- system.sep!!! -> util?
-conf_ui.get_query_file = function(lang, query_name)
-  return fs.read_file(string.format("%s/queries/%s/%s.scm", system.doom_root, lang, query_name))
-end
-
-local function ts_get_doom_captures(buf, doom_capture_name)
-  local t_matched_captures = {}
-  local query_str = conf_ui.get_query_file("lua", "doom_conf_ui")
-  local language_tree = vim.treesitter.get_parser(buf, "lua")
-  local syntax_tree = language_tree:parse()
-  local root = syntax_tree[1]:root()
-  local qp = vim.treesitter.parse_query("lua", query_str)
-
-  for id, node, _ in qp:iter_captures(root, buf, root:start(), root:end_()) do
-    local name = qp.captures[id]
-	  if name == doom_capture_name then
-        table.insert(t_matched_captures, node)
-	  end
-   end
-   return t_matched_captures
-end
-
--- filter the list of all modules
-conf_ui.filter_modules = function(filter)
-  local filtered = {}
-  -- if has each filter then return modules
-  -- for all modules -> for each filter.
-
-  -- -- with the new module extension util this will be much easier
-  -- local function check_if_module_name_exists(c, new_name)
-  --   print(vim.inspect(c.selected_module))
-  --   local already_exists = false
-  --   for _, v in pairs(c.all_modules_data) do
-  --     if v.section == c.selected_module.section and v.name == new_name then
-  -- 	print("module already exists!!!")
-  --       already_exists = true
-  --     end
-  --   end
-  --   return already_exists
-  -- end
-
-  return filtered
-end
-
-local function flatten_regular_binds_tree(nest_tree)
-
-end
-
-local function flatten_ts_nest_tree(ts_nest_table)
-  local ts_nest_flat = {}
-  return ts_nest_flat
-end
 
 -- also with architext it would probably become easier to capture nodes later.
 -- actually it would probably be easier to use smaller functions for queryint patterns
@@ -160,7 +108,7 @@ local function transform_root_mod_file(m, cb)
 
   local buf = utils.get_buf_handle(ROOT_MODULES)
 
-  local query_str = conf_ui.get_query_file("lua", "doom_root_modules")
+  local query_str = doom_ui.get_query_file("lua", "doom_root_modules")
   local language_tree = vim.treesitter.get_parser(buf, "lua")
   local syntax_tree = language_tree:parse()
   local root = syntax_tree[1]:root()
@@ -197,20 +145,20 @@ end
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
 
-conf_ui.cmds = {
-	{ "DoomPickerMain", 		function() conf_ui.doom_main_menu_picker() end, },
-	{ "DoomPickerSettings", 		function() conf_ui.doom_settings_picker() end, },
-	{ "DoomPickerModules", 		function() conf_ui.doom_modules_picker() end, },
-	{ "DoomPickerModuleSettings", 		function() conf_ui.doom_module_settings_picker() end, },
-	{ "DoomPickerModulePackages", 		function() conf_ui.doom_module_packages_picker() end, },
-	{ "DoomPickerModuleCmds", 	      function() conf_ui.doom_module_cmds_picker() end, },
-	{ "DoomPickerModuleAutocmds", 		function() conf_ui.doom_module_autocmds_picker() end, },
-	{ "DoomPickerModuleBindsTable", 		function() conf_ui.doom_binds_table_picker() end, },
-	{ "DoomPickerModuleBindsBranch", 		function() conf_ui.doom_binds_branch_picker() end, },
-	{ "DoomPickerModuleBindsLeaf", 		function() conf_ui.doom_binds_leaf_picker() end, },
+pickers.cmds = {
+	{ "DoomPickerMain", 		          function() pickers.doom_main_menu_picker() end, },
+	{ "DoomPickerSettings", 		      function() pickers.doom_settings_picker() end, },
+	{ "DoomPickerModules", 		        function() pickers.doom_modules_picker() end, },
+	{ "DoomPickerModuleSettings", 		function() pickers.doom_module_settings_picker() end, },
+	{ "DoomPickerModulePackages", 		function() pickers.doom_module_packages_picker() end, },
+	{ "DoomPickerModuleCmds", 	      function() pickers.doom_module_cmds_picker() end, },
+	{ "DoomPickerModuleAutocmds", 		function() pickers.doom_module_autocmds_picker() end, },
+	{ "DoomPickerModuleBindsTable", 	function() pickers.doom_binds_table_picker() end, },
+	{ "DoomPickerModuleBindsBranch", 	function() pickers.doom_binds_branch_picker() end, },
+	{ "DoomPickerModuleBindsLeaf", 		function() pickers.doom_binds_leaf_picker() end, },
 }
 
-conf_ui.binds = {
+doom_ui.binds = {
   { "[n", ":DoomPickerMain<cr>", name = "doom main menu command"},
   { "[s", ":DoomPickerSettings<cr>", name = "picker doom settings"},
   { "[m", ":DoomPickerModules<cr>", name = "picker doom modules"},
@@ -239,4 +187,4 @@ conf_ui.binds = {
   },
 }
 
-return conf_ui
+return doom_ui

@@ -1,7 +1,4 @@
 local M = {}
---
--- NUI
---
 
 M.nui_input = function(title, callback)
   local Input = require("nui.input")
