@@ -79,18 +79,20 @@ module.defaults = {
     silent = true,
   },
 }
-
 local rhsFns = {}
 
-module._callRhsFn = function(index)
-  rhsFns[index]()
-end
+_doom.keymaps = {
+  rhsFns = rhsFns,
 
-module._getRhsExpr = function(index)
-  local keys = rhsFns[index]()
+  _callRhsFn = function(index)
+    rhsFns[index]()
+  end,
 
-  return vim.api.nvim_replace_termcodes(keys, true, true, true)
-end
+  _getRhsExpr = function(index)
+    local keys = rhsFns[index]()
+    return vim.api.nvim_replace_termcodes(keys, true, true, true)
+  end
+}
 
 --- Converts a lua function to a string that can be called to execute the function
 --- @param func function
@@ -101,8 +103,8 @@ local function functionToRhs(func, expr)
 
   local insertedIndex = #rhsFns
 
-  return expr and "v:lua.package.loaded.nest._getRhsExpr(" .. insertedIndex .. ")"
-    or "<cmd>lua package.loaded.nest._callRhsFn(" .. insertedIndex .. ")<cr>"
+  return expr and "v:lua._doom.keymaps._getRhsExpr(" .. insertedIndex .. ")"
+    or "<cmd>lua _doom.keymaps._callRhsFn(" .. insertedIndex .. ")<cr>"
 end
 
 local function copy(table)

@@ -11,7 +11,7 @@ cc.autocmds = {
     "*.cpp,*.cc,*.cxx,*.c,*.hpp,*.hh,*.hxx,*.h",
     function()
       local langs_utils = require("doom.modules.langs.utils")
-      langs_utils.use_lsp(doom.langs.cpp.settings.language_server_name)
+      langs_utils.use_lsp(doom.langs.cc.settings.language_server_name)
 
       require("nvim-treesitter.install").ensure_installed("cpp", "c")
 
