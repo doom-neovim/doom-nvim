@@ -40,6 +40,10 @@ local function ensure_doom_ui_state()
 
   -- 1. get doom modules extended
   -- 2. flatten_doom_modules()
+  --
+
+  -- inside a picker -> assign data to current
+  -- in actions -> refer to history[#history] to get the selection.
 
   doom_ui_state = {
     -- doom_global_extended,
@@ -50,6 +54,9 @@ local function ensure_doom_ui_state()
       picker_selection = nil,
       picker_line = nil,
       index_selected = nil,
+    },
+    prev = {
+
     },
     history = {},
     ts = {
@@ -163,10 +170,6 @@ P.doom_modules_picker = function(c)
   end
 
   if c == nil then
-
-    -- make into three funcs
-    -- get_doom_extended, get_enabled_modules_flattened(get_doom_extended), get_all_modules_flattened(get_doom_extended)
-
     local doom_global_extended, all_modules_flattened = utils.get_modules_flat_with_meta_data()
 
     c = {
@@ -268,17 +271,8 @@ end
 -- rename this to a generic `table_picker`,
 -- 	so that any table can be recursively pickyfied.
 P.doom_settings_picker = function(c)
-  c = c or { picker_depth = 1 }
-  c.buf_ref = c.buf_ref or utils.get_buf_handle(utils.find_config("settings.lua"))
-
   ensure_doom_ui_state()
-
-  -- c.opts           -> telecope options
-  -- c.buf_ref
-  --
-  -- c.prepared_results
-
-  -- prepare results ----------
+  doom_ui_state.current.buf_ref = doom_ui_state.prev.buf_ref or utils.get_buf_handle(utils.find_config("settings.lua"))
 
   local function ts_table_picker_prepare(t)
     local prep = {}
@@ -290,14 +284,12 @@ P.doom_settings_picker = function(c)
     return prep
   end
 
-  if c.prepared_results == nil then
-	  c["prepared_results"] = {}
-	  c.prepared_results = ts_table_picker_prepare(dui_ts.ts_get_doom_captures(c.buf_ref, "doom_root.settings_table"))
+  -- first spawned picker, else use passed along data
+  if doom_ui_state.prev ~= "settings" or doom_ui_state.prev.selection == nil then
+	  doom_ui_state.current.results_prepared = ts_table_picker_prepare(dui_ts.ts_get_doom_captures(c.buf_ref, "doom_root.settings_table"))
   else
-	  c.prepared_results = ts_table_picker_prepare(c.prepared_results)
+	  doom_ui_state.current.results_prepared = ts_table_picker_prepare(doom_ui_state.prev.selection)
   end
-
-  -- prepare mappings ---------------------
 
   local function ts_table_picker_mappings(prompt_bufnr, map)
       actions_set.select:replace(function()
@@ -312,7 +304,10 @@ P.doom_settings_picker = function(c)
 		      f2x = " >>> { ... }"
 		      c.picker_depth = c.picker_depth + 1
 		      c.prepared_results = f2
+
+          -- wrap in next_picker(P.doom_settings_picker) which updates the ui history
 		      P.doom_settings_picker(c)
+
 	      else
 		      print(ntext(f1, c.buf_ref) .. " -> " .. f2x)
 	   	      local sr,sc,er,ec = f1:range()
