@@ -93,7 +93,23 @@ end
 
 local function next(picker)
   local prev_picker = doom_ui_state.current.picker
-  local store = vim.deepcopy(doom_ui_state.current)
+
+  -- if has userdata
+  local dres, dsel, store
+
+  if doom_ui_state.current.title:match("BIND") then
+    dres = doom_ui_state.current.results_prepared
+    dsel = doom_ui_state.current.selection
+    doom_ui_state.current.results_prepared = nil
+    doom_ui_state.current.selection = nil
+    store = vim.deepcopy(doom_ui_state.current)
+    store.results_prepared = dres
+    store.selection = dsel
+  else
+    store = vim.deepcopy(doom_ui_state.current)
+  end
+
+
   store.picker = prev_picker
   doom_ui_state.prev = store
   table.insert(doom_ui_state.history, 1, store)
@@ -573,7 +589,7 @@ P.doom_binds_leaf_picker = function(c)
 
   -- results
   local prep_results = {}
-  for k, v in pairs(c.data) do
+  for k, v in pairs(doom_ui_state.prev.selection) do
     if vim.tbl_contains(bind_params, k) then
   	table.insert(prep_results,{
   	  key = k,
@@ -582,13 +598,15 @@ P.doom_binds_leaf_picker = function(c)
     end
   end
 
+  doom_ui_state.current.results_prepared = prep_results
+
   local opts = opts or require("telescope.themes").get_dropdown()
 
   pickers.new(opts, {
-    title = opts.title,
+    title = doom_ui_state.current.title,
     finder = finders.new_table({
-      results = prep_results,
-      entry_maker = display_binds_leaf, -- child of results
+      results = doom_ui_state.current.results_prepared,
+      entry_maker = dui_em.display_binds_leaf, -- child of results
     }),
     sorter = opts.sorter or conf.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
