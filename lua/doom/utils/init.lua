@@ -311,6 +311,7 @@ utils.get_modules_flat_with_meta_data = function()
       prep_all_m[m_origin][m_section] = {}
     end
     prep_all_m[m_origin][m_section][m_name] = {
+      type = "module",
       enabled = false,
       name = m_name,
       section = m_section,
