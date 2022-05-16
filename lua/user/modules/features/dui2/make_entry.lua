@@ -19,22 +19,33 @@ function entry_makers.display_all_modules_list(entry)
 end
 
 function entry_makers.display_doom_settings(entry)
-	    -- print((entry:named_child(1)):type())
-	    local function e() end
-	    local function d(node)
-		local f1 = node:named_child(0)
-		local f2 = node:named_child(1)
-		local f2x = ts.ntext(f2, c.buf_ref)
-		local f2ccnt = f2:named_child_count()
-		if f2:type() == "table_constructor" then f2x = " >>> { #"..f2ccnt.." }" end
-		return (ts.ntext(f1, c.buf_ref) .. " -> " .. f2x)
-	    end
-	    local function o() end
-	  return {
-	    value = entry,
-	    display = function(tbl) return d(tbl.value) end,
-	    ordinal = function(tbl) return d(tbl.value) end,
-	  }
+	-- print((entry:named_child(1)):type())
+	local formatted = ""
+	-- print(vim.inspect(node))
+	local f1 = entry:named_child(0)
+	local f2 = entry:named_child(1)
+  local f1x = ts.ntext(f1, doom_ui_state.current.buf_ref)
+	local f2x = ts.ntext(f2, doom_ui_state.current.buf_ref)
+	local f2ccnt = f2:named_child_count()
+	if f2:type() == "table_constructor" then
+	  f2x = " >>> { #"..f2ccnt.." }"
+	end
+	formatted = formatted .. f1x .. " -> " .. f2x
+
+	local function e() end
+
+	local function d(node)
+	  -- print(formatted)
+		return formatted
+	end
+
+	local function o() end
+	return {
+	  value = entry,
+	  display = formatted,
+	  -- display = function(tbl) return d(tbl.value) end,
+	  ordinal = f1x,
+	}
 end
 
 function entry_makers.display_single_module(entry) end

@@ -36,7 +36,7 @@ local bind_params = {
 -- PICKER HELPERS
 --
 local function ensure_doom_ui_state()
-  -- if doom_ui_state ~= nil then return end
+  if doom_ui_state ~= nil then return end
 
   -- 1. get doom modules extended
   -- 2. flatten_doom_modules()
@@ -49,14 +49,17 @@ local function ensure_doom_ui_state()
     -- doom_global_extended,
     all_modules_flattened = utils.get_modules_flat_with_meta_data(),
     current = {
+      type = nil, -- eg. settings, modules, binds_table, binds_branch
       results_prepared = nil,
-      bufref = nil,
-      picker_selection = nil,
-      picker_line = nil,
+      buf_ref = nil,
+      picker = nil,
+      selection = nil,
+      line_str = nil,
       index_selected = nil,
     },
     prev = {
-
+      type = nil,
+      buf_ref = nil,
     },
     history = {},
     ts = {
@@ -76,8 +79,22 @@ local function ensure_doom_ui_state()
 
 end
 
+local function doom_ui_state_reset()
+  doom_ui_state = nil
+end
+
 local function doom_ui_state_reset_modules()
   -- reset modules data
+end
+
+local function next_picker(picker)
+  print("func -> next_picker()")
+  doom_ui_state.prev = doom_ui_state.current
+  picker()
+  -- set history.
+  -- write
+  -- if history > 10 -> delete.
+  -- call next picker
 end
 
 
@@ -213,6 +230,7 @@ end
 
 P.doom_main_menu_picker = function(c)
   ensure_doom_ui_state()
+
   local function mappings_prepare(prompt_bufnr)
 	  local fuzzy, line = picker_get_state(prompt_bufnr)
 	  require("telescope.actions").close(prompt_bufnr)
@@ -270,13 +288,14 @@ end
 --
 -- rename this to a generic `table_picker`,
 -- 	so that any table can be recursively pickyfied.
-P.doom_settings_picker = function(c)
+P.doom_settings_picker = function()
   ensure_doom_ui_state()
-  doom_ui_state.current.buf_ref = doom_ui_state.prev.buf_ref or utils.get_buf_handle(utils.find_config("settings.lua"))
 
+
+  -- @param table_constructor
   local function ts_table_picker_prepare(t)
     local prep = {}
-    for n in t[1]:iter_children() do
+    for n in t:iter_children() do
       if n:named() and n:type(1) ~= "comment" then
 		    table.insert(prep, n)
 	    end
@@ -284,50 +303,43 @@ P.doom_settings_picker = function(c)
     return prep
   end
 
+  doom_ui_state.current.type = "settings"
+
   -- first spawned picker, else use passed along data
-  if doom_ui_state.prev ~= "settings" or doom_ui_state.prev.selection == nil then
-	  doom_ui_state.current.results_prepared = ts_table_picker_prepare(dui_ts.ts_get_doom_captures(c.buf_ref, "doom_root.settings_table"))
+  if doom_ui_state.prev.buf_ref == nil or doom_ui_state.prev.type ~= "settings" then
+    doom_ui_state.current.buf_ref = utils.get_buf_handle(utils.find_config("settings.lua"))
+	  doom_ui_state.current.results_prepared = ts_table_picker_prepare(dui_ts.ts_get_doom_captures(
+	    doom_ui_state.current.buf_ref, "doom_root.settings_table")[1]
+	  )
   else
+    doom_ui_state.current.buf_ref = doom_ui_state.prev.buf_ref
 	  doom_ui_state.current.results_prepared = ts_table_picker_prepare(doom_ui_state.prev.selection)
   end
 
-  local function ts_table_picker_mappings(prompt_bufnr, map)
-      actions_set.select:replace(function()
-        local fuzzy = selection(prompt_bufnr)
-	      -- print(vim.inspect(fuzzy.value:type()))
- 	      local node = fuzzy.value
-        require("telescope.actions").close(prompt_bufnr)
-	      local f1 = node:named_child(0)
-	      local f2 = node:named_child(1)
-	      local f2x = ntext(f2, c.buf_ref)
-	      if f2:type() == "table_constructor" then
-		      f2x = " >>> { ... }"
-		      c.picker_depth = c.picker_depth + 1
-		      c.prepared_results = f2
-
-          -- wrap in next_picker(P.doom_settings_picker) which updates the ui history
-		      P.doom_settings_picker(c)
-
-	      else
-		      print(ntext(f1, c.buf_ref) .. " -> " .. f2x)
-	   	      local sr,sc,er,ec = f1:range()
-	  	      vim.api.nvim_win_set_buf(0, c.buf_ref)
-	  	      vim.fn.cursor(er+1,ec)
-	      end
-      end)
-  end
-
-  opts = opts or require("telescope.themes").get_dropdown()
+  opts = require("telescope.themes").get_ivy()
 
   require("telescope.pickers").new(opts, {
-    prompt_title = "create user module",
+    prompt_title = "doom user settings",
     finder = require("telescope.finders").new_table({
-      results = c.prepared_results,
+      results = doom_ui_state.current.results_prepared,
       entry_maker = dui_em.display_doom_settings
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
-      ts_table_picker_mappings(prompt_bufnr, map)
+      actions_set.select:replace(function()
+        local node = selection(prompt_bufnr).value
+        require("telescope.actions").close(prompt_bufnr)
+	      local field_key = node:named_child(0)
+	      local field_value = node:named_child(1)
+	      if field_value:type() == "table_constructor" then
+		      doom_ui_state.current.selection = field_value
+          next_picker(P.doom_settings_picker)
+	      else
+	   	      local sr,sc,er,ec = field_key:range()
+	  	      vim.api.nvim_win_set_buf(0, doom_ui_state.current.buf_ref)
+	  	      vim.fn.cursor(er+1,ec)
+	      end
+      end)
       return true
     end,
   }):find()

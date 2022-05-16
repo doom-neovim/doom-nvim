@@ -50,9 +50,19 @@ doom_ui.settings = {
 --    https://github.com/nvim-telescope/telescope-ui-select.nvim
 -- }
 
+local function reset()
+  doom_ui_state = nil
+end
+
 doom_ui.cmds = {
 	{ "DoomPickerMain", 		          function() pickers.doom_main_menu_picker() end, },
-	{ "DoomPickerSettings", 		      function() pickers.doom_settings_picker() end, },
+	{
+	  "DoomPickerSettings",
+	  function()
+	    reset()
+	    pickers.doom_settings_picker()
+	  end,
+	},
 	{ "DoomPickerModules", 		        function() pickers.doom_modules_picker() end, },
 	{ "DoomPickerModuleSettings", 		function() pickers.doom_module_settings_picker() end, },
 	{ "DoomPickerModulePackages", 		function() pickers.doom_module_packages_picker() end, },
