@@ -2,6 +2,9 @@ local utils = require("doom.utils")
 local fs = require("doom.utils.fs")
 local system = require("doom.core.system")
 
+-- dui
+local dui_ts = require("user.modules.features.dui2.ts")
+
 -- TELESCOPE
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
@@ -226,7 +229,7 @@ P.doom_settings_picker = function(c)
 
 	c["picker_depth"] = 1
         c["buf_ref"] = utils.get_buf_handle(utils.find_config("settings.lua"))
-	local ts_settings_table = ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
+	local ts_settings_table = dui_ts.ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
 	local child = ts_settings_table[1]:named_child(0)
 	local gc2 = child:named_child(1)
 	-- filter out comments.
@@ -314,7 +317,7 @@ P.doom_module_settings_picker = function(c)
 	--
 	-- c["picker_depth"] = 1
  --        c["buf_ref"] = utils.get_buf_handle(utils.find_config("settings.lua"))
-	-- local ts_settings_table = ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
+	-- local ts_settings_table = dui_ts.ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
 	-- local child = ts_settings_table[1]:named_child(0)
 	-- local gc2 = child:named_child(1)
 	-- -- filter out comments.
@@ -372,7 +375,7 @@ P.doom_module_cmds_picker = function(c)
 	--
 	-- c["picker_depth"] = 1
  --        c["buf_ref"] = utils.get_buf_handle(utils.find_config("settings.lua"))
-	-- local ts_settings_table = ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
+	-- local ts_settings_table = dui_ts.ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
 	-- local child = ts_settings_table[1]:named_child(0)
 	-- local gc2 = child:named_child(1)
 	-- -- filter out comments.
@@ -400,7 +403,7 @@ P.doom_module_autocmds_picker = function(c)
 	--
 	-- c["picker_depth"] = 1
  --        c["buf_ref"] = utils.get_buf_handle(utils.find_config("settings.lua"))
-	-- local ts_settings_table = ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
+	-- local ts_settings_table = dui_ts.ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
 	-- local child = ts_settings_table[1]:named_child(0)
 	-- local gc2 = child:named_child(1)
 	-- -- filter out comments.
@@ -483,7 +486,7 @@ P.doom_binds_table_picker = function(c)
     -- print(vim.inspect(c))
 
   if c.data == nil then
-    local t_nest_table_nodes = ts_get_doom_captures(c.buf_ref, "doom_module.binds_table")
+    local t_nest_table_nodes = dui_ts.ts_get_doom_captures(c.buf_ref, "doom_module.binds_table")
     local nestdata =  P.parse_nest_tables_meta_data(c.buf_ref, t_nest_table_nodes[1])
 
     -- print("num nest: ", #t_nest_table_nodes, c.selected_module.path)
