@@ -1,3 +1,6 @@
+local tsq = require("vim.treesitter.query")
+local parsers = require "nvim-treesitter.parsers"
+
 local tst = {}
 
 tst.parse_nest_tables_meta_data = function(buf, node, accumulated,level)
@@ -37,7 +40,7 @@ tst.parse_nest_tables_meta_data = function(buf, node, accumulated,level)
           if child:named() then
             if child:type() == "field" then
               table.insert(child_table,
-                conf_ui.parse_nest_tables_meta_data(buf, child:named_child(0), {}, accumulated.level)
+                tst.parse_nest_tables_meta_data(buf, child:named_child(0), {}, accumulated.level)
                 )
             end
           end
@@ -100,7 +103,7 @@ tst.parse_nest_tables_meta_data = function(buf, node, accumulated,level)
   end
   accumulated["rhs"] = rhs
   if accumulated.rhs:type() == "table_constructor" then
-    accumulated["rhs"] = conf_ui.parse_nest_tables_meta_data(buf, accumulated.rhs, {}, level)
+    accumulated["rhs"] = tst.parse_nest_tables_meta_data(buf, accumulated.rhs, {}, level)
   end
   return accumulated
 end

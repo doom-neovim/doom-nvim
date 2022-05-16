@@ -64,13 +64,13 @@ doom_ui.cmds = {
 	  end,
 	},
 	{ "DoomPickerModules", 		        function() reset() pickers.doom_modules_picker() end, },
-	{ "DoomPickerModuleSettings", 		function() pickers.doom_module_settings_picker() end, },
-	{ "DoomPickerModulePackages", 		function() pickers.doom_module_packages_picker() end, },
-	{ "DoomPickerModuleCmds", 	      function() pickers.doom_module_cmds_picker() end, },
-	{ "DoomPickerModuleAutocmds", 		function() pickers.doom_module_autocmds_picker() end, },
-	{ "DoomPickerModuleBindsTable", 	function() pickers.doom_binds_table_picker() end, },
-	{ "DoomPickerModuleBindsBranch", 	function() pickers.doom_binds_branch_picker() end, },
-	{ "DoomPickerModuleBindsLeaf", 		function() pickers.doom_binds_leaf_picker() end, },
+	{ "DoomPickerModuleSettings", 		function() reset() pickers.doom_module_settings_picker() end, },
+	{ "DoomPickerModulePackages", 		function() reset() pickers.doom_module_packages_picker() end, },
+	{ "DoomPickerModuleCmds", 	      function() reset() pickers.doom_module_cmds_picker() end, },
+	{ "DoomPickerModuleAutocmds", 		function() reset() pickers.doom_module_autocmds_picker() end, },
+	{ "DoomPickerModuleBindsTable", 	function() reset() pickers.doom_binds_table_picker() end, },
+	{ "DoomPickerModuleBindsBranch", 	function() reset() pickers.doom_binds_branch_picker() end, },
+	{ "DoomPickerModuleBindsLeaf", 		function() reset() pickers.doom_binds_leaf_picker() end, },
 }
 
 doom_ui.binds = {

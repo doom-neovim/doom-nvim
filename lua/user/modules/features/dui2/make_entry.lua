@@ -59,7 +59,7 @@ function entry_makers.display_module_autocmds(entry) end
 function entry_makers.display_binds_table(entry)
 	-- print(vim.inspect(entry))
 	  local function make_display(t)
-	    local s = t.level .. " / " .. tsq.get_node_text(t.prefix,c.buf_ref) .. " / "
+	    local s = t.level .. " / " .. ts.ntext(t.prefix, doom_ui_state.current.buf_ref) .. " / "
 	    -- print(s)
 	    return s
 	  end

@@ -5,6 +5,7 @@ local system = require("doom.core.system")
 -- dui
 local dui_ts = require("user.modules.features.dui2.ts")
 local dui_em = require("user.modules.features.dui2.make_entry")
+local tst = require("user.modules.features.dui2.ts_traverse")
 
 -- TELESCOPE
 local pickers = require("telescope.pickers")
@@ -44,6 +45,9 @@ local function ensure_doom_ui_state()
 
   -- inside a picker -> assign data to current
   -- in actions -> refer to history[#history] to get the selection.
+  --
+  -- always attach a type tage to result entries so that we can check for type
+  -- when preparing pickers.
 
   doom_ui_state = {
     -- doom_global_extended,
@@ -53,13 +57,9 @@ local function ensure_doom_ui_state()
       results_prepared = nil,
       buf_ref = nil,
       picker = nil,
-      selection = nil,
+      selection = { item = nil, type = nil },
       line_str = nil,
       index_selected = nil,
-    },
-    prev = {
-      title = nil,
-      buf_ref = nil,
     },
     history = {},
     ts = {
@@ -76,6 +76,8 @@ local function ensure_doom_ui_state()
       }
     }
   }
+
+  doom_ui_state["prev"] = doom_ui_state.current
 
 end
 
@@ -491,69 +493,43 @@ end
 P.doom_picker_everything = function(c) end
 P.doom_picker_all_binds = function(c) end
 P.doom_picker_all_autocmds = function(c) end
--- ...
--- ...
 
---
--- PICKER -> MAPPINGS BASE TABLE
---
+P.doom_binds_table_picker = function()
+  ensure_doom_ui_state()
+  doom_ui_state.current.title = "BINDS TABLE"
 
--- expects c.data to be array of (branch|leaf) mapping nest objects
-P.doom_binds_table_picker = function(c)
-
-
-  -- first picker in sequence
-  if c == nil then
-    c = {
-      buf_ref = nil,
-      history = {},
-      opts = {}
-    }
-  else
-    -- print("binds table prev config ------")
-    -- print(vim.inspect(c))
-    -- print("end --------------------------")
+  if doom_ui_state.prev ~= nil then
+    print(vim.inspect(doom_ui_state.prev.selection))
   end
 
-
-
-  if c.opts ~= nil then
-    c.opts["title"] = "Doom Binds Table"
-  end
-
-  if c.buf_ref == nil then
+  if doom_ui_state.current.buf_ref == nil then
     local p
-    if c.selected_module ~= nil then
-	p = c.selected_module.path .. "/init.lua"
+    if doom_ui_state.prev.selection.type == "module" then
+      print("#### module!")
+	    p = doom_ui_state.prev.selection.path .. "/init.lua"
     end
-    c.buf_ref = utils.get_buf_handle(p)
+    doom_ui_state.current.buf_ref = utils.get_buf_handle(p)
   end
 
-    -- print(vim.inspect(c))
-
-  if c.data == nil then
-    local t_nest_table_nodes = dui_ts.ts_get_doom_captures(c.buf_ref, "doom_module.binds_table")
-    local nestdata =  P.parse_nest_tables_meta_data(c.buf_ref, t_nest_table_nodes[1])
-
-    -- print("num nest: ", #t_nest_table_nodes, c.selected_module.path)
-    c["data"] = nestdata[1]
+  if doom_ui_state.prev.buf_ref == nil
+    or doom_ui_state.prev.selection.type ~= "binds_table"
+    or doom_ui_state.prev.selection.type ~= "binds_branch"
+    or doom_ui_state.prev.selection.type ~= "binds_leaf"
+    -- or doom_ui_state.prev.selection.type ~= "module" -- ??????????
+  then
+    print("# # nest # #")
+    local t_nest_table_nodes = dui_ts.ts_get_doom_captures(doom_ui_state.current.buf_ref, "doom_module.binds_table")
+    local nestdata =  tst.parse_nest_tables_meta_data(doom_ui_state.current.buf_ref, t_nest_table_nodes[1])
+    doom_ui_state.current.results_prepared = nestdata[1]
   end
 
-  opts = c.opts or {} -- if the user didn't specify options
-  local doom_binds_table_theme = require("telescope.themes").get_dropdown()
+  local opts = opts or require("telescope.themes").get_dropdown()
 
-  local function goback(prompt_bufnr, map)
-	    return map("i", "<C-z>", function(prompt_bufnr)
-	      require("telescope.actions").close(prompt_bufnr)
-	      prev()
-	    end)
-  end
-
-  pickers.new(doom_binds_table_theme, {
-    title = c.opts.title,
+  pickers.new(opts, {
+    title = doom_ui_state.current.title,
     finder = finders.new_table({
-      results = c.data,
-      entry_maker = display_binds_table,
+      results = doom_ui_state.current.results_prepared,
+      entry_maker = dui_em.display_binds_table,
     }),
     sorter = opts.sorter or conf.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
@@ -751,5 +727,36 @@ P.doom_global_picker_test = function()
   --
   --
 end
+
+local test = {}
+test.binds = {
+  { "[n", ":DoomPickerMain<cr>", name = "doom main menu command"},
+  { "[s", ":DoomPickerSettings<cr>", name = "picker doom settings"},
+  { "[m", ":DoomPickerModules<cr>", name = "picker doom modules"},
+  { "[b", ":DoomPickerModuleBinds<cr>", name = "picker doom binds"},
+  {
+    "<leader>",
+    name = "+prefix",
+    {
+      {
+        "n",
+        name = "+nnn",
+        {
+          { "l", [[ :DoomPickerMain<cr> ]], name = "main menu", options = { silent = false }, },
+          { "s", [[ :DoomPickerSettings<cr> ]], name = "settings", options = { silent = false }, }, -- lol
+          { "d", [[ :DoomPickerModules<cr> ]], name = "all modules", options = { silent = false }, },
+          { "S", [[ :DoomPickerModuleSettings<cr> ]], name = "m settings", options = { silent = false }, },
+          { "p", [[ :DoomPickerModulePackages<cr> ]], name = "m pgks", options = { silent = false }, },
+          { "c", [[ :DoomPickerModuleCmds<cr> ]], name = "m cmds", options = { silent = false }, },
+          { "a", [[ :DoomPickerModuleAutocmds<cr> ]], name = "m autocmds", options = { silent = false }, },
+          { "f", [[ :DoomPickerModuleBindsTable<cr> ]], name = "m binds table", options = { silent = false }, },
+          { "b", [[ :DoomPickerModuleBindsBranch<cr> ]], name = "m binds branch", options = { silent = false }, },
+          { "w", [[ :DoomPickerModuleBindsLeaf<cr> ]], name = "m binds leaf", options = { silent = false }, },
+        },
+      },
+    },
+  },
+}
+
 
 return P
