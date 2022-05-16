@@ -282,6 +282,7 @@ utils.iter_string_at = function(str, sep)
   return string.gmatch(str, "([^" .. sep .. "]+)")
 end
 
+-- returns tree -> should be renamed
 utils.get_modules_flat_with_meta_data = function()
   local config_path = vim.fn.stdpath("config")
 
@@ -353,6 +354,19 @@ utils.get_modules_flat_with_meta_data = function()
   end
 
  return prep_all_m
+end
+
+-- returns flattened array
+utils.get_modules_flattened = function(modules_tree)
+  local flattened = {}
+  for _, origin in pairs(modules_tree) do
+    for _, section in pairs(origin) do
+      for _, module in pairs(section) do
+        table.insert(flattened, module)
+      end
+    end
+  end
+  return flattened
 end
 
 utils.get_buf_handle = function(path)
