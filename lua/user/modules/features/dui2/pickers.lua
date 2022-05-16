@@ -36,7 +36,7 @@ local bind_params = {
 -- PICKER HELPERS
 --
 local function ensure_doom_ui_state()
-  if doom_ui_state ~= nil then return end
+  -- if doom_ui_state ~= nil then return end
 
   -- 1. get doom modules extended
   -- 2. flatten_doom_modules()
@@ -44,12 +44,33 @@ local function ensure_doom_ui_state()
   doom_ui_state = {
     -- doom_global_extended,
     all_modules_flattened = utils.get_modules_flat_with_meta_data(),
-    current = {},
-    bufref = nil,
+    current = {
+      results_prepared = nil,
+      bufref = nil,
+      picker_selection = nil,
+      picker_line = nil,
+      index_selected = nil,
+    },
     history = {},
-    index_selected = nil,
+    ts = {
+      root_settings = {
+        table_root = nil,
+        buf = nil,
+      },
+      root_modules = {
+
+      },
+      module = {
+        selected = nil,
+        buf = nil,
+      }
+    }
   }
 
+end
+
+local function doom_ui_state_reset_modules()
+  -- reset modules data
 end
 
 
@@ -90,6 +111,8 @@ end
 -- @param filter
 P.doom_modules_picker = function(c)
 
+  ensure_doom_ui_state()
+  doom_ui_state_reset_modules()
 
   local function mappings_prepare(prompt_bufnr, c)
 	  local fuzzy, line = picker_get_state(prompt_bufnr)
@@ -186,6 +209,7 @@ end
 --
 
 P.doom_main_menu_picker = function(c)
+  ensure_doom_ui_state()
   local function mappings_prepare(prompt_bufnr)
 	  local fuzzy, line = picker_get_state(prompt_bufnr)
 	  require("telescope.actions").close(prompt_bufnr)
@@ -253,16 +277,6 @@ P.doom_settings_picker = function(c)
   -- c.buf_ref
   --
   -- c.prepared_results
-
-  -- global
-  -- doom_ui_state.doom_global_extended
-  -- doom_ui_state.all_modules_flattened
-  -- doom_ui_state.current = {
-  --
-  -- }
-  -- doom_ui_state.history
-  -- doom_ui_state.selected_module_idx
-  -- doom_ui_state.bufref
 
   -- prepare results ----------
 
