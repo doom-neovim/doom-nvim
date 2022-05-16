@@ -96,33 +96,19 @@ local function next(picker)
   local store = vim.deepcopy(doom_ui_state.current)
   store.picker = prev_picker
   doom_ui_state.prev = store
-
-
-    print("store type:", store.picker)
   table.insert(doom_ui_state.history, 1, store)
-
   local hlen = #doom_ui_state.history
   if hlen > 10 then
     table.remove(doom_ui_state.history, hlen)
   end
-
   if picker ~= nil then picker() end
 end
 
 -- restore state and shift history
 local function prev()
-  -- print("hlen:", #doom_ui_state.history)
-
   local res = table.remove(doom_ui_state.history, 1)
-
-  print("prev -> ", res.title)
-
-  print(vim.inspect(res))
-
   if res ~= nil then
     doom_ui_state.prev = res
-    -- print("prev -> ", res.title)
-    print("type:", res.picker)
     doom_ui_state.prev.picker()
   end
 end
@@ -327,7 +313,6 @@ P.doom_settings_picker = function()
 	  )
   else
     doom_ui_state.current.buf_ref = doom_ui_state.prev.buf_ref
-    print(doom_ui_state.prev.selection:type())
 	  doom_ui_state.current.results_prepared = ts_table_picker_prepare(doom_ui_state.prev.selection)
   end
 
@@ -559,18 +544,15 @@ P.doom_binds_table_picker = function()
         local fuzzy = selection(prompt_bufnr)
         actions.close(prompt_bufnr)
 
-	      local new_c = c
-	      new_c.data = fuzzy.value
+	      doom_ui_state.current.selection = fuzzy.value
 
-	      table.insert(new_c.history, {
-		      prev_picker = P.doom_binds_table_picker,
-	      })
-	      if c.data.doom_category == "binds_branch" then
-	        P.doom_binds_branch_picker(new_c)
-	      elseif c.data.doom_category == "binds_leaf" then
-	        P.doom_binds_leaf_picker(new_c)
+	      if fuzzy.value.type == "binds_branch" then
+	        next(P.doom_binds_branch_picker)
+	      elseif fuzzy.value.type == "binds_leaf" then
+	        next(P.doom_binds_leaf_picker)
 	      else
 	      end
+
       end)
 
 	    goback(prompt_bufnr, map)
@@ -588,15 +570,8 @@ P.doom_binds_leaf_picker = function(c)
   doom_ui_state.current.title = "BINDS LEAF"
   doom_ui_state.current.picker = P.doom_binds_leaf_picker
 
-  if c == nil then
-  end
-  local pc = c.history[#c.history].prev_config
-  print("xxxx")
-  print(vim.inspect(pc))
 
-  opts = c.opts or {} -- if the user didn't specify options
-
-
+  -- results
   local prep_results = {}
   for k, v in pairs(c.data) do
     if vim.tbl_contains(bind_params, k) then
@@ -607,6 +582,7 @@ P.doom_binds_leaf_picker = function(c)
     end
   end
 
+  local opts = opts or require("telescope.themes").get_dropdown()
 
   pickers.new(opts, {
     title = opts.title,
@@ -638,17 +614,7 @@ P.doom_binds_leaf_picker = function(c)
 
         end)
 
-         -- go back
-         map("i", "<C-z>", function(prompt_bufnr)
-           require("telescope.actions").close(prompt_bufnr)
-	         if #c.history > 0 then
-	           local pp = c.history[#c.history].prev_picker
-	           local pc = c.history[#c.history].prev_config
-		          print("???")
-		          print(vim.inspect(pc))
-	           pp(pc)
-	         end
-         end)
+        goback(prompt_bufnr, map)
 
         return true
       end,
@@ -658,17 +624,10 @@ P.doom_binds_leaf_picker = function(c)
   }):find()
 end
 
---
--- PICKER -> MAPPINGS BRANCH
---
-
 P.doom_binds_branch_picker = function(c)
   ensure_doom_ui_state()
   doom_ui_state.current.title = "BINDS BRANCH"
   doom_ui_state.current.picker = P.doom_binds_branch_picker
-
-  if c == nil then
-  end
 
   local prep_results = {}
   for k, v in pairs(c.data) do
@@ -680,7 +639,8 @@ P.doom_binds_branch_picker = function(c)
     end
   end
 
-  opts = c.opts or {} -- if the user didn't specify options
+  local opts = opts or require("telescope.themes").get_dropdown()
+
   pickers.new(opts, {
     title = opts.title,
     finder = finders.new_table({
@@ -707,16 +667,7 @@ P.doom_binds_branch_picker = function(c)
 	        end
               end)
 
-               -- go back
-               map("i", "<C-z>", function(prompt_bufnr)
-                 require("telescope.actions").close(prompt_bufnr)
-	         if #c.history > 0 then
-	           local  pp = c.history[#c.history].prev_picker
-	           local  pc = c.history[#c.history].prev_config
-	           -- table.remove(c.history, #c.history) -- not necessary i think
-	           pp(pc)
-	         end
-         end)
+        goback(prompt_bufnr, map)
 
         return true
       end,
