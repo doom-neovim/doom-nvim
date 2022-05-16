@@ -92,9 +92,14 @@ local function doom_ui_state_reset_modules()
 end
 
 local function next(picker)
-  doom_ui_state.prev = doom_ui_state.current
+  local prev_picker = doom_ui_state.current.picker
+  local store = vim.deepcopy(doom_ui_state.current)
+  store.picker = prev_picker
+  doom_ui_state.prev = store
 
-  table.insert(doom_ui_state.history, 1, doom_ui_state.current)
+
+    print("store type:", store.picker)
+  table.insert(doom_ui_state.history, 1, store)
 
   local hlen = #doom_ui_state.history
   if hlen > 10 then
@@ -106,18 +111,26 @@ end
 
 -- restore state and shift history
 local function prev()
-  local previous = table.remove(doom_ui_state.history, 1)
-  -- print(vim.inspect(prev))
-  if previous ~= nil then
-    doom_ui_state.current = previous
-    print(doom_ui_state.current.title)
-    doom_ui_state.current.picker()
+  -- print("hlen:", #doom_ui_state.history)
+
+  local res = table.remove(doom_ui_state.history, 1)
+
+  print("prev -> ", res.title)
+
+  print(vim.inspect(res))
+
+  if res ~= nil then
+    doom_ui_state.prev = res
+    -- print("prev -> ", res.title)
+    print("type:", res.picker)
+    doom_ui_state.prev.picker()
   end
 end
 
 local function goback(prompt_bufnr, map)
 	  return map("i", "<C-z>", function(prompt_bufnr)
 	    require("telescope.actions").close(prompt_bufnr)
+	    -- print(doom_ui_state.history[1].title)
 	    prev()
 	  end)
 end
@@ -231,6 +244,7 @@ P.doom_main_menu_picker = function(c)
   ensure_doom_ui_state()
   doom_ui_state.current.title = "MAIN MENU"
   doom_ui_state.current.picker = P.doom_main_menu_picker
+
   local function mappings_prepare(prompt_bufnr)
 	  local fuzzy, line = picker_get_state(prompt_bufnr)
 	  require("telescope.actions").close(prompt_bufnr)
@@ -313,6 +327,7 @@ P.doom_settings_picker = function()
 	  )
   else
     doom_ui_state.current.buf_ref = doom_ui_state.prev.buf_ref
+    print(doom_ui_state.prev.selection:type())
 	  doom_ui_state.current.results_prepared = ts_table_picker_prepare(doom_ui_state.prev.selection)
   end
 
@@ -326,6 +341,7 @@ P.doom_settings_picker = function()
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
+
       actions_set.select:replace(function()
         local node = selection(prompt_bufnr).value
         require("telescope.actions").close(prompt_bufnr)
@@ -342,10 +358,6 @@ P.doom_settings_picker = function()
       end)
       goback(prompt_bufnr, map)
 
-	    -- map("i", "<C-z>", function(prompt_bufnr)
-	    --   require("telescope.actions").close(prompt_bufnr)
-	    --   prev()
-	    -- end)
       return true
     end,
   }):find()
