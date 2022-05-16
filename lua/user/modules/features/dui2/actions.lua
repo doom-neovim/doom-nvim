@@ -1,3 +1,9 @@
+local utils = require("doom.utils")
+local fs = require("doom.utils.fs")
+local system = require("doom.core.system")
+
+local sh = require("user.modules.features.dui2.shell")
+
 local actions = {}
 
 --

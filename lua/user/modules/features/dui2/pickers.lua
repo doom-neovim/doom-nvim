@@ -1,3 +1,7 @@
+local utils = require("doom.utils")
+local fs = require("doom.utils.fs")
+local system = require("doom.core.system")
+
 -- TELESCOPE
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
