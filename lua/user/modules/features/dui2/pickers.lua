@@ -61,6 +61,7 @@ local function ensure_doom_ui_state()
       line_str = nil,
       index_selected = nil,
     },
+
     history = {},
     ts = {
       root_settings = {
@@ -91,24 +92,25 @@ local function doom_ui_state_reset_modules()
 end
 
 local function next(picker)
-  print("func -> next()")
   doom_ui_state.prev = doom_ui_state.current
 
   table.insert(doom_ui_state.history, 1, doom_ui_state.current)
-  local hlen = #doom_ui_state.history
 
+  local hlen = #doom_ui_state.history
   if hlen > 10 then
     table.remove(doom_ui_state.history, hlen)
   end
+
   if picker ~= nil then picker() end
 end
 
 -- restore state and shift history
 local function prev()
-  local prev = table.remove(doom_ui_state.history, 1)
+  local previous = table.remove(doom_ui_state.history, 1)
   -- print(vim.inspect(prev))
-  if prev ~= nil then
-    doom_ui_state.current = prev
+  if previous ~= nil then
+    doom_ui_state.current = previous
+    print(doom_ui_state.current.title)
     doom_ui_state.current.picker()
   end
 end
@@ -146,6 +148,7 @@ P.doom_modules_picker = function(c)
   ensure_doom_ui_state()
   doom_ui_state_reset_modules()
   doom_ui_state.current.title = "ALL MODULES"
+  doom_ui_state.current.picker = P.doom_modules_picker
   local function mappings_prepare(prompt_bufnr)
 	  local fuzzy, line = picker_get_state(prompt_bufnr)
 	  require("telescope.actions").close(prompt_bufnr)
@@ -301,6 +304,7 @@ P.doom_settings_picker = function()
   end
 
   doom_ui_state.current.title = "USER SETTINGS" -- make into const
+  doom_ui_state.current.picker = P.doom_settings_picker
 
   if doom_ui_state.prev.buf_ref == nil or doom_ui_state.prev.title ~= "USER SETTINGS" then
     doom_ui_state.current.buf_ref = utils.get_buf_handle(utils.find_config("settings.lua"))
@@ -497,30 +501,35 @@ P.doom_picker_all_autocmds = function(c) end
 P.doom_binds_table_picker = function()
   ensure_doom_ui_state()
   doom_ui_state.current.title = "BINDS TABLE"
+  doom_ui_state.current.picker = P.doom_binds_table_picker
 
-  if doom_ui_state.prev ~= nil then
-    print(vim.inspect(doom_ui_state.prev.selection))
-  end
+  -- if doom_ui_state.prev ~= nil then
+  --   print(vim.inspect(doom_ui_state.prev.selection))
+  -- end
+
+  -- TODO: attach the nest data to the module.
+  --
+  -- 1. find which module we are working on.
+  -- 2. extend the module with the nest binds data.
 
   if doom_ui_state.current.buf_ref == nil then
     local p
     if doom_ui_state.prev.selection.type == "module" then
-      print("#### module!")
 	    p = doom_ui_state.prev.selection.path .. "/init.lua"
     end
     doom_ui_state.current.buf_ref = utils.get_buf_handle(p)
   end
 
-  if doom_ui_state.prev.buf_ref == nil
+  if doom_ui_state.prev.selection.type == nil
     or doom_ui_state.prev.selection.type ~= "binds_table"
     or doom_ui_state.prev.selection.type ~= "binds_branch"
     or doom_ui_state.prev.selection.type ~= "binds_leaf"
-    -- or doom_ui_state.prev.selection.type ~= "module" -- ??????????
   then
-    print("# # nest # #")
     local t_nest_table_nodes = dui_ts.ts_get_doom_captures(doom_ui_state.current.buf_ref, "doom_module.binds_table")
     local nestdata =  tst.parse_nest_tables_meta_data(doom_ui_state.current.buf_ref, t_nest_table_nodes[1])
     doom_ui_state.current.results_prepared = nestdata[1]
+  else
+    doom_ui_state.current.results_prepared = doom_ui_state.prev.selection
   end
 
   local opts = opts or require("telescope.themes").get_dropdown()
@@ -534,54 +543,38 @@ P.doom_binds_table_picker = function()
     sorter = opts.sorter or conf.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
 
-      goback(prompt_bufnr, map)
-	    -- map("i", "<C-z>", function(prompt_bufnr)
-	    --   require("telescope.actions").close(prompt_bufnr)
-	    --   prev()
-	    -- end)
+      actions_set.select:replace(function()
+        local fuzzy = selection(prompt_bufnr)
+        actions.close(prompt_bufnr)
 
-      -- REFACTOR: into ts_binds_table_mappings()
-        actions_set.select:replace(function()
-          local fuzzy = selection(prompt_bufnr)
-          actions.close(prompt_bufnr)
+	      local new_c = c
+	      new_c.data = fuzzy.value
 
-	        local new_c = c
-	        new_c.data = fuzzy.value
-
-	      -- how can c be leaf data here?
-	        -- print("######",vim.inspect(c))
-
-	        table.insert(new_c.history, {
+	      table.insert(new_c.history, {
 		      prev_picker = P.doom_binds_table_picker,
+	      })
+	      if c.data.doom_category == "binds_branch" then
+	        P.doom_binds_branch_picker(new_c)
+	      elseif c.data.doom_category == "binds_leaf" then
+	        P.doom_binds_leaf_picker(new_c)
+	      else
+	      end
+      end)
 
-	        })
+	    goback(prompt_bufnr, map)
 
-	        -- print(vim.inspect(fuzzy.value))
-	        if c.data.doom_category == "binds_branch" then
-	          P.doom_binds_branch_picker(new_c)
-	        elseif c.data.doom_category == "binds_leaf" then
-	          P.doom_binds_leaf_picker(new_c)
-	        else
-	          -- print("stop")
-	        end
-        end)
-
-	      goback(prompt_bufnr, map)
-
-        return true
-      end,
+      return true
+    end,
     previewer = previewers.new_buffer_previewer({
 	  define_preview = function() return vim.inspect(c.data) end,
 	})
   }):find()
 end
 
---
--- PICKER -> MAPPINGS LEAF ------
---
-
 P.doom_binds_leaf_picker = function(c)
-
+  ensure_doom_ui_state()
+  doom_ui_state.current.title = "BINDS LEAF"
+  doom_ui_state.current.picker = P.doom_binds_leaf_picker
 
   if c == nil then
   end
@@ -658,6 +651,9 @@ end
 --
 
 P.doom_binds_branch_picker = function(c)
+  ensure_doom_ui_state()
+  doom_ui_state.current.title = "BINDS BRANCH"
+  doom_ui_state.current.picker = P.doom_binds_branch_picker
 
   if c == nil then
   end

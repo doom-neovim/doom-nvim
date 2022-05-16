@@ -34,7 +34,7 @@ tst.parse_nest_tables_meta_data = function(buf, node, accumulated,level)
       if the_type == "table_constructor" then
         -- accumulated["children"] = {}
         local child_table = {
-		doom_category = "binds_table"
+		type = "binds_table"
 	}
         for child in node:iter_children() do
           if child:named() then
@@ -49,7 +49,7 @@ tst.parse_nest_tables_meta_data = function(buf, node, accumulated,level)
         return accumulated
       else
         accumulated["prefix"] = the_node
-	      accumulated["doom_category"] = "binds_leaf"
+	      accumulated["type"] = "binds_leaf"
         local nt = tsq.get_node_text(the_node, buf)
 	      accumulated["prefix_text"] = nt
         special_cnt = special_cnt + 1
@@ -99,7 +99,7 @@ tst.parse_nest_tables_meta_data = function(buf, node, accumulated,level)
   end
   if accumulated.rhs == nil and second_table then
     rhs = second_table
-    accumulated["doom_category"] = "binds_branch"
+    accumulated["type"] = "binds_branch"
   end
   accumulated["rhs"] = rhs
   if accumulated.rhs:type() == "table_constructor" then
