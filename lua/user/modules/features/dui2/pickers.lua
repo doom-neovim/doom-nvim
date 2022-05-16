@@ -4,12 +4,13 @@ local system = require("doom.core.system")
 
 -- dui
 local dui_ts = require("user.modules.features.dui2.ts")
+local dui_em = require("user.modules.features.dui2.make_entry")
 
 -- TELESCOPE
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
 local conf = require("telescope.config").values
-local entry_display = require("telescope.pickers.entry_display")
+-- local entry_display = require("telescope.pickers.entry_display")
 local actions_set = require("telescope.actions.set")
 local state = require("telescope.actions.state")
 local actions = require("telescope.actions")
@@ -34,6 +35,23 @@ local bind_params = {
 --
 -- PICKER HELPERS
 --
+local function ensure_doom_ui_state()
+  if doom_ui_state ~= nil then return end
+
+  -- 1. get doom modules extended
+  -- 2. flatten_doom_modules()
+
+  doom_ui_state = {
+    -- doom_global_extended,
+    all_modules_flattened = utils.get_modules_flat_with_meta_data(),
+    current = {},
+    bufref = nil,
+    history = {},
+    index_selected = nil,
+  }
+
+end
+
 
 local function line(buf)
   return state.get_current_line(buf)
@@ -74,12 +92,13 @@ P.doom_modules_picker = function(c)
 
 
   local function mappings_prepare(prompt_bufnr, c)
-	local fuzzy, line = picker_get_state(prompt_bufnr)
-	require("telescope.actions").close(prompt_bufnr)
-	table.insert(c.history, c)
-	c.data = nil -- why??
-	return c, fuzzy, line
+	  local fuzzy, line = picker_get_state(prompt_bufnr)
+	  require("telescope.actions").close(prompt_bufnr)
+	  table.insert(c.history, c)
+	  c.data = nil -- why??
+	  return c, fuzzy, line
   end
+
   local t_mappings = {
 	{ "<cr>:EDIT", "i", "<CR>", function(prompt_bufnr)
         	local c, fuzzy, line = mappings_prepare(prompt_bufnr, c)
@@ -121,14 +140,27 @@ P.doom_modules_picker = function(c)
   end
 
   if c == nil then
+
+    -- make into three funcs
+    -- get_doom_extended, get_enabled_modules_flattened(get_doom_extended), get_all_modules_flattened(get_doom_extended)
+
+    local doom_global_extended, all_modules_flattened = utils.get_modules_flat_with_meta_data()
+
     c = {
-      all_modules_flattened = utils.get_modules_flat_with_meta_data(),
+      doom_global_extended = doom_global_extended,
+      all_modules_flattened = all_modules_flattened,
       buf_ref = nil,
       history = {},
       opts = {
 	    title = "Doom Modules"
       }
     }
+  end
+
+  local function ts_table_picker_prepare(t)
+    -- prepare the results array here
+    -- I belive it should only be appending the buf_ref to each flattened module, so
+    -- they can all be transformed in the entry maker
   end
 
   local doom_modules_theme = require("telescope.themes").get_dropdown()
@@ -142,7 +174,7 @@ P.doom_modules_picker = function(c)
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(_, map)
       for _,m in pairs(t_mappings) do
-	map(m[2], m[3], m[4])
+	      map(m[2], m[3], m[4])
       end
       return true
     end,
@@ -205,10 +237,6 @@ P.doom_main_menu_picker = function(c)
 
 end
 
---
--- PICKER -> DOOM SETTINGS
---
-
 -- expects there to be a `settings.lua` file in
 -- doom root dir that returns only the settings table of
 -- the doom global table.
@@ -216,84 +244,81 @@ end
 -- rename this to a generic `table_picker`,
 -- 	so that any table can be recursively pickyfied.
 P.doom_settings_picker = function(c)
+  c = c or { picker_depth = 1 }
+  c.buf_ref = c.buf_ref or utils.get_buf_handle(utils.find_config("settings.lua"))
 
-  local function ts_table_picker_prepare()
-  end
+  ensure_doom_ui_state()
 
-  local function ts_table_picker_mappings()
-  end
+  -- c.opts           -> telecope options
+  -- c.buf_ref
+  --
+  -- c.prepared_results
 
-  if c == nil then c = {} end
-  if c.settings_table == nil then
-	c["settings_table"] = {}
-	c["picker_depth"] = 1
-  c["buf_ref"] = utils.get_buf_handle(utils.find_config("settings.lua"))
+  -- global
+  -- doom_ui_state.doom_global_extended
+  -- doom_ui_state.all_modules_flattened
+  -- doom_ui_state.current = {
+  --
+  -- }
+  -- doom_ui_state.history
+  -- doom_ui_state.selected_module_idx
+  -- doom_ui_state.bufref
 
-	local ts_settings_table = dui_ts.ts_get_doom_captures(c.buf_ref, "doom_root.settings_table")
+  -- prepare results ----------
 
-    for n in ts_settings_table[1]:iter_children() do
-      if n:named() then
-	      local the_node = n
-	      local the_type = n:type(1)
-	      if the_type ~= "comment" then
-		      table.insert(c.settings_table, n)
-        end
+  local function ts_table_picker_prepare(t)
+    local prep = {}
+    for n in t[1]:iter_children() do
+      if n:named() and n:type(1) ~= "comment" then
+		    table.insert(prep, n)
 	    end
     end
+    return prep
   end
 
-  print(vim.inspect(c))
+  if c.prepared_results == nil then
+	  c["prepared_results"] = {}
+	  c.prepared_results = ts_table_picker_prepare(dui_ts.ts_get_doom_captures(c.buf_ref, "doom_root.settings_table"))
+  else
+	  c.prepared_results = ts_table_picker_prepare(c.prepared_results)
+  end
 
-  if c.picker_depth and c.picker_depth > 1 then
-	local passed_table = c.settings_table
-	c.settings_table = {}
-	-- print(vim.inspect(c))
-        for n in passed_table:iter_children() do
-          if n:named() then
-	    local the_node = n
-	    local the_type = n:type()
-	    if the_type ~= "comment" then
-		table.insert(c.settings_table, n)
-		-- print(type)
-            end
-	  end
-        end
+  -- prepare mappings ---------------------
+
+  local function ts_table_picker_mappings(prompt_bufnr, map)
+      actions_set.select:replace(function()
+        local fuzzy = selection(prompt_bufnr)
+	      -- print(vim.inspect(fuzzy.value:type()))
+ 	      local node = fuzzy.value
+        require("telescope.actions").close(prompt_bufnr)
+	      local f1 = node:named_child(0)
+	      local f2 = node:named_child(1)
+	      local f2x = ntext(f2, c.buf_ref)
+	      if f2:type() == "table_constructor" then
+		      f2x = " >>> { ... }"
+		      c.picker_depth = c.picker_depth + 1
+		      c.prepared_results = f2
+		      P.doom_settings_picker(c)
+	      else
+		      print(ntext(f1, c.buf_ref) .. " -> " .. f2x)
+	   	      local sr,sc,er,ec = f1:range()
+	  	      vim.api.nvim_win_set_buf(0, c.buf_ref)
+	  	      vim.fn.cursor(er+1,ec)
+	      end
+      end)
   end
 
   opts = opts or require("telescope.themes").get_dropdown()
-  -- local opts = require("telescope.themes").get_dropdown()
 
   require("telescope.pickers").new(opts, {
     prompt_title = "create user module",
     finder = require("telescope.finders").new_table({
-      results = c.settings_table,
-      entry_maker = display_doom_settings,
+      results = c.prepared_results,
+      entry_maker = dui_em.display_doom_settings
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
-
-      -- REFACTOR: move this to mappings func above
-        actions_set.select:replace(function()
-          local fuzzy = selection(prompt_bufnr)
-	  -- print(vim.inspect(fuzzy.value:type()))
- 	  local node = fuzzy.value
-          require("telescope.actions").close(prompt_bufnr)
-	  local f1 = node:named_child(0)
-
-	  local f2 = node:named_child(1)
-	  local f2x = ntext(f2, c.buf_ref)
-	  if f2:type() == "table_constructor" then
-		  f2x = " >>> { ... }"
-		  c.picker_depth = c.picker_depth + 1
-		  c.settings_table = f2
-		  P.doom_settings_picker(c)
-	  else
-		  print(ntext(f1, c.buf_ref) .. " -> " .. f2x)
-	   	  local sr,sc,er,ec = f1:range()
-	  	  vim.api.nvim_win_set_buf(0, c.buf_ref)
-	  	  vim.fn.cursor(er+1,ec)
-	  end
-        end)
+      ts_table_picker_mappings(prompt_bufnr, map)
       return true
     end,
   }):find()
@@ -689,6 +714,16 @@ P.doom_binds_branch_picker = function(c)
 	  define_preview = function() return "-----" end,
 	})
   }):find()
+end
+
+P.doom_global_picker_test = function()
+  -- here try passing the whole doom table to a picker and see how it would work to
+  -- traverse the tree, and only make treesitter queries when you reach a leaf that
+  -- you actually want to modify. this way it could be much easier to manage the
+  -- doom config.
+  -- it should also be possible to pass any node of the tree to the picker and expand from there.
+  --
+  --
 end
 
 return P
