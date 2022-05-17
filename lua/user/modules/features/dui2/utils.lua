@@ -64,16 +64,17 @@ M.binds_flattened = function(nest_tree, flattened, bstack)
     for _, t in ipairs(nest_tree) do
       if type(t.rhs) == "table" then
         -- :: BRANCH ::::::::::::::::::::::::::::::::::::::::::::::
+        -- TODO: add each branch to flattened and tag as t["type"] = "module_bind_branch"
+        -- so that you can select it and `add_mapping_to_branch`
+        -- or `add_new_branch_level_to_branch()`
         table.insert(bstack, t.lhs)
         flattened = M.binds_flattened(t.rhs, flattened, bstack)
       else
         -- :: LEAF ::::::::::::::::::::::::::::::::::::::::::::::::
-        -- local pre = ""
-        -- if #bstack > 0 then
-        --   pre = table.concat(bstack, " -> ")
-        -- end
-        -- local res = "#".. t.lhs .. sep .. t[1] .. sep .. t.name .. sep .. sep .. type(t.rhs)
-        t["type"] = "module_bind"
+
+        -- TODO: attach the corresponding branch to each bind
+        -- so that you can do `add_mapping_to_same_branch()`
+        t["type"] = "module_bind_leaf"
         table.insert(flattened, t)
       end
     end

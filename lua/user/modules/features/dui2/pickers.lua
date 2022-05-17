@@ -396,7 +396,7 @@ P.doom_module_full_picker = function()
 
 	-- print("full module prep res ->", vim.inspect(doom_ui_state.current.results_prepared))
 
-  opts = opts or require("telescope.themes").get_cursor()
+  opts = require("telescope.themes").get_ivy()
 
   require("telescope.pickers").new(opts, {
 

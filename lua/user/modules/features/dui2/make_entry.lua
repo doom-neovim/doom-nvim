@@ -1,5 +1,10 @@
 local ts = require("user.modules.features.dui2.ts")
 
+local function i(x)
+  print(vim.inspect(x))
+end
+
+
 local entry_makers = {}
 
 -- MODULE META PARAMS EXAMPLE
@@ -77,12 +82,30 @@ end
 function entry_makers.display_module_full(entry)
 	-- print(doom_ui_state.all_modules_flattened[selected_module_idx].title)
 	local function make_display(t)
+	  local res = ""
 	  local idx = doom_ui_state.selected_module_idx
 
 	  local sec = doom_ui_state.all_modules_flattened[idx].section
 	  local name = doom_ui_state.all_modules_flattened[idx].name
+
+  -- value = { "w", " :DoomPickerModuleBindsLeaf<cr> ",
+  --   lhs = "<leader>nw",
+  --   name = "m binds leaf",
+  --   options = {
+  --     silent = false
+  --   },
+  --   rhs = " :DoomPickerModuleBindsLeaf<cr> ",
+  --   type = "module_bind_leaf"
+
+	  if t.key == "module_bind_leaf" then
+      res = t.value.lhs .. " -> " .. t.value.rhs .. " // name: " .. t.value.name
+      -- i(t)
+    else
+      res = t.key .. " > " .. tostring(t.value)
+	  end
+
 	  -- return sec .. " > " .. name .. ": " .. t.key
-	  return t.key .. " > " .. tostring(t.value)
+	  return res
 	end
 	return {
 	  value = entry,
