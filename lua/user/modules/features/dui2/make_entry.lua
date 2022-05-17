@@ -84,32 +84,33 @@ function entry_makers.display_module_full(entry)
 	local function make_display(t)
 	  local res = ""
 	  local idx = doom_ui_state.selected_module_idx
-
 	  local sec = doom_ui_state.all_modules_flattened[idx].section
 	  local name = doom_ui_state.all_modules_flattened[idx].name
 
-  -- value = { "w", " :DoomPickerModuleBindsLeaf<cr> ",
-  --   lhs = "<leader>nw",
-  --   name = "m binds leaf",
-  --   options = {
-  --     silent = false
-  --   },
-  --   rhs = " :DoomPickerModuleBindsLeaf<cr> ",
-  --   type = "module_bind_leaf"
-
 	  if t.key == "module_bind_leaf" then
-      res = t.value.lhs .. " -> " .. t.value.rhs .. " // name: " .. t.value.name
-      -- i(t)
+      res = "BIND: " .. t.value.lhs .. " -> " .. t.value.rhs .. " // name: " .. t.value.name
+
+	  elseif t.key == "module_setting" then
+	    local sval
+	    i(t.value)
+	    if type(t.value.value) ~= table then
+	      sval = t.value.key .. " -> " ..tostring(t.value.value)
+	    else
+	      sval = t.value.key .. " -> { ... }"
+	    end
+      res = "SETTING: " .. sval --.. " -> " .. t.value.rhs .. " // name: " .. t.value.name
+
+	  elseif t.key == "module_package" then
+      res = "PACKAGE: " .. t.value[1] --.. " -> " .. t.value.rhs .. " // name: " .. t.value.name
+
     else
       res = t.key .. " > " .. tostring(t.value)
 	  end
 
-	  -- return sec .. " > " .. name .. ": " .. t.key
 	  return res
 	end
 	return {
 	  value = entry,
-	  -- display = entry.key .. " > " .. type(entry.value),
 	  display = function(tbl) return make_display(tbl.value) end,
 	  ordinal = entry.key,
 	}

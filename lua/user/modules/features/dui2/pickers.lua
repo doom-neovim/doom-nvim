@@ -364,19 +364,45 @@ P.doom_module_full_picker = function()
 
     if vim.tbl_contains(MODULE_COMPONENTS, k) then
 
-      -- flatten binds
-      if k == "binds" then
-        for _, bind_flat in ipairs(pu.binds_flattened(v)) do
-          -- i(bind_flat)
-          table.insert(prep, {
-            key = bind_flat.type,
-            value = bind_flat
-          })
+      if k == "settings" then
+        -- i(v)
+        for a, b in pairs(v) do
+          i(b)
+          print(a, type(b))
+          table.insert(prep, { key = "module_setting", value = { key = a, value = b } })
         end
 
-      -- flatten cmds
+      elseif k == "packages" then
+        for pname, pkg in pairs(v) do
+          -- i(pkg)
+          table.insert(prep, { key = "module_package", value = pkg })
+        end
 
-      -- flatten autocmds
+      -- elseif k == "configs" then
+      --   for pname, pkg in pairs(v) do
+      --     -- i(pkg)
+      --     table.insert(prep, { key = "module_package", value = pkg })
+      --   end
+
+      -- elseif k == "cmds" then
+      --   for pname, pkg in pairs(v) do
+      --     -- i(pkg)
+      --     table.insert(prep, { key = "module_package", value = pkg })
+      --   end
+
+      -- elseif k == "autocmds" then
+      --   for pname, pkg in pairs(v) do
+      --     -- i(pkg)
+      --     table.insert(prep, { key = "module_package", value = pkg })
+      --   end
+
+
+
+      elseif k == "binds" then
+          for _, bind_flat in ipairs(pu.binds_flattened(v)) do
+            table.insert(prep, { key = bind_flat.type, value = bind_flat })
+          end
+
 
       else
         table.insert(prep, {
@@ -391,8 +417,6 @@ P.doom_module_full_picker = function()
   -- i(prep)
 
   doom_ui_state.current.results_prepared = prep
-
-
 
 	-- print("full module prep res ->", vim.inspect(doom_ui_state.current.results_prepared))
 

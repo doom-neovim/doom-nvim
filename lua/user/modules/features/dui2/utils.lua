@@ -42,7 +42,10 @@ end
 M.settings_flattened = function(nest_tree, flattened, bstack)
 end
 
-M.packages_flattened = function(nest_tree, flattened, bstack)
+M.packages_flattened = function(t_packages)
+  local flattened = {}
+  i(t_packages)
+  return flattened
 end
 
 M.configs_flattened = function(nest_tree, flattened, bstack)
