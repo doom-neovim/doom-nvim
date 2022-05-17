@@ -8,6 +8,7 @@ local ts = require("user.modules.features.dui2.ts")
 local em = require("user.modules.features.dui2.make_entry")
 local ax = require("user.modules.features.dui2.actions")
 local tst = require("user.modules.features.dui2.ts_traverse")
+local pu = require("user.modules.features.dui2.utils")
 
 -- TELESCOPE
 local pickers = require("telescope.pickers")
@@ -354,16 +355,27 @@ P.doom_module_full_picker = function()
   --    create title based on the selected module > so that we can show `MODULE: doom > feat > lsp (disabled)`
 
   local prep = {}
-  -- print(vim.inspect(MODULE_COMPONENTS))
-  for k, v in pairs(doom_ui_state.prev.selection) do
 
+
+  -- TODO: if k == binds -> flatten each bind into a keymapping.
+
+  for k, v in pairs(doom_ui_state.prev.selection) do
     -- print(k, v)
 
     if vim.tbl_contains(MODULE_COMPONENTS, k) then
-      table.insert(prep, {
-        key = k,
-        value = v
-      })
+
+      if k == "binds" then
+        for _, bind_flat in ipairs(pu.binds_flattened(v)) do
+          table.insert(prep, bind_flat)
+        end
+
+      else
+        table.insert(prep, {
+          key = k,
+          value = v
+        })
+      end
+
     end
   end
 
