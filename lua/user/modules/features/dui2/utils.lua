@@ -39,26 +39,74 @@ M.filter_modules = function(filter)
   return filtered
 end
 
+M.get_module_components_prepared_for_picker = function()
+
+end
+
+
+-- @return array of
+-- {
+--  type = string
+-- }
 M.settings_flattened = function(nest_tree, flattened, bstack)
 end
 
+
+-- @return array of
+-- {
+--  type = string,
+--  name = string,
+--  spec = table,
+-- }
 M.packages_flattened = function(t_packages)
   local flattened = {}
-  i(t_packages)
+  if t_packages == nil then return end
+  for idx, v in ipairs(t_packages) do
+    table.insert(flattened, {
+
+    })
+  end
   return flattened
 end
 
+
+-- @return array of
+-- {
+--  type = string
+--  ...
+--  ...
+-- }
 M.configs_flattened = function(nest_tree, flattened, bstack)
 end
 
 
+
+-- @return array of
+-- {
+--  type = string
+--  ...
+--  ...
+-- }
 M.cmds_flattened = function(nest_tree, flattened, bstack)
 end
 
+
+-- @return array of
+-- {
+--  type = string
+--  ...
+--  ...
+-- }
 M.autocmds_flattened = function(nest_tree, flattened, bstack)
 end
 
 
+-- @return array of
+-- {
+--  type = string
+--  ...
+--  ...
+-- }
 M.binds_flattened = function(nest_tree, flattened, bstack)
   local flattened = {}
   local sep = " | "

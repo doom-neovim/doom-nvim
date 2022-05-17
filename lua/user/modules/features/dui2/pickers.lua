@@ -18,7 +18,7 @@ local conf = require("telescope.config").values
 local actions_set = require("telescope.actions.set")
 local state = require("telescope.actions.state")
 local actions = require("telescope.actions")
--- local previewers = require("telescope.previewers")
+local previewers = require("telescope.previewers")
 
 
 local P = {}
@@ -357,49 +357,62 @@ P.doom_module_full_picker = function()
   local prep = {}
 
 
-  -- TODO: if k == binds -> flatten each bind into a keymapping.
+  -- move this to
 
   for k, v in pairs(doom_ui_state.prev.selection) do
     -- print(k, v)
 
     if vim.tbl_contains(MODULE_COMPONENTS, k) then
 
-      if k == "settings" then
-        -- i(v)
+      -- TODO: monitor state in the preview window??
+      --
+      -- TODO: the work `key` should be replaced by `type`
+      --
+      -- also each entry has to have enough information
+      --
+      --
+      -- {
+      --    type = string,
+      --    ...
+      --    ... flattened params..
+      --    ..
+      --    .
+      -- }
+
+
+      if k == "settings" then -- TODO: requires flattening
         for a, b in pairs(v) do
-          i(b)
-          print(a, type(b))
           table.insert(prep, { key = "module_setting", value = { key = a, value = b } })
         end
 
-      elseif k == "packages" then
+      elseif k == "packages" then -- TODO: could use a flattening func that accounts for plain strings and anonymous tables.
         for pname, pkg in pairs(v) do
           -- i(pkg)
           table.insert(prep, { key = "module_package", value = pkg })
         end
 
-      -- elseif k == "configs" then
-      --   for pname, pkg in pairs(v) do
-      --     -- i(pkg)
+      elseif k == "configs" then -- TODO: flatten -> account for table / func
+        for cn, cfg in pairs(v) do
+          -- i(cfg)
+          -- table.insert(prep, { key = "module_config", value = pkg })
+        end
+
+      elseif k == "cmds" then -- TODO: put all entries in keys?
+        for _, cmd in pairs(v) do
+          i(cmd)
+          -- table.insert(prep, { key = "module_cmd", value = pkg })
+        end
+
+      elseif k == "autocmds" then -- TODO: same as cmds
+        for _, autocmd in pairs(v) do
+          i(autocmd)
       --     table.insert(prep, { key = "module_package", value = pkg })
-      --   end
+        end
 
-      -- elseif k == "cmds" then
-      --   for pname, pkg in pairs(v) do
-      --     -- i(pkg)
-      --     table.insert(prep, { key = "module_package", value = pkg })
-      --   end
-
-      -- elseif k == "autocmds" then
-      --   for pname, pkg in pairs(v) do
-      --     -- i(pkg)
-      --     table.insert(prep, { key = "module_package", value = pkg })
-      --   end
-
-
-
-      elseif k == "binds" then
+      elseif k == "binds" then -- TODO: improve displayer; make sure all necessary keys are in the entry table.
           for _, bind_flat in ipairs(pu.binds_flattened(v)) do
+
+            -- REMOVE: i should just pass the flat bind
             table.insert(prep, { key = bind_flat.type, value = bind_flat })
           end
 
@@ -438,7 +451,7 @@ P.doom_module_full_picker = function()
       return true
     end,
    --  previewer = previewers.new_buffer_previewer({
-	  --   define_preview = function() return vim.inspect(c.data) end,
+	  --   define_preview = function() return "xxxxxxxxxx" end,
 	  -- })
   }):find()
 
