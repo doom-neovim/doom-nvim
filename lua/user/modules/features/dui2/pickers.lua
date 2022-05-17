@@ -322,7 +322,24 @@ P.doom_module_full_picker = function()
   us.ensure_doom_ui_state()
   us.doom_ui_state_reset_modules()
 
-  doom_ui_state.current.title = "MODULE_FULL" -- make into const
+
+  local postfix = ""
+  if doom_ui_state.selected_module_idx ~= nil then
+	  local idx = doom_ui_state.selected_module_idx
+
+	  local morig = doom_ui_state.all_modules_flattened[idx].origin
+	  local mfeat = doom_ui_state.all_modules_flattened[idx].section
+	  local mname = doom_ui_state.all_modules_flattened[idx].name
+	  local menab = doom_ui_state.all_modules_flattened[idx].enabled
+
+	  postfix = postfix .. morig .. ">" .. mfeat .. ">" .. mname .. " (enabled=" .. tostring(menab) .. ")"
+  end
+
+  doom_ui_state.current.title = "MODULE_FULL " .. postfix -- make into const
+
+
+
+
   doom_ui_state.current.picker = P.doom_module_full_picker
 
   -- try current buffer? or prev
