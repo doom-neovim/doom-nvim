@@ -1,9 +1,51 @@
 local M = {}
 
+local nui_settings = {
+  confirm_alternatives = { "yes", "no" },
+  section_alternatives = { "user", "features", "langs", "core" },
+  popup = {
+    relative = "cursor",
+    position = {
+      row = 1,
+      col = 0,
+    },
+    size = 20,
+    border = {
+      style = "rounded",
+      text = {
+        top = "[Input]",
+        top_align = "left",
+      },
+    },
+    win_options = {
+      winhighlight = "Normal:Normal",
+    },
+  },
+  menu = {
+    position = "20%",
+    size = {
+      width = 20,
+      height = 2,
+    },
+    relative = "editor",
+    border = {
+      style = "single",
+      text = {
+        top = "Choose Something",
+        top_align = "center",
+      },
+    },
+    win_options = {
+      winblend = 10,
+      winhighlight = "Normal:Normal",
+    },
+  },
+}
+
 M.nui_input = function(title, callback)
   local Input = require("nui.input")
   local event = require("nui.utils.autocmd").event
-  local input = Input(conf_ui.settings.popup, {
+  local input = Input(nui_settings.popup, {
     prompt = title .. "> ",
     default_value = "",
     on_close = function()
@@ -23,7 +65,7 @@ M.nui_input = function(title, callback)
 end
 
 local function menu_set_title(title)
-  local opts = conf_ui.settings.menu
+  local opts = nui_settings.menu
   opts.border.text.top = title
   return opts
 end

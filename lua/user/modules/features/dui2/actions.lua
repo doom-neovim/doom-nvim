@@ -1,26 +1,25 @@
-local utils = require("doom.utils")
-local fs = require("doom.utils.fs")
+-- local utils = require("doom.utils")
+-- local fs = require("doom.utils.fs")
 local system = require("doom.core.system")
 
-local sh = require("user.modules.features.dui2.shell")
+-- local sh = require("user.modules.features.dui2.shell")
+local nui = require("user.modules.features.dui2.nui")
 
 local actions = {}
 
---
--- MODULE ACTIONS
---
+local confirm_alternatives = { "yes", "no" }
 
 
-actions.m_edit = function(c)
-  if c.selected_module ~= nil then
-    vim.cmd(string.format(":e %s%s%s", c.selected_module.path, system.sep, "init.lua"))
+actions.m_edit = function(m)
+  if m.type == "module" then
+    vim.cmd(string.format(":e %s%s%s", m.path, system.sep, "init.lua"))
   end
 end
 
-actions.m_rename = function(c)
-  nui_input("NEW NAME", function(value)
+actions.m_rename = function(m)
+  nui.nui_input("NEW NAME", function(value)
     if not check_if_module_name_exists(c, value) then
-      print("old name: ", c.selected_module.name, ", new name:", value)
+      print("old name: ", m.name, ", new name:", value)
 --       local new_name = value
 --
 --       local buf, _ = transform_root_mod_file(m, function(buf, node, capt, node_text)
@@ -60,14 +59,14 @@ actions.m_rename = function(c)
   end)
 end
 
-actions.m_create = function(c)
+actions.m_create = function(m)
   local new_name
   local for_section
 
-  nui_menu("CONFIRM CREATE", conf_ui.settings.confirm_alternatives, function(value)
+  nui.nui_menu("CONFIRM CREATE", confirm_alternatives, function(value)
     if value.text == "yes" then
       new_name = c.new_module_name
-      nui_menu("FOR SECTION:", conf_ui.settings.section_alternatives, function(value)
+      nui.nui_menu("FOR SECTION:", conf_ui.settings.section_alternatives, function(value)
         for_section = value.text
         print("create mod >> new name:", for_section .. " > " .. new_name)
 --         if not check_if_module_name_exists(c, { section = nil }, value) then
@@ -86,7 +85,7 @@ end
 -- TODO: what happens if you try to remove a module that has been disabled ?? account for disabled in modules.lua
 --
 actions.m_delete = function(c)
-  nui_menu("CONFIRM DELETE", conf_ui.settings.confirm_alternatives, function(value)
+  nui.nui_menu("CONFIRM DELETE", confirm_alternatives, function(value)
     if value.text == "yes" then
 	print("delete module: ", c.selected_module.section .. " > " .. c.selected_module.name)
 --       local buf, _ = transform_root_mod_file(m, function(buf, node, capt, node_text)
