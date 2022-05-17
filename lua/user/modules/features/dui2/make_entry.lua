@@ -18,15 +18,25 @@ local entry_makers = {}
 function entry_makers.display_all_modules(entry)
 	local function make_display(t)
 
-    local on
-    if entry.enabled then
-      on = "y"
+	  local res = ""
+
+    local on = "x"
+    local org
+
+    if not t.enabled then on = "_" end
+
+    if t.origin == "user" then
+      org = "u"
     else
-      on = "n"
+      org = "d"
     end
 
-	  return "["..on.."] ".. t.origin .. " > " .. t.section .." -> " .. t.name
+    -- res = string.format([[ ]],
+    -- )
+
+	  return t.origin .. " ["..on.."] : " .. t.section .." -> " .. t.name
 	end
+
 	return {
 	  value = entry,
 	  display = function(tbl) return make_display(tbl.value) end,
