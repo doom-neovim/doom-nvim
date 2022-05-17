@@ -23,6 +23,9 @@ doom_ui.cmds = {
 	    pickers.doom_settings_picker()
 	  end,
 	},
+
+	{ "DoomPickerModuleFull", 		    function() reset() pickers.doom_module_full_picker() end, },
+
 	{ "DoomPickerModules", 		        function() reset() pickers.doom_modules_picker() end, },
 	{ "DoomPickerModuleSettings", 		function() reset() pickers.doom_module_settings_picker() end, },
 	{ "DoomPickerModulePackages", 		function() reset() pickers.doom_module_packages_picker() end, },
@@ -48,6 +51,9 @@ doom_ui.binds = {
         {
           { "l", [[ :DoomPickerMain<cr> ]], name = "main menu", options = { silent = false }, },
           { "s", [[ :DoomPickerSettings<cr> ]], name = "settings", options = { silent = false }, }, -- lol
+
+          { "n", [[ :DoomPickerModuleFull<cr> ]], name = "m_full", options = { silent = false }, },
+
           { "d", [[ :DoomPickerModules<cr> ]], name = "all modules", options = { silent = false }, },
           { "S", [[ :DoomPickerModuleSettings<cr> ]], name = "m settings", options = { silent = false }, },
           { "p", [[ :DoomPickerModulePackages<cr> ]], name = "m pgks", options = { silent = false }, },

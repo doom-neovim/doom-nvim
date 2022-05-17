@@ -79,6 +79,7 @@ P.doom_modules_picker = function(c)
   us.doom_ui_state_reset_modules()
   doom_ui_state.current.title = "ALL MODULES"
   doom_ui_state.current.picker = P.doom_modules_picker
+
   local function mappings_prepare(prompt_bufnr)
 	  local fuzzy, line = picker_get_state(prompt_bufnr)
 	  require("telescope.actions").close(prompt_bufnr)
@@ -93,6 +94,13 @@ P.doom_modules_picker = function(c)
 		    ax.m_edit(doom_ui_state.current.selection)
 		  end
 		},
+	  { "^a:DISPLAY", "i", "<C-a>",
+	    function(prompt_bufnr)
+        local fuzzy, line = mappings_prepare(prompt_bufnr)
+		    doom_ui_state.current.selection = fuzzy.value
+		    us.next(P.doom_module_full_picker)
+	    end
+	  },
 	  { "^r:RENAME", "i", "<C-r>",
 	    function(prompt_bufnr)
         local fuzzy, line = mappings_prepare(prompt_bufnr)
@@ -138,10 +146,13 @@ P.doom_modules_picker = function(c)
 
   local doom_modules_theme = require("telescope.themes").get_dropdown()
 
+  -- type = "module" for all modules.
+  doom_ui_state.results_prepared = doom_ui_state.all_modules_flattened
+
   require("telescope.pickers").new(doom_modules_theme, {
     prompt_title = doom_ui_state.current.title,
     finder = require("telescope.finders").new_table({
-      results = doom_ui_state.all_modules_flattened,
+      results = doom_ui_state.results_prepared,
       entry_maker = em.display_all_modules
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
@@ -177,7 +188,13 @@ P.doom_main_menu_picker = function(c)
   		{ "jobs 	  (todo..)",function() end },
   }
 
+  -- add type tag
+  for _, v in ipairs(doom_menu_items) do
+    doom_menu_items["type"] = "main_menu"
+  end
+
   doom_ui_state.current.results_prepared = doom_menu_items
+
   local doom_menu_theme = require("telescope.themes").get_dropdown()
   opts = opts or require("telescope.themes").get_ivy()
 
@@ -216,18 +233,22 @@ end
 -- REFACTOR: GENERING TABLE PICKER
 P.doom_settings_picker = function()
   us.ensure_doom_ui_state()
+
   -- @param table_constructor
+  -- refactor into ts table_construct_get_sub_fields(???)
   local function ts_table_picker_prepare(t)
     local prep = {}
     for n in t:iter_children() do
       if n:named() and n:type(1) ~= "comment" then
-		    table.insert(prep, n)
+        table.insert(prep, n)
 	    end
     end
     return prep
   end
 
-  doom_ui_state.current.title = "USER SETTINGS" -- make into const
+  -- replace `_` in entry_maker with ` `
+  doom_ui_state.current.title = "USER_SETTINGS" -- make into const
+
   doom_ui_state.current.picker = P.doom_settings_picker
 
   if doom_ui_state.prev.buf_ref == nil or doom_ui_state.prev.title ~= "USER SETTINGS" then
@@ -239,6 +260,8 @@ P.doom_settings_picker = function()
     doom_ui_state.current.buf_ref = doom_ui_state.prev.buf_ref
 	  doom_ui_state.current.results_prepared = ts_table_picker_prepare(doom_ui_state.prev.selection)
   end
+
+  -- for each results -> add type = "settings_field"
 
   opts = require("telescope.themes").get_dropdown()
 
@@ -273,10 +296,70 @@ P.doom_settings_picker = function()
 
 end
 
-P.doom_module_settings_picker = function(c)
+-- create binding for this in the modules picker.
+P.doom_module_full_picker = function()
+  us.ensure_doom_ui_state()
+  us.doom_ui_state_reset_modules()
+
+  doom_ui_state.current.title = "MODULE_FULL" -- make into const
+  doom_ui_state.current.picker = P.doom_module_full_picker
+
+  -- try current buffer? or prev
+  -- if then
+  -- end
+  -- print("xxxxxxxxxxxxxxxxxxxxxxxxx")
+
+
+  -- TODO: wrap each entry in table so
+  --
+  local prep = {}
+  for k, v in pairs(doom_ui_state.prev.selection) do
+    print(k, v)
+    table.insert(prep, {
+      key = k,
+      value = v
+    })
+  end
+
+  doom_ui_state.current.results_prepared = prep
+
+
+
+	-- print("prev sel", vim.inspect(doom_ui_state.current.results_prepared))
+
+  opts = opts or require("telescope.themes").get_cursor()
+  require("telescope.pickers").new(opts, {
+
+    prompt_title = doom_ui_state.current.title,
+
+    finder = require("telescope.finders").new_table({
+      results = doom_ui_state.current.results_prepared,
+      entry_maker = em.display_module_full,
+    }),
+    sorter = require("telescope.config").values.generic_sorter(opts),
+    attach_mappings = function(prompt_bufnr, map)
+      -- map("i", "<CR>", pass_entry_to_callback)
+      -- map("n", "<CR>", pass_entry_to_callback)
+	    goback(prompt_bufnr, map)
+      return true
+    end,
+   --  previewer = previewers.new_buffer_previewer({
+	  --   define_preview = function() return vim.inspect(c.data) end,
+	  -- })
+  }):find()
+
 end
 
-P.doom_module_packages_picker = function(config)
+P.doom_module_settings_picker = function(c) end
+
+
+P.doom_module_packages_picker = function()
+  us.ensure_doom_ui_state()
+  doom_ui_state.current.title = "MODULE PACKAGES" -- make into const
+
+  doom_ui_state.current.picker = P.doom_settings_picker
+
+
   local function pass_entry_to_callback(prompt_buf)
     local state = require("telescope.actions.state")
     local fuzzy_selection = state.get_selected_entry(prompt_bufnr)
@@ -286,7 +369,10 @@ P.doom_module_packages_picker = function(config)
 
   opts = opts or require("telescope.themes").get_cursor()
   require("telescope.pickers").new(opts, {
+
+    -- TODO: dynamic title based on state
     prompt_title = "create user module",
+
     finder = require("telescope.finders").new_table({
       results = config.entries,
       entry_maker = display_module_packages,
@@ -301,11 +387,9 @@ P.doom_module_packages_picker = function(config)
   }):find()
 end
 
-P.doom_module_cmds_picker = function(c)
-end
+P.doom_module_cmds_picker = function() end
 
-P.doom_module_autocmds_picker = function(c)
-end
+P.doom_module_autocmds_picker = function() end
 
 -- i also need to merge all tables that I can find in a module into
 -- this shouldn't be too difficult.
@@ -319,6 +403,7 @@ end
 -- would it be possible to make a picker where you put pretty much everything into one big
 -- flat table that we can make a good entry_maker on so that you can fileter every single
 -- config setting in a single picker? that would be pretty cool.
+
 P.doom_picker_all_packages = function(c)
 	-- table settings picker to navigate the specs.
 	-- connect module data to each module somehow.
