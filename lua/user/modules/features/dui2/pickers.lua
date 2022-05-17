@@ -366,6 +366,7 @@ P.doom_module_full_picker = function()
 
       if k == "binds" then
         for _, bind_flat in ipairs(pu.binds_flattened(v)) do
+          print(bind_flat)
           table.insert(prep, bind_flat)
         end
 
