@@ -32,7 +32,17 @@ local P = {}
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
 
-local bind_params = {
+local MODULE_COMPONENTS = {
+  "settings",
+  "packages",
+  "configs",
+  "binds",
+  "cmds",
+  "autocmds",
+  -- "options",
+}
+
+local BIND_COMPONENTS = {
   "prefix",
   "name",
   "rhs",
@@ -307,18 +317,18 @@ P.doom_module_full_picker = function()
   -- try current buffer? or prev
   -- if then
   -- end
-  -- print("xxxxxxxxxxxxxxxxxxxxxxxxx")
 
+  -- TODO: filter only necessary components
 
-  -- TODO: wrap each entry in table so
-  --
   local prep = {}
   for k, v in pairs(doom_ui_state.prev.selection) do
     print(k, v)
-    table.insert(prep, {
-      key = k,
-      value = v
-    })
+    if vim.tbl_contains(MODULE_COMPONENTS, k) then
+      table.insert(prep, {
+        key = k,
+        value = v
+      })
+    end
   end
 
   doom_ui_state.current.results_prepared = prep
@@ -494,7 +504,7 @@ P.doom_binds_leaf_picker = function(c)
 
   local prep_results = {}
   for k, v in pairs(doom_ui_state.prev.selection) do
-    if vim.tbl_contains(bind_params, k) then
+    if vim.tbl_contains(BIND_COMPONENTS, k) then
   	table.insert(prep_results,{
   	  key = k,
   	  value = v
@@ -541,7 +551,7 @@ P.doom_binds_branch_picker = function(c)
 
   local prep_results = {}
   for k, v in pairs(doom_ui_state.prev.selection) do
-    if vim.tbl_contains(bind_params, k) then
+    if vim.tbl_contains(BIND_COMPONENTS, k) then
   	table.insert(prep_results,{
   	  key = k,
   	  value = v
