@@ -33,6 +33,8 @@ local P = {}
 -----------------------------------------------------------------------------
 
 local MODULE_COMPONENTS = {
+  "name",
+  "enabled",
   "settings",
   "packages",
   "configs",
@@ -315,14 +317,21 @@ P.doom_module_full_picker = function()
   doom_ui_state.current.picker = P.doom_module_full_picker
 
   -- try current buffer? or prev
-  -- if then
+  -- if prev module then
+  --
+  -- else
+  --    if current buf path exists in all modules list?
+  --    assign currently selected module index/ID.
   -- end
 
-  -- TODO: filter only necessary components
+  -- assign currently selected module.
 
   local prep = {}
+  -- print(vim.inspect(MODULE_COMPONENTS))
   for k, v in pairs(doom_ui_state.prev.selection) do
-    print(k, v)
+
+    -- print(k, v)
+
     if vim.tbl_contains(MODULE_COMPONENTS, k) then
       table.insert(prep, {
         key = k,
@@ -335,9 +344,10 @@ P.doom_module_full_picker = function()
 
 
 
-	-- print("prev sel", vim.inspect(doom_ui_state.current.results_prepared))
+	-- print("full module prep res ->", vim.inspect(doom_ui_state.current.results_prepared))
 
   opts = opts or require("telescope.themes").get_cursor()
+
   require("telescope.pickers").new(opts, {
 
     prompt_title = doom_ui_state.current.title,

@@ -18,6 +18,7 @@ function uistate.ensure_doom_ui_state()
   doom_ui_state = {
     -- doom_global_extended,
     all_modules_flattened = nil,
+    selected_module = nil,
     current = {
       title = nil, -- eg. settings, modules, binds_table, binds_branch
       results_prepared = nil,
@@ -29,21 +30,13 @@ function uistate.ensure_doom_ui_state()
     },
 
     history = {},
-    ts = {
-      root_settings = {
-        table_root = nil,
-        buf = nil,
-      },
-      root_modules = {
-
-      },
-      module = {
-        selected = nil,
-        buf = nil,
-      }
-    }
   }
   doom_ui_state["prev"] = doom_ui_state.current
+end
+
+function uistate.reset_selections()
+  doom_ui_state.selected_module = nil
+  doom_ui_state.current = nil
 end
 
 function uistate.doom_ui_state_reset()

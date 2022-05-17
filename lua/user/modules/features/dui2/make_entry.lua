@@ -2,6 +2,14 @@ local ts = require("user.modules.features.dui2.ts")
 
 local entry_makers = {}
 
+-- MODULE META PARAMS EXAMPLE
+--
+-- enabled = false,
+-- name = "plugins_local_reloader",
+-- origin = "user",
+-- path = "/Users/hjalmarjakobsson/.config/nvim/lua/user/modules/features/plugins_local_reloader/",
+-- section = "features",
+-- type = "module"
 
 --
 -- ENTRY MAKERS
@@ -9,7 +17,15 @@ local entry_makers = {}
 
 function entry_makers.display_all_modules(entry)
 	local function make_display(t)
-	  return t.section .." > " .. t.name
+
+    local on
+    if entry.enabled then
+      on = "y"
+    else
+      on = "n"
+    end
+
+	  return "["..on.."] ".. t.origin .. " > " .. t.section .." -> " .. t.name
 	end
 	return {
 	  value = entry,
@@ -49,7 +65,6 @@ function entry_makers.display_doom_settings(entry)
 end
 
 function entry_makers.display_module_full(entry)
-  print("-------------------------------------------------")
 	-- print(vim.inspect(entry))
 	-- local formatted = ""
 	-- -- print(vim.inspect(node))
