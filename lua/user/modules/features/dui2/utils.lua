@@ -39,41 +39,45 @@ M.filter_modules = function(filter)
   return filtered
 end
 
+M.settings_flattened = function(nest_tree, flattened, bstack)
+end
+
+M.packages_flattened = function(nest_tree, flattened, bstack)
+end
+
+M.configs_flattened = function(nest_tree, flattened, bstack)
+end
+
+
+M.cmds_flattened = function(nest_tree, flattened, bstack)
+end
+
+M.autocmds_flattened = function(nest_tree, flattened, bstack)
+end
+
+
 M.binds_flattened = function(nest_tree, flattened, bstack)
   local flattened = {}
   local sep = " | "
   local bstack = bstack or {}
-
   if acc == nil then
-
     for _, t in ipairs(nest_tree) do
-
       if type(t.rhs) == "table" then
         -- :: BRANCH ::::::::::::::::::::::::::::::::::::::::::::::
-
-        -- print("table:", t.lhs)
         table.insert(bstack, t.lhs)
-        -- i(bstack)
-
         flattened = M.binds_flattened(t.rhs, flattened, bstack)
-        -- table.remove(bstack, #bstack)
       else
         -- :: LEAF ::::::::::::::::::::::::::::::::::::::::::::::::
-        local pre = ""
-        if #bstack > 0 then
-          pre = table.concat(bstack, " -> ")
-        end
-        -- local res = "#"..pre .. t[1] .. sep .. t.name .. sep .. t.lhs .. sep .. type(t.rhs)
-        local res = "#".. t.lhs .. sep .. t[1] .. sep .. t.name .. sep .. sep .. type(t.rhs)
-        print(res)
-        table.insert(flattened, res)
-
+        -- local pre = ""
+        -- if #bstack > 0 then
+        --   pre = table.concat(bstack, " -> ")
+        -- end
+        -- local res = "#".. t.lhs .. sep .. t[1] .. sep .. t.name .. sep .. sep .. type(t.rhs)
+        t["type"] = "module_bind"
+        table.insert(flattened, t)
       end
     end
-
   end
-
-  -- i(flattened)
   table.remove(bstack, #bstack)
   return flattened
 end

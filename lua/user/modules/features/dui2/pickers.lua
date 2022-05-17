@@ -364,11 +364,19 @@ P.doom_module_full_picker = function()
 
     if vim.tbl_contains(MODULE_COMPONENTS, k) then
 
+      -- flatten binds
       if k == "binds" then
         for _, bind_flat in ipairs(pu.binds_flattened(v)) do
-          print(bind_flat)
-          table.insert(prep, bind_flat)
+          -- i(bind_flat)
+          table.insert(prep, {
+            key = bind_flat.type,
+            value = bind_flat
+          })
         end
+
+      -- flatten cmds
+
+      -- flatten autocmds
 
       else
         table.insert(prep, {
@@ -379,6 +387,8 @@ P.doom_module_full_picker = function()
 
     end
   end
+
+  -- i(prep)
 
   doom_ui_state.current.results_prepared = prep
 
