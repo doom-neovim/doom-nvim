@@ -18,7 +18,7 @@ function uistate.ensure_doom_ui_state()
   doom_ui_state = {
     -- doom_global_extended,
     all_modules_flattened = nil,
-    selected_module = nil,
+    selected_module_idx = nil,
     current = {
       title = nil, -- eg. settings, modules, binds_table, binds_branch
       results_prepared = nil,

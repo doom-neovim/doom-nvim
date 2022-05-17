@@ -75,34 +75,19 @@ function entry_makers.display_doom_settings(entry)
 end
 
 function entry_makers.display_module_full(entry)
-	-- print(vim.inspect(entry))
-	-- local formatted = ""
-	-- -- print(vim.inspect(node))
-	-- local f1 = entry:named_child(0)
-	-- local f2 = entry:named_child(1)
- --  local f1x = ts.ntext(f1, doom_ui_state.current.buf_ref)
-	-- local f2x = ts.ntext(f2, doom_ui_state.current.buf_ref)
-	-- local f2ccnt = f2:named_child_count()
-	-- if f2:type() == "table_constructor" then
-	--   f2x = " >>> { #"..f2ccnt.." }"
-	-- end
-	-- formatted = formatted .. f1x .. " -> " .. f2x
-	--
-	-- local function e() end
-	--
-	-- local function d(node)
-	--   -- print(formatted)
-	-- 	return formatted
-	-- end
-	--
-	-- local function o() end
-	-- local function make_display(t)
-	--   return t.section .." > " .. t.name
-	-- end
+	-- print(doom_ui_state.all_modules_flattened[selected_module_idx].title)
+	local function make_display(t)
+	  local idx = doom_ui_state.selected_module_idx
+
+	  local sec = doom_ui_state.all_modules_flattened[idx].section
+	  local name = doom_ui_state.all_modules_flattened[idx].name
+	  -- return sec .. " > " .. name .. ": " .. t.key
+	  return t.key .. " > " .. tostring(t.value)
+	end
 	return {
 	  value = entry,
-	  display = entry.key .. " > " .. type(entry.value),
-	  -- display = function(tbl) return d(tbl.value) end,
+	  -- display = entry.key .. " > " .. type(entry.value),
+	  display = function(tbl) return make_display(tbl.value) end,
 	  ordinal = entry.key,
 	}
 end

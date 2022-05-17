@@ -22,6 +22,10 @@ local actions = require("telescope.actions")
 
 local P = {}
 
+local function i(x)
+  print(vim.inspect(x))
+end
+
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
 
@@ -109,6 +113,10 @@ P.doom_modules_picker = function(c)
 	  { "^a:DISPLAY", "i", "<C-a>",
 	    function(prompt_bufnr)
         local fuzzy, line = mappings_prepare(prompt_bufnr)
+
+        -- i(fuzzy)
+
+		    doom_ui_state.selected_module_idx = fuzzy.index
 		    doom_ui_state.current.selection = fuzzy.value
 		    us.next(P.doom_module_full_picker)
 	    end
@@ -169,6 +177,7 @@ P.doom_modules_picker = function(c)
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
+
       for _,m in pairs(t_mappings) do
 	      map(m[2], m[3], m[4])
 	      goback(prompt_bufnr, map)
@@ -324,7 +333,8 @@ P.doom_module_full_picker = function()
   --    assign currently selected module index/ID.
   -- end
 
-  -- assign currently selected module.
+  -- assign currently selected module. index!!!
+  --    create title based on the selected module > so that we can show `MODULE: doom > feat > lsp (disabled)`
 
   local prep = {}
   -- print(vim.inspect(MODULE_COMPONENTS))
