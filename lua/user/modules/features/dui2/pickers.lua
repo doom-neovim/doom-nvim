@@ -331,9 +331,10 @@ P.doom_module_full_picker = function()
 	  local mname = doom_ui_state.all_modules_flattened[idx].name
 	  local menab = doom_ui_state.all_modules_flattened[idx].enabled
 
-	  postfix = postfix .. morig .. ">" .. mfeat .. ">" .. mname .. " (enabled=" .. tostring(menab) .. ")"
+    local on = menab and "enabled" or "disabled"
+	  postfix = postfix .. "["..morig..":"..mfeat.."] -> " .. mname .. " (" .. on .. ")"
   end
-  doom_ui_state.current.title = "MODULE_FULL " .. postfix -- make into const
+  doom_ui_state.current.title = "MODULE_FULL: " .. postfix -- make into const
   doom_ui_state.current.picker = P.doom_module_full_picker
   doom_ui_state.current.results_prepared = pu.get_module_components_prepared_for_picker()
 
