@@ -49,6 +49,8 @@ doom_ui.binds = {
     "<leader>",
     name = "+prefix",
     {
+      -- TODO: this should be all mods + settings, so that everything can be reached.
+      { "k", [[ :DoomPickerModules<cr> ]], name = "all modules", options = { silent = false }, },
       {
         "n",
         name = "+nnn",
@@ -57,9 +59,6 @@ doom_ui.binds = {
           { "s", [[ :DoomPickerSettings<cr> ]], name = "settings", options = { silent = false }, }, -- lol
 
           { "n", [[ :DoomPickerModuleFull<cr> ]], name = "m_full", options = { silent = false }, },
-
-          -- TODO: this should be all mods + settings, so that everything can be reached.
-          { "k", [[ :DoomPickerModules<cr> ]], name = "all modules", options = { silent = false }, },
 
           { "S", [[ :DoomPickerModuleSettings<cr> ]], name = "m settings", options = { silent = false }, },
           { "p", [[ :DoomPickerModulePackages<cr> ]], name = "m pgks", options = { silent = false }, },

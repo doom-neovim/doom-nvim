@@ -81,6 +81,21 @@ end
 
 function entry_makers.display_module_full(entry)
 	-- print(doom_ui_state.all_modules_flattened[selected_module_idx].title)
+
+  -- local displayer = entry_display.create {
+  --   separator = "▏",
+  --   items = {
+  --     { width = 14 },
+  --     { width = 18 },
+  --     { width = 16 },
+  --     { remaining = true },
+  --   },
+  -- }
+
+	local function formatter()
+	end
+
+
 	local function make_display(t)
 	  local res = ""
 	  local idx = doom_ui_state.selected_module_idx
@@ -118,6 +133,23 @@ function entry_makers.display_module_full(entry)
 
 	  return res
 	end
+
+	-- because we have variable amounts of attributes we want to display.
+	-- we need to put them into a subtable for each doom component
+	-- entry.display_props = {
+	--    { "display_string", "hl_group" }
+	-- }
+
+  -- local make_display = function(entry)
+  --   return displayer {
+  --     { entry.event, "vimAutoEvent" },
+  --     { entry.group, "vimAugroup" },
+  --     { entry.ft_pattern, "vimAutoCmdSfxList" },
+  --     entry.command,
+  --   }
+  -- end
+
+
 	return {
 	  value = entry,
 	  display = function(tbl) return make_display(tbl.value) end,

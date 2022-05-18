@@ -298,7 +298,6 @@ P.doom_picker_single_module_full = function()
 
 
   local requested_doom_components = {
-    -- "user_settings",
     "settings",
     "packages",
     "configs",

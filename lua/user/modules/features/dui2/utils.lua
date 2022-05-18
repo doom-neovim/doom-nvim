@@ -1,13 +1,24 @@
 local M = {}
 
--- rename this file to `flatteners.lua` or `make_array.lua`
---
--- HELPERS FOR FLATTENING OUT ALL ASPECTS OF DOOM TO MAKE THEM
--- COMPATIBLE WITH LIST FINDERS, SUCH AS `TELESCOPE-NVIM`.
 
--- REFACTOR: this becomes unnecessary since we pass this table to the
--- `get_doom_components_flat( { ...} )`
+-- rename this file to `flatteners.lua` or `make_array.lua`
+
 --
+-- TELESCOPE LIST FLATTENERS
+--
+-- helpers for flattening out all aspects of doom to make them
+-- compatible with list finders, such as `telescope-nvim`.
+
+-- LIST OF POSSIBLE DOOM COMPONENTS
+--
+--    ->  user_settings
+--    ->  settings
+--    ->  packages
+--    ->  configs -> merge with packages.. right?
+--    ->  binds
+--    ->  cmds
+--    ->  autocmds
+
 
 -- inspect table
 local function i(x)
@@ -27,15 +38,11 @@ end
 -- @param list or table of tables
 local function table_merge(...)
     local tables_to_merge = { ... }
-    -- i(tables_to_merge)
-
     -- assume the table has been wrapped
     if #tables_to_merge == 1 then
       tables_to_merge = tables_to_merge[1]
     end
-
     assert(#tables_to_merge > 1, "There should be at least two tables to merge them")
-
     for k, t in ipairs(tables_to_merge) do
         assert(type(t) == "table", string.format("Expected a table as function parameter %d", k))
     end
@@ -68,6 +75,8 @@ end
 --
 -- only return true if the table is pure string
 -- keys and at least one key
+-- @param key, val when looping with pairs()
+-- @return bool - should we recurse into table or not?
 local function is_sub_setting(a, b)
   if type(a) == "number" then
     return false
@@ -89,48 +98,6 @@ local function is_sub_setting(a, b)
   return true
 end
 
--- M.check_if_module_name_exists = function(c, new_name)
---   print(vim.inspect(c.selected_module))
---   local already_exists = false
---   for _, v in pairs(c.all_modules_data) do
---     if v.section == c.selected_module.section and v.name == new_name then
--- 	print("module already exists!!!")
---       already_exists = true
---     end
---   end
---   return already_exists
--- end
-
-
--- filter the list of all modules
-M.filter_modules = function(filter)
-  local filtered = {}
-  -- if has each filter then return modules
-  -- for all modules -> for each filter.
-
-  -- -- with the new module extension util this will be much easier
-  -- local function check_if_module_name_exists(c, new_name)
-  --   print(vim.inspect(c.selected_module))
-  --   local already_exists = false
-  --   for _, v in pairs(c.all_modules_data) do
-  --     if v.section == c.selected_module.section and v.name == new_name then
-  -- 	print("module already exists!!!")
-  --       already_exists = true
-  --     end
-  --   end
-  --   return already_exists
-  -- end
-
-  return filtered
-end
-
-
-
--- REFACTOR: make accept list params
--- @param table: of each component you require flattened,
---          -> eg. get_flat { "user_settings", "module_settings", "module_packages" } returns { {}, {}, ... }
--- @return list of flattened doom components, use with eg. telescope.
---
 -- EACH ENTRY SHOULD HAVE ENOUGH INFORMATION TO STRUCTURAL FIND AND TRANSFORM
 -- THE DATA IN THE CODEBASE.
 --
@@ -150,46 +117,51 @@ end
 --      list of keybind actions for each doom component, so that you
 --      can easilly attach custom operations for each doom type.
 --      ideally these should be usable with cursor context as well. ie. add bind to first branch under cursor, second, bind after leaf under cursor.
---
---    ordinal = ??
---
---    ... custom keys
---    ...
---    ..
+--    list_display_props = {
+--      ..
+--      { "display_string", "hl_group" }
+--      ..
+--      ..
+--    }
 -- }
 --
---  TYPE | formatted_name    | formatted_value   | legend |
---
---
---
---
+--  item | item    | item  | .. | legend? |
 
--- LIST OF POSSIBLE DOOM COMPONENTS
---
--- "user_settings",
--- "settings",
--- "packages",
--- "configs", -> merge with packages.. right?
--- "binds",
--- "cmds",
--- "autocmds",
-
+-- @param table: of each component you require flattened,
+--          -> eg. get_flat { "user_settings", "module_settings", "module_packages" } returns { {}, {}, ... }
+-- @return list of flattened doom components, use with eg. telescope.
 M.doom_get_flat = function(t_requested_components)
   local components_table = {}
   for m_key, m_comp in pairs(doom_ui_state.prev.selection) do
+    -- make sure we don't try to access nil
     if vim.tbl_contains(t_requested_components, m_key) then
       table.insert(components_table, M[m_key .."_flattened"](m_comp))
     else
+      -- prefix hidden props
       table.insert(components_table, {
         type = "__" .. m_key,
         value = m_comp
       })
+--    list_display_props = {
+--      ..
+--      { "display_string", "hl_group" }
+--      ..
+--      ..
+--    }
     end
   end
 
   local merge =  table_merge(components_table)
   return merge
 end
+
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+
+--
+-- FLATTENERS
+--
+
 
 -- TODO: could the same flattener be used for both user settings and module settings? Yes, right?!
 --
