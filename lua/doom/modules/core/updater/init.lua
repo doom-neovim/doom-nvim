@@ -158,6 +158,13 @@ updater._checkout_version = function(version)
   }):start()
 end
 
+-- recursive check that user settings mirror `core/doom_global.lua`
+-- with the new defaults. don't modify any user settings. only
+-- add.
+updater.sync_user_settings = function()
+end
+
+
 updater.cmds = {
   -- {
   --   "DoomUpdate",
