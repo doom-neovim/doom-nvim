@@ -243,12 +243,14 @@ M.settings_flattened = function(t_settings, flattened, stack)
 
       local entry = {
         type = "module_setting",
-        path_components = k,
-        value = tostring(v),
-
+        data = {
+          path_components = k,
+          value = tostring(v),
+        },
+        -- ordinal = ,
+        -- todo: if leaf setting is table list -> "[[" .. table.concat(v, ", ) .. "]]"
         -- todo: conditional USR/MOD_
         list_display_props = {
-          -- todo: if leaf setting is table list -> "[[" .. table.concat(v, ", ) .. "]]"
           "SETTING", "", ""
         }
       }
@@ -281,8 +283,11 @@ M.packages_flattened = function(t_packages)
 
     local entry = {
       type = "module_package",
-      name = k,
-      spec = v,
+      data = {
+        name = k,
+        spec = v,
+      },
+      -- ordinal = ,
       list_display_props = {
         "PKG", "", ""
       }
@@ -298,8 +303,11 @@ M.configs_flattened = function(t_configs)
   for k, v in pairs(t_configs) do
     local entry = {
       type = "module_config",
-      name = k,
-      value = v,
+      data = {
+        name = k,
+        value = v,
+      },
+      -- ordinal = ,
       list_display_props = {
         "CFG", "", ""
       }
@@ -315,8 +323,11 @@ M.cmds_flattened = function(t_cmds)
   for k, v in pairs(t_cmds) do
     table.insert(flattened, {
       type = "module_cmd",
-      name = v[1],
-      cmd = v[2],
+      data = {
+        name = v[1],
+        cmd = v[2],
+      },
+      -- ordinal = ,
       list_display_props = {
         "CMD", "", ""
       }
@@ -332,11 +343,14 @@ M.autocmds_flattened = function(t_autocmds)
   if type(t_autocmds) == "function" then
     table.insert(flattened, {
       type = "module_autocmd",
-      event = nil,
-      pattern = nil,
-      action = nil,
-      is_func = true,
-      func = t_autocmds,
+      data = {
+        event = nil,
+        pattern = nil,
+        action = nil,
+        is_func = true,
+        func = t_autocmds,
+      },
+      -- ordinal = ,
       list_display_props = {
         "AUTOCMD", "", ""
       }
@@ -345,9 +359,11 @@ M.autocmds_flattened = function(t_autocmds)
     for k, v in pairs(t_autocmds) do
       table.insert(flattened, {
         type = "module_autocmd",
-        event = v[1],
-        pattern = v[2],
-        action = v[3],
+        data = {
+          event = v[1],
+          pattern = v[2],
+          action = v[3],
+        },
         list_display_props = {
           "AUTOCMD", "", ""
         }
@@ -387,14 +403,12 @@ M.binds_flattened = function(nest_tree, flattened, bstack)
         -- so that you can do `add_mapping_to_same_branch()` ???
         local entry = {
           type = "module_bind_leaf",
-          name = k,
-          value = v,
+          data = t,
+          -- ordinal = ,
           list_display_props = {
             "BIND", "", ""
           }
         }
-
-        entry = table_merge(entry, t)
 
         table.insert(flattened, entry)
       end

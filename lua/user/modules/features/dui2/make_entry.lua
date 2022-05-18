@@ -1,3 +1,5 @@
+local entry_display = require("telescope.pickers.entry_display")
+
 local ts = require("user.modules.features.dui2.ts")
 
 local function i(x)
@@ -86,71 +88,61 @@ end
 function entry_makers.display_module_full(entry)
 	-- print(doom_ui_state.all_modules_flattened[selected_module_idx].title)
 
-  -- local displayer = entry_display.create {
-  --   separator = "▏",
-  --   items = {
-  --     { width = 14 },
-  --     { width = 18 },
-  --     { width = 16 },
-  --     { remaining = true },
-  --   },
-  -- }
+  local displayer = entry_display.create {
+    separator = "▏",
+    items = {
+      { width = 14 },
+      { width = 18 },
+      { width = 20 },
+      { remaining = true },
+    },
+  }
 
 	local function formatter()
 	end
 
-
-	local function make_display(t)
+	local function make_display(entry)
 	  local res = ""
 	  local idx = doom_ui_state.selected_module_idx
 	  local sec = doom_ui_state.all_modules_flattened[idx].section
 	  local name = doom_ui_state.all_modules_flattened[idx].name
 
-	  i(t)
+	  i(entry)
 
-	  if t.type == "module_setting" then
-	    res = "SETTING: " .. t.path_components .. " -> " .. t.value
+	  if entry.type == "module_setting" then
+	    res = "SETTING: " .. entry.data.path_components .. " -> " .. entry.data.value
 
-	  elseif t.type == "module_config" then
-	    res = "CONFIG: " .. t.name .. " -> " .. tostring(t.value)
+	  elseif entry.type == "module_config" then
+	    res = "CONFIG: " .. entry.data.name .. " -> " .. tostring(entry.data.value)
 
-	  elseif t.type == "module_package" then
-      res = "PACKAGE: " .. t.name .. " -> " .. tostring(t.spec)
+	  elseif entry.type == "module_package" then
+      res = "PACKAGE: " .. entry.data.name .. " -> " .. tostring(entry.data.spec)
 
-	  elseif t.type == "module_cmd" then
-      res = "CMD: " .. t.name .. " -> " .. tostring(t.cmd)
+	  elseif entry.type == "module_cmd" then
+      res = "CMD: " .. entry.data.name .. " -> " .. tostring(entry.data.cmd)
 
-	  elseif t.type == "module_autocmd" then
-      if t.is_func then
-        res = "AUTOCMD: " .. t.func
+	  elseif entry.type == "module_autocmd" then
+      if entry.data.is_func then
+        res = "AUTOCMD: " .. entry.data.func
       else
-        res = "AUTOCMD: " .. t.event .. " | " .. t.pattern .. " | " .. tostring(t.action)
+        res = "AUTOCMD: " .. entry.data.event .. " | " .. entry.data.pattern .. " | " .. tostring(entry.data.action)
       end
 
-	  elseif t.type == "module_bind_leaf" then
-      res = "BIND: " .. t.lhs .. " -> " .. t.rhs .. " // name: " .. t.name
+	  elseif entry.type == "module_bind_leaf" then
+      res = "BIND: " .. entry.data.lhs .. " -> " .. entry.data.rhs .. " // name: " .. entry.data.name
 
-    else
-      res = string.upper(t.type) .. " -> " .. tostring(t.value)
+    -- else
+    --   res = string.upper(entry.type) .. " -> " .. tostring(
 
 	  end
+
+	  print(res)
 
 	  return res
 	end
 
-	-- because we have variable amounts of attributes we want to display.
-	-- we need to put them into a subtable for each doom component
-	-- entry.display_props = {
-	--    { "display_string", "hl_group" }
-	-- }
-
   -- local make_display = function(entry)
-  --   return displayer {
-  --     { entry.event, "vimAutoEvent" },
-  --     { entry.group, "vimAugroup" },
-  --     { entry.ft_pattern, "vimAutoCmdSfxList" },
-  --     entry.command,
-  --   }
+  --   return displayer entry.list_display_props
   -- end
 
 
@@ -159,6 +151,20 @@ function entry_makers.display_module_full(entry)
 	  display = function(tbl) return make_display(tbl.value) end,
 	  ordinal = entry.type,
 	}
+  -- return function(entry)
+  --   if entry == "" then
+  --     return nil
+  --   end
+  --   -- local mod, file = string.match(entry, "(..).*%s[->%s]?(.+)")
+  --
+  --   return {
+  --     value = entry,
+  --     -- status = mod,
+  --     ordinal = entry.type,
+  --     display = make_display,
+  --     -- path = Path:new({ opts.cwd, file }):absolute(),
+  --   }
+  -- end
 end
 
 function entry_makers.display_single_module(entry) end

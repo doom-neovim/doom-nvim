@@ -281,7 +281,10 @@ P.doom_picker_all_module_binds = function() end
 P.doom_picker_single_module_full = function()
   us.ensure_doom_ui_state()
   us.doom_ui_state_reset_modules()
+  doom_ui_state.current.picker = P.doom_module_full_picker
 
+
+  -- move this chunk into flattener func.??
   local postfix = ""
   if doom_ui_state.selected_module_idx ~= nil then
 	  local idx = doom_ui_state.selected_module_idx
@@ -289,41 +292,34 @@ P.doom_picker_single_module_full = function()
 	  local mfeat = doom_ui_state.all_modules_flattened[idx].section
 	  local mname = doom_ui_state.all_modules_flattened[idx].name
 	  local menab = doom_ui_state.all_modules_flattened[idx].enabled
-
     local on = menab and "enabled" or "disabled"
 	  postfix = postfix .. "["..morig..":"..mfeat.."] -> " .. mname .. " (" .. on .. ")"
   end
   doom_ui_state.current.title = "MODULE_FULL: " .. postfix -- make into const
-  doom_ui_state.current.picker = P.doom_module_full_picker
 
 
   local requested_doom_components = {
     "settings",
     "packages",
     "configs",
-    -- "binds",
+    "binds",
     "cmds",
     "autocmds",
   }
 
+
   doom_ui_state.current.results_prepared = pu.doom_get_flat(requested_doom_components)
 
-  -- print(doom_ui_state.current.results_prepared)
 
   opts = require("telescope.themes").get_ivy()
-
   require("telescope.pickers").new(opts, {
-
     prompt_title = doom_ui_state.current.title,
-
     finder = require("telescope.finders").new_table({
       results = doom_ui_state.current.results_prepared,
       entry_maker = em.display_module_full,
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
-      -- map("i", "<CR>", pass_entry_to_callback)
-      -- map("n", "<CR>", pass_entry_to_callback)
 	    goback(prompt_bufnr, map)
       return true
     end,
