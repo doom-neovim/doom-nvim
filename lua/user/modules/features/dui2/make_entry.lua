@@ -110,7 +110,7 @@ function entry_makers.display_module_full(entry)
       res = "BIND: " .. t.lhs .. " -> " .. t.rhs .. " // name: " .. t.name
 
     else
-      res = string.upper(t.type) .. " -> " .. t.value
+      res = string.upper(t.type) .. " -> " .. tostring(t.value)
 
 	  end
 

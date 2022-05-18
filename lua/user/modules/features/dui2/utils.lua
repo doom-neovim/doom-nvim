@@ -131,6 +131,7 @@ M.get_module_components_prepared_for_picker = function()
           end
 
       else
+        print(m_key)
         table.insert(prep, {
           type = m_key,
           value = m_comp
