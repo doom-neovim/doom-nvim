@@ -20,10 +20,26 @@ local MODULE_COMPONENTS = {
   -- "options",
 }
 
+-- inspect table
 local function i(x)
   print(vim.inspect(x))
 end
 
+-- helper to make recursive output easier to read
+-- @param integer - recursion depth
+local function indent(s)
+  local res = ""
+  for i = 1, #s do res = res .. "- " end res = res .. ">"
+  return res
+end
+
+-- Helper to flatten and get table keys/indices properly.
+--
+-- for example it makes sure that recursion only enters tables with keys
+-- and no indices, ie. tables containins integer indexed values are treaded
+-- as setting leaf values, in order to prevent that list-settings are treated
+-- as separate settings. eg, position = { "x", "y", } is treated as one setting.
+--
 -- only return true if the table is pure string
 -- keys and at least one key
 local function is_sub_setting(s, a, b)
@@ -55,12 +71,6 @@ local function is_sub_setting(s, a, b)
 
   -- print("IS_SUB; table is pure", a, b)
   return true
-end
-
-local function indent(s)
-  local res = ""
-  for i = 1, #s do res = res .. "- " end res = res .. ">"
-  return res
 end
 
 -- M.check_if_module_name_exists = function(c, new_name)
@@ -135,6 +145,36 @@ end
 --
 --
 --
+
+local function table_merge(...)
+    local tables_to_merge = { ... }
+
+    assert(#tables_to_merge > 1, "There should be at least two tables to merge them")
+
+    for k, t in ipairs(tables_to_merge) do
+        assert(type(t) == "table", string.format("Expected a table as function parameter %d", k))
+    end
+
+    local result = tables_to_merge[1]
+
+    for i = 2, #tables_to_merge do
+        local from = tables_to_merge[i]
+        for k, v in pairs(from) do
+            if type(k) == "number" then
+                table.insert(result, v)
+            elseif type(k) == "string" then
+                if type(v) == "table" then
+                    result[k] = result[k] or {}
+                    result[k] = table_merge(result[k], v)
+                else
+                    result[k] = v
+                end
+            end
+        end
+    end
+
+    return result
+end
 
 M.get_module_components_prepared_for_picker = function()
 
@@ -223,6 +263,9 @@ M.settings_flattened = function(t_settings, flattened, stack)
       table.insert(stack, k)
       flattened = M.settings_flattened(v, flattened, stack)
     else
+
+      -- todo: if leaf setting is table list -> "[[" .. table.concat(v, ", ) .. "]]"
+
       local entry = { type = "module_setting",path_components = k, value = tostring(v) }
       if #stack > 0 then
         local pc = table.concat(stack, ".")
