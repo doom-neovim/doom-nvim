@@ -1,7 +1,13 @@
 local M = {}
 
 -- rename this file to `flatteners.lua` or `make_array.lua`
+--
+-- HELPERS FOR FLATTENING OUT ALL ASPECTS OF DOOM TO MAKE THEM
+-- COMPATIBLE WITH LIST FINDERS, SUCH AS `TELESCOPE-NVIM`.
 
+-- REFACTOR: this becomes unnecessary since we pass this table to the
+-- `get_doom_components_flat( { ...} )`
+--
 local MODULE_COMPONENTS = {
   "name",
   "enabled",
@@ -94,13 +100,42 @@ end
 
 
 
--- refactor: make accept
+-- REFACTOR: make accept list params
 -- @param table: of each component you require flattened,
 --          -> eg. get_flat { "user_settings", "module_settings", "module_packages" } returns { {}, {}, ... }
 -- @return list of flattened doom components, use with eg. telescope.
 --
 -- EACH ENTRY SHOULD HAVE ENOUGH INFORMATION TO STRUCTURAL FIND AND TRANSFORM
 -- THE DATA IN THE CODEBASE.
+--
+--
+-- {
+--    type = string,
+--    table_path = { "level1", "level2", idx1 }, ie. level1.level2[idx1]
+--        for cmds and autocmds, (and some packages), this wil be just { number }
+--        since you only need the index to get back to the type in the selected module.
+--    table_value =  <anything>,
+--        reference to the real value?
+--    formatted_value = string,
+--    name = string,
+--    formatted_name = string,  -- table_path concat + name
+--        create function that formats each entry for display?
+--    actions = type ?? list
+--      list of keybind actions for each doom component, so that you
+--      can easilly attach custom operations for each doom type.
+--      ideally these should be usable with cursor context as well. ie. add bind to first branch under cursor, second, bind after leaf under cursor.
+--
+--    ... custom keys
+--    ...
+--    ..
+-- }
+--
+--  TYPE | formatted_name    | formatted_value   | legend |
+--
+--
+--
+--
+
 M.get_module_components_prepared_for_picker = function()
 
   local prep = {}
@@ -273,12 +308,15 @@ M.binds_flattened = function(nest_tree, flattened, bstack)
   if acc == nil then
     for _, t in ipairs(nest_tree) do
       if type(t.rhs) == "table" then
-        -- so that you can select it and `add_mapping_to_branch`
-        -- or `add_new_branch_level_to_branch()`
+
+        -- TODO: insert an entry for each new branch here ??
+
         table.insert(bstack, t.lhs)
         flattened = M.binds_flattened(t.rhs, flattened, bstack)
       else
-        -- so that you can do `add_mapping_to_same_branch()`
+
+        -- so that you can do `add_mapping_to_same_branch()` ???
+
         t["type"] = "module_bind_leaf"
         table.insert(flattened, t)
       end
@@ -287,10 +325,5 @@ M.binds_flattened = function(nest_tree, flattened, bstack)
   table.remove(bstack, #bstack)
   return flattened
 end
-
--- M.flatten_ts_nest_tree = function(ts_nest_table)
---   local ts_nest_flat = {}
---   return ts_nest_flat
--- end
 
 return M
