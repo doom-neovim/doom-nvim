@@ -239,25 +239,31 @@ M.settings_flattened = function(t_settings, flattened, stack)
       flattened = M.settings_flattened(v, flattened, stack)
 
     else
-      -- entry
-
+      -- ordinal = ,
+      -- todo: if leaf setting is table list -> "[[" .. table.concat(v, ", ) .. "]]"
+      -- todo: conditional USR/MOD_
       local entry = {
         type = "module_setting",
         data = {
-          path_components = k,
-          value = tostring(v),
-        },
-        -- ordinal = ,
-        -- todo: if leaf setting is table list -> "[[" .. table.concat(v, ", ) .. "]]"
-        -- todo: conditional USR/MOD_
-        list_display_props = {
-          "SETTING", "", ""
+          path_components = nil,
+          value = v,
         }
       }
+
       if #stack > 0 then
-        local pc = table.concat(stack, ".")
-        entry.path_components = pc .. "." .. k
+        local pc = stack
+        table.insert(pc, k)
+        entry.data.path_components = pc
+      else
+        entry.data.path_components = { k }
       end
+
+      entry["list_display_props"] = {
+          "SETTING",
+          table.concat(entry.data.path_components, "."),
+         tostring(entry.data.path_components)
+        }
+
       table.insert(flattened, entry)
     end
   end
@@ -272,66 +278,84 @@ M.packages_flattened = function(t_packages)
 
   for k, v in pairs(t_packages) do
 
+
     if type(k) == "number" then
       k = "anonymous"
 
       if type(v) == "string" then
-        entry.spec = { v }
+        v = { v }
       end
 
     end
 
+      -- ordinal = ,
     local entry = {
       type = "module_package",
       data = {
         name = k,
         spec = v,
       },
-      -- ordinal = ,
-      list_display_props = {
-        "PKG", "", ""
-      }
+    }
+
+    entry["list_display_props"] = {
+      "PKG",
+      entry.data.name,
+      tostring(entry.data.spec)
     }
 
     table.insert(flattened, entry)
   end
+
   return flattened
 end
 
 M.configs_flattened = function(t_configs)
   local flattened = {}
   for k, v in pairs(t_configs) do
+
     local entry = {
       type = "module_config",
       data = {
         name = k,
         value = v,
       },
-      -- ordinal = ,
-      list_display_props = {
-        "CFG", "", ""
-      }
     }
+
+    entry["list_display_props"] = {
+      "CFG",
+      entry.data.name,
+      tostring(entry.data.value)
+    }
+
     table.insert(flattened, entry)
   end
+
   return flattened
 end
 
 M.cmds_flattened = function(t_cmds)
   local flattened = {}
+
   if t_cmds == nil then return end
+
   for k, v in pairs(t_cmds) do
-    table.insert(flattened, {
+
+    local entry = {
       type = "module_cmd",
       data = {
         name = v[1],
         cmd = v[2],
-      },
-      -- ordinal = ,
-      list_display_props = {
-        "CMD", "", ""
       }
+    }
+
+    entry["list_display_props"] = {
+      "CMD",
+      entry.data.name,
+      tostring(entry.data.cmd)
+    }
     })
+
+    table.insert(flattened, entry)
   end
 
   return flattened
@@ -340,6 +364,7 @@ end
 M.autocmds_flattened = function(t_autocmds)
   local flattened = {}
   if t_autocmds == nil then return end
+
   if type(t_autocmds) == "function" then
     table.insert(flattened, {
       type = "module_autocmd",
@@ -355,6 +380,7 @@ M.autocmds_flattened = function(t_autocmds)
         "AUTOCMD", "", ""
       }
     })
+
   else
     for k, v in pairs(t_autocmds) do
       table.insert(flattened, {
@@ -369,6 +395,7 @@ M.autocmds_flattened = function(t_autocmds)
         }
       })
     end
+
   end
   return flattened
 end
