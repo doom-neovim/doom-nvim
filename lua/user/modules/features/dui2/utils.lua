@@ -8,17 +8,6 @@ local M = {}
 -- REFACTOR: this becomes unnecessary since we pass this table to the
 -- `get_doom_components_flat( { ...} )`
 --
-local MODULE_COMPONENTS = {
-  "name",
-  "enabled",
-  "settings",
-  "packages",
-  "configs",
-  "binds",
-  "cmds",
-  "autocmds",
-  -- "options",
-}
 
 -- inspect table
 local function i(x)
@@ -146,6 +135,7 @@ end
 --
 --
 
+-- TODO: mv to util
 local function table_merge(...)
     local tables_to_merge = { ... }
 
@@ -176,58 +166,34 @@ local function table_merge(...)
     return result
 end
 
+local NEEDS_FLATTENED = {
+  "user_settings",
+  "settings",
+  "packages",
+  "configs",
+  "binds",
+  "cmds",
+  "autocmds",
+}
+
 M.get_module_components_prepared_for_picker = function()
 
-  local prep = {}
+  local component_tables = {}
 
-  -- Iterate selected module
   for m_key, m_comp in pairs(doom_ui_state.prev.selection) do
-    -- print(m_key)
-    if vim.tbl_contains(MODULE_COMPONENTS, m_key) then
 
-      if m_key == "settings" then
-        for _, setting_flat in ipairs(M.settings_flattened(m_comp)) do
-          table.insert(prep, setting_flat)
-        end
+    if vim.tbl_contains(NEEDS_FLATTENED, m_key) then
 
-      elseif m_key == "packages" then
-        for _, package_flat in ipairs(M.packages_flattened(m_comp)) do
-          table.insert(prep, package_flat)
-        end
-
-      elseif m_key == "configs" then
-        for _, config_flat in ipairs(M.configs_flattened(m_comp)) do
-          table.insert(prep, config_flat)
-        end
-
-      elseif m_key == "cmds" then
-        for _, cmd_flat in ipairs(M.cmds_flattened(m_comp)) do
-          -- i(cmd_flat)
-          table.insert(prep, cmd_flat)
-        end
-
-      elseif m_key == "autocmds" then
-        for _, autocmd_flat in ipairs(M.autocmds_flattened(m_comp)) do
-          table.insert(prep, autocmd_flat)
-        end
-
-      elseif m_key == "binds" then
-          for _, bind_flat in ipairs(M.binds_flattened(m_comp)) do
-            table.insert(prep, bind_flat)
-          end
-
-      else
-        table.insert(prep, {
-          type = "__" .. m_key,
-          value = m_comp
-        })
-
-      end
-
+      table.insert(components_table, M[m_key .."_flattened"](m_comp))
+    else
+      table.insert(components_table, {
+        type = "__" .. m_key,
+        value = m_comp
+      })
     end
   end
 
-  return prep
+  return table_merge(components_table)
 end
 
 -- TODO: could the same flattener be used for both user settings and module settings? Yes, right?!
