@@ -135,7 +135,11 @@ M.doom_get_flat = function(t_requested_components)
   for m_key, m_comp in pairs(doom_ui_state.prev.selection) do
     -- make sure we don't try to access nil
     if vim.tbl_contains(t_requested_components, m_key) then
+
+      -- if settings or user_settings use same
+
       table.insert(components_table, M[m_key .."_flattened"](m_comp))
+
     else
       -- prefix hidden props
       table.insert(components_table, {
@@ -163,43 +167,68 @@ end
 --
 
 
--- TODO: could the same flattener be used for both user settings and module settings? Yes, right?!
+-- -- TODO: could the same flattener be used for both user settings and module settings? Yes, right?!
+-- --
+-- -- tree flattener: user settings and module settings,
+-- M.user_settings_flattened = function(t_settings, flattened, stack)
+--   local flattened = flattened or {}
+--   local stack = stack or {}
 --
--- tree flattener: user settings and module settings,
-M.user_settings_flattened = function(t_settings, flattened, stack)
-  local flattened = flattened or {}
-  local stack = stack or {}
-  for k, v in pairs(t_settings) do
-    if is_sub_setting(k,v) then
-      -- if type(v) ~= "table" then print("!!!!! sub t") end
-      table.insert(stack, k)
-      flattened = M.settings_flattened(v, flattened, stack)
-    else
-      local entry = { type = "module_setting",path_components = k, value = tostring(v) }
-      if #stack > 0 then
-        local pc = table.concat(stack, ".")
-        entry.path_components = pc .. "." .. k
-      end
-      table.insert(flattened, entry)
-    end
-  end
-  table.remove(stack, #stack)
-  return flattened
-end
+--   for k, v in pairs(t_settings) do
+--
+--     if is_sub_setting(k,v) then
+--       -- recurse down
+--       table.insert(stack, k)
+--       flattened = M.settings_flattened(v, flattened, stack)
+--
+--     else
+--       -- entry
+--       local entry = {
+--         type = "module_setting",
+--         path_components = k,
+--         value = tostring(v),
+--         list_display_props = {
+--           "SETTING", "", ""
+--         }
+--       }
+--       if #stack > 0 then
+--         local pc = table.concat(stack, ".")
+--         entry.path_components = pc .. "." .. k
+--       end
+--       table.insert(flattened, entry)
+--
+--     end
+--   end
+--
+--   table.remove(stack, #stack)
+--   return flattened
+-- end
 
 M.settings_flattened = function(t_settings, flattened, stack)
   local flattened = flattened or {}
   local stack = stack or {}
+
   for k, v in pairs(t_settings) do
+
     if is_sub_setting(stack, k,v) then
-      -- if type(v) ~= "table" then print("!!!!! sub t") end
+      -- recurse down
       table.insert(stack, k)
       flattened = M.settings_flattened(v, flattened, stack)
+
     else
+      -- entry
 
-      -- todo: if leaf setting is table list -> "[[" .. table.concat(v, ", ) .. "]]"
+      local entry = {
+        type = "module_setting",
+        path_components = k,
+        value = tostring(v),
 
-      local entry = { type = "module_setting",path_components = k, value = tostring(v) }
+        -- todo: conditional USR/MOD_
+        list_display_props = {
+          -- todo: if leaf setting is table list -> "[[" .. table.concat(v, ", ) .. "]]"
+          "SETTING", "", ""
+        }
+      }
       if #stack > 0 then
         local pc = table.concat(stack, ".")
         entry.path_components = pc .. "." .. k
@@ -215,14 +244,27 @@ end
 M.packages_flattened = function(t_packages)
   local flattened = {}
   if t_packages == nil then return end
+
   for k, v in pairs(t_packages) do
+
     if type(k) == "number" then
       k = "anonymous"
+
       if type(v) == "string" then
         entry.spec = { v }
       end
+
     end
-    local entry = { type = "module_package", name = k, spec = v }
+
+    local entry = {
+      type = "module_package",
+      name = k,
+      spec = v,
+      list_display_props = {
+        "PKG", "", ""
+      }
+    }
+
     table.insert(flattened, entry)
   end
   return flattened
@@ -231,7 +273,14 @@ end
 M.configs_flattened = function(t_configs)
   local flattened = {}
   for k, v in pairs(t_configs) do
-    local entry = { type = "module_config", name = k, value = v }
+    local entry = {
+      type = "module_config",
+      name = k,
+      value = v,
+      list_display_props = {
+        "CFG", "", ""
+      }
+    }
     table.insert(flattened, entry)
   end
   return flattened
@@ -244,7 +293,10 @@ M.cmds_flattened = function(t_cmds)
     table.insert(flattened, {
       type = "module_cmd",
       name = v[1],
-      cmd = v[2]
+      cmd = v[2],
+      list_display_props = {
+        "CMD", "", ""
+      }
     })
   end
 
@@ -261,7 +313,10 @@ M.autocmds_flattened = function(t_autocmds)
       pattern = nil,
       action = nil,
       is_func = true,
-      func = t_autocmds
+      func = t_autocmds,
+      list_display_props = {
+        "AUTOCMD", "", ""
+      }
     })
   else
     for k, v in pairs(t_autocmds) do
@@ -270,6 +325,9 @@ M.autocmds_flattened = function(t_autocmds)
         event = v[1],
         pattern = v[2],
         action = v[3],
+        list_display_props = {
+          "AUTOCMD", "", ""
+        }
       })
     end
   end
@@ -285,16 +343,36 @@ M.binds_flattened = function(nest_tree, flattened, bstack)
     for _, t in ipairs(nest_tree) do
       if type(t.rhs) == "table" then
 
-        -- TODO: insert an entry for each new branch here ??
+        -- -- TODO: insert an entry for each new branch here ??
+        -- -- so that you can do `add_mapping_to_same_branch()` ???
+        -- local entry = {
+        --   type = "module_bind_leaf",
+        --   name = k,
+        --   value = v,
+        --   list_display_props = {
+        --     "BIND", "", ""
+        --   }
+        -- }
+        -- entry = table_merge(entry, t)
+
+        table.insert(flattened, entry)
 
         table.insert(bstack, t.lhs)
         flattened = M.binds_flattened(t.rhs, flattened, bstack)
       else
 
         -- so that you can do `add_mapping_to_same_branch()` ???
+        local entry = {
+          type = "module_bind_leaf",
+          name = k,
+          value = v,
+          list_display_props = {
+            "BIND", "", ""
+          }
+        }
+        entry = table_merge(entry, t)
 
-        t["type"] = "module_bind_leaf"
-        table.insert(flattened, t)
+        table.insert(flattened, entry)
       end
     end
   end
