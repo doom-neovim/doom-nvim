@@ -323,11 +323,9 @@ P.doom_module_full_picker = function()
   us.ensure_doom_ui_state()
   us.doom_ui_state_reset_modules()
 
-
   local postfix = ""
   if doom_ui_state.selected_module_idx ~= nil then
 	  local idx = doom_ui_state.selected_module_idx
-
 	  local morig = doom_ui_state.all_modules_flattened[idx].origin
 	  local mfeat = doom_ui_state.all_modules_flattened[idx].section
 	  local mname = doom_ui_state.all_modules_flattened[idx].name
@@ -335,103 +333,9 @@ P.doom_module_full_picker = function()
 
 	  postfix = postfix .. morig .. ">" .. mfeat .. ">" .. mname .. " (enabled=" .. tostring(menab) .. ")"
   end
-
   doom_ui_state.current.title = "MODULE_FULL " .. postfix -- make into const
-
-
-
-
   doom_ui_state.current.picker = P.doom_module_full_picker
-
-  -- try current buffer? or prev
-  -- if prev module then
-  --
-  -- else
-  --    if current buf path exists in all modules list?
-  --    assign currently selected module index/ID.
-  -- end
-
-  -- assign currently selected module. index!!!
-  --    create title based on the selected module > so that we can show `MODULE: doom > feat > lsp (disabled)`
-
-  local prep = {}
-
-
-  -- move this to
-
-  for k, v in pairs(doom_ui_state.prev.selection) do
-    -- print(k, v)
-
-    if vim.tbl_contains(MODULE_COMPONENTS, k) then
-
-      -- TODO: monitor state in the preview window??
-      --
-      -- TODO: the work `key` should be replaced by `type`
-      --
-      -- also each entry has to have enough information
-      --
-      --
-      -- {
-      --    type = string,
-      --    ...
-      --    ... flattened params..
-      --    ..
-      --    .
-      -- }
-
-
-      if k == "settings" then -- TODO: requires flattening
-        for a, b in pairs(v) do
-          table.insert(prep, { key = "module_setting", value = { key = a, value = b } })
-        end
-
-      elseif k == "packages" then -- TODO: could use a flattening func that accounts for plain strings and anonymous tables.
-        for pname, pkg in pairs(v) do
-          -- i(pkg)
-          table.insert(prep, { key = "module_package", value = pkg })
-        end
-
-      elseif k == "configs" then -- TODO: flatten -> account for table / func
-        for cn, cfg in pairs(v) do
-          -- i(cfg)
-          -- table.insert(prep, { key = "module_config", value = pkg })
-        end
-
-      elseif k == "cmds" then -- TODO: put all entries in keys?
-        for _, cmd in pairs(v) do
-          i(cmd)
-          -- table.insert(prep, { key = "module_cmd", value = pkg })
-        end
-
-      elseif k == "autocmds" then -- TODO: same as cmds
-        for _, autocmd in pairs(v) do
-          i(autocmd)
-      --     table.insert(prep, { key = "module_package", value = pkg })
-        end
-
-      elseif k == "binds" then -- TODO: improve displayer; make sure all necessary keys are in the entry table.
-          for _, bind_flat in ipairs(pu.binds_flattened(v)) do
-
-            -- REMOVE: i should just pass the flat bind
-            table.insert(prep, { key = bind_flat.type, value = bind_flat })
-          end
-
-
-      else
-        table.insert(prep, {
-          key = k,
-          value = v
-        })
-      end
-
-    end
-  end
-
-  -- i(prep)
-
-  doom_ui_state.current.results_prepared = prep
-
-	-- print("full module prep res ->", vim.inspect(doom_ui_state.current.results_prepared))
+  doom_ui_state.current.results_prepared = pu.get_module_components_prepared_for_picker()
 
   opts = require("telescope.themes").get_ivy()
 

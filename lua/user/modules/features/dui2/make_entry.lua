@@ -86,25 +86,35 @@ function entry_makers.display_module_full(entry)
 	  local idx = doom_ui_state.selected_module_idx
 	  local sec = doom_ui_state.all_modules_flattened[idx].section
 	  local name = doom_ui_state.all_modules_flattened[idx].name
+	  -- i(t)
 
-	  if t.key == "module_bind_leaf" then
-      res = "BIND: " .. t.value.lhs .. " -> " .. t.value.rhs .. " // name: " .. t.value.name
+	  if t.type == "module_bind_leaf" then
+      res = "BIND: " .. t.lhs .. " -> " .. t.rhs .. " // name: " .. t.name
 
-	  elseif t.key == "module_setting" then
-	    local sval
-	    i(t.value)
-	    if type(t.value.value) ~= table then
-	      sval = t.value.key .. " -> " ..tostring(t.value.value)
+	  elseif t.type == "module_setting" then
+	    -- print("SETTING......")
+	    -- i(t)
+	    -- i(typet.path_components)
+
+	    res = "SETTING: " .. t.path_components .. " -> "
+
+	    print(type(t.value))
+
+	    if type(t.value) == "table" then
+	      res = res .. "{}"
+	    elseif type(t.value) == "function" then
+	      res = res .. tostring(t.value)
 	    else
-	      sval = t.value.key .. " -> { ... }"
+	      res = res .. t.value
 	    end
-      res = "SETTING: " .. sval --.. " -> " .. t.value.rhs .. " // name: " .. t.value.name
 
-	  elseif t.key == "module_package" then
-      res = "PACKAGE: " .. t.value[1] --.. " -> " .. t.value.rhs .. " // name: " .. t.value.name
+	    print("res:", res)
 
-    else
-      res = t.key .. " > " .. tostring(t.value)
+	  elseif t.type == "module_package" then
+      res = "PACKAGE: " .. t.name --.. " -> " .. t.value.rhs .. " // name: " .. t.value.name
+
+    -- else
+    --   res = t.type .. " > " .. tostring(t.key)
 	  end
 
 	  return res
@@ -112,7 +122,7 @@ function entry_makers.display_module_full(entry)
 	return {
 	  value = entry,
 	  display = function(tbl) return make_display(tbl.value) end,
-	  ordinal = entry.key,
+	  ordinal = entry.type,
 	}
 end
 
