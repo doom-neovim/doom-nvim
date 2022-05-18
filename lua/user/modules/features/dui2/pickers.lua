@@ -198,7 +198,7 @@ P.doom_picker_all_modules = function(c)
 
 		    doom_ui_state.selected_module_idx = fuzzy.index
 		    doom_ui_state.current.selection = fuzzy.value
-		    us.next(P.doom_module_full_picker)
+		    us.next(P.doom_picker_single_module_full)
 	    end
 	  },
 	  { "^r:RENAME", "i", "<C-r>",
@@ -267,12 +267,12 @@ P.doom_picker_all_modules = function(c)
   }):find()
 end
 
-P.doom_picker_all_module_settings = function(c) end
-P.doom_picker_all_module_packages = function(c) end
-P.doom_picker_all_module_binds = function(c) end
-P.doom_picker_all_module_cmds = function(c) end
-P.doom_picker_all_module_autocmds = function(c) end
-P.doom_picker_all_module_binds = function(c) end
+P.doom_picker_all_module_settings = function() end
+P.doom_picker_all_module_packages = function() end
+P.doom_picker_all_module_binds = function() end
+P.doom_picker_all_module_cmds = function() end
+P.doom_picker_all_module_autocmds = function() end
+P.doom_picker_all_module_binds = function() end
 
 --
 -- PICKERS > SINGLE MODULE
@@ -295,7 +295,21 @@ P.doom_picker_single_module_full = function()
   end
   doom_ui_state.current.title = "MODULE_FULL: " .. postfix -- make into const
   doom_ui_state.current.picker = P.doom_module_full_picker
-  doom_ui_state.current.results_prepared = pu.get_module_components_prepared_for_picker()
+
+
+  local requested_doom_components = {
+    -- "user_settings",
+    "settings",
+    "packages",
+    "configs",
+    "binds",
+    "cmds",
+    "autocmds",
+  }
+
+  doom_ui_state.current.results_prepared = pu.doom_get_flat(requested_doom_components)
+
+  -- print(doom_ui_state.current.results_prepared)
 
   opts = require("telescope.themes").get_ivy()
 
@@ -372,280 +386,240 @@ P.doom_picker_single_module_binds = function() end
 -- PICKERS > TREESITTER (deprecated)
 --
 
-P.doom_settings_picker_treesitter = function()
-  us.ensure_doom_ui_state()
-
-  -- @param table_constructor
-  -- refactor into ts table_construct_get_sub_fields(???)
-  local function ts_table_picker_prepare(t)
-    local prep = {}
-    for n in t:iter_children() do
-      if n:named() and n:type(1) ~= "comment" then
-        table.insert(prep, n)
-	    end
-    end
-    return prep
-  end
-
-  -- replace `_` in entry_maker with ` `
-  doom_ui_state.current.title = "USER_SETTINGS" -- make into const
-
-  doom_ui_state.current.picker = P.doom_settings_picker
-
-  if doom_ui_state.prev.buf_ref == nil or doom_ui_state.prev.title ~= "USER SETTINGS" then
-    doom_ui_state.current.buf_ref = utils.get_buf_handle(utils.find_config("settings.lua"))
-	  doom_ui_state.current.results_prepared = ts_table_picker_prepare(ts.ts_get_doom_captures(
-	    doom_ui_state.current.buf_ref, "doom_root.settings_table")[1]
-	  )
-  else
-    doom_ui_state.current.buf_ref = doom_ui_state.prev.buf_ref
-	  doom_ui_state.current.results_prepared = ts_table_picker_prepare(doom_ui_state.prev.selection)
-  end
-
-  -- for each results -> add type = "settings_field"
-
-  opts = require("telescope.themes").get_dropdown()
-
-  require("telescope.pickers").new(opts, {
-    prompt_title = doom_ui_state.current.title,
-    finder = require("telescope.finders").new_table({
-      results = doom_ui_state.current.results_prepared,
-      entry_maker = em.display_doom_settings
-    }),
-    sorter = require("telescope.config").values.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, map)
-
-      actions_set.select:replace(function()
-        local node = selection(prompt_bufnr).value
-        require("telescope.actions").close(prompt_bufnr)
-	      local field_key = node:named_child(0)
-	      local field_value = node:named_child(1)
-	      if field_value:type() == "table_constructor" then
-		      doom_ui_state.current.selection = field_value
-          us.next(P.doom_settings_picker)
-	      else
-	   	      local sr,sc,er,ec = field_key:range()
-	  	      vim.api.nvim_win_set_buf(0, doom_ui_state.current.buf_ref)
-	  	      vim.fn.cursor(er+1,ec)
-	      end
-      end)
-      goback(prompt_bufnr, map)
-
-      return true
-    end,
-  }):find()
-
-end
-
-
-P.doom_binds_table_picker_treesitter = function()
-  us.ensure_doom_ui_state()
-  doom_ui_state.current.title = "BINDS TABLE"
-  doom_ui_state.current.picker = P.doom_binds_table_picker
-
-  -- if doom_ui_state.prev ~= nil then
-  --   print(vim.inspect(doom_ui_state.prev.selection))
-  -- end
-
-  -- TODO: attach the nest data to the module.
-  --
-  -- 1. find which module we are working on.
-  -- 2. extend the module with the nest binds data.
-
-  if doom_ui_state.current.buf_ref == nil then
-    local p
-    if doom_ui_state.prev.selection.type == "module" then
-	    p = doom_ui_state.prev.selection.path .. "/init.lua"
-    end
-    doom_ui_state.current.buf_ref = utils.get_buf_handle(p)
-  end
-
-  if doom_ui_state.prev.selection.type == nil
-    or doom_ui_state.prev.selection.type ~= "binds_table"
-    or doom_ui_state.prev.selection.type ~= "binds_branch"
-    or doom_ui_state.prev.selection.type ~= "binds_leaf"
-  then
-    local t_nest_table_nodes = ts.ts_get_doom_captures(doom_ui_state.current.buf_ref, "doom_module.binds_table")
-    local nestdata =  tst.parse_nest_tables_meta_data(doom_ui_state.current.buf_ref, t_nest_table_nodes[1])
-    doom_ui_state.current.results_prepared = nestdata[1]
-  else
-    doom_ui_state.current.results_prepared = doom_ui_state.prev.selection
-  end
-
-  local opts = opts or require("telescope.themes").get_dropdown()
-
-  pickers.new(opts, {
-    title = doom_ui_state.current.title,
-    finder = finders.new_table({
-      results = doom_ui_state.current.results_prepared,
-      entry_maker = em.display_binds_table,
-    }),
-    sorter = opts.sorter or conf.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, map)
-
-      actions_set.select:replace(function()
-        local fuzzy = selection(prompt_bufnr)
-        actions.close(prompt_bufnr)
-
-	      doom_ui_state.current.selection = fuzzy.value
-
-	      if fuzzy.value.type == "binds_branch" then
-	        us.next(P.doom_binds_branch_picker)
-	      elseif fuzzy.value.type == "binds_leaf" then
-	        us.next(P.doom_binds_leaf_picker)
-	      else
-	      end
-
-      end)
-
-	    goback(prompt_bufnr, map)
-
-      return true
-    end,
- --    previewer = previewers.new_buffer_previewer({
-	--   define_preview = function() return vim.inspect(c.data) end,
-	-- })
-  }):find()
-end
-
-P.doom_binds_leaf_picker_treesitter = function(c)
-  us.ensure_doom_ui_state()
-  doom_ui_state.current.title = "BINDS LEAF"
-  doom_ui_state.current.picker = P.doom_binds_leaf_picker
-  if doom_ui_state.prev.selection.type ~= "binds_leaf" then
-    return
-  end
-
-  local prep_results = {}
-  for k, v in pairs(doom_ui_state.prev.selection) do
-    if vim.tbl_contains(BIND_COMPONENTS, k) then
-  	table.insert(prep_results,{
-  	  key = k,
-  	  value = v
-  	})
-    end
-  end
-
-  doom_ui_state.current.results_prepared = prep_results
-
-  local opts = opts or require("telescope.themes").get_dropdown()
-
-  pickers.new(opts, {
-    title = doom_ui_state.current.title,
-    finder = finders.new_table({
-      results = doom_ui_state.current.results_prepared,
-      entry_maker = em.display_binds_leaf, -- child of results
-    }),
-    sorter = opts.sorter or conf.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, map)
-        actions_set.select:replace(function()
-          local fuzzy = selection(prompt_bufnr)
-          actions.close(prompt_bufnr)
-	        local sr,sc,er,ec = fuzzy.value.value:range()
-	        -- doom_ui_state.current.selection = ??
-	        vim.api.nvim_win_set_buf(0, doom_ui_state.current.buf_ref)
-	        vim.fn.cursor(er+1,ec)
-        end)
-        goback(prompt_bufnr, map)
-        return true
-      end,
- --    previewer = previewers.new_buffer_previewer({
-	--   define_preview = function() return vim.inspect(c.data) end,
-	-- })
-  }):find()
-end
-
-P.doom_binds_branch_picker_treesitter = function(c)
-  us.ensure_doom_ui_state()
-  doom_ui_state.current.title = "BINDS BRANCH"
-  doom_ui_state.current.picker = P.doom_binds_branch_picker
-  if doom_ui_state.prev.selection.type ~= "binds_branch" then
-    return
-  end
-
-  local prep_results = {}
-  for k, v in pairs(doom_ui_state.prev.selection) do
-    if vim.tbl_contains(BIND_COMPONENTS, k) then
-  	table.insert(prep_results,{
-  	  key = k,
-  	  value = v
-  	})
-    end
-  end
-
-  doom_ui_state.current.results_prepared = prep_results
-
-  local opts = opts or require("telescope.themes").get_dropdown()
-
-  pickers.new(opts, {
-    title = doom_ui_state.current.title,
-    finder = finders.new_table({
-      results = doom_ui_state.current.results_prepared,
-      entry_maker = em.display_binds_branch, -- child of results
-    }),
-    sorter = opts.sorter or conf.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, map)
-        actions_set.select:replace(function()
-          local fuzzy = selection(prompt_bufnr)
-          actions.close(prompt_bufnr)
-          if type(fuzzy.value.value) == "table" then
-	          doom_ui_state.current.selection = fuzzy.value.value
-	  	      us.next(P.doom_binds_table_picker)
-	        else
-	  	      local sr,sc,er,ec = fuzzy.value.value:range()
-	  	      vim.fn.cursor(er+1,ec)
-	        end
-        end)
-        goback(prompt_bufnr, map)
-        return true
-      end,
- --    previewer = previewers.new_buffer_previewer({
-	--   define_preview = function() return "-----" end,
-	-- })
-  }):find()
-end
-
-P.doom_global_picker_test = function()
-  -- here try passing the whole doom table to a picker and see how it would work to
-  -- traverse the tree, and only make treesitter queries when you reach a leaf that
-  -- you actually want to modify. this way it could be much easier to manage the
-  -- doom config.
-  -- it should also be possible to pass any node of the tree to the picker and expand from there.
-  --
-  --
-end
+-- P.doom_settings_picker_treesitter = function()
+--   us.ensure_doom_ui_state()
+--
+--   -- @param table_constructor
+--   -- refactor into ts table_construct_get_sub_fields(???)
+--   local function ts_table_picker_prepare(t)
+--     local prep = {}
+--     for n in t:iter_children() do
+--       if n:named() and n:type(1) ~= "comment" then
+--         table.insert(prep, n)
+-- 	    end
+--     end
+--     return prep
+--   end
+--
+--   -- replace `_` in entry_maker with ` `
+--   doom_ui_state.current.title = "USER_SETTINGS" -- make into const
+--
+--   doom_ui_state.current.picker = P.doom_settings_picker
+--
+--   if doom_ui_state.prev.buf_ref == nil or doom_ui_state.prev.title ~= "USER SETTINGS" then
+--     doom_ui_state.current.buf_ref = utils.get_buf_handle(utils.find_config("settings.lua"))
+-- 	  doom_ui_state.current.results_prepared = ts_table_picker_prepare(ts.ts_get_doom_captures(
+-- 	    doom_ui_state.current.buf_ref, "doom_root.settings_table")[1]
+-- 	  )
+--   else
+--     doom_ui_state.current.buf_ref = doom_ui_state.prev.buf_ref
+-- 	  doom_ui_state.current.results_prepared = ts_table_picker_prepare(doom_ui_state.prev.selection)
+--   end
+--
+--   -- for each results -> add type = "settings_field"
+--
+--   opts = require("telescope.themes").get_dropdown()
+--
+--   require("telescope.pickers").new(opts, {
+--     prompt_title = doom_ui_state.current.title,
+--     finder = require("telescope.finders").new_table({
+--       results = doom_ui_state.current.results_prepared,
+--       entry_maker = em.display_doom_settings
+--     }),
+--     sorter = require("telescope.config").values.generic_sorter(opts),
+--     attach_mappings = function(prompt_bufnr, map)
+--
+--       actions_set.select:replace(function()
+--         local node = selection(prompt_bufnr).value
+--         require("telescope.actions").close(prompt_bufnr)
+-- 	      local field_key = node:named_child(0)
+-- 	      local field_value = node:named_child(1)
+-- 	      if field_value:type() == "table_constructor" then
+-- 		      doom_ui_state.current.selection = field_value
+--           us.next(P.doom_settings_picker)
+-- 	      else
+-- 	   	      local sr,sc,er,ec = field_key:range()
+-- 	  	      vim.api.nvim_win_set_buf(0, doom_ui_state.current.buf_ref)
+-- 	  	      vim.fn.cursor(er+1,ec)
+-- 	      end
+--       end)
+--       goback(prompt_bufnr, map)
+--
+--       return true
+--     end,
+--   }):find()
+--
+-- end
+--
+--
+-- P.doom_binds_table_picker_treesitter = function()
+--   us.ensure_doom_ui_state()
+--   doom_ui_state.current.title = "BINDS TABLE"
+--   doom_ui_state.current.picker = P.doom_binds_table_picker
+--
+--   -- if doom_ui_state.prev ~= nil then
+--   --   print(vim.inspect(doom_ui_state.prev.selection))
+--   -- end
+--
+--   -- TODO: attach the nest data to the module.
+--   --
+--   -- 1. find which module we are working on.
+--   -- 2. extend the module with the nest binds data.
+--
+--   if doom_ui_state.current.buf_ref == nil then
+--     local p
+--     if doom_ui_state.prev.selection.type == "module" then
+-- 	    p = doom_ui_state.prev.selection.path .. "/init.lua"
+--     end
+--     doom_ui_state.current.buf_ref = utils.get_buf_handle(p)
+--   end
+--
+--   if doom_ui_state.prev.selection.type == nil
+--     or doom_ui_state.prev.selection.type ~= "binds_table"
+--     or doom_ui_state.prev.selection.type ~= "binds_branch"
+--     or doom_ui_state.prev.selection.type ~= "binds_leaf"
+--   then
+--     local t_nest_table_nodes = ts.ts_get_doom_captures(doom_ui_state.current.buf_ref, "doom_module.binds_table")
+--     local nestdata =  tst.parse_nest_tables_meta_data(doom_ui_state.current.buf_ref, t_nest_table_nodes[1])
+--     doom_ui_state.current.results_prepared = nestdata[1]
+--   else
+--     doom_ui_state.current.results_prepared = doom_ui_state.prev.selection
+--   end
+--
+--   local opts = opts or require("telescope.themes").get_dropdown()
+--
+--   pickers.new(opts, {
+--     title = doom_ui_state.current.title,
+--     finder = finders.new_table({
+--       results = doom_ui_state.current.results_prepared,
+--       entry_maker = em.display_binds_table,
+--     }),
+--     sorter = opts.sorter or conf.generic_sorter(opts),
+--     attach_mappings = function(prompt_bufnr, map)
+--
+--       actions_set.select:replace(function()
+--         local fuzzy = selection(prompt_bufnr)
+--         actions.close(prompt_bufnr)
+--
+-- 	      doom_ui_state.current.selection = fuzzy.value
+--
+-- 	      if fuzzy.value.type == "binds_branch" then
+-- 	        us.next(P.doom_binds_branch_picker)
+-- 	      elseif fuzzy.value.type == "binds_leaf" then
+-- 	        us.next(P.doom_binds_leaf_picker)
+-- 	      else
+-- 	      end
+--
+--       end)
+--
+-- 	    goback(prompt_bufnr, map)
+--
+--       return true
+--     end,
+--  --    previewer = previewers.new_buffer_previewer({
+-- 	--   define_preview = function() return vim.inspect(c.data) end,
+-- 	-- })
+--   }):find()
+-- end
+--
+-- P.doom_binds_leaf_picker_treesitter = function(c)
+--   us.ensure_doom_ui_state()
+--   doom_ui_state.current.title = "BINDS LEAF"
+--   doom_ui_state.current.picker = P.doom_binds_leaf_picker
+--   if doom_ui_state.prev.selection.type ~= "binds_leaf" then
+--     return
+--   end
+--
+--   local prep_results = {}
+--   for k, v in pairs(doom_ui_state.prev.selection) do
+--     if vim.tbl_contains(BIND_COMPONENTS, k) then
+--   	table.insert(prep_results,{
+--   	  key = k,
+--   	  value = v
+--   	})
+--     end
+--   end
+--
+--   doom_ui_state.current.results_prepared = prep_results
+--
+--   local opts = opts or require("telescope.themes").get_dropdown()
+--
+--   pickers.new(opts, {
+--     title = doom_ui_state.current.title,
+--     finder = finders.new_table({
+--       results = doom_ui_state.current.results_prepared,
+--       entry_maker = em.display_binds_leaf, -- child of results
+--     }),
+--     sorter = opts.sorter or conf.generic_sorter(opts),
+--     attach_mappings = function(prompt_bufnr, map)
+--         actions_set.select:replace(function()
+--           local fuzzy = selection(prompt_bufnr)
+--           actions.close(prompt_bufnr)
+-- 	        local sr,sc,er,ec = fuzzy.value.value:range()
+-- 	        -- doom_ui_state.current.selection = ??
+-- 	        vim.api.nvim_win_set_buf(0, doom_ui_state.current.buf_ref)
+-- 	        vim.fn.cursor(er+1,ec)
+--         end)
+--         goback(prompt_bufnr, map)
+--         return true
+--       end,
+--  --    previewer = previewers.new_buffer_previewer({
+-- 	--   define_preview = function() return vim.inspect(c.data) end,
+-- 	-- })
+--   }):find()
+-- end
+--
+-- P.doom_binds_branch_picker_treesitter = function(c)
+--   us.ensure_doom_ui_state()
+--   doom_ui_state.current.title = "BINDS BRANCH"
+--   doom_ui_state.current.picker = P.doom_binds_branch_picker
+--   if doom_ui_state.prev.selection.type ~= "binds_branch" then
+--     return
+--   end
+--
+--   local prep_results = {}
+--   for k, v in pairs(doom_ui_state.prev.selection) do
+--     if vim.tbl_contains(BIND_COMPONENTS, k) then
+--   	table.insert(prep_results,{
+--   	  key = k,
+--   	  value = v
+--   	})
+--     end
+--   end
+--
+--   doom_ui_state.current.results_prepared = prep_results
+--
+--   local opts = opts or require("telescope.themes").get_dropdown()
+--
+--   pickers.new(opts, {
+--     title = doom_ui_state.current.title,
+--     finder = finders.new_table({
+--       results = doom_ui_state.current.results_prepared,
+--       entry_maker = em.display_binds_branch, -- child of results
+--     }),
+--     sorter = opts.sorter or conf.generic_sorter(opts),
+--     attach_mappings = function(prompt_bufnr, map)
+--         actions_set.select:replace(function()
+--           local fuzzy = selection(prompt_bufnr)
+--           actions.close(prompt_bufnr)
+--           if type(fuzzy.value.value) == "table" then
+-- 	          doom_ui_state.current.selection = fuzzy.value.value
+-- 	  	      us.next(P.doom_binds_table_picker)
+-- 	        else
+-- 	  	      local sr,sc,er,ec = fuzzy.value.value:range()
+-- 	  	      vim.fn.cursor(er+1,ec)
+-- 	        end
+--         end)
+--         goback(prompt_bufnr, map)
+--         return true
+--       end,
+--  --    previewer = previewers.new_buffer_previewer({
+-- 	--   define_preview = function() return "-----" end,
+-- 	-- })
+--   }):find()
+-- end
 
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
-
-local test = {}
-test.binds = {
-  { "[n", ":DoomPickerMain<cr>", name = "doom main menu command"},
-  { "[s", ":DoomPickerSettings<cr>", name = "picker doom settings"},
-  { "[m", ":DoomPickerModules<cr>", name = "picker doom modules"},
-  { "[b", ":DoomPickerModuleBinds<cr>", name = "picker doom binds"},
-  {
-    "<leader>",
-    name = "+prefix",
-    {
-      {
-        "n",
-        name = "+nnn",
-        {
-          { "l", [[ :DoomPickerMain<cr> ]], name = "main menu", options = { silent = false }, },
-          { "s", [[ :DoomPickerSettings<cr> ]], name = "settings", options = { silent = false }, }, -- lol
-          { "d", [[ :DoomPickerModules<cr> ]], name = "all modules", options = { silent = false }, },
-          { "S", [[ :DoomPickerModuleSettings<cr> ]], name = "m settings", options = { silent = false }, },
-          { "p", [[ :DoomPickerModulePackages<cr> ]], name = "m pgks", options = { silent = false }, },
-          { "c", [[ :DoomPickerModuleCmds<cr> ]], name = "m cmds", options = { silent = false }, },
-          { "a", [[ :DoomPickerModuleAutocmds<cr> ]], name = "m autocmds", options = { silent = false }, },
-          { "f", [[ :DoomPickerModuleBindsTable<cr> ]], name = "m binds table", options = { silent = false }, },
-          { "b", [[ :DoomPickerModuleBindsBranch<cr> ]], name = "m binds branch", options = { silent = false }, },
-          { "w", [[ :DoomPickerModuleBindsLeaf<cr> ]], name = "m binds leaf", options = { silent = false }, },
-        },
-      },
-    },
-  },
-}
 
 return P

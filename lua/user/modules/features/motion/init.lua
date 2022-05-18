@@ -10,6 +10,7 @@ motion.packages = {
   -- { 'easymotion/vim-easymotion' },
 }
 
+-- need to add timeout to lightspeed!! goback to narmal
 motion.configs = {}
 
 motion.configs["lightspeed.nvim"] = function()

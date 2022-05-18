@@ -15,7 +15,7 @@ local function reset()
 end
 
 doom_ui.cmds = {
-	{ "DoomPickerMain", 		          function() reset() pickers.doom_main_menu_picker() end, },
+	{ "DoomPickerMain", 		          function() reset() pickers.doom_picker_main_menu() end, },
 	{
 	  "DoomPickerSettings",
 	  function()
@@ -26,7 +26,8 @@ doom_ui.cmds = {
 
 	{ "DoomPickerModuleFull", 		    function() reset() pickers.doom_module_full_picker() end, },
 
-	{ "DoomPickerModules", 		        function() reset() pickers.doom_modules_picker() end, },
+	{ "DoomPickerModules", 		        function() reset() pickers.doom_picker_all_modules() end, },
+
 	{ "DoomPickerModuleSettings", 		function() reset() pickers.doom_module_settings_picker() end, },
 	{ "DoomPickerModulePackages", 		function() reset() pickers.doom_module_packages_picker() end, },
 	{ "DoomPickerModuleCmds", 	      function() reset() pickers.doom_module_cmds_picker() end, },
@@ -34,6 +35,9 @@ doom_ui.cmds = {
 	{ "DoomPickerModuleBindsTable", 	function() reset() pickers.doom_binds_table_picker() end, },
 	{ "DoomPickerModuleBindsBranch", 	function() reset() pickers.doom_binds_branch_picker() end, },
 	{ "DoomPickerModuleBindsLeaf", 		function() reset() pickers.doom_binds_leaf_picker() end, },
+
+	-- todo: all modules + settings, so that you can really access everything
+	--    from one fuzzy finder
 }
 
 doom_ui.binds = {
@@ -54,7 +58,9 @@ doom_ui.binds = {
 
           { "n", [[ :DoomPickerModuleFull<cr> ]], name = "m_full", options = { silent = false }, },
 
-          { "d", [[ :DoomPickerModules<cr> ]], name = "all modules", options = { silent = false }, },
+          -- TODO: this should be all mods + settings, so that everything can be reached.
+          { "k", [[ :DoomPickerModules<cr> ]], name = "all modules", options = { silent = false }, },
+
           { "S", [[ :DoomPickerModuleSettings<cr> ]], name = "m settings", options = { silent = false }, },
           { "p", [[ :DoomPickerModulePackages<cr> ]], name = "m pgks", options = { silent = false }, },
           { "c", [[ :DoomPickerModuleCmds<cr> ]], name = "m cmds", options = { silent = false }, },

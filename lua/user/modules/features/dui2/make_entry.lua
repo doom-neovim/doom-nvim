@@ -87,6 +87,8 @@ function entry_makers.display_module_full(entry)
 	  local sec = doom_ui_state.all_modules_flattened[idx].section
 	  local name = doom_ui_state.all_modules_flattened[idx].name
 
+	  i(t)
+
 	  if t.type == "module_setting" then
 	    res = "SETTING: " .. t.path_components .. " -> " .. t.value
 

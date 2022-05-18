@@ -22,6 +22,43 @@ local function indent(s)
   return res
 end
 
+-- TODO: mv to util
+--
+-- @param list or table of tables
+local function table_merge(...)
+    local tables_to_merge = { ... }
+    -- i(tables_to_merge)
+
+    -- assume the table has been wrapped
+    if #tables_to_merge == 1 then
+      tables_to_merge = tables_to_merge[1]
+    end
+
+    assert(#tables_to_merge > 1, "There should be at least two tables to merge them")
+
+    for k, t in ipairs(tables_to_merge) do
+        assert(type(t) == "table", string.format("Expected a table as function parameter %d", k))
+    end
+    local result = tables_to_merge[1]
+    for i = 2, #tables_to_merge do
+        local from = tables_to_merge[i]
+        for k, v in pairs(from) do
+            if type(k) == "number" then
+                table.insert(result, v)
+            elseif type(k) == "string" then
+                if type(v) == "table" then
+                    result[k] = result[k] or {}
+                    result[k] = table_merge(result[k], v)
+                else
+                    result[k] = v
+                end
+            end
+        end
+    end
+    return result
+end
+
+
 -- Helper to flatten and get table keys/indices properly.
 --
 -- for example it makes sure that recursion only enters tables with keys
@@ -31,19 +68,13 @@ end
 --
 -- only return true if the table is pure string
 -- keys and at least one key
-local function is_sub_setting(s, a, b)
-  -- print("is_sub_settings:", type(a), type(b))
-
+local function is_sub_setting(a, b)
   if type(a) == "number" then
-    -- print("IS_SUB; a == number",  a)
     return false
   end
-
   if type(b) ~= "table" then
-    -- print("IS_SUB; b ~= table",  a)
     return false
   end
-
   local cnt = 0
   for k, v in pairs(b) do
     cnt = cnt + 1
@@ -52,13 +83,9 @@ local function is_sub_setting(s, a, b)
       return false
     end
   end
-
   if cnt == 0 then
-    -- print("IS_SUB: sub table has no keys", a)
     return false
   end
-
-  -- print("IS_SUB; table is pure", a, b)
   return true
 end
 
@@ -124,6 +151,8 @@ end
 --      can easilly attach custom operations for each doom type.
 --      ideally these should be usable with cursor context as well. ie. add bind to first branch under cursor, second, bind after leaf under cursor.
 --
+--    ordinal = ??
+--
 --    ... custom keys
 --    ...
 --    ..
@@ -135,55 +164,20 @@ end
 --
 --
 
--- TODO: mv to util
-local function table_merge(...)
-    local tables_to_merge = { ... }
+-- LIST OF POSSIBLE DOOM COMPONENTS
+--
+-- "user_settings",
+-- "settings",
+-- "packages",
+-- "configs", -> merge with packages.. right?
+-- "binds",
+-- "cmds",
+-- "autocmds",
 
-    assert(#tables_to_merge > 1, "There should be at least two tables to merge them")
-
-    for k, t in ipairs(tables_to_merge) do
-        assert(type(t) == "table", string.format("Expected a table as function parameter %d", k))
-    end
-
-    local result = tables_to_merge[1]
-
-    for i = 2, #tables_to_merge do
-        local from = tables_to_merge[i]
-        for k, v in pairs(from) do
-            if type(k) == "number" then
-                table.insert(result, v)
-            elseif type(k) == "string" then
-                if type(v) == "table" then
-                    result[k] = result[k] or {}
-                    result[k] = table_merge(result[k], v)
-                else
-                    result[k] = v
-                end
-            end
-        end
-    end
-
-    return result
-end
-
-local NEEDS_FLATTENED = {
-  "user_settings",
-  "settings",
-  "packages",
-  "configs",
-  "binds",
-  "cmds",
-  "autocmds",
-}
-
-M.get_module_components_prepared_for_picker = function()
-
-  local component_tables = {}
-
+M.doom_get_flat = function(t_requested_components)
+  local components_table = {}
   for m_key, m_comp in pairs(doom_ui_state.prev.selection) do
-
-    if vim.tbl_contains(NEEDS_FLATTENED, m_key) then
-
+    if vim.tbl_contains(t_requested_components, m_key) then
       table.insert(components_table, M[m_key .."_flattened"](m_comp))
     else
       table.insert(components_table, {
@@ -193,7 +187,8 @@ M.get_module_components_prepared_for_picker = function()
     end
   end
 
-  return table_merge(components_table)
+  local merge =  table_merge(components_table)
+  return merge
 end
 
 -- TODO: could the same flattener be used for both user settings and module settings? Yes, right?!
@@ -203,7 +198,7 @@ M.user_settings_flattened = function(t_settings, flattened, stack)
   local flattened = flattened or {}
   local stack = stack or {}
   for k, v in pairs(t_settings) do
-    if is_sub_setting(stack, k,v) then
+    if is_sub_setting(k,v) then
       -- if type(v) ~= "table" then print("!!!!! sub t") end
       table.insert(stack, k)
       flattened = M.settings_flattened(v, flattened, stack)
