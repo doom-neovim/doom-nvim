@@ -1,5 +1,7 @@
 local M = {}
 
+-- rename this file to `flatteners.lua` or `make_array.lua`
+
 local MODULE_COMPONENTS = {
   "name",
   "enabled",
@@ -90,6 +92,15 @@ M.filter_modules = function(filter)
   return filtered
 end
 
+
+
+-- refactor: make accept
+-- @param table: of each component you require flattened,
+--          -> eg. get_flat { "user_settings", "module_settings", "module_packages" } returns { {}, {}, ... }
+-- @return list of flattened doom components, use with eg. telescope.
+--
+-- EACH ENTRY SHOULD HAVE ENOUGH INFORMATION TO STRUCTURAL FIND AND TRANSFORM
+-- THE DATA IN THE CODEBASE.
 M.get_module_components_prepared_for_picker = function()
 
   local prep = {}
@@ -144,6 +155,30 @@ M.get_module_components_prepared_for_picker = function()
   return prep
 end
 
+-- TODO: could the same flattener be used for both user settings and module settings? Yes, right?!
+--
+-- tree flattener: user settings and module settings,
+M.user_settings_flattened = function(t_settings, flattened, stack)
+  local flattened = flattened or {}
+  local stack = stack or {}
+  for k, v in pairs(t_settings) do
+    if is_sub_setting(stack, k,v) then
+      -- if type(v) ~= "table" then print("!!!!! sub t") end
+      table.insert(stack, k)
+      flattened = M.settings_flattened(v, flattened, stack)
+    else
+      local entry = { type = "module_setting",path_components = k, value = tostring(v) }
+      if #stack > 0 then
+        local pc = table.concat(stack, ".")
+        entry.path_components = pc .. "." .. k
+      end
+      table.insert(flattened, entry)
+    end
+  end
+  table.remove(stack, #stack)
+  return flattened
+end
+
 M.settings_flattened = function(t_settings, flattened, stack)
   local flattened = flattened or {}
   local stack = stack or {}
@@ -165,6 +200,7 @@ M.settings_flattened = function(t_settings, flattened, stack)
   return flattened
 end
 
+-- list flattener: cmds, and autocmds, and packages.???
 M.packages_flattened = function(t_packages)
   local flattened = {}
   if t_packages == nil then return end
@@ -229,15 +265,7 @@ M.autocmds_flattened = function(t_autocmds)
   return flattened
 end
 
-
--- @return array of
--- {
---  type = string
---  ...
---  ...
--- }
--- TODO: add each branch to flattened and tag as t["type"] = "module_bind_branch"
--- TODO: attach the corresponding branch to each bind
+-- list tree flattener. binds contain both anonymous list and potential trees.
 M.binds_flattened = function(nest_tree, flattened, bstack)
   local flattened = flattened or {}
   local sep = " | "
