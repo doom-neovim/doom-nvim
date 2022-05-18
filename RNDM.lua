@@ -180,13 +180,26 @@ TODO: DEKLARERA -> TRANSFER MONEY?
 
 - debug luasnip
 
-make sure all prepared results has a type tag. i dunno if I am doing this the correct way.
+-> create bindings for all new stuff.
 
-change mode you enter with.
+-> fix doom settings picker
 
-i want to display each bind as flat so that it can be something tha is just so fucki fast that you cannot really.
-maybe restructure the tree and prepare it more in some way?
+-> 2 char binds for the most important ones. (all modules)
 
+-> make pickers for each package component.
+
+-> all_modules_picker -> binding to call sub picker for each module component?
+
+-> displayers -> how is the git branch displayers created > i notice that it changes colors
+
+
+-> refactor all displayers into one big one?? this would make sense, since all data is tagged with a corresponding type.
+
+this is pretty fucking cool and the thing about this is that you might never fucking need this shit and so for various reasons
+this is something that you might need to do.
+
+function sync_doom_global_to_settings()
+end
 
 --]]
 
