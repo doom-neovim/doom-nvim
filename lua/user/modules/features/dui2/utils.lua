@@ -22,12 +22,12 @@ local function is_sub_setting(s, a, b)
   -- print("is_sub_settings:", type(a), type(b))
 
   if type(a) == "number" then
-    print("IS_SUB; a == number",  a)
+    -- print("IS_SUB; a == number",  a)
     return false
   end
 
   if type(b) ~= "table" then
-    print("IS_SUB; b ~= table",  a)
+    -- print("IS_SUB; b ~= table",  a)
     return false
   end
 
@@ -35,17 +35,17 @@ local function is_sub_setting(s, a, b)
   for k, v in pairs(b) do
     cnt = cnt + 1
     if type(k) == "number" then
-      print("IS_SUB; sub table has number",  a)
+      -- print("IS_SUB; sub table has number",  a)
       return false
     end
   end
 
   if cnt == 0 then
-    print("IS_SUB: sub table has no keys", a)
+    -- print("IS_SUB: sub table has no keys", a)
     return false
   end
 
-  print("IS_SUB; table is pure", a, b)
+  -- print("IS_SUB; table is pure", a, b)
   return true
 end
 
@@ -130,11 +130,12 @@ M.get_module_components_prepared_for_picker = function()
       --       table.insert(prep, bind_flat)
       --     end
 
-      else
-        table.insert(prep, {
-          type = m_key,
-          value = m_comp
-        })
+      -- else
+      --   table.insert(prep, {
+      --     type = m_key,
+      --     value = m_comp
+      --   })
+
       end
 
     end
@@ -148,47 +149,31 @@ end
 -- {
 --  type = string
 -- }
-M.settings_flattened = function(t_settings, stack)
+M.settings_flattened = function(t_settings, flattened, stack)
   -- print(t_settings == nil)
-  local flattened = {}
+  local flattened = flattened or {}
   local stack = stack or {}
-  if #stack > 4 then return end
-
-  local ns = #stack
-
   for k, v in pairs(t_settings) do
-
-    print("------------------------------------------------------", indent(stack))
-    local ss = string.format([[#%s%s key = (%s, t:%s), v = (t:%s,
-    ]], #stack, indent(stack), type(k), k,  type(v))
-    print(ss)
-
+    -- print("------------------------------------------------------", indent(stack))
+    -- local ss = string.format([[#%s%s key = (%s, t:%s), v = (t:%s)]], #stack, indent(stack), type(k), k,  type(v))
     if is_sub_setting(stack, k,v) then
-      -- print("NEW SUB TABLE ->", type(k) ..":"..k, type(v)..":"..tostring(v))
+      -- print("NEW SUB TABLE ->", string.upper(type(k)) ..":"..k, string.upper(type(v)) ..":"..tostring(v))
+      if type(v) ~= "table" then print("!!!!! sub t") end
       table.insert(stack, k)
-      flattened = M.settings_flattened(v, stack)
+      flattened = M.settings_flattened(v, flattened, stack)
       -- print("POST SUB TABLE ->", type(k) ..":"..k, type(v)..":"..tostring(v))
     else
-      print("LEAF ->", type(k) ..":"..k, type(v)..":"..tostring(v))
-
-      local entry = {
-        type = "module_setting",
-        path_components = k,
-        value = tostring(v)
-      }
+      -- print("LEAF ->", string.upper(type(k)) ..":"..k, string.upper(type(v)) ..":".. tostring(v))
+      local entry = { type = "module_setting",path_components = k, value = tostring(v) }
       if #stack > 0 then
         local pc = table.concat(stack, ".")
         entry.path_components = pc .. "." .. k
       end
-
-      print("ENTRY:", vim.inspect(entry))
-
+      -- print("ENTRY:", entry.path_components, "=", entry.value)
       table.insert(flattened, entry)
     end
   end
-
   table.remove(stack, #stack)
-  -- print("LAST F:", i(flattened))
   return flattened
 end
 

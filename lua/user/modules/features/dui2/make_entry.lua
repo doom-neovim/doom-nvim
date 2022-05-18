@@ -98,15 +98,15 @@ function entry_makers.display_module_full(entry)
 
 	    res = "SETTING: " .. t.path_components .. " -> "
 
-	    print(type(t.value))
+	    -- print(type(t.value))
 
-	    if type(t.value) == "table" then
-	      res = res .. "{}"
-	    elseif type(t.value) == "function" then
-	      res = res .. tostring(t.value)
-	    else
+	    -- if type(t.value) == "table" then
+	    --   res = res .. "{}"
+	    -- elseif type(t.value) == "function" then
+	    --   res = res .. tostring(t.value)
+	    -- else
 	      res = res .. t.value
-	    end
+	    -- end
 
 	    print("res:", res)
 
