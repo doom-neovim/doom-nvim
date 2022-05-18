@@ -116,24 +116,25 @@ M.get_module_components_prepared_for_picker = function()
 
       elseif m_key == "cmds" then
         for _, cmd_flat in ipairs(M.cmds_flattened(m_comp)) do
+          -- i(cmd_flat)
           table.insert(prep, cmd_flat)
         end
 
-      -- elseif k == "autocmds" then
-      --   for _, autocmd_flat in ipairs(M.autocmds_flattened(m_comp)) do
-      --     table.insert(prep, autocmd_flat)
-      --   end
-      --
-      -- elseif k == "binds" then
-      --     for _, bind_flat in ipairs(M.binds_flattened(m_comp)) do
-      --       table.insert(prep, bind_flat)
-      --     end
+      elseif m_key == "autocmds" then
+        for _, autocmd_flat in ipairs(M.autocmds_flattened(m_comp)) do
+          table.insert(prep, autocmd_flat)
+        end
 
-      -- else
-      --   table.insert(prep, {
-      --     type = m_key,
-      --     value = m_comp
-      --   })
+      elseif m_key == "binds" then
+          for _, bind_flat in ipairs(M.binds_flattened(m_comp)) do
+            table.insert(prep, bind_flat)
+          end
+
+      else
+        table.insert(prep, {
+          type = m_key,
+          value = m_comp
+        })
 
       end
 
@@ -177,7 +178,6 @@ M.packages_flattened = function(t_packages)
     local entry = { type = "module_package", name = k, spec = v }
     table.insert(flattened, entry)
   end
-  -- i(flattened)
   return flattened
 end
 
@@ -192,34 +192,39 @@ end
 
 M.cmds_flattened = function(t_cmds)
   local flattened = {}
-  if t_packages == nil then return end
-  for idx, v in ipairs(t_cmds) do
-    -- i(v)
-
-   table.insert(flattened, {
+  if t_cmds == nil then return end
+  for k, v in pairs(t_cmds) do
+    table.insert(flattened, {
       type = "module_cmd",
-      cmd = v
+      name = v[1],
+      cmd = v[2]
     })
   end
+
   return flattened
 end
 
--- @return array of
--- {
---  type = string
---  ...
---  ...
--- }
 M.autocmds_flattened = function(t_autocmds)
   local flattened = {}
-  if t_packages == nil then return end
-  for idx, v in ipairs(t_autocmds) do
-    -- i(v)
-
-   table.insert(flattened, {
+  if t_autocmds == nil then return end
+  if type(t_autocmds) == "function" then
+    table.insert(flattened, {
       type = "module_autocmd",
-      autocmd = v
+      event = nil,
+      pattern = nil,
+      action = nil,
+      is_func = true,
+      func = t_autocmds
     })
+  else
+    for k, v in pairs(t_autocmds) do
+      table.insert(flattened, {
+        type = "module_autocmd",
+        event = v[1],
+        pattern = v[2],
+        action = v[3],
+      })
+    end
   end
   return flattened
 end

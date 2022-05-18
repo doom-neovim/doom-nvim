@@ -94,10 +94,24 @@ function entry_makers.display_module_full(entry)
 	    res = "CONFIG: " .. t.name .. " -> " .. tostring(t.value)
 
 	  elseif t.type == "module_package" then
-      res = "PACKAGE: " .. t.name .. " -> " .. tostring(t.spec) --.. " // name: " .. t.value.name
+      res = "PACKAGE: " .. t.name .. " -> " .. tostring(t.spec)
+
+	  elseif t.type == "module_cmd" then
+      res = "CMD: " .. t.name .. " -> " .. tostring(t.cmd)
+
+	  elseif t.type == "module_autocmd" then
+      if t.is_func then
+        res = "AUTOCMD: " .. t.func
+      else
+        res = "AUTOCMD: " .. t.event .. " | " .. t.pattern .. " | " .. tostring(t.action)
+      end
 
 	  elseif t.type == "module_bind_leaf" then
       res = "BIND: " .. t.lhs .. " -> " .. t.rhs .. " // name: " .. t.name
+
+    else
+      res = string.upper(t.type) .. " -> " .. t.value
+
 	  end
 
 	  return res
