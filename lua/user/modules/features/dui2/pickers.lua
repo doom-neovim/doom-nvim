@@ -301,7 +301,7 @@ P.doom_picker_single_module_full = function()
     "settings",
     "packages",
     "configs",
-    "binds",
+    -- "binds",
     "cmds",
     "autocmds",
   }

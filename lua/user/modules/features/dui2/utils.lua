@@ -140,12 +140,13 @@ M.doom_get_flat = function(t_requested_components)
 
       table.insert(components_table, M[m_key .."_flattened"](m_comp))
 
-    else
-      -- prefix hidden props
-      table.insert(components_table, {
-        type = "__" .. m_key,
-        value = m_comp
-      })
+    -- else
+    --   -- prefix hidden props
+    --   table.insert(components_table, {
+    --     type = "__" .. m_key,
+    --     value = m_comp
+    --   })
+
 --    list_display_props = {
 --      ..
 --      { "display_string", "hl_group" }
@@ -154,6 +155,8 @@ M.doom_get_flat = function(t_requested_components)
 --    }
     end
   end
+
+  --TODO: prevent fail if table empty
 
   local merge =  table_merge(components_table)
   return merge
@@ -165,6 +168,26 @@ end
 --
 -- FLATTENERS
 --
+
+-- TODO: mv modules flattener to here
+
+
+-- xxx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 -- -- TODO: could the same flattener be used for both user settings and module settings? Yes, right?!
@@ -370,6 +393,7 @@ M.binds_flattened = function(nest_tree, flattened, bstack)
             "BIND", "", ""
           }
         }
+
         entry = table_merge(entry, t)
 
         table.insert(flattened, entry)

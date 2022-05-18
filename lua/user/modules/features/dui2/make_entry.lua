@@ -23,6 +23,10 @@ local entry_makers = {}
 function entry_makers.display_all_modules(entry)
 	local function make_display(t)
 
+	  -- i(t)
+
+	  -- TODO: move all of this into the modules flattener.
+
 	  local res = ""
 
     local on = "x"
