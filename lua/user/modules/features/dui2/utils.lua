@@ -96,30 +96,29 @@ M.get_module_components_prepared_for_picker = function()
 
   -- Iterate selected module
   for m_key, m_comp in pairs(doom_ui_state.prev.selection) do
-    -- print(k, v)
+    -- print(m_key)
     if vim.tbl_contains(MODULE_COMPONENTS, m_key) then
+
       if m_key == "settings" then
-        -- print(m_key)
         for _, setting_flat in ipairs(M.settings_flattened(m_comp)) do
-          -- i(setting_flat)
           table.insert(prep, setting_flat)
         end
-        -- i(prep)
-      -- elseif k == "packages" then
-      --   for _, package_flat in ipairs(M.packages_flattened(m_comp)) do
-      --     table.insert(prep, package_flat)
-      --   end
-      --
-      -- elseif k == "configs" then
-      --   for _, config_flat in ipairs(M.configs_flattened(m_comp)) do
-      --     table.insert(prep, config_flat)
-      --   end
-      --
-      -- elseif k == "cmds" then
-      --   for _, cmd_flat in ipairs(M.cmds_flattened(m_comp)) do
-      --     table.insert(prep, cmd_flat)
-      --   end
-      --
+
+      elseif m_key == "packages" then
+        for _, package_flat in ipairs(M.packages_flattened(m_comp)) do
+          table.insert(prep, package_flat)
+        end
+
+      elseif m_key == "configs" then
+        for _, config_flat in ipairs(M.configs_flattened(m_comp)) do
+          table.insert(prep, config_flat)
+        end
+
+      elseif m_key == "cmds" then
+        for _, cmd_flat in ipairs(M.cmds_flattened(m_comp)) do
+          table.insert(prep, cmd_flat)
+        end
+
       -- elseif k == "autocmds" then
       --   for _, autocmd_flat in ipairs(M.autocmds_flattened(m_comp)) do
       --     table.insert(prep, autocmd_flat)
@@ -144,32 +143,20 @@ M.get_module_components_prepared_for_picker = function()
   return prep
 end
 
-
--- @return array of
--- {
---  type = string
--- }
 M.settings_flattened = function(t_settings, flattened, stack)
-  -- print(t_settings == nil)
   local flattened = flattened or {}
   local stack = stack or {}
   for k, v in pairs(t_settings) do
-    -- print("------------------------------------------------------", indent(stack))
-    -- local ss = string.format([[#%s%s key = (%s, t:%s), v = (t:%s)]], #stack, indent(stack), type(k), k,  type(v))
     if is_sub_setting(stack, k,v) then
-      -- print("NEW SUB TABLE ->", string.upper(type(k)) ..":"..k, string.upper(type(v)) ..":"..tostring(v))
-      if type(v) ~= "table" then print("!!!!! sub t") end
+      -- if type(v) ~= "table" then print("!!!!! sub t") end
       table.insert(stack, k)
       flattened = M.settings_flattened(v, flattened, stack)
-      -- print("POST SUB TABLE ->", type(k) ..":"..k, type(v)..":"..tostring(v))
     else
-      -- print("LEAF ->", string.upper(type(k)) ..":"..k, string.upper(type(v)) ..":".. tostring(v))
       local entry = { type = "module_setting",path_components = k, value = tostring(v) }
       if #stack > 0 then
         local pc = table.concat(stack, ".")
         entry.path_components = pc .. "." .. k
       end
-      -- print("ENTRY:", entry.path_components, "=", entry.value)
       table.insert(flattened, entry)
     end
   end
@@ -177,61 +164,32 @@ M.settings_flattened = function(t_settings, flattened, stack)
   return flattened
 end
 
-
--- @return array of
--- {
---  type = string,
---  name = string,
---  spec = table,
--- }
 M.packages_flattened = function(t_packages)
   local flattened = {}
   if t_packages == nil then return end
-  for idx, v in ipairs(t_packages) do
-    -- i(v)
-
-   table.insert(flattened, {
-      type = "module_package",
-      name = idx,
-      spec = v
-    })
+  for k, v in pairs(t_packages) do
+    if type(k) == "number" then
+      k = "anonymous"
+      if type(v) == "string" then
+        entry.spec = { v }
+      end
+    end
+    local entry = { type = "module_package", name = k, spec = v }
+    table.insert(flattened, entry)
   end
+  -- i(flattened)
   return flattened
 end
 
--- @return array of
--- {
---  type = string
---  ...
---  ...
--- }
 M.configs_flattened = function(t_configs)
   local flattened = {}
-  -- i(t_settings)
-  -- local stack = stack or {}
   for k, v in pairs(t_configs) do
-    -- print("config:", k,v)
-    -- if type(v) == "table" then
-    --   table.insert(stack, k)
-    -- else
-   local entry = {}
-    entry["type"] = "module_config"
-    entry["name"] = k
-    entry["config"] = v
+    local entry = { type = "module_config", name = k, value = v }
     table.insert(flattened, entry)
-    -- end
   end
-  -- table.remove(stack, #stack)
   return flattened
 end
 
-
--- @return array of
--- {
---  type = string
---  ...
---  ...
--- }
 M.cmds_flattened = function(t_cmds)
   local flattened = {}
   if t_packages == nil then return end
@@ -276,7 +234,7 @@ end
 -- TODO: add each branch to flattened and tag as t["type"] = "module_bind_branch"
 -- TODO: attach the corresponding branch to each bind
 M.binds_flattened = function(nest_tree, flattened, bstack)
-  local flattened = {}
+  local flattened = flattened or {}
   local sep = " | "
   local bstack = bstack or {}
   if acc == nil then

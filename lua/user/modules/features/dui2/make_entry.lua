@@ -86,35 +86,18 @@ function entry_makers.display_module_full(entry)
 	  local idx = doom_ui_state.selected_module_idx
 	  local sec = doom_ui_state.all_modules_flattened[idx].section
 	  local name = doom_ui_state.all_modules_flattened[idx].name
-	  -- i(t)
 
-	  if t.type == "module_bind_leaf" then
-      res = "BIND: " .. t.lhs .. " -> " .. t.rhs .. " // name: " .. t.name
+	  if t.type == "module_setting" then
+	    res = "SETTING: " .. t.path_components .. " -> " .. t.value
 
-	  elseif t.type == "module_setting" then
-	    -- print("SETTING......")
-	    -- i(t)
-	    -- i(typet.path_components)
-
-	    res = "SETTING: " .. t.path_components .. " -> "
-
-	    -- print(type(t.value))
-
-	    -- if type(t.value) == "table" then
-	    --   res = res .. "{}"
-	    -- elseif type(t.value) == "function" then
-	    --   res = res .. tostring(t.value)
-	    -- else
-	      res = res .. t.value
-	    -- end
-
-	    print("res:", res)
+	  elseif t.type == "module_config" then
+	    res = "CONFIG: " .. t.name .. " -> " .. tostring(t.value)
 
 	  elseif t.type == "module_package" then
-      res = "PACKAGE: " .. t.name --.. " -> " .. t.value.rhs .. " // name: " .. t.value.name
+      res = "PACKAGE: " .. t.name .. " -> " .. tostring(t.spec) --.. " // name: " .. t.value.name
 
-    -- else
-    --   res = t.type .. " > " .. tostring(t.key)
+	  elseif t.type == "module_bind_leaf" then
+      res = "BIND: " .. t.lhs .. " -> " .. t.rhs .. " // name: " .. t.name
 	  end
 
 	  return res
