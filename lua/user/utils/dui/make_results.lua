@@ -199,7 +199,7 @@ local MODULE_CATEGORIES = {
 }
 
 
-local MODULE_COMPONENTS = {
+local MODULE_PARTS = {
     "settings",
     "packages",
     "configs",
@@ -212,7 +212,6 @@ local MODULE_COMPONENTS = {
 -- GET DOOM COMPONENTS BY TYPE
 --
 
-
 -- @param table: of each component you require flattened,
 --          -> eg. get_flat { "user_settings", "module_settings", "module_packages" } returns { {}, {}, ... }
 -- @return list of flattened doom components, use with eg. telescope.
@@ -222,7 +221,7 @@ M.get_results_for_query = function(type, components)
 
   -- inspect_ui_state()
 
-    -- TODO: filters
+    -- TODO: filters -> investigate
 
   -- doom_picker("main_menu")
   -- doom_picker("settings")
@@ -247,11 +246,15 @@ M.get_results_for_query = function(type, components)
     end
 
   elseif doom_ui_state.query.type == "module" then
-
-    -- -- requires module selection!
-    -- for _, cmp in pairs(doom_ui_stat.query.components or MODULE_COMPONENTS) do
-    --   table.insert(components_table, M[cmp .."_flattened"](m_comp))
-    -- end
+      for mk, m_part in pairs(doom_ui_state.selected_module) do
+        for _, qp in ipairs(doom_ui_state.query.parts or MODULE_PARTS) do
+          if mk == qp then
+            for _, entry in pairs(M[mk.."_flattened"](m_part)) do
+              table.insert(results, entry)
+            end
+          end
+        end
+      end
 
   elseif doom_ui_state.query.type == "component" then
 
@@ -323,9 +326,11 @@ M.main_menu_flattened = function()
         {"browse all modules"},
       },
       mappings = {
-        ["<CR>"] = function(fuzzy, line, cb)
+        ["<CR>"] = function(fuzzy, line)
           doom_ui_state.query = {
             type = "modules",
+            -- origins = {},
+            -- categories = {},
           }
           doom_ui_state.next()
         end,
@@ -418,7 +423,6 @@ M.get_modules_extended = function()
       prep_all_m[m_origin][m_section] = {}
     end
 
-
     prep_all_m[m_origin][m_section][m_name] = {
       type = "module",
       enabled = false,
@@ -431,13 +435,18 @@ M.get_modules_extended = function()
       },
       mappings = {
         ["<CR>"] = function(fuzzy, line)
-		      doom_ui_state.current.selection = fuzzy.value
-		      ax.m_edit(doom_ui_state.current.selection)
+         -- i(fuzzy)
+		      doom_ui_state.selected_module = fuzzy.value
+		      ax.m_edit(fuzzy.value)
 		    end,
-		    ["<C-a>"] = function(fuzzy, line, cb)
-		      doom_ui_state.selected_module_idx = fuzzy.index
-		      doom_ui_state.current.selection = fuzzy.value
-  		    if cb ~= nil then cb() end
+		    ["<C-a>"] = function(fuzzy, line)
+          doom_ui_state.query = {
+            type = "module",
+            -- components = {}
+          }
+		      doom_ui_state.selected_module = fuzzy.value
+          i(fuzzy)
+          doom_ui_state.next()
 	      end
       }
     }
@@ -604,6 +613,15 @@ M.packages_flattened = function(t_packages)
         {"PKG"},
         {repo_name},
         {pkg_name}
+      },
+      mappings = {
+        ["<CR>"] = function(fuzzy,line, cb)
+          i(fuzzy)
+          -- doom_ui_state.query = {
+          --   type = "settings",
+          -- }
+          -- doom_ui_state.next()
+  		  end
       }
     }
 
@@ -632,6 +650,15 @@ M.configs_flattened = function(t_configs)
         {"CFG"},
         {tostring(k)},
         {tostring(v)}
+      },
+      mappings = {
+        ["<CR>"] = function(fuzzy,line, cb)
+          i(fuzzy)
+          -- doom_ui_state.query = {
+          --   type = "settings",
+          -- }
+          -- doom_ui_state.next()
+  		  end
       }
     }
 
@@ -664,6 +691,15 @@ M.cmds_flattened = function(t_cmds)
         {"CMD"},
         {tostring(v[1])},
         {tostring(v[2])}
+      },
+      mappings = {
+        ["<CR>"] = function(fuzzy,line, cb)
+          i(fuzzy)
+          -- doom_ui_state.query = {
+          --   type = "settings",
+          -- }
+          -- doom_ui_state.next()
+  		  end
       }
     }
 
@@ -693,6 +729,15 @@ M.autocmds_flattened = function(t_autocmds)
       },
       list_display_props = {
         {"AUTOCMD"}, {"isfunc"}, {tostring(t_autocmds)}
+      },
+      mappings = {
+        ["<CR>"] = function(fuzzy,line, cb)
+          i(fuzzy)
+          -- doom_ui_state.query = {
+          --   type = "settings",
+          -- }
+          -- doom_ui_state.next()
+  		  end
       }
     })
 
@@ -707,6 +752,15 @@ M.autocmds_flattened = function(t_autocmds)
         },
         list_display_props = {
            {"AUTOCMD"}, {v[1]}, {v[2]}, {tostring(v[3])}
+        },
+        mappings = {
+          ["<CR>"] = function(fuzzy,line, cb)
+            i(fuzzy)
+            -- doom_ui_state.query = {
+            --   type = "settings",
+            -- }
+            -- doom_ui_state.next()
+  		    end
         }
       })
     end
@@ -755,6 +809,15 @@ M.binds_flattened = function(nest_tree, flattened, bstack)
           data = t,
           list_display_props = {
             { "BIND" }, { t.lhs }, {t.name}, {t.rhs} -- {t[1], t[2], tostring(t.options)
+          },
+          mappings = {
+            ["<CR>"] = function(fuzzy,line, cb)
+              i(fuzzy)
+              -- doom_ui_state.query = {
+              --   type = "settings",
+              -- }
+              -- doom_ui_state.next()
+  		      end
           }
         }
 

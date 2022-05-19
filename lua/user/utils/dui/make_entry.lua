@@ -67,7 +67,10 @@ function entry_makers.doom_displayer(entry)
     },
   }
 
+  -- i(entry)
+
   local make_display = function(entry)
+    -- i(entry)
     return displayer(entry.value.list_display_props)
   end
 

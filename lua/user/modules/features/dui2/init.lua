@@ -48,6 +48,11 @@ end
   end
   }
 
+local function reset()
+  doom_ui_state.query = nil
+  doom_ui_state.selected_module = nil
+  doom_ui_state.selected_component = nil
+end
 
 -- end
 --
@@ -82,8 +87,7 @@ end
 
 
 local function main()
-  -- reset()
-  -- uistate.ensure_doom_ui_state()
+  reset()
 
   doom_ui_state.query = {
     type = "main_menu",

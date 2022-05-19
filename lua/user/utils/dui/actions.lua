@@ -1,4 +1,4 @@
--- local utils = require("doom.utils")
+local utils = require("doom.utils")
 -- local fs = require("doom.utils.fs")
 local system = require("doom.core.system")
 
@@ -12,7 +12,9 @@ local confirm_alternatives = { "yes", "no" }
 
 actions.m_edit = function(m)
   if m.type == "module" then
-    vim.cmd(string.format(":e %s%s%s", m.path, system.sep, "init.lua"))
+    local buf = utils.get_buf_handle(m.path .. "init.lua")
+	  vim.api.nvim_win_set_buf(0, buf)
+	  -- vim.fn.cursor(er+1,ec)
   end
 end
 
