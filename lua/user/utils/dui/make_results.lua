@@ -187,6 +187,26 @@ end
 --    }
 -- }
 
+local MODULE_ORIGINS = {
+    "user",
+    "doom",
+}
+
+local MODULE_CATEGORIES = {
+    "core",
+    "features",
+    "langs",
+}
+
+
+local MODULE_COMPONENTS = {
+    "settings",
+    "packages",
+    "configs",
+    "binds",
+    "cmds",
+    "autocmds",
+}
 
 --
 -- GET DOOM COMPONENTS BY TYPE
@@ -200,7 +220,9 @@ M.get_results_for_query = function(type, components)
 
   local results = {}
 
-  inspect_ui_state()
+  -- inspect_ui_state()
+
+    -- TODO: filters
 
   -- doom_picker("main_menu")
   -- doom_picker("settings")
@@ -220,32 +242,20 @@ M.get_results_for_query = function(type, components)
     end
 
   elseif doom_ui_state.query.type == "modules" then
-
-
-    -- if not components specified -> return all
-
-    -- user
-    -- doom
+    for _, entry in pairs(M.get_modules_flattened()) do
+      table.insert(results, entry)
+    end
 
   elseif doom_ui_state.query.type == "module" then
 
-    -- settings
-    -- packages
-    -- configs
-    -- cmds
-    -- autocmds
-    -- binds
+    -- -- requires module selection!
+    -- for _, cmp in pairs(doom_ui_stat.query.components or MODULE_COMPONENTS) do
+    --   table.insert(components_table, M[cmp .."_flattened"](m_comp))
+    -- end
 
   elseif doom_ui_state.query.type == "component" then
 
   elseif doom_ui_state.query.type == "all" then
-
-    -- settings
-    -- packages
-    -- configs
-    -- cmds
-    -- autocmds
-    -- binds
 
   end
 
@@ -314,6 +324,10 @@ M.main_menu_flattened = function()
       },
       mappings = {
         ["<CR>"] = function(fuzzy, line, cb)
+          doom_ui_state.query = {
+            type = "modules",
+          }
+          doom_ui_state.next()
         end,
       }
   	},
@@ -404,10 +418,6 @@ M.get_modules_extended = function()
       prep_all_m[m_origin][m_section] = {}
     end
 
-    -- local mod_state = "x"
-    -- if not t.enabled then on = "_" end
-
-    -- print(m_origin)
 
     prep_all_m[m_origin][m_section][m_name] = {
       type = "module",
@@ -544,6 +554,15 @@ M.settings_flattened = function(t_settings, flattened, stack)
           {"SETTING"},
           {pc_display},
           {v_display}
+        },
+        mappings = {
+          ["<CR>"] = function(fuzzy,line, cb)
+            i(fuzzy)
+            -- doom_ui_state.query = {
+            --   type = "settings",
+            -- }
+            -- doom_ui_state.next()
+  		    end
         }
       }
       table.insert(flattened, entry)

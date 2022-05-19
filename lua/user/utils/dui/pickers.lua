@@ -3,12 +3,9 @@ local utils = require("doom.utils")
 -- local system = require("doom.core.system")
 
 -- dui
--- local us =  require("user.utils.dui.uistate")
-local ts =  require("user.utils.dui.ts")
-local em =  require("user.utils.dui.make_entry")
-local tm =  require("user.utils.dui.title_maker")
--- local tst = require("user.utils.dui.ts_traverse")
-local pu =  require("user.utils.dui.utils")
+local me =  require("user.utils.dui.make_entry")
+local mt =  require("user.utils.dui.make_title")
+local mr =  require("user.utils.dui.make_results")
 
 -- TELESCOPE
 local pickers = require("telescope.pickers")
@@ -107,20 +104,20 @@ end
 
 P.doom_picker = function(type, components)
 
-  print(tm.get_title())
 
-  local title = tm.get_title()
-  local results = pu.get_results_for_query()
+  local title = mt.get_title()
+  local results = mr.get_results_for_query()
 
   -- i(results)
-  print("picker -> query:", vim.inspect(doom_ui_state.query))
+  -- print("picker -> query:", vim.inspect(doom_ui_state.query))
+  -- print("picker -> title:", title)
 
-  local opts = require("telescope.themes").get_dropdown()
+  local opts = require("telescope.themes").get_ivy()
   require("telescope.pickers").new(opts, {
     prompt_title = title,
     finder = require("telescope.finders").new_table({
       results = results, -- rename/refact this func
-      entry_maker = em.doom_displayer
+      entry_maker = me.doom_displayer
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
@@ -144,32 +141,32 @@ end
 -- PICKER > USER SETTINGS
 --
 
-P.doom_picker_settings_user = function()
-  -- us.ensure_doom_ui_state()
-  doom_ui_state.current.picker = P.doom_picker_settings_user
-  doom_ui_state.current.title = "USER_SETTINGS" -- make into const
-  -- move this to main menu ??
-	doom_ui_state.prev.selection = {
-    data = doom.settings,
-    type = "doom_user_settings"
-	}
-  -- doom_ui_state.current.buf_ref = utils.get_buf_handle(utils.find_config("settings.lua"))
-  doom_ui_state.current.results_prepared = pu.doom_get_flat({ "user_settings" })
-  opts = require("telescope.themes").get_dropdown()
-  require("telescope.pickers").new(opts, {
-    prompt_title = doom_ui_state.current.title,
-    finder = require("telescope.finders").new_table({
-      results = doom_ui_state.current.results_prepared,
-      entry_maker = em.display_doom_settings
-    }),
-    sorter = require("telescope.config").values.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, map)
-      goback(prompt_bufnr, map)
-      return true
-    end,
-  }):find()
-
-end
+-- P.doom_picker_settings_user = function()
+--   -- us.ensure_doom_ui_state()
+--   doom_ui_state.current.picker = P.doom_picker_settings_user
+--   doom_ui_state.current.title = "USER_SETTINGS" -- make into const
+--   -- move this to main menu ??
+-- 	doom_ui_state.prev.selection = {
+--     data = doom.settings,
+--     type = "doom_user_settings"
+-- 	}
+--   -- doom_ui_state.current.buf_ref = utils.get_buf_handle(utils.find_config("settings.lua"))
+--   doom_ui_state.current.results_prepared = mr.doom_get_flat({ "user_settings" })
+--   opts = require("telescope.themes").get_dropdown()
+--   require("telescope.pickers").new(opts, {
+--     prompt_title = doom_ui_state.current.title,
+--     finder = require("telescope.finders").new_table({
+--       results = doom_ui_state.current.results_prepared,
+--       entry_maker = me.display_doom_settings
+--     }),
+--     sorter = require("telescope.config").values.generic_sorter(opts),
+--     attach_mappings = function(prompt_bufnr, map)
+--       goback(prompt_bufnr, map)
+--       return true
+--     end,
+--   }):find()
+--
+-- end
 
 
 --
@@ -252,7 +249,7 @@ end
 --     prompt_title = doom_ui_state.current.title,
 --     finder = require("telescope.finders").new_table({
 --       results = doom_ui_state.results_prepared,
---       entry_maker = em.display_all_modules
+--       entry_maker = me.display_all_modules
 --     }),
 --     sorter = require("telescope.config").values.generic_sorter(opts),
 --     attach_mappings = function(prompt_bufnr, map)
@@ -325,7 +322,7 @@ P.doom_picker_all_module_binds = function() end
 --     prompt_title = doom_ui_state.current.title,
 --     finder = require("telescope.finders").new_table({
 --       results = doom_ui_state.current.results_prepared,
---       entry_maker = em.display_module_full,
+--       entry_maker = me.display_module_full,
 --     }),
 --     sorter = require("telescope.config").values.generic_sorter(opts),
 --     attach_mappings = function(prompt_bufnr, map)
@@ -410,7 +407,7 @@ P.doom_picker_single_module_binds = function() end
 --     prompt_title = doom_ui_state.current.title,
 --     finder = require("telescope.finders").new_table({
 --       results = doom_ui_state.current.results_prepared,
---       entry_maker = em.display_doom_settings
+--       entry_maker = me.display_doom_settings
 --     }),
 --     sorter = require("telescope.config").values.generic_sorter(opts),
 --     attach_mappings = function(prompt_bufnr, map)
@@ -478,7 +475,7 @@ P.doom_picker_single_module_binds = function() end
 --     title = doom_ui_state.current.title,
 --     finder = finders.new_table({
 --       results = doom_ui_state.current.results_prepared,
---       entry_maker = em.display_binds_table,
+--       entry_maker = me.display_binds_table,
 --     }),
 --     sorter = opts.sorter or conf.generic_sorter(opts),
 --     attach_mappings = function(prompt_bufnr, map)
@@ -534,7 +531,7 @@ P.doom_picker_single_module_binds = function() end
 --     title = doom_ui_state.current.title,
 --     finder = finders.new_table({
 --       results = doom_ui_state.current.results_prepared,
---       entry_maker = em.display_binds_leaf, -- child of results
+--       entry_maker = me.display_binds_leaf, -- child of results
 --     }),
 --     sorter = opts.sorter or conf.generic_sorter(opts),
 --     attach_mappings = function(prompt_bufnr, map)
@@ -581,7 +578,7 @@ P.doom_picker_single_module_binds = function() end
 --     title = doom_ui_state.current.title,
 --     finder = finders.new_table({
 --       results = doom_ui_state.current.results_prepared,
---       entry_maker = em.display_binds_branch, -- child of results
+--       entry_maker = mme.display_binds_branch, -- child of results
 --     }),
 --     sorter = opts.sorter or conf.generic_sorter(opts),
 --     attach_mappings = function(prompt_bufnr, map)

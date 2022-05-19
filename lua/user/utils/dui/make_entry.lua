@@ -56,15 +56,18 @@ function entry_makers.doom_displayer(entry)
   local displayer = entry_display.create {
     separator = "▏",
     items = {
+      -- todo: make this dynamic
       { width = 10 },
-      { width = 30 },
-      { width = 30 },
+      { width = 20 },
+      { width = 20 },
+      { width = 20 },
+      { width = 20 },
+      { width = 20 },
       { remaining = true },
     },
   }
 
   local make_display = function(entry)
-    i(entry)
     return displayer(entry.value.list_display_props)
   end
 
