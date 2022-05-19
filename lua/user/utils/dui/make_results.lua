@@ -198,7 +198,6 @@ local MODULE_CATEGORIES = {
     "langs",
 }
 
-
 local MODULE_PARTS = {
     "settings",
     "packages",
@@ -445,7 +444,6 @@ M.get_modules_extended = function()
             -- components = {}
           }
 		      doom_ui_state.selected_module = fuzzy.value
-          i(fuzzy)
           doom_ui_state.next()
 	      end
       }

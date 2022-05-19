@@ -200,7 +200,7 @@ M.get_results_for_query = function(type, components)
 
   local results = {}
 
-  inspect_ui_state()
+  -- inspect_ui_state()
 
   -- doom_picker("main_menu")
   -- doom_picker("settings")
@@ -420,14 +420,13 @@ M.get_modules_extended = function()
         "MODULE", " ", m_origin, m_section, m_name
       },
       mappings = {
-        ["<CR>"] = function(fuzzy, line)
+        ["<CR>"] = function(fuzzy)
 		      doom_ui_state.current.selection = fuzzy.value
 		      ax.m_edit(doom_ui_state.current.selection)
 		    end,
-		    ["<C-a>"] = function(fuzzy, line, cb)
-		      doom_ui_state.selected_module_idx = fuzzy.index
+		    ["<C-a>"] = function(fuzzy, line)
 		      doom_ui_state.current.selection = fuzzy.value
-  		    if cb ~= nil then cb() end
+          doom_ui_state.next()
 	      end
       }
     }

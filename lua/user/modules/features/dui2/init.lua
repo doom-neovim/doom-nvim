@@ -1,50 +1,95 @@
 -- local pu =  require("user.utils.dui.utils")
-local us =  require("user.utils.dui.uistate")
+-- local us =  require("user.utils.dui.uistate")
+-- local pickers = require("user.utils.dui.pickers")
+local me =  require("user.utils.dui.make_entry")
+local mt =  require("user.utils.dui.make_title")
+local mr =  require("user.utils.dui.make_results")
 
-local pickers = require("user.utils.dui.pickers")
+local pickers = require("telescope.pickers")
+local finders = require("telescope.finders")
+local conf = require("telescope.config").values
+local actions_set = require("telescope.actions.set")
+local state = require("telescope.actions.state")
+local actions = require("telescope.actions")
+local previewers = require("telescope.previewers")
 
 local doom_ui = {}
+
 
 local function i(x)
   print(vim.inspect(x))
 end
 
--- local uistate = {}
---
--- function uistate.ensure_doom_ui_state()
+local function goback(prompt_bufnr, map)
+	  return map("i", "<C-z>", function(prompt_bufnr)
+	    require("telescope.actions").close(prompt_bufnr)
+	    -- print(doom_ui_state.history[1].title)
+	    -- us.prev_hist()
+	  end)
+end
 
-  doom_ui_state = {
-    -- doom_global_extended,
-    -- all_modules_flattened = nil,
-    -- selected_module_idx = nil, -- is this necessary?
-    -- selected_module = nil,
-    -- selected_component = nil,
-    -- buf_ref = nil,
+local function line(buf)
+  return state.get_current_line(buf)
+end
+
+local function selection(buf)
+  return state.get_selected_entry(buf)
+end
+
+local function picker_get_state(prompt_bufnr)
+  local state = require("telescope.actions.state")
+  local line = state.get_current_line(prompt_bufnr)
+  local fuzzy = state.get_selected_entry(prompt_bufnr)
+  return fuzzy, line
+end
 
 
-    -- current = {
-    --   title = nil, -- remove and do in picker
-    --   results_prepared = nil, -- remove and do in picker
-    --   picker = nil, -- remove
-    --   selection = { item = nil, type = nil },
-    --   line_str = nil,
-    --   index_selected = nil,
-    -- },
+local function doom_picker(type, components)
+  local title = mt.get_title()
+  local results = mr.get_results_for_query()
+  -- i(results)
+  -- print("picker -> query:", vim.inspect(doom_ui_state.query))
+  -- print("picker -> title:", title)
+  local opts = require("telescope.themes").get_ivy()
+  require("telescope.pickers").new(opts, {
+    prompt_title = title,
+    finder = require("telescope.finders").new_table({
+      results = results, -- rename/refact this func
+      entry_maker = me.doom_displayer
+    }),
+    sorter = require("telescope.config").values.generic_sorter(opts),
+    attach_mappings = function(prompt_bufnr, map)
+      actions_set.select:replace(function()
+	      local fuzzy, line = picker_get_state(prompt_bufnr)
+	      require("telescope.actions").close(prompt_bufnr)
+        fuzzy.value.mappings["<CR>"](fuzzy, line)
+	    end)
+	    map("i", "<C-a>", function()
+	      local fuzzy, line = picker_get_state(prompt_bufnr)
+	      require("telescope.actions").close(prompt_bufnr)
+	      if fuzzy.value.mappings["<C-a>"] ~= nil then
+	        fuzzy.value.mappings["<C-a>"](fuzzy, line)
+	      end
+	    end)
+	    goback(prompt_bufnr, map)
+      return true
+    end
 
+  }):find()
+
+end
+
+doom_ui_state = {
     history = {},
     next = function()
-      -- -- for later with history
       -- if doom_ui_state ~= nil then return end
-
     -- local old_query = vim.deepcopy(doom_ui_state.query)
-    --
     -- table.insert(doom_ui_state.history, 1, store)
     -- local hlen = #doom_ui_state.history
     -- if hlen > 10 then
     --   table.remove(doom_ui_state.history, hlen)
     -- end
-
-	  pickers.doom_picker()
+	  doom_picker()
   end
   }
 
@@ -54,41 +99,8 @@ local function reset()
   doom_ui_state.selected_component = nil
 end
 
--- end
---
--- function uistate.reset_selections()
---   doom_ui_state.selected_module = nil
---   doom_ui_state.current = nil
--- end
---
--- function uistate.doom_ui_state_reset()
---   doom_ui_state = nil
--- end
---
--- -- function uistate.doom_ui_state_reset_modules()
--- --     doom_ui_state.all_modules_flattened = pu.get_modules_flattened()
--- -- end
---
---
--- function uistate.prev_hist()
---   local res = table.remove(doom_ui_state.history, 1)
---   if res ~= nil then
---     doom_ui_state.prev = res
---     doom_ui_state.prev.picker()
---   end
--- end
---
--- local function reset()
---   doom_ui_state = nil
--- end
-
-
-
-
-
 local function main()
   reset()
-
   doom_ui_state.query = {
     type = "main_menu",
   }
