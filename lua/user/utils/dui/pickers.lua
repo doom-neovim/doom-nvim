@@ -3,12 +3,12 @@ local utils = require("doom.utils")
 -- local system = require("doom.core.system")
 
 -- dui
-local us = require("user.modules.features.dui2.uistate")
-local ts = require("user.modules.features.dui2.ts")
-local em = require("user.modules.features.dui2.make_entry")
-local ax = require("user.modules.features.dui2.actions")
-local tst = require("user.modules.features.dui2.ts_traverse")
-local pu = require("user.modules.features.dui2.utils")
+local us =  require("user.utils.dui.uistate")
+local ts =  require("user.utils.dui.ts")
+local em =  require("user.utils.dui.make_entry")
+local ax =  require("user.utils.dui.actions")
+local tst = require("user.utils.dui.ts_traverse")
+local pu =  require("user.utils.dui.utils")
 
 -- TELESCOPE
 local pickers = require("telescope.pickers")

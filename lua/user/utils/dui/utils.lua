@@ -25,13 +25,13 @@ local function i(x)
   print(vim.inspect(x))
 end
 
--- helper to make recursive output easier to read
--- @param integer - recursion depth
-local function indent(s)
-  local res = ""
-  for i = 1, #s do res = res .. "- " end res = res .. ">"
-  return res
-end
+-- -- helper to make recursive output easier to read
+-- -- @param integer - recursion depth
+-- local function indent(s)
+--   local res = ""
+--   for _ = 1, #s do res = res .. "- " end res = res .. ">"
+--   return res
+-- end
 
 -- TODO: mv to util
 --
@@ -78,12 +78,17 @@ end
 -- @param key, val when looping with pairs()
 -- @return bool - should we recurse into table or not?
 local function is_sub_setting(a, b)
+
   if type(a) == "number" then
+    -- print(":: number:", a)
     return false
   end
+
   if type(b) ~= "table" then
+    -- print(":: number:", b)
     return false
   end
+
   local cnt = 0
   for k, v in pairs(b) do
     cnt = cnt + 1
@@ -95,6 +100,7 @@ local function is_sub_setting(a, b)
   if cnt == 0 then
     return false
   end
+
   return true
 end
 
@@ -131,9 +137,12 @@ end
 --          -> eg. get_flat { "user_settings", "module_settings", "module_packages" } returns { {}, {}, ... }
 -- @return list of flattened doom components, use with eg. telescope.
 M.doom_get_flat = function(t_requested_components)
+
   local components_table = {}
+
   for m_key, m_comp in pairs(doom_ui_state.prev.selection) do
     -- make sure we don't try to access nil
+
     if vim.tbl_contains(t_requested_components, m_key) then
 
       -- if settings or user_settings use same
@@ -157,6 +166,10 @@ M.doom_get_flat = function(t_requested_components)
   end
 
   --TODO: prevent fail if table empty
+
+  if #components_table == 0 or components_table == nil then
+    return nil
+  end
 
   local merge =  table_merge(components_table)
   return merge
@@ -233,74 +246,98 @@ M.settings_flattened = function(t_settings, flattened, stack)
 
   for k, v in pairs(t_settings) do
 
-    if is_sub_setting(stack, k,v) then
+    if is_sub_setting(k,v) then
       -- recurse down
+      -- if type(k) == "number" then print("!!!!!!!!!!!!") end
+
+      -- print("SUB -> ", type(k), k, v)
+      -- print([[ recurse: (%s:%s), (%s:%s)]], type(k), k, type(v), v)
+
       table.insert(stack, k)
       flattened = M.settings_flattened(v, flattened, stack)
 
     else
-      -- ordinal = ,
-      -- todo: if leaf setting is table list -> "[[" .. table.concat(v, ", ) .. "]]"
-      -- todo: conditional USR/MOD_
+
+      local pc
+      if #stack > 0 then
+        pc = vim.deepcopy(stack)
+        table.insert(pc, k)
+      else
+        pc = { k }
+      end
+
+      local pc_display = table.concat(pc, ".")
+
+      local v_display
+
+      if type(v) == "table" then
+        local str = ""
+
+        for i, x in pairs(v) do
+          if type(x) == "table" then
+            str = str .. ", " .. "subt"
+          else
+            str = str .. ", " .. x
+          end
+        end
+
+        v_display = str -- table.concat(v, ", ")
+
+      else
+        v_display = tostring(v)
+      end
+
+      -- i(v_display)
+
+
       local entry = {
         type = "module_setting",
         data = {
-          path_components = nil,
+          path_components = pc,
           value = v,
+        },
+        list_display_props = {
+          "SETTING",
+          second,
+          v_display
         }
       }
-
-      if #stack > 0 then
-        local pc = stack
-        table.insert(pc, k)
-        entry.data.path_components = pc
-      else
-        entry.data.path_components = { k }
-      end
-
-      entry["list_display_props"] = {
-          "SETTING",
-          table.concat(entry.data.path_components, "."),
-         tostring(entry.data.path_components)
-        }
-
       table.insert(flattened, entry)
+
     end
   end
+
   table.remove(stack, #stack)
+
   return flattened
 end
 
 -- list flattener: cmds, and autocmds, and packages.???
 M.packages_flattened = function(t_packages)
-  local flattened = {}
   if t_packages == nil then return end
+  local flattened = {}
 
   for k, v in pairs(t_packages) do
 
-
+    local spec = v
     if type(k) == "number" then
-      k = "anonymous"
-
+      -- k = "anonymous"
       if type(v) == "string" then
-        v = { v }
+        spec = { v }
       end
-
     end
 
-      -- ordinal = ,
     local entry = {
       type = "module_package",
       data = {
-        name = k,
-        spec = v,
+        name_key = k,
+        spec = spec,
       },
-    }
-
-    entry["list_display_props"] = {
-      "PKG",
-      entry.data.name,
-      tostring(entry.data.spec)
+      list_display_props = {
+        "PKG",
+        k,
+        tostring(v)
+      }
     }
 
     table.insert(flattened, entry)
@@ -319,12 +356,11 @@ M.configs_flattened = function(t_configs)
         name = k,
         value = v,
       },
-    }
-
-    entry["list_display_props"] = {
-      "CFG",
-      entry.data.name,
-      tostring(entry.data.value)
+      list_display_props = {
+        "CFG",
+        k,
+        tostring(v)
+      }
     }
 
     table.insert(flattened, entry)
@@ -340,6 +376,8 @@ M.cmds_flattened = function(t_cmds)
 
   for k, v in pairs(t_cmds) do
 
+    -- i need to attach k here as well, to table_path
+
     local entry = {
       type = "module_cmd",
       data = {
@@ -350,10 +388,10 @@ M.cmds_flattened = function(t_cmds)
 
     entry["list_display_props"] = {
       "CMD",
-      entry.data.name,
-      tostring(entry.data.cmd)
+      v[1],
+      tostring(v[2])
     }
-    })
+    -- })
 
     table.insert(flattened, entry)
   end
@@ -397,6 +435,7 @@ M.autocmds_flattened = function(t_autocmds)
     end
 
   end
+
   return flattened
 end
 

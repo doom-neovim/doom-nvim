@@ -1,6 +1,6 @@
 local entry_display = require("telescope.pickers.entry_display")
 
-local ts = require("user.modules.features.dui2.ts")
+local ts = require("user.utils.dui.ts")
 
 local function i(x)
   print(vim.inspect(x))
@@ -107,7 +107,7 @@ function entry_makers.display_module_full(entry)
 	  local sec = doom_ui_state.all_modules_flattened[idx].section
 	  local name = doom_ui_state.all_modules_flattened[idx].name
 
-	  i(entry)
+	  -- i(entry)
 
 	  if entry.type == "module_setting" then
 	    res = "SETTING: " .. entry.data.path_components .. " -> " .. entry.data.value
@@ -136,7 +136,7 @@ function entry_makers.display_module_full(entry)
 
 	  end
 
-	  print(res)
+	  -- print(res)
 
 	  return res
 	end
