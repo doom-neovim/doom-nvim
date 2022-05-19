@@ -94,8 +94,9 @@ end
 
 P.doom_picker_main_menu = function(c)
   us.ensure_doom_ui_state()
+  doom_ui_state.current.picker = P.doom_picker_main_menu
+
   doom_ui_state.current.title = "MAIN MENU"
-  doom_ui_state.current.picker = P.doom_main_menu_picker
 
   local function mappings_prepare(prompt_bufnr)
 	  local fuzzy, line = picker_get_state(prompt_bufnr)
@@ -105,8 +106,8 @@ P.doom_picker_main_menu = function(c)
 
   local doom_menu_items = {
 		{ "open config", function() vim.cmd(("e %s"):format(require("doom.core.config").source)) end },
-  		{ "edit settings",function() us.next(P.doom_settings_picker) end },
-  		{ "browse modules",  function() us.next(P.doom_modules_picker) end },
+  		{ "edit settings",function() us.next(P.doom_picker_settings_user) end },
+  		{ "browse modules",  function() us.next(P.doom_picker_all_modules) end },
   		{ "binds    (todo..)",function() end },
   		{ "autocmds (todo..)", function() end },
   		{ "cmds     (todo..)", function() end },
@@ -174,7 +175,7 @@ P.doom_picker_all_modules = function(c)
   us.ensure_doom_ui_state()
   us.doom_ui_state_reset_modules()
   doom_ui_state.current.title = "ALL MODULES"
-  doom_ui_state.current.picker = P.doom_modules_picker
+  doom_ui_state.current.picker = P.doom_picker_all_modules
 
   local function mappings_prepare(prompt_bufnr)
 	  local fuzzy, line = picker_get_state(prompt_bufnr)
@@ -281,7 +282,7 @@ P.doom_picker_all_module_binds = function() end
 P.doom_picker_single_module_full = function()
   us.ensure_doom_ui_state()
   us.doom_ui_state_reset_modules()
-  doom_ui_state.current.picker = P.doom_module_full_picker
+  doom_ui_state.current.picker = P.doom_picker_single_module_full
 
 
   -- move this chunk into flattener func.??
@@ -334,9 +335,11 @@ P.doom_picker_single_module_settings = function(c) end
 
 P.doom_picker_single_module_packages = function()
   us.ensure_doom_ui_state()
+  doom_ui_state.current.picker = P.doom_picker_single_module_packages
+
+  -- make this in the module flattener
   doom_ui_state.current.title = "MODULE PACKAGES" -- make into const
 
-  doom_ui_state.current.picker = P.doom_settings_picker
 
 
   local function pass_entry_to_callback(prompt_buf)

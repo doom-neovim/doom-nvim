@@ -23,7 +23,7 @@ local entry_makers = {}
 --
 
 function entry_makers.display_all_modules(entry)
-  print(entry.origin, vim.inspect(entry.list_display_props))
+  -- print(entry.origin, vim.inspect(entry.list_display_props))
 
   local displayer = entry_display.create {
     separator = "▏",
@@ -51,6 +51,7 @@ end
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
 function entry_makers.display_module_full(entry)
+  -- print(entry.value)
   local displayer = entry_display.create {
     separator = "▏",
     items = {
