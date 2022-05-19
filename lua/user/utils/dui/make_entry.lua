@@ -50,7 +50,8 @@ end
 
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
-function entry_makers.display_module_full(entry)
+
+function entry_makers.doom_displayer(entry)
   -- print(entry.value)
   local displayer = entry_display.create {
     separator = "▏",
@@ -63,6 +64,7 @@ function entry_makers.display_module_full(entry)
   }
 
   local make_display = function(entry)
+    i(entry)
     return displayer(entry.value.list_display_props)
   end
 

@@ -1,3 +1,11 @@
+-- local us =  require("user.utils.dui.uistate")
+local ax =  require("user.utils.dui.actions")
+-- local us =  require("user.utils.dui.uistate")
+
+
+-- local pickers = require("user.utils.dui.pickers")
+
+
 local M = {}
 
 
@@ -41,10 +49,18 @@ end
 -- @param list or table of tables
 local function table_merge(...)
     local tables_to_merge = { ... }
+
     -- assume the table has been wrapped
     if #tables_to_merge == 1 then
       tables_to_merge = tables_to_merge[1]
     end
+
+    -- while (#tables_to_merge == 1) do
+    --   tables_to_merge = tables_to_merge[1]
+    -- end
+
+  -- i(tables_to_merge)
+
     assert(#tables_to_merge > 1, "There should be at least two tables to merge them")
     for k, t in ipairs(tables_to_merge) do
         assert(type(t) == "table", string.format("Expected a table as function parameter %d", k))
@@ -127,6 +143,21 @@ local function inspect_ui_state()
     print("--------------------------------------------")
     print("PREVIOUS:", vim.inspect(doom_ui_state.prev))
     print("CURRENT:", vim.inspect(doom_ui_state.current))
+
+    -- for k, v in pairs(doom_ui_state) do
+    --   if k == "current" then
+    --     for a, b in pairs(v) do
+    --        print("  curr:", a, b)
+    --     end
+    --   elseif  k == "prev" then
+    --     for a, b in pairs(v) do
+    --        print("  prev:", a, b)
+    --     end
+    --   else
+    --     print(k, v)
+    --   end
+    -- end
+  print("###")
 end
 
 -- EACH ENTRY SHOULD HAVE ENOUGH INFORMATION TO STRUCTURAL FIND AND TRANSFORM
@@ -165,58 +196,184 @@ end
 -- @param table: of each component you require flattened,
 --          -> eg. get_flat { "user_settings", "module_settings", "module_packages" } returns { {}, {}, ... }
 -- @return list of flattened doom components, use with eg. telescope.
-M.doom_get_flat = function(t_requested_components)
+M.get_results_for_query = function(type, components)
 
-  local components_table = {}
+  local results = {}
 
   inspect_ui_state()
 
-  for m_key, m_comp in pairs(doom_ui_state.prev.selection) do
-    -- make sure we don't try to access nil
 
+  -- doom_picker("main_menu")
+  -- doom_picker("settings")
+  -- doom_picker("modules", "all"|"user"|"doom")
+  -- doom_picker("module", "settings"|...|"binds")
+  -- doom_picker("component")
+  -- doom_picker("all", "settings"|...|"binds")
 
-
-    if vim.tbl_contains(t_requested_components, m_key) then
-
-      -- if settings or user_settings use same
-
-      table.insert(components_table, M[m_key .."_flattened"](m_comp))
-
-    -- else
-    --   -- prefix hidden props
-    --   table.insert(components_table, {
-    --     type = "__" .. m_key,
-    --     value = m_comp
-    --   })
-
---    list_display_props = {
---      ..
---      { "display_string", "hl_group" }
---      ..
---      ..
---    }
+  if doom_ui_state.query.type == "main_menu" then
+    for _, entry in ipairs(M.main_menu_flattened()) do
+      table.insert(results, entry)
     end
+
+  elseif doom_ui_state.query.type == "settings" then
+    for _, entry in ipairs(M.settings_flattened(doom.settings)) do
+      table.insert(results, entry)
+    end
+
+  elseif doom_ui_state.query.type == "modules" then
+
+
+    -- if not components specified -> return all
+
+    -- user
+    -- doom
+
+  elseif doom_ui_state.query.type == "module" then
+
+    -- settings
+    -- packages
+    -- configs
+    -- cmds
+    -- autocmds
+    -- binds
+
+  elseif doom_ui_state.query.type == "component" then
+
+  elseif doom_ui_state.query.type == "all" then
+
+    -- settings
+    -- packages
+    -- configs
+    -- cmds
+    -- autocmds
+    -- binds
+
   end
 
-  --TODO: prevent fail if table empty
 
-  if #components_table == 0 or components_table == nil then
-    return nil
-  end
+  -- if doom_ui_state.current.selection.type == "doom_main_menu" then
+  --   table.insert(components_table, M.main_menu_flattened())
+  --
+  -- elseif doom_ui_state.current.selection.type == "module" then
+  --   for m_key, m_comp in pairs(doom_ui_state.current.selection) do
+  --     if vim.tbl_contains(t_requested_components, m_key) then
+  --       table.insert(components_table, M[m_key .."_flattened"](m_comp))
+  --     end
+  --   end
+  --
+  -- end
 
-  local merge =  table_merge(components_table)
-  return merge
+  return results
+
+  -- --TODO: prevent fail if table empty
+  -- if #results == 0 or results == nil then
+  --   return nil
+  --
+  -- -- elseif #results == 1 then
+  -- --   return results
+  --
+  -- else
+  --   return table_merge(results)
+  --
+  -- end
+
 end
 
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
 
---
--- FLATTENERS
---
+-- FLATTENER -> MAIN MENU
 
--- TODO: mv modules flattener to here
+M.main_menu_flattened = function()
+  local doom_menu_items = {
+		{
+      list_display_props = {
+        {"open user config"},
+      },
+      mappings = {
+        ["<CR>"] = function()
+          vim.cmd(("e %s"):format(require("doom.core.config").source))
+        end,
+      }
+		},
+  	{
+      list_display_props = {
+        {"browse user settings"},
+      },
+      mappings = {
+        ["<CR>"] = function(fuzzy,line, cb)
+          doom_ui_state.query = {
+            type = "settings",
+          }
+          doom_ui_state.next()
+  		  end,
+      }
+  	},
+  	{
+      list_display_props = {
+        {"browse all modules"},
+      },
+      mappings = {
+        ["<CR>"] = function(fuzzy, line, cb)
+        end,
+      }
+  	},
+  	{
+      list_display_props = {
+        {"browse all binds"},
+      },
+      mappings = {
+        ["<CR>"] =function() end,
+      }
+
+  	},
+  	{
+      list_display_props = {
+        {"browse all autocmds"},
+      },
+      mappings = {
+        ["<CR>"] = function() end,
+      }
+  	},
+  	{
+      list_display_props = {
+        {"browse all cmds"},
+      },
+      mappings = {
+        ["<CR>"] = function() end,
+      }
+  	},
+  	{
+      list_display_props = {
+        {"browse all packages"},
+      },
+      mappings = {
+        ["<CR>"] = function() end,
+      }
+  	},
+  	{
+      list_display_props = {
+        {"browse all jobs"},
+      },
+      mappings = {
+        ["<CR>"] = function() end,
+      }
+  	},
+  }
+
+  for k, v in pairs(doom_menu_items) do
+    table.insert(v.list_display_props, 1, {"MAIN"})
+    v["type"] = "doom_main_menu"
+    -- i(v)
+  end
+
+  -- i(doom_menu_items)
+
+  return doom_menu_items
+end
+
 --
+-- FLATTENER -> MODULES
 --
 
 -- returns tree -> should be renamed
@@ -262,6 +419,17 @@ M.get_modules_extended = function()
       path = p,
       list_display_props = {
         "MODULE", " ", m_origin, m_section, m_name
+      },
+      mappings = {
+        ["<CR>"] = function(fuzzy, line)
+		      doom_ui_state.current.selection = fuzzy.value
+		      ax.m_edit(doom_ui_state.current.selection)
+		    end,
+		    ["<C-a>"] = function(fuzzy, line, cb)
+		      doom_ui_state.selected_module_idx = fuzzy.index
+		      doom_ui_state.current.selection = fuzzy.value
+  		    if cb ~= nil then cb() end
+	      end
       }
     }
   end

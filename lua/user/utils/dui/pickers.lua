@@ -3,11 +3,11 @@ local utils = require("doom.utils")
 -- local system = require("doom.core.system")
 
 -- dui
-local us =  require("user.utils.dui.uistate")
+-- local us =  require("user.utils.dui.uistate")
 local ts =  require("user.utils.dui.ts")
 local em =  require("user.utils.dui.make_entry")
-local ax =  require("user.utils.dui.actions")
-local tst = require("user.utils.dui.ts_traverse")
+local tm =  require("user.utils.dui.title_maker")
+-- local tst = require("user.utils.dui.ts_traverse")
 local pu =  require("user.utils.dui.utils")
 
 -- TELESCOPE
@@ -62,7 +62,7 @@ local function goback(prompt_bufnr, map)
 	  return map("i", "<C-z>", function(prompt_bufnr)
 	    require("telescope.actions").close(prompt_bufnr)
 	    -- print(doom_ui_state.history[1].title)
-	    us.prev_hist()
+	    -- us.prev_hist()
 	  end)
 end
 
@@ -96,76 +96,7 @@ end
 --     {pkg_name}
 --   }
 -- }
-local function get_main_menu_items()
-  local doom_menu_items = {
-		{
-		  type = "doom_main_menu_item",
-      list_display_props = {
-        {"U_SETTING"},
-        {"open user config"},
-      },
-		  function() vim.cmd(("e %s"):format(require("doom.core.config").source)) end,
-		},
-  	{
-		  type = "doom_main_menu_item",
-      list_display_props = {
-        {"U_SETTING"},
-        {"browse user settings"},
-      },
-  		function() us.next(P.doom_picker_settings_user) end,
-  	},
-  	{
-		  type = "doom_main_menu_item",
-      list_display_props = {
-        {"U_SETTING"},
-        {"browse all modules"},
-      },
-  		function() us.next(P.doom_picker_all_modules) end,
-  	},
-  	{
-		  type = "doom_main_menu_item",
-      list_display_props = {
-        {"U_SETTING"},
-        {"browse all binds"},
-      },
-  		function() end,
-  	},
-  	{
-		  type = "doom_main_menu_item",
-      list_display_props = {
-        {"U_SETTING"},
-        {"browse all autocmds"},
-      },
-  		function() end,
-  	},
-  	{
-		  type = "doom_main_menu_item",
-      list_display_props = {
-        {"U_SETTING"},
-        {"browse all cmds"},
-      },
-  		function() end,
-  	},
-  	{
-		  type = "doom_main_menu_item",
-      list_display_props = {
-        {"U_SETTING"},
-        {"browse all packages"},
-      },
-  		function() end,
-  	},
-  	{
-		  type = "doom_main_menu_item",
-      list_display_props = {
-        {"U_SETTING"},
-        {"browse all jobs"},
-      },
-  		function() end,
-  	},
-  }
 
-  return doom_menu_items
-end
 
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
@@ -174,37 +105,37 @@ end
 -- PICKERS > MAIN MENU
 --
 
-P.doom_picker_main_menu = function(c)
-  us.ensure_doom_ui_state()
-  doom_ui_state.current.picker = P.doom_picker_main_menu
-  doom_ui_state.current.title = "MAIN MENU"
-  local doom_menu_items = get_main_menu_items()
+P.doom_picker = function(type, components)
 
+  print(tm.get_title())
 
-  local test = pu.doom_get_flat()
+  local title = tm.get_title()
+  local results = pu.get_results_for_query()
 
-  doom_ui_state.current.results_prepared =  doom_menu_items
+  -- i(results)
+  print("picker -> query:", vim.inspect(doom_ui_state.query))
 
-  local doom_menu_theme = require("telescope.themes").get_dropdown()
-  opts = opts or require("telescope.themes").get_ivy()
-
-  require("telescope.pickers").new(doom_menu_theme, {
-    prompt_title = doom_ui_state.current.title,
+  local opts = require("telescope.themes").get_dropdown()
+  require("telescope.pickers").new(opts, {
+    prompt_title = title,
     finder = require("telescope.finders").new_table({
-      results = doom_menu_items,
-      entry_maker = em.display_module_full
+      results = results, -- rename/refact this func
+      entry_maker = em.doom_displayer
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
         actions_set.select:replace(function()
 	        local fuzzy, line = picker_get_state(prompt_bufnr)
 	        require("telescope.actions").close(prompt_bufnr)
-	        for _,m in pairs(doom_menu_items) do if m[1] == fuzzy.value[1] then m[1]() end end
-
+	        -- i(fuzzy)
+          fuzzy.value.mappings["<CR>"](fuzzy, line)
 	      end)
+
 	      goback(prompt_bufnr, map)
+
       return true
     end
+
   }):find()
 
 end
@@ -214,7 +145,7 @@ end
 --
 
 P.doom_picker_settings_user = function()
-  us.ensure_doom_ui_state()
+  -- us.ensure_doom_ui_state()
   doom_ui_state.current.picker = P.doom_picker_settings_user
   doom_ui_state.current.title = "USER_SETTINGS" -- make into const
   -- move this to main menu ??
@@ -245,96 +176,109 @@ end
 -- PICKERS > ALL <category>
 --
 
--- @param filter
-P.doom_picker_all_modules = function(c)
-  us.ensure_doom_ui_state()
-  us.doom_ui_state_reset_modules()
-  doom_ui_state.current.title = "ALL MODULES"
-  doom_ui_state.current.picker = P.doom_picker_all_modules
-
-  local t_mappings = {
-	  { "<cr>:EDIT", "i", "<CR>",
-	    function(prompt_bufnr)
-	      local fuzzy, line = picker_get_state(prompt_bufnr)
-	      require("telescope.actions").close(prompt_bufnr)
-		    doom_ui_state.current.selection = fuzzy.value
-		    ax.m_edit(doom_ui_state.current.selection)
-		  end
-		},
-	  { "^a:DISPLAY", "i", "<C-a>",
-	    function(prompt_bufnr)
-	      local fuzzy, line = picker_get_state(prompt_bufnr)
-	      require("telescope.actions").close(prompt_bufnr)
-		    doom_ui_state.selected_module_idx = fuzzy.index
-		    doom_ui_state.current.selection = fuzzy.value
-		    us.next(P.doom_picker_single_module_full)
-	    end
-	  },
-	  { "^r:RENAME", "i", "<C-r>",
-	    function(prompt_bufnr)
-	      local fuzzy, line = picker_get_state(prompt_bufnr)
-	      require("telescope.actions").close(prompt_bufnr)
-		    doom_ui_state.current.selection = fuzzy.value
-		    ax.m_rename()
-	    end
-	  },
-	  {"^e:CREATE","i", "<C-e>",
-	    function(prompt_bufnr)
-	      local fuzzy, line = picker_get_state(prompt_bufnr)
-	      require("telescope.actions").close(prompt_bufnr)
-		    doom_ui_state.current.selection = fuzzy.value
-		    ax.m_create()
-	    end
-	  },
-	  {"^u:DELETE","i", "<C-u>",
-	    function(prompt_bufnr)
-	      local fuzzy, line = picker_get_state(prompt_bufnr)
-	      require("telescope.actions").close(prompt_bufnr)
-		    doom_ui_state.current.selection = fuzzy.value
-		    ax.m_delete()
-	    end
-	  },
-	  {"^t:TOGGLE","i", "<C-t>",
-	    function(prompt_bufnr)
-	      local fuzzy, line = picker_get_state(prompt_bufnr)
-	      require("telescope.actions").close(prompt_bufnr)
-		    doom_ui_state.current.selection = fuzzy.value
-		    ax.m_toggle()
-	    end
-	  },
-	  {"^b:BINDS","i", "<C-b>",
-	    function(prompt_bufnr)
-	      local fuzzy, line = picker_get_state(prompt_bufnr)
-	      require("telescope.actions").close(prompt_bufnr)
-		    doom_ui_state.current.selection = fuzzy.value
-		    us.next(P.doom_binds_table_picker)
-	    end
-	  },
-	}
-
-  local doom_modules_theme = require("telescope.themes").get_dropdown()
-
-  -- doom_ui_state.current.results_prepared = pu.doom_get_flat({ "modules" })
-  doom_ui_state.results_prepared = doom_ui_state.all_modules_flattened
-
-  require("telescope.pickers").new(doom_modules_theme, {
-    prompt_title = doom_ui_state.current.title,
-    finder = require("telescope.finders").new_table({
-      results = doom_ui_state.results_prepared,
-      entry_maker = em.display_all_modules
-    }),
-    sorter = require("telescope.config").values.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, map)
-
-      for _,m in pairs(t_mappings) do
-	      map(m[2], m[3], m[4])
-	      goback(prompt_bufnr, map)
-      end
-      return true
-    end,
-  }):find()
-end
-
+-- -- @param filter
+-- P.doom_picker_all_modules = function(c)
+--   -- us.ensure_doom_ui_state()
+--   -- us.doom_ui_state_reset_modules()
+--   doom_ui_state.current.title = "ALL MODULES"
+--   doom_ui_state.current.picker = P.doom_picker_all_modules
+--
+--  --  local t_mappings = {
+-- 	--  --  { "<cr>:EDIT", "i", "<CR>",
+-- 	--  --    function(prompt_bufnr)
+-- 	--  --      local fuzzy, line = picker_get_state(prompt_bufnr)
+-- 	--  --      require("telescope.actions").close(prompt_bufnr)
+-- 	-- 	--     doom_ui_state.current.selection = fuzzy.value
+-- 	-- 	--     ax.m_edit(doom_ui_state.current.selection)
+-- 	-- 	--   end
+-- 	-- 	-- },
+-- 	--   { "^a:DISPLAY", "i", "<C-a>",
+-- 	--     function(prompt_bufnr)
+-- 	--       local fuzzy, line = picker_get_state(prompt_bufnr)
+-- 	--       require("telescope.actions").close(prompt_bufnr)
+-- 	-- 	    doom_ui_state.selected_module_idx = fuzzy.index
+-- 	-- 	    doom_ui_state.current.selection = fuzzy.value
+-- 	-- 	    us.next(P.doom_picker_single_module_full)
+-- 	--     end
+-- 	--   },
+-- 	--   { "^r:RENAME", "i", "<C-r>",
+-- 	--     function(prompt_bufnr)
+-- 	--       local fuzzy, line = picker_get_state(prompt_bufnr)
+-- 	--       require("telescope.actions").close(prompt_bufnr)
+-- 	-- 	    doom_ui_state.current.selection = fuzzy.value
+-- 	-- 	    ax.m_rename()
+-- 	--     end
+-- 	--   },
+-- 	--   {"^e:CREATE","i", "<C-e>",
+-- 	--     function(prompt_bufnr)
+-- 	--       local fuzzy, line = picker_get_state(prompt_bufnr)
+-- 	--       require("telescope.actions").close(prompt_bufnr)
+-- 	-- 	    doom_ui_state.current.selection = fuzzy.value
+-- 	-- 	    ax.m_create()
+-- 	--     end
+-- 	--   },
+-- 	--   {"^u:DELETE","i", "<C-u>",
+-- 	--     function(prompt_bufnr)
+-- 	--       local fuzzy, line = picker_get_state(prompt_bufnr)
+-- 	--       require("telescope.actions").close(prompt_bufnr)
+-- 	-- 	    doom_ui_state.current.selection = fuzzy.value
+-- 	-- 	    ax.m_delete()
+-- 	--     end
+-- 	--   },
+-- 	--   {"^t:TOGGLE","i", "<C-t>",
+-- 	--     function(prompt_bufnr)
+-- 	--       local fuzzy, line = picker_get_state(prompt_bufnr)
+-- 	--       require("telescope.actions").close(prompt_bufnr)
+-- 	-- 	    doom_ui_state.current.selection = fuzzy.value
+-- 	-- 	    ax.m_toggle()
+-- 	--     end
+-- 	--   },
+-- 	--   {"^b:BINDS","i", "<C-b>",
+-- 	--     function(prompt_bufnr)
+-- 	--       local fuzzy, line = picker_get_state(prompt_bufnr)
+-- 	--       require("telescope.actions").close(prompt_bufnr)
+-- 	-- 	    doom_ui_state.current.selection = fuzzy.value
+-- 	-- 	    us.next(P.doom_binds_table_picker)
+-- 	--     end
+-- 	--   },
+-- 	-- }
+--
+--   local doom_modules_theme = require("telescope.themes").get_dropdown()
+--
+--   -- doom_ui_state.current.results_prepared = pu.doom_get_flat({ "modules" })
+--   doom_ui_state.results_prepared = doom_ui_state.all_modules_flattened
+--
+--   require("telescope.pickers").new(doom_modules_theme, {
+--     prompt_title = doom_ui_state.current.title,
+--     finder = require("telescope.finders").new_table({
+--       results = doom_ui_state.results_prepared,
+--       entry_maker = em.display_all_modules
+--     }),
+--     sorter = require("telescope.config").values.generic_sorter(opts),
+--     attach_mappings = function(prompt_bufnr, map)
+--
+--       -- <CR>
+--       actions_set.select:replace(function()
+-- 	      local fuzzy, line = picker_get_state(prompt_bufnr)
+-- 	      require("telescope.actions").close(prompt_bufnr)
+--         fuzzy.value.mappings["<CR>"](fuzzy, line)
+-- 	    end)
+--
+-- 	    map("i", "<C-a>", function()
+-- 	      local fuzzy, line = picker_get_state(prompt_bufnr)
+-- 	      require("telescope.actions").close(prompt_bufnr)
+-- 	      i(fuzzy)
+-- 	      fuzzy.value.mappings["<C-a>"](fuzzy, line)
+-- 	    end)
+--
+--       -- <C-z>
+-- 	    goback(prompt_bufnr, map)
+--
+--       return true
+--     end,
+--   }):find()
+-- end
+--
 P.doom_picker_all_module_settings = function() end
 P.doom_picker_all_module_packages = function() end
 P.doom_picker_all_module_binds = function() end
@@ -347,74 +291,74 @@ P.doom_picker_all_module_binds = function() end
 -- PICKERS > SINGLE MODULE
 --
 
-P.doom_picker_single_module_full = function()
-  us.ensure_doom_ui_state()
-  us.doom_ui_state_reset_modules()
-  doom_ui_state.current.picker = P.doom_picker_single_module_full
-
-
-  -- move this chunk into flattener func.??
-  local postfix = ""
-  if doom_ui_state.selected_module_idx ~= nil then
-	  local idx = doom_ui_state.selected_module_idx
-	  local morig = doom_ui_state.all_modules_flattened[idx].origin
-	  local mfeat = doom_ui_state.all_modules_flattened[idx].section
-	  local mname = doom_ui_state.all_modules_flattened[idx].name
-	  local menab = doom_ui_state.all_modules_flattened[idx].enabled
-    local on = menab and "enabled" or "disabled"
-	  postfix = postfix .. "["..morig..":"..mfeat.."] -> " .. mname .. " (" .. on .. ")"
-  end
-  doom_ui_state.current.title = "MODULE_FULL: " .. postfix -- make into const
-
-
-  doom_ui_state.current.results_prepared = pu.doom_get_flat({
-    "settings",
-    "packages",
-    "configs",
-    "binds",
-    "cmds",
-    "autocmds",
-  })
-
-  opts = require("telescope.themes").get_ivy()
-  require("telescope.pickers").new(opts, {
-    prompt_title = doom_ui_state.current.title,
-    finder = require("telescope.finders").new_table({
-      results = doom_ui_state.current.results_prepared,
-      entry_maker = em.display_module_full,
-    }),
-    sorter = require("telescope.config").values.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, map)
-	    goback(prompt_bufnr, map)
-      return true
-    end,
-   --  previewer = previewers.new_buffer_previewer({
-	  --   define_preview = function() return "xxxxxxxxxx" end,
-	  -- })
-  }):find()
-
-end
+-- P.doom_picker_single_module_full = function()
+--   -- us.ensure_doom_ui_state()
+--   -- us.doom_ui_state_reset_modules()
+--   doom_ui_state.current.picker = P.doom_picker_single_module_full
+--
+--
+--   -- move this chunk into flattener func.??
+--   local postfix = ""
+--   if doom_ui_state.selected_module_idx ~= nil then
+-- 	  local idx = doom_ui_state.selected_module_idx
+-- 	  local morig = doom_ui_state.all_modules_flattened[idx].origin
+-- 	  local mfeat = doom_ui_state.all_modules_flattened[idx].section
+-- 	  local mname = doom_ui_state.all_modules_flattened[idx].name
+-- 	  local menab = doom_ui_state.all_modules_flattened[idx].enabled
+--     local on = menab and "enabled" or "disabled"
+-- 	  postfix = postfix .. "["..morig..":"..mfeat.."] -> " .. mname .. " (" .. on .. ")"
+--   end
+--   doom_ui_state.current.title = "MODULE_FULL: " .. postfix -- make into const
+--
+--
+--   doom_ui_state.current.results_prepared = pu.doom_get_flat({
+--     "settings",
+--     "packages",
+--     "configs",
+--     "binds",
+--     "cmds",
+--     "autocmds",
+--   })
+--
+--   opts = require("telescope.themes").get_ivy()
+--   require("telescope.pickers").new(opts, {
+--     prompt_title = doom_ui_state.current.title,
+--     finder = require("telescope.finders").new_table({
+--       results = doom_ui_state.current.results_prepared,
+--       entry_maker = em.display_module_full,
+--     }),
+--     sorter = require("telescope.config").values.generic_sorter(opts),
+--     attach_mappings = function(prompt_bufnr, map)
+-- 	    goback(prompt_bufnr, map)
+--       return true
+--     end,
+--    --  previewer = previewers.new_buffer_previewer({
+-- 	  --   define_preview = function() return "xxxxxxxxxx" end,
+-- 	  -- })
+--   }):find()
+--
+-- end
 
 P.doom_picker_single_module_settings = function(c) end
 
-P.doom_picker_single_module_packages = function()
-  us.ensure_doom_ui_state()
-  doom_ui_state.current.picker = P.doom_picker_single_module_packages
-  doom_ui_state.current.title = "MODULE PACKAGES" -- make into const
-  opts = opts or require("telescope.themes").get_cursor()
-  require("telescope.pickers").new(opts, {
-    prompt_title = "create user module",
-    finder = require("telescope.finders").new_table({
-      results = config.entries,
-      entry_maker = display_module_packages,
-    }),
-    sorter = require("telescope.config").values.generic_sorter(opts),
-    attach_mappings = function(prompt_bufnr, map)
-	    goback(prompt_bufnr, map)
-      return true
-    end,
-  }):find()
-end
+-- P.doom_picker_single_module_packages = function()
+--   -- us.ensure_doom_ui_state()
+--   doom_ui_state.current.picker = P.doom_picker_single_module_packages
+--   doom_ui_state.current.title = "MODULE PACKAGES" -- make into const
+--   opts = opts or require("telescope.themes").get_cursor()
+--   require("telescope.pickers").new(opts, {
+--     prompt_title = "create user module",
+--     finder = require("telescope.finders").new_table({
+--       results = config.entries,
+--       entry_maker = display_module_packages,
+--     }),
+--     sorter = require("telescope.config").values.generic_sorter(opts),
+--     attach_mappings = function(prompt_bufnr, map)
+-- 	    goback(prompt_bufnr, map)
+--       return true
+--     end,
+--   }):find()
+-- end
 
 P.doom_picker_single_module_configs = function() end
 P.doom_picker_single_module_cmds = function() end
