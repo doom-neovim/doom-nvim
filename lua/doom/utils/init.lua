@@ -310,13 +310,22 @@ utils.get_modules_flat_with_meta_data = function()
     if prep_all_m[m_origin][m_section] == nil then
       prep_all_m[m_origin][m_section] = {}
     end
+
+    -- local mod_state = "x"
+    -- if not t.enabled then on = "_" end
+
+    -- print(m_origin)
+
     prep_all_m[m_origin][m_section][m_name] = {
       type = "module",
       enabled = false,
       name = m_name,
       section = m_section,
       origin = m_origin,
-      path = p
+      path = p,
+      list_display_props = {
+        "MODULE", " ", m_origin, m_section, m_name
+      }
     }
   end
 
@@ -344,9 +353,10 @@ utils.get_modules_flat_with_meta_data = function()
         if prep_all_m[origin][section_name] ~= nil then
           if prep_all_m[origin][section_name][module_name] ~= nil then
             prep_all_m[origin][section_name][module_name].enabled = true
-              for k, v in pairs(doom[section_name][module_name]) do
-                prep_all_m[origin][section_name][module_name][k] = v
-              end
+            prep_all_m[origin][section_name][module_name].list_display_props[2] = "x"
+            for k, v in pairs(doom[section_name][module_name]) do
+              prep_all_m[origin][section_name][module_name][k] = v
+            end
             break;
           end
         end

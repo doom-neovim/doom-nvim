@@ -23,37 +23,88 @@ local entry_makers = {}
 --
 
 function entry_makers.display_all_modules(entry)
-	local function make_display(t)
+  print(entry.origin, vim.inspect(entry.list_display_props))
 
-	  -- i(t)
+  local displayer = entry_display.create {
+    separator = "▏",
+    items = {
+      { width = 7 },
+      { width = 3 },
+      { width = 5 },
+      { width = 10 },
+      { width = 25 },
+      { remaining = true },
+    },
+  }
 
-	  -- TODO: move all of this into the modules flattener.
-
-	  local res = ""
-
-    local on = "x"
-    local org
-
-    if not t.enabled then on = "_" end
-
-    if t.origin == "user" then
-      org = "u"
-    else
-      org = "d"
-    end
-
-    -- res = string.format([[ ]],
-    -- )
-
-	  return t.origin .. " ["..on.."] : " .. t.section .." -> " .. t.name
-	end
+  local make_display = function(entry)
+    return displayer(entry.value.list_display_props)
+  end
 
 	return {
 	  value = entry,
-	  display = function(tbl) return make_display(tbl.value) end,
+	  display = make_display,
 	  ordinal = entry.name,
 	}
 end
+
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+function entry_makers.display_module_full(entry)
+  local displayer = entry_display.create {
+    separator = "▏",
+    items = {
+      { width = 10 },
+      { width = 30 },
+      { width = 30 },
+      { remaining = true },
+    },
+  }
+
+  local make_display = function(entry)
+    return displayer(entry.value.list_display_props)
+  end
+
+	return {
+	  value = entry,
+	  display = make_display,
+	  ordinal = entry.type,
+	}
+end
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+
+function entry_makers.display_single_module(entry) end
+
+function entry_makers.display_all_packages(entry) end
+function entry_makers.display_module_packages(entry) end
+
+function entry_makers.display_module_cmds(entry) end
+function entry_makers.display_module_autocmds(entry) end
+
+function entry_makers.display_binds_leaf(entry)
+	  return {
+	    value = entry,
+	    display = function(tbl)
+	      return tbl.value.key
+	    end,
+	    ordinal = entry,
+	  }
+end
+
+function entry_makers.display_binds_branch(entry)
+	  return {
+	    value = entry,
+	    display = function(tbl)
+	      return tbl.value.key
+	    end,
+	    ordinal = entry,
+	  }
+end
+
+--
+-- TREESITTER
+--
 
 function entry_makers.display_doom_settings(entry)
 	-- print((entry:named_child(1)):type())
@@ -85,37 +136,6 @@ function entry_makers.display_doom_settings(entry)
 	}
 end
 
-function entry_makers.display_module_full(entry)
-  local displayer = entry_display.create {
-    separator = "▏",
-    items = {
-      { width = 14 },
-      { width = 18 },
-      { width = 20 },
-      { remaining = true },
-    },
-  }
-
-	-- print(doom_ui_state.all_modules_flattened[selected_module_idx].title)
-  local make_display = function(entry)
-    return displayer(entry.value.list_display_props)
-  end
-
-	return {
-	  value = entry,
-	  display = make_display,
-	  ordinal = entry.type,
-	}
-end
-
-function entry_makers.display_single_module(entry) end
-
-function entry_makers.display_all_packages(entry) end
-function entry_makers.display_module_packages(entry) end
-
-function entry_makers.display_module_cmds(entry) end
-function entry_makers.display_module_autocmds(entry) end
-
 function entry_makers.display_binds_table(entry)
 	-- print(vim.inspect(entry))
 	  local function make_display(t)
@@ -130,24 +150,5 @@ function entry_makers.display_binds_table(entry)
 	  }
 end
 
-function entry_makers.display_binds_leaf(entry)
-	  return {
-	    value = entry,
-	    display = function(tbl)
-	      return tbl.value.key
-	    end,
-	    ordinal = entry,
-	  }
-end
-
-function entry_makers.display_binds_branch(entry)
-	  return {
-	    value = entry,
-	    display = function(tbl)
-	      return tbl.value.key
-	    end,
-	    ordinal = entry,
-	  }
-end
 
 return entry_makers
