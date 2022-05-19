@@ -169,23 +169,15 @@ P.doom_picker_settings_user = function()
   doom_ui_state.current.picker = P.doom_picker_settings_user
   doom_ui_state.current.title = "USER_SETTINGS" -- make into const
 
-  doom_ui_state.current.buf_ref = utils.get_buf_handle(utils.find_config("settings.lua"))
+  -- move this to main menu ??
+	doom_ui_state.prev.selection = {
+    data = doom.settings,
+    type = "doom_user_settings"
+	}
 
-  -- assign "user_settings" object to current selection
+  -- doom_ui_state.current.buf_ref = utils.get_buf_handle(utils.find_config("settings.lua"))
 
   doom_ui_state.current.results_prepared = pu.doom_get_flat({ "user_settings" })
-
-
-  -- if doom_ui_state.prev.buf_ref == nil or doom_ui_state.prev.title ~= "USER SETTINGS" then
-	 --  doom_ui_state.current.results_prepared = ts_table_picker_prepare(ts.ts_get_doom_captures(
-	 --    doom_ui_state.current.buf_ref, "doom_root.settings_table")[1]
-	 --  )
-  -- else
-  --   doom_ui_state.current.buf_ref = doom_ui_state.prev.buf_ref
-	 --  doom_ui_state.current.results_prepared = ts_table_picker_prepare(doom_ui_state.prev.selection)
-  -- end
-
-  -- for each results -> add type = "settings_field"
 
   opts = require("telescope.themes").get_dropdown()
 
@@ -197,23 +189,7 @@ P.doom_picker_settings_user = function()
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
-
-      -- actions_set.select:replace(function()
-      --   local node = selection(prompt_bufnr).value
-      --   require("telescope.actions").close(prompt_bufnr)
-	     --  local field_key = node:named_child(0)
-	     --  local field_value = node:named_child(1)
-	     --  if field_value:type() == "table_constructor" then
-		    --   doom_ui_state.current.selection = field_value
-      --     us.next(P.doom_settings_picker)
-	     --  else
-	   	 --      local sr,sc,er,ec = field_key:range()
-	  	  --     vim.api.nvim_win_set_buf(0, doom_ui_state.current.buf_ref)
-	  	  --     vim.fn.cursor(er+1,ec)
-	     --  end
-      -- end)
       goback(prompt_bufnr, map)
-
       return true
     end,
   }):find()
@@ -301,6 +277,15 @@ P.doom_picker_all_modules = function(c)
   end
 
   local doom_modules_theme = require("telescope.themes").get_dropdown()
+
+ --  -- move this to main menu ??
+	-- doom_ui_state.prev.selection = {
+ --    data = doom.settings,
+ --    type = "doom_all_modules"
+	-- }
+
+  -- doom_ui_state.current.results_prepared = pu.doom_get_flat({ "modules" })
+
 
   -- type = "module" for all modules.
   doom_ui_state.results_prepared = doom_ui_state.all_modules_flattened
