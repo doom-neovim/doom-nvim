@@ -1,57 +1,7 @@
 local ax =  require("user.modules.features.dui.actions")
-
--- rename this file to `flatteners.lua` or `make_array.lua`
-
---
--- TELESCOPE LIST FLATTENERS
---
--- helpers for flattening out all aspects of doom to make them
--- compatible with list finders, such as `telescope-nvim`.
-
--- LIST OF POSSIBLE DOOM COMPONENTS
---
---    ->  user_settings
---
---    ->  module
---
---    ->  settings
---    ->  packages
---    ->  configs -> merge with packages.. right?
---    ->  binds
---    ->  cmds
---    ->  autocmds
-
+local ut =  require("user.modules.features.dui.utils")
 
 local M = {}
-
-
-
--- EACH ENTRY SHOULD HAVE ENOUGH INFORMATION TO STRUCTURAL FIND AND TRANSFORM
--- THE DATA IN THE CODEBASE.
---
---
--- {
---    type = string,
---    table_path = { "level1", "level2", idx1 }, ie. level1.level2[idx1]
---        for cmds and autocmds, (and some packages), this wil be just { number }
---        since you only need the index to get back to the type in the selected module.
---    table_value =  <anything>,
---        reference to the real value?
---    formatted_value = string,
---    name = string,
---    formatted_name = string,  -- table_path concat + name
---        create function that formats each entry for display?
---    actions = type ?? list
---      list of keybind actions for each doom component, so that you
---      can easilly attach custom operations for each doom type.
---      ideally these should be usable with cursor context as well. ie. add bind to first branch under cursor, second, bind after leaf under cursor.
---    list_display_props = {
---      ..
---      { "display_string", "hl_group" }
---      ..
---      ..
---    }
--- }
 
 local MODULE_ORIGINS = {
     "user",
@@ -73,13 +23,6 @@ local MODULE_PARTS = {
     "autocmds",
 }
 
---
--- GET DOOM COMPONENTS BY TYPE
---
-
--- @param table: of each component you require flattened,
---          -> eg. get_flat { "user_settings", "module_settings", "module_packages" } returns { {}, {}, ... }
--- @return list of flattened doom components, use with eg. telescope.
 M.get_results_for_query = function(type, components)
 
   local results = {}
@@ -128,32 +71,7 @@ M.get_results_for_query = function(type, components)
   end
 
 
-  -- if doom_ui_state.current.selection.type == "doom_main_menu" then
-  --   table.insert(components_table, M.main_menu_flattened())
-  --
-  -- elseif doom_ui_state.current.selection.type == "module" then
-  --   for m_key, m_comp in pairs(doom_ui_state.current.selection) do
-  --     if vim.tbl_contains(t_requested_components, m_key) then
-  --       table.insert(components_table, M[m_key .."_flattened"](m_comp))
-  --     end
-  --   end
-  --
-  -- end
-
   return results
-
-  -- --TODO: prevent fail if table empty
-  -- if #results == 0 or results == nil then
-  --   return nil
-  --
-  -- -- elseif #results == 1 then
-  -- --   return results
-  --
-  -- else
-  --   return table_merge(results)
-  --
-  -- end
-
 end
 
 -----------------------------------------------------------------------------
@@ -378,7 +296,7 @@ M.settings_flattened = function(t_settings, flattened, stack)
 
   for k, v in pairs(t_settings) do
 
-    if is_sub_setting(k,v) then
+    if ut.is_sub_setting(k,v) then
       -- recurse down
       -- if type(k) == "number" then print("!!!!!!!!!!!!") end
 
