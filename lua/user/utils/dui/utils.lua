@@ -107,6 +107,28 @@ local function is_sub_setting(a, b)
   return true
 end
 
+  -- doom_ui_state = {
+  --   -- doom_global_extended,
+  --   all_modules_flattened = nil,
+  --   selected_module_idx = nil,
+  --   current = {
+  --     title = nil, -- eg. settings, modules, binds_table, binds_branch
+  --     results_prepared = nil,
+  --     buf_ref = nil,
+  --     picker = nil,
+  --     selection = { item = nil, type = nil },
+  --     line_str = nil,
+  --     index_selected = nil,
+  --   },
+  --   history = {},
+  -- }
+
+local function inspect_ui_state()
+    print("--------------------------------------------")
+    print("PREVIOUS:", vim.inspect(doom_ui_state.prev))
+    print("CURRENT:", vim.inspect(doom_ui_state.current))
+end
+
 -- EACH ENTRY SHOULD HAVE ENOUGH INFORMATION TO STRUCTURAL FIND AND TRANSFORM
 -- THE DATA IN THE CODEBASE.
 --
@@ -133,8 +155,12 @@ end
 --      ..
 --    }
 -- }
+
+
 --
---  item | item    | item  | .. | legend? |
+-- GET DOOM COMPONENTS BY TYPE
+--
+
 
 -- @param table: of each component you require flattened,
 --          -> eg. get_flat { "user_settings", "module_settings", "module_packages" } returns { {}, {}, ... }
@@ -143,7 +169,7 @@ M.doom_get_flat = function(t_requested_components)
 
   local components_table = {}
 
-  i(doom_ui_state.prev.selection)
+  inspect_ui_state()
 
   for m_key, m_comp in pairs(doom_ui_state.prev.selection) do
     -- make sure we don't try to access nil
@@ -190,62 +216,111 @@ end
 --
 
 -- TODO: mv modules flattener to here
-
-
--- xxx
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- -- TODO: could the same flattener be used for both user settings and module settings? Yes, right?!
--- --
--- -- tree flattener: user settings and module settings,
--- M.user_settings_flattened = function(t_settings, flattened, stack)
---   local flattened = flattened or {}
---   local stack = stack or {}
 --
---   for k, v in pairs(t_settings) do
 --
---     if is_sub_setting(k,v) then
---       -- recurse down
---       table.insert(stack, k)
---       flattened = M.settings_flattened(v, flattened, stack)
+
+-- returns tree -> should be renamed
+M.get_modules_extended = function()
+  local config_path = vim.fn.stdpath("config")
+
+  local function glob_modules(cat)
+    if cat ~= "doom" and cat ~= "user" then return end
+    local glob = config_path .. "/lua/"..cat.."/modules/*/*/"
+    return vim.split(vim.fn.glob(glob), "\n")
+  end
+  local function get_all_module_paths()
+    local glob_doom_modules = glob_modules("doom")
+    local glob_user_modules = glob_modules("user")
+    local all = glob_doom_modules
+    for _, p in ipairs(glob_user_modules) do
+      table.insert(all, p)
+    end
+    return all
+  end
+
+  local all_m = get_all_module_paths()
+
+  local prep_all_m = { doom = {}, user = {} }
+
+  for _, p in ipairs(all_m) do
+    local m_origin, m_section, m_name =  p:match("/([_%w]-)/modules/([_%w]-)/([_%w]-)/$") -- capture only dirname
+    if prep_all_m[m_origin][m_section] == nil then
+      prep_all_m[m_origin][m_section] = {}
+    end
+
+    -- local mod_state = "x"
+    -- if not t.enabled then on = "_" end
+
+    -- print(m_origin)
+
+    prep_all_m[m_origin][m_section][m_name] = {
+      type = "module",
+      enabled = false,
+      name = m_name,
+      section = m_section,
+      origin = m_origin,
+      path = p,
+      list_display_props = {
+        "MODULE", " ", m_origin, m_section, m_name
+      }
+    }
+  end
+
+  local enabled_modules = require("doom.core.modules").enabled_modules
+  local all_modules = vim.tbl_deep_extend("keep", {
+    core = {
+      'doom',
+      'nest',
+      'treesitter',
+      'reloader',
+    }
+  },enabled_modules)
+
+
+
+  for section_name, section_modules in pairs(all_modules) do
+    for _, module_name in pairs(section_modules) do
+      local search_paths = {
+        ("user.modules.%s.%s"):format(section_name, module_name),
+        ("doom.modules.%s.%s"):format(section_name, module_name)
+      }
+      for _, path in ipairs(search_paths) do
+        local origin = path:sub(1,4)
+
+        if prep_all_m[origin][section_name] ~= nil then
+          if prep_all_m[origin][section_name][module_name] ~= nil then
+            prep_all_m[origin][section_name][module_name].enabled = true
+            prep_all_m[origin][section_name][module_name].list_display_props[2] = "x"
+            for k, v in pairs(doom[section_name][module_name]) do
+              prep_all_m[origin][section_name][module_name][k] = v
+            end
+            break;
+          end
+        end
+      end
+    end
+  end
+
+ return prep_all_m
+end
+
+-- returns flattened array
+M.get_modules_flattened = function()
+  local flattened = {}
+  for _, origin in pairs(M.get_modules_extended()) do
+    for _, section in pairs(origin) do
+      for _, module in pairs(section) do
+        table.insert(flattened, module)
+      end
+    end
+  end
+  return flattened
+end
+
+
 --
---     else
---       -- entry
---       local entry = {
---         type = "module_setting",
---         path_components = k,
---         value = tostring(v),
---         list_display_props = {
---           "SETTING", "", ""
---         }
---       }
---       if #stack > 0 then
---         local pc = table.concat(stack, ".")
---         entry.path_components = pc .. "." .. k
---       end
---       table.insert(flattened, entry)
+-- SETTINGS (USER/MODULE)
 --
---     end
---   end
---
---   table.remove(stack, #stack)
---   return flattened
--- end
 
 M.settings_flattened = function(t_settings, flattened, stack)
   local flattened = flattened or {}
@@ -314,7 +389,10 @@ M.settings_flattened = function(t_settings, flattened, stack)
   return flattened
 end
 
--- list flattener: cmds, and autocmds, and packages.???
+--
+-- PACKAGES
+--
+
 M.packages_flattened = function(t_packages)
   if t_packages == nil then return end
   local flattened = {}
@@ -349,6 +427,11 @@ M.packages_flattened = function(t_packages)
   return flattened
 end
 
+--
+-- CONFIGS
+--
+
+
 M.configs_flattened = function(t_configs)
   local flattened = {}
   for k, v in pairs(t_configs) do
@@ -371,6 +454,10 @@ M.configs_flattened = function(t_configs)
 
   return flattened
 end
+
+--
+-- CMDS
+--
 
 M.cmds_flattened = function(t_cmds)
   local flattened = {}
@@ -399,6 +486,10 @@ M.cmds_flattened = function(t_cmds)
 
   return flattened
 end
+
+--
+-- AUTOCMDS
+--
 
 M.autocmds_flattened = function(t_autocmds)
   local flattened = {}
@@ -438,6 +529,10 @@ M.autocmds_flattened = function(t_autocmds)
 
   return flattened
 end
+
+--
+-- BINDS
+--
 
 -- list tree flattener. binds contain both anonymous list and potential trees.
 M.binds_flattened = function(nest_tree, flattened, bstack)
