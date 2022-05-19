@@ -32,8 +32,7 @@ return {
     "lsp_progress",       -- Check status of LSP loading
     "tabline",            -- Tab bar buffer switcher
     "dashboard",          -- A pretty dashboard upon opening
-    -- "dui",
-    "dui2",
+    "dui",
     "trouble",         -- A pretty diagnostic viewer
     -- "statusline",         -- A pretty status line at the bottom of the buffer
     "minimap",         -- Shows current position in document

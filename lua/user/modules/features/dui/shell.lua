@@ -2,7 +2,7 @@ local utils = require("doom.utils")
 local fs = require("doom.utils.fs")
 local system = require("doom.core.system")
 
-local pu = require("user.utils.dui.templates")
+local pu = require("user.modules.features.dui.templates")
 
 local shell = {}
 

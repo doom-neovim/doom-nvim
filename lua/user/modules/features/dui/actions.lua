@@ -3,7 +3,7 @@ local utils = require("doom.utils")
 local system = require("doom.core.system")
 
 -- local sh = require("user.modules.features.dui2.shell")
-local nui = require("user.utils.dui.nui")
+local nui = require("user.modules.features.dui.nui")
 
 local actions = {}
 

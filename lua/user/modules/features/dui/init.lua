@@ -1,9 +1,9 @@
 -- local pu =  require("user.utils.dui.utils")
 -- local us =  require("user.utils.dui.uistate")
 -- local pickers = require("user.utils.dui.pickers")
-local me =  require("user.utils.dui.make_entry")
-local mt =  require("user.utils.dui.make_title")
-local mr =  require("user.utils.dui.make_results")
+local me =  require("user.modules.features.dui.make_entry")
+local mt =  require("user.modules.features.dui.make_title")
+local mr =  require("user.modules.features.dui.make_results")
 
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
