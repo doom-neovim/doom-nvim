@@ -258,6 +258,7 @@ M.settings_flattened = function(t_settings, flattened, stack)
 
     else
 
+      -- collect table_path back to setting in original table
       local pc
       if #stack > 0 then
         pc = vim.deepcopy(stack)
@@ -266,40 +267,34 @@ M.settings_flattened = function(t_settings, flattened, stack)
         pc = { k }
       end
 
+      -- REFACTOR: concat table_path
+      -- format each setting
       local pc_display = table.concat(pc, ".")
-
       local v_display
-
       if type(v) == "table" then
         local str = ""
-
-        for i, x in pairs(v) do
+        for _, x in pairs(v) do
           if type(x) == "table" then
             str = str .. ", " .. "subt"
           else
             str = str .. ", " .. x
           end
         end
-
         v_display = str -- table.concat(v, ", ")
-
       else
         v_display = tostring(v)
       end
 
-      -- i(v_display)
-
-
       local entry = {
         type = "module_setting",
         data = {
-          path_components = pc,
-          value = v,
+          table_path = pc,
+          table_value = v,
         },
         list_display_props = {
-          "SETTING",
-          second,
-          v_display
+          {"SETTING"},
+          {pc_display},
+          {v_display}
         }
       }
       table.insert(flattened, entry)
@@ -321,22 +316,23 @@ M.packages_flattened = function(t_packages)
 
     local spec = v
     if type(k) == "number" then
-      -- k = "anonymous"
       if type(v) == "string" then
         spec = { v }
       end
     end
 
+    local repo_name, pkg_name = spec[1]:match("(.*)/([%w%-%.%_]*)$")
+
     local entry = {
       type = "module_package",
       data = {
-        name_key = k,
+        table_path = k,
         spec = spec,
       },
       list_display_props = {
-        "PKG",
-        k,
-        tostring(v)
+        {"PKG"},
+        {repo_name},
+        {pkg_name}
       }
     }
 
@@ -353,13 +349,13 @@ M.configs_flattened = function(t_configs)
     local entry = {
       type = "module_config",
       data = {
-        name = k,
-        value = v,
+        table_path = k,
+        table_value = v,
       },
       list_display_props = {
-        "CFG",
-        k,
-        tostring(v)
+        {"CFG"},
+        {tostring(k)},
+        {tostring(v)}
       }
     }
 
@@ -383,15 +379,13 @@ M.cmds_flattened = function(t_cmds)
       data = {
         name = v[1],
         cmd = v[2],
+      },
+      list_display_props = {
+        {"CMD"},
+        {tostring(v[1])},
+        {tostring(v[2])}
       }
     }
-
-    entry["list_display_props"] = {
-      "CMD",
-      v[1],
-      tostring(v[2])
-    }
-    -- })
 
     table.insert(flattened, entry)
   end
@@ -413,9 +407,8 @@ M.autocmds_flattened = function(t_autocmds)
         is_func = true,
         func = t_autocmds,
       },
-      -- ordinal = ,
       list_display_props = {
-        "AUTOCMD", "", ""
+        {"AUTOCMD"}, {"isfunc"}, {tostring(t_autocmds)}
       }
     })
 
@@ -429,7 +422,7 @@ M.autocmds_flattened = function(t_autocmds)
           action = v[3],
         },
         list_display_props = {
-          "AUTOCMD", "", ""
+           {"AUTOCMD"}, {v[1]}, {v[2]}, {tostring(v[3])}
         }
       })
     end
@@ -466,13 +459,14 @@ M.binds_flattened = function(nest_tree, flattened, bstack)
         flattened = M.binds_flattened(t.rhs, flattened, bstack)
       else
 
+        -- i(t)
+
         -- so that you can do `add_mapping_to_same_branch()` ???
         local entry = {
           type = "module_bind_leaf",
           data = t,
-          -- ordinal = ,
           list_display_props = {
-            "BIND", "", ""
+            { "BIND" }, { t.lhs }, {t.name}, {t.rhs} -- {t[1], t[2], tostring(t.options)
           }
         }
 

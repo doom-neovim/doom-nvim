@@ -86,8 +86,6 @@ function entry_makers.display_doom_settings(entry)
 end
 
 function entry_makers.display_module_full(entry)
-	-- print(doom_ui_state.all_modules_flattened[selected_module_idx].title)
-
   local displayer = entry_display.create {
     separator = "▏",
     items = {
@@ -98,73 +96,16 @@ function entry_makers.display_module_full(entry)
     },
   }
 
-	local function formatter()
-	end
-
-	local function make_display(entry)
-	  local res = ""
-	  local idx = doom_ui_state.selected_module_idx
-	  local sec = doom_ui_state.all_modules_flattened[idx].section
-	  local name = doom_ui_state.all_modules_flattened[idx].name
-
-	  -- i(entry)
-
-	  if entry.type == "module_setting" then
-	    res = "SETTING: " .. entry.data.path_components .. " -> " .. entry.data.value
-
-	  elseif entry.type == "module_config" then
-	    res = "CONFIG: " .. entry.data.name .. " -> " .. tostring(entry.data.value)
-
-	  elseif entry.type == "module_package" then
-      res = "PACKAGE: " .. entry.data.name .. " -> " .. tostring(entry.data.spec)
-
-	  elseif entry.type == "module_cmd" then
-      res = "CMD: " .. entry.data.name .. " -> " .. tostring(entry.data.cmd)
-
-	  elseif entry.type == "module_autocmd" then
-      if entry.data.is_func then
-        res = "AUTOCMD: " .. entry.data.func
-      else
-        res = "AUTOCMD: " .. entry.data.event .. " | " .. entry.data.pattern .. " | " .. tostring(entry.data.action)
-      end
-
-	  elseif entry.type == "module_bind_leaf" then
-      res = "BIND: " .. entry.data.lhs .. " -> " .. entry.data.rhs .. " // name: " .. entry.data.name
-
-    -- else
-    --   res = string.upper(entry.type) .. " -> " .. tostring(
-
-	  end
-
-	  -- print(res)
-
-	  return res
-	end
-
-  -- local make_display = function(entry)
-  --   return displayer entry.list_display_props
-  -- end
-
+	-- print(doom_ui_state.all_modules_flattened[selected_module_idx].title)
+  local make_display = function(entry)
+    return displayer(entry.value.list_display_props)
+  end
 
 	return {
 	  value = entry,
-	  display = function(tbl) return make_display(tbl.value) end,
+	  display = make_display,
 	  ordinal = entry.type,
 	}
-  -- return function(entry)
-  --   if entry == "" then
-  --     return nil
-  --   end
-  --   -- local mod, file = string.match(entry, "(..).*%s[->%s]?(.+)")
-  --
-  --   return {
-  --     value = entry,
-  --     -- status = mod,
-  --     ordinal = entry.type,
-  --     display = make_display,
-  --     -- path = Path:new({ opts.cwd, file }):absolute(),
-  --   }
-  -- end
 end
 
 function entry_makers.display_single_module(entry) end
