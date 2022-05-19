@@ -12,6 +12,9 @@ local M = {}
 -- LIST OF POSSIBLE DOOM COMPONENTS
 --
 --    ->  user_settings
+--
+--    ->  module
+--
 --    ->  settings
 --    ->  packages
 --    ->  configs -> merge with packages.. right?
@@ -140,8 +143,12 @@ M.doom_get_flat = function(t_requested_components)
 
   local components_table = {}
 
+  i(doom_ui_state.prev.selection)
+
   for m_key, m_comp in pairs(doom_ui_state.prev.selection) do
     -- make sure we don't try to access nil
+
+
 
     if vim.tbl_contains(t_requested_components, m_key) then
 

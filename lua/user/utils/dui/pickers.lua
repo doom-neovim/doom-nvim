@@ -83,6 +83,25 @@ local function picker_get_state(prompt_bufnr)
   return fuzzy, line
 end
 
+local function get_main_menu_items()
+  local doom_menu_items = {
+		{ "open config", function() vim.cmd(("e %s"):format(require("doom.core.config").source)) end },
+  		{ "edit settings",function() us.next(P.doom_picker_settings_user) end },
+  		{ "browse modules",  function() us.next(P.doom_picker_all_modules) end },
+  		{ "binds    (todo..)",function() end },
+  		{ "autocmds (todo..)", function() end },
+  		{ "cmds     (todo..)", function() end },
+  		{ "packages (todo..)", function() end },
+  		{ "jobs 	  (todo..)",function() end },
+  }
+
+  for _, v in ipairs(doom_menu_items) do
+    doom_menu_items["type"] = "main_menu"
+  end
+
+  return doom_menu_items
+end
+
 -----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
 
@@ -98,29 +117,9 @@ P.doom_picker_main_menu = function(c)
 
   doom_ui_state.current.title = "MAIN MENU"
 
-  local function mappings_prepare(prompt_bufnr)
-	  local fuzzy, line = picker_get_state(prompt_bufnr)
-	  require("telescope.actions").close(prompt_bufnr)
-	  return fuzzy, line
-  end
+  local doom_menu_items = get_main_menu_items()
 
-  local doom_menu_items = {
-		{ "open config", function() vim.cmd(("e %s"):format(require("doom.core.config").source)) end },
-  		{ "edit settings",function() us.next(P.doom_picker_settings_user) end },
-  		{ "browse modules",  function() us.next(P.doom_picker_all_modules) end },
-  		{ "binds    (todo..)",function() end },
-  		{ "autocmds (todo..)", function() end },
-  		{ "cmds     (todo..)", function() end },
-  		{ "packages (todo..)", function() end },
-  		{ "jobs 	  (todo..)",function() end },
-  }
-
-  -- add type tag
-  for _, v in ipairs(doom_menu_items) do
-    doom_menu_items["type"] = "main_menu"
-  end
-
-  doom_ui_state.current.results_prepared = doom_menu_items
+  doom_ui_state.current.results_prepared =  doom_menu_items
 
   local doom_menu_theme = require("telescope.themes").get_dropdown()
   opts = opts or require("telescope.themes").get_ivy()
@@ -130,11 +129,6 @@ P.doom_picker_main_menu = function(c)
     finder = require("telescope.finders").new_table({
       results = doom_menu_items,
       entry_maker = function(entry)
-	      local function make_display(t)
-	        local s = t.level .. " / " .. tsq.get_node_text(t.prefix,c.buf_ref) .. " / "
-	        -- print(s)
-	        return s
-	      end
 	      return {
 	        value = entry,
 	        display = entry[1],
@@ -165,6 +159,67 @@ end
 
 
 P.doom_picker_everything = function(c) end
+
+--
+-- PICKER > USER SETTINGS
+--
+
+P.doom_picker_settings_user = function()
+  us.ensure_doom_ui_state()
+  doom_ui_state.current.picker = P.doom_picker_settings_user
+  doom_ui_state.current.title = "USER_SETTINGS" -- make into const
+
+  doom_ui_state.current.buf_ref = utils.get_buf_handle(utils.find_config("settings.lua"))
+
+  -- assign "user_settings" object to current selection
+
+  doom_ui_state.current.results_prepared = pu.doom_get_flat({ "user_settings" })
+
+
+  -- if doom_ui_state.prev.buf_ref == nil or doom_ui_state.prev.title ~= "USER SETTINGS" then
+	 --  doom_ui_state.current.results_prepared = ts_table_picker_prepare(ts.ts_get_doom_captures(
+	 --    doom_ui_state.current.buf_ref, "doom_root.settings_table")[1]
+	 --  )
+  -- else
+  --   doom_ui_state.current.buf_ref = doom_ui_state.prev.buf_ref
+	 --  doom_ui_state.current.results_prepared = ts_table_picker_prepare(doom_ui_state.prev.selection)
+  -- end
+
+  -- for each results -> add type = "settings_field"
+
+  opts = require("telescope.themes").get_dropdown()
+
+  require("telescope.pickers").new(opts, {
+    prompt_title = doom_ui_state.current.title,
+    finder = require("telescope.finders").new_table({
+      results = doom_ui_state.current.results_prepared,
+      entry_maker = em.display_doom_settings
+    }),
+    sorter = require("telescope.config").values.generic_sorter(opts),
+    attach_mappings = function(prompt_bufnr, map)
+
+      -- actions_set.select:replace(function()
+      --   local node = selection(prompt_bufnr).value
+      --   require("telescope.actions").close(prompt_bufnr)
+	     --  local field_key = node:named_child(0)
+	     --  local field_value = node:named_child(1)
+	     --  if field_value:type() == "table_constructor" then
+		    --   doom_ui_state.current.selection = field_value
+      --     us.next(P.doom_settings_picker)
+	     --  else
+	   	 --      local sr,sc,er,ec = field_key:range()
+	  	  --     vim.api.nvim_win_set_buf(0, doom_ui_state.current.buf_ref)
+	  	  --     vim.fn.cursor(er+1,ec)
+	     --  end
+      -- end)
+      goback(prompt_bufnr, map)
+
+      return true
+    end,
+  }):find()
+
+end
+
 
 --
 -- PICKERS > ALL <category>
@@ -384,7 +439,7 @@ P.doom_picker_single_module_binds = function() end
 -- PICKERS > TREESITTER (deprecated)
 --
 
--- P.doom_settings_picker_treesitter = function()
+-- P.doom_picker_settings_user = function()
 --   us.ensure_doom_ui_state()
 --
 --   -- @param table_constructor
@@ -448,7 +503,7 @@ P.doom_picker_single_module_binds = function() end
 --   }):find()
 --
 -- end
---
+
 --
 -- P.doom_binds_table_picker_treesitter = function()
 --   us.ensure_doom_ui_state()
