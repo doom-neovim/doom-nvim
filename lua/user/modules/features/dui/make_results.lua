@@ -32,7 +32,7 @@ local MODULE_PARTS = {
 --- but maybe passing params would be better, I dunno.
 ---@param type
 ---@param components
----@return
+---@return merged list of all entries prepared for telescope.
 M.get_results_for_query = function(type, components)
   local results = {}
 
@@ -71,7 +71,6 @@ M.get_results_for_query = function(type, components)
   elseif doom_ui_state.query.type == "all" then
 
   end
-
 
   return results
 end

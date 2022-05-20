@@ -1,4 +1,3 @@
-local me =  require("user.modules.features.dui.make_entry")
 local mt =  require("user.modules.features.dui.make_title")
 local mr =  require("user.modules.features.dui.make_results")
 
@@ -9,6 +8,7 @@ local actions_set = require("telescope.actions.set")
 local state = require("telescope.actions.state")
 local actions = require("telescope.actions")
 local previewers = require("telescope.previewers")
+local entry_display = require("telescope.pickers.entry_display")
 
 local doom_ui = {}
 
@@ -36,14 +36,6 @@ local function goback(prompt_bufnr, map)
 	  end)
 end
 
-local function line(buf)
-  return state.get_current_line(buf)
-end
-
-local function selection(buf)
-  return state.get_selected_entry(buf)
-end
-
 local function picker_get_state(prompt_bufnr)
   local state = require("telescope.actions.state")
   local line = state.get_current_line(prompt_bufnr)
@@ -51,6 +43,35 @@ local function picker_get_state(prompt_bufnr)
   return fuzzy, line
 end
 
+local function i(x)
+  print(vim.inspect(x))
+end
+
+-- TODO: make this dynamic / add display configs to each parts result maker.
+function doom_displayer(entry)
+  local displayer = entry_display.create {
+    separator = "▏",
+    items = {
+      { width = 10 },
+      { width = 20 },
+      { width = 20 },
+      { width = 20 },
+      { width = 20 },
+      { width = 20 },
+      { remaining = true },
+    },
+  }
+  local make_display = function(entry)
+    return displayer(entry.value.list_display_props)
+  end
+	return {
+	  value = entry,
+	  display = make_display,
+	  ordinal = entry.type,
+	}
+end
+
+-- return entry_makers
 
 local function doom_picker(type, components)
   local title = mt.get_title()
@@ -62,16 +83,18 @@ local function doom_picker(type, components)
   require("telescope.pickers").new(opts, {
     prompt_title = title,
     finder = require("telescope.finders").new_table({
-      results = results, -- rename/refact this func
-      entry_maker = me.doom_displayer
+      results = results,
+      entry_maker = doom_displayer
     }),
     sorter = require("telescope.config").values.generic_sorter(opts),
     attach_mappings = function(prompt_bufnr, map)
+
       actions_set.select:replace(function()
 	      local fuzzy, line = picker_get_state(prompt_bufnr)
 	      require("telescope.actions").close(prompt_bufnr)
         fuzzy.value.mappings["<CR>"](fuzzy, line)
 	    end)
+
 	    map("i", "<C-a>", function()
 	      local fuzzy, line = picker_get_state(prompt_bufnr)
 	      require("telescope.actions").close(prompt_bufnr)
@@ -79,7 +102,9 @@ local function doom_picker(type, components)
 	        fuzzy.value.mappings["<C-a>"](fuzzy, line)
 	      end
 	    end)
+
 	    goback(prompt_bufnr, map)
+
       return true
     end
 
@@ -87,6 +112,7 @@ local function doom_picker(type, components)
 
 end
 
+-- TODO: read up on telescopes internal history maker.
 doom_ui_state = {
     history = {},
     next = function()
@@ -107,20 +133,15 @@ local function reset()
   doom_ui_state.selected_component = nil
 end
 
-local function main()
-  reset()
-  doom_ui_state.query = {
-    type = "main_menu",
-  }
-  doom_ui_state.next()
-end
-
-
 doom_ui.cmds = {
 	{
 	  "DoomPickerMain",
 	  function()
-      main()
+      reset()
+      doom_ui_state.query = {
+        type = "main_menu",
+      }
+      doom_ui_state.next()
 	  end
 	},
 	-- {

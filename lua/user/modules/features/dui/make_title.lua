@@ -1,5 +1,7 @@
 local tm = {}
 
+-- Dynamically generate titles so that you know exactly what parts of doom
+-- that you are operating on.
 
 tm.get_title = function()
   local title
@@ -12,7 +14,8 @@ tm.get_title = function()
 
   elseif doom_ui_state.query.type == "modules" then
     title = ":: MODULES LIST ::"
-    -- TODO: MODULES LIST (ALL/ALL)
+
+    -- TODO: MODULES LIST (ORIGINS/CATEGORIES)
 
   elseif doom_ui_state.query.type == "module" then
     local postfix = ""
@@ -25,8 +28,10 @@ tm.get_title = function()
     title = "MODULE_FULL: " .. postfix -- make into const
 
   elseif doom_ui_state.query.type == "component" then
+    -- TODO: MODULES LIST (/CATEGORIES)
 
   elseif doom_ui_state.query.type == "all" then
+    -- TODO: MODULES LIST (/CATEGORIES)
 
   end
 
