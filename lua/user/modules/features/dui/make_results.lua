@@ -285,7 +285,7 @@ M.get_modules_extended = function()
  return prep_all_m
 end
 
--- returns flattened array
+-- @return flattened array of all modules extended with meta data.
 M.get_modules_flattened = function()
   local flattened = {}
   for _, origin in pairs(M.get_modules_extended()) do
