@@ -1,6 +1,3 @@
--- local pu =  require("user.utils.dui.utils")
--- local us =  require("user.utils.dui.uistate")
--- local pickers = require("user.utils.dui.pickers")
 local me =  require("user.modules.features.dui.make_entry")
 local mt =  require("user.modules.features.dui.make_title")
 local mr =  require("user.modules.features.dui.make_results")
@@ -15,6 +12,17 @@ local previewers = require("telescope.previewers")
 
 local doom_ui = {}
 
+-- TODO:
+--
+--    - sorters
+--    - displayers
+--    - native fuzzy
+--    - properly use the options object
+--    - ovrerride actions properly.
+--    - refactor the `table-tree-flattener`
+--        -> use same for settings trees, and flat package/cmd lists
+--    -
+--
 
 local function i(x)
   print(vim.inspect(x))

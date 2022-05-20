@@ -1,6 +1,10 @@
 local ax =  require("user.modules.features.dui.actions")
 local ut =  require("user.modules.features.dui.utils")
 
+local function i(x)
+  print(vim.inspect(x))
+end
+
 local M = {}
 
 local MODULE_ORIGINS = {
@@ -23,20 +27,18 @@ local MODULE_PARTS = {
     "autocmds",
 }
 
+--- Gets the results list for the given query made by user. Currently this is
+--- done with a global ui state query, so you can't really pass params to func
+--- but maybe passing params would be better, I dunno.
+---@param type
+---@param components
+---@return
 M.get_results_for_query = function(type, components)
-
   local results = {}
 
   -- inspect_ui_state()
 
     -- TODO: filters -> investigate
-
-  -- doom_picker("main_menu")
-  -- doom_picker("settings")
-  -- doom_picker("modules", "all"|"user"|"doom")
-  -- doom_picker("module", "settings"|...|"binds")
-  -- doom_picker("component")
-  -- doom_picker("all", "settings"|...|"binds")
 
   if doom_ui_state.query.type == "main_menu" then
     for _, entry in ipairs(M.main_menu_flattened()) do
@@ -79,6 +81,10 @@ end
 
 -- FLATTENER -> MAIN MENU
 
+--- This could probably go into a `results_static.lua`
+--- so that these kinds of menus are not mixed with dynamically
+--- generated results/entries
+---@return list of main menu items
 M.main_menu_flattened = function()
   local doom_menu_items = {
 		{
@@ -177,7 +183,15 @@ end
 -- FLATTENER -> MODULES
 --
 
--- returns tree -> should be renamed
+-- todo: refactor
+
+--
+-- takes the global doom table so you don't need to pass any params. however,
+-- maybe some of this should be brough into the config loader, or defered, somehow.
+-- so that this info is always up to date, and you don't have to re-run this on each
+-- call to the picker.
+--
+---@return returns the doom modules tree extended with meta data that makes it easier to perform actions on modules and module parts.
 M.get_modules_extended = function()
   local config_path = vim.fn.stdpath("config")
 
@@ -370,6 +384,9 @@ end
 -- PACKAGES
 --
 
+---
+---@param t_packages
+---@return list of flattened packages
 M.packages_flattened = function(t_packages)
   if t_packages == nil then return end
   local flattened = {}
@@ -418,6 +435,9 @@ end
 --
 
 
+---
+---@param t_configs
+---@return list of flattened entries
 M.configs_flattened = function(t_configs)
   local flattened = {}
   for k, v in pairs(t_configs) do
@@ -454,6 +474,9 @@ end
 -- CMDS
 --
 
+---
+---@param t_cmds
+---@return list of flattened entries
 M.cmds_flattened = function(t_cmds)
   local flattened = {}
 
@@ -495,6 +518,13 @@ end
 -- AUTOCMDS
 --
 
+-- TODO: make into a single result entry table
+--
+-- TODO: if type cmd / autocmd -> use same `tree-flattener` and pass `list = true` param to force only level 0 loop
+
+---
+---@param t_autocmds
+---@return list of flattened entries
 M.autocmds_flattened = function(t_autocmds)
   local flattened = {}
   if t_autocmds == nil then return end
@@ -557,6 +587,11 @@ end
 --
 
 -- list tree flattener. binds contain both anonymous list and potential trees.
+---
+---@param nest_tree / doom binds tree
+---@param flattened / accumulator list of all entries
+---@param bstack / keep track of recursive depth and the index chain to get back to the tree
+---@return list of flattened bind entries
 M.binds_flattened = function(nest_tree, flattened, bstack)
   local flattened = flattened or {}
   local sep = " | "
@@ -565,10 +600,17 @@ M.binds_flattened = function(nest_tree, flattened, bstack)
     for _, t in ipairs(nest_tree) do
       if type(t.rhs) == "table" then
 
+        -- --
         -- -- TODO: insert an entry for each new branch here ??
+        -- --
+        --
+        --
+        --  optional flag to make a uniqe entry for each branch_step
+        --
+        --
         -- -- so that you can do `add_mapping_to_same_branch()` ???
         -- local entry = {
-        --   type = "module_bind_leaf",
+        --   type = "module_bind_branch",
         --   name = k,
         --   value = v,
         --   list_display_props = {
