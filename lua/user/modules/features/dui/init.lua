@@ -190,7 +190,7 @@ doom_ui.binds = {
     name = "+prefix",
     {
       -- TODO: this should be all mods + settings, so that everything can be reached.
-      { "k", [[ :DoomPickerModules<cr> ]], name = "all modules", options = { silent = false }, },
+      { "k", [[ :DoomPickerMain<cr> ]], name = "all modules", options = { silent = false }, },
       {
         "n",
         name = "+nnn",
