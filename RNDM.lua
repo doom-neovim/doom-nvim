@@ -180,26 +180,8 @@ TODO: DEKLARERA -> TRANSFER MONEY?
 
 - debug luasnip
 
--> create bindings for all new stuff.
-
--> fix doom settings picker
-
--> 2 char binds for the most important ones. (all modules)
-
--> make pickers for each package component.
-
--> all_modules_picker -> binding to call sub picker for each module component?
-
--> displayers -> how is the git branch displayers created > i notice that it changes colors
-
-
--> refactor all displayers into one big one?? this would make sense, since all data is tagged with a corresponding type.
-
-this is pretty fucking cool and the thing about this is that you might never fucking need this shit and so for various reasons
-this is something that you might need to do.
-
-function sync_doom_global_to_settings()
-end
+this is pretty much fucking insane and this is starting to make it so that I can actually do this shit and so that is something
+that is just so fucking fast that you could never fucki do this shit and run it in neovim and so that is quite fucking retarded.
 
 --]]
 
