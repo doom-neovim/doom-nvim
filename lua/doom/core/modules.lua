@@ -15,7 +15,17 @@ local modules = {}
 --   2. stdpath('config')/modules.lua
 --   3. <runtimepath>/doom-nvim/modules.lua
 modules.source = utils.find_config(filename)
-modules.enabled_modules = dofile(modules.source)
+
+-- Merge core modules (can't be disabled) with user enabled modules
+local core_modules = {
+  core = {
+    'doom',
+    'nest',
+    'treesitter',
+    'reloader',
+  }
+}
+modules.enabled_modules = vim.tbl_deep_extend('keep', core_modules, dofile(modules.source))
 
 local system = require("doom.core.system")
 

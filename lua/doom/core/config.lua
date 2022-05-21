@@ -64,17 +64,9 @@ config.load = function()
 
   -- Combine enabled modules (`modules.lua`) with core modules.
   local enabled_modules = require("doom.core.modules").enabled_modules
-  local all_modules = vim.tbl_deep_extend('keep', {
-    core = {
-      'doom',
-      'nest',
-      'treesitter',
-      'reloader',
-    }
-  },enabled_modules)
 
   -- Iterate over each module and save it to the doom global object
-  for section_name, section_modules in pairs(all_modules) do
+  for section_name, section_modules in pairs(enabled_modules) do
     for _, module_name in pairs(section_modules) do
 
       -- If the section is `user` resolves from `lua/user/modules`
