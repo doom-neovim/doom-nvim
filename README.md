@@ -90,8 +90,8 @@ return {
   }
 }
 ```
-> Here the `lsp` module is enabled but the `telescope` module is disabled, similarly the `lua` language is enabled but the `rust`
-> language module is disabled.
+> Here the `lsp` module is enabled but the `telescope` module is disabled,
+> similarly the `lua` language is enabled but the `rust` language module is disabled.
 
 #### All modules
 
@@ -182,7 +182,7 @@ doom.use_cmd({
 })
 ```
 
-#### Overriding module defaults
+#### Configuring modules
 
 The settings and config for all modules are also exposed inside of the `doom` global object.
 Here you can override the plugin git sources, pre-defined settings, keybinds or autocmds.
@@ -198,11 +198,12 @@ return {
 }
 ```
 
-The same module with be avaliable in your `config.lua` in the `doom.modules.module_name` field.
+The same module with be avaliable in your `config.lua` in the `doom.features.module_name` field.
 The settings should have autocomplete from sumneko lua lsp.
 ```lua
 -- config.lua
-local whichkey = doom.modules.whichkey -- Get the whichkey module
+local whichkey = doom.features.whichkey -- Get the whichkey module
+-- You can also access it as `doom.modules.features.whichkey`
 
 -- Some common settings are exposed in the `<module>.settings` table.
 whichkey.settings.window.height.max = 5
@@ -237,7 +238,37 @@ whichkey.packages["which-key.nvim"] = {
 whichkey.configs["which-key.nvim"] = function ()
   local wk = require("which-key")
 end
+
+-- Another example with a language module
+local lua = doom.langs.lua
+
+-- Disable lua-dev loading library definitions
+lua.settings.dev.library.plugins = false
 ```
+
+#### Overriding modules or adding custom modules
+
+It's possible to add your own doom modules or completely replace builtin doom
+modules without editing the original files.  Doom will first check the `lua/user/modules`
+directory if a module exists before loading the default from `lua/doom/modules`.
+
+As an example, if we wanted to replace the `lua` module in the `langs` section we
+would create a new file at `lua/user/modules/langs/lua/init.lua`.
+
+Alternatively if we wanted to add support for a new language (lets use julia as
+an example) we would create a new file at `lua/user/modules/langs/julia/init.lua`.
+You would then enable the module in `modules.lua`
+
+```lua
+--- modules.lua
+return {
+  langs = {
+    'julia',
+  }
+}
+```
+
+> For more info, read the [documentation for creating your own modules.](./docs/modules.md#building-your-own-module)
 
 ## Contributing
 
