@@ -84,7 +84,7 @@ local palettes = {
   },
 }
 local specs = {}
-local groups = {
+local all = {
   TelescopeNormal = { fg = "fg0", bg = "bg0" },
   TelescopePromptTitle = { fg = "pallet.green", bg = "bg1" },
   TelescopePromptBorder = { fg = "bg1", bg = "bg1" },
@@ -105,7 +105,7 @@ require("nightfox").setup({
   options = options,
   palettes = palettes,
   specs = specs,
-  groups = groups,
+  all = all,
 })
 doom.colorscheme = "dawnfox"
 
