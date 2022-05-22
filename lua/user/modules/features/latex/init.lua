@@ -2,8 +2,12 @@ local latex = {}
 
 latex.settings = {}
 
+  -- https://github.com/search?q=vim+latex
+
 latex.packages = {
   ["nabla.nvim"] = { "jbyuki/nabla.nvim" }, -- , config = require("molleweide.configs.nabla")
+  -- https://github.com/lervag/vimtex
+  -- https://github.com/gerw/vim-latex-suite
 }
 
 -- return function()
