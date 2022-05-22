@@ -376,7 +376,7 @@ lsp.binds = {
                 end,
                 name = "Line",
               },
-              { "l", vim.lsp.diagnostic.set_loclist, name = "Loclist" },
+              { "l", vim.diagnostic.setloclist, name = "Loclist" },
             },
           },
         },
