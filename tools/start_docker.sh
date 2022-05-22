@@ -100,6 +100,7 @@ fi
 
 # Create docker container if haven't already
 echo " - Success! Running docker container doom-nvim-contrib-container..."
+mkdir -p "${SCRIPT_DIR}/local-share-nvim" "${SCRIPT_DIR}/workspace"
 echo ""
 docker run \
   -it \
