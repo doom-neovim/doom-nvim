@@ -6,7 +6,7 @@ python.settings = {
 
 python.autocmds = {
   {
-    "FileType",
+    "BufWinEnter",
     "*.py",
     function()
       local langs_utils = require('doom.modules.langs.utils')
