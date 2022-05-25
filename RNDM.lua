@@ -1,4 +1,5 @@
 --[[
+https://github.com/masukomi/scheme-format
 
 - 1. need to turn off gpg
 - 2.
@@ -178,11 +179,83 @@ https://github.com/VonHeikemen/dotfiles/blob/master/my-configs/neovim/lua/conf/k
 
 TODO: DEKLARERA -> TRANSFER MONEY?
 
-- debug luasnip
+- SCRUM PARAGRAPH
 
-this is pretty much fucking insane and this is starting to make it so that I can actually do this shit and so that is something
-that is just so fucking fast that you could never fucki do this shit and run it in neovim and so that is quite fucking retarded.
+this just doesn't work you know.
+
+- cv > highlight willys part time in parallell with engineering studies.
+
+- PROOF READ CV
+  > remove years from projects ??
+  > more projs (dotfiles?, telecope, nvim-*, )
+
+- CREATE TEMP HEROKU
+    point it to `mollewei.de` -> static presentation.
+
+- ASK FOR FEEDBACK
+
+  is this too goofy
+  i am trying to make a persuasive case
+  for myself even though I try to be as honest as possible.
+
+  i am following the rule "keep it short" and respect their time.
+  because
+
+
+i need to fix the ordinal values and so that is something that is.
+
+rrr
+
+
+
+SOKA IT INOM ALLA STORA FORETAG SOM JAG KAN TAENKA MIG.
+
+ansoka i alla foretag som aer rimliga.
+
+elbil -> laddnings app -> desing -> vilka foretag existerar?
+
+beijer -> app desing ->
+
+
+SOKTA JOBB
+
+TODO: -> SOKA AXFOOD CI/CD !!!!!!!!!!!!!!!!!!!!!!
+willys -> https://jobb.axfood.se/go/Axfood/4303301/?createNewAlert=false&q=&optionsFacetsDD_facility=Axfood+IT&optionsFacetsDD_department=&optionsFacetsDD_customfield3=&optionsFacetsDD_shifttype=&optionsFacetsDD_customfield5=&optionsFacetsDD_city=
+axfood > devops -> https://jobb.axfood.se/job/Stockholm-Senior-DevOps-Engineer-e-handel-Stoc/800894501/
+alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/Stockholm/Digitalization-Development-Engineer_JR0011998
+
+rndm
+
+
+so now i am going to go to the gym and make sure that i have some serious masster stretch whi h is something that is quite fucking
+retarded and you will never understand how fast this system is ultil you have seen the mastery fuckig bitch as nigga.
+and now when i have been at the gym i am going to do this shit and make sure that i cannot really fuckig do that and so that is somethilg.
+
+
+WARM UP --------------------------------------------
+
+quad crawling into stretch
+master delt
+
+UPPER --------------------------------------------
+
+push
+pull
+master delt
+shrugs
+
+LOWER --------------------------------------------
+
+press + shoulders
+calf
+ham
+hip flex
+
+
+
 
 --]]
+
+
 
 
