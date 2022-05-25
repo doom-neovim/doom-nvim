@@ -5,6 +5,7 @@ litee.settings = {}
 litee.packages = {
   ["litee.nvim"] = {
     "ldelossa/litee.nvim",
+    opt = "true",
     config = function()
       require("litee").setup({})
       -- require'lightspeed'.setup {

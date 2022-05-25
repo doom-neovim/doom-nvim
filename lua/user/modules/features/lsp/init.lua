@@ -77,6 +77,7 @@ lsp.settings = {
   },
 }
 
+-- https://github.com/lukas-reineke/lsp-format.nvim
 -- https://github.com/nvim-lua/lsp-status.nvim
 -- https://github.com/onsails/lspkind-nvim
 local is_module_enabled = require("doom.utils").is_module_enabled
