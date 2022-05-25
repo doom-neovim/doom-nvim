@@ -109,13 +109,14 @@ Modules are grouped into 3 categories:
 ### Quick Guide
 
 You can access, override and configure all modules by using the `config.lua` file (`<leader>Dc` or `~/.config/nvim/config.lua`).
-This is done through the `doom.modules` global object.  Here we'll use the [`comment`](../lua/doom/modules/features/comment) module as an example.
+This is done through the `doom.features` global object.  Here we'll use the [`comment`](../lua/doom/modules/features/comment) module as an example.
 Compare the source file with the example overrides below.
+
 ```lua
 --- config.lua
 
 -- Here `comment_module` is just a reference to `../lua/doom/modules/features/comment/init.lua`
-local comment_module = doom.modules.comment
+local comment_module = doom.features.comment
 -- Override default settings (provided by doom-nvim)
 comment_module.settings.padding = false
 -- Override package source with a fork
@@ -139,7 +140,7 @@ all of these properties should be auto completeable.
 
 #### Module lifecycle
 1. Doom nvim reads `modules.lua` to determine which modules to load.
-2. Doom loads the config for each module, saves it to `doom.modules` global object.
+2. Doom loads the config for each module, saves it to `doom.features|doom.langs|doom.core` global object.
 3. User can override the settings for a module in `config.lua` using the `doom.modules` global object.
 4. Doom executes the modules, installing plugins and setting keybinds/autocommands.
 
@@ -154,7 +155,7 @@ splice your own custom configure function with the default one.
 ```lua
 --- config.lua
 
-local lsp = doom.modules.lsp
+local lsp = doom.langs.lsp
 local old_nvim_cmp_config_function = lsp.configs['nvim-cmp']
 lsp.configs['nvim-cmp'] = function()
   old_nvim_cmp_config_function() -- Run the default config
@@ -173,10 +174,10 @@ This is not ideal as it's harder to `vim.inspect` the defaults.  As a workaround
 ```lua
 -- config.lua
 
-print(type(doom.modules.lsp.binds)) -- "table" (not conditional)
-print(vim.inspect(doom.modules.lsp.binds)) -- Shows config
-print(type(doom.modules.telescope.binds)) -- "function" (adds extra keybinds if "lsp" module is enabled)
-print(vim.inspect(doom.modules.telescope.binds())) -- You must execute the function to see the config.
+print(type(doom.features.lsp.binds)) -- "table" (not conditional)
+print(vim.inspect(doom.features.lsp.binds)) -- Shows config
+print(type(doom.features.telescope.binds)) -- "function" (adds extra keybinds if "lsp" module is enabled)
+print(vim.inspect(doom.features.telescope.binds())) -- You must execute the function to see the config.
 ```
 
 #### Module spec
@@ -192,35 +193,35 @@ module.autocmds:  table<AutoCmd>|function -> table<AutoCmd>       -- Table of Au
 ```
 
 ```lua
-local module = {}
+local example = {}
 
-module.settings = {...} -- Doom-nvim provided object to change settings
+example.settings = {...} -- Doom-nvim provided object to change settings
 
 -- Stores the packer.nvim config for all of the plugin dependencies
-module.packages = {
+example.packages = {
   ["example-plugin.nvim"] = { -- Use the repository name as the key
     "GithubUser/example-plugin.nvim",
     commit = "..." -- We like to pin plugins to commits to avoid issues upgrading.
   }
 }
 
-module.configs = {
-  ["example-plugin.nvim"] = function() -- key matches `module.packages` entry
-    require('example-plugin').setup( doom.modules.example.settings ) -- Consumes `module.settings` and uses it to config the plugin
+example.configs = {
+  ["example-plugin.nvim"] = function() -- key matches `example.packages` entry
+    require('example-plugin').setup( doom.features.example.settings ) -- Consumes `example.settings` and uses it to config the plugin
   end
 }
 
 -- Keybinds are defined using a modified nest.nvim table syntax.
 -- https://github.com/connorgmeehan/nest.nvim/tree/integrations-api
-module.binds = {
+example.binds = {
   { '<leader>ff', '<cmd>:Telescope find_files<CR>', name = 'Find files'} -- `name = "..."` For `whichkey` and `mapper` integrations
   { '<leader>cc', function() print('custom command') end, name = 'Find files' }, -- Can trigger either a `<cmd>` string or a function
 }
 
 -- If you need conditional keybinds it's recommended you use a function that returns a table instead.
-module.binds = function()
+example.binds = function()
   local binds = { ... }
-  if doom.modules.other_module then
+  if doom.features.other_module then
     table.insert(binds, {
       '<leader>ff', function() print('this is a conditional keybind') end, name = 'My conditional keybind'
     })
@@ -231,11 +232,11 @@ end
 -- Autocmds are defined as a table with the following syntax
 -- { "event", "aupat", "command or function" }
 -- Example
-module.autocmds = {
+example.autocmds = {
   { "BufWinEnter", "*.js", function() print("I'm in a javascript file now") end }
 }
 -- Similarly, autocmds can be conditional using a function
-module.autocmds = function()
+example.autocmds = function()
   local autocmds = {}
   if condition then
     table.insert(autocmds, { "BufWinEnter", "*.js", function() print("I'm in a javascript file now") end })
@@ -261,10 +262,10 @@ This module will:
 > - Seperate words with an underscore, this is so the plugin can be represented as a lua variable
 > - Name the module after the functionality rather than the plugin it uses.
 
-For our example of adding char counting plugin I will create a folder called `lua/user/modules/char_counter/`
+For our example of adding char counting plugin I will create a folder called `lua/user/modules/features/char_counter/`
 and create a new `init.lua` inside of it.
 ```lua
--- lua/user/modules/char_counter/init.lua
+-- lua/user/modules/features/char_counter/init.lua
 local char_counter = {}
 
 return char_counter
@@ -272,9 +273,9 @@ return char_counter
 
 ### 2. Adding autocommands
 
-> Autocommands are set using the `module.autocmds` field.  And follow the structure of
+> Autocommands are set using the `module_name.autocmds` field.  And follow the structure of
 > ```lua
-> module.autocmds = {
+> module_name.autocmds = {
 >   { "{event}", "{aupat}", "command or function" }
 > }
 > ```
@@ -283,7 +284,7 @@ For our example we need to hook into the [InsertEnter](https://neovim.io/doc/use
 and [InsertLeave](https://neovim.io/doc/user/autocmd.html#InsertLeave) auto commands.
 
 ```lua
--- lua/user/modules/char_counter/init.lua
+-- lua/user/modules/features/char_counter/init.lua
 char_counter.autocmds = {
   { "InsertEnter", "*", function ()
     print('Entered insert mode')
@@ -296,8 +297,6 @@ char_counter.autocmds = {
 
 ### 3. Enabling and testing your module
 
-
-
 Now you can enable the module in `modules.lua`!  Once enabled, restart your doom-nvim instance and check
 `:messages` to see if it's printing correctly.
 
@@ -305,14 +304,7 @@ Now you can enable the module in `modules.lua`!  Once enabled, restart your doom
 -- modules.lua
 return {
   features = {
-    ...
-  },
-  langs = {
-    ...
-  },
-  -- user field is optional and will read from the `lua/user/modules` folder in your `.nvim/` folder.
-  user = {
-    "char_counter" -- Must match the name of the folder i.e. `lua/user/modules/char_counter/init.lua`
+    'char_counter',
   },
 }
 ```
@@ -330,7 +322,7 @@ We will also check if the [`buftype`](https://neovim.io/doc/user/options.html#'b
 means we wont count other interactive buffers like terminals, prompts or quick fix lists.
 
 ```lua
--- lua/user/modules/char_counter/init.lua
+-- lua/user/modules/features/char_counter/init.lua
 
 local char_counter = {}
 
@@ -377,7 +369,7 @@ Using the `module.cmds` property we can define and expose vim commands to the us
 `:CountPrint` and `:CountReset` command.
 
 ```lua
--- lua/user/modules/char_counter/init.lua
+-- lua/user/modules/features/char_counter/init.lua
 
 char_counter.cmds = {
   { "CountPrint", function ()
@@ -399,7 +391,7 @@ Now restart doom nvim and run `:CountPrint` and `:CountReset` to test it out.
 Keybinds are provided using the `module.binds` field.  We use a modified [nest.nvim]() config that integrates with whichkey and nvim-mapper. You can read more about it [here](https://github.com/connorgmeehan/nest.nvim/tree/integrations-api#quickstart-guide) but generally you should provide the `name` field for all entries so it displays in whichkey.
 
 ```lua
--- lua/user/modules/char_counter/init.lua
+-- lua/user/modules/features/char_counter/init.lua
 
 char_counter.binds = {
   { '<leader>i', name = '+info', { -- Adds a new `whichkey` folder called `+info`
@@ -420,7 +412,7 @@ In this example I will add [nui.nvim](https://github.com/MunifTanjim/nui.nvim) t
 the user uses the `CountPrint` command.
 
 ```lua
--- lua/user/modules/char_counter/init.lua
+-- lua/user/modules/features/char_counter/init.lua
 
 -- Add these two fields to `char_counter` at the top of the file.
 char_counter.packages = {
@@ -438,7 +430,7 @@ char_counter.configs = {
     -- If your plugin requires a `.setup({ ... config ... })` function, this is where you'd execute it.
 
     -- WARNING: Because of how Packer compiles plugin configs, this function does not have direct access to `char_counter` table.
-    --          Instead you must re-define it from the `doom` global object as `local char_counter` = doom.modules.char_counter
+    -- The only way to access the `char_counter` object is via `doom.features.char_counter`
   end
 }
 
@@ -490,7 +482,7 @@ object.  This will allow users to tweak the config in their `config.lua` file wi
 
 
 ```lua
--- lua/user/modules/char_counter/init.lua
+-- lua/user/modules/features/char_counter/init.lua
 
 -- Copy the settings that are passed to the `Popup` function, place them in `char_counter.settings.popup`
 char_counter.settings = {
@@ -560,7 +552,7 @@ If you would like to contribute your module, just move it from `lua/user/modules
 If you'd just like to look at the end result, or if you're comparing why your implementation didn't work, here is the final working output.
 
 ```lua
--- lua/user/modules/char_counter/init.lua
+-- lua/user/modules/features/char_counter/init.lua
 local char_counter = {}
 
 char_counter.settings = {
