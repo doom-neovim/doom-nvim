@@ -7,6 +7,7 @@ snippets.settings = {
   updateevents = "TextChanged,TextChangedI",
 }
 
+-- https://github.com/smjonas/snippet-converter.nvim
 snippets.packages = {
   ["LuaSnip"] = {
     "L3MON4D3/LuaSnip",
