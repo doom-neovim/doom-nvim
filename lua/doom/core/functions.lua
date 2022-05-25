@@ -248,4 +248,12 @@ functions.sugar_folds = function()
   return string.format("%s ... (%d lines)", start_line, vim.v.foldend - vim.v.foldstart + 1)
 end
 
+-- Toggle wrap.
+functions.toggle_wrap = function()
+  vim.opt.wrap = not vim.opt.wrap
+  vim.opt.linebreak = not vim.opt.linebreak
+end
+
+
+
 return functions
