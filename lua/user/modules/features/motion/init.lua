@@ -5,6 +5,7 @@ motion.settings = {}
 -- https://github.com/mfussenegger/nvim-treehopper
 
 motion.packages = {
+  -- git@github.com:ggandor/leap.nvim.git -- successor to lightspeed. very cool motions.
   ["lightspeed.nvim"] = { "ggandor/lightspeed.nvim" },
   -- { 'justinmk/vim-sneak' },
   -- { 'easymotion/vim-easymotion' },

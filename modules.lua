@@ -225,6 +225,7 @@ return {
     -- "ts_testing_locals",
     -- "ts_textobjects",
     -- "ts_treehopper",
+    "tweak",
     -- "ui",
     -- "ui_pipeline",
     -- "ui_toggle_components",
