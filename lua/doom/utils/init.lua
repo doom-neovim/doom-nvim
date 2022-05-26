@@ -282,4 +282,14 @@ utils.iter_string_at = function(str, sep)
   return string.gmatch(str, "([^" .. sep .. "]+)")
 end
 
+utils.get_buf_handle = function(path)
+  local buf
+  if path ~= nil then
+    buf = vim.uri_to_bufnr(vim.uri_from_fname(path))
+  else
+    buf = vim.api.nvim_get_current_buf()
+  end
+  return buf
+end
+
 return utils
