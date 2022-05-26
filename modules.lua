@@ -45,6 +45,9 @@ return {
     "explorer",           -- An enhanced filetree explorer
     -- "firenvim",        -- Embed neovim in your browser
     -- "lazygit",         -- Lazy git integration
+    -- "git",                -- Git basic support
+    -- "github",             -- Github integration
+    -- "diffview",           -- Diffview for git
     -- "neogit",          -- A git client for neovim
     "neorg",              -- Organise your life
     "projects",           -- Quickly switch between projects
