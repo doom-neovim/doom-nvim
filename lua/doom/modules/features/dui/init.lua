@@ -145,13 +145,16 @@ doom_ui.cmds = {
       doom_ui_state.next()
 	  end
 	},
-	-- {
-	--   "DoomPickerSettings",
-	--   function()
-	--     reset()
-	--     pickers.doom_settings_picker()
-	--   end,
-	-- },
+	{
+	  "DoomPickerModules",
+	  function()
+	    reset()
+      doom_ui_state.query = {
+        type = "modules",
+      }
+      doom_ui_state.next()
+	  end,
+	},
 	--
 	-- {
 	--   "DoomPickerModuleFull",
@@ -191,7 +194,7 @@ doom_ui.binds = {
     name = "+prefix",
     {
       -- TODO: this should be all mods + settings, so that everything can be reached.
-      { "k", [[ :DoomPickerMain<cr> ]], name = "all modules", options = { silent = false }, },
+      { "k", [[ :DoomPickerModules<cr> ]], name = "all modules", options = { silent = false }, },
       {
         "n",
         name = "+nnn",

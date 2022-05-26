@@ -216,7 +216,6 @@ elbil -> laddnings app -> desing -> vilka foretag existerar?
 
 beijer -> app desing ->
 
-
 SOKTA JOBB
 
 TODO: -> SOKA AXFOOD CI/CD !!!!!!!!!!!!!!!!!!!!!!
@@ -224,6 +223,10 @@ willys -> https://jobb.axfood.se/go/Axfood/4303301/?createNewAlert=false&q=&opti
 axfood > devops -> https://jobb.axfood.se/job/Stockholm-Senior-DevOps-Engineer-e-handel-Stoc/800894501/
 alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/Stockholm/Digitalization-Development-Engineer_JR0011998
 
+- move to core neogit module
+
+
+motion_leap >
 
 - clean
 
@@ -256,5 +259,13 @@ hip flex
 `:h ins-completion`
 
 --]]
+
+
+
+
+
+
+
+
 
 

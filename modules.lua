@@ -26,14 +26,14 @@ return {
     "indentlines",        -- Show indent lines with special characters
     "range_highlight",    -- Highlight selected range from commands
     "todo_comments",      -- Highlight TODO: comments
-    "doom_themes",     -- Extra themes for doom
+    "doom_themes",        -- Extra themes for doom
+    "leap",               -- Replace `s` with advanced leap.nvim motion plugin.
 
     -- UI Components
     "dui",                -- Browse config and modules with Telescope
     "lsp_progress",       -- Check status of LSP loading
     "tabline",            -- Tab bar buffer switcher
     "dashboard",          -- A pretty dashboard upon opening
-    "dui",
     "trouble",         -- A pretty diagnostic viewer
     -- "statusline",         -- A pretty status line at the bottom of the buffer
     "minimap",         -- Shows current position in document
@@ -46,8 +46,11 @@ return {
     -- Tools
     -- "dap",             -- Debug code through neovim
     "explorer",           -- An enhanced filetree explorer
-    "firenvim",        -- Embed neovim in your browser
-    "lazygit",         -- Lazy git integration
+    "firenvim",           -- Embed neovim in your browser
+    "lazygit",            -- Lazy git integration
+    "git",                -- git basic support
+    "github",             -- github integration
+    "diffview",           -- git diffview integration
     -- "neogit",          -- A git client for neovim
     "neorg",              -- Organise your life
     "plugins_reloader",   -- Watch local packages for changes during development
@@ -110,12 +113,7 @@ return {
     -- "games",
     -- "gdb",
     "ghq",
-    "git_diffview",
-    "git_github",
     "git_neogit",
-    "git_various",
-    -- "git_vgit",
-    -- "gitsigns",
     -- "google_docs",
     "gpg",
     -- "haskell",
@@ -152,11 +150,9 @@ return {
     -- "modules_edit",
     -- "modules_move_component",
     -- "monitor_mappings",
-    "motion",
     -- "mouse",
     -- "move",
     -- "navigator",
-    "neorg",
     -- "nodejs",
     -- "nvim_luadev",
     -- "nvim_queries",

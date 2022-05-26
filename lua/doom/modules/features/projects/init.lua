@@ -41,6 +41,7 @@ projects.packages = {
     commit = "612443b27f5feda45ea478bd6ddc8f95d4ec7b77",
     requires = { "nvim-treesitter/nvim-treesitter" },
   },
+  -- https://github.com/shaeinst/penvim
 }
 
 projects.configs = {}
