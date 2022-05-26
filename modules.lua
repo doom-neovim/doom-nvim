@@ -42,6 +42,7 @@ return {
     "ranger",          -- File explorer in neovim (TODO: Test)
     "restclient",      -- Test HTTP requests from neovim (TODO: Test)
     "show_registers",  -- Show and navigate between registers
+    "cmdline",         -- Floating cmdline at cursor
 
     -- Tools
     -- "dap",             -- Debug code through neovim
@@ -75,7 +76,6 @@ return {
     -- "binds_mini_syntax",
     -- "char_counter",
     -- "clipboard",
-    "cmdline",
     -- "code_outline",
     -- "codeql",
     -- "coderunner",
