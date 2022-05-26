@@ -1,0 +1,2 @@
+-- how is this done in telescope so that we can have the same kind of colors
+--
