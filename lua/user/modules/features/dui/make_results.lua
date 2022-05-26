@@ -94,7 +94,8 @@ M.main_menu_flattened = function()
         ["<CR>"] = function()
           vim.cmd(("e %s"):format(require("doom.core.config").source))
         end,
-      }
+      },
+      ordinal = "userconfig"
 		},
   	{
       list_display_props = {
@@ -107,7 +108,8 @@ M.main_menu_flattened = function()
           }
           doom_ui_state.next()
   		  end,
-      }
+      },
+      ordinal = "usersettings"
   	},
   	{
       list_display_props = {
@@ -122,7 +124,8 @@ M.main_menu_flattened = function()
           }
           doom_ui_state.next()
         end,
-      }
+      },
+      ordinal = "modules"
   	},
   	{
       list_display_props = {
@@ -130,8 +133,8 @@ M.main_menu_flattened = function()
       },
       mappings = {
         ["<CR>"] =function() end,
-      }
-
+      },
+      ordinal = "binds"
   	},
   	{
       list_display_props = {
@@ -139,7 +142,8 @@ M.main_menu_flattened = function()
       },
       mappings = {
         ["<CR>"] = function() end,
-      }
+      },
+      ordinal = "autocmds"
   	},
   	{
       list_display_props = {
@@ -147,7 +151,8 @@ M.main_menu_flattened = function()
       },
       mappings = {
         ["<CR>"] = function() end,
-      }
+      },
+      ordinal = "cmds"
   	},
   	{
       list_display_props = {
@@ -155,7 +160,8 @@ M.main_menu_flattened = function()
       },
       mappings = {
         ["<CR>"] = function() end,
-      }
+      },
+      ordinal = "packages"
   	},
   	{
       list_display_props = {
@@ -360,6 +366,7 @@ M.settings_flattened = function(t_settings, flattened, stack)
           {pc_display},
           {v_display}
         },
+        ordinal = pc_display,
         mappings = {
           ["<CR>"] = function(fuzzy,line, cb)
             i(fuzzy)
@@ -413,6 +420,7 @@ M.packages_flattened = function(t_packages)
         {repo_name},
         {pkg_name}
       },
+      ordinal = repo_name .. pkg_name,
       mappings = {
         ["<CR>"] = function(fuzzy,line, cb)
           i(fuzzy)
@@ -453,6 +461,7 @@ M.configs_flattened = function(t_configs)
         {tostring(k)},
         {tostring(v)}
       },
+      ordinal = tostring(k),
       mappings = {
         ["<CR>"] = function(fuzzy,line, cb)
           i(fuzzy)
@@ -492,6 +501,7 @@ M.cmds_flattened = function(t_cmds)
         name = v[1],
         cmd = v[2],
       },
+      ordinal = v[1],
       list_display_props = {
         {"CMD"},
         {tostring(v[1])},
@@ -539,6 +549,7 @@ M.autocmds_flattened = function(t_autocmds)
         is_func = true,
         func = t_autocmds,
       },
+      ordinal = "autocmd_func",
       list_display_props = {
         {"AUTOCMD"}, {"isfunc"}, {tostring(t_autocmds)}
       },
@@ -562,6 +573,7 @@ M.autocmds_flattened = function(t_autocmds)
           pattern = v[2],
           action = v[3],
         },
+        ordinal = v[1]..v[2],
         list_display_props = {
            {"AUTOCMD"}, {v[1]}, {v[2]}, {tostring(v[3])}
         },
@@ -634,6 +646,7 @@ M.binds_flattened = function(nest_tree, flattened, bstack)
           list_display_props = {
             { "BIND" }, { t.lhs }, {t.name}, {t.rhs} -- {t[1], t[2], tostring(t.options)
           },
+          ordinal = t.name..tostring(lhs),
           mappings = {
             ["<CR>"] = function(fuzzy,line, cb)
               i(fuzzy)

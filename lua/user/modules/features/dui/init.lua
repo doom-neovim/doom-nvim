@@ -67,7 +67,7 @@ function doom_displayer(entry)
 	return {
 	  value = entry,
 	  display = make_display,
-	  ordinal = entry.type,
+	  ordinal = entry.ordinal,
 	}
 end
 
