@@ -224,13 +224,15 @@ willys -> https://jobb.axfood.se/go/Axfood/4303301/?createNewAlert=false&q=&opti
 axfood > devops -> https://jobb.axfood.se/job/Stockholm-Senior-DevOps-Engineer-e-handel-Stoc/800894501/
 alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/Stockholm/Digitalization-Development-Engineer_JR0011998
 
-rndm
 
+- clean
 
-so now i am going to go to the gym and make sure that i have some serious masster stretch whi h is something that is quite fucking
-retarded and you will never understand how fast this system is ultil you have seen the mastery fuckig bitch as nigga.
-and now when i have been at the gym i am going to do this shit and make sure that i cannot really fuckig do that and so that is somethilg.
-
+  -> windows
+  -> bathroom
+  -> upper level vacuum and rinse
+  -> vents
+  -> wipe walls downstairs
+  -> behind washingmashine
 
 WARM UP --------------------------------------------
 
@@ -241,21 +243,18 @@ UPPER --------------------------------------------
 
 push
 pull
-master delt
 shrugs
+cable pulls
 
 LOWER --------------------------------------------
 
-press + shoulders
+press + shoulders!!!
 calf
 ham
 hip flex
 
-
-
+`:h ins-completion`
 
 --]]
-
-
 
 

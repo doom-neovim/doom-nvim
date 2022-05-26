@@ -154,7 +154,7 @@ return {
     -- "mouse",
     -- "move",
     -- "navigator",
-    -- "neorg",
+    "neorg",
     -- "nodejs",
     -- "nvim_luadev",
     -- "nvim_queries",
@@ -237,6 +237,7 @@ return {
     -- "wildmenu",
     "windows",
     "wm",
+
   },
   langs = {
     -- Scripts
