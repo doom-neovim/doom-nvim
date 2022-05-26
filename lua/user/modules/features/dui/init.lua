@@ -106,7 +106,8 @@ local function doom_picker(type, components)
 	    goback(prompt_bufnr, map)
 
       return true
-    end
+    end,
+    initial_mode = "insert",
 
   }):find()
 

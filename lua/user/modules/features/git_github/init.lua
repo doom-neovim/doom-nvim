@@ -3,6 +3,7 @@ local github = {}
 github.settings = {}
 
 github.packages = {
+  -- git@github.com:ldelossa/gh.nvim.git
   ["octo.nvim"] = {
     "pwntester/octo.nvim",
     requires = {

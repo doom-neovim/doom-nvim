@@ -1,4 +1,3 @@
-
         -- {
         --     "n", name = "neorg", {
         --       -- { 'n', '<leader>nd', ':Neorg workspace default_workspace<cr>', { noremap = true } },
