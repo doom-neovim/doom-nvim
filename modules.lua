@@ -51,7 +51,7 @@ return {
     "git",                -- git basic support
     "github",             -- github integration
     "diffview",           -- git diffview integration
-    -- "neogit",          -- A git client for neovim
+    "neogit",          -- A git client for neovim
     "neorg",              -- Organise your life
     "plugins_reloader",   -- Watch local packages for changes during development
     "projects",           -- Quickly switch between projects
@@ -113,7 +113,6 @@ return {
     -- "games",
     -- "gdb",
     "ghq",
-    "git_neogit",
     -- "google_docs",
     "gpg",
     -- "haskell",
