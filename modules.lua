@@ -48,8 +48,9 @@ return {
     "firenvim",        -- Embed neovim in your browser
     "lazygit",         -- Lazy git integration
     -- "neogit",          -- A git client for neovim
-    -- "neorg",              -- Organise your life
-    --"projects",           -- Quickly switch between projects
+    "neorg",              -- Organise your life
+    "plugins_reloader",   -- Watch local packages for changes during development
+    "projects",           -- Quickly switch between projects
     "superman",        -- Read unix man pages in neovim
     -- "suda",            -- Save using sudo when necessary
     "telescope",          -- Fuzzy searcher to find files, grep code and more
