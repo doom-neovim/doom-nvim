@@ -243,7 +243,8 @@ M.get_modules_extended = function()
 		      doom_ui_state.selected_module = fuzzy.value
           doom_ui_state.next()
 	      end
-      }
+      },
+      ordinal = m_origin .. m_name -- connect strings to make it easy to search modules. improve how?
     }
   end
 
