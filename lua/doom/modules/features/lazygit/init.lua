@@ -26,7 +26,7 @@ lazygit.binds = {
       "g",
       name = "+git",
       {
-        { "o", "<cmd>LazyGit<CR>", name = "Open lazygit" },
+        { "l", "<cmd>LazyGit<CR>", name = "Open Lazygit" },
       },
     },
   },

@@ -149,21 +149,11 @@ neogit.binds = {
         "g",
         name = "+git",
         {
-          { "g", "<cmd>Neogit<CR>", name = "Open neogit" },
-          {
-            "n",
-            name = "+neogit",
-            {
-              -- -- { 'n', '<leader>lnh', '<cmd>lua require("neogit").open({ kind = "vsplit", cwd = "~" })<CR>', opts.s},
-              { 'o', '<cmd>Neogit<CR>', name = "open"},
-              { 'c', '<cmd>Neogit commit<CR>', name = "commit"},
-              -- { 'n', '<leader>lnl', '<cmd>Neogit pull<CR>', opts.s}, -- TODO: pull
-              -- { 'n', '<leader>lnp', '<cmd>Neogit push<CR>', opts.s}, -- TODO: push
-              -- { 'n', '<leader>lnb', '<cmd>Neogit branch<CR>', opts.s}, -- TODO: push
-              -- { 'n', '<leader>lnv', '<cmd>Neogit log<CR>', opts.s}, -- TODO: push
-              -- { 'n', '<leader>lns', '<cmd>Neogit stash<CR>', opts.s}, -- TODO: push
-            },
+          { "c", name = "+commits", {
+              { 'c', '<cmd>Neogit commit<CR>', name = "neogit commit"},
+            }
           },
+          { "n", "<cmd>Neogit<CR>", name = "Open Neogit" },
         },
       },
     },

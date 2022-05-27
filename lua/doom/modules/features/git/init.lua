@@ -1,4 +1,9 @@
+local utils = require("doom.utils")
+local is_module_enabled = utils.is_module_enabled
+
 local git = {}
+
+-- TODO: add git repo search?
 
 git.settings = {
   -- doom.modules.git.settings.gitsigns
@@ -254,38 +259,7 @@ git.configs["vgit.nvim"] = function()
   require("vgit").setup()
 end
 
--- git.binds = {
---   { "ih", ':<C-U>lua require"gitsigns".select_hunk()<CR>', name = "select hunk", mode = "o" },
---   { "ih", ':<C-U>lua require"gitsigns".select_hunk()<CR>', name = "select hunk", mode = "x" },
---   {
---     "<leader>",
---     name = "+prefix",
---     {
---       {
---         "g",
---         name = "+git",
---         {
---           {
---             "z",
---             name = "+gitsigns",
---             {
---               { "S", '<cmd>lua require"gitsigns".stage_hunk()<CR>', name = "stage hunk" },
---               { "u", '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>', name = "undo hunk" },
---               { "r", '<cmd>lua require"gitsigns".reset_hunk()<CR>', name = "reset hunk" },
---               { "R", '<cmd>lua require"gitsigns".reset_buffer()<CR>', name = "reset buffer" },
---               { "h", '<cmd>lua require"gitsigns".preview_hunk()<CR>', name = "preview hunk" },
---               { "b", '<cmd>lua require"gitsigns".blame_line()<CR>', name = "blame line" },
---             },
---           },
---         },
---       },
---     },
---   },
--- }
-
-git.binds = {}
-
-table.insert(git.binds, {
+git.binds = {
   { "ih", ':<C-U>lua require"gitsigns".select_hunk()<CR>', name = "select hunk", mode = "o" },
   { "ih", ':<C-U>lua require"gitsigns".select_hunk()<CR>', name = "select hunk", mode = "x" },
   {
@@ -295,102 +269,93 @@ table.insert(git.binds, {
       {
         "g",
         name = "+git",
-          -- TODO: +stage
-          -- TODO: +diff
-          -- TODO: l -> lazygit
-          -- TODO: +commits
-          -- TODO: +stash
-          -- TODO: +status
-          -- TODO: +branch
-          -- TODO: +pull
-          -- TODO: +push
-          -- TODO: +misc
 
         {
-          -- { "xx", name = "+stage", {}},
-          -- { "xx", name = "+diff", {}},
-          -- -- { "xx", name = "+lazygit", {}},
-          -- { "xx", name = "+commits", {}},
-          -- { "xx", name = "+stash", {}},
-          -- { "xx", name = "+status", {}},
-          -- { "xx", name = "+branches", {}},
-          -- { "xx", name = "+pull", {}},
-          -- { "xx", name = "+push", {}},
-          -- { "xx", name = "+misc", {}},
+          -- COMMITS
           {
-            "z",
-            name = "+gitsigns",
+            "c", name = "+commits",
             {
-              { "S", '<cmd>lua require"gitsigns".stage_hunk()<CR>', name = "stage hunk" },
-              { "u", '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>', name = "undo hunk" },
-              { "r", '<cmd>lua require"gitsigns".reset_hunk()<CR>', name = "reset hunk" },
-              { "R", '<cmd>lua require"gitsigns".reset_buffer()<CR>', name = "reset buffer" },
-              { "h", '<cmd>lua require"gitsigns".preview_hunk()<CR>', name = "preview hunk" },
-              { "b", '<cmd>lua require"gitsigns".blame_line()<CR>', name = "blame line" },
-            },
+              { "c", "<cmd>Telescope git_commits<CR>", name = "Tele commits" },
+            }
           },
-        },
-      },
-    },
-  },
-})
-
-table.insert(git.binds, {
-  {
-    "<leader>",
-    name = "+prefix",
-    {
-      {
-        "g",
-        name = "+git",
-        {
-          {
-            "v",
-            name = "+vgit",
+          -- STAGING | HUNKS
+          { "e", name = "+staging/hunks", {
+            { "q", ":lua require('vgit').project_hunks_qf()<cr>", name = "proj hunks qt" },
+            { "S", '<cmd>lua require"gitsigns".stage_hunk()<CR>', name = "stage hunk" },
+            { "u", '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>', name = "undo hunk" },
+            { "r", '<cmd>lua require"gitsigns".reset_hunk()<CR>', name = "reset hunk" },
+            { "R", '<cmd>lua require"gitsigns".reset_buffer()<CR>', name = "reset buffer" },
+            { "h", '<cmd>lua require"gitsigns".preview_hunk()<CR>', name = "preview hunk" },
+            { "s", ":lua require('vgit').buffer_hunk_stage()<cr>", name = "stage hunk" },
+            { "r", ":lua require('vgit').buffer_hunk_reset()<cr>", name = "reset hunk" },
+            { "p", ":lua require('vgit').buffer_hunk_preview()<cr>", name = "preview hunk" },
+            { "u", ":lua require('vgit').buffer_reset()<cr>", name = "buf reset" },
             {
-              { "s", ":lua require('vgit').buffer_hunk_stage()<cr>", name = "stage hunk" },
-              { "r", ":lua require('vgit').buffer_hunk_reset()<cr>", name = "reset hunk" },
-              { "p", ":lua require('vgit').buffer_hunk_preview()<cr>", name = "preview hunk" },
+              "P",
+              name = "+project",
+              {
+                { "s", ":lua require('vgit').project_stage_all()<cr>", name = "stage all" },
+                { "X", ":lua require('vgit').project_reset_all()<cr>", name = "discard all!staged" },
+                { "u", ":lua require('vgit').project_unstage_all()<cr>", name = "unstage all" },
+              },
+            },
+          }},
+          -- DIFF
+          { "q", name = "+diff", {
+            { "f", ":lua require('vgit').buffer_diff_preview()<cr>", name = "diff preview" },
+            { "h", ":lua require('vgit').buffer_history_preview()<cr>", name = "hist preview" },
+            {
+              "l",
+              ":lua require('vgit').project_hunks_preview()<cr>",
+              name = "proj hunks preview",
+            },
+            {
+              "d",
+              ":lua require('vgit').project_diff_preview()<cr>",
+              name = "proj diff preview",
+            },
+            {
+              "x",
+              ":lua require('vgit').toggle_diff_preference()<cr>",
+              name = "toggle diff pref",
+            },
+          }},
+          -- { "f", name = "+stash", {
+          --
+          -- }},
+          -- INFO | STATUS
+          { "i", name = "+info/status",
+            {
+              { "s", "<cmd>Telescope git_status<CR>", name = "Tele status" },
+              { "b", '<cmd>lua require"gitsigns".blame_line()<CR>', name = "blame line" },
               { "b", ":lua require('vgit').buffer_blame_preview()<cr>", name = "blame preview" },
-              { "f", ":lua require('vgit').buffer_diff_preview()<cr>", name = "diff preview" },
-              { "h", ":lua require('vgit').buffer_history_preview()<cr>", name = "hist preview" },
-              { "u", ":lua require('vgit').buffer_reset()<cr>", name = "buf reset" },
               {
                 "g",
                 ":lua require('vgit').buffer_gutter_blame_preview()<cr>",
                 name = "gutter bl preview",
               },
-              {
-                "x",
-                ":lua require('vgit').toggle_diff_preference()<cr>",
-                name = "toggle diff pref",
-              },
-              {
-                "P",
-                name = "+project",
-                {
-                  { "s", ":lua require('vgit').project_stage_all()<cr>", name = "stage all" },
-                  { "X", ":lua require('vgit').project_reset_all()<cr>", name = "discard all!staged" },
-                  { "u", ":lua require('vgit').project_unstage_all()<cr>", name = "unstage all" },
-                  {
-                    "l",
-                    ":lua require('vgit').project_hunks_preview()<cr>",
-                    name = "proj hunks preview",
-                  },
-                  {
-                    "d",
-                    ":lua require('vgit').project_diff_preview()<cr>",
-                    name = "proj diff preview",
-                  },
-                  { "q", ":lua require('vgit').project_hunks_qf()<cr>", name = "proj hunks qt" },
-                },
-              },
-            },
+              { "h", '<cmd>lua require"gitsigns".preview_hunk()<CR>', name = "preview hunk" },
+              { "b", '<cmd>lua require"gitsigns".blame_line()<CR>', name = "blame line" },
+            }
           },
+          {
+            "b", name = "+branches", {
+              { "b", "<cmd>Telescope git_branches<CR>", name = "Tele Branches" },
+            }
+          },
+          -- { "p", name = "+pull", {
+          --
+          -- }},
+          -- { "P", name = "+push", {
+          --
+          -- }},
+          -- { "m", name = "+misc", {
+          --
+          -- }},
         },
       },
     },
   },
-})
+}
 
 return git
