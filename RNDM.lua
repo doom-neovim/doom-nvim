@@ -227,7 +227,6 @@ willys -> https://jobb.axfood.se/go/Axfood/4303301/?createNewAlert=false&q=&opti
 axfood > devops -> https://jobb.axfood.se/job/Stockholm-Senior-DevOps-Engineer-e-handel-Stoc/800894501/
 alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/Stockholm/Digitalization-Development-Engineer_JR0011998
 
-
 -- gitsigns/dui/nightfox startup err
 
 - clean
@@ -263,13 +262,8 @@ hip flex
 --]]
 
 
+-- leap / surround / git-bufferm stage binds
 
 
 
-
-
-
-
-
-
---todo: move surround into leap motion feat branch.
+--TODO: MOVE SURROUND INTO LEAP MOTION FEAT BRANCH.

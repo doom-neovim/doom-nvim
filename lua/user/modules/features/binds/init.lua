@@ -208,7 +208,6 @@ if require("doom.utils").is_module_enabled("whichkey") then
               -- { "N", "<cmd>e " .. paths.notes_rndm .. "<CR>" },
               { "S", "<cmd>e " .. paths.conf_skhd .. "<CR>" },
               { "a", "<cmd>e " .. paths.conf_alac .. "<CR>" },
-              { "d", "<cmd>e " .. paths.conf_doom .. "<CR>" },
               { "e", "<cmd>e " .. paths.conf_setup .. "<CR>" },
               { "g", "<cmd>e " .. paths.aliases_git .. "<CR>" },
               { "m", "<cmd>e " .. paths.conf_tnx_main .. "<CR>" },

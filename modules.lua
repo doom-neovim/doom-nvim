@@ -5,10 +5,15 @@
 --
 -- Uncomment a plugin to enable it and comment out to disable and uninstall it.
 
+-- TODO: REDO COMMENT HEADERS WITH FIGLET
+
 return {
   features = {
 
-    -- Language features
+    ------------------------------------------------------------------
+    -- ::: LANGUAGE FEATURES ::: --
+    ------------------------------------------------------------------
+
     "annotations",        -- Code annotation generator
     "auto_install",       -- Auto install LSP providers
     "autopairs",          -- Automatically close character pairs
@@ -17,7 +22,10 @@ return {
     "lsp",                -- Code completion
     "snippets",           -- Code snippets for all languages
 
-    -- Editor
+    ------------------------------------------------------------------
+    -- ::: EDITOR ::: --
+    ------------------------------------------------------------------
+
     "auto_session",       -- Remember sessions between loads
     "colorizer",          -- Show colors in neovim
     "editorconfig",       -- Support editorconfig files
@@ -29,8 +37,19 @@ return {
     "litee",              -- Litee IDE suite
     "leap",               -- Replace `s` with advanced leap.nvim motion plugin.
     "surround",           -- Surround text objects, eg. {([])}
+    "search_and_replace", -- Binds for search and replace
+    -- "mouse",
+    "cursor",
+    -- "tabs",
+    -- "scroll",
+    -- "registers",
+    -- "marks",
+    -- "undo",
 
-    -- UI Components
+    ------------------------------------------------------------------
+    -- ::: UI COMPONENTS ::: --
+    ------------------------------------------------------------------
+
     "dui",                -- Browse config and modules with Telescope
     "lsp_progress",       -- Check status of LSP loading
     "tabline",            -- Tab bar buffer switcher
@@ -45,9 +64,17 @@ return {
     "show_registers",  -- Show and navigate between registers
     "cmdline",         -- Floating cmdline at cursor
     -- "wildmenu",
+    "quickfix",         -- Extra quickfix capabilitieS
 
-    -- Tools
+    ------------------------------------------------------------------
+    -- ::: TOOLS ::: --
+    ------------------------------------------------------------------
+
+    "ai",
     -- "dap",             -- Debug code through neovim
+    "gpg",
+    -- "ssh",
+    "collaborate",        -- Google docs collaborative editing.
     "explorer",           -- An enhanced filetree explorer
     "firenvim",           -- Embed neovim in your browser
     "lazygit",            -- Lazy git integration
@@ -63,17 +90,46 @@ return {
     -- "suda",            -- Save using sudo when necessary
     "telescope",          -- Fuzzy searcher to find files, grep code and more
     "whichkey",           -- An interactive sheet
+    "refactor",           -- Code refactoring
+  -- "scim",              -- Spreadsheets
+
+    ------------------------------------------------------------------
+    -- ::: MISC ::: --
+    ------------------------------------------------------------------
+
+    "color_schemes",        -- if you want to play around with new color schemes
+    -- "crypto",            -- Crypto currency stuff
+    -- "diagrams",
+    -- "games",
+    -- "solidity",          -- ethereum lang
+    -- "tabular",
+    -- "websearch",
+    -- "data_science",
 
 
+
+    ------------------------------------------------------------------
+    -- ::: MOLLEWEIDE ::: --
+    ------------------------------------------------------------------
+
+    "architext", -- todo
+    "binds",
+    "colors",
+    "docs",
+    "editing",
+    "formatting",
+    "ghq",
+    "paths",
+    "telescope_extensions",
+    "tweak",
+    "windows",
+    "wm",
 
     -- Molleweide
-    "ai",
-    "architext",
     -- "async_jobs",
     -- "audio",
     -- "autocmds",
     -- "awk",
-    "binds",
     -- "binds_debug",
     -- "binds_make_fn_under_cursor_into_bind",
     -- "binds_mini_syntax",
@@ -82,10 +138,7 @@ return {
     -- "code_outline",
     -- "codeql",
     -- "coderunner",
-    "collaborate",
     -- "color_scheme_creation",
-    "color_schemes",
-    "colors",
     -- "community_configs",
     -- "competitive",
     -- "complementree",
@@ -93,31 +146,21 @@ return {
     -- "create_module_sync_root",
     -- "create_plugin",
     -- "create_snippet",
-    -- "crypto",
-    "cursor",
-    -- "data_science",
     -- "debugging",
     -- "diagnostics",
-    -- "diagrams",
     -- "dim_unused",
     -- "docker",
-    "docs",
     -- "doom_module_formatting",
     -- "doom_queries_manager",
     -- "doom_user_settings_ui",
-    "editing",
     -- "fennel",
     -- "figlet",
     -- "file_explorers",
     -- "filetype",
     -- "flutter",
     -- "folds",
-    "formatting",
-    -- "games",
     -- "gdb",
-    "ghq",
     -- "google_docs",
-    "gpg",
     -- "haskell",
     -- "help",
     -- "highlighting",
@@ -131,13 +174,11 @@ return {
     -- "legend",
     -- "libmodal",
     -- "logging",
-    -- "lsp",
     -- "lsp_semantinc_tokens",
     -- "lsp_testing",
     -- "lua_table_commands",
     -- "mappings",
     -- "markdown",
-    -- "marks",
     -- "math_calculator",
     -- "module_create_edit",
     -- "module_disable",
@@ -151,7 +192,6 @@ return {
     -- "modules_edit",
     -- "modules_move_component",
     -- "monitor_mappings",
-    -- "mouse",
     -- "move",
     -- "navigator",
     -- "nodejs",
@@ -160,20 +200,16 @@ return {
     -- "open_module_for_bind",
     -- "pandoc",
     -- "parse_module_cmd_args",
-    "paths",
     -- "plugin_template",
     -- "plugins_fork",
     -- "plugins_local_reloader",
     -- "printer",
     -- "projects",
-    "quickfix",
     -- "rayx",
     -- "read_file",
     -- "reaper_keys",
-    "refactor",
     -- "refactor_fn_into_utils",
     -- "regex",
-    -- "registers",
     -- "remote_dev",
     -- "rename",
     -- "repl",
@@ -181,23 +217,15 @@ return {
     -- "ripgrep",
     -- "rust",
     -- "scheme_formatting",
-    -- "scim",
-    -- "scroll",
-    "search_and_replace",
     -- "session",
     -- "snipets_create_edit",
     -- "snippets",
-    -- "solidity",
     -- "sort",
     -- "spellcheck",
-    -- "ssh",
     -- "startup",
     -- "statusline",
     -- "stenography",
-    -- "tabs",
-    -- "tabular",
     -- "telescope_doom_reloader",
-    "telescope_extensions",
     -- "telescope_mappings_legend",
     -- "terminal_integration",
     -- "test",
@@ -223,17 +251,12 @@ return {
     -- "ts_testing_locals",
     -- "ts_textobjects",
     -- "ts_treehopper",
-    "tweak",
     -- "ui",
     -- "ui_pipeline",
     -- "ui_toggle_components",
-    -- "undo",
     -- "utilities",
     -- "vigoux_templar",
     -- "virtual_types",
-    -- "websearch",
-    "windows",
-    "wm",
 
   },
   langs = {
