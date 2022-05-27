@@ -1,2 +1,0 @@
-local figlet = {}
-return figlet

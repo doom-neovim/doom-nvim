@@ -86,6 +86,7 @@ return {
     "neorg",              -- Organise your life
     "plugins_reloader",   -- Watch local packages for changes during development
     "projects",           -- Quickly switch between projects
+    -- "sort",            -- extra binds that help with sorting lines/objects
     "superman",        -- Read unix man pages in neovim
     -- "suda",            -- Save using sudo when necessary
     "telescope",          -- Fuzzy searcher to find files, grep code and more
@@ -220,7 +221,6 @@ return {
     -- "session",
     -- "snipets_create_edit",
     -- "snippets",
-    -- "sort",
     -- "spellcheck",
     -- "startup",
     -- "statusline",
