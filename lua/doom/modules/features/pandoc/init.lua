@@ -1,4 +1,4 @@
-local pd = {}
+local pandoc = {}
 
 -- https://github.com/aspeddro/pandoc.nvim
 -- https://github.com/aspeddro/cmp-pandoc.nvim
@@ -7,4 +7,4 @@ local pd = {}
 -- https://github.com/aspeddro/pandoc.nvim
 -- https://github.com/kaymmm/nvim-pandoc-pdf
 
-return pd
+return pandoc

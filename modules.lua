@@ -38,15 +38,19 @@ return {
     "leap",               -- Replace `s` with advanced leap.nvim motion plugin.
     "surround",           -- Surround text objects, eg. {([])}
     "search_and_replace", -- Binds for search and replace
-    -- "mouse",
+    -- "mouse",           -- ???
     "cursor",
-    -- "tabs",
+    -- "tabs",            -- ???
     -- "scroll",
     -- "registers",
     -- "marks",
     -- "undo",
     -- "folds",
     -- "increment",       --  tools for incrementing stuff
+    -- "clipboard",
+    -- "regex",           -- Regex tools
+    -- "help",            -- Support for help with binds and stuff
+    -- "printer",
 
     ------------------------------------------------------------------
     -- ::: UI COMPONENTS ::: --
@@ -68,6 +72,7 @@ return {
     -- "wildmenu",
     "quickfix",         -- Extra quickfix capabilitieS
     -- "images",        -- Image support
+    -- "legend",        -- ???
 
     ------------------------------------------------------------------
     -- ::: TOOLS ::: --
@@ -88,6 +93,7 @@ return {
     "diffview",           -- git diffview integration
     "neogit",          -- A git client for neovim
     "neorg",              -- Organise your life
+    -- "pandoc",
     "plugins_reloader",   -- Watch local packages for changes during development
     "projects",           -- Quickly switch between projects
     -- "sort",            -- extra binds that help with sorting lines/objects
@@ -97,22 +103,25 @@ return {
     "whichkey",           -- An interactive sheet
     "refactor",           -- Code refactoring
   -- "scim",              -- Spreadsheets
+    -- "ripgrep",
 
     ------------------------------------------------------------------
     -- ::: MISC ::: --
     ------------------------------------------------------------------
 
     "color_schemes",        -- if you want to play around with new color schemes
+    -- "audio",
     -- "crypto",            -- Crypto currency stuff
     -- "diagrams",
     -- "competitive",
+    -- "icons",             -- Extended various icons support
     -- "figlet",            -- figlet fonts editor
     -- "kmonad",            -- Support for kmonad keyboard remapper
     -- "games",
     -- "solidity",          -- ethereum lang
-    -- "tabular",
     -- "websearch",
     -- "data_science",
+    -- "tabular",           -- Extended support for managing tabular data
 
 
 
@@ -134,16 +143,18 @@ return {
     "wm",
     -- "tmux",
 
+    ------------------------------------------------------------------
+    -- ::: HOUSE CLEANING ::: --
+    ------------------------------------------------------------------
+
     -- Molleweide
     -- "async_jobs",
-    -- "audio",
     -- "autocmds",
     -- "awk",
     -- "binds_debug",
     -- "binds_make_fn_under_cursor_into_bind",
     -- "binds_mini_syntax",
     -- "char_counter",
-    -- "clipboard",
     -- "code_outline",
     -- "codeql",
     -- "coderunner",
@@ -165,12 +176,9 @@ return {
     -- "flutter",
     -- "gdb",
     -- "google_docs",
-    -- "help",
     -- "highlighting",
-    -- "icons",
     -- "indent",
     -- "lang_nav",
-    -- "legend",
     -- "libmodal",
     -- "logging",
     -- "lsp_semantinc_tokens",
@@ -197,27 +205,22 @@ return {
     -- "nvim_luadev",
     -- "nvim_queries",
     -- "open_module_for_bind",
-    -- "pandoc",
     -- "parse_module_cmd_args",
     -- "plugin_template",
     -- "plugins_fork",
     -- "plugins_local_reloader",
-    -- "printer",
     -- "projects",
     -- "rayx",
     -- "read_file",
     -- "reaper_keys",
     -- "refactor_fn_into_utils",
-    -- "regex",
     -- "remote_dev",
     -- "rename",
     -- "repl",
     -- "repo_search",
-    -- "ripgrep",
     -- "scheme_formatting",
     -- "session",
     -- "snipets_create_edit",
-    -- "snippets",
     -- "spellcheck",
     -- "startup",
     -- "statusline",

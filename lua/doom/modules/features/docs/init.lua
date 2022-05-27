@@ -1,5 +1,7 @@
 local docs = {}
 
+-- TODO: move all of into more specific modules
+
 docs.settings = {}
 
 -- https://github.com/natw/nvim-hover-doc-url
