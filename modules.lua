@@ -55,6 +55,7 @@ return {
     -- "logging",         -- binds n stuff
     -- "buffers",
     -- "readline",        -- ???
+    -- "filetype",        -- ???
 
     ------------------------------------------------------------------
     -- ::: UI COMPONENTS ::: --
@@ -81,6 +82,18 @@ return {
     -- "code_outline",
 
     ------------------------------------------------------------------
+    -- ::: VCS / GIT ::: --
+    ------------------------------------------------------------------
+
+    -- "gitsigns",           -- Show git changes in sidebar
+    "git",                -- git basic support
+    "github",             -- github integration; requires `litee` module under `Editor`
+    "diffview",           -- git diffview integration
+    "neogit",          -- A git client for neovim
+    "ghq",                -- Support for `qhq` repo manager
+    -- "repo_search",
+
+    ------------------------------------------------------------------
     -- ::: TOOLS ::: --
     ------------------------------------------------------------------
 
@@ -93,12 +106,6 @@ return {
     "explorer",           -- An enhanced filetree explorer
     "firenvim",           -- Embed neovim in your browser
     "lazygit",            -- Lazy git integration
-    -- "gitsigns",           -- Show git changes in sidebar
-    "git",                -- git basic support
-    "github",             -- github integration; requires `litee` module under `Editor`
-    "diffview",           -- git diffview integration
-    "neogit",          -- A git client for neovim
-    "ghq",                -- Support for `qhq` repo manager
     "neorg",              -- Organise your life
     -- "pandoc",
     "plugins_reloader",   -- Watch local packages for changes during development
@@ -125,12 +132,14 @@ return {
     -- "audio",
     -- "crypto",            -- Crypto currency stuff
     -- "rename",            -- ??
+    -- "spellcheck",
     -- "diagrams",
     -- "competitive",
     -- "libmodal",          -- ??
     -- "icons",             -- Extended various icons support
     -- "figlet",            -- figlet fonts editor
     -- "kmonad",            -- Support for kmonad keyboard remapper
+    -- "navigator",         -- ???
     -- "games",
     -- "solidity",          -- ethereum lang
     -- "websearch",
@@ -139,6 +148,7 @@ return {
     -- "stenography",
     -- "statusline_misc",
     -- "utilities",         -- ??
+    -- "math_calculator",
 
 
 
@@ -186,7 +196,6 @@ return {
     -- "doom_queries_manager",
     -- "doom_user_settings_ui",
     -- "file_explorers",
-    -- "filetype",
     -- "gdb",
     -- "highlighting",
     -- "indent",
@@ -195,22 +204,6 @@ return {
     -- "lsp_testing",
     -- "lua_table_commands",
     -- "mappings",
-    -- "math_calculator",
-    -- "module_create_edit",
-    -- "module_disable",
-    -- "module_manager",
-    -- "module_merge",
-    -- "module_package_configs",
-    -- "module_package_toggle_fork",
-    -- "module_refactor_any_extra_vars_into_settings",
-    -- "module_remove",
-    -- "module_syntax_enforce",
-    -- "modules_edit",
-    -- "modules_move_component",
-    -- "monitor_mappings",
-    -- "move",
-    -- "navigator",
-    -- "nodejs",
     -- "nvim_luadev",
     -- "nvim_queries",
     -- "open_module_for_bind",
@@ -218,21 +211,15 @@ return {
     -- "plugin_template",
     -- "plugins_fork",
     -- "plugins_local_reloader",
-    -- "projects",
     -- "rayx",
     -- "read_file",
     -- "reaper_keys",
     -- "refactor_fn_into_utils",
     -- "repl",
-    -- "repo_search",
-    -- "scheme_formatting",
-    -- "session",
     -- "snipets_create_edit",
-    -- "spellcheck",
     -- "startup",
     -- "telescope_doom_reloader",
     -- "telescope_mappings_legend",
-    -- "terminal_integration",
     -- "test",
     -- "testing",
     -- "todo",
