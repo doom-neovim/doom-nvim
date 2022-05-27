@@ -46,6 +46,7 @@ return {
     -- "marks",
     -- "undo",
     -- "folds",
+    -- "increment",       --  tools for incrementing stuff
 
     ------------------------------------------------------------------
     -- ::: UI COMPONENTS ::: --
@@ -66,6 +67,7 @@ return {
     "cmdline",         -- Floating cmdline at cursor
     -- "wildmenu",
     "quickfix",         -- Extra quickfix capabilitieS
+    -- "images",        -- Image support
 
     ------------------------------------------------------------------
     -- ::: TOOLS ::: --
@@ -76,6 +78,7 @@ return {
     "gpg",
     -- "ssh",
     "collaborate",        -- Google docs collaborative editing.
+    -- "docker",          -- Docker tools
     "explorer",           -- An enhanced filetree explorer
     "firenvim",           -- Embed neovim in your browser
     "lazygit",            -- Lazy git integration
@@ -102,6 +105,9 @@ return {
     "color_schemes",        -- if you want to play around with new color schemes
     -- "crypto",            -- Crypto currency stuff
     -- "diagrams",
+    -- "competitive",
+    -- "figlet",            -- figlet fonts editor
+    -- "kmonad",            -- Support for kmonad keyboard remapper
     -- "games",
     -- "solidity",          -- ethereum lang
     -- "tabular",
@@ -143,7 +149,6 @@ return {
     -- "coderunner",
     -- "color_scheme_creation",
     -- "community_configs",
-    -- "competitive",
     -- "complementree",
     -- "create_cmds",
     -- "create_module_sync_root",
@@ -152,24 +157,18 @@ return {
     -- "debugging",
     -- "diagnostics",
     -- "dim_unused",
-    -- "docker",
     -- "doom_module_formatting",
     -- "doom_queries_manager",
     -- "doom_user_settings_ui",
-    -- "figlet",
     -- "file_explorers",
     -- "filetype",
     -- "flutter",
     -- "gdb",
     -- "google_docs",
-    -- "haskell",
     -- "help",
     -- "highlighting",
     -- "icons",
-    -- "images",
-    -- "increment",
     -- "indent",
-    -- "kmonad",
     -- "lang_nav",
     -- "legend",
     -- "libmodal",
