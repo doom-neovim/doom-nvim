@@ -1,5 +1,7 @@
 local telescope = {}
 
+-- todo: configure with select_ui prompt -> default to open telescope.
+
 telescope.settings = {
   defaults = {
     find_command = {

@@ -21,12 +21,12 @@ return {
     "auto_session",       -- Remember sessions between loads
     "colorizer",          -- Show colors in neovim
     "editorconfig",       -- Support editorconfig files
-    -- "gitsigns",           -- Show git changes in sidebar
     "illuminate",         -- Highlight other copies of the word you're hovering on
     "indentlines",        -- Show indent lines with special characters
     "range_highlight",    -- Highlight selected range from commands
     "todo_comments",      -- Highlight TODO: comments
     "doom_themes",        -- Extra themes for doom
+    "litee",              -- Litee IDE suite
     "leap",               -- Replace `s` with advanced leap.nvim motion plugin.
 
     -- UI Components
@@ -50,8 +50,9 @@ return {
     "explorer",           -- An enhanced filetree explorer
     "firenvim",           -- Embed neovim in your browser
     "lazygit",            -- Lazy git integration
+    -- "gitsigns",           -- Show git changes in sidebar
     "git",                -- git basic support
-    "github",             -- github integration
+    "github",             -- github integration; requires `litee` module under `Editor`
     "diffview",           -- git diffview integration
     "neogit",          -- A git client for neovim
     "neorg",              -- Organise your life
@@ -128,7 +129,6 @@ return {
     -- "latex",
     -- "legend",
     -- "libmodal",
-    "litee",
     -- "logging",
     -- "lsp",
     -- "lsp_semantinc_tokens",
