@@ -63,7 +63,7 @@ if require("doom.utils").is_module_enabled("whichkey") then
     {
       {
         "n",
-        name = "+nnn",
+        name = "+test",
         {
           {
             {

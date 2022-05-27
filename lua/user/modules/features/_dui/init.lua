@@ -194,7 +194,7 @@ doom_ui.binds = {
       { "k", [[ :DoomPickerMain<cr> ]], name = "all modules", options = { silent = false }, },
       {
         "n",
-        name = "+nnn",
+        name = "+test",
         {
           { "l", [[ :DoomPickerMain<cr> ]], name = "main menu", options = { silent = false }, },
           -- { "s", [[ :DoomPickerSettings<cr> ]], name = "settings", options = { silent = false }, }, -- lol

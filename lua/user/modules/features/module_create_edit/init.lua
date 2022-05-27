@@ -204,7 +204,7 @@ create_module.cmds = {
 --       },
 --       {
 --         "n",
---         name = "+nnn",
+--         name = "+test",
 --         {
 --           { "c", [[ :DoomCreateModuleUser<cr> ]], name = "edit/create user modules" },
 --         },

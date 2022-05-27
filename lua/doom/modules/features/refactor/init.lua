@@ -88,7 +88,7 @@ if require("doom.utils").is_module_enabled("whichkey") then
     {
       {
         "n",
-        name = "+nnn",
+        name = "+test",
         {
           { -- prompt for a refactor to apply when the remap is triggered
             "r",
