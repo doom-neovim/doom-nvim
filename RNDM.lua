@@ -266,6 +266,7 @@ hip flex
 
 -- leap / surround / git-bufferm stage binds
 
+-- need to setup sponsorship for myself asap. buycoffe/github/cryptowallets/paypal/
 
 
 --TODO: MOVE SURROUND INTO LEAP MOTION FEAT BRANCH.

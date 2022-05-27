@@ -4,6 +4,16 @@ haskell.settings = {
   language_server_name = 'hls',
 }
 
+-- -- https://github.com/neovimhaskell/nvim-hs
+-- lua.packages = {
+--   ["lua-dev.nvim"] = {
+--     "folke/lua-dev.nvim",
+--     commit = "fda3d256001b79c5659fb4d624b47ae712cee261",
+--     ft = "lua",
+--   },
+-- }
+
+
 haskell.autocmds = {
   {
     "BufWinEnter",

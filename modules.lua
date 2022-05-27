@@ -45,6 +45,7 @@ return {
     -- "registers",
     -- "marks",
     -- "undo",
+    -- "folds",
 
     ------------------------------------------------------------------
     -- ::: UI COMPONENTS ::: --
@@ -125,6 +126,7 @@ return {
     "tweak",
     "windows",
     "wm",
+    -- "tmux",
 
     -- Molleweide
     -- "async_jobs",
@@ -154,12 +156,10 @@ return {
     -- "doom_module_formatting",
     -- "doom_queries_manager",
     -- "doom_user_settings_ui",
-    -- "fennel",
     -- "figlet",
     -- "file_explorers",
     -- "filetype",
     -- "flutter",
-    -- "folds",
     -- "gdb",
     -- "google_docs",
     -- "haskell",
@@ -171,7 +171,6 @@ return {
     -- "indent",
     -- "kmonad",
     -- "lang_nav",
-    -- "latex",
     -- "legend",
     -- "libmodal",
     -- "logging",
@@ -216,7 +215,6 @@ return {
     -- "repl",
     -- "repo_search",
     -- "ripgrep",
-    -- "rust",
     -- "scheme_formatting",
     -- "session",
     -- "snipets_create_edit",
@@ -230,7 +228,6 @@ return {
     -- "terminal_integration",
     -- "test",
     -- "testing",
-    -- "tmux",
     -- "todo",
     -- "ts_context",
     -- "ts_docs",
@@ -283,6 +280,9 @@ return {
 
     "config",          -- JSON, YAML, TOML
     "markdown",
+
+    -- "fennel",
+    -- "latex",
   },
 }
 
