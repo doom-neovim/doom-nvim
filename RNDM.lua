@@ -229,7 +229,8 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 -- gitsigns/dui/nightfox startup err
 
-
+this is quite fucking retarded and it is something that you are going to have to eat because
+this is not very nice behavior
 
 - clean
 
