@@ -51,6 +51,10 @@ return {
     -- "regex",           -- Regex tools
     -- "help",            -- Support for help with binds and stuff
     -- "printer",
+    -- "sort",            -- extra binds that help with sorting lines/objects
+    -- "logging",         -- binds n stuff
+    -- "buffers",
+    -- "readline",        -- ???
 
     ------------------------------------------------------------------
     -- ::: UI COMPONENTS ::: --
@@ -73,6 +77,8 @@ return {
     "quickfix",         -- Extra quickfix capabilitieS
     -- "images",        -- Image support
     -- "legend",        -- ???
+    -- "virtual_types", -- ???
+    -- "code_outline",
 
     ------------------------------------------------------------------
     -- ::: TOOLS ::: --
@@ -92,28 +98,36 @@ return {
     "github",             -- github integration; requires `litee` module under `Editor`
     "diffview",           -- git diffview integration
     "neogit",          -- A git client for neovim
+    "ghq",                -- Support for `qhq` repo manager
     "neorg",              -- Organise your life
     -- "pandoc",
     "plugins_reloader",   -- Watch local packages for changes during development
     "projects",           -- Quickly switch between projects
-    -- "sort",            -- extra binds that help with sorting lines/objects
+    -- "remote_dev",      -- ???
     "superman",        -- Read unix man pages in neovim
+    -- "tmux",               -- ???
     -- "suda",            -- Save using sudo when necessary
     "telescope",          -- Fuzzy searcher to find files, grep code and more
     "whichkey",           -- An interactive sheet
     "refactor",           -- Code refactoring
   -- "scim",              -- Spreadsheets
     -- "ripgrep",
+    -- "flutter",
+    -- "markdown_tools",  -- ??
+    -- "google_docs",
 
     ------------------------------------------------------------------
     -- ::: MISC ::: --
     ------------------------------------------------------------------
 
     "color_schemes",        -- if you want to play around with new color schemes
+    "telescope_extensions", -- move into categories
     -- "audio",
     -- "crypto",            -- Crypto currency stuff
+    -- "rename",            -- ??
     -- "diagrams",
     -- "competitive",
+    -- "libmodal",          -- ??
     -- "icons",             -- Extended various icons support
     -- "figlet",            -- figlet fonts editor
     -- "kmonad",            -- Support for kmonad keyboard remapper
@@ -122,6 +136,9 @@ return {
     -- "websearch",
     -- "data_science",
     -- "tabular",           -- Extended support for managing tabular data
+    -- "stenography",
+    -- "statusline_misc",
+    -- "utilities",         -- ??
 
 
 
@@ -135,9 +152,7 @@ return {
     "docs",
     "editing",
     "formatting",
-    "ghq",
     "paths",
-    "telescope_extensions",
     "tweak",
     "windows",
     "wm",
@@ -155,7 +170,6 @@ return {
     -- "binds_make_fn_under_cursor_into_bind",
     -- "binds_mini_syntax",
     -- "char_counter",
-    -- "code_outline",
     -- "codeql",
     -- "coderunner",
     -- "color_scheme_creation",
@@ -173,19 +187,14 @@ return {
     -- "doom_user_settings_ui",
     -- "file_explorers",
     -- "filetype",
-    -- "flutter",
     -- "gdb",
-    -- "google_docs",
     -- "highlighting",
     -- "indent",
     -- "lang_nav",
-    -- "libmodal",
-    -- "logging",
     -- "lsp_semantinc_tokens",
     -- "lsp_testing",
     -- "lua_table_commands",
     -- "mappings",
-    -- "markdown",
     -- "math_calculator",
     -- "module_create_edit",
     -- "module_disable",
@@ -214,8 +223,6 @@ return {
     -- "read_file",
     -- "reaper_keys",
     -- "refactor_fn_into_utils",
-    -- "remote_dev",
-    -- "rename",
     -- "repl",
     -- "repo_search",
     -- "scheme_formatting",
@@ -223,8 +230,6 @@ return {
     -- "snipets_create_edit",
     -- "spellcheck",
     -- "startup",
-    -- "statusline",
-    -- "stenography",
     -- "telescope_doom_reloader",
     -- "telescope_mappings_legend",
     -- "terminal_integration",
@@ -253,9 +258,7 @@ return {
     -- "ui",
     -- "ui_pipeline",
     -- "ui_toggle_components",
-    -- "utilities",
     -- "vigoux_templar",
-    -- "virtual_types",
 
   },
   langs = {

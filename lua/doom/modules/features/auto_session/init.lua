@@ -10,6 +10,8 @@ auto_session.packages = {
     commit = "77cf5a6ee162013b97237ff25450080401849f85",
     module = 'persistence',
   },
+  --   -- https://github.com/Shatur/neovim-session-manager
+  --   https://github.com/jedrzejboczar/possession.nvim
 }
 
 auto_session.configs = {}

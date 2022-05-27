@@ -2,6 +2,9 @@ local utils = require("doom.utils")
 -- local is_module_enabled = utils.is_module_enabled
 local user_util = require("user.utils")
 
+
+-- todo: move all extensions into modules that make sense.
+
 local after_telescope = user_util.after_telescope
 local load_extension_helper = user_util.load_extension_helper
 local up = user_util.paths

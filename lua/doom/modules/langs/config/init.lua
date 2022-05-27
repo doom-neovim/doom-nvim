@@ -20,6 +20,7 @@ config.packages = {
     commit = "aaf3d7840b42119d7aefb03a25da0c6f2ab0c4e9",
     ft = { "json", "yaml", "toml" }
   },
+  -- git@github.com:someone-stole-my-name/yaml-companion.nvim.git
 }
 config.configs = {}
 config.configs["SchemaStore.nvim"] = function()

@@ -1,1 +1,0 @@
--- git@github.com:someone-stole-my-name/yaml-companion.nvim.git
