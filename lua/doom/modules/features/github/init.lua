@@ -8,7 +8,7 @@ github.settings = {}
 
 github.packages = {
   ["gh.nvim"] = {
-    "ldelossa/gh.nvim.git",
+    "ldelossa/gh.nvim",
     requires = { { 'ldelossa/litee.nvim' } }
   },
   ["octo.nvim"] = {

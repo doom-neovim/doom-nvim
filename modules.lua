@@ -28,6 +28,7 @@ return {
     "doom_themes",        -- Extra themes for doom
     "litee",              -- Litee IDE suite
     "leap",               -- Replace `s` with advanced leap.nvim motion plugin.
+    "surround",           -- Surround text objects, eg. {([])}
 
     -- UI Components
     "dui",                -- Browse config and modules with Telescope
@@ -193,7 +194,6 @@ return {
     -- "startup",
     -- "statusline",
     -- "stenography",
-    -- "surround",
     -- "tabs",
     -- "tabular",
     -- "telescope_doom_reloader",

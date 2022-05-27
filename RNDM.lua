@@ -1,6 +1,10 @@
 --[[
 https://github.com/masukomi/scheme-format
 
+- kontakta Kid, Nicky, Marcus, andra musik maenniskor. franska killen vikarie
+
+
+
 - 1. need to turn off gpg
 - 2.
 
@@ -226,11 +230,10 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 -- gitsigns/dui/nightfox startup err
 
-this is pretty cool because this allows for a super interesting workflow.
+so this is going to be so fucking cool and now since this interface works it would make more sense for newbies to start learning
+on this system.
 
-octo
-gh
-
+get a job and start working on the reaper system now tha i can really start to doing tha shit.
 
 - clean
 

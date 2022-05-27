@@ -2,12 +2,9 @@ local surround = {}
 
 surround.settings = {}
 
--- 1. consider switching to nvim plugin because vim surround mappings just don't do anything ???
--- 2. add command that allows for wrapping selection in a `function() ... end``
-
 surround.packages = {
-  ["vim-surround"] = { "tpope/vim-surround" }, -- cs`' to change `` to '', etc
-  -- ["surround.nvim"] = { "ur4ltz/surround.nvim" }, -- https://github.com/ur4ltz/surround.nvim
+  ["vim-surround"] = { "tpope/vim-surround" },
+  -- ["surround.nvim"] = { "ur4ltz/surround.nvim" }, -- pure lua
 }
 
 surround.configs = {}
@@ -49,6 +46,7 @@ surround.binds = {}
 -- -- xmap gS       <Plug>VgSurround
 -- normal mode
 
+-- todo: move into `doom.settings`
 table.insert(surround.binds, {
   { "z", "<Plug>VSurround", mode = "x", name = "surr" },
   { "yzz", "<Plug>Yssurround", mode = "n", name = "surr" }, -- double ss
