@@ -224,6 +224,10 @@ axfood > devops -> https://jobb.axfood.se/job/Stockholm-Senior-DevOps-Engineer-e
 alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/Stockholm/Digitalization-Development-Engineer_JR0011998
 
 
+-- gitsigns/dui/nightfox startup err
+
+so now I am going to buy some food and then do more stretching and make sure that everything works as expected and then there is something
+that is just so fucki insane and that is what I have been always looking for.
 
 
 - clean

@@ -285,7 +285,6 @@ end
 
 git.binds = {}
 
--- gitsign binds
 table.insert(git.binds, {
   { "ih", ':<C-U>lua require"gitsigns".select_hunk()<CR>', name = "select hunk", mode = "o" },
   { "ih", ':<C-U>lua require"gitsigns".select_hunk()<CR>', name = "select hunk", mode = "x" },
@@ -296,7 +295,28 @@ table.insert(git.binds, {
       {
         "g",
         name = "+git",
+          -- TODO: +stage
+          -- TODO: +diff
+          -- TODO: l -> lazygit
+          -- TODO: +commits
+          -- TODO: +stash
+          -- TODO: +status
+          -- TODO: +branch
+          -- TODO: +pull
+          -- TODO: +push
+          -- TODO: +misc
+
         {
+          -- { "xx", name = "+stage", {}},
+          -- { "xx", name = "+diff", {}},
+          -- -- { "xx", name = "+lazygit", {}},
+          -- { "xx", name = "+commits", {}},
+          -- { "xx", name = "+stash", {}},
+          -- { "xx", name = "+status", {}},
+          -- { "xx", name = "+branches", {}},
+          -- { "xx", name = "+pull", {}},
+          -- { "xx", name = "+push", {}},
+          -- { "xx", name = "+misc", {}},
           {
             "z",
             name = "+gitsigns",
@@ -315,7 +335,6 @@ table.insert(git.binds, {
   },
 })
 
--- vgit binds
 table.insert(git.binds, {
   {
     "<leader>",
