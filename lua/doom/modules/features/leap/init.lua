@@ -90,4 +90,14 @@ end
 -- `<Plug>Lightspeed_t`  1-character  forward   t-like
 -- `<Plug>Lightspeed_T`  1-character  backward  T-like
 
+-- -- operator
+-- table.insert(binds, {
+--   { "b", "vb", mode = "o", options = { silent = true, noremap = true } },
+--   { "B", "vB", mode = "o", options = { silent = true, noremap = true } },
+--   { "F", "vF", mode = "o", options = { silent = true, noremap = true } },
+--   { "T", "vT", mode = "o", options = { silent = true, noremap = true } },
+--   -- { 'o', 's', '<Plug>Lightspeed_s', options = { silent = true } },
+--   -- { 'o', 'S', '<Plug>Lightspeed_S', options = { silent = true, noremap = true } },
+-- })
+
 return motion

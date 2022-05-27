@@ -28,25 +28,20 @@ surround.configs = {}
 
 surround.binds = {}
 
-----------------------------
----       surround       ---
-----------------------------
-
 -- https://github.com/justinmk/vim-sneak/issues/268
-
--- -- map ds       <Plug>Dsurround
--- -- nmap cs       <Plug>Csurround
--- -- nmap cS       <Plug>CSurround
--- -- nmap ys       <Plug>Ysurround
--- -- nmap yS       <Plug>YSurround
--- -- nmap yss      <Plug>Yssurround
--- -- nmap ySs      <Plug>YSsurround
--- -- nmap ySS      <Plug>YSsurround
--- -- xmap gs       <Plug>VSurround
--- -- xmap gS       <Plug>VgSurround
+-- map ds       <Plug>Dsurround
+-- nmap cs       <Plug>Csurround
+-- nmap cS       <Plug>CSurround
+-- nmap ys       <Plug>Ysurround
+-- nmap yS       <Plug>YSurround
+-- nmap yss      <Plug>Yssurround
+-- nmap ySs      <Plug>YSsurround
+-- nmap ySS      <Plug>YSsurround
+-- xmap gs       <Plug>VSurround
+-- xmap gS       <Plug>VgSurround
 -- normal mode
 
--- todo: move into `doom.settings`
+-- TODO: move into `doom.settings`
 table.insert(surround.binds, {
   { "z", "<Plug>VSurround", mode = "x", name = "surr" },
   { "yzz", "<Plug>Yssurround", mode = "n", name = "surr" }, -- double ss
@@ -54,25 +49,5 @@ table.insert(surround.binds, {
   { "dz", "<Plug>Dsurround", mode = "n", name = "surr" },
   { "cz", "<Plug>Csurround", mode = "n", name = "surr" },
 })
-
--- test map with leader.
--- if require("doom.utils").is_module_enabled("whichkey") then
---   table.insert(surround.binds, {
---     "<leader>",
---     name = "+prefix",
---     {
---       {
---         "w",
---         name = "+windows",
---         {
---           { "z", [[<esc><cmd>suspend<CR>]], name = "suspend vim" },
---           -- { "S", [[<esc><CR>]], name = "solo window / close all others" }, -- nvim get windows > compare some idx/name > close match set
---           -- { "move"}
---           -- { "new/rm"}
---         },
---       },
---     },
---   })
--- end
 
 return surround

@@ -230,11 +230,6 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 -- gitsigns/dui/nightfox startup err
 
-so this is going to be so fucking cool and now since this interface works it would make more sense for newbies to start learning
-on this system.
-
-get a job and start working on the reaper system now tha i can really start to doing tha shit.
-
 - clean
 
   -> windows
@@ -277,4 +272,4 @@ hip flex
 
 
 
-
+--todo: move surround into leap motion feat branch.
