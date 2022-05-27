@@ -31,3 +31,4 @@
 -- https://github.com/spywhere/detect-language.nvim
 -- https://github.com/vigoux/proofreader.nvim
 -- https://github.com/ziontee113/syntax-tree-surfer
+-- https://github.com/p00f/nvim-ts-rainbow

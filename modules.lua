@@ -21,6 +21,13 @@ return {
     "linter",             -- Linting and formatting for languages
     "lsp",                -- Code completion
     "snippets",           -- Code snippets for all languages
+    -- "ts_context",        -- ??
+    -- "ts_refactor",
+    -- "ts_syntax",
+    -- "ts_textobjects",
+    -- "ts_playground",
+    -- "ts_plugins",
+    -- "ts_motions",
 
     ------------------------------------------------------------------
     -- ::: EDITOR ::: --
@@ -56,6 +63,7 @@ return {
     -- "buffers",
     -- "readline",        -- ???
     -- "filetype",        -- ???
+    -- "make_inclusive",  -- Make various binds/plugins inclusive, ie. include cursor position in eg `f/F`
 
     ------------------------------------------------------------------
     -- ::: UI COMPONENTS ::: --
@@ -135,7 +143,7 @@ return {
     -- "spellcheck",
     -- "diagrams",
     -- "competitive",
-    -- "libmodal",          -- ??
+    -- "libmodal",          -- Tool for creating custom modes
     -- "icons",             -- Extended various icons support
     -- "figlet",            -- figlet fonts editor
     -- "kmonad",            -- Support for kmonad keyboard remapper
@@ -223,24 +231,13 @@ return {
     -- "test",
     -- "testing",
     -- "todo",
-    -- "ts_context",
-    -- "ts_docs",
     -- "ts_jump_2_func",
     -- "ts_jump_to_module_part",
-    -- "ts_lang_detect",
     -- "ts_mirror_doom_globals",
-    -- "ts_mode",
-    -- "ts_motions",
     -- "ts_navigation",
-    -- "ts_playground",
-    -- "ts_plugins",
     -- "ts_query_monitor",
-    -- "ts_rainbow",
-    -- "ts_refactor",
-    -- "ts_syntax",
     -- "ts_testing",
     -- "ts_testing_locals",
-    -- "ts_textobjects",
     -- "ts_treehopper",
     -- "ui",
     -- "ui_pipeline",

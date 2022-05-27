@@ -1,0 +1,1 @@
+-- TODO: make binds inclusive and put an option in doom.settigs for this
