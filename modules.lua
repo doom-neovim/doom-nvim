@@ -43,6 +43,7 @@ return {
     "restclient",      -- Test HTTP requests from neovim (TODO: Test)
     "show_registers",  -- Show and navigate between registers
     "cmdline",         -- Floating cmdline at cursor
+    -- "wildmenu",
 
     -- Tools
     -- "dap",             -- Debug code through neovim
@@ -231,7 +232,6 @@ return {
     -- "vigoux_templar",
     -- "virtual_types",
     -- "websearch",
-    -- "wildmenu",
     "windows",
     "wm",
 
