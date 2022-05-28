@@ -2,6 +2,8 @@ local textobjects = {}
 
 textobjects.packages = {
   ["nvim-treesitter-textobjects"] = { "nvim-treesitter/nvim-treesitter-textobjects" },
+  -- https://github.com/David-Kunz/treesitter-unit/
+  -- https://github.com/zacharydscott/hatchet.nvim
 }
 
 textobjects.configs = {}

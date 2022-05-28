@@ -233,7 +233,6 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 so this is quite fucking insane and the thing that you need to fucking do is just so fuckig fast that it is hard to understand you know.
 
 
-
 - clean
 
   -> windows
