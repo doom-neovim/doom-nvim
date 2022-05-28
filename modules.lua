@@ -29,6 +29,7 @@ return {
     -- "ts_motions",
     -- "ts_textsubjects",
     -- "ts_hlargs"
+    -- "ts_cmptree",
 
 
     ------------------------------------------------------------------
@@ -194,7 +195,6 @@ return {
     -- "coderunner",
     -- "color_scheme_creation",
     -- "community_configs",
-    -- "complementree",
     -- "create_cmds",
     -- "create_module_sync_root",
     -- "create_plugin",

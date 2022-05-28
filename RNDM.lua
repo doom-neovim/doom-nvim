@@ -230,8 +230,8 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 -- gitsigns/dui/nightfox startup err
 
 
-so now things are starting to get really fucking good and it is starting to make sense so that one can customize anything pretty
-much and when that is achieved it has the ability to move around in the operating system in quite an insane way.
+so this is quite fucking insane and the thing that you need to fucking do is just so fuckig fast that it is hard to understand you know.
+
 
 
 - clean
