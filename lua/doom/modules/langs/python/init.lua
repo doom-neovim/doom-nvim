@@ -4,6 +4,15 @@ python.settings = {
   language_server_name = 'pyright',
 }
 
+-- lua.packages = {
+--   ["lua-dev.nvim"] = {
+--     "folke/lua-dev.nvim",
+--     ft = "lua",
+--   },
+-- }
+-- https://github.com/eddiebergman/nvim-treesitter-pyfold
+-- https://github.com/geg2102/nvim-python-repl
+
 python.autocmds = {
   {
     "BufWinEnter",

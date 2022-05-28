@@ -5,6 +5,8 @@ surround.settings = {}
 surround.packages = {
   ["vim-surround"] = { "tpope/vim-surround" },
   -- ["surround.nvim"] = { "ur4ltz/surround.nvim" }, -- pure lua
+  -- https://github.com/echasnovski/mini.nvim/blob/main/lua/mini/surround.lua
+  -- [""] = { 'echasnovski/mini.nvim', branch = 'stable' }
 }
 
 surround.configs = {}
@@ -25,6 +27,11 @@ surround.configs = {}
 --     },
 --   })
 -- end
+
+-- surround.configs["mini"] = function()
+--   require('mini.surround').setup()
+-- end
+
 
 surround.binds = {}
 

@@ -229,11 +229,9 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 -- gitsigns/dui/nightfox startup err
 
-so this is actually quite fucking cool because this really seems to make me stronger and stronger and I can type faster and faster
-and so now in the end his is just such a fucking insane setup thaty you cannot really fucking understand hwo cool this is so that
-you can fucking make it work.
 
-test all of this shit to make sure that this shit actually works and go back to the snippets repo and make sure that it works.
+so now things are starting to get really fucking good and it is starting to make sense so that one can customize anything pretty
+much and when that is achieved it has the ability to move around in the operating system in quite an insane way.
 
 
 - clean

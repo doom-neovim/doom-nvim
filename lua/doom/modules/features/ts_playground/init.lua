@@ -11,12 +11,12 @@ ts_playground.binds = {}
 if require("doom.utils").is_module_enabled("whichkey") then
   ts_playground.binds = {
     {
-      "<leader>v",
-      name = "+testing",
+      "<leader>n",
+      name = "+test",
       {
         {
           "t",
-          name = "+treesitter",
+          name = "+ts",
           {
             { "p", "<cmd>TSPlaygroundToggle<CR>", name = "togl playgr" },
             { "h", "<cmd>TSHighlightCapturesUnderCursor<CR>", name = "highl capt curs" },

@@ -5,6 +5,16 @@ cc.settings = {
   language_server_name = utils.get_sysname() == "Darwin" and "clangd" or "ccls",
 }
 
+-- -- https://github.com/Badhi/nvim-treesitter-cpp-tools
+-- lua.packages = {
+--   ["lua-dev.nvim"] = {
+--     "folke/lua-dev.nvim",
+--     commit = "fda3d256001b79c5659fb4d624b47ae712cee261",
+--     ft = "lua",
+--   },
+-- }
+
+
 cc.autocmds = {
   {
     "BufWinEnter",

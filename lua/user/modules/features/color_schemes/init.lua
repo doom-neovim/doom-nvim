@@ -12,6 +12,7 @@ themes.packages = {
   ["Catppuccino.nvim"] = { "Pocco81/Catppuccino.nvim" },
   ["sonokai"] = { "sainnhe/sonokai" },
   ["tokyonight.nvim"] = { "folke/tokyonight.nvim" },
+  -- ray-x/aurora - A 24-bit dark theme with Tree-sitter and LSP support. TODO: <<<<<<< very nice!!!!!!!!!
   --   tjdevries/gruvbuddy.nvim - Gruvbox colors.
   -- ellisonleao/gruvbox.nvim - Gruvbox community colorscheme Lua port.
   -- metalelf0/jellybeans-nvim - A port of jellybeans colorscheme for Neovim.
@@ -46,7 +47,6 @@ themes.packages = {
   -- PHSix/nvim-hybrid - A Neovim colorscheme write in Lua.
   -- Th3Whit3Wolf/space-nvim - A spacemacs inspired dark and light colorscheme for Neovim.
   -- yonlu/omni.vim - Omni color scheme for Vim.
-  -- ray-x/aurora - A 24-bit dark theme with Tree-sitter and LSP support.
   -- novakne/kosmikoa.nvim - Colorscheme for Neovim.
   -- tanvirtin/monokai.nvim - Monokai theme for Neovim written in Lua.
   -- nekonako/xresources-nvim - Neovim colorscheme based on your xresources color.
