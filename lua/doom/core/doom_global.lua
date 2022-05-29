@@ -325,9 +325,11 @@ doom = {
     core = {},
     features = {},
     langs = {},
+    themes = {},
   }
 }
 -- Maintain backwards compatibility + provide a shorthand way to access modules
 doom.core = doom.modules.core
 doom.features = doom.modules.features
 doom.langs = doom.modules.langs
+doom.themes = doom.modules.themes

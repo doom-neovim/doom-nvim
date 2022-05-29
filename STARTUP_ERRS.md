@@ -1,6 +1,8 @@
 
-[Diffview.nvim] 'file_panel.{position|width|height}' has been deprecated. See ':h diffview.changelog-136'.
-[Diffview.nvim] 'file_history_panel.{position|width|height}' has been deprecated. See ':h diffview.changelog-136'.
+i need to fix the startup errs below so that vim can start working again in the browser so that you don't need to use it at all.
+
+
+```vim
 [doom] [ERROR 08:02:00] config.lua:90: There was an error loading module 'features.dui'. Traceback:
 [doom] ...sson/.config/nvim/lua/doom/modules/features/dui/init.lua:4: module 'telescope.pickers' not found:
 [doom] ^Ino field package.preload['telescope.pickers']
@@ -27,9 +29,10 @@
 [doom] ^I/Users/hjalmarjakobsson/.config/nvim/lua/doom/core/init.lua:21: in main chunk
 [doom] ^I[C]: in function 'require'
 [doom] ^I...sson/code/repos/github.com/molleweide/doom-nvim/init.lua:16: in main chunk
-packer.nvim: Error running config for nightfox.nvim: ...ack/packer/start/nightfox.nvim/lua/nightfox/override.lua:20: attempt to index local 'opts' (a s
-tring value)
+
+packer.nvim: Error running config for nightfox.nvim: ...ack/packer/start/nightfox.nvim/lua/nightfox/override.lua:20: attempt to index local 'opts' (a string value)
+
 packer.nvim: Error running config for gitsigns.nvim: [string "..."]:0: attempt to index field 'git' (a nil value)
-[doom] [WARN  08:02:04] [string "..."]:0: doom-treesitter:  clang has poor compatibility compiling treesitter parsers.  We recommend using gcc, see iss
-ue #246 for details.  (https://github.com/NTBBloodbath/doom-nvim/issues/246)
-Press ENTER or type command to continue
+
+[doom] [WARN  08:02:04] [string "..."]:0: doom-treesitter:  clang has poor compatibility compiling treesitter parsers.  We recommend using gcc, see issue #246 for details.  (https://github.com/NTBBloodbath/doom-nvim/issues/246)
+```

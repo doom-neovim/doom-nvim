@@ -132,7 +132,6 @@ return {
     -- ::: MISC ::: --
     ------------------------------------------------------------------
 
-    "color_schemes",        -- if you want to play around with new color schemes
     "telescope_extensions", -- move into categories
     -- "audio",
     -- "crypto",            -- Crypto currency stuff
@@ -269,6 +268,10 @@ return {
     -- "fennel",
     -- "latex",
   },
+  themes = {
+    "themes",        -- if you want to play around with new color schemes
+    "nightfox",
+  }
 }
 
 -- vim: sw=2 sts=2 ts=2 fdm=indent expandtab

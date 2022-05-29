@@ -68,9 +68,11 @@ diffview.configs = {
         fold_open = "",
       },
       file_panel = {
-        position = "left", -- One of 'left', 'right', 'top', 'bottom'
-        width = 35, -- Only applies when position is 'left' or 'right'
-        height = 10, -- Only applies when position is 'top' or 'bottom'
+        win_config = {
+          position = "left", -- One of 'left', 'right', 'top', 'bottom'
+          width = 35,
+          height = 16,
+        },
         listing_style = "tree", -- One of 'list' or 'tree'
         tree_options = { -- Only applies when listing_style is 'tree'
           flatten_dirs = true,
@@ -78,9 +80,11 @@ diffview.configs = {
         },
       },
       file_history_panel = {
-        position = "bottom",
-        width = 35,
-        height = 16,
+        win_config = {
+          position = "left", -- One of 'left', 'right', 'top', 'bottom'
+          width = 35,
+          height = 16,
+        },
         log_options = {
           max_count = 256, -- Limit the number of commits
           follow = false, -- Follow renames (only for single file)

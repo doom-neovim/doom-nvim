@@ -12,6 +12,7 @@ colorpicker.settings = {}
 
 colorpicker.packages = {
   ["vCoolor.vim"] = { "KabbAmine/vCoolor.vim" }, -- open color picker / requires mouse to select color
+  -- https://github.com/folke/lsp-colors.nvim
 }
 
 return colorpicker
