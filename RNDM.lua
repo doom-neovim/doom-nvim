@@ -227,8 +227,8 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 -- gitsigns/dui/nightfox startup err
 
-this is actually quite fucking amazing and this would allow you to do shit that is just so fucking amazing that you cannot even understand
-how insane this shit is.
+this is quite fucking cool because now everything is starting to get quite fucking good and with my additions some pretty cool
+context stuff has been added.
 
 
 - clean

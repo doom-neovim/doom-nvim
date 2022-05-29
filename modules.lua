@@ -24,7 +24,9 @@ return {
     "context",            -- Provides visual context via Treesitter
     "args",               -- Provides highlighting and tools for managing function args
     "textobjects",
-    -- "ts_plugins",
+    "comments_frame",    -- Create big comments with a nice frame
+    "endwise",      -- ??
+    "ts_plugins",      -- walk through
 
     ------------------------------------------------------------------
     -- ::: EDITOR ::: --
@@ -41,7 +43,6 @@ return {
     "litee",              -- Litee IDE suite
     "leap",               -- Replace `s` with advanced leap.nvim motion plugin.
     "surround",           -- Surround text objects, eg. {([])}
-    "search_and_replace", -- Binds for search and replace
     -- "mouse",           -- ???
     "cursor",
     -- "tabs",            -- ???
@@ -98,6 +99,14 @@ return {
     "neogit",          -- A git client for neovim
     "ghq",                -- Support for `qhq` repo manager
     -- "repo_search",
+
+    ------------------------------------------------------------------
+    -- ::: TRANSFORM ::: --
+    ------------------------------------------------------------------
+
+    "search_and_replace", -- Binds for search and replace
+    "architext", -- todo
+
 
     ------------------------------------------------------------------
     -- ::: TOOLS ::: --
@@ -161,7 +170,6 @@ return {
     -- ::: MOLLEWEIDE ::: --
     ------------------------------------------------------------------
 
-    "architext", -- todo
     "binds",
     "colors",
     "docs",
@@ -268,6 +276,7 @@ return {
 
     -- "fennel",
     -- "latex",
+    -- lisp
   },
   themes = {
     -- "apprentice",
