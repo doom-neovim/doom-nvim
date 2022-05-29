@@ -227,9 +227,9 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 -- gitsigns/dui/nightfox startup err
 
-so now all of the startup errors are fixed and everything is configured and setup so that one can use this shit and ownso
-so that is actually quite fucking cool and we could look into this shit to gether and maybe see if there is something here that we
-can fix.
+this is actually quite fucking amazing and this would allow you to do shit that is just so fucking amazing that you cannot even understand
+how insane this shit is.
+
 
 - clean
 
@@ -274,4 +274,6 @@ hip flex
 
 --TODO: MOVE SURROUND INTO LEAP MOTION FEAT BRANCH.
 
+
+--  soka jobb pao Boss Sweden.
 
