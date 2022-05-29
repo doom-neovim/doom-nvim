@@ -16,6 +16,7 @@ local MODULE_CATEGORIES = {
     "core",
     "features",
     "langs",
+    "themes"
 }
 
 local MODULE_PARTS = {
@@ -256,7 +257,7 @@ M.get_modules_extended = function()
           doom_ui_state.next()
 	      end
       },
-      ordinal = m_origin .. m_name -- connect strings to make it easy to search modules. improve how?
+      ordinal = m_name -- connect strings to make it easy to search modules. improve how?
     }
   end
 
