@@ -1,15 +1,6 @@
 local mt =  require("doom.modules.features.dui.make_title")
 local mr =  require("doom.modules.features.dui.make_results")
 
-local pickers = require("telescope.pickers")
-local finders = require("telescope.finders")
-local conf = require("telescope.config").values
-local actions_set = require("telescope.actions.set")
-local state = require("telescope.actions.state")
-local actions = require("telescope.actions")
-local previewers = require("telescope.previewers")
-local entry_display = require("telescope.pickers.entry_display")
-
 local doom_ui = {}
 
 -- TODO:
@@ -49,6 +40,7 @@ end
 
 -- TODO: make this dynamic / add display configs to each parts result maker.
 function doom_displayer(entry)
+  local entry_display = require("telescope.pickers.entry_display")
   local displayer = entry_display.create {
     separator = "▏",
     items = {
@@ -74,6 +66,15 @@ end
 -- return entry_makers
 
 local function doom_picker(type, components)
+  local pickers = require("telescope.pickers")
+  local finders = require("telescope.finders")
+  local conf = require("telescope.config").values
+  local actions_set = require("telescope.actions.set")
+  local state = require("telescope.actions.state")
+  local actions = require("telescope.actions")
+  local previewers = require("telescope.previewers")
+
+
   local title = mt.get_title()
   local results = mr.get_results_for_query()
   -- i(results)
@@ -194,7 +195,7 @@ doom_ui.binds = {
     name = "+prefix",
     {
       -- TODO: this should be all mods + settings, so that everything can be reached.
-      { "k", [[ :DoomPickerModules<cr> ]], name = "all modules", options = { silent = false }, },
+      { "k", [[ :DoomPickerModules<cr> ]], name = "Browse modules", options = { silent = false }, },
       {
         "n",
         name = "+test",

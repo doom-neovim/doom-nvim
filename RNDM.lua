@@ -227,7 +227,9 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 -- gitsigns/dui/nightfox startup err
 
-maybe it is time to delve into dorothy now then since I have this feature.
+so now all of the startup errors are fixed and everything is configured and setup so that one can use this shit and ownso
+so that is actually quite fucking cool and we could look into this shit to gether and maybe see if there is something here that we
+can fix.
 
 - clean
 
