@@ -7,12 +7,12 @@ ts_args.packages = {
       { "nvim-treesitter/nvim-treesitter" },
     },
   },
+  ["iswap.nvim"] = {"mizlan/iswap.nvim"} -- re-arrange args easilly
   -- https://github.com/rohit-px2/nvim-ts-highlightparams
-  -- https://github.com/mizlan/iswap.nvim -- re-arrange args easilly
 }
 
 ts_args.configs = {}
-ts_args.configs["nvim-treesitter-context"] = function()
+ts_args.configs["hlargs.nvim"] = function()
   require('hlargs').setup() -- detaults
   -- require('hlargs').setup {
   --   color = '#ef9062',
@@ -51,7 +51,8 @@ end
 -- Run the command :ISwap when your cursor is in a location that is suitable for swapping around things. These include lists/arrays, function arguments, and parameters in function definitions. Then, hit two keys corresponding to the items you wish to be swapped. After both keys are hit, the text should immediately swap in the buffer. See the gif above for example usage.
 -- Use :ISwapWith if you want to have the element your cursor is over automatically as one of the elements. This way, you only need one keypress to make a swap.
 
-ts_args.configs["iswap.nvim"] = function()
+-- ts_args.configs["iswap.nvim"] = function()
+-- end
 
 
 ts_args.binds = {

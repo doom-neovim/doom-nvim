@@ -229,9 +229,7 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 -- gitsigns/dui/nightfox startup err
 
-
-so this is quite fucking insane and the thing that you need to fucking do is just so fuckig fast that it is hard to understand you know.
-
+no but is an expensive operation that costs quite a lot of money.
 
 - clean
 
