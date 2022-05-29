@@ -21,15 +21,11 @@ return {
     "linter",             -- Linting and formatting for languages
     "lsp",                -- Code completion
     "snippets",           -- Code snippets for all languages
-    "ts_context",        -- ??
-    -- "ts_refactor",
+    -- "ts_context",        -- ??
+    -- "ts_args",            -- ??
     -- "ts_textobjects",
-    -- "ts_playground",
     -- "ts_plugins",
-    -- "ts_motions",
     -- "ts_textsubjects",
-    -- "ts_hlargs"
-    -- "ts_cmptree",
 
 
     ------------------------------------------------------------------

@@ -11,6 +11,7 @@ local tsp = {}
 ----------------------------
 
 tsp.packages = {
+  ["nvim-treesitter-refactor"] = { "nvim-treesitter/nvim-treesitter-refactor" },
   ["complementree.nvim"] = { "vigoux/complementree.nvim" },
   ["ts-manipulator.nvim"] = {"akshettrj/ts-manipulator.nvim"},
   ["templar.nvim"] = {"vigoux/templar.nvim"},
@@ -25,11 +26,68 @@ tsp.packages = {
   ["nvim-treesitter-endwise"] = {"RRethy/nvim-treesitter-endwise"},
   ["docstr.nvim"] = {"Bryley/docstr.nvim"},
   ["nvim-comment-frame"] = {"s1n7ax/nvim-comment-frame"}
+  ["playground"] = { "nvim-treesitter/playground" }, -- move to ts module.
 }
 
 ----------------------------
+--
 -- CONFIGS
+--
 ----------------------------
+
+-----------------------------------------------------------------------------
+-- ::: NVIM TREESITTER REFACTOR ::: --
+-----------------------------------------------------------------------------
+
+-- lua <<EOF
+-- require'nvim-treesitter.configs'.setup {
+--   refactor = {
+--     highlight_definitions = {
+--       enable = true,
+--       -- Set to false if you have an `updatetime` of ~100.
+--       clear_on_cursor_move = true,
+--     },
+--   },
+-- }
+-- EOF
+
+-- lua <<EOF
+-- require'nvim-treesitter.configs'.setup {
+--   refactor = {
+--     highlight_current_scope = { enable = true },
+--   },
+-- }
+-- EOF
+
+-- lua <<EOF
+-- require'nvim-treesitter.configs'.setup {
+--   refactor = {
+--     smart_rename = {
+--       enable = true,
+--       keymaps = {
+--         smart_rename = "grr",
+--       },
+--     },
+--   },
+-- }
+-- EOF
+
+-- lua <<EOF
+-- require'nvim-treesitter.configs'.setup {
+--   refactor = {
+--     navigation = {
+--       enable = true,
+--       keymaps = {
+--         goto_definition = "gnd",
+--         list_definitions = "gnD",
+--         list_definitions_toc = "gO",
+--         goto_next_usage = "<a-*>",
+--         goto_previous_usage = "<a-#>",
+--       },
+--     },
+--   },
+-- }
+-- EOF
 
 ----------------------------
 -- CMDS
@@ -47,19 +105,67 @@ tsp.packages = {
 -- BINDS
 ----------------------------
 
+tsp.binds = {
+  {
+    "<leader>n",
+    name = "+test",
+    {
+      {
+        "t",
+        name = "+ts",
+        {
+          { "p", "<cmd>TSPlaygroundToggle<CR>", name = "togl playgr" },
+          { "h", "<cmd>TSHighlightCapturesUnderCursor<CR>", name = "highl capt curs" },
+          { "u", "<cmd>TSNodeUnderCursor<CR>", name = "node under curs" },
+        },
+      },
+    },
+  },
+}
+
 -- tsp.binds = {
---     "<leader>",
---     name = "+prefix",
+--   "<leader>",
+--   name = "+prefix",
+--   {
 --     {
+--       "n",
+--       name = "+test",
 --       {
---         "YYY",
---         name = "+ZZZ",
 --         {
---         -- first level
+--           {
+--             "t",
+--             name = "+ts",
+--             -- TSContextEnable, TSContextDisable and TSContextToggle.
+--             { "c", [[ :TSContextToggle<cr> ]], name = "toggle context" },
+--           },
 --         },
 --       },
 --     },
---   }
+--   },
+-- }
+
+-- tsp.binds = {
+--   "<leader>",
+--   name = "+prefix",
+--   {
+--     {
+--       "n",
+--       name = "+test",
+--       {
+--         {
+--           {
+--             "t",
+--             name = "+ts",
+--             { "c", [[ :TSContextToggle<cr> ]], name = "toggle context" },
+--             { "v", [[ :NvimContextVtToggle<cr> ]], name = "toggle vt context" },
+--             -- { "V", [[ :NvimContextVtDebug<cr> ]], name = "vt ctx debug" },
+--           },
+--         },
+--       },
+--     },
+--   },
+-- }
+
 
 ----------------------------
 -- RETURN

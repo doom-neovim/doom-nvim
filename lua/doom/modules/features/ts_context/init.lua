@@ -8,8 +8,8 @@ tsctx.packages = {
     },
     opt = true,
   },
-  -- https://github.com/haringsrob/nvim_context_vt -- MUST CHECKOUT!!
-  -- https://github.com/keyvchan/virt_context.nvim
+  ["nvim_context_vt"] = {"haringsrob/nvim_context_vt"},
+  ["virt_context.nvim"] = {"keyvchan/virt_context.nvim"},
 }
 
 tsctx.configs = {}
@@ -117,5 +117,6 @@ end
 --     },
 --   },
 -- }
+
 
 return tsctx
