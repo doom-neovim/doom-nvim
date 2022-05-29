@@ -229,7 +229,8 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 -- gitsigns/dui/nightfox startup err
 
-no but is an expensive operation that costs quite a lot of money.
+thisi s quite cool because this means that you can see your context whenever you like which is pretty fucking cool and something
+that you might really like which is pretty awesome.
 
 - clean
 

@@ -1,12 +1,7 @@
 local ts_args = {}
 
 ts_args.packages = {
-  ["hlargs.nvim"] = {
-    "m-demare/hlargs.nvim",
-    requires = {
-      { "nvim-treesitter/nvim-treesitter" },
-    },
-  },
+  ["hlargs.nvim"] = { "m-demare/hlargs.nvim", },
   ["iswap.nvim"] = {"mizlan/iswap.nvim"} -- re-arrange args easilly
   -- https://github.com/rohit-px2/nvim-ts-highlightparams
 }

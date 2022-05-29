@@ -21,8 +21,8 @@ return {
     "linter",             -- Linting and formatting for languages
     "lsp",                -- Code completion
     "snippets",           -- Code snippets for all languages
-    "ts_context",
-    -- "ts_args",
+    "context",            -- Provides visual context via Treesitter
+    "args",               -- Provides highlighting and tools for managing function args
     -- "ts_textobjects",
     -- "ts_plugins",
 
