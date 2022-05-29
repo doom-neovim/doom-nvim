@@ -2,6 +2,13 @@ local textobjects = {}
 
 textobjects.packages = {
   ["nvim-treesitter-textobjects"] = { "nvim-treesitter/nvim-treesitter-textobjects" },
+  ["nvim-treesitter-textsubjects"] = {
+    "RRethy/nvim-treesitter-textsubjects",
+    requires = {
+      { "nvim-treesitter/nvim-treesitter" },
+    },
+    opt = true,
+  }
   -- https://github.com/David-Kunz/treesitter-unit/
   -- https://github.com/zacharydscott/hatchet.nvim
 }
@@ -87,6 +94,19 @@ textobjects.configs = function()
   -- EOF
 end
 
+-- textobjects.configs["nvim-treesitter-textsubjects"] = function()
+--   require('nvim-treesitter.configs').setup {
+--       textsubjects = {
+--           enable = true,
+--           prev_selection = ',', -- (Optional) keymap to select the previous selection
+--           keymaps = {
+--               ['.'] = 'textsubjects-smart',
+--               [';'] = 'textsubjects-container-outer',
+--               ['i;'] = 'textsubjects-container-inner',
+--           },
+--       },
+--   }
+-- end
 
 
 
@@ -112,6 +132,27 @@ textobjects.binds = {
     },
   },
 }
+
+-- textobjects.binds = {
+--   "<leader>",
+--   name = "+prefix",
+--   {
+--     {
+--       "n",
+--       name = "+test",
+--       {
+--         {
+--           {
+--             "t",
+--             name = "+ts",
+--             -- TSContextEnable, TSContextDisable and TSContextToggle.
+--             { "c", [[ :TSContextToggle<cr> ]], name = "toggle context" },
+--           },
+--         },
+--       },
+--     },
+--   },
+-- }
 
 
 return textobjects
