@@ -229,8 +229,8 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 -- gitsigns/dui/nightfox startup err
 
-they have a very interesting thing hat is quite fucking insane and the thing is that it cannot really fucking be the thing that y6
-would like you know and so that is why they are so fucking amazing and cool which is a political game.
+it is true and quite fuckign cool and something that is sort of the shit that really needs to be dealt with, and that is something
+that you really fucki need to hepl with
 
 - clean
 
@@ -271,3 +271,5 @@ hip flex
 
 
 --TODO: MOVE SURROUND INTO LEAP MOTION FEAT BRANCH.
+
+

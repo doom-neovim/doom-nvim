@@ -23,9 +23,8 @@ return {
     "snippets",           -- Code snippets for all languages
     "context",            -- Provides visual context via Treesitter
     "args",               -- Provides highlighting and tools for managing function args
-    -- "textobjects",
+    "textobjects",
     -- "ts_plugins",
-
 
     ------------------------------------------------------------------
     -- ::: EDITOR ::: --
@@ -273,3 +272,5 @@ return {
 }
 
 -- vim: sw=2 sts=2 ts=2 fdm=indent expandtab
+
+
