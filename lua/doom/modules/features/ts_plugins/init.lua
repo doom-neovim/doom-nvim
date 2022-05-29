@@ -1,10 +1,68 @@
--- git@github.com:akshettrj/ts-manipulator.nvim.git
--- https://github.com/Bryley/docstr.nvim
--- https://github.com/rishabh3/symsearch.nvim
--- https://github.com/nvim-treesitter/module-template
--- https://github.com/kizza/jump-from-treesitter.nvim
--- https://github.com/jbyuki/ntangle-ts.nvim -- ?????????
--- https://github.com/aaronma37/ts-word-wrapper.nvim
--- https://github.com/vigoux/proofreader.nvim
--- https://github.com/ziontee113/syntax-tree-surfer
--- https://github.com/p00f/nvim-ts-rainbow
+local tsp = {}
+
+----------------------------
+-- SETTINGS
+----------------------------
+
+-- tsp.settings = {}
+
+----------------------------
+-- PACKAGES
+----------------------------
+
+tsp.packages = {
+  ["complementree.nvim"] = { "vigoux/complementree.nvim" },
+  ["ts-manipulator.nvim"] = {"akshettrj/ts-manipulator.nvim"},
+  ["templar.nvim"] = {"vigoux/templar.nvim"},
+  ["module-template"] = {"nvim-treesitter/module-template"},
+  ["jump-from-treesitter.nvim"] = {"kizza/jump-from-treesitter.nvim"},
+  ["ntangle-ts.nvim"] = {"jbyuki/ntangle-ts.nvim "},
+  ["ts-word-wrapper.nvim"] = {"aaronma37/ts-word-wrapper.nvim"},
+  ["proofreader.nvim"] = {"vigoux/proofreader.nvim"},
+  ["sintax-tree-surfer"] = {"ziontee113/syntax-tree-surfer"},
+  ["nvim-ts-rainbow"] = {"p00f/nvim-ts-rainbow"},
+  ["nvim-yati"] = {"yioneko/nvim-yati"},
+  ["nvim-treesitter-endwise"] = {"RRethy/nvim-treesitter-endwise"},
+  ["docstr.nvim"] = {"Bryley/docstr.nvim"},
+  ["nvim-comment-frame"] = {"s1n7ax/nvim-comment-frame"}
+}
+
+----------------------------
+-- CONFIGS
+----------------------------
+
+----------------------------
+-- CMDS
+----------------------------
+
+-- tsp.cmds = {}
+
+--------------------------
+-- AUTOCMDS
+--------------------------
+
+-- tsp.autocmds = {}
+
+----------------------------
+-- BINDS
+----------------------------
+
+-- tsp.binds = {
+--     "<leader>",
+--     name = "+prefix",
+--     {
+--       {
+--         "YYY",
+--         name = "+ZZZ",
+--         {
+--         -- first level
+--         },
+--       },
+--     },
+--   }
+
+----------------------------
+-- RETURN
+----------------------------
+
+return tsp

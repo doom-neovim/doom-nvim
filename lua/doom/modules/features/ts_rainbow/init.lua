@@ -1,1 +1,0 @@
--- https://github.com/p00f/nvim-ts-rainbow
