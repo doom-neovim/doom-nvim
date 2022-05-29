@@ -3,8 +3,6 @@ https://github.com/masukomi/scheme-format
 
 - kontakta Kid, Nicky, Marcus, andra musik maenniskor. franska killen vikarie
 
-
-
 - 1. need to turn off gpg
 - 2.
 
@@ -185,7 +183,7 @@ TODO: DEKLARERA -> TRANSFER MONEY?
 
 - SCRUM PARAGRAPH
 
-this just doesn't work you know.
+startup errors has to be fixed
 
 - cv > highlight willys part time in parallell with engineering studies.
 
@@ -229,8 +227,7 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 -- gitsigns/dui/nightfox startup err
 
-it is true and quite fuckign cool and something that is sort of the shit that really needs to be dealt with, and that is something
-that you really fucki need to hepl with
+maybe it is time to delve into dorothy now then since I have this feature.
 
 - clean
 
@@ -268,6 +265,9 @@ hip flex
 -- leap / surround / git-bufferm stage binds
 
 -- need to setup sponsorship for myself asap. buycoffe/github/cryptowallets/paypal/
+--
+
+-- download all podcast apps and make sure that I am subscribed in them all.
 
 
 --TODO: MOVE SURROUND INTO LEAP MOTION FEAT BRANCH.
