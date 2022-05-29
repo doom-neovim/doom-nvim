@@ -229,8 +229,8 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 -- gitsigns/dui/nightfox startup err
 
-thisi s quite cool because this means that you can see your context whenever you like which is pretty fucking cool and something
-that you might really like which is pretty awesome.
+they have a very interesting thing hat is quite fucking insane and the thing is that it cannot really fucking be the thing that y6
+would like you know and so that is why they are so fucking amazing and cool which is a political game.
 
 - clean
 

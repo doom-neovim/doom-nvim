@@ -2,15 +2,9 @@ local textobjects = {}
 
 textobjects.packages = {
   ["nvim-treesitter-textobjects"] = { "nvim-treesitter/nvim-treesitter-textobjects" },
-  ["nvim-treesitter-textsubjects"] = {
-    "RRethy/nvim-treesitter-textsubjects",
-    requires = {
-      { "nvim-treesitter/nvim-treesitter" },
-    },
-    opt = true,
-  }
-  -- https://github.com/David-Kunz/treesitter-unit/
-  -- https://github.com/zacharydscott/hatchet.nvim
+  -- ["nvim-treesitter-textsubjects"] = { "RRethy/nvim-treesitter-textsubjects", }
+  -- ["treesitter-unit"] = {"David-Kunz/treesitter-unit"},
+  -- ["hatchet.nvim"] = {"zacharydscott/hatchet.nvim"},
 }
 
 textobjects.configs = {}
@@ -112,27 +106,6 @@ end
 
 textobjects.binds = {}
 
-textobjects.binds = {
-  "<leader>",
-  name = "+prefix",
-  {
-    {
-      "n",
-      name = "+test",
-      {
-        {
-          {
-            "t",
-            name = "+ts",
-            -- TSContextEnable, TSContextDisable and TSContextToggle.
-            { "c", [[ :TSContextToggle<cr> ]], name = "toggle context" },
-          },
-        },
-      },
-    },
-  },
-}
-
 -- textobjects.binds = {
 --   "<leader>",
 --   name = "+prefix",
@@ -145,7 +118,6 @@ textobjects.binds = {
 --           {
 --             "t",
 --             name = "+ts",
---             -- TSContextEnable, TSContextDisable and TSContextToggle.
 --             { "c", [[ :TSContextToggle<cr> ]], name = "toggle context" },
 --           },
 --         },
@@ -153,6 +125,5 @@ textobjects.binds = {
 --     },
 --   },
 -- }
-
 
 return textobjects

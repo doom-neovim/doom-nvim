@@ -23,7 +23,7 @@ return {
     "snippets",           -- Code snippets for all languages
     "context",            -- Provides visual context via Treesitter
     "args",               -- Provides highlighting and tools for managing function args
-    -- "ts_textobjects",
+    -- "textobjects",
     -- "ts_plugins",
 
 
