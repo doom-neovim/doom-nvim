@@ -43,12 +43,14 @@ return {
     "litee",              -- Litee IDE suite
     "leap",               -- Replace `s` with advanced leap.nvim motion plugin.
     "surround",           -- Surround text objects, eg. {([])}
-    -- "mouse",           -- ???
     "cursor",
+    -- "mouse",           -- ???
+    -- "gestures",        -- Mouse gestures
     -- "tabs",            -- ???
     -- "scroll",
-    -- "registers",
-    -- "marks",
+    "registers",
+    -- "yank",            -- Improved yank functionalities, experimental plugin `yanky.nvim`
+    "marks",
     -- "undo",
     -- "folds",
     -- "increment",       --  tools for incrementing stuff
@@ -132,11 +134,17 @@ return {
     "telescope",          -- Fuzzy searcher to find files, grep code and more
     "whichkey",           -- An interactive sheet
     "refactor",           -- Code refactoring
-  -- "scim",              -- Spreadsheets
     -- "ripgrep",
     -- "flutter",
     -- "markdown_tools",  -- ??
     -- "google_docs",
+
+    ------------------------------------------------------------------
+    -- ::: TABULAR ::: --
+    ------------------------------------------------------------------
+
+    -- "scim",              -- Spreadsheets
+    -- "tabular",           -- Extended support for managing tabular data
 
     ------------------------------------------------------------------
     -- ::: MISC ::: --
@@ -155,10 +163,8 @@ return {
     -- "kmonad",            -- Support for kmonad keyboard remapper
     -- "navigator",         -- ???
     -- "games",
-    -- "solidity",          -- ethereum lang
     -- "websearch",
     -- "data_science",
-    -- "tabular",           -- Extended support for managing tabular data
     -- "stenography",
     -- "statusline_misc",
     -- "utilities",         -- ??
@@ -277,6 +283,7 @@ return {
     -- "fennel",
     -- "latex",
     -- lisp
+    -- "solidity",          -- ethereum lang
   },
   themes = {
     -- "apprentice",

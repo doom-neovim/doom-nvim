@@ -14,7 +14,6 @@ local tsp = {}
 tsp.packages = {
   ["playground"] = { "nvim-treesitter/playground" }, -- move to ts module.
   ["nvim-treesitter-refactor"] = { "nvim-treesitter/nvim-treesitter-refactor" },
-  ["nvim-treesitter-endwise"] = {"RRethy/nvim-treesitter-endwise"},
   ["complementree.nvim"] = { "vigoux/complementree.nvim" },
   -- ["ts-manipulator.nvim"] = {"akshettrj/ts-manipulator.nvim"},
   -- ["templar.nvim"] = {"vigoux/templar.nvim"},
