@@ -86,7 +86,8 @@ return {
     "quickfix",         -- Extra quickfix capabilitieS
     -- "images",        -- Image support
     -- "legend",        -- ???
-    -- "virtual_types", -- ???
+    -- "ui",            -- improved `vim.ui`
+    "virtual_types", -- ???
     -- "code_outline",
     -- "transparent"
 
