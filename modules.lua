@@ -86,7 +86,7 @@ return {
     "quickfix",         -- Extra quickfix capabilitieS
     -- "images",        -- Image support
     -- "legend",        -- ???
-    -- "ui",            -- improved `vim.ui`
+    -- "vim_ui",            -- improved `vim.ui`
     "virtual_types", -- ???
     -- "code_outline",
     -- "transparent"
@@ -101,7 +101,7 @@ return {
     "diffview",           -- git diffview integration
     "neogit",          -- A git client for neovim
     "ghq",                -- Support for `qhq` repo manager
-    -- "repo_search",
+    -- "repo_search",     -- Browse repos in Telescope.
 
     ------------------------------------------------------------------
     -- ::: TRANSFORM ::: --
