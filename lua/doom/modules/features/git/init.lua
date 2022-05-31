@@ -261,6 +261,16 @@ git.configs["vgit.nvim"] = function()
   require("vgit").setup()
 end
 
+---
+
+local function commit_hunk_under_cursor()
+  -- a. unstage all previously staged hunks
+  -- b.
+end
+
+local function commit_current_buffer()
+end
+
 git.binds = {
   { "ih", ':<C-U>lua require"gitsigns".select_hunk()<CR>', name = "select hunk", mode = "o" },
   { "ih", ':<C-U>lua require"gitsigns".select_hunk()<CR>', name = "select hunk", mode = "x" },
@@ -273,13 +283,18 @@ git.binds = {
         name = "+git",
 
         {
+          -----------------------------------------------------------------------------
           -- COMMITS
+          -----------------------------------------------------------------------------
           {
             "c", name = "+commits",
             {
               { "c", "<cmd>Telescope git_commits<CR>", name = "Tele commits" },
+              { "u", commit_hunk_under_cursor, name = "unstage all; commit hunk under cursor"}, -- resets all other
+              { "U", commit_current_buffer, name = "unstage all;  commit current buffer"}, -- resets all other
             }
           },
+
           -- STAGING | HUNKS
           { "e", name = "+staging/hunks", {
             { "q", ":lua require('vgit').project_hunks_qf()<cr>", name = "proj hunks qt" },
@@ -302,7 +317,9 @@ git.binds = {
               },
             },
           }},
+          -----------------------------------------------------------------------------
           -- DIFF
+          -----------------------------------------------------------------------------
           { "q", name = "+diff", {
             { "f", ":lua require('vgit').buffer_diff_preview()<cr>", name = "diff preview" },
             { "h", ":lua require('vgit').buffer_history_preview()<cr>", name = "hist preview" },
@@ -325,7 +342,9 @@ git.binds = {
           -- { "f", name = "+stash", {
           --
           -- }},
+          -----------------------------------------------------------------------------
           -- INFO | STATUS
+          -----------------------------------------------------------------------------
           { "i", name = "+info/status",
             {
               { "s", "<cmd>Telescope git_status<CR>", name = "Tele status" },
@@ -345,12 +364,21 @@ git.binds = {
               { "b", "<cmd>Telescope git_branches<CR>", name = "Tele Branches" },
             }
           },
+          -----------------------------------------------------------------------------
+          -- PULL
+          -----------------------------------------------------------------------------
           -- { "p", name = "+pull", {
           --
           -- }},
+          -----------------------------------------------------------------------------
+          -- PUSH
+          -----------------------------------------------------------------------------
           -- { "P", name = "+push", {
           --
           -- }},
+          -----------------------------------------------------------------------------
+          -- MISC
+          -----------------------------------------------------------------------------
           -- { "m", name = "+misc", {
           --
           -- }},

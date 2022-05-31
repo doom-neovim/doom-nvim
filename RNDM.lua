@@ -225,11 +225,7 @@ willys -> https://jobb.axfood.se/go/Axfood/4303301/?createNewAlert=false&q=&opti
 axfood > devops -> https://jobb.axfood.se/job/Stockholm-Senior-DevOps-Engineer-e-handel-Stoc/800894501/
 alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/Stockholm/Digitalization-Development-Engineer_JR0011998
 
--- gitsigns/dui/nightfox startup err
-
-thank you for your call my lady and why you have done this shit which is some of the most exciting shit ever done and so we cannot
-really deviate from this and do some other shit you know.
-
+so this is actually quite fast when you get a feel for it.
 
 - clean
 
@@ -275,5 +271,10 @@ hip flex
 --TODO: MOVE SURROUND INTO LEAP MOTION FEAT BRANCH.
 
 
---  soka jobb pao Boss Sweden.
 
+--  soka jobb pao Boss Sweden.
+-- https://opencollective.com/neovim
+
+-- follow Markus and David @ github, and also cousin Daniel's github.
+
+-- https://github.com/MordechaiHadad/bob

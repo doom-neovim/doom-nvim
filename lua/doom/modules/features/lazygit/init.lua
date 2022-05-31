@@ -1,5 +1,7 @@
 local lazygit = {}
 
+-- todo: make transparent
+
 lazygit.settings = {}
 
 lazygit.packages = {

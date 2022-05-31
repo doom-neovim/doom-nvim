@@ -5,6 +5,8 @@ local doom_ui = {}
 
 -- TODO:
 --
+--    -> CHECK OUT `LEGENDARY` SOURCE AND SEE HOW THE DISPLAYER IS CONFIGURED.
+--
 --    - sorters
 --    - displayers
 --    - native fuzzy
