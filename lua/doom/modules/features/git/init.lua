@@ -261,14 +261,17 @@ git.configs["vgit.nvim"] = function()
   require("vgit").setup()
 end
 
----
-
 local function commit_hunk_under_cursor()
-  -- a. unstage all previously staged hunks
-  -- b.
+  require('vgit').project_unstage_all()
+  require"gitsigns".stage_hunk()
+  vim.cmd("Neogit commit")
 end
 
 local function commit_current_buffer()
+  -- a. unstage all previously staged hunks (vgit command)
+  -- b. stage buffer
+  -- c. commit
+  -- d. push
 end
 
 git.binds = {
@@ -290,8 +293,8 @@ git.binds = {
             "c", name = "+commits",
             {
               { "c", "<cmd>Telescope git_commits<CR>", name = "Tele commits" },
-              { "u", commit_hunk_under_cursor, name = "unstage all; commit hunk under cursor"}, -- resets all other
-              { "U", commit_current_buffer, name = "unstage all;  commit current buffer"}, -- resets all other
+              { "u", commit_hunk_under_cursor, name = "commit single hunk"}, -- resets all other
+              -- { "U", commit_current_buffer, name = "unstage all;  commit current buffer"}, -- resets all other
               -- { "p", commit_hunk_and_push, name = "com hunk @ curs & push"}, -- resets all other
             }
           },
