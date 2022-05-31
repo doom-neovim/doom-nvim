@@ -292,6 +292,7 @@ git.binds = {
               { "c", "<cmd>Telescope git_commits<CR>", name = "Tele commits" },
               { "u", commit_hunk_under_cursor, name = "unstage all; commit hunk under cursor"}, -- resets all other
               { "U", commit_current_buffer, name = "unstage all;  commit current buffer"}, -- resets all other
+              -- { "p", commit_hunk_and_push, name = "com hunk @ curs & push"}, -- resets all other
             }
           },
 
