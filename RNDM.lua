@@ -231,9 +231,12 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 cmp / luasnip /
 
-dude this is going to become so fucking nice dude and the way this goes is by fucking running this shit system into
-the ground and so that youc an always make it into something that is just boom.
+so now neorg is starting to work again which is quite fucking nice and something that I really want to show and so that is the thing that
+is the most important.
 
+prepare my skills lecture.
+
+lf
 
 - clean
 
@@ -274,5 +277,6 @@ the ground and so that youc an always make it into something that is just boom.
 --
 --
 --
+
 
 -- MODULE STRUCTURE > dynamically collect module category dirs instead of having them hard coded.

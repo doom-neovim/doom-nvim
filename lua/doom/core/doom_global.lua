@@ -317,6 +317,7 @@ doom = {
     end
   end,
 
+  -- TODO: USE GLOB PATH TO DYNAMICALLY COLLECT MODULE PATHS
   -- This is where modules are stored.
   -- The entire data structure will be stored in modules[module_name] = {}
   -- The key (`user` vs `modules` vs `langs`) cooresponds with the section in
@@ -328,6 +329,8 @@ doom = {
     themes = {},
   }
 }
+
+
 -- Maintain backwards compatibility + provide a shorthand way to access modules
 doom.core = doom.modules.core
 doom.features = doom.modules.features

@@ -201,6 +201,7 @@ end
 M.get_modules_extended = function()
   local config_path = vim.fn.stdpath("config")
 
+  -- REFACTOR: move into utils -> get modules
   local function glob_modules(cat)
     if cat ~= "doom" and cat ~= "user" then return end
     local glob = config_path .. "/lua/"..cat.."/modules/*/*/"
