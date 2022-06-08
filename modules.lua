@@ -74,7 +74,7 @@ return {
     "tabline",            -- Tab bar buffer switcher
     "dashboard",          -- A pretty dashboard upon opening
     "trouble",         -- A pretty diagnostic viewer
-    -- "statusline",         -- A pretty status line at the bottom of the buffer
+    -- "statusline2",         -- A pretty status line at the bottom of the buffer
     "minimap",         -- Shows current position in document
     "terminal",        -- Integrated terminal in neovim
     "symbols",         -- Navigate between code symbols using telescope
@@ -124,6 +124,7 @@ return {
     "explorer",           -- An enhanced filetree explorer
     "firenvim",           -- Embed neovim in your browser
     "lazygit",            -- Lazy git integration
+    "netrw",
     "neorg",              -- Organise your life
     -- "pandoc",
     "plugins_reloader",   -- Watch local packages for changes during development
@@ -268,6 +269,7 @@ return {
     "css",
     "vue",
     "tailwindcss",
+    "glsl",
 
     -- Compiled
     "rust",
