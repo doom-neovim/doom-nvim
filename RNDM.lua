@@ -2,11 +2,15 @@
 https://github.com/masukomi/scheme-format
 
 - kontakta Kid, Nicky, Marcus, andra musik maenniskor. franska killen vikarie
+  > nicklas nya studio pao soder.
 
 - 1. need to turn off gpg
 - 2.
 
         require("plenary.reload").reload_module(selection.value)
+
+
+https://github.com/ReaTeam/ReaScripts/wiki/RPP-Parser
 
 wha possibilities are there.
 
@@ -225,9 +229,14 @@ willys -> https://jobb.axfood.se/go/Axfood/4303301/?createNewAlert=false&q=&opti
 axfood > devops -> https://jobb.axfood.se/job/Stockholm-Senior-DevOps-Engineer-e-handel-Stoc/800894501/
 alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/Stockholm/Digitalization-Development-Engineer_JR0011998
 
-so this is actually quite fast when you get a feel for it.
+cmp / luasnip /
+
+dude this is going to become so fucking nice dude and the way this goes is by fucking running this shit system into
+the ground and so that youc an always make it into something that is just boom.
+
 
 - clean
+
 
   -> windows
   -> bathroom
@@ -235,25 +244,6 @@ so this is actually quite fast when you get a feel for it.
   -> vents
   -> wipe walls downstairs
   -> behind washingmashine
-
-WARM UP --------------------------------------------
-
-quad crawling into stretch
-master delt
-
-UPPER --------------------------------------------
-
-push
-pull
-shrugs
-cable pulls
-
-LOWER --------------------------------------------
-
-press + shoulders!!!
-calf
-ham
-hip flex
 
 `:h ins-completion`
 
@@ -267,12 +257,10 @@ hip flex
 
 -- download all podcast apps and make sure that I am subscribed in them all.
 
--- ccccc
-
 --TODO: MOVE SURROUND INTO LEAP MOTION FEAT BRANCH.
 
-
 -- arst
+
 
 --  soka jobb pao Boss Sweden.
 -- https://opencollective.com/neovim
@@ -280,3 +268,11 @@ hip flex
 -- follow Markus and David @ github, and also cousin Daniel's github.
 
 -- https://github.com/MordechaiHadad/bob
+
+
+-- https://github.com/ReaTeam/ReaScripts/wiki/RPP-Parser
+--
+--
+--
+
+-- MODULE STRUCTURE > dynamically collect module category dirs instead of having them hard coded.
