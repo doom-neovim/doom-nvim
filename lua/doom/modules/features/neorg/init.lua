@@ -93,4 +93,30 @@ neorg.autocmds = {
   }
 }
 
+neorg.binds = {
+  {
+    "<leader>",
+    name = "+prefix",
+    {
+      {
+        "o",
+        name = "+open/close",
+        {
+          "n",
+          name = "+neorg",
+          {
+            { 'd', ':Neorg workspace default_workspace<cr>', name = "neorg workspace default" },
+            { 'G', ':Neorg workspace gtd<cr>', name = "neorg gtd" },
+            { 'E', ':Neorg workspace example_gtd<cr>', name = "neorg example" },
+            { 'g', ':Neorg gtd ', name = "neorg gtd <insert>" },
+            { 'c', ':Neorg gtd capture<cr>', name = "neorg capture" },
+            { 'e', ':Neorg gtd edit', name = "neorg gtd edit" },
+            { 'v', ':Neorg gtd views<cr>', name = "neorg gtd views" },
+          },
+        },
+      },
+    },
+  },
+}
+
 return neorg
