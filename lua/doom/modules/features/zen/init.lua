@@ -36,7 +36,7 @@ zen.settings = {
     },
   },
   integrations = {
-    galaxyline = true,
+    -- galaxyline = true,
     tmux = true,
     gitsigns = true,
     nvim_bufferline = true,
