@@ -138,6 +138,10 @@ doom = {
     -- @default = { 'jk', 'kj' }
     escape_sequences = { "jk", "kj" },
 
+    -- If you require a specific command to be run when initiating the terminal
+    -- @default = ""
+    term_exec_cmd = "",
+
     -- Use floating windows for plugins manager (packer) operations
     -- @default = false
     use_floating_win_packer = false,
