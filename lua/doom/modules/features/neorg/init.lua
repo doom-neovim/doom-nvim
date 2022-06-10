@@ -1,6 +1,8 @@
-local utils = require("doom.utils")
+-- local utils = require("doom.utils")
 
 local neorg = {}
+
+-- https://github.com/max397574/neorg-kanban
 
 local doom_root = require("doom.core.system").doom_root
 
@@ -38,8 +40,19 @@ neorg.settings = {
         workspace = "gtd",
       },
     },
-    ["core.integrations.telescope"] = {}, -- Enable the telescope module
-  },
+    ["core.integrations.telescope"] = {},
+    ["core.presenter"] = {
+      config = {
+        zen_mode = "truezen",
+      }
+    },
+    ["core.norg.journal"] = {
+      config = {
+        main = "~/neorg",
+        journal_folder = "~/neorg/journal"
+      },
+    },
+  }
 }
 
 neorg.packages = {
@@ -143,6 +156,8 @@ neorg.binds = {
             { 'c', ':Neorg gtd capture<cr>', name = "neorg capture" },
             { 'e', ':Neorg gtd edit', name = "neorg gtd edit" },
             { 'v', ':Neorg gtd views<cr>', name = "neorg gtd views" },
+            { 't', ':Neorg journal today<cr>', name = "neorg journal today" },
+            { 'n', ':Neorg present<cr>', name = "neorg present" },
             -- { 'f', ':Neorg gtd views<cr>', name = "neorg telescope" },
             -- Telescope neorg find_linkable
             -- Telescope neorg search_headings
