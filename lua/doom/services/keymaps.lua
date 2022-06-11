@@ -171,13 +171,12 @@ default_integration.handler = function(node, node_settings)
   for mode in string.gmatch(node_settings.mode, ".") do
     local sanitizedMode = mode == "_" and "" or mode
 
-    if node_settings.buffer then
-      local buffer = (node_settings.buffer == true) and 0 or node_settings.buffer
+    local buffer = (node_settings.buffer == true) and 0 or node_settings.buffer
 
-      vim.api.nvim_buf_set_keymap(buffer, sanitizedMode, node.lhs, node.rhs, node_settings.options)
-    else
-      vim.api.nvim_set_keymap(sanitizedMode, node.lhs, node.rhs, node_settings.options)
-    end
+    vim.keymap.set(sanitizedMode, node.lhs, node.rhs, {
+      buffer = buffer,
+      unpack(node_settings.options)
+    })
   end
 end
 -- Bind default_integration keymap handler
