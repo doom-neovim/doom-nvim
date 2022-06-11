@@ -158,7 +158,7 @@ telescope.binds = function()
         {
           {
             "C",
-            "<cmd>Telescope colorscheme enable_preview=true",
+            "<cmd>Telescope colorscheme enable_preview=true<CR>",
             name = "Switch colorscheme",
           },
         },
