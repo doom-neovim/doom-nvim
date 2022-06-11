@@ -55,7 +55,6 @@ telescope.packages = {
   },
 }
 
-
 telescope.configs = {}
 telescope.configs["telescope.nvim"] = function()
   local telescope_package = require("telescope")
@@ -90,7 +89,7 @@ telescope.configs["telescope.nvim"] = function()
   end
 end
 
-telescope.binds = function ()
+telescope.binds = function()
   local utils = require("doom.utils")
   local is_module_enabled = utils.is_module_enabled
 
@@ -159,9 +158,7 @@ telescope.binds = function ()
         {
           {
             "C",
-            function()
-              require("telescope.builtin.internal").colorscheme({ enable_preview = true })
-            end,
+            "<cmd>Telescope colorscheme enable_preview=true",
             name = "Switch colorscheme",
           },
         },
