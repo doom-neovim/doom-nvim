@@ -25,7 +25,7 @@ linter.configs["null-ls.nvim"] = function()
         vim.cmd([[
         augroup LspFormatting
           autocmd! * <buffer>
-          autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+          autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
         augroup END
         ]])
       end
@@ -37,7 +37,7 @@ linter.binds = {
   {
     "<leader>cf",
     function()
-      vim.lsp.buf.formatting_sync()
+      vim.lsp.buf.format()
     end,
     name = "Format/Fix",
   },
