@@ -125,7 +125,6 @@ statusline._generate_colorscheme = function()
     return a.rating > b.rating
   end)
 
-  print(vim.inspect(colors))
   return unpack(vim.tbl_map(function(color)
     return color.hex
   end, colors))
@@ -144,7 +143,6 @@ statusline.configs["heirline.nvim"] = function()
 
   local special, special2, special3 = doom.modules.features.statusline._generate_colorscheme()
 
-  print(special, special2, special3)
   local safe_get_highlight = doom.modules.features.statusline._safe_get_highlight
   local colors = {
     normal = safe_get_highlight("Normal").foreground,
