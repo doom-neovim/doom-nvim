@@ -57,7 +57,7 @@ statusline._safe_get_highlight = function(...)
       end
     end
   end
-  return { foreground = "#ffffff", background = "#000000" }
+  return { foreground = "#000000", background = "#000000" }
 end
 
 
@@ -72,6 +72,8 @@ statusline._generate_colorscheme = function()
     statusline._safe_get_highlight("luaTSConditional").foreground,
     statusline._safe_get_highlight("luaTSFunction").foreground,
     statusline._safe_get_highlight("luaTSKeywordFunction").foreground,
+    statusline._safe_get_highlight("luaTSString").foreground,
+    statusline._safe_get_highlight("luaTSNumber").foreground,
   })
 
   local rate_color = function(hsv)
@@ -89,7 +91,7 @@ statusline._generate_colorscheme = function()
       end
     end
     averageDist = averageDist / #colors
-    local rating = averageDist * 3 + numberOfNearbyNodes * 0.2 + hsv[2] * 0.2
+    local rating = averageDist * 3 + numberOfNearbyNodes * 0.2 + hsv[2] * 0.2 + 0.5 - math.abs(0.5 - hsv[3])
     return rating
   end
 
@@ -150,7 +152,7 @@ statusline.configs["heirline.nvim"] = function()
       provider = function()
         return "█"
       end,
-      hl = { fg = colors.special3 },
+      hl = { fg = colors.special2 },
     },
   }
 
@@ -336,7 +338,7 @@ statusline.configs["heirline.nvim"] = function()
 
     {
       {
-        hl = { fg = colors.special3 },
+        hl = { fg = colors.special2 },
         provider = function()
           return "  "
         end,
