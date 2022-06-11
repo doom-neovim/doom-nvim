@@ -1,9 +1,9 @@
 local hex2rgb = function(hex)
   hex = hex:gsub("#", "")
   return {
-     tonumber("0x" .. hex:sub(1, 2)),
-     tonumber("0x" .. hex:sub(3, 4)),
-     tonumber("0x" .. hex:sub(5, 6))
+    tonumber("0x" .. hex:sub(1, 2)),
+    tonumber("0x" .. hex:sub(3, 4)),
+    tonumber("0x" .. hex:sub(5, 6)),
   }
 end
 
@@ -25,16 +25,24 @@ local rgbToHsv = function(r, g, b)
   v = max
 
   local d = max - min
-  if max == 0 then s = 0 else s = d / max end
+  if max == 0 then
+    s = 0
+  else
+    s = d / max
+  end
 
   if max == min then
     h = 0 -- achromatic
   else
     if max == r then
-    h = (g - b) / d
-    if g < b then h = h + 6 end
-    elseif max == g then h = (b - r) / d + 2
-    elseif max == b then h = (r - g) / d + 4
+      h = (g - b) / d
+      if g < b then
+        h = h + 6
+      end
+    elseif max == g then
+      h = (b - r) / d + 2
+    elseif max == b then
+      h = (r - g) / d + 4
     end
     h = h / 6
   end
@@ -53,21 +61,20 @@ statusline._safe_get_highlight = function(...)
       local foreground = vim.fn.synIDattr(id, "fg")
       local background = vim.fn.synIDattr(id, "bg")
       if foreground and foreground:find("^#") then
-          return { foreground = foreground, background = background }
+        return { foreground = foreground, background = background }
       end
     end
   end
   return { foreground = "#000000", background = "#000000" }
 end
 
-
 statusline._generate_colorscheme = function()
   local colors = vim.tbl_map(function(hl)
     return {
       hex = hl,
-      rgb = hex2rgb(hl)
+      rgb = hex2rgb(hl),
     }
-    end, {
+  end, {
     statusline._safe_get_highlight("luaTSField").foreground,
     statusline._safe_get_highlight("luaTSConditional").foreground,
     statusline._safe_get_highlight("luaTSFunction").foreground,
@@ -91,20 +98,37 @@ statusline._generate_colorscheme = function()
       end
     end
     averageDist = averageDist / #colors
-    local rating = averageDist * 3 + numberOfNearbyNodes * 0.2 + hsv[2] * 0.2 + 0.5 - math.abs(0.5 - hsv[3])
+
+    -- Prioritise colours that are far away from others
+    local averageDistanceRating = averageDist * 2
+    -- Prioritise colours that are the center of clusters
+    local proximityRating = numberOfNearbyNodes * 0.2
+    -- Prioritise nodes with roughly 0.8 brightness
+    local allowedBrightnessRating = (1 - math.abs(0.8 - hsv[3]))
+    -- Prioritise nodes with high saturation
+    local saturationRating = hsv[2] * 0.3
+
+    local rating = (averageDistanceRating + proximityRating + saturationRating)
+      * allowedBrightnessRating
     return rating
   end
 
   for _, color in ipairs(colors) do
     local h, s, v = rgbToHsv(unpack(color.rgb))
-    color.hsv = {h, s, v}
+    color.hsv = { h, s, v }
   end
   for _, color in ipairs(colors) do
     color.rating = rate_color(color.hsv)
   end
 
-  table.sort(colors, function(a, b) return a.rating > b.rating end)
-  return unpack(vim.tbl_map(function(color) return color.hex end, colors))
+  table.sort(colors, function(a, b)
+    return a.rating > b.rating
+  end)
+
+  print(vim.inspect(colors))
+  return unpack(vim.tbl_map(function(color)
+    return color.hex
+  end, colors))
 end
 
 statusline.packages = {
@@ -119,6 +143,8 @@ statusline.configs["heirline.nvim"] = function()
   local conditions = require("heirline.conditions")
 
   local special, special2, special3 = doom.modules.features.statusline._generate_colorscheme()
+
+  print(special, special2, special3)
   local safe_get_highlight = doom.modules.features.statusline._safe_get_highlight
   local colors = {
     normal = safe_get_highlight("Normal").foreground,
@@ -416,13 +442,15 @@ statusline.autocmds = {
   {
     "VimEnter",
     "*",
-    function ()
-      vim.defer_fn(function()
-        doom.modules.features.statusline.configs["heirline.nvim"]()
-      end, 10)
+    function()
+      for i = 1, 7 do
+        vim.defer_fn(function()
+          doom.modules.features.statusline.configs["heirline.nvim"]()
+        end, math.pow(4, i))
+      end
     end,
-    once = true
-  }
+    once = true,
+  },
 }
 
 return statusline
