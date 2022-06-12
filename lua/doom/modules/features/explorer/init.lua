@@ -1,31 +1,14 @@
 local explorer = {}
 
 explorer.settings = {
-  refresh_wait = true,
   disable_netrw = true,
   hijack_netrw = true,
   open_on_setup = false,
   ignore_ft_on_setup = {},
-  auto_close = false,
   open_on_tab = true,
   hijack_cursor = true,
   update_cwd = true,
   respect_buf_cwd = true,
-  special_files = {
-    "README.md",
-    "Makefile",
-    "MAKEFILE",
-  },
-  window_picker_exclude = {
-    filetype = {
-      "notify",
-      "packer",
-      "qf",
-    },
-    buftype = {
-      "terminal",
-    },
-  },
   update_focused_file = {
     enable = true,
     update_cwd = true,
@@ -39,38 +22,72 @@ explorer.settings = {
       custom_only = false,
     },
   },
-  indent_markers = true,
-  git_highlight = true,
-  traling_dir_slash = true,
-  group_empty = true,
-  show_icons = {
-    git = true,
-    folders = true,
-    files = true,
-    folder_arrows = true,
+  filters = {
+    custom = { ".git", "node_modules.editor", ".cache", "__pycache__" },
   },
-  icons = {
-    default = "",
-    symlink = "",
-    git = {
-      unstaged = "",
-      staged = "",
-      unmerged = "",
-      renamed = "",
-      untracked = "",
-      deleted = "",
-      ignored = "◌",
+  renderer = {
+    indent_markers = {
+      enable = true,
     },
-    folder = {
-      arrow_open = "",
-      arrow_closed = "",
-      default = "",
-      open = "",
-      empty = "",
-      empty_open = "",
-      symlink = "",
-      symlink_open = "",
+    highlight_git = true,
+    root_folder_modifier = ":~",
+    add_trailing = true,
+    group_empty = true,
+    special_files = {
+      "README.md",
+      "Makefile",
+      "MAKEFILE",
     },
+    icons = {
+      glyphs = {
+        default = "",
+        symlink = "",
+        folder = {
+          arrow_open = "",
+          arrow_closed = "",
+          default = "",
+          open = "",
+          empty = "",
+          empty_open = "",
+          symlink = "",
+          symlink_open = "",
+        },
+        git = {
+          unstaged = "",
+          staged = "",
+          unmerged = "",
+          renamed = "",
+          untracked = "",
+          deleted = "",
+          ignored = "◌",
+        },
+      },
+      show = {
+        git = true,
+        folder = true,
+        file = true,
+        folder_arrow = true,
+      },
+    },
+  },
+  actions = {
+    open_file = {
+      window_picker = {
+        exclude = {
+          filetype = {
+            "notify",
+            "packer",
+            "qf",
+          },
+          buftype = {
+            "terminal",
+          },
+        },
+      },
+    },
+  },
+  diagnostics = {
+    enable = false,
   },
 }
 
@@ -89,7 +106,6 @@ explorer.packages = {
   },
 }
 
-
 explorer.configs = {}
 explorer.configs["nvim-tree.lua"] = function()
   local utils = require("doom.utils")
@@ -97,58 +113,7 @@ explorer.configs["nvim-tree.lua"] = function()
 
   local tree_cb = require("nvim-tree.config").nvim_tree_callback
 
-  vim.g.nvim_tree_ignore = { ".git", "node_modules.editor", ".cache", "__pycache__" }
-
-  vim.g.nvim_tree_indent_markers = utils.bool2num(doom.features.explorer.settings.indent_markers)
-
-  vim.g.nvim_tree_respect_buf_cwd = utils.bool2num(doom.features.explorer.settings.respect_buf_cwd)
-
-  vim.g.nvim_tree_hide_dotfiles = utils.bool2num(not doom.show_hidden)
-
-  vim.g.nvim_tree_git_hl = utils.bool2num(doom.features.explorer.settings.git_highlight)
-
-  vim.g.nvim_tree_gitignore = utils.bool2num(doom.hide_gitignore)
-
-  vim.g.nvim_tree_root_folder_modifier = ":~"
-
-  vim.g.nvim_tree_add_trailing = utils.bool2num(doom.features.explorer.settings.trailing_dir_slash)
-
-  vim.g.nvim_tree_group_empty = utils.bool2num(doom.features.explorer.settings.group_empty)
-
-  vim.g.nvim_tree_refresh_wait = utils.bool2num(doom.features.explorer.settings.refresh_wait)
-
-  vim.g.nvim_tree_window_picker_exclude = doom.features.explorer.settings.window_picker_exclude
-
-  local special_files = {}
-  for _, file in ipairs(doom.features.explorer.settings.special_files) do
-    special_files[file] = 1
-  end
-  vim.g.nvim_tree_special_files = special_files
-
-  local show_icons = {}
-  for key, value in pairs(doom.features.explorer.settings.show_icons) do
-    show_icons[key] = utils.bool2num(value)
-  end
-  vim.g.nvim_tree_show_icons = show_icons
-
-  local override_icons = {}
-  if is_module_enabled("lsp") then
-    override_icons = {
-      lsp = {
-        hint = doom.features.lsp.settings.icons.hint,
-        info = doom.features.lsp.settings.icons.info,
-        warning = doom.features.lsp.settings.icons.warn,
-        error = doom.features.lsp.settings.icons.error,
-      },
-    }
-  end
-  vim.g.nvim_tree_icons = vim.tbl_deep_extend("force", doom.features.explorer.settings.icons, override_icons)
-
-  local override_table = {
-    diagnostics = {
-      enable = false,
-    },
-  }
+  local override_table
   if is_module_enabled("lsp") then
     override_table = {
       diagnostics = {
@@ -162,7 +127,7 @@ explorer.configs["nvim-tree.lua"] = function()
       },
     }
   end
-  require("nvim-tree").setup(vim.tbl_deep_extend("force", {
+  local config = vim.tbl_deep_extend("force", {
     view = {
       mappings = {
         list = {
@@ -192,7 +157,14 @@ explorer.configs["nvim-tree.lua"] = function()
         },
       },
     },
-  }, doom.features.explorer.settings, override_table))
+    filters = {
+      dotfiles = not doom.show_hidden,
+    },
+    git = {
+      ignore = doom.hide_gitignore,
+    },
+  }, doom.features.explorer.settings, override_table)
+  require("nvim-tree").setup(config)
 end
 
 explorer.binds = {
@@ -209,7 +181,7 @@ explorer.binds = {
         },
       },
     },
-  }
+  },
 }
 
 return explorer
