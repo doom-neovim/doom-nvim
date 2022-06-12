@@ -49,6 +49,10 @@ _G._doom = {
 
 --- Global object
 doom = {
+  -- Leader key for keybinds
+  -- @default = ' '
+  leader_key = ' ',
+
   -- Pins plugins to a commit sha to prevent breaking changes
   -- @default = true
   freeze_dependencies = true,
