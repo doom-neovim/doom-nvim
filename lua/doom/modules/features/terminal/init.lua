@@ -52,14 +52,14 @@ terminal.configs["toggleterm.nvim"] = function()
   require("toggleterm").setup(doom.features.terminal.settings)
 end
 
-local function toggle_term_custom()
-  if doom.settings.term_exec_cmd == "" then
-    vim.cmd("ToggleTerm")
-  else
-    local cmd = string.format("TermExec cmd=\"%s\"", doom.settings.term_exec_cmd)
-    vim.cmd()
-  end
-end
+-- local function toggle_term_custom()
+--   if doom.settings.term_exec_cmd == "" then
+--     vim.cmd("ToggleTerm")
+--   else
+--     local cmd = string.format("TermExec cmd=\"%s\"", doom.settings.term_exec_cmd)
+--     vim.cmd(cmd)
+--   end
+-- end
 
 terminal.binds = {
   "<leader>",
@@ -69,7 +69,14 @@ terminal.binds = {
       "o",
       name = "+open/close",
       {
-        { "t", toggle_term_custom, name = "Terminal" },
+        { "t", function()
+          if doom.settings.term_exec_cmd == "" then
+            vim.cmd("ToggleTerm")
+          else
+            local exec_cmd = string.format("TermExec cmd=\"%s\"", doom.settings.term_exec_cmd)
+            vim.cmd(exec_cmd)
+          end
+        end, name = "Terminal" },
       },
     },
   },
