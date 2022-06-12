@@ -134,7 +134,6 @@ statusline.packages = {
   ["heirline.nvim"] = {
     "rebelot/heirline.nvim",
     commit = "efbf99c48d03f456b19680a46f0e21acd6df5188",
-    after = "nvim-web-devicons",
   },
 }
 
@@ -431,7 +430,7 @@ statusline.configs["heirline.nvim"] = function()
 end
 
 statusline.try_refresh = function ()
-  xpcall(doom.modules.features.statusline.configs["heirline.nvim"], function () end)
+  xpcall(doom.modules.features.statusline.configs["heirline.nvim"], debug.traceback)
 end
 
 statusline.autocmds = {
@@ -447,10 +446,10 @@ statusline.autocmds = {
     "VimEnter",
     "*",
     function()
-      for i = 1, 7 do
+      for i = 1, 9 do
         vim.defer_fn(function()
           statusline.try_refresh()
-        end, math.pow(4, i))
+        end, math.pow(i, 3) + i * 50)
       end
     end,
     once = true,
