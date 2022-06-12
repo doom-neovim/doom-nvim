@@ -146,11 +146,9 @@ default_integration.handler = function(node, node_settings)
 
     local buffer = (node_settings.buffer == true) and 0 or node_settings.buffer
 
-    -- print(("Binding %s %s to %s"):format(sanitizedMode, node.lhs, type(node.rhs) == "string" and node.rhs or type(node.rhs)))
-    local options = {
-      buffer = buffer,
-      unpack(node_settings.options)
-    }
+    local options = vim.tbl_extend("force", {
+      buffer = buffer
+    }, node_settings.options)
     vim.keymap.set(sanitizedMode, node.lhs, node.rhs, options)
   end
 end
