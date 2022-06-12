@@ -26,7 +26,6 @@ if utils.is_module_enabled("telescope") then
       up.ghq.github .. "nvim-telescope/telescope-packer.nvim",
       after = { "telescope.nvim" },
     },
-    ["neorg-telescope"] = { "nvim-neorg/neorg-telescope", after = { "telescope.nvim" } },
     ["telescope-github.nvim"] = {
       "nvim-telescope/telescope-github.nvim",
       after = { "telescope.nvim" },
@@ -51,15 +50,11 @@ if utils.is_module_enabled("telescope") then
   extensions.configs["telescope-packer.nvim"] = function()
     require("telescope").load_extension("packer")
   end
-  -- extensions.configs["neorg-telescope"] = function()
-  --   require("telescope").load_extension("neorg")
-  -- end
   extensions.configs["telescope-github.nvim"] = function()
     require("telescope").load_extension("gh")
   end
 end
 
--- TODO: neorg
 
 -- {
 --   'nvim-telescope/telescope-project.nvim',
@@ -121,7 +116,6 @@ end
 -- https://github.com/keyvchan/telescope-find-pickers.nvim
 -- https://github.com/nvim-telescope/telescope-file-browser.nvim
 -- https://github.com/fcying/telescope-ctags-outline.nvim
--- https://github.com/nvim-neorg/neorg-telescope
 -- https://github.com/IllustratedMan-code/telescope-conda.nvim
 -- https://github.com/AckslD/nvim-neoclip.lua
 -- https://github.com/EthanJWright/vs-tasks.nvim

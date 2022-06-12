@@ -19,5 +19,6 @@ local utilities = {}
 -- rgroli/other.nvim - Open alternative files for the current buffer.
 -- toppair/reach.nvim - Buffer, mark, tabpage switcher for Neovim.
 -- axieax/urlview.nvim - Browse all URLs in the current buffer.
+-- https://github.com/max397574/tomato.nvim
 utilities.packages = {}
 return utilities

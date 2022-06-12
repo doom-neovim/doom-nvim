@@ -1,5 +1,12 @@
 local help = {}
 
+-- TODO:
+--
+--    > lua referene toc
+--    > man ...
+--    > help under cursor inner word
+--
+
 help.packages = {}
 
 help.binds = {}
