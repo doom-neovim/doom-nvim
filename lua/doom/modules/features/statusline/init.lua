@@ -433,7 +433,9 @@ statusline.autocmds = {
     "ColorScheme",
     "*",
     function()
-      doom.modules.features.statusline.configs["heirline.nvim"]()
+      if packer_plugins("heirline") then
+        doom.modules.features.statusline.configs["heirline.nvim"]()
+      end
     end,
   },
   -- Sometimes the colorscheme doesn't load on the first try
@@ -441,10 +443,12 @@ statusline.autocmds = {
     "VimEnter",
     "*",
     function()
-      for i = 1, 7 do
-        vim.defer_fn(function()
-          doom.modules.features.statusline.configs["heirline.nvim"]()
-        end, math.pow(4, i))
+      if packer_plugins("heirline") then
+        for i = 1, 7 do
+          vim.defer_fn(function()
+            doom.modules.features.statusline.configs["heirline.nvim"]()
+          end, math.pow(4, i))
+        end
       end
     end,
     once = true,
