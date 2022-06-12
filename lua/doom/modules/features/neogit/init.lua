@@ -5,7 +5,7 @@ neogit.settings = {}
 neogit.packages = {
   ["neogit"] = {
     "TimUntersberger/neogit",
-    commit = "cec7fd91ce9d7a5a5027e85eea961adfa4776dd4",
+    commit = "0ce803d22e361080ec0daf6bee7aad45e8cf8b07",
     cmd = "Neogit",
     opt = true,
   },

@@ -42,7 +42,7 @@ treesitter.settings = {
 treesitter.packages = {
   ["nvim-treesitter"] = {
     "nvim-treesitter/nvim-treesitter",
-    commit = "868053edf587fd6f07111428b65cbd23144da860",
+    commit = "9e8df1b3ca576eeaca4e8d48e3d67119b32adb99",
     run = ":TSUpdate",
     branch = "master",
   },

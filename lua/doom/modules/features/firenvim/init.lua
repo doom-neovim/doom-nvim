@@ -25,7 +25,7 @@ firenvim.settings = {
 firenvim.packages = {
   ["firenvim"] = {
     "glacambre/firenvim",
-    commit = "8f26d2dce4806817be3abeb29368aed2caf2c937",
+    commit = "e90f87872b313df15a06119ddbb84cdf1599657c",
     run = function()
       vim.fn["firenvim#install"](0)
     end,

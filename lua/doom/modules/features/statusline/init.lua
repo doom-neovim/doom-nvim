@@ -133,6 +133,7 @@ end
 statusline.packages = {
   ["heirline.nvim"] = {
     "rebelot/heirline.nvim",
+    commit = "efbf99c48d03f456b19680a46f0e21acd6df5188",
     after = "nvim-web-devicons",
   },
 }

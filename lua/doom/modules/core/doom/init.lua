@@ -11,12 +11,12 @@ required.packages = {
   -- Required by some treesitter modules
   ["aniseed"] = {
     "Olical/aniseed",
-    commit = "618c2115d5046cc04c8a4af7727ee4d90fc2061c",
+    commit = "bfaefa11c9e6b36b17a7fe11f8f005198411c3e5",
     module_pattern = "aniseed",
   },
   ["plenary.nvim"] = {
     "nvim-lua/plenary.nvim",
-    commit = "9069d14a120cadb4f6825f76821533f2babcab92",
+    commit = "9c3239bc5f99b85be1123107f7290d16a68f8e64",
     module = "plenary",
   },
   ["popup.nvim"] = {
@@ -26,7 +26,7 @@ required.packages = {
   },
   ["nvim-web-devicons"] = {
     "kyazdani42/nvim-web-devicons",
-    commit = "8df4988ecf8599fc1f8f387bbf2eae790e4c5ffb",
+    commit = "8d2c5337f0a2d0a17de8e751876eeb192b32310e",
     module = "nvim-web-devicons",
   },
   -- Must include impatient.nvim here, even though it's bootstrapped in

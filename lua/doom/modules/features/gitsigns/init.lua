@@ -75,7 +75,7 @@ gitsigns.settings = {
 gitsigns.packages = {
   ["gitsigns.nvim"] = {
     "lewis6991/gitsigns.nvim",
-    commit = "0beb1941641bd7d5d7072d3612ee47c0eb80b63d",
+    commit = "c18e016864c92ecf9775abea1baaa161c28082c3",
   },
 }
 
