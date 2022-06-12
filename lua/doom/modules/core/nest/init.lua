@@ -106,13 +106,14 @@ mapper.configs["nvim-mapper"] = function()
         local id = node.uid or determine_uid(node.lhs, node.name, sanitizedMode)
 
         if id ~= nil then
+          local rhs = type(node.rhs) == "function" and "<function>" or node.rhs
           if node_settings.buffer then
             local bufnr = type(node_settings.buffer) == "number" and node_settings.buffer
               or vim.api.nvim_get_current_buf()
             Mapper.map_buf_virtual(
               sanitizedMode,
               node.lhs,
-              node.rhs,
+              rhs,
               node_settings.options,
               category,
               id,
@@ -122,7 +123,7 @@ mapper.configs["nvim-mapper"] = function()
             Mapper.map_virtual(
               sanitizedMode,
               node.lhs,
-              node.rhs,
+              rhs,
               node_settings.options,
               category,
               id,
