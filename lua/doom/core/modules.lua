@@ -57,6 +57,7 @@ modules.start = function()
 
   local has_packer = pcall(require, "packer")
   if not has_packer then
+    modules._needs_sync = true
     -- Packer Bootstrapping
     local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
     if vim.fn.empty(vim.fn.glob(packer_path)) > 0 then
@@ -176,6 +177,19 @@ modules.handle_user_config = function()
   -- Handle extra user keybinds
   for _, keybinds in ipairs(doom.binds) do
     keymaps_service.applyKeymaps(keybinds)
+  end
+end
+
+modules.try_sync = function()
+  if modules._needs_sync then
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "PackerComplete",
+      callback = function()
+        local logger = require("doom.utils.logging")
+        logger.error("Doom-nvim has been installed.  Please restart doom-nvim.")
+      end,
+    })
+    require("packer").sync()
   end
 end
 

@@ -133,6 +133,7 @@ end
 statusline.packages = {
   ["heirline.nvim"] = {
     "rebelot/heirline.nvim",
+    after = "nvim-web-devicons",
   },
 }
 
@@ -428,14 +429,16 @@ statusline.configs["heirline.nvim"] = function()
   require("heirline").setup(heirline_config)
 end
 
+statusline.try_refresh = function ()
+  xpcall(doom.modules.features.statusline.configs["heirline.nvim"], function () end)
+end
+
 statusline.autocmds = {
   {
     "ColorScheme",
     "*",
     function()
-      if packer_plugins("heirline") then
-        doom.modules.features.statusline.configs["heirline.nvim"]()
-      end
+      statusline.try_refresh()
     end,
   },
   -- Sometimes the colorscheme doesn't load on the first try
@@ -443,12 +446,10 @@ statusline.autocmds = {
     "VimEnter",
     "*",
     function()
-      if packer_plugins("heirline") then
-        for i = 1, 7 do
-          vim.defer_fn(function()
-            doom.modules.features.statusline.configs["heirline.nvim"]()
-          end, math.pow(4, i))
-        end
+      for i = 1, 7 do
+        vim.defer_fn(function()
+          statusline.try_refresh()
+        end, math.pow(4, i))
       end
     end,
     once = true,
