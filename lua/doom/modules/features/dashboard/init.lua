@@ -128,7 +128,9 @@ dashboard.autocmds = {
       -- 2. Bytes count from the start of the buffer to the end (it should be non-existent, -1)
       -- 3. Existence of the buffer
       if vim.fn.argc() == 0 and vim.fn.line2byte("$") == -1 and vim.fn.bufexists(0) == 0 then
-        vim.cmd("Dashboard")
+        if packer_plugins["dashboard"] then
+          vim.cmd("Dashboard")
+        end
       end
     end,
     once = true,
