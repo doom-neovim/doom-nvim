@@ -79,33 +79,6 @@ module.defaults = {
     silent = true,
   },
 }
-local rhsFns = {}
-
-_doom.keymaps = {
-  rhsFns = rhsFns,
-
-  _callRhsFn = function(index)
-    rhsFns[index]()
-  end,
-
-  _getRhsExpr = function(index)
-    local keys = rhsFns[index]()
-    return vim.api.nvim_replace_termcodes(keys, true, true, true)
-  end
-}
-
---- Converts a lua function to a string that can be called to execute the function
---- @param func function
---- @param expr boolean
---- @return string
-local function functionToRhs(func, expr)
-  table.insert(rhsFns, func)
-
-  local insertedIndex = #rhsFns
-
-  return expr and "v:lua._doom.keymaps._getRhsExpr(" .. insertedIndex .. ")"
-    or "<cmd>lua _doom.keymaps._callRhsFn(" .. insertedIndex .. ")<cr>"
-end
 
 local function copy(table)
   return vim.deepcopy(table)
@@ -173,10 +146,12 @@ default_integration.handler = function(node, node_settings)
 
     local buffer = (node_settings.buffer == true) and 0 or node_settings.buffer
 
-    vim.keymap.set(sanitizedMode, node.lhs, node.rhs, {
+    -- print(("Binding %s %s to %s"):format(sanitizedMode, node.lhs, type(node.rhs) == "string" and node.rhs or type(node.rhs)))
+    local options = {
       buffer = buffer,
       unpack(node_settings.options)
-    })
+    }
+    vim.keymap.set(sanitizedMode, node.lhs, node.rhs, options)
   end
 end
 -- Bind default_integration keymap handler
@@ -206,8 +181,7 @@ module.traverse = function(node, settings, integrations)
   local second = node[2]
 
   --- @type string|table<number, NestNode>
-  local rhs = type(second) == "function" and functionToRhs(second, mergedSettings.options.expr)
-    or second
+  local rhs = second
 
   -- Populate node.name and node.description if necessary
   if node.name == nil and #node >= 3 then

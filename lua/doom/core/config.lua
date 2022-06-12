@@ -131,7 +131,9 @@ config.load = function()
     vim.opt.undofile = false
     vim.opt.undodir = nil
   end
+  vim.g.mapleader = ' '
 end
+
 
 -- Path cases:
 --   1. stdpath('config')/../doom-nvim/config.lua

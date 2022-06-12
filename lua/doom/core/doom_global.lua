@@ -299,11 +299,7 @@ doom = {
   use_keybind = function(...)
     local arg = {...}
     for _, bind in ipairs(arg) do
-      if type(bind[1]) == "string" then
-        table.insert(doom.binds, { [1] = bind })
-      else
-        table.insert(doom.binds, bind)
-      end
+      table.insert(doom.binds, bind)
     end
   end,
 
