@@ -29,5 +29,6 @@ local modules = utils.safe_require("doom.core.modules")
 modules.start()
 modules.load_modules()
 modules.handle_user_config()
+modules.try_sync()
 
 -- vim: fdm=marker
