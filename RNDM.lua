@@ -231,8 +231,9 @@ alfa laval -> https://alfalaval.wd3.myworkdayjobs.com/en-US/Alfa_Laval_jobs/job/
 
 cmp / luasnip /
 
-so now neorg is starting to work again which is quite fucking nice and something that I really want to show and so that is the thing that
-is the most important.
+so what are we doing? I don't understand why they would ever do somethi that is that fast and it doesn't really make any sense right why would they even try it.
+to what extent do you think that this will affect the other patterns that they have running when that is on the table which is something that
+you might ever understand whych is the thing that is just sos much faster that they t
 
 prepare my skills lecture.
 
@@ -240,6 +241,17 @@ lf
 
 - clean
 
+-- NEED TO FIX THE TERM EXEC COMMAND. -> SETTINGS
+--
+
+me and devito did my podcast and we had a driver who used to work at world trade center. and somebody must have become
+arrested for shoplifting. all the goods in there would have been wasted which is a bit insane actually and so that is why
+they would never ever see it I believe? can you circle back around a little. I don't want to get somebody fired because
+that really sucks. listen lady I gotta pick up my son now really fast. come on come on quick now. this kid's got ideas.
+
+
+
+- clean
 
   -> windows
   -> bathroom
