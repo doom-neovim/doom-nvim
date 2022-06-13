@@ -294,8 +294,17 @@ git.binds = {
             "c", name = "+commits",
             {
               { "t", "<cmd>Telescope git_commits<CR>", name = "Tele commits" },
-              { "h", commit_hunk_under_cursor, name = "commit single hunk"}, -- resets all other
-              { "b", commit_current_buffer_only, name = "commit current buf"}, -- resets all other
+              { "h", function()
+                require('vgit').project_unstage_all()
+                require"gitsigns".stage_hunk()
+                vim.cmd("Neogit commit")
+                vim.cmd("norm c")
+              end, name = "commit single hunk"}, -- resets all other
+              { "b", function()
+                require('vgit').project_unstage_all()
+                require"vgit".buffer_stage()
+                vim.cmd("Neogit commit")
+              end, name = "commit current buf"}, -- resets all other
             }
           },
 
