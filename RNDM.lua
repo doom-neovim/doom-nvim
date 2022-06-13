@@ -212,8 +212,6 @@ i need to fix the ordinal values and so that is something that is.
 
 rrr
 
-
-
 SOKA IT INOM ALLA STORA FORETAG SOM JAG KAN TAENKA MIG.
 
 ansoka i alla foretag som aer rimliga.
@@ -235,11 +233,21 @@ so what are we doing? I don't understand why they would ever do somethi that is 
 to what extent do you think that this will affect the other patterns that they have running when that is on the table which is something that
 you might ever understand whych is the thing that is just sos much faster that they t
 
-prepare my skills lecture.
+why are they so fucking afraid of us i just don't understand why that is and thi the thing that hey could do in the end if we don't get in
+into the hage allianes then there will be somet seiour chaos t orussia which is something that they don't have in the reality.
+the election has to be dealing with a set of questions so. so it is something that you don't really have to be afriaed of.
 
-lf
+the result of this frankensteinian government. that we fail with joining the nato. and that they send the kurdish
+system to the american system which is fucking insane. and so that is very very dumb. I just don't want to see the running around
+the for r=ss,11 do
+this is actually much better that using the regular system which they would nevner have to look into and that
+is alse and continue typing in the position where you last was
+end
 
-- clean
+todo -> leader > go to last insert position. the party leader johan person. and that is actually something that you might never want.
+
+the most exciting at kantar sifo. that would bring them into the mix and position them in the left block. one percentile
+all you are doing is just making the comedian go harder on you.
 
 -- NEED TO FIX THE TERM EXEC COMMAND. -> SETTINGS
 --
