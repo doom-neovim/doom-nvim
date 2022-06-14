@@ -13,7 +13,7 @@ for i = 1, #core_modules, 1 do
     if core_modules[i] == "settings" then
       -- Neovim configurations, e.g. shiftwidth
       require("doom.core.settings").load_default_options()
-      -- User-defined settings (global variables, mappings, ect)
+      -- User-defined settings (global variables, mappings, etc)
       require("doom.core.settings").custom_options()
       -- Doom Nvim custom commands
       require("doom.core.settings").doom_commands()
