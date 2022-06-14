@@ -92,8 +92,7 @@ lsp.packages = {
   ["nvim-cmp"] = {
     "hrsh7th/nvim-cmp",
     commit = "15c7bf7c0dfb7c75eb526c53f9574633c13dc22d",
-    event = is_module_enabled("snippets") and nil or "InsertEnter *", -- Rely on luasnips InsertEnter * event
-    after = is_module_enabled("snippets") and "luasnip" or nil,
+    after = is_module_enabled("snippets") and "LuaSnip" or nil,
   },
   ["cmp-nvim-lua"] = {
     "hrsh7th/cmp-nvim-lua",
