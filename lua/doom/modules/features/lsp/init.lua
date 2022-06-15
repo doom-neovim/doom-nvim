@@ -301,8 +301,8 @@ lsp.binds = {
   {
     "<C-",
     {
-      { "p>", vim.lsp.diagnostic.goto_prev, name = "Jump to prev diagnostic" },
-      { "n>", vim.lsp.diagnostic.goto_next, name = "Jump to next diagnostic" },
+      { "p>", vim.diagnostic.goto_prev, name = "Jump to prev diagnostic" },
+      { "n>", vim.diagnostic.goto_next, name = "Jump to next diagnostic" },
       { "k>", vim.lsp.buf.signature_help, name = "Show signature help" },
     },
   },
