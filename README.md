@@ -270,6 +270,20 @@ return {
 
 > For more info, read the [documentation for creating your own modules.](./docs/modules.md#building-your-own-module)
 
+## Migration guide from v3
+
+The majors changes between v3 and v4 are the following.
+
+- `doom_config.lua` renamed to `config.lua`
+- Adding custom commands, keybinds and autocommands done using new [`doom.use_*`](#-configlua-) helper functions.
+- Adding extra plugins done using new [`doom.use_package`](#adding-plugins) helper function.
+- `doom_modules.lua` renamed to `modules.lua`
+- Many of the modules categories have been combined, there are now only `features` (modifying capabilities of doom-nvim) and `languages` (add support for a language)
+- Languages `+lsp`, `+formatting`, etc flags are no longer necessary
+
+> Because of the durastic changes to the way you configure doom-nvim we recommend
+> starting a new branch and porting your changes across.
+
 ## Contributing
 
 For for information please see our [contributing docs](./docs/contributing.md).
