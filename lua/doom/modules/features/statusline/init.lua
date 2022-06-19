@@ -75,12 +75,12 @@ statusline._generate_colorscheme = function()
       rgb = hex2rgb(hl),
     }
   end, {
-    statusline._safe_get_highlight("luaTSField").foreground,
-    statusline._safe_get_highlight("luaTSConditional").foreground,
-    statusline._safe_get_highlight("luaTSFunction").foreground,
-    statusline._safe_get_highlight("luaTSKeywordFunction").foreground,
-    statusline._safe_get_highlight("luaTSString").foreground,
-    statusline._safe_get_highlight("luaTSNumber").foreground,
+    statusline._safe_get_highlight("luaTSField", "TSField").foreground,
+    statusline._safe_get_highlight("luaTSConditional", "TSConditional").foreground,
+    statusline._safe_get_highlight("luaTSFunction", "TSFunction").foreground,
+    statusline._safe_get_highlight("luaTSKeywordFunction", "TSKeywordFunction").foreground,
+    statusline._safe_get_highlight("luaTSString", "TSString").foreground,
+    statusline._safe_get_highlight("luaTSNumber", "TSNumber").foreground,
   })
 
   local rate_color = function(hsv)
@@ -438,7 +438,9 @@ statusline.autocmds = {
     "ColorScheme",
     "*",
     function()
-      statusline.try_refresh()
+      vim.defer_fn(function()
+        statusline.try_refresh()
+      end, 1)
     end,
   },
   -- Sometimes the colorscheme doesn't load on the first try
@@ -446,11 +448,9 @@ statusline.autocmds = {
     "VimEnter",
     "*",
     function()
-      for i = 1, 9 do
-        vim.defer_fn(function()
-          statusline.try_refresh()
-        end, math.pow(i, 3) + i * 50)
-      end
+      vim.defer_fn(function()
+        statusline.try_refresh()
+      end, 100)
     end,
     once = true,
   },
