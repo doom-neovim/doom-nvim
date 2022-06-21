@@ -35,7 +35,7 @@ vim.g.netrw_list_hide = vim.fn["netrw_gitignore#Hide"]()
 -- 0 : show all files
 -- 1 : show not-hidden files
 -- 2 : show hidden files only
-vim.g.netrw_hide = not doom.show_hidden
+vim.g.netrw_hide = not doom.settings.show_hidden
 
 -- Preview files in a vertical split window
 -- vim.g.netrw_preview = 1

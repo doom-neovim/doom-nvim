@@ -39,7 +39,7 @@ whichkey.settings = {
   },
   window = {
     padding = { 0, 0, 0, 0 },
-    border = doom.border_style,
+    border = doom.settings.border_style,
   },
   layout = {
     height = { min = 1, max = 10 },

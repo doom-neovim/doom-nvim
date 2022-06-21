@@ -107,9 +107,9 @@ Doom nvim provides a number of config options, including wrapping some of vim's 
 ```lua
 -- config.lua
 
-doom.freeze_dependencies = false  -- Don't use pinned packer dependencies
-doom.logging = 'trace'            -- Debug doom internal issues
-doom.indent = 2                   -- Sets vim.opt.shiftwith, vim.opt.softtabstop, vim.opt.tabstop to 2
+doom.settings.freeze_dependencies = false  -- Don't use pinned packer dependencies
+doom.settings.logging = 'trace'            -- Debug doom internal issues
+doom.settings.indent = 2                   -- Sets vim.opt.shiftwith, vim.opt.softtabstop, vim.opt.tabstop to 2
 
 vim.opt.colorcolumn = 120         -- Regular vim options can also be set
 ```

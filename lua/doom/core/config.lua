@@ -106,10 +106,10 @@ config.load = function()
   end
 
   -- Apply the necessary `doom.field_name` options
-  vim.opt.shiftwidth = doom.indent
-  vim.opt.softtabstop = doom.indent
-  vim.opt.tabstop = doom.indent
-  if doom.guicolors then
+  vim.opt.shiftwidth = doom.settings.indent
+  vim.opt.softtabstop = doom.settings.indent
+  vim.opt.tabstop = doom.settings.indent
+  if doom.settings.guicolors then
     if vim.fn.exists("+termguicolors") == 1 then
       vim.opt.termguicolors = true
     elseif vim.fn.exists("+guicolors") == 1 then
@@ -117,21 +117,21 @@ config.load = function()
     end
   end
 
-  if doom.auto_comment then
+  if doom.settings.auto_comment then
     vim.opt.formatoptions:append("croj")
   end
-  if doom.movement_wrap then
+  if doom.settings.movement_wrap then
     vim.cmd("set whichwrap+=<,>,[,],h,l")
   end
 
-  if doom.undo_dir then
+  if doom.settings.undo_dir then
     vim.opt.undofile = true
-    vim.opt.undodir = doom.undo_dir
+    vim.opt.undodir = doom.settings.undo_dir
   else
     vim.opt.undofile = false
     vim.opt.undodir = nil
   end
-  vim.g.mapleader = doom.leader_key
+  vim.g.mapleader = doom.settings.leader_key
 end
 
 

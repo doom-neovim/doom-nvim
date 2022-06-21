@@ -33,7 +33,7 @@ required.packages = {
   -- core.modules.lua so that packer doesn't try and clean it up.
   ["impatient.nvim"] = {
     "lewis6991/impatient.nvim",
-    disabled = not doom.impatient_enabled,
+    disabled = not doom.settings.impatient_enabled,
   },
 }
 
@@ -105,20 +105,20 @@ required.binds = function()
   }
 
   -- Conditionally disable macros
-  if doom.disable_macros then
+  if doom.settings.disable_macros then
     table.insert(binds, { "q", "<Nop>" })
   end
   -- Conditionally disable ex mode
-  if doom.disable_ex then
+  if doom.settings.disable_ex then
     table.insert(binds, { "Q", "<Nop>" })
   end
   -- Conditionally disable suspension
-  if doom.disable_suspension then
+  if doom.settings.disable_suspension then
     table.insert(binds, { "<C-z>", "<Nop>" })
   end
 
   -- Exit insert mode fast
-  for _, esc_seq in pairs(doom.escape_sequences) do
+  for _, esc_seq in pairs(doom.settings.escape_sequences) do
     table.insert(binds, { esc_seq, "<ESC>", mode = "i" })
   end
 
@@ -144,7 +144,7 @@ required.binds = function()
     horizontal = "",
     [false] = "e",
   }
-  local split_prefix = split_modes[doom.new_file_split]
+  local split_prefix = split_modes[doom.settings.new_file_split]
   table.insert(binds, {
     "<leader>",
     name = "+prefix",
@@ -314,11 +314,11 @@ end
 required.autocmds = function()
   local autocmds = {}
 
-  if doom.autosave then
+  if doom.settings.autosave then
     table.insert(autocmds, { "TextChanged,InsertLeave", "<buffer>", "silent! write" })
   end
 
-  if doom.highlight_yank then
+  if doom.settings.highlight_yank then
     table.insert(autocmds, {
       "TextYankPost",
       "*",
@@ -328,7 +328,7 @@ required.autocmds = function()
     })
   end
 
-  if doom.preserve_edit_pos then
+  if doom.settings.preserve_edit_pos then
     table.insert(autocmds, {
       "BufReadPost",
       "*",

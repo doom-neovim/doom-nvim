@@ -158,10 +158,10 @@ lsp.configs["nvim-lspconfig"] = function()
   })
   -- Border for lsp_popups
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = doom.border_style,
+    border = doom.settings.border_style,
   })
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = doom.border_style,
+    border = doom.settings.border_style,
   })
   -- symbols for autocomplete
   local kinds = {}
@@ -279,7 +279,7 @@ lsp.configs["lsp_signature.nvim"] = function()
   -- Signature help
   require("lsp_signature").setup(vim.tbl_deep_extend("force", doom.features.lsp.settings.signature, {
     handler_opts = {
-      border = doom.border_style,
+      border = doom.settings.border_style,
     },
   }))
 end
@@ -344,7 +344,7 @@ lsp.binds = {
                 function()
                   vim.diagnostic.open_float(0, {
                     focusable = false,
-                    border = doom.border_style,
+                    border = doom.settings.border_style,
                   })
                 end,
                 name = "Line",

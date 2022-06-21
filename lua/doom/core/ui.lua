@@ -7,13 +7,13 @@ local utils = require("doom.utils")
 local log = require("doom.utils.logging")
 
 -- If the colorscheme was not found then fallback to defaults.
-if not utils.is_empty(doom.colorscheme) then
+if not utils.is_empty(doom.settings.colorscheme) then
   local loaded_colorscheme = xpcall(function()
-    vim.api.nvim_command("colorscheme " .. doom.colorscheme)
+    vim.api.nvim_command("colorscheme " .. doom.settings.colorscheme)
   end, debug.traceback)
 
   if not loaded_colorscheme then
-    log.warn("Colorscheme '" .. doom.colorscheme .. "' not found, falling back to doom-one")
+    log.warn("Colorscheme '" .. doom.settings.colorscheme .. "' not found, falling back to doom-one")
     vim.api.nvim_command("colorscheme doom-one")
   end
 else
@@ -22,13 +22,13 @@ else
 end
 
 -- Set doom-one colorscheme settings
-if doom.colorscheme == "doom-one" then
+if doom.settings.colorscheme == "doom-one" then
   require("colors.doom-one").setup({
-    cursor_coloring = doom.doom_one.cursor_coloring,
-    terminal_colors = doom.doom_one.terminal_colors,
-    italic_comments = doom.doom_one.italic_comments,
-    enable_treesitter = doom.doom_one.enable_treesitter,
-    transparent_background = doom.doom_one.transparent_background,
+    cursor_coloring = doom.settings.doom_one.cursor_coloring,
+    terminal_colors = doom.settings.doom_one.terminal_colors,
+    italic_comments = doom.settings.doom_one.italic_comments,
+    enable_treesitter = doom.settings.doom_one.enable_treesitter,
+    transparent_background = doom.settings.doom_one.transparent_background,
     pumblend = {
       enable = true,
       transparency_amount = doom.complete_transparency,
@@ -39,7 +39,7 @@ if doom.colorscheme == "doom-one" then
       bufferline = true,
       gitgutter = false,
       gitsigns = true,
-      telescope = doom.doom_one.telescope_highlights,
+      telescope = doom.settings.doom_one.telescope_highlights,
       neogit = true,
       nvim_tree = true,
       dashboard = true,
