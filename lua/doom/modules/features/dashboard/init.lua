@@ -2,25 +2,35 @@ local dashboard = {}
 
 dashboard.settings = {
   entries = {
-    b = {
-      description = { "  Recently Opened Files          SPC f r" },
-      command = "Telescope oldfiles",
+    {
+      icon = "  ",
+      desc = "Recently Opened Files          ",
+      shortcut = "SPC f r",
+      action = "Telescope oldfiles"
     },
-    c = {
-      description = { "  Jump to Bookmark               SPC s m" },
-      command = "Telescope marks",
+    {
+      icon = "  ",
+      desc = "Jump to Bookmark               ",
+      shortcut = "SPC s m",
+      action = "Telescope marks"
     },
-    d = {
-      description = { "  Open Configuration             SPC D c" },
-      command = "e " .. require("doom.core.config").source,
+    {
+      icon = "  ",
+      desc = "Open Configuration             ",
+      shortcut = "SPC D c",
+      action = "e " .. require("doom.core.config").source
     },
-    e = {
-      description = { "  Open Modules                   SPC D m" },
-      command = "e " .. require("doom.core.modules").source,
+    {
+      icon = "  ",
+      desc = "Open Modules                   ",
+      shortcut = "SPC D m",
+      action = "e " .. require("doom.core.modules").source
     },
-    f = {
-      description = { "  Open Documentation             SPC D d" },
-      command = [[lua require("doom.core.functions").open_docs()]],
+    {
+      icon = "  ",
+      desc = "Open Documentation             ",
+      shortcut = "SPC D d",
+      action = "lua require('doom.core.functions').open_docs()"
     },
   },
   header = {
@@ -45,7 +55,7 @@ dashboard.settings = {
     "\\   _-'                                                                `-_   /",
     " `''                                                                      ``'  ",
   },
-  footer = { "Doom Nvim loaded" },
+  footer = { "", "Doom Nvim loaded" },
   colors = {
     header = "#586268",
     center = "#51afef",
@@ -66,6 +76,7 @@ dashboard.packages = {
 dashboard.configs = {}
 dashboard.configs["dashboard-nvim"] = function()
   local utils = require("doom.utils")
+  local db = require("dashboard")
   local is_module_enabled = utils.is_module_enabled
 
   if is_module_enabled("auto_session") then
@@ -76,23 +87,28 @@ dashboard.configs["dashboard-nvim"] = function()
   end
   if is_module_enabled("auto_session") then
     doom.features.dashboard.settings.entries.a = {
-      description = { "  Load Last Session              SPC s r" },
-      command = [[lua require("persistence").load({ last = true })]],
+      icon = "  ",
+      desc = "Load Last Session              ",
+      shortcut = "SPC s r",
+      action = "lua require('persistence').load({ last = true })"
     }
   end
 
-  vim.g.dashboard_custom_section = doom.features.dashboard.settings.entries
+  db.custom_center = doom.features.dashboard.settings.entries
 
   if type(doom.features.dashboard.settings.footer) ~= "function" then
-    vim.g.dashboard_custom_footer = doom.features.dashboard.settings.footer
+    db.custom_footer = doom.features.dashboard.settings.footer
   end
 
   if type(doom.features.dashboard.settings.header) ~= "function" then
-    vim.g.dashboard_custom_header = doom.features.dashboard.settings.header
+    db.custom_header = doom.features.dashboard.settings.header
   end
+  db.hide_tabline = false
+  db.hide_statusline = false
   -- Header color
   vim.cmd("hi! dashboardHeader   guifg=" .. doom.features.dashboard.settings.colors.header)
   vim.cmd("hi! dashboardCenter   guifg=" .. doom.features.dashboard.settings.colors.center)
+  vim.cmd("hi! DashboardCenterIcon   guifg=" .. doom.features.dashboard.settings.colors.center)
   vim.cmd("hi! dashboardShortcut guifg=" .. doom.features.dashboard.settings.colors.shortcut)
   vim.cmd("hi! dashboardFooter   guifg=" .. doom.features.dashboard.settings.colors.footer)
 end
@@ -123,12 +139,14 @@ dashboard.autocmds = {
     "VimEnter",
     "*",
     function()
+      local utils = require("doom.utils")
+      local is_module_enabled = utils.is_module_enabled
       -- Here we check for
       -- 1. Number of files passed to Neovim as arguments during its launch
       -- 2. Bytes count from the start of the buffer to the end (it should be non-existent, -1)
       -- 3. Existence of the buffer
       if vim.fn.argc() == 0 and vim.fn.line2byte("$") == -1 and vim.fn.bufexists(0) == 0 then
-        if packer_plugins["dashboard"] then
+        if is_module_enabled("dashboard") then
           vim.cmd("Dashboard")
         end
       end
