@@ -70,7 +70,7 @@ modules.modules = {
   utilities = {
     -- "lazygit",         -- LazyGit integration for Neovim, requires LazyGit
     -- "neogit",          -- Magit for Neovim
-    "range-highlight", -- hightlights ranges you have entered in commandline
+    "range-highlight", -- highlights ranges you have entered in commandline
     -- "suda",            -- Write and read files without sudo permissions
   },
   web = {
