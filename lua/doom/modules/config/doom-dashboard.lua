@@ -12,49 +12,49 @@ return function()
       icon = "  ",
       desc = "Load Last Session              ",
       shortcut = "SPC s r",
-      action = "lua require('persistence').load({ last = true })"
+      action = "lua require('persistence').load({ last = true })",
     },
     {
       icon = "  ",
       desc = "Recently Opened Files          ",
       shortcut = "SPC f r",
-      action = "lua require('telescope.builtin').oldfiles()"
+      action = "lua require('telescope.builtin').oldfiles()",
     },
     {
       icon = "  ",
       desc = "Jump to Bookmark               ",
       shortcut = "SPC s m",
-      action = "lua require('telescope.builtin').marks()"
+      action = "lua require('telescope.builtin').marks()",
     },
     {
       icon = "  ",
       desc = "Find File                      ",
       shortcut = "SPC f f",
-      action = "lua require('telescope.builtin').find_files()"
+      action = "lua require('telescope.builtin').find_files()",
     },
     {
       icon = "  ",
       desc = "Find Word                      ",
       shortcut = "SPC f g",
-      action = "lua require('telescope.builtin').live_grep()"
+      action = "lua require('telescope.builtin').live_grep()",
     },
     {
       icon = "  ",
       desc = "Open Private Configuration     ",
       shortcut = "SPC d c",
-      action = "lua require('doom.core.functions').edit_config()"
+      action = "lua require('doom.core.functions').edit_config()",
     },
     {
       icon = "  ",
       desc = "Open Documentation             ",
       shortcut = "SPC d d",
-      action = "lua require('doom.core.functions').open_docs()"
+      action = "lua require('doom.core.functions').open_docs()",
     },
   }
 
   -- Custom Footer
   db.custom_footer = {
-    "",  -- add 'newline' padding between `custom_center` and `custom_footer`
+    "", -- add 'newline' padding between `custom_center` and `custom_footer`
     "Doom Nvim loaded in " .. vim.fn.printf(
       "%.3f",
       vim.fn.reltimefloat(vim.fn.reltime(vim.g.start_time))
