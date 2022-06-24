@@ -156,7 +156,7 @@ functions.toggle_background = function()
 end
 
 -- Only define if lsp enabled, it only makes sense there.
-if is_module_enabled("lsp") then
+if is_module_enabled("features", "lsp") then
   -- Toggle completion (by running cmp setup again).
   functions.toggle_completion = function()
     _doom.cmp_enable = not _doom.cmp_enable

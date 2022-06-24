@@ -79,13 +79,13 @@ dashboard.configs["dashboard-nvim"] = function()
   local db = require("dashboard")
   local is_module_enabled = utils.is_module_enabled
 
-  if is_module_enabled("auto_session") then
+  if is_module_enabled("features", "auto_session") then
     vim.g.dashboard_session_directory = doom.features.auto_session.settings.dir
   end
-  if is_module_enabled("telescope") then
+  if is_module_enabled("features", "telescope") then
     vim.g.dashboard_default_executive = "telescope"
   end
-  if is_module_enabled("auto_session") then
+  if is_module_enabled("features", "auto_session") then
     doom.features.dashboard.settings.entries.a = {
       icon = "  ",
       desc = "Load Last Session              ",
@@ -146,7 +146,7 @@ dashboard.autocmds = {
       -- 2. Bytes count from the start of the buffer to the end (it should be non-existent, -1)
       -- 3. Existence of the buffer
       if vim.fn.argc() == 0 and vim.fn.line2byte("$") == -1 and vim.fn.bufexists(0) == 0 then
-        if is_module_enabled("dashboard") then
+        if is_module_enabled("features", "dashboard") then
           vim.cmd("Dashboard")
         end
       end

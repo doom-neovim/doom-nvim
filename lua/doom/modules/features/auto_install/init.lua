@@ -17,14 +17,14 @@ auto_install.packages = {
       "DIList",
       "DIUninstall",
     },
-    disabled = not is_module_enabled("dap"),
+    disabled = not is_module_enabled("features", "dap"),
     module = "dap-install",
     disable = true,
   },
   ["nvim-lsp-installer"] = {
     "williamboman/nvim-lsp-installer",
     commit = "effafae44012a6ad3091968ad358531c62925a45",
-    -- disabled = not is_module_enabled("lsp"),
+    -- disabled = not is_module_enabled("features", "lsp"),
     module = "nvim-lsp-installer",
   },
 }

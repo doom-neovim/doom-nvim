@@ -165,7 +165,7 @@ telescope.binds = function()
       },
     },
   }
-  if is_module_enabled("lsp") then
+  if is_module_enabled("features", "lsp") then
     table.insert(binds, {
       "<leader>",
       name = "+prefix",

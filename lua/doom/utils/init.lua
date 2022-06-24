@@ -201,19 +201,14 @@ utils.get_diagnostic_count = function(bufnr, severity)
 end
 
 --- Check if the given plugin is disabled in doom-nvim/modules.lua
---- @param plugin string The plugin identifier, e.g. statusline
+--- @param section string The module section, e.g. features
+--- @param plugin string The module identifier, e.g. statusline
 --- @return boolean
-utils.is_module_enabled = function(plugin)
+utils.is_module_enabled = function(section, plugin)
   local modules = require("doom.core.modules").enabled_modules
 
-  -- Iterate over all modules sections (e.g. ui) and their plugins
-  for _, section in pairs(modules) do
-    if vim.tbl_contains(section, plugin) then
-      return true
-    end
-  end
-
-  return false
+  return modules[section]
+    and vim.tbl_contains(modules[section], plugin)
 end
 
 local modules_list_cache = {}

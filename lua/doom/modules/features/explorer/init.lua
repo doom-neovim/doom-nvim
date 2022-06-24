@@ -114,7 +114,7 @@ explorer.configs["nvim-tree.lua"] = function()
   local tree_cb = require("nvim-tree.config").nvim_tree_callback
 
   local override_table
-  if is_module_enabled("lsp") then
+  if is_module_enabled("features", "lsp") then
     override_table = {
       diagnostics = {
         enable = true,
