@@ -24,7 +24,7 @@ end
 
 module.use_lsp = function(lsp_name, options)
   local utils = require('doom.utils')
-  if not utils.is_module_enabled("lsp") then
+  if not utils.is_module_enabled("features", "lsp") then
     return
   end
   local lsp = require('lspconfig')
@@ -40,7 +40,7 @@ module.use_lsp = function(lsp_name, options)
 
   -- Combine default on_attach with provided on_attach
   local on_attach_functions = {}
-  if utils.is_module_enabled("illuminate") then
+  if utils.is_module_enabled("features", "illuminate") then
     table.insert(on_attach_functions, utils.illuminate_attach)
   end
   if (opts.config and opts.config.on_attach) then
