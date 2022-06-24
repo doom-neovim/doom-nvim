@@ -1,74 +1,105 @@
 return function()
   local config = require("doom.core.config").config
+  -- require [dashboard-nvim](https://github.com/glepnir/dashboard-nvim)
+  local db = require("dashboard")
 
   vim.g.dashboard_session_directory = require("doom.core.system").doom_root .. "/sessions"
   vim.g.dashboard_default_executive = "telescope"
 
-  vim.g.dashboard_custom_section = {
-    a = {
-      description = { "  Load Last Session              SPC s r" },
-      command = "lua require('persistence').load({ last = true })",
+  -- Custom Center
+  db.custom_center = {
+    {
+      icon = "  ",
+      desc = "Load Last Session              ",
+      shortcut = "SPC s r",
+      action = "lua require('persistence').load({ last = true })"
     },
-    b = {
-      description = { "  Recently Opened Files          SPC f r" },
-      command = "Telescope oldfiles",
+    {
+      icon = "  ",
+      desc = "Recently Opened Files          ",
+      shortcut = "SPC f r",
+      action = "lua require('telescope.builtin').oldfiles()"
     },
-    c = {
-      description = { "  Jump to Bookmark               SPC s m" },
-      command = "Telescope marks",
+    {
+      icon = "  ",
+      desc = "Jump to Bookmark               ",
+      shortcut = "SPC s m",
+      action = "lua require('telescope.builtin').marks()"
     },
-    d = {
-      description = { "  Find File                      SPC f f" },
-      command = "Telescope find_files",
+    {
+      icon = "  ",
+      desc = "Find File                      ",
+      shortcut = "SPC f f",
+      action = "lua require('telescope.builtin').find_files()"
     },
-    e = {
-      description = { "  Find Word                      SPC s g" },
-      command = "Telescope live_grep",
+    {
+      icon = "  ",
+      desc = "Find Word                      ",
+      shortcut = "SPC f g",
+      action = "lua require('telescope.builtin').live_grep()"
     },
-    f = {
-      description = { "  Open Private Configuration     SPC d c" },
-      command = 'lua require("doom.core.functions").edit_config()',
+    {
+      icon = "  ",
+      desc = "Open Private Configuration     ",
+      shortcut = "SPC d c",
+      action = "lua require('doom.core.functions').edit_config()"
     },
-    g = {
-      description = { "  Open Documentation             SPC d d" },
-      command = 'lua require("doom.core.functions").open_docs()',
+    {
+      icon = "  ",
+      desc = "Open Documentation             ",
+      shortcut = "SPC d d",
+      action = "lua require('doom.core.functions').open_docs()"
     },
   }
 
-  vim.g.dashboard_custom_footer = {
+  -- Custom Footer
+  db.custom_footer = {
+    "",  -- add 'newline' padding between `custom_center` and `custom_footer`
     "Doom Nvim loaded in " .. vim.fn.printf(
       "%.3f",
       vim.fn.reltimefloat(vim.fn.reltime(vim.g.start_time))
     ) .. " seconds.",
   }
 
-  vim.g.dashboard_custom_header = vim.tbl_isempty(config.doom.dashboard_custom_header)
-      and {
-        "                                                                              ",
-        "=================     ===============     ===============   ========  ========",
-        "\\\\ . . . . . . .\\\\   //. . . . . . .\\\\   //. . . . . . .\\\\  \\\\. . .\\\\// . . //",
-        "||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||",
-        "|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||",
-        "||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||",
-        "|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\\ . . . . ||",
-        "||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\\_ . .|. .||",
-        "|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\\ `-_/| . ||",
-        "||_-' ||  .|/    || ||    \\|.  || `-_|| ||_-' ||  .|/    || ||   | \\  / |-_.||",
-        "||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \\  / |  `||",
-        "||    `'         || ||         `'    || ||    `'         || ||   | \\  / |   ||",
-        "||            .===' `===.         .==='.`===.         .===' /==. |  \\/  |   ||",
-        "||         .=='   \\_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \\/  |   ||",
-        "||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \\/  |   ||",
-        "||   .=='    _-'          `-__\\._-'         `-_./__-'         `' |. /|  |   ||",
-        "||.=='    _-'                                                     `' |  /==.||",
-        "=='    _-'                        N E O V I M                         \\/   `==",
-        "\\   _-'                                                                `-_   /",
-        " `''                                                                      ``'  ",
-      }
-    or config.doom.dashboard_custom_header
+  -- always show tabline & statusline
+  db.hide_tabline = false
+  db.hide_statusline = false
+
+  -- Custom Header (default)
+  db.custom_header = {
+    "                                                                              ",
+    "=================     ===============     ===============   ========  ========",
+    "\\\\ . . . . . . .\\\\   //. . . . . . .\\\\   //. . . . . . .\\\\  \\\\. . .\\\\// . . //",
+    "||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\\/ . . .||",
+    "|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||",
+    "||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||",
+    "|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\\ . . . . ||",
+    "||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\\_ . .|. .||",
+    "|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\\ `-_/| . ||",
+    "||_-' ||  .|/    || ||    \\|.  || `-_|| ||_-' ||  .|/    || ||   | \\  / |-_.||",
+    "||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \\  / |  `||",
+    "||    `'         || ||         `'    || ||    `'         || ||   | \\  / |   ||",
+    "||            .===' `===.         .==='.`===.         .===' /==. |  \\/  |   ||",
+    "||         .=='   \\_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \\/  |   ||",
+    "||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \\/  |   ||",
+    "||   .=='    _-'          `-__\\._-'         `-_./__-'         `' |. /|  |   ||",
+    "||.=='    _-'                                                     `' |  /==.||",
+    "=='    _-'                        N E O V I M                         \\/   `==",
+    "\\   _-'                                                                `-_   /",
+    " `''                                                                      ``'  ",
+  }
+
+  -- overwrite the default `custom_header` if the user sets `config.doom.dashboard_custom_header`
+  local next = next
+  if next(config.doom.dashboard_custom_header) ~= nil then
+    -- user has set `config.doom.dashboard_custom_header`
+    db.custom_header = config.doom.dashboard_custom_header
+  end
+
   -- Header color
-  vim.cmd("hi! dashboardHeader   guifg=" .. config.doom.dashboard_custom_colors.header_color)
-  vim.cmd("hi! dashboardCenter   guifg=" .. config.doom.dashboard_custom_colors.center_color)
-  vim.cmd("hi! dashboardShortcut guifg=" .. config.doom.dashboard_custom_colors.shortcut_color)
-  vim.cmd("hi! dashboardFooter   guifg=" .. config.doom.dashboard_custom_colors.footer_color)
+  vim.cmd("hi! DashboardHeader       guifg=" .. config.doom.dashboard_custom_colors.header_color)
+  vim.cmd("hi! DashboardCenter       guifg=" .. config.doom.dashboard_custom_colors.center_color)
+  vim.cmd("hi! DashboardCenterIcon   guifg=" .. config.doom.dashboard_custom_colors.center_color)
+  vim.cmd("hi! DashboardShortCut     guifg=" .. config.doom.dashboard_custom_colors.shortcut_color)
+  vim.cmd("hi! DashboardFooter       guifg=" .. config.doom.dashboard_custom_colors.footer_color)
 end
