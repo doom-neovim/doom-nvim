@@ -80,6 +80,15 @@ lsp.settings = {
       { name = "buffer" },
     },
   },
+  sorting = {
+    "offset",
+    "exact",
+    "score",
+    "kind",
+    "sort_text",
+    "length",
+    "order",
+  }
 }
 
 local is_module_enabled = require("doom.utils").is_module_enabled
@@ -209,6 +218,12 @@ lsp.configs["nvim-cmp"] = function()
   if _doom.cmp_enable == nil then
     _doom.cmp_enable = true
   end
+
+  -- Fetch the comparators from cmp
+  local comparators = require("cmp.config.compare")
+  doom.features.lsp.settings.sorting = vim.tbl_map(function (comparator)
+    return comparators[comparator]
+  end, doom.features.lsp.settings.sorting)
 
   cmp.setup(vim.tbl_deep_extend("force", doom.features.lsp.settings.completion, {
     completeopt = nil,
