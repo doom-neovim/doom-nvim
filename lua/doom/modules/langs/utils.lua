@@ -74,7 +74,7 @@ module.use_lsp = function(lsp_name, options)
   end
 
   -- Auto install if possible
-  if utils.is_module_enabled('auto_install') and not opts.no_installer then
+  if utils.is_module_enabled('features', 'auto_install') and not opts.no_installer then
     local lsp_installer = require("nvim-lsp-installer.servers")
     local server_available, server = lsp_installer.get_server(lsp_name)
     if server_available then
