@@ -1,6 +1,6 @@
 # Contributing Tools for Doom Neovim
 
-This directory stores various tools and automations to help contributors or develpers of doom-nvim. 
+This directory stores various tools and automations to help contributors or develpers of doom-nvim.
 
 ## Doom Contrib Docker Image `./start_docker.sh`
 
@@ -19,13 +19,13 @@ options:
 -h     Shows this help menu
 ```
 
-The script will start an instance of neovim that uses `./contribute/doom-nvim-contrib/` for configuration.  
+The script will start an instance of neovim that uses `./tools/doom-nvim-contrib/` for configuration.
 You will then be able to start making changes within `doom-nvim-contrib` without breaking your existing config.
 
 ### What this script does
 
 1. On first execution it will setup a git worktree of doom-nvim, this means your main config and this copy of the repo will share the same git history.
-    - This worktree will be placed in the `contribute/doom-nvim-contrib` folder inside of this repository.
+    - This worktree will be placed in the `tools/doom-nvim-contrib` folder inside of this repository.
     - Because they share history you wont be able to checkout the same branch on both copies of the repository.  Unless specified, a new branch called `doom-nvim-contrib` will be created off the latest version of `develop`.
 2. It will setup a new docker image to run this config within (if necessary).
 3. It will then start the docker image and enter you into neovim.
@@ -34,13 +34,13 @@ You will then be able to start making changes within `doom-nvim-contrib` without
 
 These are the folders used by this docker image, they will be auto generated when `./start_docker.sh` is run
 
-`contribute/doom-nvim-contrib/` - Git worktree for doom-nvim contributions
-`contribute/local-share-nvim/` - Stores the data from `~/.local/share/nvim/` 
-`contribute/workspace/` - Directory to store test files and project that you want to test your changes upon
+`tools/doom-nvim-contrib/` - Git worktree for doom-nvim contributions
+`tools/local-share-nvim/` - Stores the data from `~/.local/share/nvim/`
+`tools/workspace/` - Directory to store test files and project that you want to test your changes upon
 
 ## Pinned Dependencies `./update_dependencies.sh`
 
-This script parses the `lua/doom/modules/init.lua` file and pins each plugin to the latest commit in the default branch.  
+This script parses the `lua/doom/modules/init.lua` file and pins each plugin to the latest commit in the default branch.
 We should update these dependencies with each release of doom-nvim, and test everything working together to ensure a stable experience for users.
 Pinned/frozen dependencies can be disabled using the `freeze_dependencies` configuration option in `doom_config.lua`.
 
@@ -48,7 +48,7 @@ Pinned/frozen dependencies can be disabled using the `freeze_dependencies` confi
 
 Run the following command in the root of the neovim folder.
 ```bash
-cd contribute && ./update_dependencies.sh`
+cd tools && ./update_dependencies.sh`
 ```
 
 ### Issues
