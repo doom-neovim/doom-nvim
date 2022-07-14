@@ -22,6 +22,8 @@ bash.autocmds = {
 
         langs_utils.use_null_ls_source({
           null_ls.builtins.formatting.shfmt,
+          null_ls.builtins.code_actions.shellcheck,
+          null_ls.builtins.diagnostics.shellcheck,
         })
       end
     end,
