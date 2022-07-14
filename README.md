@@ -58,7 +58,19 @@ Some of the defining features that make this project unique are:
 
 ## Install
 
-TODO: Add install docs here
+### Mac OS / Linux
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/next/contribute/install.sh)
+```
+
+### Manual (Mac OS / Linux)
+
+1. Clone doom-nvim to ~/.config/nvim
+  - `git clone https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_HOME:-$HOME/.config}/nvim`
+2. (optional) Checkout the latest stable version in a new branch called `my-config` so the auto-updater works.
+  - `git checkout tags/$(git tag -l --sort -version:refname | head -n 1) -b my-config`
+  - ℹ️ The auto-updater will be broken without this step but you're free to check updates using the `:CheckUpdate` (TODO: Implement) command and manage updates manually.
 
 ## Configuring
 
