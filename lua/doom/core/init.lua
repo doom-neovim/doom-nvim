@@ -45,12 +45,16 @@ utils.safe_require("doom.core.ui")
 -- Set some extra commands
 utils.safe_require("doom.core.commands")
 
-
 -- Load Doom modules.
 local modules = utils.safe_require("doom.core.modules")
 modules.start()
 modules.load_modules()
 modules.handle_user_config()
 modules.try_sync()
+
+-- Execute autocommand for user to hook custom config into
+vim.api.nvim_exec_autocmds("User", {
+  pattern = "DoomStarted",
+})
 
 -- vim: fdm=marker
