@@ -42,6 +42,7 @@ return {
 
     -- Tools
     -- "dap",             -- Debug code through neovim
+    "repl", -- Interactive REPL in neovim
     "explorer",           -- An enhanced filetree explorer
     -- "firenvim",        -- Embed neovim in your browser
     -- "lazygit",         -- Lazy git integration
