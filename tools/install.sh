@@ -26,7 +26,7 @@ function help() {
   echo "    -y, --yes                                Skip all prompts"
 }
 
-declare -a system_dependencies=("nvim" "git" "node" "npm" "fd;optional" "rg;optional" "wgeto;optional" "unzip;optional")
+declare -a system_dependencies=("nvim" "git" "node" "npm" "fd;optional" "rg;optional" "wget;optional" "unzip;optional")
 declare -a npm_dependencies=("tree-sitter")
 
 function banner() {
@@ -67,7 +67,9 @@ function check_dependency_group () {
   echo "Checking $dependency_group_name dependencies..."
   local missing_dependencies=0
   for i in "$@"; do
-    local split_result=("${i//;/ }")
+    # The recommended changes break the string splitting
+    # shellcheck disable=2206
+    local split_result=(${i//;/ })
     local executable="${split_result[0]}"
     local optional=${split_result[1]}
 
@@ -99,12 +101,14 @@ function backup_existing_config() {
     echo " "
     echo "Do you want to continue installing doom-nvim? (y/n)"
     echo "Note: The old config will be backed up to ${XDG_CONFIG_HOME}/nvim-old"
+    echo " "
     read -p "" -n 1 -r
-    echo    # (optional) move to a new line
+    echo " "   # (optional) move to a new line
     if [[ $REPLY =~ ^[Yy]$ ]]; then
       # If nvim-old directory doesn`t exist, move `nvim/` to `nvim-old/'
       if [ ! -d "${XDG_CONFIG_HOME}/nvim-old" ]; then
         mv "${XDG_CONFIG_HOME}/nvim" "${XDG_CONFIG_HOME}/nvim-old"
+        echo "Moved old config from \`${XDG_CONFIG_HOME}/nvim\` to \`${XDG_CONFIG_HOME}/nvim-old\`"
       else
         # If it already exists try placing it in `nvim-old-1/` then `nvim-old-2/` (up until 10)
         local i=1
@@ -116,6 +120,7 @@ function backup_existing_config() {
 
         if [[ $has_found_directory -eq 1 ]]; then
           mv "${XDG_CONFIG_HOME}/nvim" "${XDG_CONFIG_HOME}/nvim-old-${i}"
+          echo "Moved old config from \`${XDG_CONFIG_HOME}/nvim\` to \`${XDG_CONFIG_HOME}/nvim-old-${i}\`"
         fi
       fi
     fi
@@ -137,6 +142,7 @@ function install_doom_nvim() {
   local is_dirty=0
   git diff-index --quiet HEAD -- || is_dirty=1;
 
+  echo " "
   if [ $is_dirty -eq 0 ]; then
     local tag
     tag="$(git tag -l --sort -version:refname | head -n 1)"
