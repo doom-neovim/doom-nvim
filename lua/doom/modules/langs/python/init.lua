@@ -1,7 +1,7 @@
 local python = {}
 
 python.settings = {
-  language_server_name = 'pyright',
+  language_server_name = "pyright",
 }
 
 python.autocmds = {
@@ -9,7 +9,7 @@ python.autocmds = {
     "BufWinEnter",
     "*.py",
     function()
-      local langs_utils = require('doom.modules.langs.utils')
+      local langs_utils = require("doom.modules.langs.utils")
       langs_utils.use_lsp(doom.langs.python.settings.language_server_name)
 
       require("nvim-treesitter.install").ensure_installed("python")
@@ -20,10 +20,9 @@ python.autocmds = {
 
         langs_utils.use_null_ls_source({
           null_ls.builtins.formatting.black,
-          null_ls.builtins.diagnostics.mypy
+          null_ls.builtins.diagnostics.mypy,
         })
       end
-
     end,
     once = true,
   },

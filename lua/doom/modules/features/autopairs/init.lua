@@ -16,20 +16,31 @@ autopairs.packages = {
 
 autopairs.configs = {}
 autopairs.configs["nvim-autopairs"] = function()
-  require("nvim-autopairs").setup(vim.tbl_deep_extend("force", doom.features.autopairs.settings, { check_ts = true }))
+  require("nvim-autopairs").setup(
+    vim.tbl_deep_extend("force", doom.features.autopairs.settings, { check_ts = true })
+  )
 end
 
 autopairs.binds = {
-  "<leader>", name = "+prefix", {
-    { "t", name = "+tweak", {
-        { "p", function()
-          local autopairs_plugin = require('nvim-autopairs')
-          if autopairs_plugin.state.disabled then
-            autopairs_plugin.enable()
-          else
-            autopairs_plugin.disable()
-          end
-        end, name = "Toggle autopairs" },
+  "<leader>",
+  name = "+prefix",
+  {
+    {
+      "t",
+      name = "+tweak",
+      {
+        {
+          "p",
+          function()
+            local autopairs_plugin = require("nvim-autopairs")
+            if autopairs_plugin.state.disabled then
+              autopairs_plugin.enable()
+            else
+              autopairs_plugin.disable()
+            end
+          end,
+          name = "Toggle autopairs",
+        },
       },
     },
   },

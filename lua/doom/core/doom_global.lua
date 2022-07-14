@@ -44,14 +44,13 @@
 
 -- From here on, we have a hidden global `_doom` that holds state the user
 -- shouldn't mess with.
-_G._doom = {
-}
+_G._doom = {}
 
 --- Global object
 doom = {
   -- Leader key for keybinds
   -- @default = ' '
-  leader_key = ' ',
+  leader_key = " ",
 
   -- Pins plugins to a commit sha to prevent breaking changes
   -- @default = true
@@ -214,10 +213,10 @@ doom = {
   --- )
   ---@vararg DoomPackage[]|string[] Packages to install
   use_package = function(...)
-    local arg = {...}
+    local arg = { ... }
     -- Get table of packages via git repository name
-    local packages_to_add = vim.tbl_map(function (t)
-      return type(t) == 'string' and t or t[1]
+    local packages_to_add = vim.tbl_map(function(t)
+      return type(t) == "string" and t or t[1]
     end, arg)
 
     -- Predicate returns false if the package needs to be overriden
@@ -248,10 +247,10 @@ doom = {
   ---
   --- @vararg DoomAutocmd|DoomAutocmd[] Autocommands to setup
   use_autocmd = function(...)
-    local arg = {...}
+    local arg = { ... }
     for _, autocmd in ipairs(arg) do
-      if type(autocmd[1]) == 'string' and type(autocmd[2]) == 'string' then
-        local key = string.format('%s-%s', autocmd[1], autocmd[2])
+      if type(autocmd[1]) == "string" and type(autocmd[2]) == "string" then
+        local key = string.format("%s-%s", autocmd[1], autocmd[2])
         doom.autocmds[key] = autocmd
       elseif autocmd ~= nil then
         doom.use_autocmd(unpack(autocmd))
@@ -275,10 +274,10 @@ doom = {
   --- })
   ---@vararg DoomCmd|DoomCmd[] Commands to bind
   use_cmd = function(...)
-    local arg = {...}
+    local arg = { ... }
     for _, cmd in ipairs(arg) do
       if type(cmd[1]) == "string" then
-        doom.cmds[cmd[1]] = cmd;
+        doom.cmds[cmd[1]] = cmd
       elseif cmd ~= nil then
         doom.use_cmd(unpack(cmd))
       end
@@ -301,12 +300,11 @@ doom = {
   --- })
   ---@vararg DoomKeybind|DoomKeybind[]
   use_keybind = function(...)
-    local arg = {...}
+    local arg = { ... }
     for _, bind in ipairs(arg) do
       table.insert(doom.binds, bind)
     end
   end,
-
 
   -- This is where modules are stored.
   -- The entire data structure will be stored in modules[module_name] = {}
@@ -316,7 +314,7 @@ doom = {
     core = {},
     features = {},
     langs = {},
-  }
+  },
 }
 -- Maintain backwards compatibility + provide a shorthand way to access modules
 doom.core = doom.modules.core

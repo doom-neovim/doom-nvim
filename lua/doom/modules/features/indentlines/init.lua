@@ -18,11 +18,13 @@ indentlines.packages = {
 
 indentlines.configs = {}
 indentlines.configs["indent-blankline.nvim"] = function()
-  require("indent_blankline").setup(vim.tbl_deep_extend("force", doom.features.indentlines.settings, {
-    -- To remove indent lines, remove the module. Having the module and
-    -- disabling it makes no sense.
-    enabled = true,
-  }))
+  require("indent_blankline").setup(
+    vim.tbl_deep_extend("force", doom.features.indentlines.settings, {
+      -- To remove indent lines, remove the module. Having the module and
+      -- disabling it makes no sense.
+      enabled = true,
+    })
+  )
 end
 
 return indentlines

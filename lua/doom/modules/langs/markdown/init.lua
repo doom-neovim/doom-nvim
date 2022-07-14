@@ -1,7 +1,6 @@
 local markdown = {}
 
-markdown.settings = {
-}
+markdown.settings = {}
 
 markdown.autocmds = {
   {

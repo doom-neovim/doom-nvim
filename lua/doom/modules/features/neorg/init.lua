@@ -44,7 +44,7 @@ neorg.packages = {
     "nvim-neorg/neorg",
     commit = "c0ebefa516aa9e93431f0a55e033db0dec072857",
     after = "nvim-treesitter",
-  }
+  },
 }
 
 neorg.configs = {}
@@ -65,22 +65,22 @@ neorg.autocmds = {
         install_info = {
           url = "https://github.com/nvim-neorg/tree-sitter-norg",
           files = { "src/parser.c", "src/scanner.cc" },
-          branch = "main"
-        }
+          branch = "main",
+        },
       }
       parsers.norg_meta = {
         install_info = {
           url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
           files = { "src/parser.c" },
-          branch = "main"
-        }
+          branch = "main",
+        },
       }
       parsers.norg_table = {
         install_info = {
           url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
           files = { "src/parser.c" },
-          branch = "main"
-        }
+          branch = "main",
+        },
       }
 
       vim.defer_fn(function()
@@ -90,7 +90,7 @@ neorg.autocmds = {
         ensure_installed("norg_table")
       end, 0)
     end,
-  }
+  },
 }
 
 return neorg

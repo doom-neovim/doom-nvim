@@ -429,7 +429,7 @@ statusline.configs["heirline.nvim"] = function()
   require("heirline").setup(heirline_config)
 end
 
-statusline.try_refresh = function ()
+statusline.try_refresh = function()
   xpcall(doom.modules.features.statusline.configs["heirline.nvim"], debug.traceback)
 end
 

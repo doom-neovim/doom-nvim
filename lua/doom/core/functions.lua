@@ -39,7 +39,7 @@ functions.open_docs = function()
   vim.cmd(string.format("split %s", docs_path))
   -- Move cursor to table of contents section
   vim.api.nvim_buf_call(vim.fn.bufnr("doom_nvim.norg"), function()
-    vim.fn.cursor({12, 1})
+    vim.fn.cursor({ 12, 1 })
   end)
   -- Set local documentation options
   vim.opt_local.modified = false
@@ -209,7 +209,11 @@ functions.change_number = function()
     vim.opt.number = false
     vim.opt.relativenumber = false
   end
-  print("number=%s, relativenumber=%s", utils.bool2str(vim.opt.number), utils.bool2str(vim.opt.relativenumber))
+  print(
+    "number=%s, relativenumber=%s",
+    utils.bool2str(vim.opt.number),
+    utils.bool2str(vim.opt.relativenumber)
+  )
 end
 
 -- Toggle spell.

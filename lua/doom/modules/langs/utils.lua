@@ -1,4 +1,4 @@
-local log = require('doom.utils.logging')
+local log = require("doom.utils.logging")
 
 local module = {}
 
@@ -10,24 +10,31 @@ module.use_null_ls_source = function(sources)
   local null_ls = require("null-ls")
   for _, source in ipairs(sources) do
     -- Generate a unique key from the name/methods
-    local methods = type(source.method) == 'string' and source.method or table.concat(source.method, ' ')
+    local methods = type(source.method) == "string" and source.method
+      or table.concat(source.method, " ")
     local key = source.name .. methods
     -- If it's unique, register it
     if not registered_sources[key] then
       registered_sources[key] = source
       null_ls.register(source)
     else
-      log.warn(string.format('Attempted to register a duplicate null_ls source. ( %s with methods %s).', source.name, methods))
+      log.warn(
+        string.format(
+          "Attempted to register a duplicate null_ls source. ( %s with methods %s).",
+          source.name,
+          methods
+        )
+      )
     end
   end
 end
 
 module.use_lsp = function(lsp_name, options)
-  local utils = require('doom.utils')
+  local utils = require("doom.utils")
   if not utils.is_module_enabled("features", "lsp") then
     return
   end
-  local lsp = require('lspconfig')
+  local lsp = require("lspconfig")
   local lsp_configs = require("lspconfig.configs")
 
   local opts = options or {}
@@ -43,29 +50,31 @@ module.use_lsp = function(lsp_name, options)
   if utils.is_module_enabled("features", "illuminate") then
     table.insert(on_attach_functions, utils.illuminate_attach)
   end
-  if (opts.config and opts.config.on_attach) then
+  if opts.config and opts.config.on_attach then
     table.insert(on_attach_functions, opts.config.on_attach)
   end
 
   local capabilities_config = {
     capabilities = module.get_capabilities(),
-    on_attach = function (client)
+    on_attach = function(client)
       for _, handler in ipairs(on_attach_functions) do
         handler(client)
       end
-    end
+    end,
   }
 
   -- Start server and bind to buffers
   local start_lsp = function(server)
-    local final_config = vim.tbl_deep_extend('keep', opts.config or {}, capabilities_config)
+    local final_config = vim.tbl_deep_extend("keep", opts.config or {}, capabilities_config)
     if server and not is_custom_config then -- If using lsp-installer
       server:setup(final_config)
     else
       lsp[config_name].setup(final_config)
       local lsp_config_server = lsp[config_name]
       if lsp_config_server.manager then
-        local buffer_handler = lsp_config_server.filetypes and lsp_config_server.manager.try_add_wrapper or lsp_config_server.manager.try_add
+        local buffer_handler = lsp_config_server.filetypes
+            and lsp_config_server.manager.try_add_wrapper
+          or lsp_config_server.manager.try_add
         for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
           buffer_handler(bufnr)
         end
@@ -74,7 +83,7 @@ module.use_lsp = function(lsp_name, options)
   end
 
   -- Auto install if possible
-  if utils.is_module_enabled('features', 'auto_install') and not opts.no_installer then
+  if utils.is_module_enabled("features", "auto_install") and not opts.no_installer then
     local lsp_installer = require("nvim-lsp-installer.servers")
     local server_available, server = lsp_installer.get_server(lsp_name)
     if server_available then

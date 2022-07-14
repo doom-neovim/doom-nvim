@@ -88,7 +88,7 @@ lsp.settings = {
     "sort_text",
     "length",
     "order",
-  }
+  },
 }
 
 local is_module_enabled = require("doom.utils").is_module_enabled
@@ -221,7 +221,7 @@ lsp.configs["nvim-cmp"] = function()
 
   -- Fetch the comparators from cmp
   local comparators = require("cmp.config.compare")
-  doom.features.lsp.settings.sorting = vim.tbl_map(function (comparator)
+  doom.features.lsp.settings.sorting = vim.tbl_map(function(comparator)
     return comparators[comparator]
   end, doom.features.lsp.settings.sorting)
 
@@ -292,11 +292,13 @@ lsp.configs["nvim-cmp"] = function()
 end
 lsp.configs["lsp_signature.nvim"] = function()
   -- Signature help
-  require("lsp_signature").setup(vim.tbl_deep_extend("force", doom.features.lsp.settings.signature, {
-    handler_opts = {
-      border = doom.border_style,
-    },
-  }))
+  require("lsp_signature").setup(
+    vim.tbl_deep_extend("force", doom.features.lsp.settings.signature, {
+      handler_opts = {
+        border = doom.border_style,
+      },
+    })
+  )
 end
 
 lsp.binds = {

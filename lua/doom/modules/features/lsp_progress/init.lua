@@ -1,7 +1,6 @@
 local fidget = {}
 
-fidget.settings = {
-}
+fidget.settings = {}
 
 fidget.packages = {
   ["fidget.nvim"] = {

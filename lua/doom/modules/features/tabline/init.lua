@@ -138,7 +138,6 @@ tabline.packages = {
   },
 }
 
-
 tabline.configs = {}
 tabline.configs["bufferline.nvim"] = function()
   require("bufferline").setup(doom.features.tabline.settings)

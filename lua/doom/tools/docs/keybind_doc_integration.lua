@@ -16,20 +16,20 @@
 
 --- @type NestIntegration
 local module = {}
-module.name = 'keybind_doc_integration';
+module.name = "keybind_doc_integration"
 
 module.data = {}
 
 --- @param node NestIntegrationNode
 --- @param node_settings NestSettings
-module.handler = function (node)
+module.handler = function(node)
   -- If node.rhs is a table, this is a group of keymaps, if it is a string then it is a keymap
-  local is_keymap_group = type(node.rhs) == 'table'
+  local is_keymap_group = type(node.rhs) == "table"
 
   if not is_keymap_group then
     local row = {}
     for _, key in ipairs(module.keys) do
-      table.insert(row, node[key] or 'unset')
+      table.insert(row, node[key] or "unset")
     end
     table.insert(module.data, row)
   end
@@ -39,7 +39,7 @@ module.set_table_fields = function(cols)
   module.keys = {}
   module.header = {}
   module.data = {}
-  for _, col in ipairs(cols)do
+  for _, col in ipairs(cols) do
     table.insert(module.keys, col.key)
     table.insert(module.header, col.name)
   end
@@ -55,11 +55,11 @@ module.get_rows = function()
 end
 
 local pad_left = function(string, length, char)
-  local c = char or ' '
+  local c = char or " "
   local current_length = string.len(string)
   local difference = length - current_length
   if difference > 0 then
-    for _=1,difference do
+    for _ = 1, difference do
       string = c .. string
     end
   end
@@ -76,7 +76,9 @@ local get_max_lengths = function(rows)
 
   for _, row in ipairs(rows) do
     for index, cell in ipairs(row) do
-      print(index .. '| ' .. cell .. ' length is ' .. string.len(cell) .. ' vs ' .. max_lengths[index])
+      print(
+        index .. "| " .. cell .. " length is " .. string.len(cell) .. " vs " .. max_lengths[index]
+      )
       max_lengths[index] = math.max(max_lengths[index], string.len(cell))
     end
   end
@@ -89,19 +91,19 @@ module.print_markdown = function()
   local result = {}
 
   -- Print header line and divider
-  local header_line = '|'
-  local divider_line = '|'
+  local header_line = "|"
+  local divider_line = "|"
   for index, cell in ipairs(module.header) do
-    header_line = header_line .. string.format(' %s |', pad_left(cell, max_lengths[index]))
-    divider_line = divider_line .. string.format(' %s |', pad_left('', max_lengths[index], '-'))
+    header_line = header_line .. string.format(" %s |", pad_left(cell, max_lengths[index]))
+    divider_line = divider_line .. string.format(" %s |", pad_left("", max_lengths[index], "-"))
   end
   table.insert(result, header_line)
   table.insert(result, divider_line)
 
   for _, row in ipairs(module.data) do
-    local line = '|'
+    local line = "|"
     for index, cell in ipairs(row) do
-      line = line .. string.format(' %s |', pad_left(cell, max_lengths[index]))
+      line = line .. string.format(" %s |", pad_left(cell, max_lengths[index]))
     end
     table.insert(result, line)
   end
@@ -113,8 +115,6 @@ module.print_markdown = function()
   return result
 end
 
-module.clear = function()
-end
+module.clear = function() end
 
-return module;
-
+return module

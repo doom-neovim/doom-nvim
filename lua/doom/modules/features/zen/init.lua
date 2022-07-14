@@ -57,7 +57,6 @@ zen.packages = {
   },
 }
 
-
 zen.configs = {}
 zen.configs["TrueZen.nvim"] = function()
   require("true-zen").setup(doom.features.zen.settings)
@@ -66,8 +65,8 @@ end
 zen.binds = {
   { "<F5>", ":TZAtaraxis<CR>", name = "Enter Nirvana" },
   { "<leader>t", name = "+tweaks", {
-    { "z", ":TZAtaraxis<CR>", name = 'Toggle Zen' }
-  } }
+    { "z", ":TZAtaraxis<CR>", name = "Toggle Zen" },
+  } },
 }
 
 return zen

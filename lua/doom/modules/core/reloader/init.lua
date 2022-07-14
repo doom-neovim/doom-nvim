@@ -170,10 +170,7 @@ reloader.autocmds = function()
 
   -- RELOAD DOOM ON SAVE
   if reloader.settings.reload_on_save then
-    table.insert(
-      autocmds,
-      { "BufWritePost", "*/doom/**/*.lua,*/user/**/*.lua", reloader.reload }
-    )
+    table.insert(autocmds, { "BufWritePost", "*/doom/**/*.lua,*/user/**/*.lua", reloader.reload })
     table.insert(autocmds, {
       "BufWritePost",
       "*/modules.lua,*/config.lua",
@@ -189,4 +186,3 @@ reloader.autocmds = function()
 end
 
 return reloader
-

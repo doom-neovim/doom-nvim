@@ -147,7 +147,7 @@ default_integration.handler = function(node, node_settings)
     local buffer = (node_settings.buffer == true) and 0 or node_settings.buffer
 
     local options = vim.tbl_extend("force", {
-      buffer = buffer
+      buffer = buffer,
     }, node_settings.options)
     vim.keymap.set(sanitizedMode, node.lhs, node.rhs, options)
   end

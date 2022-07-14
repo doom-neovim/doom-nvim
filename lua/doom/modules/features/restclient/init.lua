@@ -14,7 +14,6 @@ restclient.packages = {
   },
 }
 
-
 restclient.configs = {}
 restclient.configs["rest.nvim"] = function()
   require("rest-nvim").setup(doom.features.restclient.settings)
@@ -34,7 +33,7 @@ restclient.binds = {
         },
       },
     },
-  }
+  },
 }
 
 return restclient

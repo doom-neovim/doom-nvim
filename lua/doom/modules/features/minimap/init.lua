@@ -17,7 +17,6 @@ minimap.packages = {
   },
 }
 
-
 minimap.configs = {}
 
 minimap.binds = {
@@ -34,7 +33,7 @@ minimap.binds = {
         },
       },
     },
-  }
+  },
 }
 
 return minimap

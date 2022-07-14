@@ -247,19 +247,29 @@ end
 local netrw = {}
 
 netrw.autocmds = {
-  { "FileType", "netrw", function()
-    draw_icons()
-    netrw_maps()
-  end},
-  { "TextChanged", "*", function()
-    draw_icons()
-  end}
+  {
+    "FileType",
+    "netrw",
+    function()
+      draw_icons()
+      netrw_maps()
+    end,
+  },
+  {
+    "TextChanged",
+    "*",
+    function()
+      draw_icons()
+    end,
+  },
 }
 
 netrw.binds = {
-  '<leader>o', name = '+open/close', {
-    { 'e', ':Lexplore<CR>', name = 'Explorer' }
-  }
+  "<leader>o",
+  name = "+open/close",
+  {
+    { "e", ":Lexplore<CR>", name = "Explorer" },
+  },
 }
 
 return netrw

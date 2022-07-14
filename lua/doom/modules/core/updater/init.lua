@@ -94,7 +94,11 @@ end
 updater._is_version_newer = function(curr, alternate)
   return curr.major < alternate.major
     or (curr.major == alternate.major and curr.minor < alternate.minor)
-    or (curr.major == alternate.major and curr.minor == alternate.minor and curr.patch < alternate.patch)
+    or (
+      curr.major == alternate.major
+      and curr.minor == alternate.minor
+      and curr.patch < alternate.patch
+    )
 end
 
 --- Checks for updates and notifys user if a new version is available
@@ -147,15 +151,17 @@ updater._checkout_version = function(version)
   log.info("Attempting to checkout " .. tag_string)
 
   local Job = require("plenary.job")
-  Job:new({
-    command = "git",
-    args = { "merge", tag_string },
-    cwd = updater._cwd,
-    on_exit = function(j, return_val)
-      print(vim.inspect(j:result()) .. vim.inspect(return_val))
-      log.info(( "updater: Updated to v%s."):format(version_string))
-    end,
-  }):start()
+  Job
+    :new({
+      command = "git",
+      args = { "merge", tag_string },
+      cwd = updater._cwd,
+      on_exit = function(j, return_val)
+        print(vim.inspect(j:result()) .. vim.inspect(return_val))
+        log.info(("updater: Updated to v%s."):format(version_string))
+      end,
+    })
+    :start()
 end
 
 updater.cmds = {

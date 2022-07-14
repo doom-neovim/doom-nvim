@@ -10,7 +10,6 @@ local filename = "config.lua"
 
 config.source = nil
 
-
 --- Entry point to bootstrap doom-nvim.
 config.load = function()
   -- Set vim defaults on first load. To override these, the user can just
@@ -68,18 +67,17 @@ config.load = function()
   -- Iterate over each module and save it to the doom global object
   for section_name, section_modules in pairs(enabled_modules) do
     for _, module_name in pairs(section_modules) do
-
       -- If the section is `user` resolves from `lua/user/modules`
       local search_paths = {
         ("user.modules.%s.%s"):format(section_name, module_name),
-        ("doom.modules.%s.%s"):format(section_name, module_name)
+        ("doom.modules.%s.%s"):format(section_name, module_name),
       }
 
       local ok, result
       for _, path in ipairs(search_paths) do
         ok, result = xpcall(require, debug.traceback, path)
         if ok then
-          break;
+          break
         end
       end
       if ok then
@@ -133,7 +131,6 @@ config.load = function()
   end
   vim.g.mapleader = doom.leader_key
 end
-
 
 -- Path cases:
 --   1. stdpath('config')/../doom-nvim/config.lua

@@ -1,7 +1,7 @@
 local svelte = {}
 
 svelte.settings = {
-  language_server_name = 'svelte',
+  language_server_name = "svelte",
 }
 
 svelte.autocmds = {
@@ -9,7 +9,7 @@ svelte.autocmds = {
     "BufWinEnter",
     "*.svelte",
     function()
-      local langs_utils = require('doom.modules.langs.utils')
+      local langs_utils = require("doom.modules.langs.utils")
       langs_utils.use_lsp(doom.langs.svelte.settings.language_server_name)
 
       vim.defer_fn(function()

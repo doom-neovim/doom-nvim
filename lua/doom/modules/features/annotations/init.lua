@@ -30,9 +30,19 @@ annotations.configs["neogen"] = function()
 end
 
 annotations.binds = {
-  { '<leader>c', name = '+code', {
-    { 'g', function() require('neogen').generate() end, name = 'Generate annotations'}
-  }}
+  {
+    "<leader>c",
+    name = "+code",
+    {
+      {
+        "g",
+        function()
+          require("neogen").generate()
+        end,
+        name = "Generate annotations",
+      },
+    },
+  },
 }
 
 return annotations

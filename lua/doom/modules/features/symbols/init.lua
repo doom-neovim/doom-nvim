@@ -29,8 +29,6 @@ symbols.packages = {
   },
 }
 
-
-
 symbols.configs = {}
 symbols.configs["symbols_outline.nvim"] = function()
   vim.g.symbols_outline = doom.features.symbols.settings
@@ -50,7 +48,7 @@ symbols.binds = {
         },
       },
     },
-  }
+  },
 }
 
 return symbols

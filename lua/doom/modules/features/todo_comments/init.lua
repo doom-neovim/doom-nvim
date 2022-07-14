@@ -9,8 +9,6 @@ todo_comments.packages = {
   },
 }
 
-
-
 todo_comments.configs = {}
 todo_comments.configs["todo-comments.nvim"] = function()
   require("todo-comments").setup(doom.features.todo_comments.settings)

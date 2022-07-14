@@ -108,7 +108,7 @@ vue.autocmds = {
       -- Contains base configuration necessary for volar to start
       local base_config = {
         default_config = {
-          cmd = { 'vue-language-server', '--stdio' },
+          cmd = { "vue-language-server", "--stdio" },
           -- cmd = volar.document_config.default_config.cmd,
           root_dir = volar_root_dir,
           on_new_config = on_new_config,
