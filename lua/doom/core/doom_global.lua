@@ -48,6 +48,10 @@ _G._doom = {}
 
 --- Global object
 doom = {
+  -- Use the global statusline
+  -- @default = true
+  global_statusline = true,
+
   -- Leader key for keybinds
   -- @default = ' '
   leader_key = " ",

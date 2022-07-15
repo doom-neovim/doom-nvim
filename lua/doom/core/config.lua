@@ -129,6 +129,11 @@ config.load = function()
     vim.opt.undofile = false
     vim.opt.undodir = nil
   end
+
+  if doom.global_statusline then
+    vim.opt.laststatus = 3
+  end
+
   vim.g.mapleader = doom.leader_key
 end
 
