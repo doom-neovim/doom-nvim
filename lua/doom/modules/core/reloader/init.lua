@@ -1,3 +1,6 @@
+-- Store state that persists between reloads here.
+_G._doom_reloader = _G._doom_reloader ~= nil and _G._doom_reloader or {}
+
 local reloader = {}
 
 --- Only show error reloading message once per session
@@ -119,11 +122,14 @@ reloader._reload_doom = function()
     return t[1]
   end, doom.packages)
   local needs_install = vim.deep_equal(modules, old_modules)
-    and vim.deep_equal(packages, old_packages)
+      and vim.deep_equal(packages, old_packages)
   if needs_install then
-    log.warn(
-      "reloader: If you made changes to the config of a plugin, run `:PackerCompile` to execute these changes."
-    )
+    if not _G._doom_reloader._has_shown_packer_compile_message then
+      log.warn(
+        "reloader: You will have to run `:PackerCompile` before changes to plugin configs take effect."
+      )
+      _G._doom_reloader._has_shown_packer_compile_message = true
+    end
   else
     log.warn("reloader: Run `:PackerSync` to install and configure new plugins.")
   end
@@ -145,8 +151,8 @@ reloader.reload = function()
 
   log.info(
     "Reloaded Doom in "
-      .. vim.fn.printf("%.3f", vim.fn.reltimefloat(vim.fn.reltime(reload_time)))
-      .. " seconds"
+    .. vim.fn.printf("%.3f", vim.fn.reltimefloat(vim.fn.reltime(reload_time)))
+    .. " seconds"
   )
 end
 
