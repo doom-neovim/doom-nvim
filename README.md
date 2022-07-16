@@ -80,10 +80,9 @@ Doom nvim is configured by enabling modules in the `modules.lua` file and then t
 
 #### What is a module?
 A module is a collection of packages, autocommands, keybinds and functions that add new capabilities or functionality to Doom Nvim.
-We organise modules into 3 categories:
+We organise modules into 2 categories:
 - `features` extend the abilities of Doom Nvim by adding new functionality.
 - `langs` add support for new languages.
-- `user` (**optional**) You can create and enable your own modules without modifying the Doom Nvim source code (read more)[#TODO:].
 
 #### Enabing/disabling modules
 
