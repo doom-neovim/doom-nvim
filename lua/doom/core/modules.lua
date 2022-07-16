@@ -23,6 +23,7 @@ local core_modules = {
     "nest",
     "treesitter",
     "reloader",
+    "updater",
   },
 }
 modules.enabled_modules = vim.tbl_deep_extend("keep", core_modules, dofile(modules.source))
