@@ -86,7 +86,7 @@ updater._get_all_versions = function(callback)
   Job
     :new({
       command = "git",
-      args = { "tag", "-l", "--sort", "-version:refname", "--merged", commit_sha },
+      args = { "tag", "-l", "--sort", "-version:refname" },
       cwd = updater._cwd,
       on_exit = function(j, err_code)
         ---@param version string
