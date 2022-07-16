@@ -18,29 +18,6 @@
 
 </div>
 
----
-
-- [Doom Nvim](#doom-nvim)
-  * [What is Doom Nvim?](#what-is-doom-nvim-)
-  * [Install](#install)
-  * [Configuring](#configuring)
-    + [Enabling features: `modules.lua`](#-moduleslua-)
-      - [What is a module?](#what-is-a-module-)
-      - [Enabing/disabling modules](#enabing-disabling-modules)
-      - [All modules](#all-modules)
-    + [Configuring and personalising: `config.lua`](#-configlua-)
-      - [Modifying neovim and doom options](#modifying-neovim-and-doom-options)
-        * [Adding plugins](#adding-plugins)
-        * [Adding Keybinds](#adding-keybinds)
-        * [Adding autocommands](#adding-autocommands)
-        * [Adding commands](#adding-commands)
-      - [Overriding module defaults](#overriding-module-defaults)
-  * [FAQ](#faq)
-  * [Contributing](#contributing)
-  * [Contributors](#contributors)
-
----
-
 ## What is Doom Nvim?
 
 Doom Nvim is a Neovim interpretation of the [doom-emacs](https://github.com/hlissner/doom-emacs) framework, adapted to Vim philosophy.
@@ -71,6 +48,29 @@ bash <(curl -s https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/next/too
 2. (optional) Checkout the latest stable version in a new branch called `my-config` so the auto-updater works.
   - `git checkout tags/$(git tag -l --sort -version:refname | head -n 1) -b my-config`
   - ℹ️ The auto-updater will be broken without this step but you're free to check updates using the `:CheckUpdate` (TODO: Implement) command and manage updates manually.
+
+---
+
+- [Doom Nvim](#doom-nvim)
+  * [What is Doom Nvim?](#what-is-doom-nvim-)
+  * [Install](#install)
+  * [Configuring](#configuring)
+    + [Enabling features: `modules.lua`](#-moduleslua-)
+      - [What is a module?](#what-is-a-module-)
+      - [Enabing/disabling modules](#enabing-disabling-modules)
+      - [All modules](#all-modules)
+    + [Configuring and personalising: `config.lua`](#-configlua-)
+      - [Modifying neovim and doom options](#modifying-neovim-and-doom-options)
+        * [Adding plugins](#adding-plugins)
+        * [Adding Keybinds](#adding-keybinds)
+        * [Adding autocommands](#adding-autocommands)
+        * [Adding commands](#adding-commands)
+      - [Overriding module defaults](#overriding-module-defaults)
+  * [FAQ](#faq)
+  * [Contributing](#contributing)
+  * [Contributors](#contributors)
+
+---
 
 ## Configuring
 
