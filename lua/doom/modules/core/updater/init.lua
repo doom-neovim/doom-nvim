@@ -276,7 +276,8 @@ updater._try_update = function()
     if error then
       error_message = error
     elseif branch_name == "next" or branch_name == "main" then
-      error_message = "You cannot use `:DoomUpdate` from within the `main` branch.  Please make a new branch for your custom config (`git checkout -b my-config`)."
+      error_message =
+        "You cannot use `:DoomUpdate` from within the `main` branch.  Please make a new branch for your custom config (`git checkout -b my-config`)."
     end
 
     if error_message then
@@ -286,36 +287,41 @@ updater._try_update = function()
       return
     end
 
-    updater._fetch_current_and_latest_version(function(current_version, latest_version, get_version_error)
-      vim.defer_fn(function()
-        if get_version_error then
-          log.error(("updater: Error checking updates... %s"):format(get_version_error))
-          return
-        end
+    updater._fetch_current_and_latest_version(
+      function(current_version, latest_version, get_version_error)
+        vim.defer_fn(function()
+          if get_version_error then
+            log.error(("updater: Error checking updates... %s"):format(get_version_error))
+            return
+          end
 
-        if current_version == latest_version then
-          vim.notify(
-            ("updater: You are already using the latest version! (%s)"):format(current_version)
-          )
-        else
-          -- Attempt to merge new version into user's custom config branch
-          updater._try_merge_version(latest_version, function(merge_error)
-            vim.defer_fn(function()
-              if merge_error then
-                log.error(("updater: Error updating... %s"):format(merge_error))
-              else
-                local message = ("updater: Updated to version %s!"):format(latest_version)
-                -- Only print changelog info if it's a stable release
-                if not is_version_unstable(latest_version) then
-                  message = message .. ("  Check the changelog at https://github.com/NTBBloodbath/doom-nvim/releases/tag/%s"):format(latest_version)
+          if current_version == latest_version then
+            vim.notify(
+              ("updater: You are already using the latest version! (%s)"):format(current_version)
+            )
+          else
+            -- Attempt to merge new version into user's custom config branch
+            updater._try_merge_version(latest_version, function(merge_error)
+              vim.defer_fn(function()
+                if merge_error then
+                  log.error(("updater: Error updating... %s"):format(merge_error))
+                else
+                  local message = ("updater: Updated to version %s!"):format(latest_version)
+                  -- Only print changelog info if it's a stable release
+                  if not is_version_unstable(latest_version) then
+                    message = message
+                      .. (
+                        "  Check the changelog at https://github.com/NTBBloodbath/doom-nvim/releases/tag/%s"
+                      ):format(latest_version)
+                  end
+                  vim.notify(message)
                 end
-                vim.notify(message)
-              end
-            end, 0)
-          end)
-        end
-      end, 0)
-    end)
+              end, 0)
+            end)
+          end
+        end, 0)
+      end
+    )
   end)
 end
 
