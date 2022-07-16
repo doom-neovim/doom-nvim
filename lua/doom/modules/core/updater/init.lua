@@ -39,7 +39,7 @@ updater._cwd = vim.fn.stdpath("config")
 ---@param callback function Handler to receive the list of versions
 updater._pull_tags = function(callback)
   local Job = require("plenary.job")
-  local job = Job
+  Job
     :new({
       command = "git",
       args = { "fetch", "--tags", "--all" },
@@ -79,6 +79,13 @@ updater._get_commit_sha = function(callback)
     :start()
 end
 
+--- Given a version string, checks if it's an alpha/beta version
+---@param version string
+---@return boolean
+local is_version_unstable = function(version)
+  return version:match("alpha") ~= nil or version:match("beta") ~= nil
+end
+
 --- Gets all version tags as a table of strings
 ---@param callback function(all_versions, error_string)
 updater._get_all_versions = function(callback)
@@ -88,10 +95,10 @@ updater._get_all_versions = function(callback)
       command = "git",
       args = { "tag", "-l", "--sort", "-version:refname" },
       cwd = updater._cwd,
-      on_exit = function(j, err_code)
+      on_exit = function(j)
         ---@param version string
         local filter_develop_predicate = function(version)
-          if not updater.settings.unstable and version:match("alpha") or version:match("beta") then
+          if not updater.settings.unstable and is_version_unstable(version) then
             return false
           end
           return true
@@ -132,14 +139,14 @@ end
 --- Gets the current version and the latest upstream version
 ---@param callback function(current_version, latest_version, error_string)
 updater._fetch_current_and_latest_version = function(callback)
-  updater._pull_tags(function(result, error)
-    if error then
-      callback(nil, nil, error)
+  updater._pull_tags(function(_, pull_tags_error)
+    if pull_tags_error then
+      callback(nil, nil, pull_tags_error)
       return
     end
-    updater._get_commit_sha(function(commit_sha, error)
-      if error then
-        callback(nil, nil, error)
+    updater._get_commit_sha(function(commit_sha, commit_sha_error)
+      if commit_sha_error then
+        callback(nil, nil, commit_sha_error)
         return
       end
 
@@ -218,7 +225,7 @@ updater._try_merge_version = function(target_version, callback)
       command = "git",
       args = { "diff", "--quiet" },
       cwd = updater._cwd,
-      on_exit = function(j, exit_code)
+      on_exit = function(_, exit_code)
         if exit_code ~= 0 then
           callback(
             (
@@ -233,38 +240,82 @@ updater._try_merge_version = function(target_version, callback)
     :start()
 end
 
+--- Gets the name of the current working branch
+---@param callback function(branch_name, error)
+updater._get_branch_name = function(callback)
+  local Job = require("plenary.job")
+  Job
+    :new({
+      command = "git",
+      args = { "rev-parse", "--symbolic-full-name", "--abbrev-ref", "HEAD" },
+      cwd = updater._cwd,
+      on_exit = function(j, exit_code)
+        if exit_code ~= 0 then
+          callback(nil, "Error getting branch name... \n\n " .. vim.inspect(j:result()))
+          return
+        end
+        local result = j:result()
+        if #result > 1 then
+          callback(result[1])
+        else
+          callback(nil, "Error getting branch name... No output.")
+        end
+      end,
+    })
+    :start()
+end
+
 --- Entry point for `:DoomUpdate`, fetches new tags, compares with current version and attempts to merge new tags into current branch
 updater._try_update = function()
   local log = require("doom.utils.logging")
   vim.notify("updater: Attempting to update...")
 
-  updater._fetch_current_and_latest_version(function(current_version, latest_version, error)
-    vim.defer_fn(function()
-      if error then
-        log.error(("updater: Error checking updates... %s"):format(error))
-        return
-      end
+  updater._get_branch_name(function(branch_name, error)
+    -- Ensure user is not in main/next branch
+    local error_message = nil
+    if error then
+      error_message = error
+    elseif branch_name == "next" or branch_name == "main" then
+      error_message = "You cannot use `:DoomUpdate` from within the `main` branch.  Please make a new branch for your custom config (`git checkout -b my-config`)."
+    end
 
-      if current_version == latest_version then
-        vim.notify(
-          ("updater: You are already using the latest version! (%s)"):format(current_version)
-        )
-      else
-        updater._try_merge_version(latest_version, function(error)
-          vim.defer_fn(function()
-            if error then
-              log.error(("updater: Error updating... %s"):format(error))
-            else
-              vim.notify(
-                (
-                  "updater: Updated to version %s!  Check the changelog at https://github.com/NTBBloodbath/doom-nvim/releases/tag/%s"
-                ):format(latest_version, latest_version)
-              )
-            end
-          end, 0)
-        end)
-      end
-    end, 0)
+    if error_message then
+      vim.defer_fn(function()
+        log.error(("updater: %s"):format(error_message))
+      end, 0)
+      return
+    end
+
+    updater._fetch_current_and_latest_version(function(current_version, latest_version, get_version_error)
+      vim.defer_fn(function()
+        if get_version_error then
+          log.error(("updater: Error checking updates... %s"):format(get_version_error))
+          return
+        end
+
+        if current_version == latest_version then
+          vim.notify(
+            ("updater: You are already using the latest version! (%s)"):format(current_version)
+          )
+        else
+          -- Attempt to merge new version into user's custom config branch
+          updater._try_merge_version(latest_version, function(merge_error)
+            vim.defer_fn(function()
+              if merge_error then
+                log.error(("updater: Error updating... %s"):format(merge_error))
+              else
+                local message = ("updater: Updated to version %s!"):format(latest_version)
+                -- Only print changelog info if it's a stable release
+                if not is_version_unstable(latest_version) then
+                  message = message .. ("  Check the changelog at https://github.com/NTBBloodbath/doom-nvim/releases/tag/%s"):format(latest_version)
+                end
+                vim.notify(message)
+              end
+            end, 0)
+          end)
+        end
+      end, 0)
+    end)
   end)
 end
 
