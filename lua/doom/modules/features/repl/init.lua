@@ -71,6 +71,24 @@ repl.binds = {
       { "C", "<NOP>", name = "Clear" },
     },
   },
+  {
+    "<C-e>",
+    function()
+      local iron = require("iron.core")
+      iron.send_line()
+    end,
+    name = "Repl send line",
+    mode = "n",
+  },
+  {
+    "<C-e>",
+    function()
+      local iron = require("iron.core")
+      iron.visual_send()
+    end,
+    name = "Repl visual send",
+    mode = "v",
+  },
 }
 
 return repl
