@@ -213,7 +213,12 @@ updater._try_merge_version = function(target_version, callback)
     cwd = updater._cwd,
     on_exit = function(j, exit_code)
       if exit_code ~= 0 then
-        callback(nil, "Error merging " .. target_version .. "... \n\n " .. vim.inspect(j:result()))
+        callback(
+          "Error merging "
+            .. target_version
+            .. ".  You may have to resolve the merge conflict manually... \n\n "
+            .. vim.inspect(table.concat(j:result(), "\n"))
+        )
         return
       end
       callback(nil)
