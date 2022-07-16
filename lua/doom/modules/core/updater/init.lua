@@ -126,7 +126,7 @@ updater._get_last_version_for_commit = function(commit_sha, callback)
           return
         end
         local result = j:result()
-        if #result > 1 then
+        if #result > 0 then
           callback(result[1])
         else
           callback(nil, "Error getting current version... No output.")
@@ -154,7 +154,7 @@ updater._fetch_current_and_latest_version = function(callback)
       local try_compare_updates = function()
         if cur_version and all_versions then
           -- Find How many versions behind we are
-          if #all_versions > 1 then
+          if #all_versions > 0 then
             callback(cur_version, all_versions[1])
             return
           else
@@ -252,7 +252,7 @@ updater._get_branch_name = function(callback)
   Job
     :new({
       command = "git",
-      args = { "rev-parse", "--symbolic-full-name", "--abbrev-ref", "HEAD" },
+      args = { "symbolic-ref", "--short", "-q", "HEAD" },
       cwd = updater._cwd,
       on_exit = function(j, exit_code)
         if exit_code ~= 0 then
@@ -260,7 +260,7 @@ updater._get_branch_name = function(callback)
           return
         end
         local result = j:result()
-        if #result > 1 then
+        if #result > 0 then
           callback(result[1])
         else
           callback(nil, "Error getting branch name... No output.")
@@ -277,6 +277,7 @@ updater._try_update = function()
 
   updater._get_branch_name(function(branch_name, error)
     -- Ensure user is not in main/next branch
+    print(branch_name)
     local error_message = nil
     if error then
       error_message = error
