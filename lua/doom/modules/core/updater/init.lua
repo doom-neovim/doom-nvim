@@ -200,38 +200,43 @@ end
 updater._try_merge_version = function(target_version, callback)
   local Job = require("plenary.job")
 
-  local merge_job = Job
-    :new({
-      command = "git",
-      args = { "merge", target_version},
-      cwd = updater._cwd,
-      on_exit = function(j, exit_code)
-        if exit_code ~= 0 then
-          callback(nil, "Error merging " .. target_version .. "... \n\n " .. vim.inspect(j:result()))
-          return
-        end
-        callback(nil)
-      end,
-    })
-
-  Job:new({
+  local merge_job = Job:new({
     command = "git",
-    args = { "diff", "--quiet" },
+    args = { "merge", target_version },
     cwd = updater._cwd,
     on_exit = function(j, exit_code)
       if exit_code ~= 0 then
-        callback(("Tried to update to new version %s but could not due to uncommitted changes.  Please commit or stash your changes before trying again."):format(target_version))
-      else
-        merge_job:start()
+        callback(nil, "Error merging " .. target_version .. "... \n\n " .. vim.inspect(j:result()))
+        return
       end
-    end
-  }):start()
+      callback(nil)
+    end,
+  })
+
+  Job
+    :new({
+      command = "git",
+      args = { "diff", "--quiet" },
+      cwd = updater._cwd,
+      on_exit = function(j, exit_code)
+        if exit_code ~= 0 then
+          callback(
+            (
+              "Tried to update to new version %s but could not due to uncommitted changes.  Please commit or stash your changes before trying again."
+            ):format(target_version)
+          )
+        else
+          merge_job:start()
+        end
+      end,
+    })
+    :start()
 end
 
 --- Entry point for `:DoomUpdate`, fetches new tags, compares with current version and attempts to merge new tags into current branch
 updater._try_update = function()
   local log = require("doom.utils.logging")
-  log.info("updater: Checking updates...")
+  vim.notify("updater: Attempting to update...")
 
   updater._fetch_current_and_latest_version(function(current_version, latest_version, error)
     vim.defer_fn(function()
@@ -241,14 +246,22 @@ updater._try_update = function()
       end
 
       if current_version == latest_version then
-        vim.notify(("updater: You are up to date! (%s)"):format(current_version))
+        vim.notify(
+          ("updater: You are already using the latest version! (%s)"):format(current_version)
+        )
       else
-        updater._try_merge_version(latest_version, function (error)
-          if (error) then
-            log.error(("updater: Error updating... %s"):format(error))
-          else
-            log.info(("updater: Updated to version %s!  Check the changelog at https://github.com/NTBBloodbath/doom-nvim/releases/tag/%s"):format(latest_version))
-          end
+        updater._try_merge_version(latest_version, function(error)
+          vim.defer_fn(function()
+            if error then
+              log.error(("updater: Error updating... %s"):format(error))
+            else
+              vim.notify(
+                (
+                  "updater: Updated to version %s!  Check the changelog at https://github.com/NTBBloodbath/doom-nvim/releases/tag/%s"
+                ):format(latest_version, latest_version)
+              )
+            end
+          end, 0)
         end)
       end
     end, 0)
