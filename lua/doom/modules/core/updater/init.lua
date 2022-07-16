@@ -97,13 +97,14 @@ updater._get_all_versions = function(callback)
       cwd = updater._cwd,
       on_exit = function(j)
         ---@param version string
-        local filter_develop_predicate = function(version)
-          if not updater.settings.unstable and is_version_unstable(version) then
+        local filter_predicate = function(version)
+          local is_unsupported = version:match("^1") or version:match("v2") or version:match("v3")
+          if is_unsupported or (not updater.settings.unstable and is_version_unstable(version)) then
             return false
           end
           return true
         end
-        local result = vim.tbl_filter(filter_develop_predicate, j:result())
+        local result = vim.tbl_filter(filter_predicate, j:result())
         callback(result)
       end,
     })
@@ -277,7 +278,6 @@ updater._try_update = function()
 
   updater._get_branch_name(function(branch_name, error)
     -- Ensure user is not in main/next branch
-    print(branch_name)
     local error_message = nil
     if error then
       error_message = error
