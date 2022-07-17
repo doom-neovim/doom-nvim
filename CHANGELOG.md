@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- `doom_modules.lua` renamed to `modules.lua`
+- `doom_config.lua` renamed to `config.lua`
+- `doom_userplugins.lua` replaced by the `doom.use_package(...)` helper function.
+- refact!: `+lsp` flags for languages are now redundant, all langs have LSP enabled by default.
+- refact!: Rewrote doom-nvim internals to simplify code + improve modularity and integrations between modules.
+  - `modules.lua` now only has two sections: `features` and `langs`
+  - Modules defined in `lua/doom/modules/SECTION_NAME/MODULE_NAME`
+  - Each module contains all plugins, config, keybinds, autocommands for a feature or a language.
+  - Users can override or add new modules by creating a folder in `lua/user/modules/SECTION_NAME/MODULE_NAME` ([implementing custom modules](https://github.com/NTBBloodbath/doom-nvim/docs/modules.md#building-your-own-module)).
+- refact!: `config.lua` to define your config programatically / imperatively using new [helper functions](https://github.com/NTBBloodbath/doom-nvim#configuring-and-personalising-configlua).
+- feat: Added an install script (clones doom-nvim, checks out a new branch `my-config`).
+- feat: Added `repl` module (run code in neovim using [iron.nvim](https://github.com/hkupty/iron.nvim)).
+- feat: Added `annotations` module (generate code documentation using [neogen](https://github.com/danymat/neogen)) to replace broken `nvim-tree-docs` plugin.
+- feat: Added `projects` module (quickly switch between projects using [project.nvim](https://github.com/ahmedkhalf/project.nvim)).
+- feat: Added `lsp_progress` module (shows lsp startup and loading using [fidget.nvim](https://github.com/j-hui/fidget.nvim))
+- refact!: `linter` and `formatter` module merged into one (`linter`).
+- refact!: `linter` module to use [null-ls.nvim](https://github.com/jose-elias-alvarez/null-ls.nvim).
+- refact: Renamed `kommentary` module to `comment` module, switched to [Comment.nvim](https://github.com/numToStr/Comment.nvim) and fixed keybinds.
+- feat: Implemented a `nest.nvim` inspired keymap syntax that integrates with `whichkey` and `nvim-mapper`.
+- feat: Added optional [impatient.nvim](lewis6991/impatient.nvim) (`doom.impatient_enabled = true` in `config.lua`).
+  - WARN: This can create bugs when modifying your config and you'll probably have to run `:LuaCacheClear`.
+- refact: Removed `develop` branch, doom-nvim will now use rolling releases with tagged stable versions.
+- refact: Auto updating logic moved into core module
+  - Now requires user to use a custom config branch
+  - Updating will merge the latest tagged stable version with your custom config branch.
+- tweak: Various startup time improvements.
+
 ## [3.3.0]
 - Removed support for Neovim 0.5
 - Fixed bug where the Dashboard would show instead of piped contents
