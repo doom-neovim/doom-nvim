@@ -346,7 +346,7 @@ updater.cmds = {
   {
     "DoomCheckUpdates",
     function()
-      updater.check_updates()
+      updater.check_updates(false)
     end,
   },
 }
