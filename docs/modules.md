@@ -43,11 +43,13 @@ Modules are grouped into 3 categories:
 
 ### `core` modules
 
+- [`core`](../lua/doom/modules/core/doom) Contains most of the doom default keybinds, autocommands, etc.
 - [`treesitter`](../lua/doom/modules/core/treesitter) An incremental parsing system for programming tools.
 - [`nest`](../lua/doom/modules/core/nest) Used for keybind management, integrates with `whichkey` and `mapper`.
+- [`updater`](../lua/doom/modules/core/updater) Checks updates and can automatically pull latest changes.
+- [`reloader`](../lua/doom/modules/core/reloader) Allows you to reload and update your config without exiting doom-nvim.
 
 ### `features` modules
-
 - **Language related modules**
   - [`annotations`](../lua/doom/modules/features/annotations) Code annotation generator
   - [`auto_install`](../lua/doom/modules/features/auto_install) Auto install LSP providers

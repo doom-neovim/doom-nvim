@@ -4,6 +4,7 @@
 -- what features are being used.
 --
 -- Uncomment a plugin to enable it and comment out to disable and uninstall it.
+-- Once done, restart doom-nvim and run `:PackerInstall`.
 
 return {
   features = {

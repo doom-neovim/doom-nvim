@@ -47,7 +47,7 @@ bash <(curl -s https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/next/too
   - `git clone https://github.com/NTBBloodbath/doom-nvim.git ${XDG_CONFIG_HOME:-$HOME/.config}/nvim`
 2. (optional) Checkout the latest stable version in a new branch called `my-config` so the auto-updater works.
   - `git checkout tags/$(git tag -l --sort -version:refname | head -n 1) -b my-config`
-  - ℹ️ The auto-updater will be broken without this step but you're free to check updates using the `:CheckUpdate` (TODO: Implement) command and manage updates manually.
+  - ℹ️ The auto-updater will be broken without this step but you're free to check updates using the `:DoomCheckUpdates` command and manage updates manually.
 
 ---
 
@@ -71,35 +71,48 @@ bash <(curl -s https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/next/too
 
 ## Configuring
 
-Doom nvim is configured by enabling modules in the `modules.lua` file and then tweaking, overriding or adding new packages, keybinds and more within the `config.lua` module.
+Doom nvim is configured by enabling modules in the `modules.lua` file and then
+tweaking, overriding or adding new packages, keybinds and more within the
+`config.lua` module.
+
+> We recommend creating a custom config branch (the auto install script will
+> do this for you) and committing your changes to this branch.  The auto updater
+> will merge new releases into your config branch for you.
 
 ### Enabling features: `modules.lua`
 
 #### What is a module?
-A module is a collection of packages, autocommands, keybinds and functions that add new capabilities or functionality to Doom Nvim.
+
+A module is a collection of packages, autocommands, keybinds and functions that
+add new capabilities or functionality to Doom Nvim.  See what's avaliable in
+`modules.lua` and enable the modules that you think you would like.  Then restart
+`doom-nvim`, run `:PackerSync` and then restart `doom-nvim` again.
+
 We organise modules into 2 categories:
 - `features` extend the abilities of Doom Nvim by adding new functionality.
 - `langs` add support for new languages.
 
 #### Enabing/disabling modules
 
-You can enable or disable a module by going to `modules.lua` (`<leader>Dm`) and commenting or uncommenting the entry.
+You can enable or disable a module by going to `modules.lua` (`<leader>Dm`) and
+commenting or uncommenting the entry.
+
 ```lua
 -- modules.lua
 
 return {
+  -- `lsp` module is enabled, `telescope is disabled`
   features = {
     'lsp'
     -- 'telescope'
   },
+  -- `lua` language is enabled, `rust is disabled`
   langs = {
     'lua',
     -- 'rust',
   }
 }
 ```
-> Here the `lsp` module is enabled but the `telescope` module is disabled,
-> similarly the `lua` language is enabled but the `rust` language module is disabled.
 
 #### All modules
 
@@ -110,7 +123,8 @@ You can find a full list of modules (here)[./docs/modules.md#all-modules]
 
 #### Modifying neovim and doom options
 
-Doom nvim provides a number of config options, including wrapping some of vim's own options.  See all available config options (in the API Reference)[./docs/api.md].
+Doom nvim provides a number of config options, including wrapping some of vim's
+own options.  See all available config options (in the API Reference)[./docs/api.md].
 
 ```lua
 -- config.lua
@@ -122,7 +136,8 @@ doom.indent = 2                   -- Sets vim.opt.shiftwith, vim.opt.softtabstop
 vim.opt.colorcolumn = 120         -- Regular vim options can also be set
 ```
 
-> **NOTE:** If you have the `lua` language and `lsp` module enabled all of these options will be autocompleted.
+> **NOTE:** If you have the `lua` language and `lsp` module enabled all of these
+> options will be autocompleted.
 
 ##### Adding plugins
 
@@ -146,7 +161,8 @@ doom.use_package({
 ##### Adding Keybinds
 
 Additional keybinds can be defined with the `doom.use_keybind()` function.
-This is a wrapper around a custom `nest.nvim` implementation and provides the same API. [DOCS](https://github.com/connorgmeehan/nest.nvim/tree/integrations-api#quickstart-guide)
+This is a wrapper around a custom `nest.nvim` implementation and provides the
+same API. [DOCS](https://github.com/connorgmeehan/nest.nvim/tree/integrations-api#quickstart-guide)
 
 ```lua
 -- config.lua
@@ -158,7 +174,8 @@ doom.use_keybind({
 })
 ```
 
-> **NOTE:** By providing the `name` field your custom keybinds will show up in `whichkey` and `mapper` if you have those modules enabled.
+> **NOTE:** By providing the `name` field your custom keybinds will show up
+> in `whichkey` and `mapper` if you have those modules enabled.
 
 ##### Adding autocommands
 
@@ -283,10 +300,13 @@ return {
 The majors changes between v3 and v4 are the following.
 
 - `doom_config.lua` renamed to `config.lua`
-- Adding custom commands, keybinds and autocommands done using new [`doom.use_*`](#-configlua-) helper functions.
-- Adding extra plugins done using new [`doom.use_package`](#adding-plugins) helper function.
+- Adding custom commands, keybinds and autocommands done using new [`doom.use_*`](#-configlua-)
+  helper functions.
+- Adding extra plugins done using new [`doom.use_package`](#adding-plugins) helper
+  function.
 - `doom_modules.lua` renamed to `modules.lua`
-- Many of the modules categories have been combined, there are now only `features` (modifying capabilities of doom-nvim) and `languages` (add support for a language)
+- Many of the modules categories have been combined, there are now only `features`
+  (modifying capabilities of doom-nvim) and `languages` (add support for a language)
 - Languages `+lsp`, `+formatting`, etc flags are no longer necessary
 
 > Because of the durastic changes to the way you configure doom-nvim we recommend
