@@ -14,3 +14,10 @@ vim.opt.runtimepath:append(vim.fn.stdpath("data"))
 
 -- Load the doom-nvim framework
 require("doom.core")
+
+vim.defer_fn(function()
+  -- Check for updates
+  if doom.check_updates and doom.core.updater then
+    doom.core.updater.check_updates(true)
+  end
+end, 0)

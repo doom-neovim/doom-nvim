@@ -178,9 +178,12 @@ updater._fetch_current_and_latest_version = function(callback)
 end
 
 --- Entry point for `:DoomCheckUpdates`, fetches new tags, compares with current version and notifies results
-updater._check_updates = function()
+---@param quiet boolean When enabled, disable all but error / needs update messages
+updater.check_updates = function(quiet)
   local log = require("doom.utils.logging")
-  vim.notify("updater: Checking updates...")
+  if not quiet then
+    vim.notify("updater: Checking updates...")
+  end
 
   updater._fetch_current_and_latest_version(function(current_version, latest_version, error)
     vim.defer_fn(function()
@@ -190,7 +193,9 @@ updater._check_updates = function()
       end
 
       if current_version == latest_version then
-        vim.notify(("updater: You are up to date! (%s)"):format(current_version))
+        if not quiet then
+          vim.notify(("updater: You are up to date! (%s)"):format(current_version))
+        end
       else
         vim.notify(
           (
@@ -341,7 +346,7 @@ updater.cmds = {
   {
     "DoomCheckUpdates",
     function()
-      updater._check_updates()
+      updater.check_updates()
     end,
   },
 }
