@@ -30,7 +30,6 @@ config.load = function()
   vim.opt.path = "**"
   vim.opt.signcolumn = "auto:2-3"
   vim.opt.foldcolumn = "auto:9"
-  vim.opt.colorcolumn = "80"
   vim.opt.formatoptions:append("j")
   vim.opt.fillchars = {
     vert = "▕",
@@ -133,9 +132,13 @@ config.load = function()
     vim.opt.laststatus = 3
   end
 
+  -- Use system clipboard
   if doom.clipboard then
     vim.opt.clipboard = "unnamedplus"
   end
+
+  -- Color column
+  vim.opt.colorcolumn = type(doom.max_columns) == "number" and tostring(doom.max_columns) or ""
 
   vim.g.mapleader = doom.leader_key
 end
