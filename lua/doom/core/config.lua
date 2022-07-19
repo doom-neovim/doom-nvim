@@ -52,8 +52,6 @@ config.load = function()
   vim.opt.mouse = "a"
   vim.opt.wrap = false
   vim.opt.swapfile = false
-  vim.opt.number = true
-  vim.opt.relativenumber = true
   vim.opt.expandtab = true
   vim.opt.conceallevel = 0
   vim.opt.foldenable = true
@@ -139,6 +137,10 @@ config.load = function()
 
   -- Color column
   vim.opt.colorcolumn = type(doom.max_columns) == "number" and tostring(doom.max_columns) or ""
+
+  -- Number column
+  vim.opt.number = not doom.disable_numbering
+  vim.opt.relativenumber = not doom.disable_numbering and doom.relative_num
 
   vim.g.mapleader = doom.leader_key
 end

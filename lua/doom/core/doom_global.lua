@@ -89,6 +89,18 @@ doom = {
   -- @default = false
   disable_suspension = true,
 
+  -- Set numbering
+  -- false : Enable  number lines
+  -- true  : Disable number lines
+  -- @default = false
+  disable_numbering = false,
+
+  -- Set numbering style
+  -- false : Shows absolute number lines
+  -- true  : Shows relative number lines
+  -- @default = true
+  relative_num = true,
+
   -- h,l, wrap lines
   movement_wrap = true,
 
@@ -174,7 +186,7 @@ doom = {
   --   · error
   --   · fatal
   -- @default = 'info'
-  logging = "warn",
+  logging = "info",
 
   -- Default colorscheme
   -- @default = doom-one
