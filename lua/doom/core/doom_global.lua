@@ -123,6 +123,12 @@ doom = {
   -- @default = true
   highlight_yank = true,
 
+  -- Use clipboard outside of vim
+  -- false : won't use third party clipboard
+  -- true  : enables third part clipboard
+  -- @default = true
+  clipboard = true,
+
   -- Enable guicolors
   -- Enables gui colors on GUI versions of Neovim
   -- @default = true

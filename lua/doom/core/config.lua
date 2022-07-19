@@ -45,7 +45,6 @@ config.load = function()
   vim.opt.smartindent = true
   vim.opt.copyindent = true
   vim.opt.preserveindent = true
-  vim.opt.clipboard = "unnamedplus"
   vim.opt.cursorline = true
   vim.opt.splitright = false
   vim.opt.splitbelow = true
@@ -132,6 +131,10 @@ config.load = function()
 
   if doom.global_statusline then
     vim.opt.laststatus = 3
+  end
+
+  if doom.clipboard then
+    vim.opt.clipboard = "unnamedplus"
   end
 
   vim.g.mapleader = doom.leader_key
