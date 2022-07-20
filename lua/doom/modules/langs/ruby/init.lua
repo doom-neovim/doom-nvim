@@ -20,7 +20,6 @@ ruby.autocmds = {
 
         langs_utils.use_null_ls_source({
           null_ls.builtins.diagnostics.rubocop,
-          null_ls.builtins.diagnostics.mypy,
         })
       end
     end,
