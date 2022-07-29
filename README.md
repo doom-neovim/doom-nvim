@@ -122,14 +122,14 @@ return {
 #### All modules
 
 Doom-nvim currently has 35+ `features` modules and 20+ `langs` modules.
-You can find a full list of modules (here)[./docs/modules.md#all-modules]
+You can find a full list of modules [here](./docs/modules.md#all-modules)
 
 ### Configuring and personalising: `config.lua`
 
 #### Modifying neovim and doom options
 
 Doom nvim provides a number of config options, including wrapping some of vim's
-own options.  See all available config options (in the API Reference)[./docs/api.md].
+own options.  See all available config options [in the API Reference](./docs/api.md).
 
 ```lua
 -- config.lua
