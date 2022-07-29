@@ -71,6 +71,7 @@ bash <(curl -s https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/too
 - [FAQ](#faq)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
+- [Uninstall](#uninstalling)
 
 ---
 
@@ -317,6 +318,11 @@ The majors changes between v3 and v4 are the following.
 > Because of the durastic changes to the way you configure doom-nvim we recommend
 > starting a new branch and porting your changes across.
 
+## Uninstalling
+
+To uninstall doom-nvim delete the `.nvim` folder from `$XDG_CONFIG_HOME/nvim` (`rm -r ~/.config/nvim`)
+You will also need to delete `packer_compiled.lua` from `$XDG_DATA_HOME/nvim/plugin/packer_compiled` (`rm ~/.local/share/nvim/plugin/packer_compiled.lua`)
+
 ## Contributing
 
 For for information please see our [contributing docs](./docs/contributing.md).
@@ -348,6 +354,7 @@ Special thanks to these amazing people for helping improve doom (see [emoji key]
     <td align="center"><a href="https://github.com/AceMouty"><img src="https://avatars.githubusercontent.com/u/45374681?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kyle Guerrero</b></sub></a><br /><a href="https://github.com/NTBBloodbath/doom-nvim/commits?author=AceMouty" title="Documentation">📖</a></td>
   </tr>
 </table>
+
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
