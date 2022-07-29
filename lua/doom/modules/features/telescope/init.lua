@@ -100,7 +100,7 @@ telescope.binds = function()
       {
         "`",
         function()
-          require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:n") })
+          vim.cmd(("Telescope find_files cwd=%s"):format(vim.fn.getcwd()))
         end,
         name = "Browse cwd",
       },
