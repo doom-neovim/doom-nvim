@@ -38,7 +38,7 @@ Some of the defining features that make this project unique are:
 ### Mac OS / Linux
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/next/tools/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/tools/install.sh)
 ```
 
 ### Manual (Mac OS / Linux)

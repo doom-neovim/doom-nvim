@@ -130,8 +130,7 @@ function backup_existing_config() {
 
 function install_doom_nvim() {
   echo "Cloning..."
-  # TODO: Remove `--branch next` for release.
-  git clone --branch next "$DOOM_REPO_URL" "${DOOM_CONFIG_DIR}"
+  git clone "$DOOM_REPO_URL" "${DOOM_CONFIG_DIR}" --depth=10
   cd "${DOOM_CONFIG_DIR}" || exit
   # Setup user with their own custom branch
   git checkout -b my-config
