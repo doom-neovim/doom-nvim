@@ -15,7 +15,7 @@ return {
     "comment",            -- Adds keybinds to comment in any language
     "linter",             -- Linting and formatting for languages
     "lsp",                -- Code completion
-    "snippets",           -- Code snippets for all languages
+    -- "snippets",           -- Code snippets for all languages
 
     -- Editor
     "auto_session",       -- Remember sessions between loads
@@ -58,7 +58,7 @@ return {
   langs = {
     -- Scripts
     "lua",
-    -- "python",
+    "python",
     -- "bash",
     -- "fish",
 

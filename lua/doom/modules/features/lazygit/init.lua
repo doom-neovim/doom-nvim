@@ -5,7 +5,7 @@ lazygit.settings = {}
 lazygit.packages = {
   ["lazygit.nvim"] = {
     "kdheepak/lazygit.nvim",
-    commit = "1f9f372b9fc137b8123d12a78c22a26c0fa78f0a",
+    commit = "9c73fd69a4c1cb3b3fc35b741ac968e331642600",
     cmd = { "LazyGit", "LazyGitConfig" },
     opt = true,
   },

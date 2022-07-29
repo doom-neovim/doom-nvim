@@ -23,7 +23,7 @@ auto_install.packages = {
   },
   ["nvim-lsp-installer"] = {
     "williamboman/nvim-lsp-installer",
-    commit = "effafae44012a6ad3091968ad358531c62925a45",
+    commit = "b8c168ccb30529a11404e5f71525502ec6288ccf",
     -- disabled = not is_module_enabled("features", "lsp"),
   },
 }

@@ -5,7 +5,7 @@ minimap.settings = {}
 minimap.packages = {
   ["minimap.vim"] = {
     "wfxr/minimap.vim",
-    commit = "5d44fe7a3a5f7041c4220a71e8fe83d8c8498042",
+    commit = "3801d9dfaa5431e7b83ae6f98423ac077d9f5c3f",
     opt = true,
     cmd = {
       "Minimap",

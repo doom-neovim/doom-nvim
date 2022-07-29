@@ -5,7 +5,7 @@ fidget.settings = {}
 fidget.packages = {
   ["fidget.nvim"] = {
     "j-hui/fidget.nvim",
-    commit = "37d536bbbee47222ddfeca0e8186e8ee6884f9a2",
+    commit = "492492e7d50452a9ace8346d31f6d6da40439f0e",
     after = "nvim-lspconfig",
   },
 }

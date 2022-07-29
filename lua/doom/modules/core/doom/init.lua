@@ -16,7 +16,7 @@ required.packages = {
   },
   ["plenary.nvim"] = {
     "nvim-lua/plenary.nvim",
-    commit = "9c3239bc5f99b85be1123107f7290d16a68f8e64",
+    commit = "986ad71ae930c7d96e812734540511b4ca838aa2",
     module = "plenary",
   },
   ["popup.nvim"] = {
@@ -26,7 +26,7 @@ required.packages = {
   },
   ["nvim-web-devicons"] = {
     "kyazdani42/nvim-web-devicons",
-    commit = "8d2c5337f0a2d0a17de8e751876eeb192b32310e",
+    commit = "2d02a56189e2bde11edd4712fea16f08a6656944",
     module = "nvim-web-devicons",
   },
   -- Must include impatient.nvim here, even though it's bootstrapped in

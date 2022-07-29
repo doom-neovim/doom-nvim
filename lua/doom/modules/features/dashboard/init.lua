@@ -67,7 +67,7 @@ dashboard.settings = {
 dashboard.packages = {
   ["dashboard-nvim"] = {
     "glepnir/dashboard-nvim",
-    commit = "883c7953d3e0a45ed0dd0fa05f9d029efdbf3c8a",
+    commit = "94585fab23f17a9450b85cc04d71f98251579e37",
     cmd = "Dashboard",
     opt = true,
   },

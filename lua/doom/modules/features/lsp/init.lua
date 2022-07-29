@@ -95,12 +95,12 @@ local is_module_enabled = require("doom.utils").is_module_enabled
 lsp.packages = {
   ["nvim-lspconfig"] = {
     "neovim/nvim-lspconfig",
-    commit = "4eac16e87f24ad26738e632446e29766e87141ae",
+    commit = "60f2993b9661d9844cee3bebdbd1b5860577eb3c",
     module = "lspconfig",
   },
   ["nvim-cmp"] = {
     "hrsh7th/nvim-cmp",
-    commit = "15c7bf7c0dfb7c75eb526c53f9574633c13dc22d",
+    commit = "706371f1300e7c0acb98b346f80dad2dd9b5f679",
     after = is_module_enabled("features", "snippets") and "LuaSnip" or nil,
   },
   ["cmp-nvim-lua"] = {
@@ -115,12 +115,12 @@ lsp.packages = {
   },
   ["cmp-path"] = {
     "hrsh7th/cmp-path",
-    commit = "466b6b8270f7ba89abd59f402c73f63c7331ff6e",
+    commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1",
     after = "nvim-cmp",
   },
   ["cmp-buffer"] = {
     "hrsh7th/cmp-buffer",
-    commit = "12463cfcd9b14052f9effccbf1d84caa7a2d57f0",
+    commit = "62fc67a2b0205136bc3e312664624ba2ab4a9323",
     after = "nvim-cmp",
   },
   ["cmp_luasnip"] = {
@@ -131,7 +131,7 @@ lsp.packages = {
   },
   ["lsp_signature.nvim"] = {
     "ray-x/lsp_signature.nvim",
-    commit = "9ccee20602a10843e3ea3ebc2536dfdcc6cee9a3",
+    commit = "aea1e060d465fcb565bc1178e4189fc79524ba61",
     after = "nvim-lspconfig",
   },
 }
