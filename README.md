@@ -18,6 +18,11 @@
 
 </div>
 
+> Note: Doom nvim v4.0.0 has just been released (29th July 2022).
+> This release introduces many changes so feel free to ask questions on the
+> discord or in the github discussions page or create an issue ticket and I'll
+> solve it as soon as possible.
+
 ## What is Doom Nvim?
 
 Doom Nvim is a Neovim interpretation of the [doom-emacs](https://github.com/hlissner/doom-emacs) framework, adapted to Vim philosophy.
