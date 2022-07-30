@@ -98,14 +98,14 @@ lsp.packages = {
     commit = "60f2993b9661d9844cee3bebdbd1b5860577eb3c",
     module = "lspconfig",
   },
-  ["LuaSnip"] = {
+  ["nvim-cmp"] = {
+    "hrsh7th/nvim-cmp",
+    commit = "706371f1300e7c0acb98b346f80dad2dd9b5f679",
+    requires = {
     "L3MON4D3/LuaSnip",
     commit = "53e812a6f51c9d567c98215733100f0169bcc20a",
     module = "luasnip",
   },
-  ["nvim-cmp"] = {
-    "hrsh7th/nvim-cmp",
-    commit = "706371f1300e7c0acb98b346f80dad2dd9b5f679",
   },
   ["cmp-nvim-lua"] = {
     "hrsh7th/cmp-nvim-lua",
@@ -202,6 +202,7 @@ lsp.configs["nvim-cmp"] = function()
   if not cmp_ok or not luasnip_ok then
     return
   end
+  luasnip.config.set_config(doom.features.lsp.settings.snippets)
 
   local replace_termcodes = utils.replace_termcodes
 
@@ -395,8 +396,5 @@ lsp.binds = {
     },
   },
 }
-lsp.configs["LuaSnip"] = function()
-  require("luasnip").config.set_config(doom.features.snippets.settings)
-end
 
 return lsp
