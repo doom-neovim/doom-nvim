@@ -5,6 +5,10 @@ local lsp = {}
 lsp.__completions_enabled = true
 
 lsp.settings = {
+  snippets = {
+    history = true,
+    updateevents = "TextChanged,TextChangedI",
+  },
   signature = {
     bind = true,
     doc_lines = 10,
