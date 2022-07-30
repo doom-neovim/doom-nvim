@@ -98,10 +98,14 @@ lsp.packages = {
     commit = "60f2993b9661d9844cee3bebdbd1b5860577eb3c",
     module = "lspconfig",
   },
+  ["LuaSnip"] = {
+    "L3MON4D3/LuaSnip",
+    commit = "53e812a6f51c9d567c98215733100f0169bcc20a",
+    module = "luasnip",
+  },
   ["nvim-cmp"] = {
     "hrsh7th/nvim-cmp",
     commit = "706371f1300e7c0acb98b346f80dad2dd9b5f679",
-    after = is_module_enabled("features", "snippets") and "LuaSnip" or nil,
   },
   ["cmp-nvim-lua"] = {
     "hrsh7th/cmp-nvim-lua",
@@ -127,7 +131,6 @@ lsp.packages = {
     "saadparwaiz1/cmp_luasnip",
     commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36",
     after = "nvim-cmp",
-    disabled = not is_module_enabled("features", "snippets"),
   },
   ["lsp_signature.nvim"] = {
     "ray-x/lsp_signature.nvim",
@@ -193,10 +196,13 @@ lsp.configs["nvim-lspconfig"] = function()
 end
 lsp.configs["nvim-cmp"] = function()
   local utils = require("doom.utils")
-  local snippets_enabled = utils.is_module_enabled("features", "snippets")
 
-  local cmp = require("cmp")
-  local luasnip = snippets_enabled and require("luasnip")
+  local cmp_ok, cmp = pcall(require, "cmp")
+  local luasnip_ok, luasnip = pcall(require, "luasnip")
+  if not cmp_ok or not luasnip_ok then
+    return
+  end
+
   local replace_termcodes = utils.replace_termcodes
 
   local source_map = {
@@ -257,7 +263,7 @@ lsp.configs["nvim-cmp"] = function()
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-        elseif snippets_enabled and luasnip.expand_or_jumpable() then
+        elseif luasnip.expand_or_jumpable() then
           vim.fn.feedkeys(replace_termcodes("<Plug>luasnip-expand-or-jump"), "")
         elseif check_backspace() then
           vim.fn.feedkeys(replace_termcodes("<Tab>"), "n")
@@ -271,7 +277,7 @@ lsp.configs["nvim-cmp"] = function()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif snippets_enabled and luasnip.jumpable(-1) then
+        elseif luasnip.jumpable(-1) then
           vim.fn.feedkeys(replace_termcodes("<Plug>luasnip-jump-prev"), "")
         else
           fallback()
@@ -389,5 +395,8 @@ lsp.binds = {
     },
   },
 }
+lsp.configs["LuaSnip"] = function()
+  require("luasnip").config.set_config(doom.features.snippets.settings)
+end
 
 return lsp

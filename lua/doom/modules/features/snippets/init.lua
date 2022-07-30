@@ -6,16 +6,14 @@ snippets.settings = {
 }
 
 snippets.packages = {
-  ["LuaSnip"] = {
-    "L3MON4D3/LuaSnip",
-    commit = "53e812a6f51c9d567c98215733100f0169bcc20a",
-    requires = { "rafamadriz/friendly-snippets", opt = true },
+  ["friendly-snippets"] = {
+    "rafamadriz/friendly-snippets",
+    after = "LuaSnip"
   },
 }
 
 snippets.configs = {}
-snippets.configs["LuaSnip"] = function()
-  require("luasnip").config.set_config(doom.features.snippets.settings)
+snippets.configs["friendly-snippets"] = function()
   require("luasnip.loaders.from_vscode").lazy_load()
 end
 
