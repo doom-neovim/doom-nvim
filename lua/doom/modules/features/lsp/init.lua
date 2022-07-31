@@ -95,7 +95,6 @@ lsp.settings = {
   },
 }
 
-local is_module_enabled = require("doom.utils").is_module_enabled
 lsp.packages = {
   ["nvim-lspconfig"] = {
     "neovim/nvim-lspconfig",
