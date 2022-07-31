@@ -50,4 +50,12 @@ terminal.binds = {
   },
 }
 
+terminal.autocmds = {
+  {
+    "TermOpen",
+    "*",
+    "setlocal laststatus=0 noshowmode noruler nonumber norelativenumber",
+  },
+}
+
 return terminal
