@@ -35,7 +35,6 @@ lsp.settings = {
     hint = "",
     info = "",
   },
-  virtual_text = false,
   severity_sort = true,
   completion = {
     kinds = {
@@ -64,6 +63,9 @@ lsp.settings = {
       Event = " ",
       Operator = " ",
       TypeParameter = " ",
+    },
+    experimental = {
+      ghost_text = true
     },
     completeopt = "menu,menuone,preview,noinsert",
     window = {
