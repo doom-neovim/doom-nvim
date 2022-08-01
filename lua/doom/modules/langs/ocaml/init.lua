@@ -13,9 +13,9 @@ ocaml.autocmds = {
       langs_utils.use_lsp(doom.langs.ocaml.settings.language_server_name)
 
       vim.schedule(function()
-        require("nvim-treesitter.install").ensure_installed("ocaml","ocaml_interface")
+        require("nvim-treesitter.install").ensure_installed("ocaml", "ocaml_interface")
         if vim.fn.executable("tree-sitter-cli") == 1 then
-            require("nvim-treesitter.install").ensure_installed("ocamllex")
+          require("nvim-treesitter.install").ensure_installed("ocamllex")
         end
       end)
     end,
