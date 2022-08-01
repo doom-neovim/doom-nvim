@@ -100,9 +100,7 @@ quote_style = "AutoPreferDouble"
 
 #### Commits & PRs
 
-- Target `develop` instead of `main`.
-  The only exception are hotfixes (plugins breaking changes, Doom bugs)
-  and documentation improvements!
+- Target the `main` branch.
 
 #### Keybind conventions
 
