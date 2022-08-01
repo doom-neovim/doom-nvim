@@ -72,6 +72,7 @@ return {
     -- Compiled
     -- "rust",
     -- "cc",
+    -- "ocaml",
 
     -- JIT
     -- "c_sharp",
