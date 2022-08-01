@@ -1,6 +1,9 @@
 <div align="center">
 
-# Doom Nvim
+
+# Doom Nvim :warning: The `develop` branch has been deprecated.
+
+Doom nvim is switching to a rolling release model with tagged stable commits on `origin/main`.  Please port your config to `main`.
 
 ![License](https://img.shields.io/github/license/NTBBloodbath/doom-nvim?style=for-the-badge)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
