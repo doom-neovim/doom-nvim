@@ -162,18 +162,12 @@ local function get_doom_info()
   })
   if doom_branch == "develop" then
     -- Current commit relevant information
-    local current_commit_author = utils.get_git_output(
-      'show -s --format="%cN <%cE>" ' .. current_commit,
-      true
-    )
-    local current_commit_message = utils.get_git_output(
-      "show -s --format=%s " .. current_commit,
-      true
-    )
-    local current_commit_body = utils.get_git_output(
-      "show -s --format=%b " .. current_commit,
-      false
-    )
+    local current_commit_author =
+      utils.get_git_output('show -s --format="%cN <%cE>" ' .. current_commit, true)
+    local current_commit_message =
+      utils.get_git_output("show -s --format=%s " .. current_commit, true)
+    local current_commit_body =
+      utils.get_git_output("show -s --format=%b " .. current_commit, false)
 
     vim.list_extend(doom_info, {
       "",

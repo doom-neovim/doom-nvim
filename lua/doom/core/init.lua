@@ -5,7 +5,9 @@
 local log = require("doom.extras.logging")
 
 log.debug("Loading Doom core ...")
-log.warn("The develop branch has been deprecated with the release of doom-vim v4.0.0.  Please port your config to `origin/main`.")
+log.warn(
+  "The develop branch has been deprecated with the release of doom-vim v4.0.0.  Please port your config to `origin/main`."
+)
 
 local core_modules = { "settings", "settings.netrw", "config.ui", "config" }
 for i = 1, #core_modules, 1 do

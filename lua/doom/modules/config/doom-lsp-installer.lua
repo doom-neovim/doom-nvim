@@ -132,10 +132,8 @@ return function()
     local ensure_installed = {}
     for _, lang in ipairs(langs) do
       -- Lang name used for key in servers table
-      local lang_name = lang
-        :gsub("%s+%+lsp(%(%a+%))", "")
-        :gsub("%s+%+lsp", "")
-        :gsub("%s+%+debug", "")
+      local lang_name =
+        lang:gsub("%s+%+lsp(%(%a+%))", ""):gsub("%s+%+lsp", ""):gsub("%s+%+debug", "")
       -- Get LSP override +lsp(<override>) if it exists
       local lsp_override = lang:match("+lsp%((.+)%)")
       -- Array of lsps to ensure are installed

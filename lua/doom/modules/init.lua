@@ -381,23 +381,25 @@ packer.startup(function(use)
   -- Snippets
   local disabled_snippets = is_plugin_disabled("snippets")
 
-  local luasnip_packer_spec = disabled_snippets and {
-    {
+  local luasnip_packer_spec = disabled_snippets
+      and {
+        {
+          "L3MON4D3/LuaSnip",
+          commit = pin_commit("09e3bc6da5376aa87a29fde222f321f518e6c120"),
+          event = "BufReadPre",
+          config = require("doom.modules.config.doom-luasnip"),
+        },
+      }
+    or {
       "L3MON4D3/LuaSnip",
       commit = pin_commit("09e3bc6da5376aa87a29fde222f321f518e6c120"),
       event = "BufReadPre",
-      config = require("doom.modules.config.doom-luasnip"),
+      config = function()
+        require("doom.modules.config.doom-luasnip")()
+        require("luasnip/loaders/from_vscode").load()
+      end,
+      requires = { "rafamadriz/friendly-snippets" },
     }
-  } or {
-    "L3MON4D3/LuaSnip",
-    commit = pin_commit("09e3bc6da5376aa87a29fde222f321f518e6c120"),
-    event = "BufReadPre",
-    config = function ()
-      require("doom.modules.config.doom-luasnip")()
-      require("luasnip/loaders/from_vscode").load()
-    end,
-    requires = { "rafamadriz/friendly-snippets" },
-  }
 
   -- Autopairs
   -- can be disabled to use your own autopairs
