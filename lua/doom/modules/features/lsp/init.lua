@@ -65,7 +65,7 @@ lsp.settings = {
       TypeParameter = " ",
     },
     experimental = {
-      ghost_text = true
+      ghost_text = true,
     },
     completeopt = "menu,menuone,preview,noinsert",
     window = {
