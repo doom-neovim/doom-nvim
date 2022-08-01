@@ -381,6 +381,24 @@ packer.startup(function(use)
   -- Snippets
   local disabled_snippets = is_plugin_disabled("snippets")
 
+  local luasnip_packer_spec = disabled_snippets and {
+    {
+      "L3MON4D3/LuaSnip",
+      commit = pin_commit("09e3bc6da5376aa87a29fde222f321f518e6c120"),
+      event = "BufReadPre",
+      config = require("doom.modules.config.doom-luasnip"),
+    }
+  } or {
+    "L3MON4D3/LuaSnip",
+    commit = pin_commit("09e3bc6da5376aa87a29fde222f321f518e6c120"),
+    event = "BufReadPre",
+    config = function ()
+      require("doom.modules.config.doom-luasnip")()
+      require("luasnip/loaders/from_vscode").load()
+    end,
+    requires = { "rafamadriz/friendly-snippets" },
+  }
+
   -- Autopairs
   -- can be disabled to use your own autopairs
   local disabled_autopairs = is_plugin_disabled("autopairs")
@@ -392,15 +410,7 @@ packer.startup(function(use)
     commit = pin_commit("d93104244c3834fbd8f3dd01da9729920e0b5fe7"),
     wants = { "LuaSnip" },
     requires = {
-      {
-        "L3MON4D3/LuaSnip",
-        commit = pin_commit("09e3bc6da5376aa87a29fde222f321f518e6c120"),
-        event = "BufReadPre",
-        wants = "friendly-snippets",
-        config = require("doom.modules.config.doom-luasnip"),
-        disable = disabled_snippets,
-        requires = { "rafamadriz/friendly-snippets" },
-      },
+      luasnip_packer_spec,
       {
         "windwp/nvim-autopairs",
         commit = pin_commit("e6b1870cd2e319f467f99188f99b1c3efc5824d2"),

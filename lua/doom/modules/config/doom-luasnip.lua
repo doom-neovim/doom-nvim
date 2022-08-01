@@ -8,8 +8,6 @@ return function()
     updateevents = "TextChanged,TextChangedI",
   })
 
-  require("luasnip/loaders/from_vscode").load()
-
   --- <tab> to jump to next snippet's placeholder
   local function on_tab()
     return luasnip.jump(1) and "" or mappings.t("<Tab>")
