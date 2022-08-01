@@ -95,7 +95,6 @@ lsp.settings = {
   },
 }
 
-local is_module_enabled = require("doom.utils").is_module_enabled
 lsp.packages = {
   ["nvim-lspconfig"] = {
     "neovim/nvim-lspconfig",
@@ -377,7 +376,7 @@ lsp.binds = {
                 end,
                 name = "Line",
               },
-              { "l", vim.lsp.diagnostic.set_loclist, name = "Loclist" },
+              { "l", vim.diagnostic.setloclist, name = "Loclist" },
             },
           },
         },

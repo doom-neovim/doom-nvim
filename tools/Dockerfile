@@ -24,8 +24,11 @@ RUN pacman -Sy neovim --noconfirm
 # Install runtime dependencies of doom-nvim
 RUN pacman -Sy ripgrep nodejs-lts-fermium npm git bash gcc jq --noconfirm
 
+# Lua
+RUN pacman -Sy luacheck stylua --noconfirm
+
 # Required for nvim-lsp-installer
-RUN pacman -Sy wget unzip
+RUN pacman -Sy wget unzip make --noconfirm
 
 # Required for watching Doom-nvim-contrib for changes
 RUN npm i -g chokidar-cli

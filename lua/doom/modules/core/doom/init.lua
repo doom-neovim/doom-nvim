@@ -332,7 +332,7 @@ required.autocmds = function()
     table.insert(autocmds, {
       "BufReadPost",
       "*",
-      [[if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]],
+      [[if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]],
     })
   end
   return autocmds

@@ -58,7 +58,9 @@ cd ./doom-nvim-contrib || exit
 
 echo "1. Setting up branch"
 # If branch exists just check it out
-if git show-ref --quiet refs/heads/"$BRANCH_NAME"; then
+if ! git symbolic-ref -q HEAD; then
+  echo "In detached HEAD state, not moving branch"
+elif git show-ref --quiet refs/heads/"$BRANCH_NAME"; then
   if [[ ! $( git rev-parse --abbrev-ref HEAD ) == "$BRANCH_NAME" ]]; then
     echo " - Checking out branch $BRANCH_NAME..."
     git checkout "$BRANCH_NAME"
@@ -98,6 +100,7 @@ fi
 
 # Create docker container if haven't already
 echo " - Success! Running docker container doom-nvim-contrib-container..."
+mkdir -p "${SCRIPT_DIR}/local-share-nvim" "${SCRIPT_DIR}/workspace"
 echo ""
 docker run \
   -it \

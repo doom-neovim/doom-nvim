@@ -108,8 +108,6 @@ mapper.configs["nvim-mapper"] = function()
         if id ~= nil then
           local rhs = type(node.rhs) == "function" and "<function>" or node.rhs
           if node_settings.buffer then
-            local bufnr = type(node_settings.buffer) == "number" and node_settings.buffer
-              or vim.api.nvim_get_current_buf()
             Mapper.map_buf_virtual(
               sanitizedMode,
               node.lhs,
