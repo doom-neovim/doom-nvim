@@ -50,9 +50,8 @@ repl.configs = {
     local iron = require("iron.core")
 
     local settings = vim.tbl_deep_extend("force", {}, doom.features.repl.settings)
-    settings.config.repl_open_command = require("iron.view").curry[settings.config.position](
-      settings.config.size
-    )
+    settings.config.repl_open_command =
+      require("iron.view").curry[settings.config.position](settings.config.size)
 
     iron.setup(settings)
   end,

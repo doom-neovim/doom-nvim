@@ -1,12 +1,11 @@
 local extra_snippets = {}
 
-extra_snippets.settings = {
-}
+extra_snippets.settings = {}
 
 extra_snippets.packages = {
   ["friendly-snippets"] = {
     "rafamadriz/friendly-snippets",
-    after = "LuaSnip"
+    after = "LuaSnip",
   },
 }
 

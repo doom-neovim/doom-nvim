@@ -8,7 +8,7 @@ if vim.fn.has("nvim-0.6.0") ~= 1 then
 end
 
 -- Makes sure ~/.local/share/nvim exists, to prevent problems with logging
-vim.fn.mkdir(vim.fn.stdpath("data"), 'p')
+vim.fn.mkdir(vim.fn.stdpath("data"), "p")
 
 -- Add ~/.local/share to runtimepath early, such that
 -- neovim autoloads plugin/packer_compiled.lua along with vimscript,

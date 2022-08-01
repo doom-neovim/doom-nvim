@@ -122,7 +122,7 @@ reloader._reload_doom = function()
     return t[1]
   end, doom.packages)
   local needs_install = vim.deep_equal(modules, old_modules)
-      and vim.deep_equal(packages, old_packages)
+    and vim.deep_equal(packages, old_packages)
   if needs_install then
     if not _G._doom_reloader._has_shown_packer_compile_message then
       log.warn(
@@ -151,8 +151,8 @@ reloader.reload = function()
 
   log.info(
     "Reloaded Doom in "
-    .. vim.fn.printf("%.3f", vim.fn.reltimefloat(vim.fn.reltime(reload_time)))
-    .. " seconds"
+      .. vim.fn.printf("%.3f", vim.fn.reltimefloat(vim.fn.reltime(reload_time)))
+      .. " seconds"
   )
 end
 

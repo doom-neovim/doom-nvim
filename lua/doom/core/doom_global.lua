@@ -166,11 +166,11 @@ doom = {
   -- @default = false
   use_floating_win_packer = false,
 
-   -- Set max cols
-   -- Defines the column to show a vertical marker
-   -- Set to false to disable
-   -- @default = 80
-   max_columns = 80,
+  -- Set max cols
+  -- Defines the column to show a vertical marker
+  -- Set to false to disable
+  -- @default = 80
+  max_columns = 80,
 
   -- Default indent size
   -- @default = 4

@@ -39,19 +39,17 @@ updater._cwd = vim.fn.stdpath("config")
 ---@param callback function Handler to receive the list of versions
 updater._pull_tags = function(callback)
   local Job = require("plenary.job")
-  Job
-    :new({
-      command = "git",
-      args = { "fetch", "--tags", "--all" },
-      cwd = updater._cwd,
-      on_exit = function(j, exit_code)
-        if exit_code ~= 0 then
-          callback(nil, "Error pulling tags... \n\n " .. vim.inspect(j.result()))
-        end
-        callback(j:result())
-      end,
-    })
-    :start()
+  Job:new({
+    command = "git",
+    args = { "fetch", "--tags", "--all" },
+    cwd = updater._cwd,
+    on_exit = function(j, exit_code)
+      if exit_code ~= 0 then
+        callback(nil, "Error pulling tags... \n\n " .. vim.inspect(j.result()))
+      end
+      callback(j:result())
+    end,
+  }):start()
 end
 
 --- Gets the current commit sha or error
@@ -59,24 +57,22 @@ end
 updater._get_commit_sha = function(callback)
   local Job = require("plenary.job")
 
-  Job
-    :new({
-      command = "git",
-      args = { "rev-parse", "HEAD" },
-      on_exit = function(j, exit_code)
-        if exit_code ~= 0 then
-          callback(nil, "Error getting current commit... \n\n" .. vim.inspect(j:result()))
-          return
-        end
-        local result = j:result()
-        if #result == 1 then
-          callback(result[1])
-        else
-          callback(nil, "Error getting current commit... No output.")
-        end
-      end,
-    })
-    :start()
+  Job:new({
+    command = "git",
+    args = { "rev-parse", "HEAD" },
+    on_exit = function(j, exit_code)
+      if exit_code ~= 0 then
+        callback(nil, "Error getting current commit... \n\n" .. vim.inspect(j:result()))
+        return
+      end
+      local result = j:result()
+      if #result == 1 then
+        callback(result[1])
+      else
+        callback(nil, "Error getting current commit... No output.")
+      end
+    end,
+  }):start()
 end
 
 --- Given a version string, checks if it's an alpha/beta version
@@ -116,25 +112,23 @@ end
 ---@param callback function(version_tag, error_string)
 updater._get_last_version_for_commit = function(commit_sha, callback)
   local Job = require("plenary.job")
-  Job
-    :new({
-      command = "git",
-      args = { "tag", "-l", "--sort", "-version:refname", "--merged", commit_sha },
-      cwd = updater._cwd,
-      on_exit = function(j, exit_code)
-        if exit_code ~= 0 then
-          callback(nil, "Error getting current version... \n\n " .. vim.inspect(j:result()))
-          return
-        end
-        local result = j:result()
-        if #result > 0 then
-          callback(result[1])
-        else
-          callback(nil, "Error getting current version... No output.")
-        end
-      end,
-    })
-    :start()
+  Job:new({
+    command = "git",
+    args = { "tag", "-l", "--sort", "-version:refname", "--merged", commit_sha },
+    cwd = updater._cwd,
+    on_exit = function(j, exit_code)
+      if exit_code ~= 0 then
+        callback(nil, "Error getting current version... \n\n " .. vim.inspect(j:result()))
+        return
+      end
+      local result = j:result()
+      if #result > 0 then
+        callback(result[1])
+      else
+        callback(nil, "Error getting current version... No output.")
+      end
+    end,
+  }):start()
 end
 
 --- Gets the current version and the latest upstream version
@@ -255,25 +249,23 @@ end
 ---@param callback function(branch_name, error)
 updater._get_branch_name = function(callback)
   local Job = require("plenary.job")
-  Job
-    :new({
-      command = "git",
-      args = { "symbolic-ref", "--short", "-q", "HEAD" },
-      cwd = updater._cwd,
-      on_exit = function(j, exit_code)
-        if exit_code ~= 0 then
-          callback(nil, "Error getting branch name... \n\n " .. vim.inspect(j:result()))
-          return
-        end
-        local result = j:result()
-        if #result > 0 then
-          callback(result[1])
-        else
-          callback(nil, "Error getting branch name... No output.")
-        end
-      end,
-    })
-    :start()
+  Job:new({
+    command = "git",
+    args = { "symbolic-ref", "--short", "-q", "HEAD" },
+    cwd = updater._cwd,
+    on_exit = function(j, exit_code)
+      if exit_code ~= 0 then
+        callback(nil, "Error getting branch name... \n\n " .. vim.inspect(j:result()))
+        return
+      end
+      local result = j:result()
+      if #result > 0 then
+        callback(result[1])
+      else
+        callback(nil, "Error getting branch name... No output.")
+      end
+    end,
+  }):start()
 end
 
 --- Entry point for `:DoomUpdate`, fetches new tags, compares with current version and attempts to merge new tags into current branch

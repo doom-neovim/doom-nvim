@@ -105,10 +105,10 @@ lsp.packages = {
     "hrsh7th/nvim-cmp",
     commit = "706371f1300e7c0acb98b346f80dad2dd9b5f679",
     requires = {
-    "L3MON4D3/LuaSnip",
-    commit = "53e812a6f51c9d567c98215733100f0169bcc20a",
-    module = "luasnip",
-  },
+      "L3MON4D3/LuaSnip",
+      commit = "53e812a6f51c9d567c98215733100f0169bcc20a",
+      module = "luasnip",
+    },
   },
   ["cmp-nvim-lua"] = {
     "hrsh7th/cmp-nvim-lua",
@@ -242,11 +242,8 @@ lsp.configs["nvim-cmp"] = function()
     },
     formatting = {
       format = function(entry, item)
-        item.kind = string.format(
-          "%s %s",
-          doom.features.lsp.settings.completion.kinds[item.kind],
-          item.kind
-        )
+        item.kind =
+          string.format("%s %s", doom.features.lsp.settings.completion.kinds[item.kind], item.kind)
         item.menu = source_map[entry.source.name]
         item.dup = vim.tbl_contains({ "path", "buffer" }, entry.source.name)
         return item
