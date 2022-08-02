@@ -82,6 +82,7 @@ return {
     -- "config",          -- JSON, YAML, TOML
     -- "markdown",
     -- "terraform",       -- Terraform / hcl files support
+    -- "dockerfile",
   },
 }
 
