@@ -60,6 +60,9 @@ statusline._safe_get_highlight = function(...)
       local id = vim.fn.synIDtrans(vim.api.nvim_get_hl_id_by_name(hlname))
       local foreground = vim.fn.synIDattr(id, "fg")
       local background = vim.fn.synIDattr(id, "bg")
+      if vim.fn.synIDattr(id, "reverse") == "1" then
+        foreground, background = background, foreground
+      end
       if foreground and foreground:find("^#") then
         return { foreground = foreground, background = background }
       end
