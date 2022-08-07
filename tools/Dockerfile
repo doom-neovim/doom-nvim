@@ -25,7 +25,7 @@ RUN pacman -Sy neovim --noconfirm
 RUN pacman -Sy ripgrep nodejs-lts-fermium npm git bash gcc jq --noconfirm
 
 # Lua
-RUN pacman -Sy luacheck stylua --noconfirm
+RUN pacman -Sy luacheck stylua lua-language-server --noconfirm
 
 # Required for nvim-lsp-installer
 RUN pacman -Sy wget unzip make --noconfirm
