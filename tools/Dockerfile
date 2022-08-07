@@ -16,7 +16,7 @@ ENV \
 	PATH="/home/doom/.local/bin:${PATH}"
 
 # Update repositories
-RUN	pacman -Syy
+RUN	pacman -Syu --noconfirm
 
 # Install neovim
 RUN pacman -Sy neovim --noconfirm
