@@ -17,7 +17,6 @@ explorer.settings = {
   view = {
     width = 35,
     side = "left",
-    auto_resize = true,
     mappings = {
       custom_only = false,
     },
@@ -72,6 +71,7 @@ explorer.settings = {
   },
   actions = {
     open_file = {
+      resize_window = true, -- previously view.auto_resize
       window_picker = {
         exclude = {
           filetype = {
