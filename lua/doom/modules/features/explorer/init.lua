@@ -95,7 +95,7 @@ explorer.packages = {
   ["nvim-tree.lua"] = {
     "kyazdani42/nvim-tree.lua",
     commit = "7fcb48c852b9d58709169a4dc1ec634fa9ea56f9",
-    module = 'nvim-tree.api',
+    module = "nvim-tree.api",
     cmd = {
       "NvimTreeClipboard",
       "NvimTreeClose",
@@ -186,12 +186,16 @@ explorer.binds = {
 }
 
 explorer.autocmds = {
-    {"BufEnter", "*", function()
-       local name = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
-        if vim.fn.isdirectory(name) == 1 then
-            require("nvim-tree.api").tree.change_root(name)
-       end
-    end}
+  {
+    "BufEnter",
+    "*",
+    function()
+      local name = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+      if vim.fn.isdirectory(name) == 1 then
+        require("nvim-tree.api").tree.change_root(name)
+      end
+    end,
+  },
 }
 
 return explorer

@@ -34,10 +34,10 @@ local utils = require("doom.utils")
 local config = utils.safe_require("doom.core.config")
 config.load()
 if not utils.is_module_enabled("features", "netrw") then
-    g.loaded_netrw = 1
-    g.loaded_netrwPlugin = 1
-    g.loaded_netrwSettings = 1
-    g.loaded_netrwFileHandlers = 1
+  g.loaded_netrw = 1
+  g.loaded_netrwPlugin = 1
+  g.loaded_netrwSettings = 1
+  g.loaded_netrwFileHandlers = 1
 end
 
 -- Load the colourscheme
