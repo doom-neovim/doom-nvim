@@ -12,7 +12,7 @@ local default_config = {
   use_console = true,
   highlights = true,
   use_file = true,
-  level = doom.logging,
+  level = doom.settings.logging,
   modes = {
     { name = "trace", hl = "Comment" },
     { name = "debug", hl = "Comment" },
