@@ -75,12 +75,12 @@ statusline._generate_colorscheme = function()
       rgb = hex2rgb(hl),
     }
   end, {
-    statusline._safe_get_highlight("luaTSField", "TSField").foreground,
-    statusline._safe_get_highlight("luaTSConditional", "TSConditional").foreground,
-    statusline._safe_get_highlight("luaTSFunction", "TSFunction").foreground,
-    statusline._safe_get_highlight("luaTSKeywordFunction", "TSKeywordFunction").foreground,
-    statusline._safe_get_highlight("luaTSString", "TSString").foreground,
-    statusline._safe_get_highlight("luaTSNumber", "TSNumber").foreground,
+    statusline._safe_get_highlight("luaTSField", "TSField", "TSVariable", "Field", "Variable").foreground,
+    statusline._safe_get_highlight("luaTSConditional", "TSConditional", "TSConstant", "Conditional", "Constant").foreground,
+    statusline._safe_get_highlight("luaTSFunction", "TSFunction", "Function").foreground,
+    statusline._safe_get_highlight("luaTSKeywordFunction", "TSKeywordFunction", "Function").foreground,
+    statusline._safe_get_highlight("luaTSString", "TSString", "String").foreground,
+    statusline._safe_get_highlight("luaTSNumber", "TSNumber", "Number").foreground,
   })
 
   local rate_color = function(hsv)
@@ -166,9 +166,9 @@ statusline.configs["heirline.nvim"] = function()
       info = safe_get_highlight("DiagnosticInfo").foreground,
     },
     git = {
-      del = safe_get_highlight("diffRemoved", "DiffAdded").foreground,
-      add = safe_get_highlight("diffAdded", "DiffAdded").foreground,
-      change = safe_get_highlight("diffChanged", "DiffChange", "DiffAdded").foreground,
+      del = safe_get_highlight("diffRemoved", "DiffRemoved", "DiffDelete").foreground,
+      add = safe_get_highlight("diffAdded", "DiffAdded", "DiffAdd").foreground,
+      change = safe_get_highlight("diffChanged", "DiffChange", "DiffChange").foreground,
     },
   }
 
