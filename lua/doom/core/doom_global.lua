@@ -239,7 +239,7 @@ doom = {
   ---   'tpope/vim-surround',
   ---   'dstein64/vim-startuptime'
   --- )
-  ---@vararg DoomPackage[]|string[] Packages to install
+  ---@vararg DoomPackage|string|DoomPackage[] Packages to install
   use_package = function(...)
     local arg = { ... }
     -- Get table of packages via git repository name
