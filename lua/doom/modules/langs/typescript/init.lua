@@ -14,7 +14,7 @@ typescript.autocmds = {
 
       vim.defer_fn(function()
         local ts_install = require("nvim-treesitter.install")
-        ts_install.ensure_installed("typescript", "javascript")
+        ts_install.ensure_installed("typescript", "javascript", "tsx")
       end, 0)
 
       -- Setup null-ls
