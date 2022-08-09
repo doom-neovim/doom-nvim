@@ -23,7 +23,7 @@ html.autocmds = {
         local null_ls = require("null-ls")
 
         langs_utils.use_null_ls_source({
-          null_ls.builtins.formatting.tidy
+          null_ls.builtins.formatting.tidy,
         })
       end
     end),
