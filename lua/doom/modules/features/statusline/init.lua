@@ -79,7 +79,13 @@ statusline._generate_colorscheme = function()
     }
   end, {
     statusline._safe_get_highlight("luaTSField", "TSField", "TSVariable", "Field", "Variable").foreground,
-    statusline._safe_get_highlight("luaTSConditional", "TSConditional", "TSConstant", "Conditional", "Constant").foreground,
+    statusline._safe_get_highlight(
+      "luaTSConditional",
+      "TSConditional",
+      "TSConstant",
+      "Conditional",
+      "Constant"
+    ).foreground,
     statusline._safe_get_highlight("luaTSFunction", "TSFunction", "Function").foreground,
     statusline._safe_get_highlight("luaTSKeywordFunction", "TSKeywordFunction", "Function").foreground,
     statusline._safe_get_highlight("luaTSString", "TSString", "String").foreground,
