@@ -5,13 +5,12 @@ return {
 
   -- Leader key for keybinds
   -- @default = ' '
-  leader_key = ' ',
+  leader_key = " ",
 
   -- Enables impatent.nvim caching to speed up start time.
   -- Can cause more issues so disabled by default
   -- @default false
   impatient_enabled = false,
-
 
   -- Pins plugins to a commit sha to prevent breaking changes
   -- @default = true
@@ -52,7 +51,6 @@ return {
   -- true  : Shows relative number lines
   -- @default = true
   relative_num = true,
-
 
   -- h,l, wrap lines
   movement_wrap = true,
@@ -173,5 +171,29 @@ return {
     -- If the Neovim instance should be transparent
     -- @default = false
     transparent_background = false,
+  },
+
+  -- Completion bindings
+  --
+  -- defaults:
+  --    select_prev_item  = "<C-p>",
+  --    select_next_item  = "<C-n>",
+  --    scroll_docs_fwd   = "<C-d>",
+  --    scroll_docs_bkw   = "<C-f>",
+  --    complete          = "<C-Space>",
+  --    close             = "<C-e>",
+  --    confirm           = "<CR>",
+  --    tab               = "<Tab>",
+  --    stab              = "<S-Tab>",
+  cmp_binds = {
+    select_prev_item = "<C-p>",
+    select_next_item = "<C-n>",
+    scroll_docs_fwd = "<C-d>",
+    scroll_docs_bkw = "<C-f>",
+    complete = "<C-Space>",
+    close = "<C-e>",
+    confirm = "<CR>",
+    tab = "<Tab>",
+    stab = "<S-Tab>",
   },
 }
