@@ -81,7 +81,12 @@ gitsigns.packages = {
 
 gitsigns.configs = {}
 gitsigns.configs["gitsigns.nvim"] = function()
-  require("gitsigns").setup(doom.features.gitsigns.settings)
+  local settings = doom.features.gitsigns.settings
+  local is_module_enabled = require("doom.utils").is_module_enabled
+  if is_module_enabled("features", "largefile") then
+    settings.max_file_length = doom.features.largefile.settings.max_line_count
+  end
+  require("gitsigns").setup(settings)
 end
 
 return gitsigns
