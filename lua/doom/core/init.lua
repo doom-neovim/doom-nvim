@@ -49,11 +49,6 @@ if not utils.is_module_enabled("features", "netrw") then
   g.loaded_netrwFileHandlers = 1
 end
 
--- Load the colourscheme
-profiler.start("framework|doom.core.ui")
-utils.safe_require("doom.core.ui")
-profiler.stop("framework|doom.core.ui")
-
 -- Set some extra commands
 utils.safe_require("doom.core.commands")
 
@@ -69,6 +64,11 @@ modules.handle_user_config()
 profiler.stop("framework|user settings")
 modules.try_sync()
 profiler.stop("framework|doom.core.modules")
+
+-- Load the colourscheme
+profiler.start("framework|doom.core.ui")
+utils.safe_require("doom.core.ui")
+profiler.stop("framework|doom.core.ui")
 
 -- Execute autocommand for user to hook custom config into
 vim.api.nvim_exec_autocmds("User", {
