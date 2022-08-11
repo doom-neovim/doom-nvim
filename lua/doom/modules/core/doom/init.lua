@@ -40,8 +40,6 @@ required.packages = {
 required.configs = {}
 
 required.binds = function()
-  local utils = require("doom.utils")
-  local is_module_enabled = utils.is_module_enabled
 
   local binds = {
     { "ZZ", require("doom.core.functions").quit_doom, name = "Fast exit" },
@@ -120,23 +118,6 @@ required.binds = function()
   -- Exit insert mode fast
   for _, esc_seq in pairs(doom.escape_sequences) do
     table.insert(binds, { esc_seq, "<ESC>", mode = "i" })
-  end
-
-  if is_module_enabled("features", "explorer") then
-    table.insert(binds, { "<F3>", ":Lexplore%s<CR>", name = "Toggle explorer" })
-    table.insert(binds, {
-      "<leader>",
-      name = "+prefix",
-      {
-        {
-          "o",
-          name = "+open/close",
-          {
-            { "e", ":Lexplore%s<CR>", name = "Explorer" },
-          },
-        },
-      },
-    })
   end
 
   local split_modes = {
