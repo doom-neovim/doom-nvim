@@ -60,7 +60,7 @@ telescope.packages = {
     key = "<leader>.",
     after = "telescope.nvim",
     opt = true,
-  }
+  },
 }
 
 telescope.configs = {}
@@ -98,7 +98,7 @@ telescope.configs["telescope.nvim"] = function()
 end
 
 telescope.configs["telescope-file-browser.nvim"] = function()
-  require("telescope").load_extension "file_browser"
+  require("telescope").load_extension("file_browser")
 end
 
 telescope.binds = function()
