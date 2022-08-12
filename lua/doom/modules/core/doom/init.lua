@@ -40,7 +40,6 @@ required.packages = {
 required.configs = {}
 
 required.binds = function()
-
   local binds = {
     { "ZZ", require("doom.core.functions").quit_doom, name = "Fast exit" },
     { "<ESC>", ":noh<CR>", name = "Remove search highlight" },
