@@ -1,5 +1,5 @@
 -- Check if user is running Doom in a supported Neovim version before trying to load anything
-if vim.fn.has("nvim-0.7.0") ~= 0 then
+if vim.fn.has("nvim-0.7.0") ~= 1 then
   local message = table.concat({
     "You are using an unsupported version of Neovim.",
     "",
