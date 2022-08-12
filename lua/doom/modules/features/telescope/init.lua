@@ -53,6 +53,14 @@ telescope.packages = {
     cmd = "Telescope",
     opt = true,
   },
+  ["telescope-file-browser.nvim"] = {
+    "nvim-telescope/telescope-file-browser.nvim",
+    commit = "4272c52078cc457dfaabce6fa3545e7495651d04",
+    cmd = "Telescope browse_files",
+    key = "<leader>.",
+    after = "telescope.nvim",
+    opt = true,
+  }
 }
 
 telescope.configs = {}
@@ -87,6 +95,10 @@ telescope.configs["telescope.nvim"] = function()
   for _, ext in ipairs(doom.features.telescope.settings.extensions) do
     telescope_package.load_extension(ext)
   end
+end
+
+telescope.configs["telescope-file-browser.nvim"] = function()
+  require("telescope").load_extension "file_browser"
 end
 
 telescope.binds = function()
