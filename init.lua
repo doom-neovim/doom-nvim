@@ -1,10 +1,13 @@
 -- Check if user is running Doom in a supported Neovim version before trying to load anything
-if vim.fn.has("nvim-0.6.0") ~= 1 then
-  vim.notify(
-    "You are using an unsupported Neovim version, doom-nvim requires at least Neovim 0.6.0 to work as expected.\nPlease consider upgrading Neovim before using doom-nvim",
-    vim.log.levels.ERROR
-  )
-  return
+if vim.fn.has("nvim-0.7.0") ~= 0 then
+  local message = table.concat({
+    "You are using an unsupported version of Neovim.",
+    "",
+    "Doom nvim and many of its plugins require at least version 0.7.0 to work as expected.",
+    "Consider updating if you run into issues.",
+    "https://github.com/NTBBloodbath/doom-nvim/blob/main/docs/updating-nvim.md"
+  }, "\n")
+  vim.notify(message, vim.log.levels.ERROR)
 end
 
 -- Makes sure ~/.local/share/nvim exists, to prevent problems with logging
