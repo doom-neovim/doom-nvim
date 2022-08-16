@@ -80,26 +80,29 @@ vue.autocmds = {
       local lspconfig_util = require("lspconfig/util")
       local langs_utils = require("doom.modules.langs.utils")
 
+      local function get_typescript_server_path(root_dir)
+        -- Alternative location if installed as root:
+        -- local global_ts = '/usr/local/lib/node_modules/typescript/lib/tsserverlibrary.js'
+        local found_ts = ''
+        local function check_dir(path)
+          found_ts =  lspconfig_util.path.join(path, 'node_modules', 'typescript', 'lib', 'tsserverlibrary.js')
+          if lspconfig_util.path.exists(found_ts) then
+            return path
+          end
+        end
+        if lspconfig_util.search_ancestors(root_dir, check_dir) then
+          return found_ts
+        end
+        return ''
+      end
       -- volar needs works with typescript server, needs to get the typescript server from the project's node_modules
       local function on_new_config(new_config, new_root_dir)
-        local function get_typescript_server_path(root_dir)
-          local project_root = lspconfig_util.find_node_modules_ancestor(root_dir)
-          return project_root
-              and (lspconfig_util.path.join(
-                project_root,
-                "node_modules",
-                "typescript",
-                "lib",
-                "tsserverlibrary.js"
-              ))
-            or ""
-        end
-
         if
           new_config.init_options
           and new_config.init_options.typescript
           and new_config.init_options.typescript.serverPath == ""
         then
+
           new_config.init_options.typescript.serverPath = get_typescript_server_path(new_root_dir)
         end
       end
