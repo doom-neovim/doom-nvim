@@ -17,7 +17,7 @@ config.settings = {
 config.packages = {
   ["SchemaStore.nvim"] = {
     "b0o/SchemaStore.nvim",
-    commit = "65e845c491db027f93648dbf6241bc73e68a44d0",
+    commit = "f55842dc797faad8cf7b0d9ce75c59da654aa018",
     ft = { "json", "yaml", "toml" },
   },
 }

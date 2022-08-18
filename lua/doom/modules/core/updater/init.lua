@@ -24,7 +24,7 @@ local updater = {}
 updater.packages = {
   ["plenary.nvim"] = {
     "nvim-lua/plenary.nvim",
-    commit = "986ad71ae930c7d96e812734540511b4ca838aa2",
+    commit = "31807eef4ed574854b8a53ae40ea3292033a78ea",
     module = "plenary",
   },
 }
