@@ -207,7 +207,7 @@ end
 
 --- Applies the given `keymapConfig`, creating nvim keymaps
 --- @param nest_config table<number, NestNode>
---- @param settings NestSettings
+--- @param settings NestSettings|nil
 --- @param integrations table<number, NestIntegration> User can parse the nest config with a subset of integrations
 module.applyKeymaps = function(nest_config, settings, integrations)
   local ints = integrations or module.integrations
