@@ -5,6 +5,61 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.3]
+
+Some "soft" breaking changes in this releases (should handle itself but could still cause complications).  Explanations highlighted with the changes.
+
+### Fixes
+- db322f3 fix(auto_install)!: Switch to using default install directory.
+    - **Note: You will have to re-install your LSPs, this should happen automatically but if you have any extra LSPs they will need to be re-installed.**
+- 5f9cf2d fix(keymaps): Incorrect EmmyLua typing
+- 5074f61 ea799b3 fix(whichkey): User keybinds not showing in whichkey.
+- 6b47758 fix(langs,vue): Fixed LSP broken in monorepos
+- ec17813 2693dbf 31668a5 fix(core): Updated minimum neovim version to 0.7.0 + added updating neovim docs.
+     - **Note: Including this in a minor release as doom-nvim was broken on 0.6.0 anyway, these changes just formalize it and tell users how to upgrade**.
+- 845b5b6 fix(telescope): Broken `<leader>.` (browse_files) keybind.
+- 8d12f36 fix(core): Fix EmmyLua typing for `doom.use_package`
+- e8e7df7 fix(explorer): delete duplicate keybinding (#383)
+    - This change fixes the explorer (`<leader>oe`keybind breaking after some use).
+
+### Other
+- 3790255 chore: Update pinned packer dependencies.
+
+## [4.0.2]
+
+### Features
+* feat(lsp): Enabled ghost_text by default
+* feat(dockerfile): Added Dockerfile language support.
+* feat(ocaml): add ocaml language support by @edwintorok in https://github.com/NTBBloodbath/doom-nvim/pull/373
+* feat(html): Add html language support
+
+### Fixes
+* fix(langs,typescript): Add `tsx` treesitter grammer to `typescript` language support.
+* fix(netrw): do not disable loading netrw when netrw feature is enabled
+* fix(linter): Increased formatting timeout. (fixes lsp formatting timing out on large documents)
+* fix Dockerfile, lsp warning and preserve_edit_pos by @edwintorok in https://github.com/NTBBloodbath/doom-nvim/pull/371
+* Fix netrw and explorer features by @edwintorok in https://github.com/NTBBloodbath/doom-nvim/pull/380
+* fix(statusline): increase contrast by @edwintorok in https://github.com/NTBBloodbath/doom-nvim/pull/381
+  - improves support for older colour schemes + correctly handles when highlights are reversed.
+
+### New Contributors
+* @edwintorok made their first contribution in https://github.com/NTBBloodbath/doom-nvim/pull/371
+
+## [4.0.1]
+
+## Features
+- feat(docs): Added uninstall docs
+
+## Fixes
+- fix(docs): Broken links in README.md
+- fix(features.telescope): Broken <leader>` keybind if telescope hasn't loaded yet.
+- fix(logger): Fix when `stdpath('data')` doesn't exist @dwarfmaster  #364
+- chore(deps): Update pinned packer dependencies
+- fix(lsp): Fixed some lsps not working when `snippets` module disabled.
+
+## Other
+- refact(langs): Renamed `snippets` to `extra_snippets`.
+
 ## [4.0.0]
 
 - `doom_modules.lua` renamed to `modules.lua`

@@ -7,8 +7,9 @@ local fs = require("doom.utils.fs")
 utils.version = {
   major = 4,
   minor = 0,
-  patch = 0,
+  patch = 3,
 }
+
 utils.doom_version =
   string.format("%d.%d.%d", utils.version.major, utils.version.minor, utils.version.patch)
 
