@@ -121,7 +121,7 @@ whichkey.configs["which-key.nvim"] = function()
   local count = 0
   for section_name, _ in pairs(doom.modules) do
     for _, module in pairs(doom[section_name]) do
-      if module.binds then
+      if module and module.binds then
         count = count + 1
         vim.defer_fn(function()
           -- table.insert(all_keymaps, type(module.binds) == "function" and module.binds() or module.binds)
@@ -134,6 +134,13 @@ whichkey.configs["which-key.nvim"] = function()
       end
     end
   end
+
+  -- Add user keymaps to whichkey user keymaps
+  keymaps_service.applyKeymaps(
+    doom.binds,
+    nil,
+    { whichkey_integration }
+  )
 end
 
 return whichkey
