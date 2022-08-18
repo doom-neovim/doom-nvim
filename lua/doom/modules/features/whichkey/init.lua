@@ -136,11 +136,7 @@ whichkey.configs["which-key.nvim"] = function()
   end
 
   -- Add user keymaps to whichkey user keymaps
-  keymaps_service.applyKeymaps(
-    doom.binds,
-    nil,
-    { whichkey_integration }
-  )
+  keymaps_service.applyKeymaps(doom.binds, nil, { whichkey_integration })
 end
 
 return whichkey
