@@ -1,8 +1,8 @@
 local auto_install = {}
 
 auto_install.settings = {
-  lsp_dir = vim.fn.stdpath("data") .. "/lsp-install",
-  dap_dir = vim.fn.stdpath("data") .. "/dap-install",
+  lsp_dir = nil, -- Change to a custom path such as `vim.fn.stdpath("data") .. "/lsp-install"`
+  dap_dir = nil, -- Change to a custom path such as `vim.fn.stdpath("data") .. "/dap-install"`
 }
 
 local is_module_enabled = require("doom.utils").is_module_enabled
