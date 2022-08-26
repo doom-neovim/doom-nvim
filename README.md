@@ -30,12 +30,12 @@ Doom Nvim is a Neovim interpretation of the [doom-emacs](https://github.com/hlis
 Our goal is to provide a configurable, extensible, performant and stable basis for any neovim configuration.
 Some of the defining features that make this project unique are:
 
-- **Fast** Rapid startup time without defer_fn, packages are lazy loaded and languages are only configured when opening its relevent file type.
+- **Fast** Rapid startup time without defer_fn, packages are lazy loaded and languages are only configured when opening its relevant file type.
 - **Stable** Plugins are pinned to commit shas to avoid breaking between updates.
 - **Scalable** Because of modular architecture you can disable any features you don't use.  Your config is as simple or complex as you want it to be.
 - **Configurable** All modules are 100% overridable and configurable, use a logical structure and have LSP completions.
 - **Extensible** With a simple api you can easily add, and or contribute, your own modules.
-- **Integrated** Desgined to handle and setup integrations between plugins for you.  For example, whichkey will only show keybinds for
+- **Integrated** Designed to handle and setup integrations between plugins for you.  For example, whichkey will only show keybinds for
   modules you have enabled (and will automatically handle your custom bindings).
 
 ## Install
@@ -59,7 +59,7 @@ bash <(curl -s https://raw.githubusercontent.com/NTBBloodbath/doom-nvim/main/too
 - [Configuring](#configuring)
 - [Enabling features: `modules.lua`](#enabling-features-moduleslua)
   - [What is a module?](#what-is-a-module)
-  - [Enabing/disabling modules](#enabingdisabling-modules)
+  - [Enabling/disabling modules](#enablingdisabling-modules)
   - [All modules](#all-modules)
 - [Configuring and personalising: `config.lua`](#configuring-and-personalising-configlua)
   - [Modifying neovim and doom options](#modifying-neovim-and-doom-options)
@@ -90,7 +90,7 @@ tweaking, overriding or adding new packages, keybinds and more within the
 #### What is a module?
 
 A module is a collection of packages, autocommands, keybinds and functions that
-add new capabilities or functionality to Doom Nvim.  See what's avaliable in
+add new capabilities or functionality to Doom Nvim.  See what's available in
 `modules.lua` and enable the modules that you think you would like.  Then restart
 `doom-nvim`, run `:PackerSync` and then restart `doom-nvim` again.
 
@@ -98,7 +98,7 @@ We organise modules into 2 categories:
 - `features` extend the abilities of Doom Nvim by adding new functionality.
 - `langs` add support for new languages.
 
-#### Enabing/disabling modules
+#### Enabling/disabling modules
 
 You can enable or disable a module by going to `modules.lua` (`<leader>Dm`) and
 commenting or uncommenting the entry.
