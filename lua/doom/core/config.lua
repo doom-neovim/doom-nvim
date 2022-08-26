@@ -135,6 +135,17 @@ config.load = function()
     vim.opt.clipboard = "unnamedplus"
   end
 
+  if doom.ignorecase then
+    vim.cmd("set ignorecase")
+  else
+    vim.cmd("set noignorecase")
+  end
+  if doom.smartcase then
+    vim.cmd("set smartcase")
+  else
+    vim.cmd("set nosmartcase")
+  end
+
   -- Color column
   vim.opt.colorcolumn = type(doom.max_columns) == "number" and tostring(doom.max_columns) or ""
 

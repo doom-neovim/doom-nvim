@@ -129,6 +129,20 @@ doom = {
   -- @default = false
   auto_comment = false,
 
+  -- Ignore case in a search pattern
+  -- false : search is sensitive
+  -- true  : search is insensitive
+  -- @default = false
+  ignorecase = false,
+
+  -- Override the 'ignorecase' option if the search pattern contains upper case
+  -- characters. Only used when the search pattern is typed and 'ignorecase'
+  -- option is on.
+  -- false : don't override the 'ignorecase' option
+  -- true  : override the 'ignorecase' option is upper case characters is in search pattern
+  -- @default = false
+  smartcase = false,
+
   -- Enable Highlight on yank
   -- false : disables highligh on yank
   -- true  : enables highlight on yank
