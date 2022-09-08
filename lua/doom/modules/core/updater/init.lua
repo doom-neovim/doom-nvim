@@ -192,9 +192,10 @@ updater.check_updates = function(quiet)
         end
       else
         vim.notify(
-          (
-            "updater: There is a new version (%s).  You are currently on %s.  Run `:DoomUpdate` to update."
-          ):format(latest_version, current_version)
+          ("updater: There is a new version (%s).  You are currently on %s.  Run `:DoomUpdate` to update."):format(
+            latest_version,
+            current_version
+          )
         )
       end
     end, 0)
@@ -233,9 +234,9 @@ updater._try_merge_version = function(target_version, callback)
       on_exit = function(_, exit_code)
         if exit_code ~= 0 then
           callback(
-            (
-              "Tried to update to new version %s but could not due to uncommitted changes.  Please commit or stash your changes before trying again."
-            ):format(target_version)
+            ("Tried to update to new version %s but could not due to uncommitted changes.  Please commit or stash your changes before trying again."):format(
+              target_version
+            )
           )
         else
           merge_job:start()
@@ -313,9 +314,9 @@ updater._try_update = function()
                   -- Only print changelog info if it's a stable release
                   if not is_version_unstable(latest_version) then
                     message = message
-                      .. (
-                        "  Check the changelog at https://github.com/NTBBloodbath/doom-nvim/releases/tag/%s"
-                      ):format(latest_version)
+                      .. ("  Check the changelog at https://github.com/NTBBloodbath/doom-nvim/releases/tag/%s"):format(
+                        latest_version
+                      )
                   end
                   vim.notify(message)
                 end
