@@ -43,6 +43,8 @@ projects.packages = {
   },
 }
 
+projects.requires_modules = { "features.telescope" }
+
 projects.configs = {}
 projects.configs["project.nvim"] = function()
   require("project_nvim").setup(doom.features.projects.settings)

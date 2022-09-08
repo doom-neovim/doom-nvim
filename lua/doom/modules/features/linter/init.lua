@@ -7,6 +7,8 @@ linter.settings = {
   },
 }
 
+linter.requires_modules = { "features.lsp" }
+
 linter.packages = {
   ["null-ls.nvim"] = {
     "jose-elias-alvarez/null-ls.nvim",
