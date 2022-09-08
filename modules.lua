@@ -61,6 +61,8 @@ return {
     "python",
     -- "bash",
     -- "fish",
+    "gdscript",
+    -- "gdscript",
 
     -- Web
     -- "javascript",
