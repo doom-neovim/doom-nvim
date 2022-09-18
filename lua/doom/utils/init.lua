@@ -2,6 +2,7 @@ local utils = {}
 
 local system = require("doom.core.system")
 local fs = require("doom.utils.fs")
+local tree = require("doom.utils.tree")
 
 --- Doom Nvim version
 utils.version = {
@@ -197,7 +198,10 @@ utils.is_module_enabled = function(section, plugin)
   local modules = require("doom.core.modules").enabled_modules
 
   if type(section) == "table" then
-    return tree.attach_table_path(modules, section)
+    local tp = section
+    local name = table.remove(tp, #tp)
+    local subsec = tree.attach_table_path(modules, tp)
+    return vim.tbl_contains(subsec, name)
   else
     return modules[section] and vim.tbl_contains(modules[section], plugin)
   end
