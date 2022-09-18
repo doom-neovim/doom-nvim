@@ -2,6 +2,7 @@ local utils = {}
 
 local system = require("doom.core.system")
 local fs = require("doom.utils.fs")
+local tree = require("doom.utils.tree")
 
 --- Doom Nvim version
 utils.version = {
