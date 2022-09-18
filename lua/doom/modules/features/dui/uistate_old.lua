@@ -1,0 +1,71 @@
+-- local utils = require("doom.utils")
+
+-- -- local pu =  require("user.utils.dui.utils")
+-- local pickers = require("user.utils.dui.pickers")
+--
+-- local uistate = {}
+--
+-- function uistate.ensure_DOOM_UI_STATE()
+--
+--   DOOM_UI_STATE = {
+--     -- doom_global_extended,
+--     all_modules_flattened = nil,
+--     selected_module_idx = nil, -- is this necessary?
+--     selected_module = nil,
+--     selected_component = nil,
+--     buf_ref = nil,
+--
+--
+--     current = {
+--       title = nil, -- remove and do in picker
+--       results_prepared = nil, -- remove and do in picker
+--       picker = nil, -- remove
+--       selection = { item = nil, type = nil },
+--       line_str = nil,
+--       index_selected = nil,
+--     },
+--
+--     history = {},
+--   }
+--
+-- end
+--
+-- function uistate.reset_selections()
+--   DOOM_UI_STATE.selected_module = nil
+--   DOOM_UI_STATE.current = nil
+-- end
+--
+-- function uistate.DOOM_UI_STATE_reset()
+--   DOOM_UI_STATE = nil
+-- end
+--
+-- -- function uistate.DOOM_UI_STATE_reset_modules()
+-- --     DOOM_UI_STATE.all_modules_flattened = pu.get_modules_flattened()
+-- -- end
+--
+-- function uistate.next()
+--
+--   -- print(vim.inspect(DOOM_UI_STATE.current))
+--
+--   -- local store = vim.deepcopy(DOOM_UI_STATE.current)
+--
+--   -- DOOM_UI_STATE.prev = store
+--
+--   -- table.insert(DOOM_UI_STATE.history, 1, store)
+--   -- local hlen = #DOOM_UI_STATE.history
+--   -- if hlen > 10 then
+--   --   table.remove(DOOM_UI_STATE.history, hlen)
+--   -- end
+--
+--   if picker ~= nil then picker() end
+-- end
+--
+-- function uistate.prev_hist()
+--   local res = table.remove(DOOM_UI_STATE.history, 1)
+--   if res ~= nil then
+--     DOOM_UI_STATE.prev = res
+--     DOOM_UI_STATE.prev.picker()
+--   end
+-- end
+--
+-- return uistate
