@@ -114,9 +114,19 @@ local keymaps_service = require("doom.services.keymaps")
 modules.load_modules = function()
   local use = require("packer").use
   -- Handle the Modules
-  for section_name, _ in pairs(doom.modules) do
-    for module_name, module in pairs(doom[section_name]) do
+  -- TODO: pass `doom.modules` to recursive function
+
+  -- print(vim.inspect(doom.modules) )
+
+  -- default > traverse `doom.modules` if nothing specified
+  require("doom.utils.tree").traverse_table({
+    tree = doom.modules,
+    filter = "doom_module_single",
+    leaf = function(_, module_name, module)
+      -- print(module_name, module)
+
       -- Import dependencies with packer from module.packages
+      -- print(module_name, module)
       if module.packages then
         for dependency_name, packer_spec in pairs(module.packages) do
           -- Set packer_spec to configure function
@@ -150,8 +160,8 @@ modules.load_modules = function()
           type(module.binds) == "function" and module.binds() or module.binds
         )
       end
-    end
-  end
+    end,
+  })
 end
 
 --- Applies user's commands, autocommands, packages from `use_*` helper functions.
