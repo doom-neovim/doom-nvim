@@ -5,6 +5,8 @@
 --  running the user's `config.lua` file.
 
 local utils = require("doom.utils")
+local spec = require("doom.core.spec")
+local tree = require("doom.utils.tree")
 local config = {}
 local filename = "config.lua"
 
@@ -60,37 +62,42 @@ config.load = function()
   -- Combine enabled modules (`modules.lua`) with core modules.
   local enabled_modules = require("doom.core.modules").enabled_modules
 
-  -- Iterate over each module and save it to the doom global object
-  for section_name, section_modules in pairs(enabled_modules) do
-    for _, module_name in pairs(section_modules) do
-      -- If the section is `user` resolves from `lua/user/modules`
-      local search_paths = {
-        ("user.modules.%s.%s"):format(section_name, module_name),
-        ("doom.modules.%s.%s"):format(section_name, module_name),
-      }
-
+  -- Crawl the modules table and require all modules
+  tree.traverse_table({
+    tree = enabled_modules,
+    leaf = function(stack, k, v)
+      -- print(vim.inspect(stack), k, v)
+      local pc, path_concat = tree.flatten_stack(stack, v, ".")
       local ok, result
-      for _, path in ipairs(search_paths) do
+      for _, path in ipairs(spec.search_paths(path_concat)) do
         ok, result = xpcall(require, debug.traceback, path)
         if ok then
           break
         end
       end
       if ok then
-        doom[section_name][module_name] = result
+        result["is_module"] = true -- I don't think this one is used.
+        result.type = "doom_module_single"
+        tree.attach_table_path(doom.modules, pc, result)
+
+        -- TODO: handle doom module dependencies.
+        --
+        --    1. fore each in pairs result.require
+        --    2. require each module.
+        --    3. use `modules/utils.lua` to make sure each dep is enabled the module in `./settings.lua`
       else
         local log = require("doom.utils.logging")
         log.error(
           string.format(
-            "There was an error loading module '%s.%s'. Traceback:\n%s",
-            section_name,
-            module_name,
+            "There was an error loading module '%s'. Traceback:\n%s",
+            path_concat,
             result
           )
         )
       end
+      return pc
     end
-  end
+  })
 
   -- Execute user's `config.lua` so they can modify the doom global object.
   local ok, err = xpcall(dofile, debug.traceback, config.source)
@@ -126,6 +133,9 @@ config.load = function()
     vim.opt.undodir = nil
   end
 
+  --   vim.g.mapleader = doom.settings.leader_key
+  -- end
+
   if doom.settings.global_statusline then
     vim.opt.laststatus = 3
   end
@@ -136,7 +146,9 @@ config.load = function()
   end
 
   -- Color column
-  vim.opt.colorcolumn = type(doom.settings.max_columns) == "number" and tostring(doom.settings.max_columns) or ""
+  vim.opt.colorcolumn = type(doom.settings.max_columns) == "number"
+      and tostring(doom.settings.max_columns)
+    or ""
 
   -- Number column
   vim.opt.number = not doom.settings.disable_numbering
