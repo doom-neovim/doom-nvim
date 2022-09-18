@@ -198,7 +198,7 @@ utils.is_module_enabled = function(section, plugin)
   local modules = require("doom.core.modules").enabled_modules
 
   if type(section) == "table" then
-    return tree.attach_table_path(modules, section)
+    return tree.attach_table_path(modules, section) and true or false
   else
     return modules[section] and vim.tbl_contains(modules[section], plugin)
   end
