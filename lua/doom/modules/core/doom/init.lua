@@ -122,7 +122,7 @@ required.binds = function()
     table.insert(binds, { esc_seq, "<ESC>", mode = "i" })
   end
 
-  if is_module_enabled("features", "explorer") then
+  if is_module_enabled({"features", "tools","explorer"}) then
     table.insert(binds, { "<F3>", ":Lexplore%s<CR>", name = "Toggle explorer" })
     table.insert(binds, {
       "<leader>",

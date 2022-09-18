@@ -36,7 +36,7 @@ doom[ "settings" ] = dofile(utils.find_config("settings.lua"))
 -- Boostraps the doom-nvim framework, runs the user's `config.lua` file.
 local config = utils.safe_require("doom.core.config")
 config.load()
-if not utils.is_module_enabled("features", "netrw") then
+if not utils.is_module_enabled({"features", "tools","netrw"}) then
   g.loaded_netrw = 1
   g.loaded_netrwPlugin = 1
   g.loaded_netrwSettings = 1
