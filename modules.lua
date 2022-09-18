@@ -29,6 +29,7 @@ return {
     -- "doom_themes",     -- Extra themes for doom
 
     -- UI Components
+    "dui", -- WIP doom telescope UI
     "lsp_progress", -- Check status of LSP loading
     "tabline", -- Tab bar buffer switcher
     "dashboard", -- A pretty dashboard upon opening
