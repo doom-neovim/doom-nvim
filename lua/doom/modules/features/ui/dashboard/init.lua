@@ -80,7 +80,7 @@ dashboard.configs["dashboard-nvim"] = function()
   local is_module_enabled = utils.is_module_enabled
 
   if is_module_enabled({"features", "editor", "auto_session"}) then
-    vim.g.dashboard_session_directory = doom.features.auto_session.settings.dir
+    vim.g.dashboard_session_directory = doom.features.editor.auto_session.settings.dir
   end
   if is_module_enabled({"features", "tools", "telescope"}) then
     vim.g.dashboard_default_executive = "telescope"
