@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.4]
+
+### Features
+- c475091 feat(core): Add `requires_modules` field to modules
+  - Should now warn you if you don't enable codependant modules i.e. `features.projects` requires `features.telescope`
+- 093b2c0 feat(langs,gdscript): Add gdscript language support (support is not great but it's there)
+- d741fa0 feat(core): Add `ignorecase` and `smartcase` options (#387)
+
+### Docs
+- 618cbb2 docs: Improved docs on adding / installing plugins (guides user to `:PackerSync` after adding new plugins)
+
 ## [4.0.3]
 
 Some "soft" breaking changes in this releases (should handle itself but could still cause complications).  Explanations highlighted with the changes.
