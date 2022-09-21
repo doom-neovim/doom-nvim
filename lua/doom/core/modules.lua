@@ -128,7 +128,7 @@ modules.load_modules = function()
           if not doom.modules[dep_section_name][dep_module_name] then
             should_enable_module = false
             logger.error(
-              ("Doom module \"%s.%s\" depends on a module that is not enabled \"%s.%s\".  Please enable the %s module."):format(
+              ('Doom module "%s.%s" depends on a module that is not enabled "%s.%s".  Please enable the %s module.'):format(
                 section_name,
                 module_name,
                 dep_section_name,

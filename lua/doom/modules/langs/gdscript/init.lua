@@ -16,7 +16,7 @@ gdscript.autocmds = {
         config = {
           flags = {
             debounce_text_changes = 150,
-          }
+          },
         },
       })
       if doom.features.linter then
