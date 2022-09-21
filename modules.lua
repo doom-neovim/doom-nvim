@@ -63,6 +63,7 @@ return {
     -- "fish",
     "gdscript",
     -- "gdscript",
+    -- "php",
 
     -- Web
     -- "javascript",
