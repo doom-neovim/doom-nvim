@@ -147,7 +147,7 @@ vim.opt.colorcolumn = 120         -- Regular vim options can also be set
 
 ##### Adding plugins
 
-Additional packages can be imported with the `doom.use_package()` function.
+Additional packages can be installed with the `doom.use_package()` function.
 This is a wrapper around `packer.use()` and provides the same API. [DOCS](https://github.com/wbthomason/packer.nvim#quickstart)
 
 ```lua
@@ -163,6 +163,8 @@ doom.use_package({
   cmd = 'Luapad'
 })
 ```
+
+> Note: you will need to restart nvim and run `:PackerSync` after add/removing packages to import them correctly.
 
 ##### Adding Keybinds
 
