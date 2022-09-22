@@ -194,6 +194,9 @@ module.binds:     table<NestConfig>|function -> table<NestConfig> -- Table of Ne
 module.autocmds:  table<AutoCmd>|function -> table<AutoCmd>       -- Table of AutoCmds (see below) or function that returns a table of AutoCmds
 ```
 
+Use the function form of `module.binds` and `module.autocmds` when values from `module.settings` are referenced on them.
+This allows consumers of the module to change the settings first and only them the binds and autocommands will be generated and configured.
+
 ```lua
 local example = {}
 
