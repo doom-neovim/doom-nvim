@@ -184,12 +184,12 @@ print(vim.inspect(doom.features.telescope.binds())) -- You must execute the func
 
 #### Module spec
 
-These are the possible values a
+These are values a module can export.
 
 ```lua
-module.settings:  table                             -- Table of settings that can be tweaked
-module.packages:      table<string,table<PackerSpec>>   -- Table of packer specs
-module.configs:   table<string,function>            -- Table of plugin config functions relating to the packer specs
+module.settings:  table                                           -- Table of settings that can be tweaked
+module.packages:  table<string,table<PackerSpec>>                 -- Table of packer specs
+module.configs:   table<string,function>                          -- Table of plugin config functions relating to the packer specs
 module.binds:     table<NestConfig>|function -> table<NestConfig> -- Table of NestConfig or function that returns Table of NestConfig
 module.autocmds:  table<AutoCmd>|function -> table<AutoCmd>       -- Table of AutoCmds (see below) or function that returns a table of AutoCmds
 ```
