@@ -98,10 +98,11 @@ whichkey.configs["which-key.nvim"] = function()
           keymaps[v] = {}
         end
         -- If this is a keymap group
-        if type(node.rhs) == "table" then
+        local rhs_type = type(node.rhs)
+        if rhs_type == "table" then
           keymaps[v][node.lhs] = { name = node.name }
           -- If this is an actual keymap
-        elseif type(node.rhs) == "string" then
+        elseif rhs_type == "string" or rhs_type == "function" then
           keymaps[v][node.lhs] = { node.name }
         end
       end
@@ -111,6 +112,7 @@ whichkey.configs["which-key.nvim"] = function()
       for k, v in pairs(keymaps) do
         require("which-key").register(v, { mode = k })
       end
+      keymaps = {}
     end
 
     return module
