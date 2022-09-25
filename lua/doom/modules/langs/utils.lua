@@ -58,7 +58,6 @@ module.use_null_ls = function(package_name, null_ls_path, configure_function)
           .. ".  null_ls_path should have 3 segments i.e. `builtins.formatting.stylua"
       )
     end
-    print(vim.inspect(path))
     local provider = null_ls[path[1]][path[2]][path[3]]
 
     if configure_function then
