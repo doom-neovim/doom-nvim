@@ -1,7 +1,32 @@
 local markdown = {}
 
 markdown.settings = {
+  --- Disables auto installing the treesitter
+  --- @type boolean
   disable_treesitter = false,
+  --- Treesitter grammars to install
+  --- @type string|string[]
+  treesitter_grammars = "markdown",
+
+  --- Disables default LSP config
+  --- @type boolean
+  disable_lsp = false,
+  --- Name of the language server
+  --- @type string
+  language_server_name = "remark_ls",
+
+  --- Disables null-ls diagnostic sources
+  --- @type boolean
+  disable_diagnostics = false,
+  --- Mason.nvim package to auto install the diagnostics provider from
+  --- @type string
+  diagnostics_package = "markdownlint",
+  --- String to access the null_ls diagnositcs provider
+  --- @type string
+  diagnostics_provider = "builtins.diagnostics.markdownlint",
+  --- Function to configure null-ls diagnostics
+  --- @type function|nil
+  diagnostics_config = nil,
 }
 
 markdown.autocmds = {
@@ -9,27 +34,23 @@ markdown.autocmds = {
     "FileType",
     "markdown",
     function()
-      -- local langs_utils = require("doom.modules.langs.utils")
+      local langs_utils = require("doom.modules.langs.utils")
 
-      -- Disabled due to unreliability (only works in projects with `remark`
-      -- npm package installed).
-      -- langs_utils.use_lsp("remark_ls")
+      if not markdown.settings.disable_lsp then
+        langs_utils.use_lsp_mason(markdown.settings.language_server_name)
+      end
 
-      vim.defer_fn(function()
-        if not markdown.settings.disable_treesitter then
-          require("nvim-treesitter.install").ensure_installed("markdown")
-        end
-      end, 0)
+      if not markdown.settings.disable_treesitter then
+        langs_utils.use_tree_sitter(markdown.settings.treesitter_grammars)
+      end
 
-      -- Setup null-ls
-      -- Disabled due to lsp being disabled. null-ls gets triggered by lspconfig
-      -- if doom.modules.linter then
-      --   local null_ls = require("null-ls")
-      --
-      --   langs_utils.use_null_ls_source({
-      --     null_ls.builtins.diagnostics.markdownlint,
-      --   })
-      -- end
+      if not markdown.settings.disable_diagnostics then
+        langs_utils.use_null_ls(
+          markdown.settings.diagnostics_package,
+          markdown.settings.diagnostics_provider,
+          markdown.settings.diagnostics_config
+        )
+      end
     end,
     once = true,
   },
