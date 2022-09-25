@@ -1,33 +1,97 @@
-local utils = require("doom.utils")
-
 local typescript = {}
 
-typescript.settings = {}
+typescript.settings = {
+  --- Disables auto installing the treesitter
+  --- @type boolean
+  disable_treesitter = false,
+  --- Treesitter grammars to install
+  --- @type string|string[]
+  treesitter_grammars = "typescript",
+
+  --- Disables default LSP config
+  --- @type boolean
+  disable_lsp = false,
+  --- Name of the language server
+  --- @type string
+  language_server_name = "tsserver",
+
+  --- Disables null-ls formatting sources
+  --- @type boolean
+  disable_formatting = false,
+  --- Mason.nvim package to auto install the formatter from
+  --- @type string
+  formatting_package = "eslint_d",
+  --- String to access the null_ls diagnositcs provider
+  --- @type string
+  formatting_provider = "builtins.formatting.eslint_d",
+  --- Function to configure null-ls formatter
+  --- @type function|nil
+  formatting_config = nil,
+
+  --- Disables null-ls diagnostic sources
+  --- @type boolean
+  disable_diagnostics = false,
+  --- Mason.nvim package to auto install the diagnostics provider from
+  --- @type string
+  diagnostics_package = "eslint_d",
+  --- String to access the null_ls diagnositcs provider
+  --- @type string
+  diagnostics_provider = "builtins.diagnostics.eslint_d",
+  --- Function to configure null-ls diagnostics
+  --- @type function|nil
+  diagnostics_config = nil,
+
+  --- Disables null-ls diagnostic sources
+  --- @type boolean
+  disable_code_actions = false,
+  --- Mason.nvim package to auto install the code_actions provider from
+  --- @type string
+  code_actions_package = "eslint_d",
+  --- String to access the null_ls diagnositcs provider
+  --- @type string
+  code_actions_provider = "builtins.code_actions.eslint_d",
+  --- Function to configure null-ls code_actions
+  --- @type function|nil
+  code_actions_config = nil,
+}
 
 typescript.autocmds = {
   {
-    "BufWinEnter",
-    "*.js,*.jsx,*.ts,*.tsx",
-    utils.make_run_once_function(function()
+    "FileType",
+    "javascript,typescript,javascriptreact,typescriptreact",
+    function()
       local langs_utils = require("doom.modules.langs.utils")
-      langs_utils.use_lsp("tsserver")
 
-      vim.defer_fn(function()
-        local ts_install = require("nvim-treesitter.install")
-        ts_install.ensure_installed("typescript", "javascript", "tsx")
-      end, 0)
-
-      -- Setup null-ls
-      if doom.features.linter then
-        local null_ls = require("null-ls")
-
-        langs_utils.use_null_ls_source({
-          null_ls.builtins.formatting.eslint_d,
-          null_ls.builtins.code_actions.eslint_d,
-          null_ls.builtins.diagnostics.eslint_d,
-        })
+      if not typescript.settings.disable_lsp then
+        langs_utils.use_lsp_mason(typescript.settings.language_server_name)
       end
-    end),
+
+      if not typescript.settings.disable_treesitter then
+        langs_utils.use_tree_sitter(typescript.settings.treesitter_grammars)
+      end
+
+      if not typescript.settings.disable_formatting then
+        langs_utils.use_null_ls(
+          typescript.settings.formatting_package,
+          typescript.settings.formatting_provider,
+          typescript.settings.formatting_config
+        )
+      end
+      if not typescript.settings.disable_diagnostics then
+        langs_utils.use_null_ls(
+          typescript.settings.diagnostics_package,
+          typescript.settings.diagnostics_provider,
+          typescript.settings.diagnostics_config
+        )
+      end
+      if not typescript.settings.disable_code_actions then
+        langs_utils.use_null_ls(
+          typescript.settings.code_actions_package,
+          typescript.settings.code_actions_provider,
+          typescript.settings.code_actions_config
+        )
+      end
+    end,
     once = true,
   },
 }

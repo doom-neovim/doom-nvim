@@ -1,17 +1,44 @@
 local c_sharp = {}
 
 c_sharp.settings = {
+  --- disables auto installing the treesitter
+  --- @type boolean
+  disable_treesitter = false,
+  --- treesitter grammars to install
+  --- @type string|string[]
+  treesitter_grammars = "c_sharp",
+
+  --- disables default lsp config
+  --- @type boolean
+  disable_lsp = false,
+  --- name of the language server
+  --- @type string
   language_server_name = "omnisharp",
+
+  --- disables null-ls formatting sources
+  --- @type boolean
+  disable_formatting = false,
+  --- mason.nvim package to auto install the formatter from
+  --- @type string
+  formatting_package = "csharpier",
+  --- string to access the null_ls diagnositcs provider
+  --- @type string
+  formatting_provider = "builtins.formatting.csharpier",
+  --- function to configure null-ls formatter
+  --- @type function|nil
+  formatting_config = nil,
 }
 
 c_sharp.autocmds = {
   {
-    "BufWinEnter",
-    "*.cs",
+    "FileType",
+    "cs,vb",
     function()
       local langs_utils = require("doom.modules.langs.utils")
+
+      if not c_sharp.settings.disable_lsp then
       local lsp_util = require("lspconfig.util")
-      langs_utils.use_lsp(doom.langs.c_sharp.settings.language_server_name, {
+        langs_utils.use_lsp_mason(c_sharp.settings.language_server_name, {
         config = {
           root_dir = function(fname)
             return lsp_util.root_pattern("*.sln")(fname)
@@ -20,8 +47,19 @@ c_sharp.autocmds = {
           end,
         },
       })
+      end
 
-      require("nvim-treesitter.install").ensure_installed("c_sharp")
+      if not c_sharp.settings.disable_treesitter then
+        langs_utils.use_tree_sitter(c_sharp.settings.treesitter_grammars)
+      end
+
+      if not c_sharp.settings.disable_formatting then
+        langs_utils.use_null_ls(
+          c_sharp.settings.formatting_package,
+          c_sharp.settings.formatting_provider,
+          c_sharp.settings.formatting_config
+        )
+      end
     end,
     once = true,
   },

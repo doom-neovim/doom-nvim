@@ -1,23 +1,35 @@
 local ocaml = {}
 
 ocaml.settings = {
+  --- disables auto installing the treesitter
+  --- @type boolean
+  disable_treesitter = false,
+  --- treesitter grammars to install
+  --- @type string|string[]
+  treesitter_grammars = {"ocaml", "ocaml_interface", "ocamllex"},
+
+  --- disables default lsp config
+  --- @type boolean
+  disable_lsp = false,
+  --- name of the language server
+  --- @type string
   language_server_name = "ocamllsp",
 }
 
 ocaml.autocmds = {
   {
-    "Filetype",
-    "ocaml,ocaml_interface,ocamllex",
+    "FileType",
+    "ocaml",
     function()
       local langs_utils = require("doom.modules.langs.utils")
-      langs_utils.use_lsp(doom.langs.ocaml.settings.language_server_name)
 
-      vim.schedule(function()
-        require("nvim-treesitter.install").ensure_installed("ocaml", "ocaml_interface")
-        if vim.fn.executable("tree-sitter-cli") == 1 then
-          require("nvim-treesitter.install").ensure_installed("ocamllex")
-        end
-      end)
+      if not ocaml.settings.disable_lsp then
+        langs_utils.use_lsp_mason(ocaml.settings.language_server_name)
+      end
+
+      if not ocaml.settings.disable_treesitter then
+        langs_utils.use_tree_sitter(ocaml.settings.treesitter_grammars)
+      end
     end,
     once = true,
   },

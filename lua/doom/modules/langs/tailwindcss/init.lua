@@ -1,33 +1,59 @@
-local utils = require("doom.utils")
+local typescript = {}
 
-local tailwindcss = {}
+typescript.settings = {
+  --- Disables auto installing the treesitter
+  --- @type boolean
+  disable_treesitter = false,
+  --- Treesitter grammars to install
+  --- @type string|string[]
+  treesitter_grammars = { "css", "html", "vue" },
 
-tailwindcss.settings = {}
+  --- Disables default LSP config
+  --- @type boolean
+  disable_lsp = false,
+  --- Name of the language server
+  --- @type string
+  language_server_name = "tailwindcss",
 
-tailwindcss.autocmds = {
+  --- Disables null-ls formatting sources
+  --- @type boolean
+  disable_formatting = false,
+  --- WARN: No package yet. Mason.nvim package to auto install the formatter from
+  --- @type nil
+  formatting_package = nil,
+  --- String to access the null_ls diagnositcs provider
+  --- @type string
+  formatting_provider = "builtins.formatting.rustywind",
+  --- Function to configure null-ls formatter
+  --- @type function|nil
+  formatting_config = nil,
+}
+
+typescript.autocmds = {
   {
-    "BufWinEnter",
-    "*.css,*.scss,*.vue,*.html,*.svelte,*.jsx,*.tsx",
-    utils.make_run_once_function(function()
+    "FileType",
+    "javascript,typescript,javascriptreact,typescriptreact,css,html,vue,svelte",
+    function()
       local langs_utils = require("doom.modules.langs.utils")
 
-      langs_utils.use_lsp("tailwindcss")
-
-      vim.defer_fn(function()
-        require("nvim-treesitter.install").ensure_installed("css")
-      end, 0)
-
-      -- Setup null-ls
-      if doom.features.linter then
-        local null_ls = require("null-ls")
-
-        langs_utils.use_null_ls_source({
-          null_ls.builtins.formatting.rustywind,
-        })
+      if not typescript.settings.disable_lsp then
+        langs_utils.use_lsp_mason(typescript.settings.language_server_name)
       end
-    end),
+
+      if not typescript.settings.disable_treesitter then
+        langs_utils.use_tree_sitter(typescript.settings.treesitter_grammars)
+      end
+
+      if not typescript.settings.disable_formatting then
+        langs_utils.use_null_ls(
+          typescript.settings.formatting_package,
+          typescript.settings.formatting_provider,
+          typescript.settings.formatting_config
+        )
+      end
+    end,
     once = true,
   },
 }
 
-return tailwindcss
+return typescript

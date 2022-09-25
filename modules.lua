@@ -82,7 +82,9 @@ return {
     -- "kotlin",
     -- "java",
 
-    -- "config",          -- JSON, YAML, TOML
+    -- "json",
+    -- "yaml",
+    -- "toml",
     -- "markdown",
     -- "terraform",       -- Terraform / hcl files support
     -- "dockerfile",

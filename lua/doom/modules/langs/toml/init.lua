@@ -1,54 +1,54 @@
-local terraform = {}
+local typescript = {}
 
-terraform.settings = {
+typescript.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
   disable_treesitter = false,
   --- Treesitter grammars to install
   --- @type string|string[]
-  treesitter_grammars = "hcl",
+  treesitter_grammars = "toml",
 
   --- Disables default LSP config
   --- @type boolean
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "terraformls",
+  language_server_name = "taplo",
 
   --- Disables null-ls formatting sources
   --- @type boolean
   disable_formatting = false,
   --- Mason.nvim package to auto install the formatter from
-  --- @type nil
-  formatting_package = nil,
+  --- @type string
+  formatting_package = "taplo",
   --- String to access the null_ls diagnositcs provider
   --- @type string
-  formatting_provider = "builtins.formatting.terraform_fmt",
+  formatting_provider = "builtins.formatting.taplo",
   --- Function to configure null-ls formatter
   --- @type function|nil
   formatting_config = nil,
 }
 
-terraform.autocmds = {
+typescript.autocmds = {
   {
-    "BufWinEnter",
-    "*.hcl,*.tf,*.tfvars,*.nomad",
+    "FileType",
+    "toml",
     function()
       local langs_utils = require("doom.modules.langs.utils")
 
-      if not terraform.settings.disable_lsp then
-        langs_utils.use_lsp_mason(terraform.settings.language_server_name)
+      -- if not typescript.settings.disable_lsp then
+      --   langs_utils.use_lsp_mason(typescript.settings.language_server_name)
+      -- end
+
+      if not typescript.settings.disable_treesitter then
+        langs_utils.use_tree_sitter(typescript.settings.treesitter_grammars)
       end
 
-      if not terraform.settings.disable_treesitter then
-        langs_utils.use_tree_sitter(terraform.treesitter_grammars)
-      end
-
-      if not terraform.settings.disable_formatting then
+      if not typescript.settings.disable_formatting then
         langs_utils.use_null_ls(
-          terraform.settings.diagnostics_package,
-          terraform.settings.formatting_provider,
-          terraform.settings.formatting_config
+          typescript.settings.formatting_package,
+          typescript.settings.formatting_provider,
+          typescript.settings.formatting_config
         )
       end
     end,
@@ -56,4 +56,4 @@ terraform.autocmds = {
   },
 }
 
-return terraform
+return typescript

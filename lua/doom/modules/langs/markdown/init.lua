@@ -1,11 +1,13 @@
 local markdown = {}
 
-markdown.settings = {}
+markdown.settings = {
+  disable_treesitter = false,
+}
 
 markdown.autocmds = {
   {
-    "BufWinEnter",
-    "*.md",
+    "FileType",
+    "markdown",
     function()
       -- local langs_utils = require("doom.modules.langs.utils")
 
@@ -14,7 +16,9 @@ markdown.autocmds = {
       -- langs_utils.use_lsp("remark_ls")
 
       vim.defer_fn(function()
-        require("nvim-treesitter.install").ensure_installed("markdown")
+        if not markdown.settings.disable_treesitter then
+          require("nvim-treesitter.install").ensure_installed("markdown")
+        end
       end, 0)
 
       -- Setup null-ls

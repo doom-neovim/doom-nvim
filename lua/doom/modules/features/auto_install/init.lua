@@ -26,6 +26,14 @@ auto_install.packages = {
     commit = "ae913cb4fd62d7a84fb1582e11f2e15b4d597123",
     -- disabled = not is_module_enabled("features", "lsp"),
   },
+  ["mason.nvim"] = {
+    "williamboman/mason.nvim",
+    commit = "75860d253f9e66d08c9289dc43fae790882eb136",
+  },
+  ["mason-lspconfig"] = {
+    "williamboman/mason-lspconfig",
+    commit = "b70dedab5ceb5f3f84c6bc9ceea013292a14f8dc",
+  },
 }
 
 auto_install.configs = {}
@@ -40,6 +48,9 @@ auto_install.configs["DAPInstall.nvim"] = function()
   dap_install.setup({
     installation_path = doom.features.auto_install.settings.dap_dir,
   })
+end
+auto_install.configs["mason.nvim"] = function()
+  require("mason").setup()
 end
 
 return auto_install
