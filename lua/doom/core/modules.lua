@@ -6,6 +6,7 @@
 --   Later on it executes all of the enabled modules, loading their packer dependencies, autocmds and cmds.
 
 local utils = require("doom.utils")
+local tree = require("doom.utils.tree")
 local filename = "modules.lua"
 
 local modules = {}
@@ -114,27 +115,26 @@ local keymaps_service = require("doom.services.keymaps")
 modules.load_modules = function()
   local use = require("packer").use
   local logger = require("doom.utils.logging")
+
   -- Handle the Modules
-  for section_name, _ in pairs(doom.modules) do
-    for module_name, module in pairs(doom.modules[section_name]) do
+  require("doom.utils.tree").traverse_table({
+    tree = doom.modules,
+    filter = "doom_module_single",
+    leaf = function(stack, module_name, module)
       -- Flag to continue enabling module
       local should_enable_module = true
+
+      local _, module_tp_concat = tree.flatten_stack(stack, module_name, ".")
 
       -- Check module has necessary dependencies
       if module.requires_modules then
         for _, dependent_module in ipairs(module.requires_modules) do
-          local dep_section_name, dep_module_name = unpack(vim.split(dependent_module, "%."))
-
-          if not doom.modules[dep_section_name][dep_module_name] then
+          if not utils.get_set_table_path(doom.modules, vim.split(dependent_module, "%.")) then
             should_enable_module = false
             logger.error(
-              ('Doom module "%s.%s" depends on a module that is not enabled "%s.%s".  Please enable the %s module.'):format(
-                section_name,
-                module_name,
-                dep_section_name,
-                dep_module_name,
-                dep_module_name
-              )
+              (
+                'Doom module "%s" depends on a module that is not enabled "%s".  Please enable the %s module.'
+              ):format(module_tp_concat, dependent_module, dependent_module)
             )
           end
         end
@@ -176,8 +176,8 @@ modules.load_modules = function()
           )
         end
       end
-    end
-  end
+    end,
+  })
 end
 
 --- Applies user's commands, autocommands, packages from `use_*` helper functions.

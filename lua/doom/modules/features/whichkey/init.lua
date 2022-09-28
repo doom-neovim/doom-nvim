@@ -98,11 +98,10 @@ whichkey.configs["which-key.nvim"] = function()
           keymaps[v] = {}
         end
         -- If this is a keymap group
-        local rhs_type = type(node.rhs)
-        if rhs_type == "table" then
+        if type(node.rhs) == "table" then
           keymaps[v][node.lhs] = { name = node.name }
           -- If this is an actual keymap
-        elseif rhs_type == "string" or rhs_type == "function" then
+        elseif type(node.rhs) == "string" then
           keymaps[v][node.lhs] = { node.name }
         end
       end
@@ -112,7 +111,6 @@ whichkey.configs["which-key.nvim"] = function()
       for k, v in pairs(keymaps) do
         require("which-key").register(v, { mode = k })
       end
-      keymaps = {}
     end
 
     return module
@@ -121,12 +119,14 @@ whichkey.configs["which-key.nvim"] = function()
   local keymaps_service = require("doom.services.keymaps")
   local whichkey_integration = get_whichkey_integration()
   local count = 0
-  for section_name, _ in pairs(doom.modules) do
-    for _, module in pairs(doom[section_name]) do
-      if module and module.binds then
+
+  require("doom.utils.tree").traverse_table({
+    tree = doom.modules,
+    filter = "doom_module_single",
+    leaf = function(_, _, module)
+      if module.binds then
         count = count + 1
         vim.defer_fn(function()
-          -- table.insert(all_keymaps, type(module.binds) == "function" and module.binds() or module.binds)
           keymaps_service.applyKeymaps(
             type(module.binds) == "function" and module.binds() or module.binds,
             nil,
@@ -134,13 +134,9 @@ whichkey.configs["which-key.nvim"] = function()
           )
         end, count)
       end
-    end
-  end
+    end,
+  })
 
-  -- Add user keymaps to whichkey user keymaps
-  if doom.binds and #doom.binds >= 1 then
-    keymaps_service.applyKeymaps(doom.binds, nil, { whichkey_integration })
-  end
 end
 
 return whichkey

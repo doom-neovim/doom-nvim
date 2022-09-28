@@ -197,7 +197,14 @@ end
 utils.is_module_enabled = function(section, plugin)
   local modules = require("doom.core.modules").enabled_modules
 
-  return modules[section] and vim.tbl_contains(modules[section], plugin)
+  if type(section) == "table" then
+    local tp = section
+    local name = table.remove(tp, #tp)
+    local subsec = utils.get_set_table_path(modules, tp)
+    return vim.tbl_contains(subsec, name)
+  else
+    return modules[section] and vim.tbl_contains(modules[section], plugin)
+  end
 end
 
 local modules_list_cache = {}
@@ -265,5 +272,47 @@ end
 utils.iter_string_at = function(str, sep)
   return string.gmatch(str, "([^" .. sep .. "]+)")
 end
+
+-- Get or Set a table path list.
+--
+-- Comes in handy with recursive module structures so that you can
+-- check if eg. a deep path exists or if you want to create/set data
+-- to a deep path.
+--
+-- if no data supplies -> returns table path node or false if not exists
+--
+---@param head  table   The table to which you want target
+---@param tp    table   Path that you wish to check in head
+---@param data  any     If supplied, attaches this data to tp tip, eg. `{"a", "b"} -> b = data`
+utils.get_set_table_path = function(head, tp, data)
+  if not head or not tp then
+    return false
+  end
+  local last = #tp
+  for i, p in ipairs(tp) do
+    if i ~= last then
+      if head[p] == nil then
+        if not data then
+          -- if a nil occurs, this means the path does no exist >> return
+          return false
+        end
+        head[p] = {}
+      end
+      head = head[p]
+    else
+      if data then
+        if type(data) == "function" then
+          data(head[p])
+        else
+          head[p] = data
+        end
+      else
+        -- print(vim.inspect(head), p)
+        return head[p]
+      end
+    end
+  end
+end
+
 
 return utils
