@@ -347,6 +347,7 @@ lsp.binds = {
           { "d", vim.lsp.buf.definition, name = "Jump to definition" },
           { "R", vim.lsp.buf.references, name = "Jump to references" },
           { "i", vim.lsp.buf.implementation, name = "Jump to implementation" },
+          { "m", "<cmd>Mason<CR>", name = "Mason" },
           {
             "l",
             name = "+lsp",
