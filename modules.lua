@@ -76,6 +76,7 @@ return {
     -- "rust",
     -- "cc",
     -- "ocaml",
+    -- "haskell",
 
     -- JIT
     -- "c_sharp",
