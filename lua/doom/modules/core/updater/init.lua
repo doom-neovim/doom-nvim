@@ -21,13 +21,7 @@ local updater = {}
 --- @field minor number
 --- @field patch number
 
-updater.packages = {
-  ["plenary.nvim"] = {
-    "nvim-lua/plenary.nvim",
-    commit = "31807eef4ed574854b8a53ae40ea3292033a78ea",
-    module = "plenary",
-  },
-}
+updater.requires_modules = { "core.doom" }
 
 updater.settings = {
   unstable = false,
