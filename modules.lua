@@ -86,6 +86,7 @@ return {
     -- "markdown",
     -- "terraform",       -- Terraform / hcl files support
     -- "dockerfile",
+    -- "nix",             -- Nix declarations
   },
 }
 
