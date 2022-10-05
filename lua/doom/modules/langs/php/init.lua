@@ -1,4 +1,3 @@
-local utils = require("doom.utils")
 local php = {}
 
 php.settings = {
