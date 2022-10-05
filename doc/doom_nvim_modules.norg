@@ -103,6 +103,7 @@ version: 0.0.11
   - {@ ../lua/doom/modules/langs/kotlin/init.lua}[`kotlin`]
   - {@ ../lua/doom/modules/langs/java/init.lua}[`java`]
   - {@ ../lua/doom/modules/langs/go/init.lua}[`go`]
+  - {@ ../lua/doom/modules/langs/nix/init.lua}[`nix`]
   - {@ ../lua/doom/modules/langs/config/init.lua}[`config`] Adds JSON, YAML, TOML support
   - Missing a language? Submit a feature request issue.
 
