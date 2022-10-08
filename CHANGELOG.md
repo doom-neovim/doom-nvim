@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [4.0.5]
+
+This release adds support for neovim v0.8! Due to breaking changes to treesitter
+you might not be able to run `:PackerSync`.  In this case try running
+`:DoomNuke all` (to re-install packer plugins + delete compiled.lua) and then
+restarting neovim.
+
+### Features
+- c3f3f03 feat(core): Add `:DoomNuke` command to re-install all plugins.
+  - Can write `:DoomNuke all|plugins|cache`
+  - `all` Delete packer plugins (re-install on next launch) + `packer_compiled.lua`
+  - `plugins` Delete packer plugins (re-install on next launch)
+  - `cache` Delete `packer_compiled.lua`
+- 7d90b56 feat,chore(core): Support nvim-0.8, update packer pinned dependencies, add fallback dependencies for 0.7
+- 84009cd feat(langs,nix): Added nix language support (#399) (Thanks @Fryuni!)
+
+### Fixes
+- 8e01af1 fix(whichkey): Not showing all keymaps
+- 99f5a78 Add extra description for configurable binds and autocmds
+- 47441f5 Fix docs message and alignment
+
 ## [4.0.4]
 
 ### Features
