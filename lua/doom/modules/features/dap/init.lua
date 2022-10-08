@@ -38,12 +38,12 @@ dap.settings = {
 dap.packages = {
   ["nvim-dap"] = {
     "mfussenegger/nvim-dap",
-    commit = "ad8b0de205a077b66cb301531bdc31c8fc7551b6",
+    commit = "0b320f5bd4e5f81e8376f9d9681b5c4ee4483c25",
     module = "dap",
   },
   ["nvim-dap-ui"] = {
     "rcarriga/nvim-dap-ui",
-    commit = "225115ae986b39fdaffaf715e571dd43b3ac9670",
+    commit = "1cd4764221c91686dcf4d6b62d7a7b2d112e0b13",
     after = { "nvim-dap" },
   },
 }

@@ -25,7 +25,7 @@ terminal.settings = {
 terminal.packages = {
   ["toggleterm.nvim"] = {
     "akinsho/toggleterm.nvim",
-    commit = "62683d927dfd30dc68441a5811fdcb6c9f176c42",
+    commit = "2a787c426ef00cb3488c11b14f5dcf892bbd0bda",
     cmd = { "ToggleTerm", "TermExec" },
     opt = true,
   },

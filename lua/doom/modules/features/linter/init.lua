@@ -12,7 +12,7 @@ linter.requires_modules = { "features.lsp" }
 linter.packages = {
   ["null-ls.nvim"] = {
     "jose-elias-alvarez/null-ls.nvim",
-    commit = "8914051a3d399e9715833ad76bbf5fe69ea7faf0",
+    commit = "8be9f4f2aca1cafac1e57234bed202bb274d03ee",
     after = "nvim-lspconfig",
   },
 }

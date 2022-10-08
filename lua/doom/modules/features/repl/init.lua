@@ -41,7 +41,7 @@ repl.settings = {
 repl.packages = {
   ["iron.nvim"] = {
     "hkupty/iron.nvim",
-    commit = "500aae3686b69dac3985e50dfaae074bcc2f2d94",
+    commit = "d1e80812aacd0c7e1a5c3050596716851d223ce9",
   },
 }
 
@@ -50,8 +50,9 @@ repl.configs = {
     local iron = require("iron.core")
 
     local settings = vim.tbl_deep_extend("force", {}, doom.features.repl.settings)
+
     settings.config.repl_open_command =
-      require("iron.view").curry[settings.config.position](settings.config.size)
+      require("iron.view")[settings.config.position](settings.config.size)
 
     iron.setup(settings)
   end,

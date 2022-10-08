@@ -128,7 +128,9 @@ modules.load_modules = function()
           if not doom.modules[dep_section_name][dep_module_name] then
             should_enable_module = false
             logger.error(
-              ('Doom module "%s.%s" depends on a module that is not enabled "%s.%s".  Please enable the %s module.'):format(
+              (
+                'Doom module "%s.%s" depends on a module that is not enabled "%s.%s".  Please enable the %s module.'
+              ):format(
                 section_name,
                 module_name,
                 dep_section_name,
@@ -149,11 +151,31 @@ modules.load_modules = function()
               packer_spec.config = module.configs[dependency_name]
             end
 
+            local spec = vim.deepcopy(packer_spec)
+
             -- Set/unset frozen packer dependencies
-            packer_spec.commit = doom.freeze_dependencies and packer_spec.commit or nil
+            if type(spec.commit) == "table" then
+              local last_commit = nil
+              for version, commit in pairs(spec.commit) do
+                if version == "latest" then
+                  version = utils.nvim_latest_supported
+                end
+
+                if vim.fn.has(version) == 1 then
+                  last_commit = commit
+                else
+                  break
+                end
+              end
+              spec.commit = last_commit
+            end
+
+            if not doom.freeze_dependencies then
+              spec.commit = nil
+            end
 
             -- Initialise packer
-            use(packer_spec)
+            use(spec)
           end
         end
 
@@ -166,7 +188,7 @@ modules.load_modules = function()
 
         if module.cmds then
           for _, cmd_spec in ipairs(module.cmds) do
-            utils.make_cmd(cmd_spec[1], cmd_spec[2])
+            utils.make_cmd(cmd_spec[1], cmd_spec[2], cmd_spec)
           end
         end
 
@@ -191,7 +213,7 @@ modules.handle_user_config = function()
 
   -- Handle extra user cmds
   for _, cmd_spec in pairs(doom.cmds) do
-    utils.make_cmd(cmd_spec[1], cmd_spec[2])
+    utils.make_cmd(cmd_spec[1], cmd_spec[2], cmd_spec)
   end
 
   -- Handle extra user autocmds

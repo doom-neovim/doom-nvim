@@ -10,6 +10,9 @@ utils.version = {
   patch = 4,
 }
 
+--- Currently supported version of neovim for this build of doom-nvim
+utils.nvim_latest_supported = 'nvim-0.8'
+
 utils.doom_version =
   string.format("%d.%d.%d", utils.version.major, utils.version.minor, utils.version.patch)
 
@@ -74,7 +77,7 @@ end
 --- Stores a function in a global table, returns a string to execute the function
 -- @param  fn function
 -- @return string
-utils.commandify_function = function(fn)
+utils.commandify_function = function(fn, has_arguments)
   if not _G._doom then
     _G._doom = {}
   end
@@ -84,16 +87,33 @@ utils.commandify_function = function(fn)
   -- Nobody is going to need more than a million of these, right?
   local unique_number = utils.unique_index()
   _doom.cmd_funcs[unique_number] = fn
-  return ("lua _doom.cmd_funcs[%d]()"):format(unique_number)
+
+  if has_arguments then
+    return ("lua _doom.cmd_funcs[%d](<f-args>)"):format(unique_number)
+  else
+    return ("lua _doom.cmd_funcs[%d]()"):format(unique_number)
+  end
 end
 
+-- @type MakeCmdOptions
+-- @field nargs string|number|nil
+-- @field complete string[]|nil
+
 --- Creates a new command that can be executed from the neovim command line
--- @param  cmd_name string The name of the command, i.e. `:DoomReload`
--- @param  action string|function The action to execute when the cmd is entered.
-utils.make_cmd = function(cmd_name, action)
-  local cmd = "command! " .. cmd_name .. " "
-  cmd = type(action) == "function" and cmd .. utils.commandify_function(action) or cmd .. action
-  vim.cmd(cmd)
+-- @param cmd_name string The name of the command, i.e. `:DoomReload`
+-- @param action string|function The action to execute when the cmd is entered.
+-- @param opts MakeCmdOptions
+utils.make_cmd = function(cmd_name, action, opts)
+  local cmd_string = "command! "
+  if opts and opts.nargs ~= nil then
+    cmd_string = cmd_string .. ("-nargs=%s "):format(opts.nargs)
+  end
+  if opts and opts.completion ~= nil then
+    cmd_string = cmd_string .. ("-complete=%s "):format(table.concat(opts.complete, ","))
+  end
+  cmd_string = cmd_string .. " " .. cmd_name .. " "
+  cmd_string = type(action) == "function" and cmd_string .. utils.commandify_function(action, opts and opts.nargs ~= nil) or cmd_string .. action
+  vim.cmd(cmd_string)
 end
 
 utils.make_autocmd = function(event, pattern, action, group, nested, once)

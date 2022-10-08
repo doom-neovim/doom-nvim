@@ -16,7 +16,7 @@ illuminate.settings = {
 illuminate.packages = {
   ["vim-illuminate"] = {
     "RRethy/vim-illuminate",
-    commit = "27f6ef135a88d9410a33cf92fc47f5c018df552c",
+    commit = "0603e75fc4ecde1ee5a1b2fc8106ed6704f34d14",
   },
 }
 
