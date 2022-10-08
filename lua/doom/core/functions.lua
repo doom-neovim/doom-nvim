@@ -178,8 +178,9 @@ end
 -- Set the indent and tab related numbers.
 -- Negative numbers mean tabstop -- Really though? Tabs?
 functions.set_indent = function()
-  local indent =
-    tonumber(vim.fn.input("Set indent (>0 uses spaces, <0 uses tabs, 0 uses vim defaults): "))
+  local indent = tonumber(
+    vim.fn.input("Set indent (>0 uses spaces, <0 uses tabs, 0 uses vim defaults): ")
+  )
   if not indent then
     indent = -8
   end
@@ -249,6 +250,32 @@ end
 functions.sugar_folds = function()
   local start_line = vim.fn.getline(vim.v.foldstart):gsub("\t", ("\t"):rep(vim.opt.tabstop:get()))
   return string.format("%s ... (%d lines)", start_line, vim.v.foldend - vim.v.foldstart + 1)
+end
+
+--- Nukes the doom install config, causes a fresh install on next boot.
+---@param target string Options of what to nuke
+functions.nuke = function(target)
+  if target == nil or #target == 0 then
+    vim.notify(
+      "Warning, this command deletes packer caches and causes a re-install of doom-nvim on next launch.\n\n :DoomNuke `plugins`|`cache`|`all`. \n\t `cache` - Clear packer_compiled.lua\n\t `plugins` - Clear all installed plugins\n\t `all` - Delete all of the above."
+    )
+    return
+  end
+
+  local log = require("doom.utils.logging")
+  -- Delete packer compiled
+  if target == "all" or target == "cache" then
+    os.remove(system.doom_compile_path)
+    log.info("DoomNuke: Deleting packer compiled.")
+  end
+
+  if target == "all" or target == "plugins" then
+    -- Delete all plugins
+    local util = require("packer.util")
+    local plugin_dir = util.join_paths(vim.fn.stdpath("data"), "site", "pack")
+    fs.rm_dir(plugin_dir)
+    log.info("DoomNuke: Deleting packer plugins.  Doom-nvim will re-install on next launch.")
+  end
 end
 
 return functions

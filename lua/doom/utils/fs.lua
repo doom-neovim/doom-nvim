@@ -1,4 +1,30 @@
+local luv = vim.loop
 local fs = {}
+
+if jit ~= nil then
+  fs.is_windows = jit.os == 'Windows'
+else
+  fs.is_windows = package.config:sub(1, 1) == '\\'
+end
+
+if fs.is_windows and vim.o.shellslash then
+  fs.use_shellslash = true
+else
+  fs.use_shallslash = false
+end
+
+fs.get_seperator = function()
+  if fs.is_windows and not fs.use_shellslash then
+    return '\\'
+  end
+  return '/'
+end
+
+--- Joins a number of strings into a valid path
+---@vararg string[] String segments to convert to file system path
+fs.join_paths = function(...)
+  return table.concat({ ... }, fs.get_seperator())
+end
 
 --- Check if the given file exists
 --- @param path string The path of the file
@@ -39,6 +65,36 @@ fs.write_file = function(path, content, mode)
       vim.loop.write(fpipe, content)
     end
   end)
+end
+
+fs.rm_dir = function(path)
+  local handle = luv.fs_scandir(path)
+
+  if type(handle) == "string" then
+    return fs.notify.error(handle)
+  end
+
+  while true do
+    local name, t = luv.fs_scandir_next(handle)
+    if not name then
+      break
+    end
+
+    local new_cwd = fs.join_paths( path, name )
+    if t == "directory" then
+      local success = fs.rm_dir(new_cwd)
+      if not success then
+        return false
+      end
+    else
+      local success = luv.fs_unlink(new_cwd)
+      if not success then
+        return false
+      end
+    end
+  end
+
+  return luv.fs_rmdir(path)
 end
 
 return fs
