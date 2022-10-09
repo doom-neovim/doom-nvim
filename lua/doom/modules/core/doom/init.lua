@@ -154,6 +154,11 @@ required.binds = function()
             ("<cmd>e %s<CR>"):format(require("doom.core.modules").source),
             name = "Edit modules",
           },
+          {
+            "d",
+            require('doom.core.functions').open_docs,
+            name = "Open documentation",
+          },
           { "l", "<cmd>DoomReload<CR>", name = "Reload config" },
           { "r", "<cmd>DoomRollback<CR>", name = "Rollback" },
           { "R", "<cmd>DoomReport<CR>", name = "Report issue" },
