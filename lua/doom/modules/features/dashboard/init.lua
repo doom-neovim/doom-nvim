@@ -89,7 +89,7 @@ dashboard.configs["dashboard-nvim"] = function()
     doom.features.dashboard.settings.entries.a = {
       icon = "  ",
       desc = "Load Last Session              ",
-      shortcut = "SPC s r",
+      shortcut = "SPC q r",
       action = "lua require('persistence').load({ last = true })",
     }
   end
