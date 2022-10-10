@@ -1,3 +1,5 @@
+local system = require("doom.core.system")
+
 local required = {}
 
 required.settings = {
@@ -11,12 +13,12 @@ required.packages = {
   -- Required by some treesitter modules
   ["aniseed"] = {
     "Olical/aniseed",
-    commit = "411d81776d996f3d6afee07469ebe58248fe9e36",
+    commit = "9892a40d4cf970a2916a984544b7f984fc12f55c",
     module_pattern = "aniseed",
   },
   ["plenary.nvim"] = {
     "nvim-lua/plenary.nvim",
-    commit = "31807eef4ed574854b8a53ae40ea3292033a78ea",
+    commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7",
     module = "plenary",
   },
   ["popup.nvim"] = {
@@ -26,7 +28,7 @@ required.packages = {
   },
   ["nvim-web-devicons"] = {
     "kyazdani42/nvim-web-devicons",
-    commit = "2d02a56189e2bde11edd4712fea16f08a6656944",
+    commit = "a8cf88cbdb5c58e2b658e179c4b2aa997479b3da",
     module = "nvim-web-devicons",
   },
   -- Must include impatient.nvim here, even though it's bootstrapped in

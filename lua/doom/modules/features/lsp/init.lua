@@ -100,12 +100,12 @@ lsp.settings = {
 lsp.packages = {
   ["nvim-lspconfig"] = {
     "neovim/nvim-lspconfig",
-    commit = "da7461b596d70fa47b50bf3a7acfaef94c47727d",
+    commit = "9d4b8d393aad0e6e9227e2d67629aa99e56b994a",
     module = "lspconfig",
   },
   ["nvim-cmp"] = {
     "hrsh7th/nvim-cmp",
-    commit = "b1ebdb0a17daaad13606b802780313a32e59781b",
+    commit = "0e436ee23abc6c3fe5f3600145d2a413703e7272",
     requires = {
       "L3MON4D3/LuaSnip",
       commit = "53e812a6f51c9d567c98215733100f0169bcc20a",
@@ -124,7 +124,7 @@ lsp.packages = {
   },
   ["cmp-path"] = {
     "hrsh7th/cmp-path",
-    commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1",
+    commit = "91ff86cd9c29299a64f968ebb45846c485725f23",
     after = "nvim-cmp",
   },
   ["cmp-buffer"] = {

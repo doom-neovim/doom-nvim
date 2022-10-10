@@ -38,7 +38,7 @@ projects.settings = {
 projects.packages = {
   ["project.nvim"] = {
     "ahmedkhalf/project.nvim",
-    commit = "090bb11ee7eb76ebb9d0be1c6060eac4f69a240f",
+    commit = "628de7e433dd503e782831fe150bb750e56e55d6",
     requires = { "nvim-treesitter/nvim-treesitter" },
   },
 }

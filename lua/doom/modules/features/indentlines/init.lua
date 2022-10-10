@@ -11,7 +11,7 @@ indentlines.settings = {
 indentlines.packages = {
   ["indent-blankline.nvim"] = {
     "lukas-reineke/indent-blankline.nvim",
-    commit = "c15bbe9f23d88b5c0b4ca45a446e01a0a3913707",
+    commit = "db7cbcb40cc00fc5d6074d7569fb37197705e7f6",
     event = "ColorScheme",
   },
 }

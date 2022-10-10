@@ -103,6 +103,7 @@ Modules are grouped into 3 categories:
 - [`kotlin`](../lua/doom/modules/langs/kotlin)
 - [`java`](../lua/doom/modules/langs/java)
 - [`go`](../lua/doom/modules/langs/go)
+- [`nix`](../lua/doom/modules/langs/nix/init.lua)
 - [`config`](../lua/doom/modules/langs/config) Adds JSON, YAML, TOML support
 - Missing a language? Submit a feature request issue.
 

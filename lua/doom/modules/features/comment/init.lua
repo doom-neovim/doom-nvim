@@ -44,7 +44,7 @@ comment.settings = {
 comment.packages = {
   ["Comment.nvim"] = {
     "numToStr/Comment.nvim",
-    commit = "7c49fb2ac01a9f03410100c8e78f647bbea857e8",
+    commit = "98c81efa6ac1946b63eef685c27f8da928d9f4e7",
     module = "Comment",
   },
 }
@@ -66,29 +66,29 @@ end
 comment.binds = {
   {
     "gc",
-    [[<cmd>lua require("Comment.api").call("toggle_linewise_op")<CR>g@]],
+    [[<cmd>lua require("Comment.api").call("toggle.linewise")<CR>g@]],
     name = "Comment motion",
   },
   {
     "gc",
-    [[<Esc><cmd>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>]],
+    [[<Esc><cmd>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>]],
     name = "Comment line",
     mode = "v",
   },
   {
     "gb",
-    [[<Esc><cmd>lua require("Comment.api").toggle_blockwise_op(vim.fn.visualmode())<CR>]],
+    [[<Esc><cmd>lua require("Comment.api").toggle.blockwise(vim.fn.visualmode())<CR>]],
     name = "Comment block",
     mode = "v",
   },
   {
     "gcc",
-    [[<cmd>lua require("Comment.api").call("toggle_current_linewise_op")<CR>g@$]],
+    [[<cmd>lua require("Comment.api").call("toggle.linewise.current")<CR>g@$]],
     name = "Comment line",
   },
   {
     "gcA",
-    [[<cmd>lua require("Comment.api").insert_linewise_eol()<CR>]],
+    [[<cmd>lua require("Comment.api").insert.linewise.eol()<CR>]],
     name = "Comment end of line",
   },
 }

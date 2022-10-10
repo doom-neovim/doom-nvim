@@ -7,7 +7,7 @@ auto_session.settings = {
 auto_session.packages = {
   ["persistence.nvim"] = {
     "folke/persistence.nvim",
-    commit = "77cf5a6ee162013b97237ff25450080401849f85",
+    commit = "251e89523dabc94242d4a1f2226fc44a95c29d9e",
     module = "persistence",
   },
 }

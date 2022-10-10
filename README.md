@@ -7,7 +7,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
 ![Latest Release](https://img.shields.io/github/v/release/NTBBloodbath/doom-nvim?include_prereleases&style=for-the-badge&color=red)
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/NTBBloodbath/doom-nvim/main?style=for-the-badge)
-![Neovim version](https://img.shields.io/badge/Neovim-0.7-57A143?style=for-the-badge&logo=neovim)
+![Neovim version](https://img.shields.io/badge/Neovim-0.8-57A143?style=for-the-badge&logo=neovim)
 [![Discord](https://img.shields.io/badge/discord-join-7289da?style=for-the-badge&logo=discord)](https://discord.gg/xhvBM45zBf)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
