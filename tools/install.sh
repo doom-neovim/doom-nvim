@@ -95,6 +95,44 @@ function check_dependency_group () {
   echo " "
 }
 
+function check_doom_installed() {
+  doom_backed_up=0
+
+  if [ -d "${DOOM_CONFIG_DIR}/lua/doom" ]; then
+    echo "${YELLOW}Warning:$NC Doom nvim is already installed on your system."
+    echo " "
+    echo "Do you want to continue installing doom-nvim? (y/n)"
+    echo "Note: the old config will be backed up to ${XDG_CONFIG_HOME}/doom-nvim-old"
+    echo ""
+    read -p "" -n 1 -r
+    echo " " # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      doom_backed_up=1
+      # If doom-nvim-old directory doesn't exist, move 'nvim/' to 'doom-nvim-old/'
+      if [ ! -d "${XDG_CONFIG_HOME}/doom-nvim-old" ]; then
+        mv "${XDG_CONFIG_HOME}/nvim" "${XDG_CONFIG_HOME}/doom-nvim-old"
+        echo "Moved old config from \`${XDG_CONFIG_HOME}/nvim\` to \`${XDG_CONFIG_HOME}/doom-nvim-old\`"
+      else
+        # If it already exists try placing it in 'doom-nvim-old-1/' then 'doom-nvim-old-2' (up until 10)
+        local i=1
+        local has_found_directory=0
+        while [[ $has_found_directory -eq 0 && $i -lt 10 ]]; do
+          i=$((i+1))
+          if [ ! -d "${XDG_CONFIG_HOME}/doom-nvim-old-${i}" ]; then
+            has_found_directory=1
+          fi
+        done
+
+        if [[ $has_found_directory -eq 1 ]]; then
+          mv "${XDG_CONFIG_HOME}/nvim" "${XDG_CONFIG_HOME}/doom-nvim-old-${i}"
+          echo "Moved old config from \`${XDG_CONFIG_HOME}/nvim\` to \`${XDG_CONFIG_HOME}/doom-nvim-old-${i}\`"
+        fi
+      fi
+    fi
+  fi
+  echo " "
+}
+
 function backup_existing_config() {
   if [ -d "$DOOM_CONFIG_DIR" ]; then
     echo "${YELLOW}Warning:$NC There is already a config at $DOOM_CONFIG_DIR."
@@ -115,7 +153,9 @@ function backup_existing_config() {
         local has_found_directory=0
         while [[ $has_found_directory -eq 0 &&  $i -lt 10 ]]; do
           i=$((i+1))
-          has_found_directory=$([ -d "${XDG_CONFIG_HOME}/nvim-old-${i}" ])
+          if [ ! -d "${XDG_CONFIG_HOME}/nvim-old-${i}" ]; then
+            has_found_directory=1
+          fi
         done
 
         if [[ $has_found_directory -eq 1 ]]; then
@@ -151,7 +191,6 @@ function install_doom_nvim() {
     echo "${GREEN}Installed doom-nvim!"
     echo "${YELLOW}Warn: Could not checkout latest tag due to uncommitted changes.  \`:DoomUpdate\` command may not work."
   fi
-
 }
 
 function main() {
@@ -160,7 +199,12 @@ function main() {
   check_dependency_group "system" "Install missing dependencies using your operating system's package manager (brew/pacman/apt-get/dnf/...)." "${system_dependencies[@]}"
   check_dependency_group "npm" "Install missing dependencies using npm/yarn/pnpm." "${npm_dependencies[@]}"
 
-  backup_existing_config
+  check_doom_installed
+
+  if [ $doom_backed_up -eq 0 ]; then
+    backup_existing_config
+  fi
+
   install_doom_nvim
 
   echo "Run \`nvim\` in your terminal to start doom-nvim."
