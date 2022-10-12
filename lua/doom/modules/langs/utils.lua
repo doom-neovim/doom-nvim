@@ -85,7 +85,6 @@ end
 ---@param package_name string Name of the package that's being installed
 ---@param err_message string Reason for erroring out of installing mason package
 local default_error_handler = function(package_name, err_message)
-  require("doom.utils.logging")
   error(("Error installing mason package `%s`.  Reason: %s "):format(package_name, err_message))
 end
 
@@ -291,7 +290,7 @@ module.wrap_language_setup = function(module_name, setup_fn)
   local setup_language = function()
     local ok, error = xpcall(setup_fn, debug.traceback)
     if not ok then
-      log.error(("Error setting up language %s. \n%s"):format(module_name, error))
+      log.error(("Error setting up language `%s`. \n%s"):format(module_name, error))
     end
   end
   return setup_language
