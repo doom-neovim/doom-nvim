@@ -29,13 +29,12 @@ terraform.settings = {
   formatting_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 terraform.autocmds = {
   {
     "BufWinEnter",
     "*.hcl,*.tf,*.tfvars,*.nomad",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("terraform", function()
       if not terraform.settings.disable_lsp then
         langs_utils.use_lsp_mason(terraform.settings.language_server_name)
       end
@@ -51,7 +50,7 @@ terraform.autocmds = {
           terraform.settings.formatting_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

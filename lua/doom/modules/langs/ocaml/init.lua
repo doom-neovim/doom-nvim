@@ -16,13 +16,12 @@ ocaml.settings = {
   language_server_name = "ocamllsp",
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 ocaml.autocmds = {
   {
     "FileType",
     "ocaml",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("ocaml", function()
       if not ocaml.settings.disable_lsp then
         langs_utils.use_lsp_mason(ocaml.settings.language_server_name)
       end
@@ -30,7 +29,7 @@ ocaml.autocmds = {
       if not ocaml.settings.disable_treesitter then
         langs_utils.use_tree_sitter(ocaml.settings.treesitter_grammars)
       end
-    end,
+    end),
     once = true,
   },
 }

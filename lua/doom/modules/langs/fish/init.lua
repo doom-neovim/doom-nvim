@@ -42,13 +42,12 @@ fish.settings = {
   diagnostics_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 fish.autocmds = {
   {
     "FileType",
     "fish",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("fish", function()
       if not fish.settings.disable_treesitter then
         langs_utils.use_tree_sitter(fish.settings.treesitter_grammars)
       end
@@ -67,7 +66,7 @@ fish.autocmds = {
           fish.settings.diagnostics_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

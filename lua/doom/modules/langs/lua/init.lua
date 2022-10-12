@@ -84,13 +84,12 @@ lua.packages = {
   },
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 lua.autocmds = {
   {
     "BufWinEnter",
     "*.lua",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("lua", function()
       local runtime_path = vim.split(package.path, ";")
       table.insert(runtime_path, "lua/?.lua")
       table.insert(runtime_path, "lua/?/init.lua")
@@ -134,7 +133,7 @@ lua.autocmds = {
           lua.settings.diagnostics_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

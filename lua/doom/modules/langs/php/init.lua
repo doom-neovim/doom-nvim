@@ -42,13 +42,12 @@ php.settings = {
   diagnostics_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 php.autocmds = {
   {
     "FileType",
     "php,phtml",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("php", function()
       if not php.settings.disable_lsp then
         langs_utils.use_lsp_mason(php.settings.language_server_name)
       end
@@ -78,7 +77,7 @@ php.autocmds = {
           php.settings.code_actions_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

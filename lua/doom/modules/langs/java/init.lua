@@ -29,12 +29,12 @@ java.settings = {
   formatting_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 java.autocmds = {
   {
     "BufWinEnter",
     "*.java",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
+    langs_utils.wrap_language_setup("java", function()
 
       if not java.settings.disable_lsp then
         langs_utils.use_lsp_mason(java.settings.language_server_name)
@@ -51,7 +51,7 @@ java.autocmds = {
           java.settings.formatting_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

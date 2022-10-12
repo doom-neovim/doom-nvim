@@ -8,7 +8,7 @@ cc.settings = {
   disable_treesitter = false,
   --- treesitter grammars to install
   --- @type string|string[]
-  treesitter_grammars = {"c", "cpp"},
+  treesitter_grammars = { "c", "cpp" },
 
   --- disables default lsp config
   --- @type boolean
@@ -20,12 +20,12 @@ cc.settings = {
   --- disables null-ls formatting sources
   --- @type boolean
   disable_formatting = false,
-  --- WARN: No package yet.  mason.nvim package to auto install the formatter from
+  ---Mason.nvim package to auto install the formatter from.
   --- @type string
-  formatting_package = nil,
+  formatting_package = "clang-format",
   --- string to access the null_ls diagnositcs provider
   --- @type string
-  formatting_provider = "builtins.formatting.cppcheck",
+  formatting_provider = "builtins.formatting.clang_format",
   --- function to configure null-ls formatter
   --- @type function|nil
   formatting_config = nil,
@@ -44,15 +44,20 @@ cc.settings = {
   diagnostics_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 cc.autocmds = {
   {
     "FileType",
     "cpp,c",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("cc", function()
       if not cc.settings.disable_lsp then
-        langs_utils.use_lsp_mason(cc.settings.language_server_name)
+        langs_utils.use_lsp_mason(cc.settings.language_server_name, {
+          config = {
+            capabilities = {
+              offsetEncoding = { "utf-16" },
+            }
+          }
+        })
       end
 
       if not cc.settings.disable_treesitter then
@@ -73,7 +78,7 @@ cc.autocmds = {
           cc.settings.diagnostics_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

@@ -29,24 +29,26 @@ c_sharp.settings = {
   formatting_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 c_sharp.autocmds = {
   {
     "FileType",
     "cs,vb",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
+    langs_utils.wrap_language_setup("c_sharp", function()
+      vim.cmd("packadd nvim-lspconfig")
 
       if not c_sharp.settings.disable_lsp then
-      local lsp_util = require("lspconfig.util")
+        local lsp_util = require("lspconfig.util")
         langs_utils.use_lsp_mason(c_sharp.settings.language_server_name, {
-        config = {
-          root_dir = function(fname)
-            return lsp_util.root_pattern("*.sln")(fname)
-              or lsp_util.root_pattern("*.csproj")(fname)
-              or lsp_util.root_pattern("ProjectSettings")(fname) -- Add support for unity projects
-          end,
-        },
-      })
+          config = {
+            cmd = { c_sharp.settings.language_server_name },
+            root_dir = function(fname)
+              return lsp_util.root_pattern("*.sln")(fname)
+                or lsp_util.root_pattern("*.csproj")(fname)
+                or lsp_util.root_pattern("ProjectSettings")(fname) -- Add support for unity projects
+            end,
+          },
+        })
       end
 
       if not c_sharp.settings.disable_treesitter then
@@ -60,7 +62,7 @@ c_sharp.autocmds = {
           c_sharp.settings.formatting_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

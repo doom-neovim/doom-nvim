@@ -20,7 +20,7 @@ css.settings = {
   disable_formatting = false,
   --- Mason.nvim package to auto install the formatter from
   --- @type string
-  formatting_package = "stylelint",
+  formatting_package = "stylelint-lsp",
   --- String to access the null_ls diagnositcs provider
   --- @type string
   formatting_provider = "builtins.formatting.stylelint",
@@ -33,7 +33,7 @@ css.settings = {
   disable_diagnostics = false,
   --- Mason.nvim package to auto install the diagnostics provider from
   --- @type string
-  diagnostics_package = "stylelint",
+  diagnostics_package = "stylelint-lsp",
   --- String to access the null_ls diagnositcs provider
   --- @type string
   diagnostics_provider = "builtins.diagnostics.stylelint",
@@ -43,13 +43,12 @@ css.settings = {
 
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 css.autocmds = {
   {
     "FileType",
     "css,scss,vue,svelte,html",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("css", function()
       if not css.settings.disable_lsp then
         langs_utils.use_lsp_mason(css.settings.language_server_name)
       end
@@ -72,7 +71,7 @@ css.autocmds = {
           css.settings.diagnostics_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

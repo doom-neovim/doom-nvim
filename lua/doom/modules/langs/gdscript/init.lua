@@ -42,12 +42,12 @@ gdscript.settings = {
   diagnostics_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 gdscript.autocmds = {
   {
     "BufWinEnter",
     "*.gd",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
+    langs_utils.wrap_language_setup("gdscript", function()
 
       if not gdscript.settings.disable_lsp then
         langs_utils.use_lsp_mason(gdscript.settings.language_server_name, {
@@ -78,7 +78,7 @@ gdscript.autocmds = {
           gdscript.settings.diagnostics_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

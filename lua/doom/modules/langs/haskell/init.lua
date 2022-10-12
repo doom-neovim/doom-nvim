@@ -29,14 +29,14 @@ haskell.settings = {
   formatting_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 haskell.autocmds = {
   {
-    "BufWinEnter",
-    "*.hs",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    "FileType",
+    "haskell",
+    langs_utils.wrap_language_setup("haskell", function()
       if not haskell.settings.disable_lsp then
+        print("starting lsp")
         langs_utils.use_lsp_mason(haskell.settings.language_server_name)
       end
 
@@ -58,7 +58,7 @@ haskell.autocmds = {
           haskell.settings.formatting_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

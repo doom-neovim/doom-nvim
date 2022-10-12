@@ -29,13 +29,12 @@ dockerfile.settings = {
   diagnostics_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 dockerfile.autocmds = {
   {
     "FileType",
     "dockerfile",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("dockerfile", function()
       if not dockerfile.settings.disable_lsp then
         langs_utils.use_lsp_mason(dockerfile.settings.language_server_name)
       end
@@ -51,7 +50,7 @@ dockerfile.autocmds = {
           dockerfile.settings.diagnostics_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

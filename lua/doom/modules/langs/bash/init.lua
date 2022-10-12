@@ -55,13 +55,12 @@ bash.settings = {
   code_actions_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 bash.autocmds = {
   {
     "FileType",
-    "bash",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    "bash,sh",
+    langs_utils.wrap_language_setup("bash", function()
       if not bash.settings.disable_lsp then
         langs_utils.use_lsp_mason(bash.settings.language_server_name)
       end
@@ -91,7 +90,7 @@ bash.autocmds = {
           bash.settings.code_actions_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

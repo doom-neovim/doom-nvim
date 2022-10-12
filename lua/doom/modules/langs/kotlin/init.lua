@@ -42,13 +42,12 @@ kotlin.settings = {
   diagnostics_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 kotlin.autocmds = {
   {
     "FileType",
     "kotlin",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("kotlin", function()
       if not kotlin.settings.disable_lsp then
         langs_utils.use_lsp_mason(kotlin.settings.language_server_name)
       end
@@ -71,7 +70,7 @@ kotlin.autocmds = {
           kotlin.settings.diagnostics_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

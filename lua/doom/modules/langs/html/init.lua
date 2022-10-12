@@ -33,13 +33,12 @@ html.settings = {
   end,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 html.autocmds = {
   {
     "BufWinEnter",
     "*.html",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("html", function()
       if not html.settings.disable_lsp then
         langs_utils.use_lsp_mason(html.settings.language_server_name)
       end
@@ -55,7 +54,7 @@ html.autocmds = {
           html.settings.formatting_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

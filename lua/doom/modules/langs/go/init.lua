@@ -33,7 +33,7 @@ go.settings = {
   disable_diagnostics = false,
   --- Mason.nvim package to auto install the diagnostics provider from
   --- @type string
-  diagnostics_package = "golangci_lint",
+  diagnostics_package = "golangci-lint",
   --- String to access the null_ls diagnositcs provider
   --- @type string
   diagnostics_provider = "builtins.diagnostics.golangci_lint",
@@ -42,12 +42,12 @@ go.settings = {
   diagnostics_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 go.autocmds = {
   {
     "BufWinEnter",
     "*.go",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
+    langs_utils.wrap_language_setup("go", function()
 
       if not go.settings.disable_lsp then
         langs_utils.use_lsp_mason(go.settings.language_server_name)
@@ -71,7 +71,7 @@ go.autocmds = {
           go.settings.diagnostics_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

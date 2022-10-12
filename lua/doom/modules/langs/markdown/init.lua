@@ -29,13 +29,12 @@ markdown.settings = {
   diagnostics_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 markdown.autocmds = {
   {
     "FileType",
     "markdown",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("markdown", function()
       if not markdown.settings.disable_lsp then
         langs_utils.use_lsp_mason(markdown.settings.language_server_name)
       end
@@ -51,7 +50,7 @@ markdown.autocmds = {
           markdown.settings.diagnostics_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

@@ -33,12 +33,12 @@ glsl.settings = {
   end,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 glsl.autocmds = {
   {
     "FileType",
     "glsl",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
+    langs_utils.wrap_language_setup("glsl", function()
 
       -- if not glsl.settings.disable_lsp then
       --   langs_utils.use_lsp_mason(glsl.settings.language_server_name)
@@ -55,7 +55,7 @@ glsl.autocmds = {
           glsl.settings.diagnostics_config
         )
       end
-    end,
+    end),
     once = true,
   },
   -- TODO: Refactor to use filetype.lua or filetype.vim

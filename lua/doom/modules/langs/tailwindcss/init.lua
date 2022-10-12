@@ -1,6 +1,6 @@
-local typescript = {}
+local tailwindcss = {}
 
-typescript.settings = {
+tailwindcss.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
   disable_treesitter = false,
@@ -29,31 +29,30 @@ typescript.settings = {
   formatting_config = nil,
 }
 
-typescript.autocmds = {
+local langs_utils = require("doom.modules.langs.utils")
+tailwindcss.autocmds = {
   {
     "FileType",
     "javascript,typescript,javascriptreact,typescriptreact,css,html,vue,svelte",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
-      if not typescript.settings.disable_lsp then
-        langs_utils.use_lsp_mason(typescript.settings.language_server_name)
+    langs_utils.wrap_language_setup("tailwindcss", function()
+      if not tailwindcss.settings.disable_lsp then
+        langs_utils.use_lsp_mason(tailwindcss.settings.language_server_name)
       end
 
-      if not typescript.settings.disable_treesitter then
-        langs_utils.use_tree_sitter(typescript.settings.treesitter_grammars)
+      if not tailwindcss.settings.disable_treesitter then
+        langs_utils.use_tree_sitter(tailwindcss.settings.treesitter_grammars)
       end
 
-      if not typescript.settings.disable_formatting then
+      if not tailwindcss.settings.disable_formatting and tailwindcss.settings.formatting_package then
         langs_utils.use_null_ls(
-          typescript.settings.formatting_package,
-          typescript.settings.formatting_provider,
-          typescript.settings.formatting_config
+          tailwindcss.settings.formatting_package,
+          tailwindcss.settings.formatting_provider,
+          tailwindcss.settings.formatting_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }
 
-return typescript
+return tailwindcss

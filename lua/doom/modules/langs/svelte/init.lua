@@ -55,13 +55,12 @@ svelte.settings = {
   code_actions_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 svelte.autocmds = {
   {
     "FileType",
     "svelte",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("svelte", function()
       if not svelte.settings.disable_lsp then
         langs_utils.use_lsp_mason(svelte.settings.language_server_name)
       end
@@ -91,7 +90,7 @@ svelte.autocmds = {
           svelte.settings.code_actions_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

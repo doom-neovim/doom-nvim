@@ -55,13 +55,12 @@ typescript.settings = {
   code_actions_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 typescript.autocmds = {
   {
-    "FileType",
-    "javascript,typescript,javascriptreact,typescriptreact",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    "BufWinEnter",
+    "*.js,*.mjs,*.jsx,*.ts,*tsx",
+    langs_utils.wrap_language_setup("typescript/javascript", function()
       if not typescript.settings.disable_lsp then
         langs_utils.use_lsp_mason(typescript.settings.language_server_name)
       end
@@ -91,7 +90,7 @@ typescript.autocmds = {
           typescript.settings.code_actions_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

@@ -29,16 +29,15 @@ typescript.settings = {
   formatting_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 typescript.autocmds = {
   {
     "FileType",
     "toml",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
-      -- if not typescript.settings.disable_lsp then
-      --   langs_utils.use_lsp_mason(typescript.settings.language_server_name)
-      -- end
+    langs_utils.wrap_language_setup("toml", function()
+      if not typescript.settings.disable_lsp then
+        langs_utils.use_lsp_mason(typescript.settings.language_server_name)
+      end
 
       if not typescript.settings.disable_treesitter then
         langs_utils.use_tree_sitter(typescript.settings.treesitter_grammars)
@@ -51,7 +50,7 @@ typescript.autocmds = {
           typescript.settings.formatting_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

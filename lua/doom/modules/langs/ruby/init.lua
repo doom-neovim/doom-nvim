@@ -29,13 +29,12 @@ ruby.settings = {
   diagnostics_config = nil,
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 ruby.autocmds = {
   {
     "FileType",
     "ruby",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("ruby", function()
       if not ruby.settings.disable_lsp then
         langs_utils.use_lsp_mason(ruby.settings.language_server_name)
       end
@@ -51,7 +50,7 @@ ruby.autocmds = {
           ruby.settings.diagnostics_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }

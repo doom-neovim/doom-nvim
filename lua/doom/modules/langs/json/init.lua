@@ -33,17 +33,17 @@ json.packages = {
   ["SchemaStore.nvim"] = {
     "b0o/SchemaStore.nvim",
     commit = "f55842dc797faad8cf7b0d9ce75c59da654aa018",
-    ft = { "json" },
+    ft = "json",
   },
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 json.autocmds = {
   {
     "FileType",
     "json",
-    function()
-      local langs_utils = require("doom.modules.langs.utils")
-
+    langs_utils.wrap_language_setup("json", function()
+      vim.cmd("packadd SchemaStore.nvim")
       if not json.settings.disable_lsp then
         langs_utils.use_lsp_mason(json.settings.language_server_name, {
           config = {
@@ -67,7 +67,7 @@ json.autocmds = {
           json.settings.formatting_config
         )
       end
-    end,
+    end),
     once = true,
   },
 }
