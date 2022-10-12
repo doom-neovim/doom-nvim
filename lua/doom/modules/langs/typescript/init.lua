@@ -14,6 +14,9 @@ typescript.settings = {
   --- Name of the language server
   --- @type string
   lsp_name = "tsserver",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
 
   --- Disables null-ls formatting sources
   --- @type boolean

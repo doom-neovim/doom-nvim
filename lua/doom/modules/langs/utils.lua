@@ -296,10 +296,12 @@ end
 ---@return function Wrapped setup function
 module.wrap_language_setup = function(module_name, setup_fn)
   local setup_language = function()
-    local ok, error = xpcall(setup_fn, debug.traceback)
-    if not ok then
-      log.error(("Error setting up language `%s`. \n%s"):format(module_name, error))
-    end
+    vim.defer_fn(function()
+      local ok, error = xpcall(setup_fn, debug.traceback)
+      if not ok then
+        log.error(("Error setting up language `%s`. \n%s"):format(module_name, error))
+      end
+    end, 1)
   end
   return setup_language
 end
