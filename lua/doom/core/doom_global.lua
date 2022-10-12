@@ -192,14 +192,8 @@ doom = {
 
   -- Logging level
   -- Set Doom logging level
-  -- Available levels:
-  --   · trace
-  --   · debug
-  --   · info
-  --   · warn
-  --   · error
-  --   · fatal
-  -- @default = 'info'
+  -- @default = "info"
+  --- @type "trace"|"debug"|"info"|"warn"|"error"|"fatal"
   logging = "info",
 
   -- Default colorscheme
