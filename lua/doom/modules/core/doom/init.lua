@@ -1,5 +1,3 @@
-local system = require("doom.core.system")
-
 local required = {}
 
 required.settings = {

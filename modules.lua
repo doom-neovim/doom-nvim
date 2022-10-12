@@ -64,6 +64,7 @@ return {
     -- "gdscript",
     -- "gdscript",
     -- "php",
+    -- "ruby",
 
     -- Web
     -- "javascript",
@@ -71,18 +72,22 @@ return {
     -- "css",
     -- "vue",
     -- "tailwindcss",
+    -- "svelte",
 
     -- Compiled
     -- "rust",
     -- "cc",
     -- "ocaml",
+    -- "haskell",
 
     -- JIT
     -- "c_sharp",
     -- "kotlin",
     -- "java",
 
-    -- "config",          -- JSON, YAML, TOML
+    -- "json",
+    -- "yaml",
+    -- "toml",
     -- "markdown",
     -- "terraform",       -- Terraform / hcl files support
     -- "dockerfile",

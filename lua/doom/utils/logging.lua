@@ -73,18 +73,8 @@ log.new = function(config, standalone)
     local console_string =
       string.format("[%-6s%s] %s: %s", nameupper, os.date("%H:%M:%S"), console_lineinfo, msg)
 
-    if config.highlights and level_config.hl then
-      vim.cmd(string.format("echohl %s", level_config.hl))
-    end
-
-    local split_console = vim.split(console_string, "\n")
-    for _, v in ipairs(split_console) do
-      vim.cmd(string.format([[echom "[%s] %s"]], config.plugin, vim.fn.escape(v, '"')))
-    end
-
-    if config.highlights and level_config.hl then
-      vim.cmd("echohl NONE")
-    end
+    local message = {("[%s] %s"):format(config.plugin, console_string), level_config.hl}
+    vim.api.nvim_echo({ message }, true, {})
   end)
 
   local log_at_level = function(level, level_config, message_maker, ...)

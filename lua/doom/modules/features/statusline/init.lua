@@ -54,6 +54,23 @@ local statusline = {}
 
 statusline.settings = {}
 
+statusline.state = {}
+statusline.state.installing_mason_packages = {}
+--- Pushes a mason package to be shown in the statusline
+---@param name string Name of the package
+statusline.state.start_mason_package = function(name)
+  statusline.state.finish_mason_package(name)
+  table.insert(statusline.state.installing_mason_packages, name)
+end
+--- Removes a mason package from being shown in the statusline
+---@param name string Name of the package
+statusline.state.finish_mason_package = function(name)
+  local packages = statusline.state.installing_mason_packages
+  statusline.state.installing_mason_packages = vim.tbl_filter(function(val)
+    return val ~= name
+  end, packages)
+end
+
 statusline._safe_get_highlight = function(...)
   for _, hlname in ipairs({ ... }) do
     if vim.fn.hlexists(hlname) == 1 then
@@ -142,7 +159,7 @@ end
 statusline.packages = {
   ["heirline.nvim"] = {
     "rebelot/heirline.nvim",
-    commit = "9af77c2531a8e10abebf45817e675ecd1966db02",
+    commit = "19cab76f52710ec67bd8829cbc96d0c322963090",
   },
 }
 
@@ -325,23 +342,47 @@ statusline.configs["heirline.nvim"] = function()
     unpack(FileFlags) -- A small optimisation, since their parent does nothing
   )
 
-  local LSPActive = {
+  -- Mason LSP indicator, shows when a package is being installed
+  -- Integrates with the use_mason_package utility function in langs/utils.lua
+  local MasonStatusElement = {
+    condition = function()
+      return #doom.features.statusline.state.installing_mason_packages > 0
+    end,
+    provider = function()
+      local installing_mason_packages = doom.features.statusline.state.installing_mason_packages
+      return (
+        ("Installing %s... "):format(table.concat(installing_mason_packages, ", "))
+      )
+    end,
+    on_click = {
+      callback = function()
+        vim.cmd("Mason")
+      end,
+      name = "mason",
+    },
+    hl = { fg = colors.special },
+  }
+
+  local FileTypeElement = {
+    provider = function()
+      return string.format(" %s ", vim.bo.filetype)
+    end,
+    hl = { fg = colors.dim },
+  }
+
+  local LSPElement = {
     condition = conditions.lsp_attached,
-
-    -- You can keep it simple,
-    -- provider = " [LSP]",
-
-    -- Or complicate things a bit and get the servers names
     provider = function()
       local servers = vim.lsp.buf_get_clients(0)
-      if #servers == 0 then
-        return string.format(" %s ", vim.bo.filetype)
-      elseif #servers == 1 then
-        return " LSP "
-      else
-        return (" LSP(%s) "):format(#servers)
-      end
+      return (" %s "):format(#servers)
     end,
+
+    on_click = {
+      callback = function()
+        vim.cmd("LspInfo")
+      end,
+      name = "lspconfig",
+    },
     hl = { fg = colors.dim },
   }
 
@@ -426,7 +467,9 @@ statusline.configs["heirline.nvim"] = function()
     { FileBlock },
     { FileEncoding },
     { provider = " %= " },
-    { LSPActive },
+    { MasonStatusElement },
+    { FileTypeElement },
+    { LSPElement },
     { GitBlock },
     { Ruler },
     { Notch },

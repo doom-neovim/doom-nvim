@@ -11,17 +11,17 @@ nix.settings = {
   },
 }
 
+local langs_utils = require("doom.modules.langs.utils")
 nix.autocmds = {
   {
     "BufWinEnter",
     "*.nix",
-    function()
+    langs_utils.wrap_language_setup("nix", function()
       local utils = require("doom.utils")
-      local langs_utils = require("doom.modules.langs.utils")
 
       require("nvim-treesitter.install").ensure_installed("nix")
 
-      langs_utils.use_lsp("rnix-lsp")
+      langs_utils.use_lsp_mason("rnix")
 
       -- Setup null-ls
       if utils.is_module_enabled("features", "linter") then
@@ -47,7 +47,7 @@ nix.autocmds = {
 
         langs_utils.use_null_ls_source(null_ls_source)
       end
-    end,
+    end),
     once = true,
   },
 }
