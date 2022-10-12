@@ -13,7 +13,11 @@ go.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "gopls",
+  lsp_name = "gopls",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
+
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -50,7 +54,9 @@ go.autocmds = {
     langs_utils.wrap_language_setup("go", function()
 
       if not go.settings.disable_lsp then
-        langs_utils.use_lsp_mason(go.settings.language_server_name)
+        langs_utils.use_lsp_mason(go.settings.lsp_name, {
+          config = go.settings.lsp_config,
+        })
       end
 
       if not go.settings.disable_treesitter then

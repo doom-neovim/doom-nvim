@@ -171,10 +171,18 @@ module.use_lsp_mason = function(lsp_name, options)
 
   local opts = options or {}
   local config_name = opts.name and opts.name or lsp_name
-  local is_custom_config = opts.name ~= nil or lsp_configs[config_name] ~= nil
+  --- If the LSP is not extending / using a pre-existing lspconfig
+  local is_unsupported_config = opts.name ~= nil or lsp_configs[config_name] ~= nil
 
-  if opts.config and is_custom_config then
-    lsp_configs[config_name] = opts.config
+  -- Resolve the user config from `opts.config` if it's a function
+  local user_config = nil
+  if opts.config then
+    user_config = type(opts.config) == "function" and opts.config() or opts.config
+  end
+
+  -- If the LSP is unsupported we need to add the entry to lspconfig
+  if user_config and is_unsupported_config then
+    lsp_configs[config_name] = user_config
   end
 
   -- Combine default on_attach with provided on_attach
@@ -182,8 +190,8 @@ module.use_lsp_mason = function(lsp_name, options)
   if utils.is_module_enabled("features", "illuminate") then
     table.insert(on_attach_functions, utils.illuminate_attach)
   end
-  if opts.config and opts.config.on_attach then
-    table.insert(on_attach_functions, opts.config.on_attach)
+  if user_config and user_config.on_attach then
+    table.insert(on_attach_functions, user_config.on_attach)
   end
 
   local capabilities_config = {
@@ -197,7 +205,7 @@ module.use_lsp_mason = function(lsp_name, options)
 
   -- Start server and bind to buffers
   local start_lsp = function()
-    local final_config = vim.tbl_deep_extend("keep", opts.config or {}, capabilities_config)
+    local final_config = vim.tbl_deep_extend("keep", user_config or {}, capabilities_config)
     lsp[config_name].setup(final_config)
     local lsp_config_server = lsp[config_name]
     if lsp_config_server.manager then

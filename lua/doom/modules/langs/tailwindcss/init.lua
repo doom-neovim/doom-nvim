@@ -13,7 +13,10 @@ tailwindcss.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "tailwindcss",
+  lsp_name = "tailwindcss",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -36,14 +39,16 @@ tailwindcss.autocmds = {
     "javascript,typescript,javascriptreact,typescriptreact,css,html,vue,svelte",
     langs_utils.wrap_language_setup("tailwindcss", function()
       if not tailwindcss.settings.disable_lsp then
-        langs_utils.use_lsp_mason(tailwindcss.settings.language_server_name)
+        langs_utils.use_lsp_mason(tailwindcss.settings.lsp_name, {
+          config = tailwindcss.settings.lsp_config,
+        })
       end
 
       if not tailwindcss.settings.disable_treesitter then
         langs_utils.use_tree_sitter(tailwindcss.settings.treesitter_grammars)
       end
 
-      if not tailwindcss.settings.disable_formatting and tailwindcss.settings.formatting_package then
+      if not tailwindcss.settings.disable_formatting then
         langs_utils.use_null_ls(
           tailwindcss.settings.formatting_package,
           tailwindcss.settings.formatting_provider,

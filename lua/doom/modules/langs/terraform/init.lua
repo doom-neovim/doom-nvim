@@ -13,7 +13,7 @@ terraform.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "terraformls",
+  lsp_name = "terraformls",
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -36,7 +36,7 @@ terraform.autocmds = {
     "*.hcl,*.tf,*.tfvars,*.nomad",
     langs_utils.wrap_language_setup("terraform", function()
       if not terraform.settings.disable_lsp then
-        langs_utils.use_lsp_mason(terraform.settings.language_server_name)
+        langs_utils.use_lsp_mason(terraform.settings.lsp_name)
       end
 
       if not terraform.settings.disable_treesitter then

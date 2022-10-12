@@ -13,7 +13,10 @@ yaml.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "tsserver",
+  lsp_name = "tsserver",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -49,7 +52,9 @@ yaml.autocmds = {
     "yaml",
     langs_utils.wrap_language_setup("yaml", function()
       if not yaml.settings.disable_lsp then
-        langs_utils.use_lsp_mason(yaml.settings.language_server_name)
+        langs_utils.use_lsp_mason(yaml.settings.lsp_name, {
+          config = yaml.settings.lsp_config,
+        })
       end
 
       if not yaml.settings.disable_treesitter then

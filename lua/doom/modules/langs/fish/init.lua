@@ -8,13 +8,6 @@ fish.settings = {
   --- @type string|string[]
   treesitter_grammars = "fish",
 
-  -- --- Disables default LSP config
-  -- --- @type boolean
-  -- disable_lsp = false,
-  -- --- Name of the language server
-  -- --- @type string
-  -- language_server_name = "tsserver",
-
   --- Disables null-ls formatting sources
   --- @type boolean
   disable_formatting = false,

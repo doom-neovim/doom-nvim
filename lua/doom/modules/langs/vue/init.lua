@@ -21,7 +21,7 @@ vue.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "tsserver",
+  lsp_name = "tsserver",
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -139,7 +139,7 @@ vue.autocmds = {
     langs_utils.wrap_language_setup("vue", function()
       if not vue.settings.disable_lsp then
         local lspconfig_util = require("lspconfig/util")
-        langs_utils.use_lsp_mason(vue.settings.language_server_name)
+        langs_utils.use_lsp_mason(vue.settings.lsp_name)
 
         local function get_typescript_server_path(root_dir)
           -- Alternative location if installed as root:

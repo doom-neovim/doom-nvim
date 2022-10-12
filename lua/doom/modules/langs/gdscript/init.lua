@@ -8,12 +8,12 @@ gdscript.settings = {
   --- @type string|string[]
   treesitter_grammars = { "gdscript", "godot_resource" },
 
-  --- Disables default LSP config
-  --- @type boolean
-  disable_lsp = false,
-  --- Name of the language server
-  --- @type string
-  language_server_name = "tsserver",
+  -- --- Disables default LSP config
+  -- --- @type boolean
+  -- disable_lsp = false,
+  -- --- Name of the language server
+  -- --- @type string
+  -- lsp_name = "tsserver",
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -50,7 +50,7 @@ gdscript.autocmds = {
     langs_utils.wrap_language_setup("gdscript", function()
 
       if not gdscript.settings.disable_lsp then
-        langs_utils.use_lsp_mason(gdscript.settings.language_server_name, {
+        langs_utils.use_lsp_mason(gdscript.settings.lsp_name, {
           no_installer = true,
           config = {
             flags = {

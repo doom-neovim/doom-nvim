@@ -13,7 +13,10 @@ python.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "pyright",
+  lsp_name = "pyright",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -49,7 +52,9 @@ python.autocmds = {
     "python",
     langs_utils.wrap_language_setup("python", function()
       if not python.settings.disable_lsp then
-        langs_utils.use_lsp_mason(python.settings.language_server_name)
+        langs_utils.use_lsp_mason(python.settings.lsp_name, {
+          config = python.settings.lsp_config,
+        })
       end
 
       if not python.settings.disable_treesitter then

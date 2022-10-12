@@ -15,7 +15,14 @@ cc.settings = {
   disable_lsp = false,
   --- name of the language server
   --- @type string
-  language_server_name = utils.get_sysname() == "Darwin" and "clangd" or "ccls",
+  lsp_name = utils.get_sysname() == "Darwin" and "clangd" or "ccls",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = {
+    capabilities = {
+      offsetEncoding = { "utf-16" },
+    },
+  },
 
   --- disables null-ls formatting sources
   --- @type boolean
@@ -51,12 +58,8 @@ cc.autocmds = {
     "cpp,c",
     langs_utils.wrap_language_setup("cc", function()
       if not cc.settings.disable_lsp then
-        langs_utils.use_lsp_mason(cc.settings.language_server_name, {
-          config = {
-            capabilities = {
-              offsetEncoding = { "utf-16" },
-            }
-          }
+        langs_utils.use_lsp_mason(cc.settings.lsp_name, {
+          config = cc.settings.lsp_config,
         })
       end
 

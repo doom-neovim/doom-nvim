@@ -13,7 +13,18 @@ c_sharp.settings = {
   disable_lsp = false,
   --- name of the language server
   --- @type string
-  language_server_name = "omnisharp",
+  lsp_name = "omnisharp",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = {
+    cmd = { c_sharp.settings.lsp_name },
+    root_dir = function(fname)
+      local lsp_util = require("lspconfig.util")
+      return lsp_util.root_pattern("*.sln")(fname)
+          or lsp_util.root_pattern("*.csproj")(fname)
+          or lsp_util.root_pattern("ProjectSettings")(fname) -- Add support for unity projects
+    end,
+  },
 
   --- disables null-ls formatting sources
   --- @type boolean
@@ -38,16 +49,8 @@ c_sharp.autocmds = {
       vim.cmd("packadd nvim-lspconfig")
 
       if not c_sharp.settings.disable_lsp then
-        local lsp_util = require("lspconfig.util")
-        langs_utils.use_lsp_mason(c_sharp.settings.language_server_name, {
-          config = {
-            cmd = { c_sharp.settings.language_server_name },
-            root_dir = function(fname)
-              return lsp_util.root_pattern("*.sln")(fname)
-                or lsp_util.root_pattern("*.csproj")(fname)
-                or lsp_util.root_pattern("ProjectSettings")(fname) -- Add support for unity projects
-            end,
-          },
+        langs_utils.use_lsp_mason(c_sharp.settings.lsp_name, {
+          config = c_sharp.settings.lsp_config,
         })
       end
 

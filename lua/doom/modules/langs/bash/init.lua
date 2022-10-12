@@ -13,7 +13,10 @@ bash.settings = {
   disable_lsp = false,
   --- name of the language server
   --- @type string
-  language_server_name = "bashls",
+  lsp_name = "bashls",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
 
   --- disables null-ls formatting sources
   --- @type boolean
@@ -62,7 +65,9 @@ bash.autocmds = {
     "bash,sh",
     langs_utils.wrap_language_setup("bash", function()
       if not bash.settings.disable_lsp then
-        langs_utils.use_lsp_mason(bash.settings.language_server_name)
+        langs_utils.use_lsp_mason(bash.settings.lsp_name, {
+          config = bash.settings.lsp_config,
+        })
       end
 
       if not bash.settings.disable_treesitter then

@@ -13,7 +13,7 @@ glsl.settings = {
   -- disable_lsp = false,
   -- --- Name of the language server
   -- --- @type string
-  -- language_server_name = "tsserver",
+  -- lsp_name = "tsserver",
 
   --- Disables null-ls diagnostic sources
   --- @type boolean
@@ -41,7 +41,7 @@ glsl.autocmds = {
     langs_utils.wrap_language_setup("glsl", function()
 
       -- if not glsl.settings.disable_lsp then
-      --   langs_utils.use_lsp_mason(glsl.settings.language_server_name)
+      --   langs_utils.use_lsp_mason(glsl.settings.lsp_name)
       -- end
 
       if not glsl.settings.disable_treesitter then

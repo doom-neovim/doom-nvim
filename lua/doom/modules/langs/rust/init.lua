@@ -13,7 +13,7 @@ rust.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "rust_analyzer",
+  lsp_name = "rust_analyzer",
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -36,7 +36,7 @@ rust.autocmds = {
     "rust",
     langs_utils.wrap_language_setup("rust", function()
       if not rust.settings.disable_lsp then
-        langs_utils.use_lsp_mason(rust.settings.language_server_name)
+        langs_utils.use_lsp_mason(rust.settings.lsp_name)
       end
 
       if not rust.settings.disable_treesitter then

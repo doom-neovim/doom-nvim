@@ -13,7 +13,10 @@ html.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "html",
+  lsp_name = "html",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -40,7 +43,9 @@ html.autocmds = {
     "*.html",
     langs_utils.wrap_language_setup("html", function()
       if not html.settings.disable_lsp then
-        langs_utils.use_lsp_mason(html.settings.language_server_name)
+        langs_utils.use_lsp_mason(html.settings.lsp_name, {
+          config = html.settings.lsp_config,
+        })
       end
 
       if not html.settings.disable_treesitter then

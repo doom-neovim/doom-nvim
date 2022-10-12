@@ -13,7 +13,10 @@ ocaml.settings = {
   disable_lsp = false,
   --- name of the language server
   --- @type string
-  language_server_name = "ocamllsp",
+  lsp_name = "ocamllsp",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
 }
 
 local langs_utils = require("doom.modules.langs.utils")
@@ -23,7 +26,9 @@ ocaml.autocmds = {
     "ocaml",
     langs_utils.wrap_language_setup("ocaml", function()
       if not ocaml.settings.disable_lsp then
-        langs_utils.use_lsp_mason(ocaml.settings.language_server_name)
+        langs_utils.use_lsp_mason(ocaml.settings.lsp_name, {
+          config = ocaml.settings.lsp_config,
+        })
       end
 
       if not ocaml.settings.disable_treesitter then

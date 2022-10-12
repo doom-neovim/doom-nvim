@@ -13,7 +13,33 @@ lua.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "sumneko_lua",
+  lsp_name = "sumneko_lua",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = {
+    formatter = {
+      enabled = true,
+    },
+    settings = {
+      Lua = {
+        runtime = {
+          version = "LuaJIT",
+        },
+        diagnostics = {
+          globals = { "vim", "doom" },
+        },
+        workspace = {
+          library = vim.api.nvim_get_runtime_file("", true),
+          maxPreload = 1000,
+          preloadFileSize = 150,
+          checkThirdParty = false,
+        },
+        telemetry = {
+          enable = false,
+        },
+      },
+    },
+  },
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -41,31 +67,6 @@ lua.settings = {
   --- @type function|nil
   diagnostics_config = nil,
 
-  --- Options passed to language server
-  lsp_config = {
-    formatter = {
-      enabled = true,
-    },
-    settings = {
-      Lua = {
-        runtime = {
-          version = "LuaJIT",
-        },
-        diagnostics = {
-          globals = { "vim", "doom" },
-        },
-        workspace = {
-          library = vim.api.nvim_get_runtime_file("", true),
-          maxPreload = 1000,
-          preloadFileSize = 150,
-          checkThirdParty = false,
-        },
-        telemetry = {
-          enable = false,
-        },
-      },
-    },
-  },
   --- Config for the lua-dev plugin
   lua_dev = {
     library = {
@@ -87,9 +88,10 @@ lua.packages = {
 local langs_utils = require("doom.modules.langs.utils")
 lua.autocmds = {
   {
-    "BufWinEnter",
-    "*.lua",
+    "FileType",
+    "lua",
     langs_utils.wrap_language_setup("lua", function()
+      vim.cmd("packadd lua-dev.nvim")
       local runtime_path = vim.split(package.path, ";")
       table.insert(runtime_path, "lua/?.lua")
       table.insert(runtime_path, "lua/?/init.lua")
@@ -110,7 +112,7 @@ lua.autocmds = {
       )
 
       if not lua.settings.disable_lsp then
-        langs_utils.use_lsp_mason(lua.settings.language_server_name, {
+        langs_utils.use_lsp_mason(lua.settings.lsp_name, {
           config = config,
         })
       end

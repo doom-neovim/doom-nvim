@@ -13,7 +13,10 @@ kotlin.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "kotlin_language_server",
+  lsp_name = "kotlin_language_server",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -49,7 +52,9 @@ kotlin.autocmds = {
     "kotlin",
     langs_utils.wrap_language_setup("kotlin", function()
       if not kotlin.settings.disable_lsp then
-        langs_utils.use_lsp_mason(kotlin.settings.language_server_name)
+        langs_utils.use_lsp_mason(kotlin.settings.lsp_name, {
+          config = kotlin.settings.lsp_config,
+        })
       end
 
       if not kotlin.settings.disable_treesitter then

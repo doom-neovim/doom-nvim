@@ -13,7 +13,10 @@ haskell.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "hls",
+  lsp_name = "hls",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -37,7 +40,9 @@ haskell.autocmds = {
     langs_utils.wrap_language_setup("haskell", function()
       if not haskell.settings.disable_lsp then
         print("starting lsp")
-        langs_utils.use_lsp_mason(haskell.settings.language_server_name)
+        langs_utils.use_lsp_mason(haskell.settings.lsp_name, {
+          config = haskell.settings.lsp_config,
+        })
       end
 
       if not haskell.settings.disable_treesitter then

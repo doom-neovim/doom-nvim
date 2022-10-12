@@ -13,7 +13,7 @@ typescript.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "tsserver",
+  lsp_name = "tsserver",
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -62,7 +62,7 @@ typescript.autocmds = {
     "*.js,*.mjs,*.jsx,*.ts,*tsx",
     langs_utils.wrap_language_setup("typescript/javascript", function()
       if not typescript.settings.disable_lsp then
-        langs_utils.use_lsp_mason(typescript.settings.language_server_name)
+        langs_utils.use_lsp_mason(typescript.settings.lsp_name)
       end
 
       if not typescript.settings.disable_treesitter then

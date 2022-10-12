@@ -13,7 +13,11 @@ css.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "cssls",
+  lsp_name = "cssls",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
+
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -50,7 +54,9 @@ css.autocmds = {
     "css,scss,vue,svelte,html",
     langs_utils.wrap_language_setup("css", function()
       if not css.settings.disable_lsp then
-        langs_utils.use_lsp_mason(css.settings.language_server_name)
+        langs_utils.use_lsp_mason(css.settings.lsp_name, {
+          config = css.settings.lsp_config,
+        })
       end
 
       if not css.settings.disable_treesitter then

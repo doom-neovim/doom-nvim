@@ -13,7 +13,10 @@ php.settings = {
   disable_lsp = false,
   --- name of the language server
   --- @type string
-  language_server_name = "intelephense",
+  lsp_name = "intelephense",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
 
   --- disables null-ls formatting sources
   --- @type boolean
@@ -49,7 +52,9 @@ php.autocmds = {
     "php,phtml",
     langs_utils.wrap_language_setup("php", function()
       if not php.settings.disable_lsp then
-        langs_utils.use_lsp_mason(php.settings.language_server_name)
+        langs_utils.use_lsp_mason(php.settings.lsp_name, {
+          config = php.settings.lsp_config,
+        })
       end
 
       if not php.settings.disable_treesitter then

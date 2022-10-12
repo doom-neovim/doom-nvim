@@ -13,7 +13,10 @@ markdown.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "remark_ls",
+  lsp_name = "remark_ls",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
 
   --- Disables null-ls diagnostic sources
   --- @type boolean
@@ -36,7 +39,9 @@ markdown.autocmds = {
     "markdown",
     langs_utils.wrap_language_setup("markdown", function()
       if not markdown.settings.disable_lsp then
-        langs_utils.use_lsp_mason(markdown.settings.language_server_name)
+        langs_utils.use_lsp_mason(markdown.settings.lsp_name, {
+          config = markdown.settings.lsp_config,
+        })
       end
 
       if not markdown.settings.disable_treesitter then

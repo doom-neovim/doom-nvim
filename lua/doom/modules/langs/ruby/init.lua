@@ -13,7 +13,10 @@ ruby.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "solargraph",
+  lsp_name = "solargraph",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
 
   --- Disables null-ls diagnostic sources
   --- @type boolean
@@ -36,7 +39,9 @@ ruby.autocmds = {
     "ruby",
     langs_utils.wrap_language_setup("ruby", function()
       if not ruby.settings.disable_lsp then
-        langs_utils.use_lsp_mason(ruby.settings.language_server_name)
+        langs_utils.use_lsp_mason(ruby.settings.lsp_name, {
+          config = ruby.settings.lsp_config,
+        })
       end
 
       if not ruby.settings.disable_treesitter then

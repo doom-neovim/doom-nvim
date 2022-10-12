@@ -13,7 +13,18 @@ json.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "jsonls",
+  lsp_name = "jsonls",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|function|nil
+  lsp_config = function()
+    return {
+      settings = {
+        json = {
+          schemas = require("schemastore").json.schemas(),
+        },
+      },
+    }
+  end,
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -33,7 +44,7 @@ json.packages = {
   ["SchemaStore.nvim"] = {
     "b0o/SchemaStore.nvim",
     commit = "f55842dc797faad8cf7b0d9ce75c59da654aa018",
-    ft = "json",
+    opt = true,
   },
 }
 
@@ -45,14 +56,8 @@ json.autocmds = {
     langs_utils.wrap_language_setup("json", function()
       vim.cmd("packadd SchemaStore.nvim")
       if not json.settings.disable_lsp then
-        langs_utils.use_lsp_mason(json.settings.language_server_name, {
-          config = {
-            settings = {
-              json = {
-                schemas = require("schemastore").json.schemas(),
-              },
-            },
-          },
+        langs_utils.use_lsp_mason(json.settings.lsp_name, {
+          config = json.settings.lsp_config,
         })
       end
 

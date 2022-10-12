@@ -13,7 +13,10 @@ dockerfile.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "dockerls",
+  lsp_name = "dockerls",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = nil,
 
   --- Disables null-ls diagnostic sources
   --- @type boolean
@@ -36,7 +39,9 @@ dockerfile.autocmds = {
     "dockerfile",
     langs_utils.wrap_language_setup("dockerfile", function()
       if not dockerfile.settings.disable_lsp then
-        langs_utils.use_lsp_mason(dockerfile.settings.language_server_name)
+        langs_utils.use_lsp_mason(dockerfile.settings.lsp_name, {
+          config = dockerfile.settings.lsp_config,
+        })
       end
 
       if not dockerfile.settings.disable_treesitter then

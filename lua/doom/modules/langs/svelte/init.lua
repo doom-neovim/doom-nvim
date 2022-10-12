@@ -13,7 +13,7 @@ svelte.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  language_server_name = "svelte",
+  lsp_name = "svelte",
 
   --- Disables null-ls formatting sources
   --- @type boolean
@@ -62,7 +62,7 @@ svelte.autocmds = {
     "svelte",
     langs_utils.wrap_language_setup("svelte", function()
       if not svelte.settings.disable_lsp then
-        langs_utils.use_lsp_mason(svelte.settings.language_server_name)
+        langs_utils.use_lsp_mason(svelte.settings.lsp_name)
       end
 
       if not svelte.settings.disable_treesitter then
