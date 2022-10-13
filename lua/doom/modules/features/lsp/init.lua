@@ -100,7 +100,7 @@ lsp.settings = {
 lsp.packages = {
   ["nvim-lspconfig"] = {
     "neovim/nvim-lspconfig",
-    commit = "9d4b8d393aad0e6e9227e2d67629aa99e56b994a",
+    commit = "334cc8601ce5f04384ebe79527284fd177938412",
     module = "lspconfig",
   },
   ["nvim-cmp"] = {

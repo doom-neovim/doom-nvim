@@ -81,7 +81,7 @@ lua.packages = {
   ["lua-dev.nvim"] = {
     "folke/lua-dev.nvim",
     commit = "f0da5bcc6ecddd121a67815a821cdb7452755e9e",
-    ft = "lua",
+    opt = true,
   },
 }
 

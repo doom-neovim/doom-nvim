@@ -132,7 +132,6 @@ module.use_mason_package = function(package_name, success_handler, error_handler
         local err = "Mason.nvim install failed.  Reason:\n"
         if (pkg and pkg.stdio and pkg.stdio.buffers and pkg.stdio.buffers.stderr) then
           for _, line in ipairs(pkg.stdio.buffers.stderr) do
-            print(line)
             err = err .. line
           end
         end
@@ -177,7 +176,7 @@ module.use_lsp_mason = function(lsp_name, options)
   local opts = options or {}
   local config_name = opts.name and opts.name or lsp_name
   --- If the LSP is not extending / using a pre-existing lspconfig
-  local is_unsupported_config = opts.name ~= nil or lsp_configs[config_name] ~= nil
+  local is_unsupported_config = opts.name ~= nil or lsp[config_name] == nil
 
   -- Resolve the user config from `opts.config` if it's a function
   local user_config = nil
@@ -186,7 +185,8 @@ module.use_lsp_mason = function(lsp_name, options)
   end
 
   -- If the LSP is unsupported we need to add the entry to lspconfig
-  if user_config and is_unsupported_config then
+  if user_config ~= nil and is_unsupported_config then
+    print(("%s is unsupported, creating it now"):format(config_name))
     lsp_configs[config_name] = user_config
   end
 
@@ -211,6 +211,10 @@ module.use_lsp_mason = function(lsp_name, options)
   -- Start server and bind to buffers
   local start_lsp = function()
     local final_config = vim.tbl_deep_extend("keep", user_config or {}, capabilities_config)
+    if lsp[config_name].setup == nil then
+      log.warn(("Cannot start LSP %s with config name %s. Reason: The LSP config does not exist, please create an issue so this can be resolved."):format(lsp_name, config_name))
+      return
+    end
     lsp[config_name].setup(final_config)
     local lsp_config_server = lsp[config_name]
     if lsp_config_server.manager then
