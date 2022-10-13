@@ -15,16 +15,18 @@ c_sharp.settings = {
   --- @type string
   lsp_name = "omnisharp",
   --- Custom config to pass to nvim-lspconfig
-  --- @type table|nil
-  lsp_config = {
-    cmd = { c_sharp.settings.lsp_name },
-    root_dir = function(fname)
-      local lsp_util = require("lspconfig.util")
-      return lsp_util.root_pattern("*.sln")(fname)
+  --- @type table|function|nil
+  lsp_config = function ()
+    local lsp_util = require("lspconfig.util")
+    return {
+      cmd = { c_sharp.settings.lsp_name },
+      root_dir = function(fname)
+        return lsp_util.root_pattern("*.sln")(fname)
           or lsp_util.root_pattern("*.csproj")(fname)
           or lsp_util.root_pattern("ProjectSettings")(fname) -- Add support for unity projects
-    end,
-  },
+      end,
+    }
+  end,
 
   --- disables null-ls formatting sources
   --- @type boolean

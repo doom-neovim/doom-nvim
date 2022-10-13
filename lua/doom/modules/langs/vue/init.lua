@@ -139,8 +139,6 @@ vue.autocmds = {
     langs_utils.wrap_language_setup("vue", function()
       if not vue.settings.disable_lsp then
         local lspconfig_util = require("lspconfig/util")
-        langs_utils.use_lsp_mason(vue.settings.lsp_name)
-
         local function get_typescript_server_path(root_dir)
           -- Alternative location if installed as root:
           -- local global_ts = '/usr/local/lib/node_modules/typescript/lib/tsserverlibrary.js'
@@ -194,21 +192,21 @@ vue.autocmds = {
 
         local volar_api_config =
           vim.tbl_deep_extend("force", {}, doom.langs.vue.settings.volar_api, base_config)
-        langs_utils.use_lsp("volar", {
+        langs_utils.use_lsp_mason("volar", {
           name = "volar_api",
           config = volar_api_config,
         })
 
         local volar_doc_config =
           vim.tbl_deep_extend("force", {}, doom.langs.vue.settings.volar_doc, base_config)
-        langs_utils.use_lsp("volar", {
+        langs_utils.use_lsp_mason("volar", {
           name = "volar_doc",
           config = volar_doc_config,
         })
 
         local volar_html_config =
           vim.tbl_deep_extend("force", {}, doom.langs.vue.settings.volar_html, base_config)
-        langs_utils.use_lsp("volar", {
+        langs_utils.use_lsp_mason("volar", {
           name = "volar_html",
           config = volar_html_config,
         })
