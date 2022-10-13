@@ -154,7 +154,7 @@ required.binds = function()
           },
           {
             "d",
-            require('doom.core.functions').open_docs,
+            require("doom.core.functions").open_docs,
             name = "Open documentation",
           },
           { "l", "<cmd>DoomReload<CR>", name = "Reload config" },

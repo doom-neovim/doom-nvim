@@ -39,7 +39,6 @@ glsl.autocmds = {
     "FileType",
     "glsl",
     langs_utils.wrap_language_setup("glsl", function()
-
       -- if not glsl.settings.disable_lsp then
       --   langs_utils.use_lsp_mason(glsl.settings.lsp_name)
       -- end
@@ -62,10 +61,10 @@ glsl.autocmds = {
   {
     "BufWinEnter",
     "*.glsl,*.frag,*.vert,*.fs,*.vs",
-    function ()
-      vim.bo.filetype = 'glsl'
-    end
-  }
+    function()
+      vim.bo.filetype = "glsl"
+    end,
+  },
 }
 
 return glsl

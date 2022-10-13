@@ -244,8 +244,11 @@ lsp.configs["nvim-cmp"] = function()
     },
     formatting = {
       format = function(entry, item)
-        item.kind =
-          string.format("%s %s", doom.features.lsp.settings.completion.kinds[item.kind], item.kind)
+        item.kind = string.format(
+          "%s %s",
+          doom.features.lsp.settings.completion.kinds[item.kind],
+          item.kind
+        )
         item.menu = source_map[entry.source.name]
         item.dup = vim.tbl_contains({ "path", "buffer" }, entry.source.name)
         return item

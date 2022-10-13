@@ -18,7 +18,6 @@ go.settings = {
   --- @type table|nil
   lsp_config = nil,
 
-
   --- Disables null-ls formatting sources
   --- @type boolean
   disable_formatting = false,
@@ -52,7 +51,6 @@ go.autocmds = {
     "BufWinEnter",
     "*.go",
     langs_utils.wrap_language_setup("go", function()
-
       if not go.settings.disable_lsp then
         langs_utils.use_lsp_mason(go.settings.lsp_name, {
           config = go.settings.lsp_config,

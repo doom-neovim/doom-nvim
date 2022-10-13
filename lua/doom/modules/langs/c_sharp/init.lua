@@ -16,7 +16,7 @@ c_sharp.settings = {
   lsp_name = "omnisharp",
   --- Custom config to pass to nvim-lspconfig
   --- @type table|function|nil
-  lsp_config = function ()
+  lsp_config = function()
     local lsp_util = require("lspconfig.util")
     return {
       cmd = { c_sharp.settings.lsp_name },

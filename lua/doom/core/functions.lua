@@ -178,8 +178,9 @@ end
 -- Set the indent and tab related numbers.
 -- Negative numbers mean tabstop -- Really though? Tabs?
 functions.set_indent = function()
-  local indent =
-    tonumber(vim.fn.input("Set indent (>0 uses spaces, <0 uses tabs, 0 uses vim defaults): "))
+  local indent = tonumber(
+    vim.fn.input("Set indent (>0 uses spaces, <0 uses tabs, 0 uses vim defaults): ")
+  )
   if not indent then
     indent = -8
   end

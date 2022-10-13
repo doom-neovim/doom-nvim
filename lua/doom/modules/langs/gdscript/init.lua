@@ -48,7 +48,6 @@ gdscript.autocmds = {
     "BufWinEnter",
     "*.gd",
     langs_utils.wrap_language_setup("gdscript", function()
-
       if not gdscript.settings.disable_lsp then
         langs_utils.use_lsp_mason(gdscript.settings.lsp_name, {
           no_installer = true,

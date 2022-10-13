@@ -6,7 +6,7 @@ html.settings = {
   disable_treesitter = false,
   --- Treesitter grammars to install
   --- @type string|string[]
-  treesitter_grammars = {"html", "javascript", "css"},
+  treesitter_grammars = { "html", "javascript", "css" },
 
   --- Disables default LSP config
   --- @type boolean
@@ -31,7 +31,7 @@ html.settings = {
   --- @type function|nil
   formatting_config = function(rome)
     rome.with({
-      filetypes = { "html" }
+      filetypes = { "html" },
     })
   end,
 }

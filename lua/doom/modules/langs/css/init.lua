@@ -18,7 +18,6 @@ css.settings = {
   --- @type table|nil
   lsp_config = nil,
 
-
   --- Disables null-ls formatting sources
   --- @type boolean
   disable_formatting = false,
@@ -44,7 +43,6 @@ css.settings = {
   --- Function to configure null-ls diagnostics
   --- @type function|nil
   diagnostics_config = nil,
-
 }
 
 local langs_utils = require("doom.modules.langs.utils")

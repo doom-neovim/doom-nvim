@@ -277,8 +277,11 @@ statusline.configs["heirline.nvim"] = function()
     init = function(self)
       local filename = self.filename
       local extension = vim.fn.fnamemodify(filename, ":e")
-      self.icon, self.icon_color =
-        require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+      self.icon, self.icon_color = require("nvim-web-devicons").get_icon_color(
+        filename,
+        extension,
+        { default = true }
+      )
     end,
     provider = function(self)
       return self.icon and (self.icon .. " ")
@@ -350,9 +353,7 @@ statusline.configs["heirline.nvim"] = function()
     end,
     provider = function()
       local installing_mason_packages = doom.features.statusline.state.installing_mason_packages
-      return (
-        ("Installing %s... "):format(table.concat(installing_mason_packages, ", "))
-      )
+      return (("Installing %s... "):format(table.concat(installing_mason_packages, ", ")))
     end,
     on_click = {
       callback = function()

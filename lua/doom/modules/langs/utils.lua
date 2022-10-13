@@ -59,7 +59,11 @@ module.use_null_ls = function(package_name, null_ls_path, configure_function)
       local null_ls = require("null-ls")
       local path = vim.split(null_ls_path, "%.", nil)
       if #path ~= 3 then
-        log.error(("Error setting up null-ls provider `%s`.\n\n  null_ls_path should have 3 segments i.e. `builtins.formatting.stylua"):format(null_ls_path))
+        log.error(
+          (
+            "Error setting up null-ls provider `%s`.\n\n  null_ls_path should have 3 segments i.e. `builtins.formatting.stylua"
+          ):format(null_ls_path)
+        )
         return
       end
       local provider = null_ls[path[1]][path[2]][path[3]]
@@ -72,7 +76,12 @@ module.use_null_ls = function(package_name, null_ls_path, configure_function)
     end
 
     local on_error = function(_, message)
-      log.error(("There was an error setting up null_ls provider `%s`. Reason: \n%s"):format(null_ls_path, message))
+      log.error(
+        ("There was an error setting up null_ls provider `%s`. Reason: \n%s"):format(
+          null_ls_path,
+          message
+        )
+      )
     end
 
     -- If auto_install module is enabled, try to install package before starting
@@ -130,7 +139,7 @@ module.use_mason_package = function(package_name, success_handler, error_handler
           statusline.state.finish_mason_package(package_name)
         end
         local err = "Mason.nvim install failed.  Reason:\n"
-        if (pkg and pkg.stdio and pkg.stdio.buffers and pkg.stdio.buffers.stderr) then
+        if pkg and pkg.stdio and pkg.stdio.buffers and pkg.stdio.buffers.stderr then
           for _, line in ipairs(pkg.stdio.buffers.stderr) do
             err = err .. line
           end
@@ -212,7 +221,11 @@ module.use_lsp_mason = function(lsp_name, options)
   local start_lsp = function()
     local final_config = vim.tbl_deep_extend("keep", user_config or {}, capabilities_config)
     if lsp[config_name].setup == nil then
-      log.warn(("Cannot start LSP %s with config name %s. Reason: The LSP config does not exist, please create an issue so this can be resolved."):format(lsp_name, config_name))
+      log.warn(
+        (
+          "Cannot start LSP %s with config name %s. Reason: The LSP config does not exist, please create an issue so this can be resolved."
+        ):format(lsp_name, config_name)
+      )
       return
     end
     lsp[config_name].setup(final_config)

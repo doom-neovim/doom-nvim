@@ -70,10 +70,15 @@ log.new = function(config, standalone)
 
   local console_output = vim.schedule_wrap(function(level_config, info, nameupper, msg)
     local console_lineinfo = vim.fn.fnamemodify(info.short_src, ":t") .. ":" .. info.currentline
-    local console_string =
-      string.format("[%-6s%s] %s: %s", nameupper, os.date("%H:%M:%S"), console_lineinfo, msg)
+    local console_string = string.format(
+      "[%-6s%s] %s: %s",
+      nameupper,
+      os.date("%H:%M:%S"),
+      console_lineinfo,
+      msg
+    )
 
-    local message = {("[%s] %s"):format(config.plugin, console_string), level_config.hl}
+    local message = { ("[%s] %s"):format(config.plugin, console_string), level_config.hl }
     vim.api.nvim_echo({ message }, true, {})
   end)
 

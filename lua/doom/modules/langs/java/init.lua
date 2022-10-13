@@ -38,7 +38,6 @@ java.autocmds = {
     "BufWinEnter",
     "*.java",
     langs_utils.wrap_language_setup("java", function()
-
       if not java.settings.disable_lsp then
         langs_utils.use_lsp_mason(java.settings.lsp_name, {
           config = java.settings.lsp_config,

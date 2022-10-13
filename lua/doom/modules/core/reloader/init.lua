@@ -94,7 +94,6 @@ reloader._reload_doom = function()
   -- Reset State
   local commands_service = require("doom.services.commands")
   commands_service.del_all()
-  print('deleting autocommands')
   local autocmds_service = require("doom.services.autocommands")
   autocmds_service.del_all()
 

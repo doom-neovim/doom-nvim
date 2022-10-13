@@ -6,7 +6,7 @@ ocaml.settings = {
   disable_treesitter = false,
   --- treesitter grammars to install
   --- @type string|string[]
-  treesitter_grammars = {"ocaml", "ocaml_interface", "ocamllex"},
+  treesitter_grammars = { "ocaml", "ocaml_interface", "ocamllex" },
 
   --- disables default lsp config
   --- @type boolean

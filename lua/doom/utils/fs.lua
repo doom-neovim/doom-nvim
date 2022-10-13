@@ -2,9 +2,9 @@ local luv = vim.loop
 local fs = {}
 
 if jit ~= nil then
-  fs.is_windows = jit.os == 'Windows'
+  fs.is_windows = jit.os == "Windows"
 else
-  fs.is_windows = package.config:sub(1, 1) == '\\'
+  fs.is_windows = package.config:sub(1, 1) == "\\"
 end
 
 if fs.is_windows and vim.o.shellslash then
@@ -15,9 +15,9 @@ end
 
 fs.get_seperator = function()
   if fs.is_windows and not fs.use_shellslash then
-    return '\\'
+    return "\\"
   end
-  return '/'
+  return "/"
 end
 
 --- Joins a number of strings into a valid path
@@ -80,7 +80,7 @@ fs.rm_dir = function(path)
       break
     end
 
-    local new_cwd = fs.join_paths( path, name )
+    local new_cwd = fs.join_paths(path, name)
     if t == "directory" then
       local success = fs.rm_dir(new_cwd)
       if not success then

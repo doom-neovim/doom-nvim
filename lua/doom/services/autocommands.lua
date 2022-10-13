@@ -64,15 +64,16 @@ local set_autocmd_implementations = {
     else
       data.autocmd_actions[uid] = action
 
-      cmd_string = cmd_string .. (":lua _doom_autocmds_service_data.autocmd_actions[%d]()"):format(uid)
+      cmd_string = cmd_string
+        .. (":lua _doom_autocmds_service_data.autocmd_actions[%d]()"):format(uid)
     end
     vim.cmd(cmd_string)
     return uid
   end,
   ["latest"] = function(event, pattern, action, opts)
-    local merged_opts = vim.tbl_extend('keep', opts, {
+    local merged_opts = vim.tbl_extend("keep", opts, {
       pattern = pattern,
-      group = "DoomAutoCommands"
+      group = "DoomAutoCommands",
     })
     if type(action) == "function" then
       merged_opts.callback = action
