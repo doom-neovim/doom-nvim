@@ -11,7 +11,7 @@ utils.version = {
 }
 
 --- Currently supported version of neovim for this build of doom-nvim
-utils.nvim_latest_supported = 'nvim-0.8'
+utils.nvim_latest_supported = "nvim-0.8"
 
 utils.doom_version =
   string.format("%d.%d.%d", utils.version.major, utils.version.minor, utils.version.patch)
@@ -21,6 +21,7 @@ utils.find_config = function(filename)
   local function get_filepath(dir)
     return table.concat({ dir, filename }, system.sep)
   end
+
   local path = get_filepath(system.doom_configs_root)
   if fs.file_exists(path) then
     return path
@@ -71,85 +72,6 @@ utils.safe_require = function(path)
   else
     log.debug(string.format("Successfully loaded '%s' module", path))
     return result
-  end
-end
-
---- Stores a function in a global table, returns a string to execute the function
--- @param  fn function
--- @return string
-utils.commandify_function = function(fn, has_arguments)
-  if not _G._doom then
-    _G._doom = {}
-  end
-  if not _doom.cmd_funcs then
-    _doom.cmd_funcs = {}
-  end
-  -- Nobody is going to need more than a million of these, right?
-  local unique_number = utils.unique_index()
-  _doom.cmd_funcs[unique_number] = fn
-
-  if has_arguments then
-    return ("lua _doom.cmd_funcs[%d](<f-args>)"):format(unique_number)
-  else
-    return ("lua _doom.cmd_funcs[%d]()"):format(unique_number)
-  end
-end
-
--- @type MakeCmdOptions
--- @field nargs string|number|nil
--- @field complete string[]|nil
-
---- Creates a new command that can be executed from the neovim command line
--- @param cmd_name string The name of the command, i.e. `:DoomReload`
--- @param action string|function The action to execute when the cmd is entered.
--- @param opts MakeCmdOptions
-utils.make_cmd = function(cmd_name, action, opts)
-  local cmd_string = "command! "
-  if opts and opts.nargs ~= nil then
-    cmd_string = cmd_string .. ("-nargs=%s "):format(opts.nargs)
-  end
-  if opts and opts.completion ~= nil then
-    cmd_string = cmd_string .. ("-complete=%s "):format(table.concat(opts.complete, ","))
-  end
-  cmd_string = cmd_string .. " " .. cmd_name .. " "
-  cmd_string = type(action) == "function" and cmd_string .. utils.commandify_function(action, opts and opts.nargs ~= nil) or cmd_string .. action
-  vim.cmd(cmd_string)
-end
-
-utils.make_autocmd = function(event, pattern, action, group, nested, once)
-  local cmd = "autocmd "
-
-  if group then
-    cmd = cmd .. group .. " "
-  end
-
-  cmd = cmd .. event .. " "
-  cmd = cmd .. pattern .. " "
-
-  if nested then
-    cmd = cmd .. "++nested "
-  end
-  if once then
-    cmd = cmd .. "++once "
-  end
-
-  cmd = type(action) == "function" and cmd .. utils.commandify_function(action) or cmd .. action
-
-  vim.cmd(cmd)
-end
-
-utils.make_augroup = function(group_name, cmds, existing_group)
-  if not existing_group then
-    vim.cmd("augroup " .. group_name)
-    vim.cmd("autocmd!")
-  end
-
-  for _, cmd in ipairs(cmds) do
-    utils.make_autocmd(cmd[1], cmd[2], cmd[3], existing_group and group_name, cmd.nested, cmd.once)
-  end
-
-  if not existing_group then
-    vim.cmd("augroup END")
   end
 end
 
@@ -284,6 +206,50 @@ end
 --- @return fun(string, string),string,string
 utils.iter_string_at = function(str, sep)
   return string.gmatch(str, "([^" .. sep .. "]+)")
+end
+
+--- Picks a field from a table by checking the keys if it's compatible
+---@generic T
+---@param compatibility_table table<string,T>
+---@return T
+---@example
+---```lua
+---local val = utils.pick_compatible_field({
+---  ['nvim-0.5'] = 'this will be picked',
+---  ['nvim-9.9'] = 'version too high, wont be picked'
+---})
+---print(val) -- > 'this will be picked'
+---```
+utils.pick_compatible_field = function(compatibility_table)
+  -- Sort the keys in order of neovim version
+  local sorted = vim.tbl_keys(compatibility_table)
+  table.sort(sorted, function(a, b)
+    return a < b
+  end)
+  -- Need "latest" to be last as it is a catch all for the default behaviour
+  if sorted[1] == "latest" then
+    table.remove(sorted, 1)
+    table.insert(sorted, "latest")
+  end
+
+  -- Find the last key that is compatible with this neovim version
+  local last_field = nil
+  for _, version in ipairs(sorted) do
+    local field = compatibility_table[version]
+    local ver = version == "latest" and utils.nvim_latest_supported or version
+
+    if vim.fn.has(ver) == 1 then
+      last_field = field
+    else
+      break
+    end
+  end
+
+  -- Must always return a value.
+  if last_field == nil then
+    error("Error getting compatible field.")
+  end
+  return last_field
 end
 
 return utils
