@@ -67,9 +67,10 @@ vue.settings = {
     default_config = {
       filetypes = { "vue" },
       -- If you want to use Volar's Take Over Mode (if you know, you know)
-      --filetypes = { 'vue', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+      --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
       init_options = {
         languageFeatures = {
+          implementation = true, -- new in @volar/vue-language-server v0.33
           references = true,
           definition = true,
           typeDefinition = true,
@@ -95,13 +96,14 @@ vue.settings = {
     default_config = {
       filetypes = { "vue" },
       -- If you want to use Volar's Take Over Mode (if you know, you know):
-      --filetypes = { 'vue', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+      --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
       init_options = {
         languageFeatures = {
+          implementation = true, -- new in @volar/vue-language-server v0.33
           documentHighlight = true,
           documentLink = true,
           codeLens = { showReferencesNotification = true },
-          -- not supported - https://github.com/neovim/neovim/pull/14122
+          -- not supported - https://github.com/neovim/neovim/pull/15723
           semanticTokens = false,
           diagnostics = true,
           schemaRequestService = true,
@@ -113,7 +115,7 @@ vue.settings = {
     default_config = {
       filetypes = { "vue" },
       -- If you want to use Volar's Take Over Mode (if you know, you know), intentionally no 'json':
-      --filetypes = { 'vue', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+      --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
       init_options = {
         documentFeatures = {
           selectionRange = true,
@@ -139,77 +141,99 @@ vue.autocmds = {
     langs_utils.wrap_language_setup("vue", function()
       if not vue.settings.disable_lsp then
         local lspconfig_util = require("lspconfig/util")
+
         local function get_typescript_server_path(root_dir)
-          -- Alternative location if installed as root:
-          -- local global_ts = '/usr/local/lib/node_modules/typescript/lib/tsserverlibrary.js'
-          local found_ts = ""
+          print("Searching for ts server path at " .. root_dir)
+          local tsdk_path = ""
           local function check_dir(path)
-            found_ts = lspconfig_util.path.join(
-              path,
-              "node_modules",
-              "typescript",
-              "lib",
-              "tsserverlibrary.js"
-            )
-            if lspconfig_util.path.exists(found_ts) then
-              return path
+            tsdk_path = lspconfig_util.path.join(path, "node_modules", "typescript", "lib")
+            local tsserverlibrary_path = lspconfig_util.path.join(tsdk_path, "tsserverlibrary.js")
+            if lspconfig_util.path.exists(tsserverlibrary_path) then
+              return true
             end
           end
 
           if lspconfig_util.search_ancestors(root_dir, check_dir) then
-            return found_ts
+            return tsdk_path
           end
-          return ""
+          return false
         end
 
         -- volar needs works with typescript server, needs to get the typescript server from the project's node_modules
-        local function on_new_config(new_config, new_root_dir)
-          if
-            new_config.init_options
-            and new_config.init_options.typescript
-            and new_config.init_options.typescript.serverPath == ""
-          then
-            new_config.init_options.typescript.serverPath = get_typescript_server_path(new_root_dir)
-          end
-        end
-
         local volar_root_dir = lspconfig_util.root_pattern("package.json")
 
         -- Contains base configuration necessary for volar to start
-        local base_config = {
-          default_config = {
-            cmd = { "vue-language-server", "--stdio" },
-            -- cmd = volar.document_config.default_config.cmd,
-            root_dir = volar_root_dir,
-            on_new_config = on_new_config,
-            init_options = {
-              typescript = {
-                serverPath = "",
+        local build_base_config = function(volar_handle)
+          local fallback_sdk_path = lspconfig_util.path.join(
+            volar_handle:get_install_path(),
+            "node_modules",
+            "typescript",
+            "lib"
+          )
+          return {
+            default_config = {
+              cmd = { "vue-language-server", "--stdio" },
+              -- cmd = volar.document_config.default_config.cmd,
+              root_dir = volar_root_dir,
+              on_new_config = function(new_config, new_root_dir)
+                if
+                  new_config.init_options
+                  and new_config.init_options.typescript
+                  and new_config.init_options.typescript.tsdk == ""
+                then
+                  new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
+                    or fallback_sdk_path
+                end
+              end,
+              init_options = {
+                typescript = {
+                  tsdk = "",
+                },
               },
             },
-          },
-        }
+          }
+        end
 
-        local volar_api_config =
-          vim.tbl_deep_extend("force", {}, doom.langs.vue.settings.volar_api, base_config)
-        langs_utils.use_lsp_mason("volar", {
-          name = "volar_api",
-          config = volar_api_config,
-        })
+        -- Need to pre-install volar language server to get the install location
+        langs_utils.use_mason_package("vue-language-server", function(handle)
+          print(vim.inspect(handle:get_install_path()))
 
-        local volar_doc_config =
-          vim.tbl_deep_extend("force", {}, doom.langs.vue.settings.volar_doc, base_config)
-        langs_utils.use_lsp_mason("volar", {
-          name = "volar_doc",
-          config = volar_doc_config,
-        })
+          -- Setup Volar API
+          local volar_api_config = vim.tbl_deep_extend(
+            "force",
+            {},
+            doom.langs.vue.settings.volar_api,
+            build_base_config(handle)
+          )
+          langs_utils.use_lsp_mason("volar", {
+            name = "volar_api",
+            config = volar_api_config,
+          })
 
-        local volar_html_config =
-          vim.tbl_deep_extend("force", {}, doom.langs.vue.settings.volar_html, base_config)
-        langs_utils.use_lsp_mason("volar", {
-          name = "volar_html",
-          config = volar_html_config,
-        })
+          -- Setup Volar DOC
+          local volar_doc_config = vim.tbl_deep_extend(
+            "force",
+            {},
+            doom.langs.vue.settings.volar_doc,
+            build_base_config(handle)
+          )
+          langs_utils.use_lsp_mason("volar", {
+            name = "volar_doc",
+            config = volar_doc_config,
+          })
+
+          -- Setup Volar HTML
+          local volar_html_config = vim.tbl_deep_extend(
+            "force",
+            {},
+            doom.langs.vue.settings.volar_html,
+            build_base_config(handle)
+          )
+          langs_utils.use_lsp_mason("volar", {
+            name = "volar_html",
+            config = volar_html_config,
+          })
+        end)
       end
 
       if not vue.settings.disable_treesitter then
