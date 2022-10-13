@@ -66,7 +66,7 @@ end
 comment.binds = {
   {
     "gc",
-    [[<cmd>lua require("Comment.api").call("toggle.linewise")<CR>g@]],
+    [[<cmd>lua require("Comment.api").call('toggle.linewise', '@g')<CR>]],
     name = "Comment motion",
   },
   {
@@ -83,7 +83,7 @@ comment.binds = {
   },
   {
     "gcc",
-    [[<cmd>lua require("Comment.api").call("toggle.linewise.current")<CR>g@$]],
+    [[<cmd>lua require("Comment.api").toggle.linewise.current()<CR>]],
     name = "Comment line",
   },
   {
@@ -92,4 +92,5 @@ comment.binds = {
     name = "Comment end of line",
   },
 }
+
 return comment
