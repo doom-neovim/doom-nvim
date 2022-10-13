@@ -49,13 +49,13 @@ telescope.settings = {
 telescope.packages = {
   ["telescope.nvim"] = {
     "nvim-telescope/telescope.nvim",
-    commit = "76ea9a898d3307244dce3573392dcf2cc38f340f",
+    commit = "f174a0367b4fc7cb17710d867e25ea792311c418",
     cmd = "Telescope",
     opt = true,
   },
   ["telescope-file-browser.nvim"] = {
     "nvim-telescope/telescope-file-browser.nvim",
-    commit = "b1bc53e0da3d26f0003ffb9602115ce258411aa5",
+    commit = "6b4e22777bfa6a31787a4ac8e086b062ef241ede",
     cmd = "Telescope browse_files",
     key = "<leader>.",
     after = "telescope.nvim",
@@ -81,7 +81,7 @@ telescope.configs["telescope.nvim"] = function()
           ["<C-j>"] = actions.move_selection_next,
           ["<C-k>"] = actions.move_selection_previous,
           ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-          ["<CR>"] = actions.select_default + actions.center,
+          -- ["<CR>"] = actions.select_default + actions.center, -- Currently breaks telescope-file-browser
         },
         n = {
           ["<C-j>"] = actions.move_selection_next,
