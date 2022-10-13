@@ -71,10 +71,15 @@ local set_autocmd_implementations = {
   end,
   ["latest"] = function(event, pattern, action, opts)
     local merged_opts = vim.tbl_extend('keep', opts, {
-      callback = action,
       pattern = pattern,
       group = "DoomAutoCommands"
     })
+    if type(action) == "function" then
+      merged_opts.callback = action
+    else
+      merged_opts.command = action
+    end
+
     local id = vim.api.nvim_create_autocmd(event, merged_opts)
     data.autocmd_ids[id] = true
     data.autocmd_signatures[id] = ("%s %s"):format(event, pattern)
