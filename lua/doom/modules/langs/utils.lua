@@ -71,7 +71,7 @@ module.use_null_ls = function(package_name, null_ls_path, configure_function)
       module.use_null_ls_source({ provider })
     end
 
-    local on_error = function(package_name, message)
+    local on_error = function(_, message)
       log.error(("There was an error setting up null_ls provider `%s`. Reason: \n%s"):format(null_ls_path, message))
     end
 
