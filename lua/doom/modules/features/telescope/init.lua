@@ -178,16 +178,12 @@ telescope.binds = function()
     },
   }
   if is_module_enabled("features", "lsp") then
-    table.insert(binds, {
-      "<leader>",
-      name = "+prefix",
-      {
+    table.insert(binds[2], {
         {
           "c",
           name = "+code",
           {
-            { "s", "<cmd>Telescope lsp_document_symbols<CR>", name = "Lsp symbols" },
-          },
+          { "s", "<cmd>Telescope lsp_document_symbols<CR>", name = "Lsp symbols", remap = true },
         },
       },
     })
