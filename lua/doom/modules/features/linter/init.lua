@@ -4,6 +4,7 @@ linter.settings = {
   format_on_save = false,
   null_ls_settings = {
     default_timeout = 2000,
+    diagnostics_format = "#{m} (#{s})",
   },
 }
 
