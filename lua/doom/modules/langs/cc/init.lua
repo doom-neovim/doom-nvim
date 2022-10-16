@@ -15,7 +15,7 @@ cc.settings = {
   disable_lsp = false,
   --- name of the language server
   --- @type string
-  lsp_name = utils.get_sysname() == "Darwin" and "clangd" or "ccls",
+  lsp_name = "clangd",
   --- Custom config to pass to nvim-lspconfig
   --- @type table|nil
   lsp_config = {
