@@ -1,3 +1,10 @@
+--- Doom nvim profiler
+---
+--- Stores start and end time by name, only processes and formats the
+--- data when the `profiler.log` function is called.
+
+local utils = require("doom.utils")
+
 local hrtime = vim.loop.hrtime
 
 local profiler = {}
@@ -5,21 +12,14 @@ local profiler = {}
 profiler.all_start = hrtime()
 profiler.chunks = {}
 
-profiler._right_pad = function(str, length, char)
-  local res = str .. string.rep(char or " ", length - #str)
-
-  return res, res ~= str
-end
-profiler._left_pad = function(str, length, char)
-  local res = string.rep(char or " ", length - #str) .. str
-
-  return res, res ~= str
-end
-
+--- Start a profiler entry
+---@param chunk string name of profiler entry
 profiler.start = function(chunk)
   profiler.chunks[chunk] = { start = hrtime() }
 end
 
+--- Stops a profiler entry
+---@param chunk string name of profiler entry
 profiler.stop = function(chunk)
   profiler.chunks[chunk].stop = hrtime()
 end
@@ -34,6 +34,7 @@ profiler.log = function(options)
   local chunks = vim.tbl_map(function(key)
     return vim.tbl_extend("force", {
       key = key,
+      depth = 1,
     }, profiler.chunks[key])
   end, vim.tbl_keys(profiler.chunks))
 
@@ -41,6 +42,7 @@ profiler.log = function(options)
     return a.start < b.start
   end)
 
+  -- Calculate depth of each node by comparing start / stop time
   for _, parent in ipairs(chunks) do
     local children = vim.tbl_filter(function(child)
       if child.stop and parent.stop then
@@ -52,31 +54,54 @@ profiler.log = function(options)
       parent.has_children = true
     end
     vim.tbl_map(function(child)
-      child.depth = child.depth ~= nil and child.depth + 1 or 1
+      child.depth = child.depth + 1
     end, children)
   end
 
-  vim.api.nvim_echo({{profiler._right_pad("Category", 12), "Int"}, {profiler._right_pad("Task", 48), "Int"}, {"Duration(ms)", "Int"}, {"\tStart/End Time", "Int"}}, false, {})
+  --- Print command information
+  vim.api.nvim_echo({
+    {
+      "This shows the time spent initialising the doom-nvim framework.\n",
+      "Comment",
+    },
+    {
+      "Note: Most of the startup time is spent configuring plugins and initialising nvim.\n",
+      "Comment",
+    },
+    { "Check `:PackerProfile` for the remaining loading time.", "Comment" },
+  }, false, {})
 
+  -- Print the header
+  vim.api.nvim_echo({
+    { utils.right_pad("Category", 12), "Int" },
+    { utils.right_pad("Task", 48), "Int" },
+    { "Duration(ms)", "Int" },
+    { "\tStart/End Time(ms)", "Int" },
+  }, false, {})
+
+  --- Store depth of previous entry to change the cap character of the tree
   -- Print them one by one
-  for _, entry in ipairs(chunks) do
-    local depth = entry.depth or 0
+  for index, entry in ipairs(chunks) do
+    local depth = entry.depth or 1
     local echo_tbl = {}
+    local next_depth = chunks[index + 1] and chunks[index + 1].depth or 1
 
     local name_or_category, name_or_nil = unpack(vim.split(entry.key, "|", {}))
     local is_async = string.find(name_or_category, "async") ~= nil
     if not is_async or (show_async and is_async) then
       if name_or_category and name_or_nil then
-        table.insert(echo_tbl, { profiler._right_pad(name_or_category, 12, " "), "Comment" })
-        table.insert(
-          echo_tbl,
-          { string.rep(" |", depth) .. (entry.has_children and " + " or " - "), "Comment" }
-        )
-        table.insert(echo_tbl, { profiler._right_pad(name_or_nil, 48 - depth * 2, " "), "Normal" })
-      else
-        table.insert(echo_tbl, { string.rep(" |", depth), "Comment" })
+        table.insert(echo_tbl, { utils.right_pad(name_or_category, 12, " "), "Comment" })
         table.insert(echo_tbl, {
-          profiler._right_pad(name_or_category, 60 - depth * 2, " "),
+          string.rep(" │", depth - 1)
+            .. (next_depth < entry.depth and " └" or " ├")
+            .. (entry.has_children and "─┬ " or "── "),
+          "Comment",
+        })
+        table.insert(echo_tbl, { utils.right_pad(name_or_nil, 48 - depth * 2, " "), "Normal" })
+      else
+        table.insert(echo_tbl, { string.rep("  ", depth - 1) .. (next_depth < entry.depth and " └" or " ├"), "Comment" })
+        table.insert(echo_tbl, {
+          utils.right_pad(name_or_category, 60 - depth * 2, " "),
           "Normal",
         })
       end

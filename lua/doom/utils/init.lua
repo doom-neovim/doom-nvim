@@ -148,45 +148,6 @@ utils.is_module_enabled = function(section, plugin)
   return modules[section] and vim.tbl_contains(modules[section], plugin)
 end
 
-local modules_list_cache = {}
-
-utils.get_all_modules_as_list = function()
-  if doom then
-    if #modules_list_cache ~= 0 then
-      return modules_list_cache
-    end
-    local all_modules = {}
-    for section_name, _ in pairs(doom.modules) do
-      for k, module in pairs(doom[section_name]) do
-        all_modules[k] = module
-        all_modules[k].name = section_name
-      end
-    end
-    modules_list_cache = table.sort(all_modules, function(a, b)
-      return (a.priority or 100) < (b.priority or 100)
-    end)
-    return modules_list_cache
-  end
-  return nil
-end
-
-utils.clear_module_cache = function()
-  modules_list_cache = {}
-end
-
---- Returns a function that can only be run once
----@param fn function
----@return function
-utils.make_run_once_function = function(fn)
-  local has_run = false
-  return function(...)
-    if not has_run then
-      fn(...)
-      has_run = true
-    end
-  end
-end
-
 --- Rounds a number, optionally to the nearest decimal place
 --- @param num number - Value to round
 --- @param decimalplace number|nil - Number of decimal places
@@ -203,15 +164,6 @@ utils.find_executable_in_path = function(executables)
   return vim.tbl_filter(function(c)
     return c ~= vim.NIL and vim.fn.executable(c) == 1
   end, executables)[1]
-end
-
---- Returns an iterator over the string str whose next function returns until
---- the next sep is reached.
---- @param str string String to iterate over
---- @param sep string Separator to look for
---- @return fun(string, string),string,string
-utils.iter_string_at = function(str, sep)
-  return string.gmatch(str, "([^" .. sep .. "]+)")
 end
 
 --- Picks a field from a table by checking the keys if it's compatible
@@ -257,5 +209,27 @@ utils.pick_compatible_field = function(compatibility_table)
   end
   return last_field
 end
+
+--- Pads a string with chars on the right hand side.
+---@param str string String to pad
+---@param length number Intended length of string
+---@param char string|nil Single char to fill with
+---@return string,boolean Padded string,Flag if padding was needed
+utils.right_pad = function(str, length, char)
+  local res = str .. string.rep(char or " ", length - #str)
+
+  return res, res ~= str
+end
+--- Pads a string with chars on the left hand side.
+---@param str string String to pad
+---@param length number Intended length of string
+---@param char string|nil Single char to fill with
+---@return string,boolean Padded string,Flag if padding was needed
+utils.left_pad = function(str, length, char)
+  local res = string.rep(char or " ", length - #str) .. str
+
+  return res, res ~= str
+end
+
 
 return utils
