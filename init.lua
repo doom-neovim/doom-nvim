@@ -10,6 +10,10 @@ if vim.fn.has("nvim-0.7.0") ~= 1 then
   vim.notify(message, vim.log.levels.ERROR)
 end
 
+local profiler = require("doom.services.profiler")
+profiler.start("framework|init.lua")
+
+
 -- Makes sure ~/.local/share/nvim exists, to prevent problems with logging
 vim.fn.mkdir(vim.fn.stdpath("data"), "p")
 
@@ -26,4 +30,7 @@ vim.defer_fn(function()
   if doom.check_updates and doom.core.updater then
     doom.core.updater.check_updates(true)
   end
-end, 0)
+end, 1)
+
+
+profiler.stop("framework|init.lua")

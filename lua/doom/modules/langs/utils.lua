@@ -1,4 +1,5 @@
 local log = require("doom.utils.logging")
+local profiler = require("doom.services.profiler")
 
 local module = {}
 
@@ -48,6 +49,9 @@ end
 --- end)
 --- ```
 module.use_null_ls = function(package_name, null_ls_path, configure_function)
+  local profiler_msg = ("null_ls|setup `%s`"):format(null_ls_path)
+
+  profiler.start(profiler_msg)
   if doom.features.linter then
     -- Check if null-ls is loaded and load it if not.
     local ok = pcall(require, "null-ls")
@@ -93,6 +97,8 @@ module.use_null_ls = function(package_name, null_ls_path, configure_function)
       end, 1)
     end
   end
+
+  profiler.stop(profiler_msg)
 end
 
 --- Default error handler for use_mason_package utility function
@@ -113,6 +119,7 @@ module.use_mason_package = function(package_name, success_handler, error_handler
     on_err("nil", "No package_name provided.")
     return
   end
+  profiler.start("mason|using package " .. package_name)
   local ok, err = xpcall(function()
     local package = mason.get_package(package_name)
     if not package:is_installed() then
@@ -132,6 +139,7 @@ module.use_mason_package = function(package_name, success_handler, error_handler
         vim.schedule(function()
           success_handler(handle)
         end)
+        profiler.stop("mason|using package " .. package_name)
       end)
       package:on("install:failed", function(pkg)
         -- Remove package from statusline state to hide it
@@ -148,12 +156,15 @@ module.use_mason_package = function(package_name, success_handler, error_handler
         vim.schedule(function()
           on_err(package_name, err)
         end)
+        profiler.stop("mason|using package " .. package_name)
       end)
     else
+      profiler.stop("mason|using package " .. package_name)
       success_handler(package, package.get_handle(package))
     end
   end, debug.traceback)
   if not ok then
+    profiler.stop("mason|using package " .. package_name)
     on_err(package_name, "There was an unknown error when installing.  Reason: \n" .. err)
   end
 end
@@ -175,6 +186,9 @@ module.use_tree_sitter = function(grammars)
 end
 
 module.use_lsp_mason = function(lsp_name, options)
+  local profiler_msg = ("lsp|setup `%s`"):format(lsp_name)
+  profiler.start(profiler_msg)
+
   local utils = require("doom.utils")
   if not utils.is_module_enabled("features", "lsp") then
     return
@@ -247,6 +261,8 @@ module.use_lsp_mason = function(lsp_name, options)
   else
     start_lsp()
   end
+
+  profiler.stop(profiler_msg)
 end
 
 -- module.use_dap = function(config_name, settings)

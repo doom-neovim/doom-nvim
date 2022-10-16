@@ -4,6 +4,8 @@
 --  config options, pre-configuring the user's modules from `modules.lua`, and
 --  running the user's `config.lua` file.
 
+
+local profiler = require("doom.services.profiler")
 local utils = require("doom.utils")
 local config = {}
 local filename = "config.lua"
@@ -60,10 +62,13 @@ config.load = function()
   -- Combine enabled modules (`modules.lua`) with core modules.
   local enabled_modules = require("doom.core.modules").enabled_modules
 
+  profiler.start("framework|import modules")
   -- Iterate over each module and save it to the doom global object
   for section_name, section_modules in pairs(enabled_modules) do
     for _, module_name in pairs(section_modules) do
       -- If the section is `user` resolves from `lua/user/modules`
+      local profiler_message = ("modules|import `%s.%s`"):format(section_name, module_name)
+      profiler.start(profiler_message)
       local search_paths = {
         ("user.modules.%s.%s"):format(section_name, module_name),
         ("doom.modules.%s.%s"):format(section_name, module_name),
@@ -89,15 +94,19 @@ config.load = function()
           )
         )
       end
+      profiler.stop(profiler_message)
     end
   end
+  profiler.stop("framework|import modules")
 
+  profiler.start("framework|config.lua (user)")
   -- Execute user's `config.lua` so they can modify the doom global object.
   local ok, err = xpcall(dofile, debug.traceback, config.source)
   local log = require("doom.utils.logging")
   if not ok and err then
     log.error("Error while running `config.lua. Traceback:\n" .. err)
   end
+  profiler.stop("framework|config.lua (user)")
 
   -- Apply the necessary `doom.field_name` options
   vim.opt.shiftwidth = doom.indent

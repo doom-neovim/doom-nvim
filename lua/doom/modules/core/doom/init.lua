@@ -323,4 +323,13 @@ required.autocmds = function()
   return autocmds
 end
 
+required.cmds = {
+  { "DoomProfile", function(opts)
+    local show_async = string.find(opts.args, "async") ~= nil
+    require("doom.services.profiler").log({
+      show_async = show_async,
+    })
+  end, { nargs = "*" } }
+}
+
 return required

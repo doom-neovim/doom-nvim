@@ -135,18 +135,22 @@ mapper.configs["nvim-mapper"] = function()
   end
   local mapper_integration = get_mapper_integration()
 
+  local profiler = require("doom.services.profiler")
   local count = 0
   for section_name, _ in pairs(doom.modules) do
-    for _, module in pairs(doom[section_name]) do
+    for module_name, module in pairs(doom[section_name]) do
       if module.binds then
         count = count + 1
         vim.defer_fn(function()
           -- table.insert(all_keymaps, type(module.binds) == "function" and module.binds() or module.binds)
+          local profiler_msg = ("keymaps(async)|module: %s.%s"):format(section_name, module_name)
+          profiler.start(profiler_msg)
           keymaps_service.applyKeymaps(
             type(module.binds) == "function" and module.binds() or module.binds,
             nil,
             { mapper_integration }
           )
+          profiler.stop(profiler_msg)
         end, count)
       end
     end

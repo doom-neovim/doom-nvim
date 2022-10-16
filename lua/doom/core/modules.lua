@@ -5,6 +5,7 @@
 --
 --   Later on it executes all of the enabled modules, loading their packer dependencies, autocmds and cmds.
 
+local profiler = require("doom.services.profiler")
 local utils = require("doom.utils")
 local filename = "modules.lua"
 
@@ -119,6 +120,9 @@ modules.load_modules = function()
   -- Handle the Modules
   for section_name, _ in pairs(doom.modules) do
     for module_name, module in pairs(doom.modules[section_name]) do
+      local profile_msg = ("modules|init `%s.%s`"):format(section_name, module_name)
+      profiler.start(profile_msg)
+
       -- Flag to continue enabling module
       local should_enable_module = true
 
@@ -130,9 +134,7 @@ modules.load_modules = function()
           if not doom.modules[dep_section_name][dep_module_name] then
             should_enable_module = false
             logger.error(
-              (
-                'Doom module "%s.%s" depends on a module that is not enabled "%s.%s".  Please enable the %s module.'
-              ):format(
+              ('Doom module "%s.%s" depends on a module that is not enabled "%s.%s".  Please enable the %s module.'):format(
                 section_name,
                 module_name,
                 dep_section_name,
@@ -192,6 +194,7 @@ modules.load_modules = function()
           )
         end
       end
+      profiler.stop(profile_msg)
     end
   end
 end

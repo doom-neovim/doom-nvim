@@ -92,10 +92,9 @@ reloader._reload_doom = function()
   end, doom.packages)
 
   -- Reset State
-  local commands_service = require("doom.services.commands")
-  commands_service.del_all()
-  local autocmds_service = require("doom.services.autocommands")
-  autocmds_service.del_all()
+  require("doom.services.commands").del_all()
+  require("doom.services.autocommands").del_all()
+  require("doom.services.profiler").reset()
 
   -- Unload doom.modules/doom.core lua files
   for k, _ in pairs(package.loaded) do
