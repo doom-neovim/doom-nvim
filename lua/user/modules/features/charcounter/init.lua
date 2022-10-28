@@ -14,8 +14,7 @@ char_counter.settings = {
         left = 3,
         right = 3,
       },
-    },
-    style = "rounded",
+    }, style = "rounded",
     enter = true,
     buf_options = {
       modifiable = true,
@@ -27,7 +26,7 @@ char_counter.settings = {
 char_counter.packages = {
   ["nui.nvim"] = {
     "MunifTanjim/nui.nvim",
-    cmd = { "CountPrint" },
+    -- cmd = { "CountPrint" },
   },
 }
 
