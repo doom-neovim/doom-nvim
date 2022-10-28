@@ -21,7 +21,7 @@ return {
     "auto_session", -- Remember sessions between loads
     "colorizer", -- Show colors in neovim
     "editorconfig", -- Support editorconfig files
-    "gitsigns", -- Show git changes in sidebar
+    -- "gitsigns", -- Show git changes in sidebar
     "illuminate", -- Highlight other copies of the word you're hovering on
     "indentlines", -- Show indent lines with special characters
     "range_highlight", -- Highlight selected range from commands
@@ -32,10 +32,10 @@ return {
     "lsp_progress", -- Check status of LSP loading
     "tabline", -- Tab bar buffer switcher
     "dashboard", -- A pretty dashboard upon opening
-    -- "trouble",         -- A pretty diagnostic viewer
+    "trouble",         -- A pretty diagnostic viewer
     "statusline", -- A pretty status line at the bottom of the buffer
-    -- "minimap",         -- Shows current position in document
-    -- "terminal",        -- Integrated terminal in neovim
+    "minimap",         -- Shows current position in document
+    "terminal",        -- Integrated terminal in neovim
     -- "symbols",         -- Navigate between code symbols using telescope
     -- "ranger",          -- File explorer in neovim (TODO: Test)
     -- "restclient",      -- Test HTTP requests from neovim (TODO: Test)
@@ -54,12 +54,17 @@ return {
     -- "suda",            -- Save using sudo when necessary
     "telescope", -- Fuzzy searcher to find files, grep code and more
     "whichkey", -- An interactive sheet
+    ------------------- user module
+    "navigation",
+    "git",
+    "views",
+    -- "charcounter", -- custom module test
   },
   langs = {
     -- Scripts
     "lua",
-    "python",
-    -- "bash",
+    -- "python",
+    "bash",
     -- "fish",
     -- "gdscript",
     -- "gdscript",
@@ -67,18 +72,17 @@ return {
     -- "ruby",
 
     -- Web
-    -- "javascript",
-    -- "typescript",
-    -- "css",
+    "javascript",
+    "typescript",
+    "css",
     -- "vue",
     -- "tailwindcss",
     -- "svelte",
 
     -- Compiled
-    -- "rust",
+    "rust",
     -- "cc",
-    -- "ocaml",
-    -- "haskell",
+    -- "ocaml", "haskell",
 
     -- JIT
     -- "c_sharp",
@@ -88,9 +92,9 @@ return {
     -- "json",
     -- "yaml",
     -- "toml",
-    -- "markdown",
+    "markdown",
     -- "terraform",       -- Terraform / hcl files support
-    -- "dockerfile",
+    "dockerfile",
     -- "nix",             -- Nix declarations
   },
 }

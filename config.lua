@@ -45,4 +45,43 @@ doom.indent = 2
 doom.core.treesitter.settings.show_compiler_warning_message = false
 doom.core.reloader.settings.reload_on_save = false
 
+doom.langs.lua.settings.disable_lsp = true
+doom.features.tabline.settings.options.enforce_regular_tabs = false
 -- vim: sw=2 sts=2 ts=2 expandtab
+--
+-- custom keybindings for tabline
+doom.features.tabline.binds = {
+  {"H",
+  name = "Left",
+  function()
+    require("bufferline").cycle(-1)
+  end
+  },
+  {"L",
+  name = "Left",
+  function()
+    require("bufferline").cycle(1)
+  end
+  },
+}
+-- custom keybindings for comments
+--
+doom.features.comment.binds = {
+  {
+    "gc",
+    [[<Esc><cmd>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>]],
+    name = "Comment line",
+    mode = "v",
+  }, {
+    "gcc",
+    [[<cmd>lua require("Comment.api").toggle.linewise.current()<CR>]],
+    name = "Comment line",
+  },
+  {
+    "gcA",
+    [[<cmd>lua require("Comment.api").insert.linewise.eol()<CR>]],
+    name = "Comment end of line",
+    mode = "ni",
+  },
+}
+--
