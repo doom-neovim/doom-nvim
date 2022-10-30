@@ -230,7 +230,7 @@ Some of the defining features that make this project unique are:
     > For more info, read the {:./doom_nvim_modules:# Building your own module} docs.
 
 * Contributing
-  I really love pull requests and bug reports, please see the {https://github.com/NTBBloodbath/doom-nvim/blob/main/docs/contributing.md}[Contributing Guidelines] on GitHub
+  I really love pull requests and bug reports, please see the {https://github.com/doom-neovim/doom-nvim/blob/main/docs/contributing.md}[Contributing Guidelines] on GitHub
   before contributing.
 
   Don't hesitate to tell me my Lua coding style sucks, but please tell me why.

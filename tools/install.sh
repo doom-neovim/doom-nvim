@@ -4,7 +4,7 @@ declare -r XDG_DATA_HOME="${XDG_DATA_HOME:-"$HOME/.local/share"}"
 declare -r XDG_CACHE_HOME="${XDG_CACHE_HOME:-"$HOME/.cache"}"
 declare -r XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
 
-DOOM_REPO_URL="https://github.com/NTBBloodbath/doom-nvim"
+DOOM_REPO_URL="https://github.com/doom-neovim/doom-nvim"
 declare -r DOOM_CONFIG_DIR="${DOOM_CONFIG_DIR:-"$XDG_CONFIG_HOME/nvim"}"
 
 declare BASEDIR

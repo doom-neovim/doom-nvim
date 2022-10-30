@@ -322,7 +322,7 @@ updater._try_update = function()
                   if not is_version_unstable(latest_version) then
                     message = message
                       .. (
-                        "  Check the changelog at https://github.com/NTBBloodbath/doom-nvim/releases/tag/%s"
+                        "  Check the changelog at https://github.com/doom-neovim/doom-nvim/releases/tag/%s"
                       ):format(latest_version)
                   end
                   vim.notify(message)

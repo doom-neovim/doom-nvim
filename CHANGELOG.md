@@ -63,20 +63,20 @@ Some "soft" breaking changes in this releases (should handle itself but could st
 ### Features
 * feat(lsp): Enabled ghost_text by default
 * feat(dockerfile): Added Dockerfile language support.
-* feat(ocaml): add ocaml language support by @edwintorok in https://github.com/NTBBloodbath/doom-nvim/pull/373
+* feat(ocaml): add ocaml language support by @edwintorok in https://github.com/doom-neovim/doom-nvim/pull/373
 * feat(html): Add html language support
 
 ### Fixes
 * fix(langs,typescript): Add `tsx` treesitter grammer to `typescript` language support.
 * fix(netrw): do not disable loading netrw when netrw feature is enabled
 * fix(linter): Increased formatting timeout. (fixes lsp formatting timing out on large documents)
-* fix Dockerfile, lsp warning and preserve_edit_pos by @edwintorok in https://github.com/NTBBloodbath/doom-nvim/pull/371
-* Fix netrw and explorer features by @edwintorok in https://github.com/NTBBloodbath/doom-nvim/pull/380
-* fix(statusline): increase contrast by @edwintorok in https://github.com/NTBBloodbath/doom-nvim/pull/381
+* fix Dockerfile, lsp warning and preserve_edit_pos by @edwintorok in https://github.com/doom-neovim/doom-nvim/pull/371
+* Fix netrw and explorer features by @edwintorok in https://github.com/doom-neovim/doom-nvim/pull/380
+* fix(statusline): increase contrast by @edwintorok in https://github.com/doom-neovim/doom-nvim/pull/381
   - improves support for older colour schemes + correctly handles when highlights are reversed.
 
 ### New Contributors
-* @edwintorok made their first contribution in https://github.com/NTBBloodbath/doom-nvim/pull/371
+* @edwintorok made their first contribution in https://github.com/doom-neovim/doom-nvim/pull/371
 
 ## [4.0.1]
 
@@ -103,8 +103,8 @@ Some "soft" breaking changes in this releases (should handle itself but could st
   - `modules.lua` now only has two sections: `features` and `langs`
   - Modules defined in `lua/doom/modules/SECTION_NAME/MODULE_NAME`
   - Each module contains all plugins, config, keybinds, autocommands for a feature or a language.
-  - Users can override or add new modules by creating a folder in `lua/user/modules/SECTION_NAME/MODULE_NAME` ([implementing custom modules](https://github.com/NTBBloodbath/doom-nvim/docs/modules.md#building-your-own-module)).
-- refact!: `config.lua` to define your config programatically / imperatively using new [helper functions](https://github.com/NTBBloodbath/doom-nvim#configuring-and-personalising-configlua).
+  - Users can override or add new modules by creating a folder in `lua/user/modules/SECTION_NAME/MODULE_NAME` ([implementing custom modules](https://github.com/doom-neovim/doom-nvim/docs/modules.md#building-your-own-module)).
+- refact!: `config.lua` to define your config programatically / imperatively using new [helper functions](https://github.com/doom-neovim/doom-nvim#configuring-and-personalising-configlua).
 - feat: Added an install script (clones doom-nvim, checks out a new branch `my-config`).
 - feat: Added `repl` module (run code in neovim using [iron.nvim](https://github.com/hkupty/iron.nvim)).
 - feat: Added `annotations` module (generate code documentation using [neogen](https://github.com/danymat/neogen)) to replace broken `nvim-tree-docs` plugin.
@@ -150,8 +150,8 @@ Some "soft" breaking changes in this releases (should handle itself but could st
 - Implement `keybinds_mdoules` option in `doom_config.lua`, enable or disable Doom keybindings modules as you wish
   - Modularize keybindings
 - Add extra field to custom functions in order to choose if the function should be ran on startup or if should be a global function
-- Add modeline in `doom_config.lua` file [#139](https://github.com/NTBBloodbath/doom-nvim/pull/139)
-- Ignore editor artifacts [#141](https://github.com/NTBBloodbath/doom-nvim/pull/141)
+- Add modeline in `doom_config.lua` file [#139](https://github.com/doom-neovim/doom-nvim/pull/139)
+- Ignore editor artifacts [#141](https://github.com/doom-neovim/doom-nvim/pull/141)
 - Use a better syntax for Neovim folds
 - Add `escape_str` function to utils module
 - Add GTD (Getting Things Done) setup in Neorg
@@ -191,7 +191,7 @@ Some "soft" breaking changes in this releases (should handle itself but could st
 - Update doom-one colorscheme
 - Reduce delay on LSP startup
 - Replace built-in Neovim `.txt` docs with Neorg-based docs
-- Refact configuration files handling [#108](https://github.com/NTBBloodbath/doom-nvim/pull/108)
+- Refact configuration files handling [#108](https://github.com/doom-neovim/doom-nvim/pull/108)
 - Invert Doom Lua modules loading order, in that way we will load Neovim configurations first
 - Use `xpcall` instead of `pcall` in all modules to provide a better tracback in case of an error
 - Rename all our Lua modules tables from `M` to a more logical name, e.g. `system` for system module
@@ -205,16 +205,16 @@ Some "soft" breaking changes in this releases (should handle itself but could st
   - Lazy-load more plugins
   - Do not lazy-load nvim-mapper
   - Enable `neorg` by default
-  - Replace [nvim-compe](https://github.com/hrsh7th/nvim-compe) with [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) [#119](https://github.com/NTBBloodbath/doom-nvim/pull/119)
+  - Replace [nvim-compe](https://github.com/hrsh7th/nvim-compe) with [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) [#119](https://github.com/doom-neovim/doom-nvim/pull/119)
   - Replace [nvim-lspinstall](https://github.com/kabouzeid/nvim-lspinstall) with [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer)
   - Use NTBBloodbath's galaxyline fork
   - Update `gitsigns` configurations
   - Update `nvim-tree` configurations
   - Update `bufferline` configurations
-  - Update `dap-ui` configurations [#114](https://github.com/NTBBloodbath/doom-nvim/pull/114)
+  - Update `dap-ui` configurations [#114](https://github.com/doom-neovim/doom-nvim/pull/114)
   - Update `neorg` tree-sitter parser files
   - Use `,o` as neorg leader instead of `<leader>o`
-  - Drop a line from Doom logo in dashboard [#140](https://github.com/NTBBloodbath/doom-nvim/pull/140)
+  - Drop a line from Doom logo in dashboard [#140](https://github.com/doom-neovim/doom-nvim/pull/140)
   - Small statusline improvements for small windows
 
 ### Fixed
@@ -230,9 +230,9 @@ Some "soft" breaking changes in this releases (should handle itself but could st
 - Provide Neovim 0.6 LSP API changes
 - Proper precedence in paths to source Doom configuration files
 - Proper example for custom options in `doom_config` file
-- Make sure plugins are loaded in a correct order [#120](https://github.com/NTBBloodbath/doom-nvim/pull/120)
-- Remove non-neeeded `bufdo e`. Fixes [#127](https://github.com/NTBBloodbath/doom-nvim/issues/127)
-- Do not try to load `which-key.nvim` plugin if not installed. Fixes [#124](https://github.com/NTBBloodbath/doom-nvim/issues/124)
+- Make sure plugins are loaded in a correct order [#120](https://github.com/doom-neovim/doom-nvim/pull/120)
+- Remove non-neeeded `bufdo e`. Fixes [#127](https://github.com/doom-neovim/doom-nvim/issues/127)
+- Do not try to load `which-key.nvim` plugin if not installed. Fixes [#124](https://github.com/doom-neovim/doom-nvim/issues/124)
 - Bufferline was not being loaded sometimes
 - Run `BufEnter` autocommand after loading tree-sitter, fixes concealing on norg files
 - Properly fallback to doom-one, better logging messages in UI module
@@ -241,8 +241,8 @@ Some "soft" breaking changes in this releases (should handle itself but could st
 
 ### Removed
 
-- Selene linter comments and references [#106](https://github.com/NTBBloodbath/doom-nvim/pull/106)
-- Do not disable syntax highlighting on launch. Closes [#131](https://github.com/NTBBloodbath/doom-nvim/issues/131)
+- Selene linter comments and references [#106](https://github.com/doom-neovim/doom-nvim/pull/106)
+- Do not disable syntax highlighting on launch. Closes [#131](https://github.com/doom-neovim/doom-nvim/issues/131)
 - Remove some built-in Neovim plugins loading logic to allow them to be used
 - Remove shada logic, we do not really need to temporarily disable it
 
@@ -251,24 +251,24 @@ Some "soft" breaking changes in this releases (should handle itself but could st
 ### Changed
 
 - Updated `dap-ui` plugin configurations to match recent breaking changes.
-  See [#114](https://github.com/NTBBloodbath/doom-nvim/pull/114) and [#137](https://github.com/NTBBloodbath/doom-nvim/pull/137)
-- Updated `gitsigns` plugin configurations to match recent breaking changes. See [#115](https://github.com/NTBBloodbath/doom-nvim/pull/122)
+  See [#114](https://github.com/doom-neovim/doom-nvim/pull/114) and [#137](https://github.com/doom-neovim/doom-nvim/pull/137)
+- Updated `gitsigns` plugin configurations to match recent breaking changes. See [#115](https://github.com/doom-neovim/doom-nvim/pull/122)
 - Updated `nvim-tree.lua` plugin configurations
-- Updated Neorg URL, neorg is now under `nvim-neorg` organization. See [#115](https://github.com/NTBBloodbath/doom-nvim/pull/115)
+- Updated Neorg URL, neorg is now under `nvim-neorg` organization. See [#115](https://github.com/doom-neovim/doom-nvim/pull/115)
 - Updated some other plugins URLs
-- Use `,o` instead of `<leader>o` as Neorg leader. Fixes [#110](https://github.com/NTBBloodbath/doom-nvim/issues/110)
+- Use `,o` instead of `<leader>o` as Neorg leader. Fixes [#110](https://github.com/doom-neovim/doom-nvim/issues/110)
 
 ### Fixed
 
 - Proper conditional for triggering dashboard-nvim plugin (re-apply)
-- Correct description for splits in documentation. See [#128](https://github.com/NTBBloodbath/doom-nvim/pull/128)
-- Do not try to load which-key.nvim if not installed. Fixes [#124](https://github.com/NTBBloodbath/doom-nvim/issues/124)
+- Correct description for splits in documentation. See [#128](https://github.com/doom-neovim/doom-nvim/pull/128)
+- Do not try to load which-key.nvim if not installed. Fixes [#124](https://github.com/doom-neovim/doom-nvim/issues/124)
 - Language servers not being installed with `+lsp` flag in `doomrc`.
-  Fixes [#87](https://github.com/NTBBloodbath/doom-nvim/issues/87), see [#149](https://github.com/NTBBloodbath/doom-nvim/pull/149)
+  Fixes [#87](https://github.com/doom-neovim/doom-nvim/issues/87), see [#149](https://github.com/doom-neovim/doom-nvim/pull/149)
 
 ### Removed
 
-- Non-needed `bufdo e`, this was causing issues with `nvim -d file1 file2`. Fixes [#127](https://github.com/NTBBloodbath/doom-nvim/issues/127)
+- Non-needed `bufdo e`, this was causing issues with `nvim -d file1 file2`. Fixes [#127](https://github.com/doom-neovim/doom-nvim/issues/127)
 
 ## [3.1.1] - 2021-09-02
 
@@ -282,7 +282,7 @@ Some "soft" breaking changes in this releases (should handle itself but could st
 
 ### Added
 
-- Options field to `doom_config.lua`, see [#62](https://github.com/NTBBloodbath/doom-nvim/pull/62)
+- Options field to `doom_config.lua`, see [#62](https://github.com/doom-neovim/doom-nvim/pull/62)
 - New prompt for editing doom configurations
 - Better internal errors handling
 - Allow to use options (e.g. silent) in the custom mappings
@@ -290,14 +290,14 @@ Some "soft" breaking changes in this releases (should handle itself but could st
 - `SPC - d - l` keybinding for manually reload configurations
 - Windows support (note that some plugins does not work well on Windows and that's not a doom issue!)
 - `SPC - d - s` keybinding now offers a live preview for the colorschemes
-- `tsx` tree-sitter parser is now installed alongside with the typescript one, see [#84](https://github.com/NTBBloodbath/doom-nvim/issues/84)
+- `tsx` tree-sitter parser is now installed alongside with the typescript one, see [#84](https://github.com/doom-neovim/doom-nvim/issues/84)
 - Allow to override default keymappings
 - Quick save with `SPC - v / m`
 - Jump keybindings on which-key
 - Keybindings to move lines (`Alt + j / k`)
 - `win_width` option, for automatically setting the windows width
 - You can now add your doom-nvim configurations to your dotfiles without having to use submodules!
-    See [#79](https://github.com/NTBBloodbath/doom-nvim/issues/79)
+    See [#79](https://github.com/doom-neovim/doom-nvim/issues/79)
 - Plugins:
   - New plugin: tree-sitter companion plugins (autotag, docs, etc)
   - New plugin: nvim-mapper, a keybindings cheatsheet
@@ -312,7 +312,7 @@ Some "soft" breaking changes in this releases (should handle itself but could st
 
 ### Changed
 
-- Assume `~/.config/nvim` rather than `~/.config/doom-nvim`, see [#41](https://github.com/NTBBloodbath/doom-nvim/pull/41)
+- Assume `~/.config/nvim` rather than `~/.config/doom-nvim`, see [#41](https://github.com/doom-neovim/doom-nvim/pull/41)
 - Autocommands and keybindings now lives in `doom.extras` instead of `doom.core`
 - Use a custom toggleterm instance for running and compiling code
 - `<leader><space>` keybind is now `<leader>` + \`
@@ -361,8 +361,8 @@ Some "soft" breaking changes in this releases (should handle itself but could st
 
 ### Fixed
 
-- Use `stdpath("config")` for configuration paths instead of `~/.config/doom-nvim` because doom-nvim is actually symlinked, respect `XDG_CONFIG_HOME` (see [#101](https://github.com/NTBBloodbath/doom-nvim/pull/101))
-- Update `<leader>dc` to match new config setup, ref [#101](https://github.com/NTBBloodbath/doom-nvim/pull/101). See [#102](https://github.com/NTBBloodbath/doom-nvim/pull/102)
+- Use `stdpath("config")` for configuration paths instead of `~/.config/doom-nvim` because doom-nvim is actually symlinked, respect `XDG_CONFIG_HOME` (see [#101](https://github.com/doom-neovim/doom-nvim/pull/101))
+- Update `<leader>dc` to match new config setup, ref [#101](https://github.com/doom-neovim/doom-nvim/pull/101). See [#102](https://github.com/doom-neovim/doom-nvim/pull/102)
 
 ## [3.0.12] - 2021-08-22
 
@@ -796,38 +796,38 @@ Some "soft" breaking changes in this releases (should handle itself but could st
 
 - Initial stable release
 
-[unreleased]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.2.0...develop
-[3.2.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.2...v3.2.0
-[3.1.2]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.1...v3.1.2
-[3.1.1]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.1.0...v3.1.1
-[3.1.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.13...v3.1.0
-[3.0.13]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.12...v3.0.13
-[3.0.12]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.11...v3.0.12
-[3.0.11]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.10...v3.0.11
-[3.0.10]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.9...v3.0.10
-[3.0.9]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.8...v3.0.9
-[3.0.8]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.7...v3.0.8
-[3.0.7]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.6...v3.0.7
-[3.0.6]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.5...v3.0.6
-[3.0.5]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.4...v3.0.5
-[3.0.4]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.3...v3.0.4
-[3.0.3]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.2...v3.0.3
-[3.0.2]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.1...v3.0.2
-[3.0.1]: https://github.com/NTBBloodbath/doom-nvim/compare/v3.0.0...v3.0.1
-[3.0.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.6...v3.0.0
-[2.3.6]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.5...v2.3.6
-[2.3.5]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.4...v2.3.5
-[2.3.4]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.3...v2.3.4
-[2.3.3]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.2...v2.3.3
-[2.3.2]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.1...v2.3.2
-[2.3.1]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.3.0...v2.3.1
-[2.3.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.2.0...v2.3.0
-[2.2.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.5...v2.2.0
-[2.1.5]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.4...v2.1.5
-[2.1.4]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.3...v2.1.4
-[2.1.3]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.2...v2.1.3
-[2.1.2]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.1.0...v2.1.2
-[2.1.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v2.0.0...v2.1.0
-[2.0.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v1.2.0...v2.0.0
-[1.2.0]: https://github.com/NTBBloodbath/doom-nvim/compare/v0.2.0...v0.3.0
-[1.0.0]: https://github.com/NTBBloodbath/doom-nvim/releases/tag/v1.0.0
+[unreleased]: https://github.com/doom-neovim/doom-nvim/compare/v3.2.0...develop
+[3.2.0]: https://github.com/doom-neovim/doom-nvim/compare/v3.1.2...v3.2.0
+[3.1.2]: https://github.com/doom-neovim/doom-nvim/compare/v3.1.1...v3.1.2
+[3.1.1]: https://github.com/doom-neovim/doom-nvim/compare/v3.1.0...v3.1.1
+[3.1.0]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.13...v3.1.0
+[3.0.13]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.12...v3.0.13
+[3.0.12]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.11...v3.0.12
+[3.0.11]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.10...v3.0.11
+[3.0.10]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.9...v3.0.10
+[3.0.9]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.8...v3.0.9
+[3.0.8]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.7...v3.0.8
+[3.0.7]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.6...v3.0.7
+[3.0.6]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.5...v3.0.6
+[3.0.5]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.4...v3.0.5
+[3.0.4]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.3...v3.0.4
+[3.0.3]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.2...v3.0.3
+[3.0.2]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.1...v3.0.2
+[3.0.1]: https://github.com/doom-neovim/doom-nvim/compare/v3.0.0...v3.0.1
+[3.0.0]: https://github.com/doom-neovim/doom-nvim/compare/v2.3.6...v3.0.0
+[2.3.6]: https://github.com/doom-neovim/doom-nvim/compare/v2.3.5...v2.3.6
+[2.3.5]: https://github.com/doom-neovim/doom-nvim/compare/v2.3.4...v2.3.5
+[2.3.4]: https://github.com/doom-neovim/doom-nvim/compare/v2.3.3...v2.3.4
+[2.3.3]: https://github.com/doom-neovim/doom-nvim/compare/v2.3.2...v2.3.3
+[2.3.2]: https://github.com/doom-neovim/doom-nvim/compare/v2.3.1...v2.3.2
+[2.3.1]: https://github.com/doom-neovim/doom-nvim/compare/v2.3.0...v2.3.1
+[2.3.0]: https://github.com/doom-neovim/doom-nvim/compare/v2.2.0...v2.3.0
+[2.2.0]: https://github.com/doom-neovim/doom-nvim/compare/v2.1.5...v2.2.0
+[2.1.5]: https://github.com/doom-neovim/doom-nvim/compare/v2.1.4...v2.1.5
+[2.1.4]: https://github.com/doom-neovim/doom-nvim/compare/v2.1.3...v2.1.4
+[2.1.3]: https://github.com/doom-neovim/doom-nvim/compare/v2.1.2...v2.1.3
+[2.1.2]: https://github.com/doom-neovim/doom-nvim/compare/v2.1.0...v2.1.2
+[2.1.0]: https://github.com/doom-neovim/doom-nvim/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/doom-neovim/doom-nvim/compare/v1.2.0...v2.0.0
+[1.2.0]: https://github.com/doom-neovim/doom-nvim/compare/v0.2.0...v0.3.0
+[1.0.0]: https://github.com/doom-neovim/doom-nvim/releases/tag/v1.0.0

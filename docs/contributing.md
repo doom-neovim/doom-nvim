@@ -13,11 +13,11 @@ and which code style you should use :heart:
 
 ## Where can I help
 
-- If you’ve encountered a bug, [file a bug report](https://github.com/NTBBloodbath/doom-nvim/issues/new/choose).
-- Check out our [issue tracker](https://github.com/NTBBloodbath/doom-nvim/issues)
+- If you’ve encountered a bug, [file a bug report](https://github.com/doom-neovim/doom-nvim/issues/new/choose).
+- Check out our [issue tracker](https://github.com/doom-neovim/doom-nvim/issues)
   for reported issues. If you find one that you have an answer for, that would
   be a great help!
-- Look for issues tagged [help wanted](https://github.com/NTBBloodbath/doom-nvim/labels/help%20wanted).
+- Look for issues tagged [help wanted](https://github.com/doom-neovim/doom-nvim/labels/help%20wanted).
   These tend to be a little (or a lot) harder, and are issues outside my own expertise.
 - If you are a Windows user and you are interested in contributing to Doom Nvim
   so that it works correctly on your environment, you can do it freely since I

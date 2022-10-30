@@ -20,4 +20,4 @@
 
 ### Asking for help
 
-- [Our issues tracker](https://github.com/NTBBloodbath/doom-nvim/issues)
+- [Our issues tracker](https://github.com/doom-neovim/doom-nvim/issues)
