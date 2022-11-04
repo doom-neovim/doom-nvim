@@ -27,7 +27,7 @@ local core_modules = {
     "updater",
   },
 }
-modules.enabled_modules = vim.tbl_deep_extend("keep", core_modules, dofile(modules.source))
+modules.enabled_modules = vim.tbl_deep_extend("force", core_modules, dofile(modules.source))
 
 local system = require("doom.core.system")
 

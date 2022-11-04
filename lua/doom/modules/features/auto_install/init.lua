@@ -2,6 +2,12 @@
 --- Most logic for this module is inside of `lua/doom/modules/langs/utils`
 local auto_install = {}
 
+---@toc_entry doc_gen.settings
+---@text ## Settings
+---
+--- Settings for the `doom.core.auto_install` module.
+---
+---@eval return doom.core.doc_gen.generate_settings(MiniDoc.current.eval_section)
 auto_install.settings = {
   --- Settings for mason-lspconfig
   lsp = {
@@ -11,7 +17,10 @@ auto_install.settings = {
     automatic_installation = true,
   },
 }
+---minidoc_afterlines_end
 
+---@toc_entry doc_gen.packages
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.auto_install")
 auto_install.packages = {
   ["mason.nvim"] = {
     "williamboman/mason.nvim",
@@ -20,6 +29,7 @@ auto_install.packages = {
   ["mason-lspconfig"] = {
     "williamboman/mason-lspconfig",
     commit = "b70dedab5ceb5f3f84c6bc9ceea013292a14f8dc",
+    opt = true,
   },
 }
 
@@ -28,6 +38,7 @@ auto_install.configs["mason.nvim"] = function()
   require("mason").setup()
 end
 
+---@eval return doom.core.doc_gen.generate_commands_documentation("features.auto_install")
 auto_install.cmds = {
   -- We can't lazy load mason-lspconfig through packer because some helper
   -- functions in lua/modules/langs/utils.lua require access to the plugin
@@ -40,6 +51,7 @@ auto_install.cmds = {
       vim.cmd("lua require('mason-lspconfig').setup(doom.features.auto_install.settings.lsp)")
       vim.cmd("LspInstall " .. opts.args)
     end,
+    description = "Install an LSP",
   },
   {
     "LspUninstall",
@@ -48,6 +60,7 @@ auto_install.cmds = {
       vim.cmd("lua require('mason-lspconfig').setup(doom.features.auto_install.settings.lsp)")
       vim.cmd("LspInstall " .. opts.args)
     end,
+    description = "Uninstall an LSP",
   },
 }
 

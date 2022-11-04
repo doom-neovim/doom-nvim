@@ -1,6 +1,6 @@
 local lsp = {}
 
---- Internal state of LSP module
+-- Internal state of LSP module
 -- Flag to enable/disable completions for <leader>tc keybind.
 lsp.__completions_enabled = true
 

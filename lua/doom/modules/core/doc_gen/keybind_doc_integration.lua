@@ -76,9 +76,6 @@ local get_max_lengths = function(rows)
 
   for _, row in ipairs(rows) do
     for index, cell in ipairs(row) do
-      print(
-        index .. "| " .. cell .. " length is " .. string.len(cell) .. " vs " .. max_lengths[index]
-      )
       max_lengths[index] = math.max(max_lengths[index], string.len(cell))
     end
   end
@@ -106,10 +103,6 @@ module.print_markdown = function()
       line = line .. string.format(" %s |", pad_left(cell, max_lengths[index]))
     end
     table.insert(result, line)
-  end
-
-  for _, line in ipairs(result) do
-    print(line)
   end
 
   return result
