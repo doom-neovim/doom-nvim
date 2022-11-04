@@ -1,9 +1,14 @@
+---@text # `doom.core.doom`
+---
+--- Internal module providing much of the keybinds and glue for doom.nvim.
+---
+--- Most settings here are configured via the `doom.settings`. Global object.
 local required = {}
 
-required.settings = {
-  mapper = {},
-}
+required.settings = {}
 
+---@toc_entry doom.packages
+---@eval return doom.core.doc_gen.generate_packages_documentation("core.doom")
 required.packages = {
   ["packer.nvim"] = {
     "wbthomason/packer.nvim",
@@ -39,6 +44,12 @@ required.packages = {
 
 required.configs = {}
 
+---@toc_entry doc_gen.binds
+---@text ## Keybinds
+---
+--- Keybinds for the doom module.
+---
+---@eval return doom.core.doc_gen.generate_keybind_table(doom.core.doom.binds)
 required.binds = function()
   local binds = {
     { "ZZ", require("doom.core.functions").quit_doom, name = "Fast exit" },
@@ -296,11 +307,22 @@ required.binds = function()
   return binds
 end
 
+---@toc_entry doom.autocmds
+---
+---@eval return doom.core.doc_gen.generate_automcmds_documentation("core.doom")
 required.autocmds = function()
   local autocmds = {}
 
   if doom.autosave then
-    table.insert(autocmds, { "TextChanged,InsertLeave", "<buffer>", "silent! write" })
+    table.insert(
+      autocmds,
+      {
+        "TextChanged,InsertLeave",
+        "<buffer>",
+        "silent! write",
+        description = "Autosaves buffer (if `doom.autosave` is true)",
+      }
+    )
   end
 
   if doom.highlight_yank then
@@ -310,6 +332,7 @@ required.autocmds = function()
       function()
         require("vim.highlight").on_yank({ higroup = "Search", timeout = 200 })
       end,
+      description = "Highlights yanked text (if `doom.highlight_yank` is true)",
     })
   end
 
@@ -318,18 +341,27 @@ required.autocmds = function()
       "BufReadPost",
       "*",
       [[if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]],
+      description = "Preserves edit position (if `doom.preserve_edit_pos` is true)",
     })
   end
   return autocmds
 end
 
+---@toc_entry doom.cmds
+---
+---@eval return doom.core.doc_gen.generate_commands_documentation("core.doom")
 required.cmds = {
-  { "DoomProfile", function(opts)
-    local show_async = string.find(opts.args, "async") ~= nil
-    require("doom.services.profiler").log({
-      show_async = show_async,
-    })
-  end, { nargs = "*" } }
+  {
+    "DoomProfile",
+    function(opts)
+      local show_async = string.find(opts.args, "async") ~= nil
+      require("doom.services.profiler").log({
+        show_async = show_async,
+      })
+    end,
+    { nargs = "*" },
+    description = "Shows total startup time of the doom framework.",
+  },
 }
 
 return required

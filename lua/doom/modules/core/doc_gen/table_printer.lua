@@ -48,8 +48,6 @@ table_printer.print = function(data, keys, titles)
   end
 
   local max_lengths = table_printer._get_max_lengths(rows)
-  print(vim.inspect(max_lengths))
-  print(vim.inspect(rows))
 
   local pad_left = table_printer.pad_left
   local result = {}

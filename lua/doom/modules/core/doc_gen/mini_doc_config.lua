@@ -1,272 +1,271 @@
 -- This contains the config to override mini.doc and produce markdown documents
 
 local config = function()
-local H = {}
-local doc_gen = doom.core.doc_gen
-print(doc_gen)
-local output_format = doc_gen.settings.output_format
+  local H = {}
+  local doc_gen = doom.core.doc_gen
+  local output_format = doc_gen.settings.output_format
 
-local doc = require("mini.doc")
-local config = doc_gen.settings.output_format == "helpdoc" and {}
-  or {
-    hooks = {
-      -- Applied to block before anything else
-      --minidoc_replace_start block_pre = --<function: infers header sections (tag and/or signature)>,
-      block_pre = function(b)
-        -- Infer metadata based on afterlines
-        if b:has_lines() and #b.info.afterlines > 0 then
-          H.infer_header(b)
-        end
-      end,
-      --minidoc_replace_end
-
-      -- Applied to section before anything else
-      --minidoc_replace_start section_pre = --<function: replaces current aliases>,
-      section_pre = function(s)
-        H.alias_replace(s)
-      end,
-      --minidoc_replace_end
-
-      -- Applied if section has specified captured id
-      sections = {
-        --minidoc_replace_start ['@alias'] = --<function: registers alias in MiniDoc.current.aliases>,
-        ["@alias"] = function(s)
-          H.alias_register(s)
-          -- NOTE: don't use `s.parent:remove(s.parent_index)` here because it
-          -- disrupts iteration over block's section during hook application
-          -- (skips next section).
-          s:clear_lines()
-        end,
-        --minidoc_replace_end
-        --minidoc_replace_start ['@class'] = --<function>,
-        ["@class"] = function(s)
-          H.enclose_var_name(s)
-          H.add_section_heading(s, "Class")
-        end,
-        --minidoc_replace_end
-        --minidoc_replace_start ['@diagnostic'] = --<function: ignores any section content>,
-        ["@diagnostic"] = function(s)
-          s:clear_lines()
-        end,
-        --minidoc_replace_end
-        -- For most typical usage see |MiniDoc.afterlines_to_code|
-        --minidoc_replace_start ['@eval'] = --<function: evaluates lines; replaces with their return>,
-        ["@eval"] = function(s)
-          local src = table.concat(s, "\n")
-          local is_loaded, code = pcall(function()
-            return assert(loadstring(src))
-          end)
-          local output
-          if is_loaded then
-            MiniDoc.current.eval_section = s
-            local ok, output_or_error = pcall(code)
-            MiniDoc.current.eval_section = nil
-            if not ok then
-              print(
-                "MINIDOC ERROR. Error while evaluating `@eval` block of \n\n "
-                  .. src
-                  .. "\n\nReason\n"
-                  .. vim.inspect(output_or_error)
-              )
-              return
-            else
-              output = output_or_error
-            end
-          else
-            output = "MINIDOC ERROR. Parsing Lua code gave the following error:\n" .. code
-          end
-
-          s:clear_lines()
-
-          if output == nil then
-            return
-          end
-          if type(output) == "string" then
-            output = vim.split(output, "\n")
-          end
-          if type(output) ~= "table" then
-            s[1] = "MINIDOC ERROR. Returned value should be `nil`, `string`, or `table`."
-            return
-          end
-          for _, x in ipairs(output) do
-            s:insert(x)
+  local doc = require("mini.doc")
+  local config = doc_gen.settings.output_format == "helpdoc" and {}
+    or {
+      hooks = {
+        -- Applied to block before anything else
+        --minidoc_replace_start block_pre = --<function: infers header sections (tag and/or signature)>,
+        block_pre = function(b)
+          -- Infer metadata based on afterlines
+          if b:has_lines() and #b.info.afterlines > 0 then
+            H.infer_header(b)
           end
         end,
         --minidoc_replace_end
-        --minidoc_replace_start ['@field'] = --<function>,
-        ["@field"] = function(s)
-          H.mark_optional(s)
-          H.enclose_var_name(s)
-          H.enclose_type(s, "`%(%1%)`", s[1]:find("%s"))
-        end,
-        --minidoc_replace_end
-        --minidoc_replace_start ['@overload'] = --<function>,
-        ["@overload"] = function(s)
-          H.enclose_type(s, "`%1`", 1)
-          H.add_section_heading(s, "Overload")
-        end,
-        --minidoc_replace_end
-        --minidoc_replace_start ['@param'] = --<function>,
-        ["@param"] = function(s)
-          H.mark_optional(s)
-          H.enclose_var_name(s)
-          H.enclose_type(s, "`%(%1%)`", s[1]:find("%s"))
-        end,
-        --minidoc_replace_end
-        --minidoc_replace_start ['@private'] = --<function: registers block for removal>,
-        ["@private"] = function(s)
-          s.parent:clear_lines()
-        end,
-        --minidoc_replace_end
-        --minidoc_replace_start ['@return'] = --<function>,
-        ["@return"] = function(s)
-          H.mark_optional(s)
-          H.enclose_type(s, "`%1%`", 1)
-          H.add_section_heading(s, "Return")
-        end,
-        --minidoc_replace_end
-        --minidoc_replace_start ['@seealso'] = --<function>,
-        ["@seealso"] = function(s)
-          H.add_section_heading(s, "See also")
-        end,
-        --minidoc_replace_end
-        --minidoc_replace_start ['@signature'] = --<function: formats signature of documented object>,
-        ["@signature"] = function(s)
-          for i, _ in ipairs(s) do
-            if output_format ~= "markdown" then
-              -- Add extra formatting to make it stand out
-              s[i] = H.format_signature(s[i])
 
-              -- Align accounting for concealed characters
-              s[i] = H.align_text(s[i], 78, "center")
-            else
-              s:clear_lines()
-            end
-          end
+        -- Applied to section before anything else
+        --minidoc_replace_start section_pre = --<function: replaces current aliases>,
+        section_pre = function(s)
+          H.alias_replace(s)
         end,
         --minidoc_replace_end
-        --minidoc_replace_start ['@tag'] = --<function: turns its line in proper tag lines>,
-        ["@tag"] = function(s)
-          for i, _ in ipairs(s) do
-            if output_format ~= "markdown" then
-              -- Enclose every word in `*`
-              s[i] = s[i]:gsub("(%S+)", "%*%1%*")
 
-              -- Align to right edge accounting for concealed characters
-              s[i] = H.align_text(s[i], 78, "right")
-            else
-              s:clear_lines()
-            end
-          end
-        end,
-        --minidoc_replace_end
-        --minidoc_replace_start ['@text'] = --<function: purposefully does nothing>,
-        ["@text"] = function() end,
-        --minidoc_replace_end
-        --minidoc_replace_start ['@toc'] = --<function: clears all section lines>,
-        ["@toc"] = function(s)
-          s:clear_lines()
-        end,
-        --minidoc_replace_end
-        --minidoc_replace_start ['@toc_entry'] = --<function: registers lines for table of contents>,
-        ["@toc_entry"] = function(s)
-          H.toc_register(s)
-          if output_format == "markdown" then
+        -- Applied if section has specified captured id
+        sections = {
+          --minidoc_replace_start ['@alias'] = --<function: registers alias in MiniDoc.current.aliases>,
+          ["@alias"] = function(s)
+            H.alias_register(s)
+            -- NOTE: don't use `s.parent:remove(s.parent_index)` here because it
+            -- disrupts iteration over block's section during hook application
+            -- (skips next section).
             s:clear_lines()
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@class'] = --<function>,
+          ["@class"] = function(s)
+            H.enclose_var_name(s)
+            H.add_section_heading(s, "Class")
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@diagnostic'] = --<function: ignores any section content>,
+          ["@diagnostic"] = function(s)
+            s:clear_lines()
+          end,
+          --minidoc_replace_end
+          -- For most typical usage see |MiniDoc.afterlines_to_code|
+          --minidoc_replace_start ['@eval'] = --<function: evaluates lines; replaces with their return>,
+          ["@eval"] = function(s)
+            local src = table.concat(s, "\n")
+            local is_loaded, code = pcall(function()
+              return assert(loadstring(src))
+            end)
+            local output
+            if is_loaded then
+              MiniDoc.current.eval_section = s
+              local ok, output_or_error = pcall(code)
+              MiniDoc.current.eval_section = nil
+              if not ok then
+                print(
+                  "MINIDOC ERROR. Error while evaluating `@eval` block of \n\n "
+                    .. src
+                    .. "\n\nReason\n"
+                    .. vim.inspect(output_or_error)
+                )
+                return
+              else
+                output = output_or_error
+              end
+            else
+              output = "MINIDOC ERROR. Parsing Lua code gave the following error:\n" .. code
+            end
+
+            s:clear_lines()
+
+            if output == nil then
+              return
+            end
+            if type(output) == "string" then
+              output = vim.split(output, "\n")
+            end
+            if type(output) ~= "table" then
+              s[1] = "MINIDOC ERROR. Returned value should be `nil`, `string`, or `table`."
+              return
+            end
+            for _, x in ipairs(output) do
+              s:insert(x)
+            end
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@field'] = --<function>,
+          ["@field"] = function(s)
+            H.mark_optional(s)
+            H.enclose_var_name(s)
+            H.enclose_type(s, "`%(%1%)`", s[1]:find("%s"))
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@overload'] = --<function>,
+          ["@overload"] = function(s)
+            H.enclose_type(s, "`%1`", 1)
+            H.add_section_heading(s, "Overload")
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@param'] = --<function>,
+          ["@param"] = function(s)
+            H.mark_optional(s)
+            H.enclose_var_name(s)
+            H.enclose_type(s, "`%(%1%)`", s[1]:find("%s"))
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@private'] = --<function: registers block for removal>,
+          ["@private"] = function(s)
+            s.parent:clear_lines()
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@return'] = --<function>,
+          ["@return"] = function(s)
+            H.mark_optional(s)
+            H.enclose_type(s, "`%1%`", 1)
+            H.add_section_heading(s, "Return")
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@seealso'] = --<function>,
+          ["@seealso"] = function(s)
+            H.add_section_heading(s, "See also")
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@signature'] = --<function: formats signature of documented object>,
+          ["@signature"] = function(s)
+            for i, _ in ipairs(s) do
+              local _, args = s[i]:match("(%S-)(%b())")
+              if (args and args ~= "()") or output_format ~= "markdown" then
+                -- Add extra formatting to make it stand out
+                s[i] = H.format_signature(s[i])
+
+                -- Align accounting for concealed characters
+                s[i] = H.align_text(s[i], 78, "center")
+              else s:clear_lines()
+              end
+            end
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@tag'] = --<function: turns its line in proper tag lines>,
+          ["@tag"] = function(s)
+            for i, _ in ipairs(s) do
+              if output_format ~= "markdown" then
+                -- Enclose every word in `*`
+                s[i] = s[i]:gsub("(%S+)", "%*%1%*")
+
+                -- Align to right edge accounting for concealed characters
+                s[i] = H.align_text(s[i], 78, "right")
+              else
+                s:clear_lines()
+              end
+            end
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@text'] = --<function: purposefully does nothing>,
+          ["@text"] = function() end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@toc'] = --<function: clears all section lines>,
+          ["@toc"] = function(s)
+            s:clear_lines()
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@toc_entry'] = --<function: registers lines for table of contents>,
+          ["@toc_entry"] = function(s)
+            H.toc_register(s)
+            if output_format == "markdown" then
+              s:clear_lines()
+            end
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@type'] = --<function>,
+          ["@type"] = function(s)
+            H.enclose_type(s, "`%(%1%)`", 1)
+            H.add_section_heading(s, "Type")
+          end,
+          --minidoc_replace_end
+          --minidoc_replace_start ['@usage'] = --<function>,
+          ["@usage"] = function(s)
+            H.add_section_heading(s, "Usage")
+          end,
+          --minidoc_replace_end
+        },
+
+        -- Applied to section after all previous steps
+        --minidoc_replace_start section_post = --<function: currently does nothing>,
+        section_post = function(s) end,
+        --minidoc_replace_end
+
+        -- Applied to block after all previous steps
+        --minidoc_replace_start block_post = --<function: does many things>,
+        block_post = function(b)
+          if not b:has_lines() then
+            return
           end
+
+          local found_param, found_field = false, false
+          local n_tag_sections = 0
+          H.apply_recursively(function(x)
+            if not (type(x) == "table" and x.type == "section") then
+              return
+            end
+
+            -- Add headings before first occurence of a section which type usually
+            -- appear several times
+            if not found_param and x.info.id == "@param" then
+              H.add_section_heading(x, "Parameters")
+              found_param = true
+            end
+            if not found_field and x.info.id == "@field" then
+              H.add_section_heading(x, "Fields")
+              found_field = true
+            end
+
+            if x.info.id == "@tag" then
+              x.parent:remove(x.parent_index)
+              n_tag_sections = n_tag_sections + 1
+              x.parent:insert(n_tag_sections, x)
+            end
+          end, b)
+
+          if output_format ~= "markdown" then
+            b:insert(1, H.as_struct({ string.rep("-", 78) }, "section"))
+          end
+          b:insert(H.as_struct({ "" }, "section"))
         end,
         --minidoc_replace_end
-        --minidoc_replace_start ['@type'] = --<function>,
-        ["@type"] = function(s)
-          H.enclose_type(s, "`%(%1%)`", 1)
-          H.add_section_heading(s, "Type")
+
+        -- Applied to file after all previous steps
+        --minidoc_replace_start file = --<function: adds separator>,
+        file = function(f)
+          if not f:has_lines() or output_format == "markdown" then
+            return
+          end
+
+          f:insert(1, H.as_struct({ H.as_struct({ string.rep("=", 78) }, "section") }, "block"))
+          f:insert(H.as_struct({ H.as_struct({ "" }, "section") }, "block"))
         end,
         --minidoc_replace_end
-        --minidoc_replace_start ['@usage'] = --<function>,
-        ["@usage"] = function(s)
-          H.add_section_heading(s, "Usage")
+
+        -- Applied to doc after all previous steps
+        --minidoc_replace_start doc = --<function: adds modeline>,
+        doc = function(d)
+          -- Render table of contents
+          H.apply_recursively(function(x)
+            if not (type(x) == "table" and x.type == "section" and x.info.id == "@toc") then
+              return
+            end
+            H.toc_insert(x)
+          end, d)
+
+          -- Insert modeline
+          d:insert(H.as_struct({
+            H.as_struct(
+              { H.as_struct({ " vim:tw=78:ts=8:noet:ft=help:norl:" }, "section") },
+              "block"
+            ),
+          }, "file"))
         end,
         --minidoc_replace_end
       },
-
-      -- Applied to section after all previous steps
-      --minidoc_replace_start section_post = --<function: currently does nothing>,
-      section_post = function(s) end,
-      --minidoc_replace_end
-
-      -- Applied to block after all previous steps
-      --minidoc_replace_start block_post = --<function: does many things>,
-      block_post = function(b)
-        if not b:has_lines() then
-          return
-        end
-
-        local found_param, found_field = false, false
-        local n_tag_sections = 0
-        H.apply_recursively(function(x)
-          if not (type(x) == "table" and x.type == "section") then
-            return
-          end
-
-          -- Add headings before first occurence of a section which type usually
-          -- appear several times
-          if not found_param and x.info.id == "@param" then
-            H.add_section_heading(x, "Parameters")
-            found_param = true
-          end
-          if not found_field and x.info.id == "@field" then
-            H.add_section_heading(x, "Fields")
-            found_field = true
-          end
-
-          if x.info.id == "@tag" then
-            x.parent:remove(x.parent_index)
-            n_tag_sections = n_tag_sections + 1
-            x.parent:insert(n_tag_sections, x)
-          end
-        end, b)
-
-        if output_format ~= "markdown" then
-          b:insert(1, H.as_struct({ string.rep("-", 78) }, "section"))
-        end
-        b:insert(H.as_struct({ "" }, "section"))
-      end,
-      --minidoc_replace_end
-
-      -- Applied to file after all previous steps
-      --minidoc_replace_start file = --<function: adds separator>,
-      file = function(f)
-        if not f:has_lines() or output_format == "markdown" then
-          return
-        end
-
-        f:insert(1, H.as_struct({ H.as_struct({ string.rep("=", 78) }, "section") }, "block"))
-        f:insert(H.as_struct({ H.as_struct({ "" }, "section") }, "block"))
-      end,
-      --minidoc_replace_end
-
-      -- Applied to doc after all previous steps
-      --minidoc_replace_start doc = --<function: adds modeline>,
-      doc = function(d)
-        -- Render table of contents
-        H.apply_recursively(function(x)
-          if not (type(x) == "table" and x.type == "section" and x.info.id == "@toc") then
-            return
-          end
-          H.toc_insert(x)
-        end, d)
-
-        -- Insert modeline
-        d:insert(H.as_struct({
-          H.as_struct(
-            { H.as_struct({ " vim:tw=78:ts=8:noet:ft=help:norl:" }, "section") },
-            "block"
-          ),
-        }, "file"))
-      end,
-      --minidoc_replace_end
-    },
-  }
+    }
 
   -- Hidden methods
   --
@@ -285,15 +284,15 @@ local config = doc_gen.settings.output_format == "helpdoc" and {}
     -- Determine if line is a function definition. Captures function name and
     -- arguments. For reference see '2.5.9 – Function Definitions' in Lua manual.
     afterline_fundef = {
-      '^function%s+(%S-)(%b())',             -- Regular definition
-      '^local%s+function%s+(%S-)(%b())',     -- Local definition
-      '^(%S+)%s*=%s*function(%b())',         -- Regular assignment
+      '^function%s+(%S-)(%b())', -- Regular definition
+      '^local%s+function%s+(%S-)(%b())', -- Local definition
+      '^(%S+)%s*=%s*function(%b())', -- Regular assignment
       '^local%s+(%S+)%s*=%s*function(%b())', -- Local assignment
     },
 
     -- Determine if line is a general assignment
     afterline_assign = {
-      '^(%S-)%s*=',         -- General assignment
+      '^(%S-)%s*=', -- General assignment
       '^local%s+(%S-)%s*=', -- Local assignment
     },
 
@@ -308,7 +307,7 @@ local config = doc_gen.settings.output_format == "helpdoc" and {}
   }
 
   H.get_config =
-    function(config) return vim.tbl_deep_extend('force', MiniDoc.config, vim.b.minidoc_config or {}, config or {}) end
+  function(config) return vim.tbl_deep_extend('force', MiniDoc.config, vim.b.minidoc_config or {}, config or {}) end
 
   -- Work with project specific script ==========================================
   H.execute_project_script = function(input, output, config)

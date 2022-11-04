@@ -14,7 +14,7 @@
 --- -- modules.lua
 --- return {
 ---   core = {
----     "doom", -- Must include all other core modules
+---     "required", -- Must include all other core modules
 ---     "nest",
 ---     "reloader",
 ---     "treesitter",
@@ -68,12 +68,15 @@ doc_gen.binds = {
   },
 }
 
+---@toc_entry doc_gen.cmds
+---
+---@eval return doom.core.doc_gen.generate_commands_documentation("core.doc_gen")
 doc_gen.cmds = {
   {
     "GenerateMarkdownDocCurrentFile",
     function()
       local output_ft = doc_gen.settings.output_format == "markdown" and "md" or "txt"
-      require("mini.doc").generate({ vim.fn.expand("%") }, ("%s/README.md"):format(vim.fn.expand("%:h"), output_ft), {})
+      require("mini.doc").generate({ vim.fn.expand("%") }, ("%s/index.md"):format(vim.fn.expand("%:h"), output_ft), {})
     end,
     name = "Document current file",
   },
@@ -126,6 +129,52 @@ doc_gen.generate_commands_documentation = function(path)
       for _, spec in ipairs(module.cmds) do
         table.insert(table_data, {
           cmd = ("`:%s`"):format(spec[1]),
+          description = spec["description"] or "",
+        })
+      end
+
+      table.insert(
+        result,
+        require("doom.modules.core.doc_gen.table_printer").print(
+          table_data,
+          { "cmd", "description" },
+          { "Command", "Description" }
+        )
+      )
+    else
+      table.insert(result, "This module does not create any commands.")
+    end
+    return table.concat(result, "\n")
+  end
+  return ""
+end
+--- Generates
+---@param path string Path to module from doom global object i.e. "core.doc_gen"
+doc_gen.generate_autocmds_documentation = function(path)
+  local segments = vim.split(path, "%.")
+  local module = doom[segments[1]][segments[2]]
+
+  if module then
+    local result = {
+      "## Commands",
+      "",
+    }
+    if module.cmds and #module.cmds > 0 then
+      table.insert(
+        result,
+        table.concat({
+          ("Commands for the `doom.%s.%s` module."):format(segments[1], segments[2]),
+          "",
+          "Note: Plugins may create additional commands, these will be avaliable once",
+          "the plugin loads.  Please check the docs for these [plugins](#plugins-packages).",
+        }, "\n")
+      )
+
+      local table_data = {}
+      for _, spec in ipairs(module.cmds) do
+        table.insert(table_data, {
+          event = spec[1],
+          pattern = spec[2],
           description = spec["description"] or "",
         })
       end

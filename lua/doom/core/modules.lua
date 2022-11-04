@@ -20,7 +20,7 @@ modules.source = utils.find_config(filename)
 -- Merge core modules (can't be disabled) with user enabled modules
 local core_modules = {
   core = {
-    "doom",
+    "required",
     "nest",
     "treesitter",
     "reloader",
