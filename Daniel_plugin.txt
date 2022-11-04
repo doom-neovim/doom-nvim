@@ -1,0 +1,107 @@
+
+ • FixCursorHold.nvim
+ • LuaSnip • aurora (not loaded)
+ • barbar.nvim
+ • better-escape.nvim (not loaded)
+ • cmp-buffer
+ • cmp-cmdline
+ • cmp-nvim-lsp
+ • cmp-nvim-lsp-signature-help
+ • cmp-path
+ • cmp-spell
+ • cmp_luasnip
+ • codi.vim -- Python scratch pad
+ • commented.nvim (not loaded)
+ • copilot-cmp (not loaded)
+ • copilot.vim
+ • crates.nvim (not loaded)
+ • dap-buddy.nvim
+ • dashboard-nvim
+ • filetype.nvim
+ • friendly-snippets
+ • git-conflict.nvim
+ • github-ci.nvim (not loaded)-- plugin by daniel, not complete. require "hub"
+ • gitlinker.nvim (not loaded) -- share code as a gist
+ • gitsigns.nvim
+ • gruvqueen (not loaded) -- theme
+ • hlargs.nvim -- Highlight arguments' definitions and usages, asynchronously, using Treesitter
+ • impatient.nvim
+ • indent-blankline.nvim -- indent sign (|)
+ • iswap.nvim -- swap order of func param
+ • lazygit.nvim (not loaded)
+ • lightspeed.nvim -- like HOP plugin
+ • lsp-colors.nvim
+ • lsp-status.nvim
+ • lspkind-nvim (them Icon cho LSP suggestion)
+ • lua-dev.nvim (manually loaded)
+ • markdown-preview.nvim
+ • material.nvim
+ • mkdir.nvim
+ • neogen (not loaded)
+ • neogit
+ • neomake (not loaded)
+ • neotest
+ • noice.nvim
+ • nui.nvim
+ • nvim-autopairs -- Auto generate close bracket when type open brackt
+ • nvim-bqf (not loaded) -- better quick fix
+ • nvim-cmp
+ • nvim-colorizer.lua
+ • nvim-coverage
+ • nvim-dap (not loaded)
+ • nvim-dap-python (not loaded)
+ • nvim-dap-ui (not loaded)
+ • nvim-gps
+ • nvim-jdtls (not loaded)
+ • nvim-lspconfig
+ • nvim-navic
+ • nvim-notify
+ • nvim-tree.lua (not loaded)
+ • nvim-treesitter
+ • nvim-treesitter-textobjects
+ • nvim-treesitter-textsubjects
+ • nvim-ts-autotag -- Use treesitter to autoclose and autorename html tag
+ • nvim-ts-context-commentstring
+ • nvim-ufo
+ • nvim-web-devicons
+ • nvim-yati -- Indent plugin with treesitter
+ • nvimux (not loaded)
+ • one-small-step-for-vimkind
+ • orgmode.nvim (not loaded)
+ • package-info.nvim (not loaded)
+ • packer.nvim (manually loaded)
+ • playground (not loaded)
+ • plenary.nvim
+ • presence.nvim -- Discord Rich Presence plugin for Neovim
+ • preview-swagger.nvim (not loaded) -- Preview swager in real time
+ • promise-async
+ • refactoring.nvim
+ • rust.vim (not loaded)
+ • sniprun (not loaded)
+ • sonokai (not loaded) -- theme
+ • spellsitter.nvim
+ • stabilize.nvim -- Neovim plugin to stabilize buffer content on window open/close events.
+ • suda.vim (not loaded)
+ • surround.nvim
+ • tabout.nvim
+ • telescope-file-browser.nvim
+ • telescope-fzf-native.nvim
+ • telescope-project.nvim
+ • telescope-ui-select.nvim
+ • telescope.nvim
+ • todo-comments.nvim (not loaded)
+ • tokyonight.nvim (not loaded)
+ • trouble.nvim (not loaded)
+ • urlview.nvim
+ • vgit.nvim -- like neogit. TODO: try to check
+ • vim-dispatch (not loaded)
+ • vim-fugitive (not loaded)
+ • vim-grammarous (not loaded)
+ • vim-matchup
+ • vim-slash (not loaded) -- improve search in nvim (press '/')
+ • vim-test (not loaded)
+ • vimwiki (not loaded)
+ • vscode.nvim (not loaded)
+ • which-key.nvim
+ • windline.nvim
+ • window-picker.nvim

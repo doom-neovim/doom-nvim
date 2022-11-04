@@ -1,0 +1,30 @@
+@document.meta
+title: todo
+description:
+authors: tuanba1
+categories:
+created: 2022-11-04
+updated: 2022-11-04
+version: 0.0.15
+@end
+
+*
+TODO: check why out put some line in open file (currently workaround by out put it into mini)
+
+* C-k not work randomly
+* integrate git-sign into git feature
+* Error msg when save
+* mark down lsp (remark) not work
+* Markdown preview
+* integrate octo plugin (edit github PR in nvim)
+* Telescope find file (leader-f-f) work not correct
+* binding C-g for Hop , not 'ghw'
+* resize windows hydra
+* better folding (maybe use UFO insteadof default tree-sitter)
+* copilot
+* sometime current line is undeadable because of grey color
+* Virtual whichkey hint
+* Neorg should auto load when open norg file
+* close (leader-b-d) buffer should go to the next buffer in bufferline
+* refactoring
+* Neogit confirm winfows when commiting code not correct (nothing display, not close )
