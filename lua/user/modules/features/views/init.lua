@@ -23,7 +23,15 @@ M.configs = {
 
 M.autocmds = {}
 
-M.cmds = {}
+M.cmds = {
+  -- command! BufferKillForce lua require('lvim.core.bufferline').buf_kill('bd', nil, true)
+  {
+    "BufferKillForce",
+    function()
+      require("lvim.core.bufferline").buf_kill("bd", nil, true)
+    end,
+  },
+}
 
 M.binds = {
   {

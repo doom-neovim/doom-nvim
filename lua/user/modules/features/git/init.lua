@@ -10,12 +10,16 @@ M.packages = {
   ["git-blame.nvim"] = {
     "f-person/git-blame.nvim",
   },
-  -- TODO: apply diff view on git
   ["diffview.nvim"] = {
     "sindrets/diffview.nvim",
     requires = 'nvim-lua/plenary.nvim'
   },
-
+  ["git-conflict.nvim"] = {
+    "akinsho/git-conflict.nvim",
+  },
+  ["gitsigns.nvim"] = {
+    "lewis6991/gitsigns.nvim",
+  },
 }
 
 M.configs = {
@@ -27,8 +31,13 @@ M.configs = {
     })
   end,
 
+  ["git-conflict.nvim"] = function()
+    require('git-conflict').setup()
+  end,
+  ["gitsigns.nvim"] = function()
+    require('gitsigns').setup()
+  end,
 }
-
 M.autocmds = {
 }
 
