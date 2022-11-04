@@ -45,14 +45,26 @@ M.cmds = {
 }
 
 -- TODO: fix bug doom-nvim, so it can load if 'M.bind= {}'
--- M.binds =
--- {
---   -- {
---   --   "ghw",
---   --   [[<cmd>HopWord<CR>]],
---   --   name = "Go to word in the screen",
---   --   mode = "nv",
---   -- },
--- }
-
-return M
+M.binds = {
+  {
+    "]c",
+    [[<cmd>Gitsigns next_hunk<CR>]],
+    name = "Next hunk",
+    mode = "n",
+  },
+  {
+    "[c",
+    [[<cmd>Gitsigns prev_hunk<CR>]],
+    name = "Prev hunk",
+    mode = "n",
+  },
+  {
+    "<leader>g",
+    -- name = "+git",
+    {
+      { "g", "<cmd>Neogit<CR>", name = "Neogit" },
+      { "l", "<cmd>Telescope git_bcommits<CR>", name = "Current buffer logs" },
+      { "L", "<cmd>Telescope git_commits<CR>", name = "Git Logs" },
+    }
+  },
+} return M
