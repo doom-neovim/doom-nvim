@@ -35,7 +35,6 @@ end
 ---@param titles string[]|nil Optional titles for `keys` parameter
 ---@return string The formatted table
 table_printer.print = function(data, keys, titles)
-  print(vim.inspect(data))
   -- Extract the desired keys from the table data
   local rows = {
     titles,

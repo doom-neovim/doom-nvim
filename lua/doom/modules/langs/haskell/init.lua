@@ -39,7 +39,6 @@ haskell.autocmds = {
     "haskell",
     langs_utils.wrap_language_setup("haskell", function()
       if not haskell.settings.disable_lsp then
-        print("starting lsp")
         langs_utils.use_lsp_mason(haskell.settings.lsp_name, {
           config = haskell.settings.lsp_config,
         })

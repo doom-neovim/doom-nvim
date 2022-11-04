@@ -29,7 +29,6 @@ auto_install.packages = {
   ["mason-lspconfig"] = {
     "williamboman/mason-lspconfig",
     commit = "b70dedab5ceb5f3f84c6bc9ceea013292a14f8dc",
-    opt = true,
   },
 }
 
