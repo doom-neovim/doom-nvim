@@ -14,6 +14,14 @@ rust.settings = {
   --- Name of the language server
   --- @type string
   lsp_name = "rust_analyzer",
+  --- Custom config to pass to nvim-lspconfig
+  --- @type table|nil
+  lsp_config = {
+    settings = {
+      ['rust-analyzer'] = {
+      }
+    }
+  },
 
   --- Disables null-ls formatting sources
   --- @type boolean
