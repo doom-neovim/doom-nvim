@@ -5,14 +5,13 @@
 -- automatically).
 
 -- ADDING A PACKAGE
---
--- doom.use_package("EdenEast/nightfox.nvim", "sainnhe/sonokai")
--- doom.use_package({
+-- doom.use_package("EdenEast/nightfox.nvim", "sainnhe/sonokai") doom.use_package({
 --   "ur4ltz/surround.nvim",
 --   config = function()
 --     require("surround").setup({mappings_style = "sandwich"})
 --   end
 -- })
+
 
 -- ADDING A KEYBIND
 --
@@ -85,3 +84,47 @@ doom.features.comment.binds = {
   },
 }
 --
+--
+-- some un categorized plugin here
+-- TODO: Will move them into a module
+
+-- doom.use_package({
+--   "WhoIsSethDaniel/toggle-lsp-diagnostics.nvim",
+--   config = function()
+--     require'toggle_lsp_diagnostics'.init()
+--   end
+-- })
+
+
+-- Packer
+
+doom.use_package({
+  "folke/noice.nvim",
+  config = function()
+    require("noice").setup({
+
+      notify = {enabled = false, view = "notify"},
+      messages = {enabled = true, view = "mini"},
+      lsp = {
+        -- progress = {enabled = false},
+        hover = {enabled = false},
+        signature = { enabled = false}
+      },
+    })
+
+  end,
+  requires = {
+    -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+    "MunifTanjim/nui.nvim",
+    -- OPTIONAL:
+    --   `nvim-notify` is only needed, if you want to use the notification view.
+    --   If not available, we use `mini` as the fallback
+    "rcarriga/nvim-notify",
+    }
+})
+
+-- fold setting
+local opt = vim.opt
+opt.foldlevel = 1
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
