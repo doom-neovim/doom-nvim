@@ -58,7 +58,7 @@ return {
   langs = {
     -- Scripts
     "lua",
-    "python",
+    -- "python",
     -- "bash",
     -- "fish",
     -- "gdscript",

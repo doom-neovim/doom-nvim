@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.0]
+
+See a more detailed changelist on the release https://github.com/doom-neovim/doom-nvim/releases/tag/v4.0.5.
+
+### What's Changed
+* fix(langs,vue): Reconfigured to use single LSP instance.
+* feat(core): Added `:DoomProfile` command to profile/trace internal startup time.
+* tweak(modules,neorg): Lazy-load neorg (-100ms on startup)
+* feat(modules, linter): Show null-ls source in error.
+* fix(modules,telescope): Fix `<leader>cs` symbols view
+* feat(modules,lsp): Cleaner completion menu
+* fix(modules,telescope): Fixed filebrowser `<leader>.` not opening files.
+* feat(core,treesitter): Add option to opt out of gcc/clang warning message
+* feat(core,langs): Improved error messaging with null-ls package install failures.
+* feat(langs): Add `lsp_config` option to configure lsp provider.
+* fix(comments): Update plugin call convention by @Fryuni in https://github.com/doom-neovim/doom-nvim/pull/404
+* fix(dashboard): Fix shortcuts shown on dashboard by @Fryuni in https://github.com/doom-neovim/doom-nvim/pull/403
+* Fixed backup dirs & added doom-nvim installed check by @Coloursplash in https://github.com/doom-neovim/doom-nvim/pull/401
+* feat(auto_install): Switch from nvim-lsp-installer to mason.nvim + various other improvements. by @connorgmeehan in https://github.com/doom-neovim/doom-nvim/pull/405
+
+
+### New Contributors
+* @Coloursplash made their first contribution in https://github.com/doom-neovim/doom-nvim/pull/401
+
+**Full Changelog**: https://github.com/doom-neovim/doom-nvim/compare/v4.0.5...v4.1.0
 
 ## [4.0.5]
 

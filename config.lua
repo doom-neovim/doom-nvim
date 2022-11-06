@@ -41,8 +41,4 @@
 --   { "FileType", "javascript", function() print('This is a javascript file') end }
 -- })
 
-doom.indent = 2
-doom.core.treesitter.settings.show_compiler_warning_message = false
-doom.core.reloader.settings.reload_on_save = false
-
 -- vim: sw=2 sts=2 ts=2 expandtab
