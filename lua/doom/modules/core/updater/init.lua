@@ -1,37 +1,49 @@
---[[
---  Doom updater
---
---  Update your doom nvim config using the :DoomUpdate command.
---  Currently disabled (not imported) because I'm not sure how nicely this will play
---  with user's own changes to config.lua/modules.lua.  May re-enable in future once
---  we land on a strategy to solve this.
---
---  One solution could be automatically creating a `user-config` branch on first load
---  and automatically pulling from tags into the `user-config` branch.
---
---  Works by fetching tags from origin, comparing semantic versions and checking out
---  the tag with the greatest semantic version.
---
---]]
+---@toc doom.core.updater
+---@text # Doom updater
+---
+--- Update your doom nvim config using the :DoomUpdate command.
+---
+--- For this module to work you must have your doom-nvim config in a seperate
+--- branch.  When you run `:DoomUpdate`, doom-nvim will check for new versions
+--- and attempt to merge it into your branch.  This could cause a merge conflict
+--- in your `config.lua` or `modules.lua` file but these should be - trivial
+--- to resolve as we don't update these files often.
+
 local updater = {}
-
---- @class DoomVersion
---- @field message string
---- @field major number
---- @field minor number
---- @field patch number
-
 updater.packages = {
-  ["plenary.nvim"] = {
-    "nvim-lua/plenary.nvim",
-    commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7",
-    module = "plenary",
+}
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.updater")
+updater.settings = {
+  --- Whether or not to use unstable (alpha builds)
+  --- @type boolean
+  --- @default false
+  unstable = false,
+}
+
+
+---@toc_entry doom.core.updater.cmds
+---
+---@eval return doom.core.doc_gen.generate_commands_documentation("core.updater")
+updater.cmds = {
+  {
+    "DoomUpdate",
+    function()
+      updater._try_update()
+    end,
+    description = "Update Doom-nvim to the latest version",
+  },
+  {
+    "DoomCheckUpdates",
+    function()
+      updater.check_updates(false)
+    end,
+    description = "Check and notify of any updates",
   },
 }
 
-updater.settings = {
-  unstable = false,
-}
+--- @toc_entry doom.core.updater.internal_methods
+--- Internal methods
 
 updater._cwd = vim.fn.stdpath("config")
 
@@ -335,19 +347,4 @@ updater._try_update = function()
     )
   end)
 end
-
-updater.cmds = {
-  {
-    "DoomUpdate",
-    function()
-      updater._try_update()
-    end,
-  },
-  {
-    "DoomCheckUpdates",
-    function()
-      updater.check_updates(false)
-    end,
-  },
-}
 return updater

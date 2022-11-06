@@ -1,5 +1,11 @@
+---@toc doom.langs.c_sharp
+---@text # CSS
+---
+--- Adds css language support to doom nvim.
+---
 local css = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.css")
 css.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -45,6 +51,7 @@ css.settings = {
   diagnostics_config = nil,
 }
 
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.css")
 local langs_utils = require("doom.modules.langs.utils")
 css.autocmds = {
   {

@@ -1,5 +1,11 @@
+---@toc doom.langs.markdown
+---@text # Markdown
+---
+--- Adds Markdown language support to doom nvim.
+---
 local markdown = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.markdown")
 markdown.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -33,6 +39,7 @@ markdown.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.markdown")
 markdown.autocmds = {
   {
     "FileType",

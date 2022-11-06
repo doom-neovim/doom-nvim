@@ -1,5 +1,11 @@
+---@toc doom.langs.gdscript
+---@text # Godot Script
+---
+--- Adds Godot Script language support to doom nvim.
+---
 local gdscript = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.gdscript")
 gdscript.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -43,6 +49,7 @@ gdscript.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.gdscript")
 gdscript.autocmds = {
   {
     "BufWinEnter",

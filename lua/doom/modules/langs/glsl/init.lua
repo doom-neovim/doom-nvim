@@ -1,5 +1,11 @@
+---@toc doom.langs.glsl
+---@text # GLSL
+---
+--- Adds GLSL language support to doom nvim.
+---
 local glsl = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.glsl")
 glsl.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -34,6 +40,7 @@ glsl.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.glsl")
 glsl.autocmds = {
   {
     "FileType",

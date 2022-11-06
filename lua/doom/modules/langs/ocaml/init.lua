@@ -1,5 +1,11 @@
+---@toc doom.langs.ocaml
+---@text # OCaml
+---
+--- Adds OCaml language support to doom nvim.
+---
 local ocaml = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.ocaml")
 ocaml.settings = {
   --- disables auto installing the treesitter
   --- @type boolean
@@ -20,6 +26,7 @@ ocaml.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.ocaml")
 ocaml.autocmds = {
   {
     "FileType",

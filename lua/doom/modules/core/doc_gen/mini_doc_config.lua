@@ -133,7 +133,7 @@ local config = function()
           ["@signature"] = function(s)
             for i, _ in ipairs(s) do
               local _, args = s[i]:match("(%S-)(%b())")
-              if (args and args ~= "()") or output_format ~= "markdown" then
+              if (args) or output_format ~= "markdown" then
                 -- Add extra formatting to make it stand out
                 s[i] = H.format_signature(s[i])
 

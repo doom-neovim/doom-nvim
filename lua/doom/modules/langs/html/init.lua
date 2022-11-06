@@ -1,5 +1,11 @@
+---@toc doom.langs.html
+---@text # HTML
+---
+--- Adds HTML language support to doom nvim.
+---
 local html = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.c_sharp")
 html.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -37,6 +43,7 @@ html.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.html")
 html.autocmds = {
   {
     "BufWinEnter",

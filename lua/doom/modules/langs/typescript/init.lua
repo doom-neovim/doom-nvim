@@ -1,5 +1,11 @@
+---@toc doom.langs.typescript
+---@text # Typescript
+---
+--- Adds Typescript language support to doom nvim.
+---
 local typescript = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.typescript")
 typescript.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -59,6 +65,7 @@ typescript.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.typescript")
 typescript.autocmds = {
   {
     "BufWinEnter",

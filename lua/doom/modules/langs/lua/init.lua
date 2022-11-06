@@ -1,5 +1,11 @@
+---@toc doom.langs.lua
+---@text # Lua
+---
+--- Adds Lua language support to doom nvim.
+---
 local lua = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.lua")
 lua.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -77,6 +83,7 @@ lua.settings = {
   },
 }
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("langs.lua")
 lua.packages = {
   ["lua-dev.nvim"] = {
     "folke/lua-dev.nvim",
@@ -86,6 +93,7 @@ lua.packages = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.lua")
 lua.autocmds = {
   {
     "FileType",

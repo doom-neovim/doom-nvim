@@ -1,5 +1,11 @@
+---@toc doom.langs.json
+---@text # JSON
+---
+--- Adds JSON language support to doom nvim.
+---
 local json = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.json")
 json.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -40,6 +46,7 @@ json.settings = {
   formatting_config = nil,
 }
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("langs.json")
 json.packages = {
   ["SchemaStore.nvim"] = {
     "b0o/SchemaStore.nvim",
@@ -49,6 +56,7 @@ json.packages = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.json")
 json.autocmds = {
   {
     "FileType",

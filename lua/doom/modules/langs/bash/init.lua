@@ -1,5 +1,12 @@
+
+---@toc doom.langs.c_sharp
+---@text # Bash
+---
+--- Adds bash language support to doom nvim.
+---
 local bash = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.bash")
 bash.settings = {
   --- disables auto installing the treesitter
   --- @type boolean
@@ -59,6 +66,8 @@ bash.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.bash")
 bash.autocmds = {
   {
     "FileType",
@@ -97,6 +106,7 @@ bash.autocmds = {
       end
     end),
     once = true,
+    description = "Sets up and configures the bash language config when opening bash files."
   },
 }
 

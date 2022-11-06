@@ -1,5 +1,15 @@
+---@toc doom.langs.vue
+---@text # Vue 3
+---
+--- Adds Vue 3 language support to doom nvim.
+---
+--- ## Trouble shooting
+--- - Make sure that you're using typescript version 4.x.x in your projects.  This
+---   module will try to use the local typescript install in `node_modules` but
+---   does not support any typescript version before v4.0.0.
 local vue = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.vue")
 vue.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -69,6 +79,7 @@ vue.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.vue")
 vue.autocmds = {
   {
     "FileType",

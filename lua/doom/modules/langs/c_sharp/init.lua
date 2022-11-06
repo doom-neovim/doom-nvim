@@ -1,5 +1,11 @@
+---@toc doom.langs.c_sharp
+---@text # C#
+---
+--- Adds C# language support to doom nvim.
+---
 local c_sharp = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.c_sharp")
 c_sharp.settings = {
   --- disables auto installing the treesitter
   --- @type boolean
@@ -43,6 +49,8 @@ c_sharp.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.c_sharp")
 c_sharp.autocmds = {
   {
     "FileType",

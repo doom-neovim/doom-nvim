@@ -1,5 +1,11 @@
+---@toc doom.langs.python
+---@text # Python
+---
+--- Adds Python language support to doom nvim.
+---
 local python = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.python")
 python.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -46,6 +52,7 @@ python.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.python")
 python.autocmds = {
   {
     "FileType",

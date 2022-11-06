@@ -1,5 +1,11 @@
+---@toc doom.langs.nix
+---@text # Nix (NixOS)
+---
+--- Adds Nix (NixOS) language support to doom nvim.
+---
 local nix = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.nix")
 nix.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -72,6 +78,7 @@ nix.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.nix")
 nix.autocmds = {
   {
     "FileType",

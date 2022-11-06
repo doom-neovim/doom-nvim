@@ -2,13 +2,13 @@
 ---
 --- Internal module providing much of the keybinds and glue for doom.nvim.
 ---
---- Most settings here are configured via the `doom.settings`. Global object.
+--- Most settings here are configured via the `doom.settings` table.
 local required = {}
 
 required.settings = {}
 
 ---@toc_entry doom.packages
----@eval return doom.core.doc_gen.generate_packages_documentation("core.doom")
+---@eval return doom.core.doc_gen.generate_packages_documentation("core.required")
 required.packages = {
   ["packer.nvim"] = {
     "wbthomason/packer.nvim",
@@ -49,10 +49,10 @@ required.configs = {}
 ---
 --- Keybinds for the doom module.
 ---
----@eval return doom.core.doc_gen.generate_keybind_table(doom.core.doom.binds)
+---@eval return doom.core.doc_gen.generate_keybind_table(doom.core.required.binds)
 required.binds = function()
   local binds = {
-    { "ZZ", require("doom.core.functions").quit_doom, name = "Fast exit" },
+    { "ZZ", require("doom.core.functions").quit_doom, name = "Quit nvim" },
     { "<ESC>", ":noh<CR>", name = "Remove search highlight" },
     { "<Tab>", ":bnext<CR>", name = "Jump to next buffer" },
     { "<S-Tab>", ":bprevious<CR>", name = "Jump to prev buffer" },
@@ -307,9 +307,7 @@ required.binds = function()
   return binds
 end
 
----@toc_entry doom.autocmds
----
----@eval return doom.core.doc_gen.generate_automcmds_documentation("core.doom")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("core.required")
 required.autocmds = function()
   local autocmds = {}
 
@@ -349,7 +347,7 @@ end
 
 ---@toc_entry doom.cmds
 ---
----@eval return doom.core.doc_gen.generate_commands_documentation("core.doom")
+---@eval return doom.core.doc_gen.generate_commands_documentation("core.required")
 required.cmds = {
   {
     "DoomProfile",

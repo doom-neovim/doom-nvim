@@ -11,7 +11,7 @@ mapper.packages = {
 -- TODO: Not happy with how messy the integrations are, refactor!
 mapper.configs = {}
 mapper.configs["nvim-mapper"] = function()
-  require("nvim-mapper").setup({})
+  require("nvim-mapper").setup()
   local keymaps_service = require("doom.services.keymaps")
 
   local get_mapper_integration = function()

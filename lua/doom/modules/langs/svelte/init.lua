@@ -1,5 +1,11 @@
+---@toc doom.langs.svelte
+---@text # Svelte
+---
+--- Adds Svelte language support to doom nvim.
+---
 local svelte = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.svelte")
 svelte.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -56,6 +62,7 @@ svelte.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.svelte")
 svelte.autocmds = {
   {
     "FileType",

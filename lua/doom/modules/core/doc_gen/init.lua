@@ -36,7 +36,7 @@ doc_gen.settings = {
   --The desired output format, this will configure mini
   --@type 'helpdoc'|'markdown'
   --@default 'helpdoc'
-  output_format = "markdown",
+  output_format = "helpdoc",
 }
 ---minidoc_afterlines_end
 
@@ -49,7 +49,7 @@ doc_gen.packages = {
 }
 
 doc_gen.configs = {}
-doc_gen.configs["mini_doc"] = require('doom.modules.core.doc_gen.mini_doc_config')
+doc_gen.configs["mini_doc"] = require("doom.modules.core.doc_gen.mini_doc_config")
 
 ---@toc_entry doc_gen.binds
 ---@text ## Keybinds
@@ -73,12 +73,23 @@ doc_gen.binds = {
 ---@eval return doom.core.doc_gen.generate_commands_documentation("core.doc_gen")
 doc_gen.cmds = {
   {
-    "GenerateMarkdownDocCurrentFile",
+    "GenerateDocCurrentFile",
     function()
+      local relative_file_path = vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.")
+
+      local relative_file_destination = vim.fn.fnamemodify(vim.fn.expand("%:h"), ":~:.")
+
+      if relative_file_path:sub(1, 3) == "lua" then
+        relative_file_destination = relative_file_destination:gsub("lua", "docs", 1)
+      end
       local output_ft = doc_gen.settings.output_format == "markdown" and "md" or "txt"
-      require("mini.doc").generate({ vim.fn.expand("%") }, ("%s/index.md"):format(vim.fn.expand("%:h"), output_ft), {})
+      require("mini.doc").generate(
+        { vim.fn.expand("%") },
+        ("%s/index.%s"):format(relative_file_destination, output_ft),
+        {}
+      )
     end,
-    name = "Document current file",
+    description = "Generates markdown documentation in the doc folder.",
   },
 }
 
@@ -97,10 +108,6 @@ doc_gen.generate_keybind_table = function(binds_field)
   local keymaps_service = require("doom.services.keymaps")
   keymaps_service.traverse(keymaps, nil, { doc_integration })
   return doc_integration.print_markdown()
-end
-
-doc_gen.generate_command_table = function(commands_field)
-  local commands = type(commands_field) == "function" and commands_field() or commands_field
 end
 
 --- Generates
@@ -152,26 +159,26 @@ end
 ---@param path string Path to module from doom global object i.e. "core.doc_gen"
 doc_gen.generate_autocmds_documentation = function(path)
   local segments = vim.split(path, "%.")
-  local module = doom[segments[1]][segments[2]]
+  local module = doom.modules[segments[1]][segments[2]]
 
   if module then
     local result = {
-      "## Commands",
+      "## Autocommands",
       "",
     }
-    if module.cmds and #module.cmds > 0 then
+    if module.autocmds and #module.autocmds > 0 then
       table.insert(
         result,
         table.concat({
-          ("Commands for the `doom.%s.%s` module."):format(segments[1], segments[2]),
+          ("Autocommands for the `doom.%s.%s` module."):format(segments[1], segments[2]),
           "",
-          "Note: Plugins may create additional commands, these will be avaliable once",
+          "Note: Plugins may create additional autocommands, these will be avaliable once",
           "the plugin loads.  Please check the docs for these [plugins](#plugins-packages).",
         }, "\n")
       )
 
       local table_data = {}
-      for _, spec in ipairs(module.cmds) do
+      for _, spec in ipairs(module.autocmds) do
         table.insert(table_data, {
           event = spec[1],
           pattern = spec[2],
@@ -183,8 +190,9 @@ doc_gen.generate_autocmds_documentation = function(path)
         result,
         require("doom.modules.core.doc_gen.table_printer").print(
           table_data,
-          { "cmd", "description" },
-          { "Command", "Description" }
+          { "event", "Event" },
+          { "pattern", "Pattern" },
+          { "description", "Description" }
         )
       )
     else
@@ -199,6 +207,7 @@ end
 doc_gen.generate_packages_documentation = function(path)
   local segments = vim.split(path, "%.")
   local module = doom[segments[1]][segments[2]]
+  local output_format = doom.core.doc_gen.settings.output_format
 
   if module then
     local pkg_names = vim.tbl_keys(module.packages)
@@ -230,14 +239,22 @@ doc_gen.generate_packages_documentation = function(path)
           or spec["autocmd"] ~= nil
           or spec["keys"] ~= nil
           or spec["ft"] ~= nil
+
+        local source = output_format == "markdown"
+            and ("[%s](https://github.com/%s)"):format(spec[1], spec[1])
+          or spec[1]
+
+        local commit = spec["commit"]
+            and (output_format == markdown and ("[%s](https://github.com/%s/commit/%s)"):format(
+              string.sub(spec["commit"], 8),
+              spec[1],
+              spec["commit"]
+            ) or string.sub(spec["commit"], 8))
+          or "N/A"
         table.insert(table_data, {
-          id = ("`%s`"):format(name),
-          source = ("[%s](https://github.com/%s)"):format(spec[1], spec[1]),
-          commit = spec["commit"] and ("[%s](https://github.com/%s/commit/%s)"):format(
-            string.sub(spec["commit"], 8),
-            spec[1],
-            spec["commit"]
-          ) or "N/A",
+          id = output_format == "markdown" and ("`%s`"):format(name) or name,
+          source = source,
+          commit = commit,
           lazy = is_lazy and "✅" or "",
         })
       end
@@ -261,14 +278,30 @@ end
 -- Generates settings documentation for a settings block
 --@param struct table The mini.doc struct
 --@return string (is appended to doc)
-doc_gen.generate_settings = function(struct)
-  local temp = vim.deepcopy(struct)
-  temp.parent = nil
-  if struct.type == "section" then
-    struct = struct.parent
+doc_gen.generate_settings_documentation = function(struct, path)
+  local segments = vim.split(path, "%.")
+  local module = doom[segments[1]][segments[2]]
+
+  if module then
+    local res = {}
+    table.insert(res, {"## Settings"})
+    table.insert(res, {""})
+    table.insert(res, {("Settings for the %s module."):format(segments[2])})
+    table.insert(res, {""})
+    table.insert(res, {"You can access and override these values in your `config.lua`. I.e."})
+    table.insert(res, {"```lua"})
+    table.insert(res, {("local %s_settings = doom.%s.%s"):format(segments[2], segments[1], segments[2])})
+    table.insert(res, {("%s_settings.<field> = <new_value>"):format(segments[2])})
+    table.insert(res, {"```"})
+    local temp = vim.deepcopy(struct)
+    temp.parent = nil
+    if struct.type == "section" then
+      struct = struct.parent
+    end
+    local src = table.concat(struct.info.afterlines, "\n")
+    return "```lua\n" .. src .. "\n```"
   end
-  local src = table.concat(struct.info.afterlines, "\n")
-  return "```lua\n" .. src .. "\n```"
+
 end
 
 return doc_gen

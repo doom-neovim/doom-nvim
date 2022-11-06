@@ -1,7 +1,11 @@
-local utils = require("doom.utils")
-
+---@toc doom.langs.c_sharp
+---@text # C/C++
+---
+--- Adds C/C++ language support to doom nvim.
+---
 local cc = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.cc")
 cc.settings = {
   --- disables auto installing the treesitter
   --- @type boolean
@@ -51,6 +55,7 @@ cc.settings = {
   diagnostics_config = nil,
 }
 
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.cc")
 local langs_utils = require("doom.modules.langs.utils")
 cc.autocmds = {
   {

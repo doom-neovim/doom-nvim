@@ -1,5 +1,11 @@
+---@toc doom.langs.go
+---@text # Go
+---
+--- Adds Go language support to doom nvim.
+---
 local go = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.go")
 go.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -46,6 +52,7 @@ go.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.go")
 go.autocmds = {
   {
     "BufWinEnter",

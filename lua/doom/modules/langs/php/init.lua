@@ -1,5 +1,11 @@
+---@toc doom.langs.php
+---@text # PHP
+---
+--- Adds PHP language support to doom nvim.
+---
 local php = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.php")
 php.settings = {
   --- disables auto installing the treesitter
   --- @type boolean
@@ -46,6 +52,7 @@ php.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.php")
 php.autocmds = {
   {
     "FileType",

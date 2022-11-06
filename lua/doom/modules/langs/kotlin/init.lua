@@ -1,5 +1,11 @@
+---@toc doom.langs.kotlin
+---@text # Kotlin
+---
+--- Adds Kotlin language support to doom nvim.
+---
 local kotlin = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.kotlin")
 kotlin.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -46,6 +52,7 @@ kotlin.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.kotlin")
 kotlin.autocmds = {
   {
     "FileType",

@@ -1,6 +1,12 @@
-local typescript = {}
+---@toc doom.langs.toml
+---@text # TOML
+---
+--- Adds TOML language support to doom nvim.
+---
+local toml = {}
 
-typescript.settings = {
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.toml")
+toml.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
   disable_treesitter = false,
@@ -30,24 +36,25 @@ typescript.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
-typescript.autocmds = {
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.toml")
+toml.autocmds = {
   {
     "FileType",
     "toml",
     langs_utils.wrap_language_setup("toml", function()
-      if not typescript.settings.disable_lsp then
-        langs_utils.use_lsp_mason(typescript.settings.lsp_name)
+      if not toml.settings.disable_lsp then
+        langs_utils.use_lsp_mason(toml.settings.lsp_name)
       end
 
-      if not typescript.settings.disable_treesitter then
-        langs_utils.use_tree_sitter(typescript.settings.treesitter_grammars)
+      if not toml.settings.disable_treesitter then
+        langs_utils.use_tree_sitter(toml.settings.treesitter_grammars)
       end
 
-      if not typescript.settings.disable_formatting then
+      if not toml.settings.disable_formatting then
         langs_utils.use_null_ls(
-          typescript.settings.formatting_package,
-          typescript.settings.formatting_provider,
-          typescript.settings.formatting_config
+          toml.settings.formatting_package,
+          toml.settings.formatting_provider,
+          toml.settings.formatting_config
         )
       end
     end),
@@ -55,4 +62,4 @@ typescript.autocmds = {
   },
 }
 
-return typescript
+return toml

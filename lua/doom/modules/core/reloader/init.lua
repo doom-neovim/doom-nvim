@@ -3,7 +3,7 @@ _G._doom_reloader = _G._doom_reloader ~= nil and _G._doom_reloader or {}
 
 local reloader = {}
 
---- Only show error reloading message once per session
+-- Only show error reloading message once per session
 reloader.has_failed_reload = false
 
 local utils = require("doom.utils")
@@ -13,9 +13,9 @@ local system = require("doom.core.system")
 -- Should cause error if plenary is not installed.
 xpcall(require, debug.traceback, "plenary")
 
---- Converts a Lua module path into an acceptable Lua module format
---- @param module_path string The path to the module
---- @return string|nil
+-- Converts a Lua module path into an acceptable Lua module format
+-- @param module_path string The path to the module
+-- @return string|nil
 local function path_to_lua_module(module_path)
   local lua_path = string.format("%s%slua", system.doom_root, system.sep)
 
@@ -38,10 +38,10 @@ local function path_to_lua_module(module_path)
   return module_path
 end
 
---- Reloads all Neovim runtime files found in plugins
---- Reload a Lua module
---- @param mod_path string The configuration module path
---- @param quiet boolean If the reloader should send an info log or not
+-- Reloads all Neovim runtime files found in plugins
+-- Reload a Lua module
+-- @param mod_path string The configuration module path
+-- @param quiet boolean If the reloader should send an info log or not
 reloader.reload_lua_module = function(mod_path, quiet)
   if mod_path:find("/") then
     mod_path = path_to_lua_module(mod_path)
@@ -139,28 +139,27 @@ reloader._reload_doom = function()
   vim.cmd("doautocmd Syntax")
 end
 
---- Reload Neovim and simulate a new run
-reloader.reload = function()
-  -- Store the time taken to reload Doom
-  local reload_time = vim.fn.reltime()
-  log.info("Reloading Doom ...")
+---@text # Reloader
+---
+--- This module is able to live reload doom-nvim and update keymaps, commands,
+--- etc.Warning it can be buggy so sometimes it's necessary to restart but it's
+--- helpful for quick small changes.
 
-  --- Reload Neovim configurations
-  reloader._reload_doom()
-
-  log.info(
-    "Reloaded Doom in "
-      .. vim.fn.printf("%.3f", vim.fn.reltimefloat(vim.fn.reltime(reload_time)))
-      .. " seconds"
-  )
-end
-
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.reloader")
 reloader.settings = {
+  --- Whether or not to auto reload doom-nvim when saving a file in your config
+  --- @type boolean
+  --- @default false
   reload_on_save = true,
 }
+---minidoc_afterlines_end
+
 reloader.packages = {}
 reloader.configs = {}
 
+---@toc_entry doom.modules.core.realoder.cmds
+---
+---@eval return doom.core.doc_gen.generate_commands_documentation("core.reloader")
 reloader.cmds = {
   {
     "DoomReload",
@@ -189,5 +188,24 @@ reloader.autocmds = function()
 
   return autocmds
 end
+
+---@text ## Internal methods
+
+--- Reload neovim
+reloader.reload = function()
+  -- Store the time taken to reload Doom
+  local reload_time = vim.fn.reltime()
+  log.info("Reloading Doom ...")
+
+  --- Reload Neovim configurations
+  reloader._reload_doom()
+
+  log.info(
+    "Reloaded Doom in "
+      .. vim.fn.printf("%.3f", vim.fn.reltimefloat(vim.fn.reltime(reload_time)))
+      .. " seconds"
+  )
+end
+
 
 return reloader

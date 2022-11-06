@@ -1,5 +1,11 @@
+---@toc doom.langs.terraform
+---@text # Terraform
+---
+--- Adds Terraform language support to doom nvim.
+---
 local terraform = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.terraform")
 terraform.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -30,6 +36,7 @@ terraform.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.terraform")
 terraform.autocmds = {
   {
     "BufWinEnter",

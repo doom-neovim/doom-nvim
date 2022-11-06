@@ -1,5 +1,11 @@
+---@toc doom.langs.yaml
+---@text # YAML
+---
+--- Adds YAML language support to doom nvim.
+---
 local yaml = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.yaml")
 yaml.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -46,6 +52,7 @@ yaml.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.yaml")
 yaml.autocmds = {
   {
     "FileType",

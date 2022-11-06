@@ -1,5 +1,11 @@
+---@toc doom.langs.fish
+---@text # Fish
+---
+--- Adds Fish language support to doom nvim.
+---
 local fish = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.fish")
 fish.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -35,6 +41,7 @@ fish.settings = {
   diagnostics_config = nil,
 }
 
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.fish")
 local langs_utils = require("doom.modules.langs.utils")
 fish.autocmds = {
   {

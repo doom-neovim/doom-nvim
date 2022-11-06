@@ -1,5 +1,11 @@
+---@toc doom.langs.ruby
+---@text # Ruby
+---
+--- Adds Ruby language support to doom nvim.
+---
 local ruby = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.ruby")
 ruby.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -33,6 +39,7 @@ ruby.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.ruby")
 ruby.autocmds = {
   {
     "FileType",

@@ -1,5 +1,12 @@
+---@toc doom.langs.tailwindcss
+---@text # TailwindCSS
+---
+--- This module works alongside regular LSPs (such as tsserver, volar or cssls)
+--- To add completions for tailwindcss.
+---
 local tailwindcss = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.tailwindcss")
 tailwindcss.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -33,10 +40,11 @@ tailwindcss.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.tailwindcss")
 tailwindcss.autocmds = {
   {
     "FileType",
-    "javascript,typescript,javascriptreact,typescriptreact,css,html,vue,svelte",
+    "tailwindcssscript,typescript,tailwindcssscriptreact,typescriptreact,css,html,vue,svelte",
     langs_utils.wrap_language_setup("tailwindcss", function()
       if not tailwindcss.settings.disable_lsp then
         langs_utils.use_lsp_mason(tailwindcss.settings.lsp_name, {

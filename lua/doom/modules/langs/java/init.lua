@@ -1,5 +1,11 @@
+---@toc doom.langs.java
+---@text # Java
+---
+--- Adds Java language support to doom nvim.
+---
 local java = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.java")
 java.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean
@@ -33,6 +39,7 @@ java.settings = {
 }
 
 local langs_utils = require("doom.modules.langs.utils")
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("langs.java")
 java.autocmds = {
   {
     "BufWinEnter",
