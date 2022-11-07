@@ -1,8 +1,9 @@
-local lsp = {}
+local DoomModule = require('doom.modules').DoomModule
 
 -- Internal state of LSP module
 -- Flag to enable/disable completions for <leader>tc keybind.
 lsp.__completions_enabled = true
+local lsp = DoomModule.new("lsp")
 
 lsp.settings = {
   snippets = {
