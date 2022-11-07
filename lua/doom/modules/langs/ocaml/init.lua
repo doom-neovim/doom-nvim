@@ -5,7 +5,7 @@
 ---
 local ocaml = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.ocaml")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.ocaml")
 ocaml.settings = {
   --- disables auto installing the treesitter
   --- @type boolean

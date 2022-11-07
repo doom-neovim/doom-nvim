@@ -5,7 +5,7 @@
 ---
 local css = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.css")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.css")
 css.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

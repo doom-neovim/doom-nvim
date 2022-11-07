@@ -5,7 +5,7 @@
 ---
 local cc = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.cc")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.cc")
 cc.settings = {
   --- disables auto installing the treesitter
   --- @type boolean

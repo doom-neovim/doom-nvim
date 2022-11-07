@@ -97,4 +97,15 @@ fs.rm_dir = function(path)
   return luv.fs_rmdir(path)
 end
 
+--- Splits a file path into a folder path, filename and file extension
+---@param path string Path of file to split
+---@return
+fs.split_file_path = function(path)
+  if fs.get_seperator() == "\\" then
+    return string.match(path, "(.-)([^\\]-([^\\%.]+))$")
+  else
+    return string.match(path, "(.-)([^/]-([^/%.]+))$")
+  end
+end
+
 return fs

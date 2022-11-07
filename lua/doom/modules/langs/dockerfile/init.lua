@@ -5,7 +5,7 @@
 ---
 local dockerfile = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.dockerfile")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.dockerfile")
 dockerfile.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

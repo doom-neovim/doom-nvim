@@ -5,7 +5,7 @@
 ---
 local svelte = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.svelte")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.svelte")
 svelte.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

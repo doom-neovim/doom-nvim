@@ -5,7 +5,7 @@
 ---
 local lua = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.lua")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.lua")
 lua.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

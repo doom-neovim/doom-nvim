@@ -5,7 +5,7 @@
 ---
 local rust = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.rust")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.rust")
 rust.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

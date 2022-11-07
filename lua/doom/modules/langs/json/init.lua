@@ -5,7 +5,7 @@
 ---
 local json = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.json")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.json")
 json.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

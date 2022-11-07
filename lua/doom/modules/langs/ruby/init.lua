@@ -5,7 +5,7 @@
 ---
 local ruby = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.ruby")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.ruby")
 ruby.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

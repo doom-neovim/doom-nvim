@@ -5,7 +5,7 @@
 ---
 local terraform = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.terraform")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.terraform")
 terraform.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

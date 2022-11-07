@@ -5,7 +5,7 @@
 ---
 local nix = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.nix")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.nix")
 nix.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

@@ -5,7 +5,7 @@
 ---
 local gdscript = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.gdscript")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.gdscript")
 gdscript.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

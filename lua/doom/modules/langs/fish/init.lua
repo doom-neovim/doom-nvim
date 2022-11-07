@@ -5,7 +5,7 @@
 ---
 local fish = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.fish")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.fish")
 fish.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

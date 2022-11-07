@@ -5,7 +5,7 @@
 ---
 local markdown = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.markdown")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.markdown")
 markdown.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

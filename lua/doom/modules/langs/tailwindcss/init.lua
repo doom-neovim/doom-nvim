@@ -6,7 +6,7 @@
 ---
 local tailwindcss = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.tailwindcss")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.tailwindcss")
 tailwindcss.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

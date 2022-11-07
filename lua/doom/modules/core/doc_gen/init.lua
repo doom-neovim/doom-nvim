@@ -76,22 +76,40 @@ doc_gen.cmds = {
     "GenerateDocCurrentFile",
     function()
       local relative_file_path = vim.fn.fnamemodify(vim.fn.expand("%"), ":~:.")
-
-      local relative_file_destination = vim.fn.fnamemodify(vim.fn.expand("%:h"), ":~:.")
-
-      if relative_file_path:sub(1, 3) == "lua" then
-        relative_file_destination = relative_file_destination:gsub("lua", "docs", 1)
-      end
-      local output_ft = doc_gen.settings.output_format == "markdown" and "md" or "txt"
-      require("mini.doc").generate(
-        { vim.fn.expand("%") },
-        ("%s/index.%s"):format(relative_file_destination, output_ft),
-        {}
-      )
+      doc_gen.document_file(relative_file_path)
     end,
     description = "Generates markdown documentation in the doc folder.",
   },
+  {
+    "GenerateDocAll",
+    function ()
+      for name, _ in pairs(doom.modules.langs) do
+        doc_gen.document_file(("lua/doom/modules/langs/%s/init.lua"):format(name))
+      end
+    end,
+    description = "Generates documentation for the entire framework"
+  }
 }
+
+doc_gen.document_file = function(path)
+  local fs = require("doom.utils.fs")
+  local folder, filename, ext = fs.split_file_path(path)
+  -- Change from lua/ folder to docs/ folder
+  folder = folder:gsub("lua", "docs", 1)
+
+  local output_format = doc_gen.settings.output_format
+  if output_format == "markdown" then
+    filename = "index"
+  end
+
+  local output_ft = output_format == "markdown" and "md" or "txt"
+
+  require("mini.doc").generate(
+    { path },
+    ("%s%s.%s"):format(folder, filename, output_ft),
+    {}
+  )
+end
 
 --- Given a module's `binds` field, returns a string of a formatted markdown table
 --- documenting all the keymaps

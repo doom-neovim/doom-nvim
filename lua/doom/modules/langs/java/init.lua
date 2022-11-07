@@ -5,7 +5,7 @@
 ---
 local java = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.java")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.java")
 java.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

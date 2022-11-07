@@ -5,7 +5,7 @@
 ---
 local glsl = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.glsl")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.glsl")
 glsl.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

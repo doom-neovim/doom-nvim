@@ -5,7 +5,7 @@
 ---
 local go = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.go")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.go")
 go.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

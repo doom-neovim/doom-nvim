@@ -5,7 +5,7 @@
 ---
 local typescript = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.typescript")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.typescript")
 typescript.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

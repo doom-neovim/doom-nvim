@@ -35,7 +35,7 @@ utils.find_config = function(filename)
     return path
   end
   local candidates = vim.api.nvim_get_runtime_file(
-    get_filepath("*" .. system.sep .. "doon-nvim"),
+    get_filepath("*" .. system.sep .. "doom-nvim"),
     false
   )
   if not vim.tbl_isempty(candidates) then

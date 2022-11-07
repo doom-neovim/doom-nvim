@@ -5,7 +5,7 @@
 ---
 local python = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.python")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.python")
 python.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

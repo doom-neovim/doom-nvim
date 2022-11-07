@@ -5,7 +5,7 @@
 ---
 local yaml = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.yaml")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.yaml")
 yaml.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

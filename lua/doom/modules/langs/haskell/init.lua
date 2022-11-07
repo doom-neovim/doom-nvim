@@ -5,7 +5,7 @@
 ---
 local haskell = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.c_sharp")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.c_sharp")
 haskell.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

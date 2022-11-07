@@ -9,7 +9,7 @@
 ---   does not support any typescript version before v4.0.0.
 local vue = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.vue")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.vue")
 vue.settings = {
   --- Disables auto installing the treesitter
   --- @type boolean

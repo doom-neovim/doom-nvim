@@ -5,7 +5,7 @@
 ---
 local php = {}
 
----@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.php")
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "langs.php")
 php.settings = {
   --- disables auto installing the treesitter
   --- @type boolean
