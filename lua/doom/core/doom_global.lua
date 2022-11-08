@@ -30,7 +30,7 @@
 
 --- @class DoomPackage
 --- @field [1] string Repository i.e. 'tpope/vim-surround'
---- @field opt string Is package optional
+--- @field opt boolean Is package optional
 --- @field cmd string|string[] Load package when command is run
 --- @field disable boolean Disable plugin
 --- @field as string Alias module
@@ -39,7 +39,7 @@
 --- @field tag string Git tag to use
 --- @field commit string Git commit to use
 --- @field requires DoomPackage[]|string[] Specify extra dependencies
---- @field config string|function Command or function to run after the plugin is loaded.
+--- @field config string|function|function[] Command or function to run after the plugin is loaded.
 --- @field setup string|function Command or function to run before the plugin is loaded.
 
 -- From here on, we have a hidden global `_doom` that holds state the user

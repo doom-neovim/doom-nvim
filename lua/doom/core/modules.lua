@@ -151,9 +151,17 @@ modules.load_modules = function()
         if module.packages then
           for dependency_name, packer_spec in pairs(module.packages) do
             -- Set packer_spec to configure function
-            if module.configs and module.configs[dependency_name] then
-              packer_spec.config = module.configs[dependency_name]
+            packer_spec.config = {}
+            if packer_spec.pre_config then
+              table.insert(packer_spec.config, packer_spec.pre_config)
             end
+            if module.configs and module.configs[dependency_name] then
+              table.insert(packer_spec.config, module.configs[dependency_name])
+            end
+            if packer_spec.post_config then
+              table.insert(packer_spec.config, packer_spec.post_config)
+            end
+            packer_spec.config = vim.tbl_flatten(packer_spec.config)
 
             local spec = vim.deepcopy(packer_spec)
 
