@@ -1,7 +1,17 @@
-local suda = {}
+local DoomModule = require('doom.modules').DoomModule
+
+---@toc doom.features.suda
+---@text # Suda
+---
+--- Easily read and write files as a super user from a non super user neovim
+--- session.
+---
+
+local suda = DoomModule.new("suda")
 
 suda.settings = {}
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.suda")
 suda.packages = {
   ["suda.vim"] = {
     "lambdalisue/suda.vim",
@@ -13,6 +23,7 @@ suda.packages = {
 
 suda.configs = {}
 
+---@eval return doom.core.doc_gen.generate_keybind_documentation("features.suda")
 suda.binds = {
   "<leader>",
   name = "+prefix",

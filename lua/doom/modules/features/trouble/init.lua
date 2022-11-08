@@ -1,7 +1,18 @@
-local trouble = {}
+local DoomModule = require('doom.modules').DoomModule
+
+---@toc doom.features.trouble
+---@text # Trouble
+---
+--- Shows project wide lsp diagnostics.
+---
+--- > ⚠️ Due to the way some LSPs are implemented it may only show diagnostics
+--- > for current or recently opened buffers.
+
+local trouble = DoomModule.new("trouble")
 
 trouble.settings = {}
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.trouble")
 trouble.packages = {
   ["trouble.nvim"] = {
     "folke/trouble.nvim",
@@ -10,12 +21,14 @@ trouble.packages = {
     opt = true,
   },
 }
+---minidoc_afterlines_end
 
 trouble.configs = {}
 trouble.configs["trouble.nvim"] = function()
   require("trouble").setup(doom.features.trouble.settings)
 end
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.trouble")
 trouble.binds = {
   "<leader>",
   name = "+prefix",

@@ -1,5 +1,14 @@
-local comment = {}
+local DoomModule = require('doom.modules').DoomModule
 
+---@toc doom.features.comment
+---@text # Comments
+---
+--- Easily toggle comments for all languages
+---
+
+local comment = DoomModule.new("comment")
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.comment")
 comment.settings = {
   --- Add a space b/w comment and the line
   --- @type boolean
@@ -40,7 +49,9 @@ comment.settings = {
     end
   end,
 }
+---minidoc_afterlines_end
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.comment")
 comment.packages = {
   ["Comment.nvim"] = {
     "numToStr/Comment.nvim",
@@ -63,6 +74,7 @@ comment.configs["Comment.nvim"] = function()
   require("Comment").setup(config)
 end
 
+---@eval return doom.core.doc_gen.generate_keybind_documentation("features.comment")
 comment.binds = {
   {
     "gc",

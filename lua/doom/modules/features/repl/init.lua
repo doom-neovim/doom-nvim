@@ -1,5 +1,14 @@
-local repl = {}
+local DoomModule = require('doom.modules').DoomModule
 
+---@toc doom.features.repl
+---@text # REPL
+---
+--- Adds support for a repl buffer for a range of languages.  This module takes
+--- advantage of [iron.nvim](https://github.com/hkupty/iron.nvim) under the hood.
+
+local repl = DoomModule.new("repl")
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.repl")
 repl.settings = {
   config = {
     -- If iron should expose `<plug>(...)` mappings for the plugins
@@ -38,6 +47,7 @@ repl.settings = {
   },
 }
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.repl")
 repl.packages = {
   ["iron.nvim"] = {
     "hkupty/iron.nvim",
@@ -58,6 +68,8 @@ repl.configs = {
     iron.setup(settings)
   end,
 }
+
+---@eval return doom.core.doc_gen.generate_keybind_documentation("features.repl")
 repl.binds = {
   {
     "<leader>r",

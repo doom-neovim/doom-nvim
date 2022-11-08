@@ -1,7 +1,16 @@
-local tabline = {}
+local DoomModule = require('doom.modules').DoomModule
+
+---@toc doom.features.tabline
+---@text # Tabline / Tabs
+---
+--- Adds tabs to neovim
+---
+
+local tabline = DoomModule.new("tabline")
 
 local utils_g = require("doom.utils")
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.tabline")
 tabline.settings = {
   options = {
     numbers = function(opts)
@@ -128,7 +137,9 @@ tabline.settings = {
     },
   },
 }
+---minidoc_afterlines_end
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.tabline")
 tabline.packages = {
   ["bufferline.nvim"] = {
     "akinsho/bufferline.nvim",
@@ -143,6 +154,7 @@ tabline.configs["bufferline.nvim"] = function()
   require("bufferline").setup(doom.features.tabline.settings)
 end
 
+---@eval return doom.core.doc_gen.generate_keybind_documentation("features.tabline")
 tabline.binds = {
   "<leader>",
   name = "+prefix",

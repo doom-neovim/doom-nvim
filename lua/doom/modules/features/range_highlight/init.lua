@@ -1,7 +1,16 @@
-local range_highlight = {}
+local DoomModule = require('doom.modules').DoomModule
+
+---@toc doom.features.range_highlight
+---@text # Range Highlight
+---
+--- Highlights the current range entered in the command line.
+---
+
+local range_highlight = DoomModule.new("range_highlight")
 
 range_highlight.settings = {}
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.range_highlight")
 range_highlight.packages = {
   ["range-highlight.nvim"] = {
     "winston0410/range-highlight.nvim",

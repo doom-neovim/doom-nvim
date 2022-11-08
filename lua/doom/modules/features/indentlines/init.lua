@@ -1,5 +1,14 @@
-local indentlines = {}
+local DoomModule = require('doom.modules').DoomModule
 
+---@toc doom.features.indentlines
+---@text # Indent Lines
+---
+--- Shows indent lines such as tabs and spaces
+---
+
+local indentlines = DoomModule.new("indentlines")
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.indentlines")
 indentlines.settings = {
   char = "│",
   use_treesitter = true,
@@ -7,7 +16,9 @@ indentlines.settings = {
   filetype_exclude = { "help", "dashboard", "packer", "norg", "DoomInfo" },
   buftype_exclude = { "terminal" },
 }
+---minidoc_afterlines_end
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.indentlines")
 indentlines.packages = {
   ["indent-blankline.nvim"] = {
     "lukas-reineke/indent-blankline.nvim",

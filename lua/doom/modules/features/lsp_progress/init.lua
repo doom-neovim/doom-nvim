@@ -1,8 +1,20 @@
-local fidget = {}
+local DoomModule = require('doom.modules').DoomModule
+---@toc doom.features.lsp_progress
+---@text # REPL
+---
+--- Adds a floating element that shows LSP loading progress
 
-fidget.settings = {}
+local lsp_progress = DoomModule.new("lsp_progress")
 
-fidget.packages = {
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.lsp_progress")
+lsp_progress.settings = {
+  -- Passed into `require("fidget").setup()`
+  -- We just rely on the defaults
+  fidget_settings = {},
+}
+
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.lsp_progress")
+lsp_progress.packages = {
   ["fidget.nvim"] = {
     "j-hui/fidget.nvim",
     commit = "1097a86db8ba38e390850dc4035a03ed234a4673",
@@ -10,9 +22,9 @@ fidget.packages = {
   },
 }
 
-fidget.configs = {}
-fidget.configs["fidget.nvim"] = function()
-  require("fidget").setup(doom.features.lsp_progress.settings)
+lsp_progress.configs = {}
+lsp_progress.configs["fidget.nvim"] = function()
+  require("fidget").setup(doom.features.lsp_progress.settings.fidget_settings)
 end
 
-return fidget
+return lsp_progress

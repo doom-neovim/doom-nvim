@@ -1,5 +1,14 @@
-local whichkey = {}
+local DoomModule = require('doom.modules').DoomModule
 
+---@toc doom.features.whichkey
+---@text # Whichkey
+---
+--- Shows an interactive cheatsheet to help
+---
+
+local whichkey = DoomModule.new("whichkey")
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.whichkey")
 whichkey.settings = {
   leader = " ",
   plugins = {
@@ -60,7 +69,9 @@ whichkey.settings = {
   show_help = true,
   triggers = "auto",
 }
+---minidoc_afterlines_end
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.whichkey")
 whichkey.packages = {
   ["which-key.nvim"] = {
     "folke/which-key.nvim",
@@ -73,7 +84,7 @@ whichkey.configs = {}
 whichkey.configs["which-key.nvim"] = function()
   vim.g.mapleader = doom.features.whichkey.settings.leader
 
-  local wk = require("which-key")
+ local wk = require("which-key")
 
   wk.setup(doom.features.whichkey.settings)
 

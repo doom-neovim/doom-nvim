@@ -56,14 +56,14 @@ statusline.settings = {}
 
 statusline.state = {}
 statusline.state.installing_mason_packages = {}
---- Pushes a mason package to be shown in the statusline
----@param name string Name of the package
+-- Pushes a mason package to be shown in the statusline
+--@param name string Name of the package
 statusline.state.start_mason_package = function(name)
   statusline.state.finish_mason_package(name)
   table.insert(statusline.state.installing_mason_packages, name)
 end
---- Removes a mason package from being shown in the statusline
----@param name string Name of the package
+-- Removes a mason package from being shown in the statusline
+--@param name string Name of the package
 statusline.state.finish_mason_package = function(name)
   local packages = statusline.state.installing_mason_packages
   statusline.state.installing_mason_packages = vim.tbl_filter(function(val)
@@ -156,6 +156,7 @@ statusline._generate_colorscheme = function()
   end, colors))
 end
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.annotations")
 statusline.packages = {
   ["heirline.nvim"] = {
     "rebelot/heirline.nvim",
@@ -483,6 +484,7 @@ statusline.try_refresh = function()
   xpcall(doom.modules.features.statusline.configs["heirline.nvim"], debug.traceback)
 end
 
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("features.annotations")
 statusline.autocmds = {
   {
     "ColorScheme",
@@ -492,6 +494,7 @@ statusline.autocmds = {
         statusline.try_refresh()
       end, 1)
     end,
+    description = "Updates statusline colours to match the colour scheme"
   },
   -- Sometimes the colorscheme doesn't load on the first try
   {

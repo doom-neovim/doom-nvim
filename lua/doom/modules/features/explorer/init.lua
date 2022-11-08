@@ -1,5 +1,15 @@
-local explorer = {}
+local DoomModule = require('doom.modules').DoomModule
 
+---@toc doom.features.explorer
+---@text # Explorer
+---
+--- Adds a file tree explorer to neovim.  This module is incompatible with
+--- the `netrw` module.
+---
+
+local explorer = DoomModule.new("explorer")
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.explorer")
 explorer.settings = {
   disable_netrw = true,
   hijack_netrw = true,
@@ -90,7 +100,9 @@ explorer.settings = {
     enable = false,
   },
 }
+---minidoc_afterlines_end
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.explorer")
 explorer.packages = {
   ["nvim-tree.lua"] = {
     "kyazdani42/nvim-tree.lua",
@@ -168,6 +180,7 @@ explorer.configs["nvim-tree.lua"] = function()
   require("nvim-tree").setup(config)
 end
 
+---@eval return doom.core.doc_gen.generate_keybind_documentation("features.explorer")
 explorer.binds = {
   { "<F3>", ":NvimTreeToggle<CR>", name = "Toggle file explorer" },
   {
@@ -185,6 +198,7 @@ explorer.binds = {
   },
 }
 
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("features.explorer")
 explorer.autocmds = {
   {
     "BufEnter",

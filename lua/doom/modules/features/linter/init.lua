@@ -1,15 +1,31 @@
-local linter = {}
+local DoomModule = require('doom.modules').DoomModule
 
+local linter = DoomModule.new("linter")
+
+---@toc doom.features.linter
+---@text # Linter / Formatter
+---
+--- Adds support for extra linting, formatting and code action providers for LSPs
+--- using null-ls.  This module does not setup any language LSPs, those are
+--- configured within the language modules.  Instead this module sets up and
+--- and configures the null-ls plugin that is shared by language modules.
+
+linter.requires_modules = { "features.lsp" }
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.linter")
 linter.settings = {
+  -- Enable automatic formatting on save
   format_on_save = false,
+  -- Passed into require("null-ls").setup()
   null_ls_settings = {
+    -- Timeout duration before showing an error (ms)
     default_timeout = 2000,
+    -- Formatting of diagnostics, see
     diagnostics_format = "#{m} (#{s})",
   },
 }
 
-linter.requires_modules = { "features.lsp" }
-
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.linter")
 linter.packages = {
   ["null-ls.nvim"] = {
     "jose-elias-alvarez/null-ls.nvim",
@@ -40,6 +56,7 @@ linter.configs["null-ls.nvim"] = function()
   }))
 end
 
+---@eval return doom.core.doc_gen.generate_keybind_documentation("features.linter")
 linter.binds = {
   {
     "<leader>cf",

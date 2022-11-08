@@ -1,5 +1,15 @@
-local firenvim = {}
+local DoomModule = require('doom.modules').DoomModule
 
+---@toc doom.features.firenvim
+---@text # Fire Nvim
+---
+--- Use neovim to edit text fields in your browser.  ⚠️  This module currently
+--- doesn't have a great experience.
+---
+
+local firenvim = DoomModule.new("firenvim")
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.firenvim")
 firenvim.settings = {
   globalSettings = {
     alt = "all",
@@ -21,7 +31,9 @@ firenvim.settings = {
     { "BufEnter", "github.com", "setlocal filetype=markdown" },
   },
 }
+---minidoc_afterlines_end
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.firenvim")
 firenvim.packages = {
   ["firenvim"] = {
     "glacambre/firenvim",

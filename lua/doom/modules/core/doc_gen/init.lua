@@ -31,7 +31,7 @@ local doc_gen = {}
 ---
 --- Settings for the `doom.core.doc_gen` module.
 ---
----@eval return doom.core.doc_gen.generate_settings(MiniDoc.current.eval_section)
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "core.doc_gen")
 doc_gen.settings = {
   --The desired output format, this will configure mini
   --@type 'helpdoc'|'markdown'
@@ -56,7 +56,7 @@ doc_gen.configs["mini_doc"] = require("doom.modules.core.doc_gen.mini_doc_config
 ---
 --- Keybinds for the doc_gen module.
 ---
----@eval return doom.core.doc_gen.generate_keybind_table(doom.core.doc_gen.binds)
+---@eval return doom.core.doc_gen.generate_keybind_documentation("core.doc_gen")
 doc_gen.binds = {
   {
     "<leader>Dg",
@@ -82,50 +82,85 @@ doc_gen.cmds = {
   },
   {
     "GenerateDocAll",
-    function ()
+    function()
+      doc_gen.document_file("lua/doom/modules/init.lua", "docs/modules/module_spec")
       for name, _ in pairs(doom.modules.langs) do
         doc_gen.document_file(("lua/doom/modules/langs/%s/init.lua"):format(name))
       end
+      for name, _ in pairs(doom.modules.features) do
+        doc_gen.document_file(("lua/doom/modules/features/%s/init.lua"):format(name))
+      end
+      for name, _ in pairs(doom.modules.core) do
+        doc_gen.document_file(("lua/doom/modules/core/%s/init.lua"):format(name))
+      end
     end,
-    description = "Generates documentation for the entire framework"
-  }
+    description = "Generates documentation for the entire framework",
+  },
 }
 
-doc_gen.document_file = function(path)
+-- Generates documentation for all of doom-nvim
+--@param path string Path of file to document
+--@param destination string|nil Optional destination for the documentation
+doc_gen.document_file = function(path, destination)
   local fs = require("doom.utils.fs")
-  local folder, filename, ext = fs.split_file_path(path)
+  local folder = fs.split_file_path(path)
   -- Change from lua/ folder to docs/ folder
-  folder = folder:gsub("lua", "docs", 1)
+  folder = folder:gsub("lua/doom", "docs", 1)
 
   local output_format = doc_gen.settings.output_format
-  if output_format == "markdown" then
-    filename = "index"
-  end
+  folder = folder:sub(1, #folder - 1) -- Remove final /
 
   local output_ft = output_format == "markdown" and "md" or "txt"
 
-  require("mini.doc").generate(
-    { path },
-    ("%s%s.%s"):format(folder, filename, output_ft),
-    {}
-  )
+  local dest = destination and ("%s.%s"):format(destination, output_ft)
+      or ("%s.%s"):format(folder, output_ft)
+  require("mini.doc").generate({ path }, dest, {})
 end
 
 --- Given a module's `binds` field, returns a string of a formatted markdown table
 --- documenting all the keymaps
----@param binds table | function
-doc_gen.generate_keybind_table = function(binds_field)
-  local keymaps = type(binds_field) == "function" and binds_field() or binds_field
-  local doc_integration = require("doom.modules.core.doc_gen.keybind_doc_integration")
-  doc_integration.clear()
+---@param path string
+doc_gen.generate_keybind_documentation = function(path)
+  local segments = vim.split(path, "%.")
+  local module = doom[segments[1]][segments[2]]
 
-  doc_integration.set_table_fields({
-    { key = "lhs", name = "Keybind" },
-    { key = "name", name = "Name" },
-  })
-  local keymaps_service = require("doom.services.keymaps")
-  keymaps_service.traverse(keymaps, nil, { doc_integration })
-  return doc_integration.print_markdown()
+  if module then
+    local binds_field = module.binds
+    local keymaps = type(binds_field) == "function" and binds_field() or binds_field
+    local doc_integration = require("doom.modules.core.doc_gen.keybind_doc_integration")
+    doc_integration.clear()
+
+    local keymaps_service = require("doom.services.keymaps")
+    keymaps_service.traverse(keymaps, nil, { doc_integration })
+    local result = {
+      "## Keybinds",
+      "",
+      "Override these keybinds in your config.lua:",
+      "",
+      "```lua",
+      ("local %s = doom.%s.%s"):format(segments[2], segments[1], segments[2]),
+      ("%s.binds = {"):format(segments[2]),
+      '  { "<leader>prefix", "<cmd>echo \'my new keybind\'<CR>", name = "Description for my new keybind" }',
+      "}",
+      "```",
+      "",
+    }
+    print("raw data: " .. vim.inspect(doc_integration.data))
+    local formatted = vim.tbl_map(function(row)
+      row.lhs = "`" .. row[1] .. "`"
+      return row
+    end, doc_integration.data)
+    print("formatted: " .. vim.inspect(formatted))
+    table.insert(
+      result,
+      require("doom.modules.core.doc_gen.table_printer").print(
+        formatted,
+        { "lhs", "name" },
+        { "Keymap", "Description" }
+      )
+    )
+    return result
+  end
 end
 
 --- Generates
@@ -147,6 +182,7 @@ doc_gen.generate_commands_documentation = function(path)
           "",
           "Note: Plugins may create additional commands, these will be avaliable once",
           "the plugin loads.  Please check the docs for these [plugins](#plugins-packages).",
+          "",
         }, "\n")
       )
 
@@ -192,6 +228,7 @@ doc_gen.generate_autocmds_documentation = function(path)
           "",
           "Note: Plugins may create additional autocommands, these will be avaliable once",
           "the plugin loads.  Please check the docs for these [plugins](#plugins-packages).",
+          "",
         }, "\n")
       )
 
@@ -243,32 +280,34 @@ doc_gen.generate_packages_documentation = function(path)
           "These plugins will be passed into packer.nvim on startup.  You can tweak",
           "the packer options by accessing these values in your `config.lua` file.",
           "i.e.:",
+          "",
           "```lua",
           ("local %s_packages = doom.%s.%s.packages"):format(segments[2], segments[1], segments[2]),
           ("%s_packages['%s'].commit = '<my_new_commit_sha>'"):format(segments[2], first_package),
           "```",
+          "",
         }, "\n")
       )
 
       local table_data = {}
       for name, spec in pairs(module.packages) do
         local is_lazy = spec["opt"]
-          or spec["cmd"] ~= nil
-          or spec["autocmd"] ~= nil
-          or spec["keys"] ~= nil
-          or spec["ft"] ~= nil
+            or spec["cmd"] ~= nil
+            or spec["autocmd"] ~= nil
+            or spec["keys"] ~= nil
+            or spec["ft"] ~= nil
 
         local source = output_format == "markdown"
             and ("[%s](https://github.com/%s)"):format(spec[1], spec[1])
-          or spec[1]
+            or spec[1]
 
         local commit = spec["commit"]
-            and (output_format == markdown and ("[%s](https://github.com/%s/commit/%s)"):format(
+            and (output_format == "markdown" and ("[%s](https://github.com/%s/commit/%s)"):format(
               string.sub(spec["commit"], 8),
               spec[1],
               spec["commit"]
             ) or string.sub(spec["commit"], 8))
-          or "N/A"
+            or "N/A"
         table.insert(table_data, {
           id = output_format == "markdown" and ("`%s`"):format(name) or name,
           source = source,
@@ -302,24 +341,27 @@ doc_gen.generate_settings_documentation = function(struct, path)
 
   if module then
     local res = {}
-    table.insert(res, {"## Settings"})
-    table.insert(res, {""})
-    table.insert(res, {("Settings for the %s module."):format(segments[2])})
-    table.insert(res, {""})
-    table.insert(res, {"You can access and override these values in your `config.lua`. I.e."})
-    table.insert(res, {"```lua"})
-    table.insert(res, {("local %s_settings = doom.%s.%s"):format(segments[2], segments[1], segments[2])})
-    table.insert(res, {("%s_settings.<field> = <new_value>"):format(segments[2])})
-    table.insert(res, {"```"})
+    table.insert(res, { "## Settings" })
+    table.insert(res, { "" })
+    table.insert(res, { ("Settings for the %s module."):format(segments[2]) })
+    table.insert(res, { "" })
+    table.insert(res, { "You can access and override these values in your `config.lua`. I.e." })
+    table.insert(res, { "```lua" })
+    table.insert(
+      res,
+      { ("local %s_settings = doom.%s.%s.settings"):format(segments[2], segments[1], segments[2]) }
+    )
+    table.insert(res, { ("%s_settings.<field> = <new_value>"):format(segments[2]) })
+    table.insert(res, { "```" })
     local temp = vim.deepcopy(struct)
     temp.parent = nil
     if struct.type == "section" then
       struct = struct.parent
     end
     local src = table.concat(struct.info.afterlines, "\n")
-    return "```lua\n" .. src .. "\n```"
+    table.insert(res, "```lua\n" .. src .. "\n```")
+    return vim.tbl_flatten(res)
   end
-
 end
 
 return doc_gen

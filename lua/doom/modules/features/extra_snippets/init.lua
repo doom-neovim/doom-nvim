@@ -1,7 +1,16 @@
-local extra_snippets = {}
+local DoomModule = require('doom.modules').DoomModule
+
+---@toc doom.features.extra_snippets
+---@text # Extra Snippets
+---
+--- Adds extra snippets for all languages.  This module depends on the `lsp` module.
+---
+
+local extra_snippets = DoomModule.new("extra_snippets")
 
 extra_snippets.settings = {}
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.extra_snippets")
 extra_snippets.packages = {
   ["friendly-snippets"] = {
     "rafamadriz/friendly-snippets",

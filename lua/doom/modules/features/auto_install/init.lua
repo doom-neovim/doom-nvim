@@ -1,15 +1,21 @@
---- Auto installer module
---- Most logic for this module is inside of `lua/doom/modules/langs/utils`
-local auto_install = {}
+local DoomModule = require('doom.modules').DoomModule
 
----@toc_entry doc_gen.settings
----@text ## Settings
+---@toc doom.features.auto_install
+---@text # Auto install (LSP/null-ls)
 ---
---- Settings for the `doom.core.auto_install` module.
+--- This module adds the ability to auto install lsps/null-ls providers when
+--- enabling language modules using `mason.nvim`.  It will not try to keep the
+--- LSP providers or null-ls sources up to date.  Sometimes plugins or doom-nvim
+--- may update and you will have to manually update the packages yourself using
+--- the `:Mason[Install|Uninstall] <package_name>` command.
 ---
----@eval return doom.core.doc_gen.generate_settings(MiniDoc.current.eval_section)
+--- ## Deleting all mason.nvim packages
+--- You can delete all mason nvim packages by running the command `:DoomNuke mason`
+
+local auto_install = DoomModule.new("auto_install")
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.auto_install")
 auto_install.settings = {
-  --- Settings for mason-lspconfig
   lsp = {
     --- List of lsp providers to automatically install and setup
     ensure_installed = {},
@@ -19,7 +25,6 @@ auto_install.settings = {
 }
 ---minidoc_afterlines_end
 
----@toc_entry doc_gen.packages
 ---@eval return doom.core.doc_gen.generate_packages_documentation("features.auto_install")
 auto_install.packages = {
   ["mason.nvim"] = {

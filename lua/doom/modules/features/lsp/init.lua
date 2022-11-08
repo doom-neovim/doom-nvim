@@ -1,20 +1,79 @@
 local DoomModule = require('doom.modules').DoomModule
 
--- Internal state of LSP module
--- Flag to enable/disable completions for <leader>tc keybind.
-lsp.__completions_enabled = true
+---@toc doom.features.lsp
+---@text # LSP / Code Completions
+---
+--- Adds code completions capabilities with nvim-cmp and nvim-lspconfig.
+---
+--- This module adds a number of code completion features to neovim.  It sets
+--- up nvim-cmp with lsp, path, buffer, nvim and snippet sources and also adds
+--- lsp signatures to show function signatures as you type.  This module does
+--- not setup any language LSPs, those are configured within the language modules.
+--- Instead this module setups and configures nvim-cmp and other plugins that are
+--- shared by language modules.
+---
+--- ## Adding extra nvim-cmp sources
+---
+--- To add extra completion sources to nvim-cmp you will first need to install
+--- the nvim-cmp extension in your `config.lua` file.  You will then need to
+--- add the source to the settings table of this module.  Here's an example
+--- using cmp-calc.
+---
+--- ```lua
+--- -- config.lua
+--- doom.use_package("hrsh7th/cmp-calc")
+--- local lsp_settings = doom.features.lsp.settings
+--- table.insert(lsp_settings.completion.sources, { name = 'calc' })
+--- ```
+---
+--- If you want to add a source that needs access to nvim-cmp.  I.e `cmp-nvim-lsp-document-symbol`
+--- you will need to use the `on_post_config` hook of the packages field of the `lsp`
+--- module.
+---
+--- ```lua
+--- -- config.lua
+--- doom.use_package({ "hrsh7th/cmp-nvim-lsp-document-symbol", after="nvim-cmp" })
+--- doom.features.lsp.packages["nvim-cmp"].on_post_config(function()
+---   local cmp = require'cmp'
+---   cmp.setup.cmdline('/', {
+---     sources = cmp.config.sources({
+---       { name = 'nvim_lsp_document_symbol' }
+---     }, {
+---       { name = 'buffer' }
+---     })
+---   })
+--- end)
+--- ```
+---
+--- > 💡 You will have reload doom-nvim and run `:PackerCompile` after adding pre/post config hooks.
+---
+--- > 💡 Some cmp completion sources do not work well with lazy loading.
+--- > You may have to disable lazy loading so it works properly.
+--- > ```lua
+--- > doom.features.lsp.packages['nvim-cmp'].event = nil -- Removes the load on InsertEnter autocommand
+--- > ```
 local lsp = DoomModule.new("lsp")
 
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.lsp")
 lsp.settings = {
+  -- Settings for cmp_luasnip
   snippets = {
     history = true,
     updateevents = "TextChanged,TextChangedI",
   },
+  -- Settings for "lsp_signature.nvim"
   signature = {
+    -- This is mandatory, otherwise border config won't get registered.
+    -- If you want to hook lspsaga or other signature handler, pls set to false
     bind = true,
-    doc_lines = 10,
-    floating_window = false, -- show hint in a floating window, set to false for virtual text only mode
+    -- Show hint in a floating window
+    floating_window = false,
+    -- Position floating window above or below cursor
     floating_window_above_cur_line = true,
+    -- Number of comment/doc lines when inserting text (when `floating_window = true`)
+    doc_lines = 10,
+    -- When true, keep floating window open until all parameters completed
     fix_pos = false, -- set to true, the floating window will not auto-close until finish all parameters
     hint_enable = true, -- virtual hint enable
     hint_prefix = " ",
@@ -22,7 +81,7 @@ lsp.settings = {
     hi_parameter = "Search", -- how your parameter will be highlight
     max_height = 12, -- max height of signature floating_window, if content is more than max_height, you can scroll down
     max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
-    transparency = 80,
+    transparency = 100,
     extra_trigger_chars = {}, -- Array of extra characters that will trigger signature completion, e.g., {"(", ","}
     zindex = 200, -- by default it will be on top of all floating windows, set to 50 send it to bottom
     debug = false, -- set to true to enable debug logging
@@ -37,7 +96,9 @@ lsp.settings = {
     info = "",
   },
   severity_sort = true,
+  -- Settings for nvim-cmp
   completion = {
+    -- Icons for each completion type
     kinds = {
       Text = " ",
       Method = " ",
@@ -66,6 +127,8 @@ lsp.settings = {
       TypeParameter = " ",
     },
     experimental = {
+      -- Show current completion as ghost text in line
+      -- @type boolean
       ghost_text = true,
     },
     completeopt = "menu,menuone,preview,noinsert",
@@ -98,6 +161,7 @@ lsp.settings = {
   },
 }
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.lsp")
 lsp.packages = {
   ["nvim-lspconfig"] = {
     "neovim/nvim-lspconfig",
@@ -107,6 +171,7 @@ lsp.packages = {
   ["nvim-cmp"] = {
     "hrsh7th/nvim-cmp",
     commit = "0e436ee23abc6c3fe5f3600145d2a413703e7272",
+    event = "InsertEnter",
     requires = {
       "L3MON4D3/LuaSnip",
       commit = "53e812a6f51c9d567c98215733100f0169bcc20a",
@@ -299,6 +364,7 @@ lsp.configs["nvim-cmp"] = function()
     end,
   }))
 end
+
 lsp.configs["lsp_signature.nvim"] = function()
   -- Signature help
   require("lsp_signature").setup(
@@ -310,6 +376,11 @@ lsp.configs["lsp_signature.nvim"] = function()
   )
 end
 
+-- Internal state of LSP module
+-- Flag to enable/disable completions for <leader>tc keybind.
+lsp.__completions_enabled = true
+
+---@eval return doom.core.doc_gen.generate_keybind_documentation("features.lsp")
 lsp.binds = function()
   return {
     { "K", vim.lsp.buf.hover, name = "Show hover doc" },

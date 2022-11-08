@@ -1,5 +1,16 @@
-local dap = {}
+local DoomModule = require('doom.modules').DoomModule
 
+---@toc doom.features.dap
+---@text # DAP / Debugger
+---
+--- Adds debugging capabilities to doom-nvim.
+--- ⚠️ This module hasn't been tested extensively and you'll have to provide
+--- most of the config yourself.
+---
+
+local dap = DoomModule.new("dap")
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.dap")
 dap.settings = {
   debugger_dir = vim.fn.stdpath("data") .. "/dapinstall/",
   debugger_map = {},
@@ -34,7 +45,9 @@ dap.settings = {
     },
   },
 }
+---minidoc_afterlines_end
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.dap")
 dap.packages = {
   ["nvim-dap"] = {
     "mfussenegger/nvim-dap",
@@ -64,6 +77,7 @@ dap.configs["nvim-dap-ui"] = function()
   dapui.setup(doom.features.dap.settings.dapui)
 end
 
+---@eval return doom.core.doc_gen.generate_keybind_documentation("features.dap")
 dap.binds = {
   "<leader>",
   name = "+prefix",

@@ -1,11 +1,22 @@
-local autopairs = {}
+local DoomModule = require('doom.modules').DoomModule
 
+---@toc doom.features.autopairs
+---@text # Autopairs
+---
+--- Automatically completes pairs of characters such as quotes and brackets.
+---
+
+local autopairs = DoomModule.new("autopairs")
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.autopairs")
 autopairs.settings = {
   enable_afterquote = true,
   enable_check_bracket_line = true,
   enable_moveright = true,
 }
+---minidoc_afterlines_end
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.autopairs")
 autopairs.packages = {
   ["nvim-autopairs"] = {
     "windwp/nvim-autopairs",
@@ -21,6 +32,7 @@ autopairs.configs["nvim-autopairs"] = function()
   )
 end
 
+---@eval return doom.core.doc_gen.generate_keybind_documentation("features.autopairs")
 autopairs.binds = {
   "<leader>",
   name = "+prefix",

@@ -1,5 +1,15 @@
-local projects = {}
+local DoomModule = require('doom.modules').DoomModule
 
+---@toc doom.features.projects
+---@text # Projects
+---
+--- Adds the ability to switch from previously visited projects using telescope.
+--- This module depends upone the `features.telescope` module.
+---
+
+local projects = DoomModule.new("projects")
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.projects")
 projects.settings = {
   -- Manual mode doesn't automatically change your root directory, so you have
   -- the option to manually do so using `:ProjectRoot` command.
@@ -34,7 +44,9 @@ projects.settings = {
   -- telescope
   datapath = vim.fn.stdpath("data"),
 }
+---minidoc_afterlines_end
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.annotations")
 projects.packages = {
   ["project.nvim"] = {
     "ahmedkhalf/project.nvim",
@@ -52,6 +64,7 @@ projects.configs["project.nvim"] = function()
   table.insert(doom.features.telescope.settings.extensions, "projects")
 end
 
+---@eval return doom.core.doc_gen.generate_keybind_documentation("features.annotations")
 projects.binds = {
   { "<leader>fp", "<cmd>Telescope projects<CR>", name = "Switch project" },
 }

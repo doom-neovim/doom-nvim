@@ -11,7 +11,7 @@ table_printer._get_max_lengths = function(rows)
 
   for _, row in ipairs(rows) do
     for index, cell in ipairs(row) do
-      local md_visible_str = string.match(cell, "%[(.*)%]")
+      local md_visible_str = string.match(cell, "%[(.*)%]"):gsub('`', '')
       max_lengths[index] = math.max(max_lengths[index], string.len(md_visible_str or cell))
     end
   end

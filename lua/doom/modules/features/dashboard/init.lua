@@ -1,5 +1,14 @@
-local dashboard = {}
+local DoomModule = require('doom.modules').DoomModule
 
+---@toc doom.features.dashboard
+---@text # Dashboard
+---
+--- Adds a pretty dashboard upon opening doom-nvim.
+---
+
+local dashboard = DoomModule.new("dashboard")
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.dashboard")
 dashboard.settings = {
   entries = {
     {
@@ -63,7 +72,9 @@ dashboard.settings = {
     footer = "#586268",
   },
 }
+---minidoc_afterlines_end
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.dashboard")
 dashboard.packages = {
   ["dashboard-nvim"] = {
     "glepnir/dashboard-nvim",
@@ -113,6 +124,7 @@ dashboard.configs["dashboard-nvim"] = function()
   vim.cmd("hi! dashboardFooter   guifg=" .. doom.features.dashboard.settings.colors.footer)
 end
 
+---@eval return doom.core.doc_gen.generate_keybind_documentation("features.dashboard")
 dashboard.binds = {
   "<leader>",
   name = "+prefix",
@@ -127,6 +139,7 @@ dashboard.binds = {
   },
 }
 
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("features.dashboard")
 dashboard.autocmds = {
   {
     "FileType",

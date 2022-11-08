@@ -255,13 +255,15 @@ local config = function()
             H.toc_insert(x)
           end, d)
 
-          -- Insert modeline
-          d:insert(H.as_struct({
-            H.as_struct(
-              { H.as_struct({ " vim:tw=78:ts=8:noet:ft=help:norl:" }, "section") },
-              "block"
-            ),
-          }, "file"))
+          if doom.core.doc_gen.settings.output_format == "helpdoc" then
+            -- Insert modeline
+            d:insert(H.as_struct({
+              H.as_struct(
+                { H.as_struct({ " vim:tw=78:ts=8:noet:ft=help:norl:" }, "section") },
+                "block"
+              ),
+            }, "file"))
+          end
         end,
         --minidoc_replace_end
       },

@@ -1,7 +1,16 @@
-local neorg = {}
+local DoomModule = require('doom.modules').DoomModule
+
+---@toc doom.features.neorg
+---@text # Neorg
+---
+--- Org mode for neovim.
+---
+
+local neorg = DoomModule.new("neorg")
 
 local doom_root = require("doom.core.system").doom_root
 
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.neorg")
 neorg.settings = {
   load = {
     ["core.defaults"] = {},
@@ -38,7 +47,9 @@ neorg.settings = {
     },
   },
 }
+---minidoc_afterlines_end
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.neorg")
 neorg.packages = {
   ["neorg"] = {
     "nvim-neorg/neorg",
@@ -56,6 +67,7 @@ neorg.configs["neorg"] = function()
   require("neorg").setup(doom.features.neorg.settings)
 end
 
+---@eval return doom.core.doc_gen.generate_autocmds_documentation("features.neorg")
 neorg.autocmds = {
   {
     "BufWinEnter",

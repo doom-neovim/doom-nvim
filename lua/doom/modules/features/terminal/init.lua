@@ -1,5 +1,15 @@
-local terminal = {}
+local DoomModule = require('doom.modules').DoomModule
 
+---@toc doom.features.terminal
+---@text # Code terminal
+---
+--- Adds the ability to generate terminal from function, class or variable
+--- signatures.
+---
+
+local terminal = DoomModule.new("terminal")
+
+---@eval return doom.core.doc_gen.generate_settings_documentation(MiniDoc.current.eval_section, "features.terminal")
 terminal.settings = {
   size = 10,
   open_mapping = "<F4>",
@@ -21,7 +31,9 @@ terminal.settings = {
     },
   },
 }
+---minidoc_afterlines_end
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.terminal")
 terminal.packages = {
   ["toggleterm.nvim"] = {
     "akinsho/toggleterm.nvim",
@@ -36,6 +48,7 @@ terminal.configs["toggleterm.nvim"] = function()
   require("toggleterm").setup(doom.features.terminal.settings)
 end
 
+---@eval return doom.core.doc_gen.generate_keybind_documentation("features.terminal")
 terminal.binds = {
   "<leader>",
   name = "+prefix",

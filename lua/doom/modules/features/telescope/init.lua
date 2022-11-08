@@ -1,6 +1,15 @@
-local telescope = {}
+local DoomModule = require('doom.modules').DoomModule
+
+---@toc doom.features.telescope
+---@text # Telescope
+---
+--- ## Use telescope for LSP actions
+---
+
+local telescope = DoomModule.new("telescope")
 
 telescope.settings = {
+  -- Passed into require("telescope").setup()
   defaults = {
     find_command = {
       "rg",

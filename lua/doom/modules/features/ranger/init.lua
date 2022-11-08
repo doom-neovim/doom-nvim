@@ -1,7 +1,16 @@
-local ranger = {}
+local DoomModule = require('doom.modules').DoomModule
+
+---@toc doom.features.ranger
+---@text # Ranger
+---
+--- File exploring using [ranger](https://github.com/ranger/ranger).
+---
+
+local ranger = DoomModule.new("ranger")
 
 ranger.settings = {}
 
+---@eval return doom.core.doc_gen.generate_packages_documentation("features.ranger")
 ranger.packages = {
   ["ranger.vim"] = {
     "francoiscabrol/ranger.vim",
@@ -21,6 +30,7 @@ ranger.packages = {
 
 ranger.configs = {}
 
+---@eval return doom.core.doc_gen.generate_keybind_documentation("features.ranger")
 ranger.binds = {
   "<leader>",
   name = "+prefix",
