@@ -22,7 +22,7 @@ explorer.settings = {
     },
   },
   filters = {
-    custom = { ".git", "node_modules.editor", ".cache", "__pycache__" },
+    custom = { "^\\.git", "node_modules.editor", "^\\.cache", "__pycache__" },
   },
   renderer = {
     indent_markers = {
