@@ -107,7 +107,7 @@ fi
 
 # Create docker container if haven't already
 echo " - Success! Running docker container doom-nvim-contrib-container..."
-mkdir -p "${SCRIPT_DIR}/local-share-nvim" "${SCRIPT_DIR}/workspace"
+mkdir -p "${SCRIPT_DIR}/local-share-nvim" "${SCRIPT_DIR}/local-state" "${SCRIPT_DIR}/workspace"
 echo ""
 ${DOCKER} run \
   ${DOCKER_RUN_FLAGS} \
@@ -115,6 +115,7 @@ ${DOCKER} run \
   -e UID="1000" \
   -e GID="1000" \
   -v "$SCRIPT_DIR"/doom-nvim-contrib:/home/doom/.config/nvim:Z \
+  -v "$SCRIPT_DIR"/local-state:/home/doom/.local/state:Z \
   -v "$SCRIPT_DIR"/local-share-nvim:/home/doom/.local/share/nvim:Z \
   -v "$SCRIPT_DIR"/workspace:/home/doom/workspace:Z \
   --name doom-nvim-contrib-container \

@@ -12,6 +12,7 @@ tags
 # Doom Nvim Contrib files
 tools/doom-nvim-contrib
 tools/local-share-nvim
+tools/local-state
 tools/workspace
 
 # User modules
