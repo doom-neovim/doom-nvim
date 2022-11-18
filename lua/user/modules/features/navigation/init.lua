@@ -35,7 +35,7 @@ M.packages = {
   ["quick-scope"] = { -- highlight char to go left/righ
     "unblevable/quick-scope",
   },
-  ["vim-matchup"] = { -- highlight char to go left/righ
+  ["vim-matchup"] = { -- smart open/close match navigation 
     "andymass/vim-matchup",
   },
 }

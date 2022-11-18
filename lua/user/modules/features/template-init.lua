@@ -48,6 +48,7 @@ M.autocmds = {
 
 M.cmds = {
 }
+-- M.requires_modules = { "features.auto_install" }
 
 -- M.binds kk
 -- {

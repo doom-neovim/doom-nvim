@@ -20,7 +20,8 @@ TODO: check why out put some line in open file (currently workaround by out put 
 * Telescope find file (leader-f-f) work not correct
 * binding C-g for Hop , not 'ghw'
 * resize windows hydra
-* better folding (maybe use UFO insteadof default tree-sitter)
+* -------- better folding (maybe use UFO insteadof default tree-sitter)
+* Luasnip work independly (for golang)
 * copilot
 * sometime current line is undeadable because of grey color
 * Virtual whichkey hint
