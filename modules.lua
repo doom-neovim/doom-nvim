@@ -8,100 +8,99 @@
 
 return {
   features = {
-    -- Language features
-    "annotations", -- Code annotation generator
+--     -- Language features
+--     "annotations", -- Code annotation generator
     "auto_install", -- Auto install LSP providers
     "autopairs", -- Automatically close character pairs
-    "comment", -- Adds keybinds to comment in any language
+     "comment", -- Adds keybinds to comment in any language
     "linter", -- Linting and formatting for languages
-    "lsp", -- Code completion
-    "lsp_progress", -- Check status of LSP loading
-
-
-
-    "extra_snippets", -- Code snippets for all languages
+    "lsp", -- Code completion "lsp_progress", -- Check status of LSP loading
 --
-    -- Editor
-
-    "auto_session", -- Remember sessions between loads
-    "colorizer", -- Show colors in neovim
+--
+    "extra_snippets", -- Code snippets for all languages
+-- --
+--     -- Editor
+--
+--     "auto_session", -- Remember sessions between loads
+    -- "colorizer", -- Show colors in neovim
     "editorconfig", -- Support editorconfig files
-    -- "gitsigns", -- Show git changes in sidebar
+--     -- "gitsigns", -- Show git changes in sidebar
     "illuminate", -- Highlight other copies of the word you're hovering on
-    "indentlines", -- Show indent lines with special characters
-    "range_highlight", -- Highlight selected range from commands
+    "indentlines", -- Show indent lines with special characters "range_highlight", -- Highlight selected range from commands
     "todo_comments", -- Highlight TODO: comments
-    -- "doom_themes",     -- Extra themes for doom
-
-    -- UI Components
+--     -- "doom_themes",     -- Extra themes for doom
+--
+--     -- UI Components
     "tabline", -- Tab bar buffer switcher
-
+--
     "dashboard", -- A pretty dashboard upon opening
     "trouble",         -- A pretty diagnostic viewer
     "statusline", -- A pretty status line at the bottom of the buffer
-    "minimap",         -- Shows current position in document
+--     "minimap",         -- Shows current position in document
     "terminal",        -- Integrated terminal in neovim
-    -- "symbols",         -- Navigate between code symbols using telescope
-    -- "ranger",          -- File explorer in neovim (TODO: Test)
-    -- "restclient",      -- Test HTTP requests from neovim (TODO: Test)
-    -- "show_registers",  -- Show and navigate between registers
-
-    -- Tools
-    -- "dap",             -- Debug code through neovim
-    "repl", -- Interactive REPL in neovim
-    "explorer", -- An enhanced filetree explorer
-    -- "firenvim",        -- Embed neovim in your browser
-    -- "lazygit",         -- Lazy git integration
-    -- "neogit",          -- A git client for neovim
-    "neorg", -- Organise your life
-    "projects", -- Quickly switch between projects
-    -- "superman",        -- Read unix man pages in neovim
-    -- "suda",            -- Save using sudo when necessary
+--     -- "symbols",         -- Navigate between code symbols using telescope
+--     -- "ranger",          -- File explorer in neovim (TODO: Test)
+--     -- "restclient",      -- Test HTTP requests from neovim (TODO: Test)
+--     -- "show_registers",  -- Show and navigate between registers
+--
+--     -- Tools
+--     -- "dap",             -- Debug code through neovim
+--     "repl", -- Interactive REPL in neovim
+      "explorer", -- An enhanced filetree explorer
+--     -- "firenvim",        -- Embed neovim in your browser
+--     -- "lazygit",         -- Lazy git integration
+      -- "neogit",          -- A git client for neovim
+--     "neorg", -- Organise your life
+--     "projects", -- Quickly switch between projects
+--     -- "superman",        -- Read unix man pages in neovim
+--     -- "suda",            -- Save using sudo when necessary
     "telescope", -- Fuzzy searcher to find files, grep code and more
     "whichkey", -- An interactive sheet
-    ------------------- user module
+--     ------------------- user module
     "navigation",
     "git",
     "views",
-    -- "charcounter", -- custom module test
+   "fold",
+--     -- "charcounter", -- custom module test
   },
 
   langs = {
-    -- -- Scripts
+    -- -- -- Scripts
     "lua",
-    -- -- "python",
-    -- "bash",
-    -- -- "fish",
-    -- -- "gdscript",
-    -- -- "gdscript",
-    -- -- "php",
-    -- -- "ruby",
-    --
-    -- -- Web
-    "javascript",
-    "typescript",
-    -- "css",
-    -- -- "vue",
-    -- -- "tailwindcss",
-    -- -- "svelte",
-    --
-    -- -- Compiled
-    -- "rust",
-    -- -- "cc",
-    -- -- "ocaml", "haskell",
-    --
-    -- -- JIT
-    -- -- "c_sharp",
-    -- -- "kotlin",
-    -- -- "java",
-    --
-    "json",
-    "yaml",
-    -- -- "toml",
+    "go",
+    -- -- -- "python",
+    -- -- "bash",
+    -- -- -- "fish",
+    -- -- -- "gdscript",
+    -- -- -- "gdscript",
+    -- -- -- "php",
+    -- -- -- "ruby",
+    -- --
+    -- -- -- Web
+    -- "javascript",
+    -- "typescript",
+    -- -- "css",
+    -- -- -- "vue",
+    -- -- -- "tailwindcss",
+    -- -- -- "svelte",
+    -- --
+    -- -- -- Compiled
+    -- -- "rust",
+    -- -- -- "cc",
+    -- -- -- "ocaml", "haskell",
+    -- --
+    -- -- -- JIT
+    -- -- -- "c_sharp",
+    -- -- -- "kotlin",
+    -- -- -- "java",
+    -- --
+    -- "json",
+    -- "yaml",
+    -- -- -- "toml",
     "markdown",
-    -- -- "terraform",       -- Terraform / hcl files support
-    "dockerfile",
-    -- "nix",             -- Nix declarations
+    -- -- -- "terraform",       -- Terraform / hcl files support
+    -- "dockerfile",
+    -- -- "nix",             -- Nix declarations
 
   },
 }
