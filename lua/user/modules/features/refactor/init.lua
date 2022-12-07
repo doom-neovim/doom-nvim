@@ -1,119 +1,48 @@
-local char_counter = {}
+local M = {}
 
-char_counter.settings = {
-  popup = {
-    position = "50%",
-    size = {
-      width = 80,
-      height = 40,
-    },
-    border = {
-      padding = {
-        top = 2,
-        bottom = 2,
-        left = 3,
-        right = 3,
-      },
-    },
-    style = "rounded",
-    enter = true,
-    buf_options = {
-      modifiable = true,
-      readonly = true,
-    },
-  },
+M.settings = {
 }
 
-char_counter.packages = {
-  ["nui.nvim"] = {
-    "MunifTanjim/nui.nvim",
-    -- cmd = { "CountPrint" },
+M.packages = {
+  ["refactoring.nvim"] = {
+    "ThePrimeagen/refactoring.nvim",
   },
+  -- ["vimade"] = {
+  --   "TaDaa/vimade",
+  -- },
+
 }
 
-char_counter.configs = {
-  ["nui.nvim"] = function()
-    vim.notify("char_counter: nui.nvim loaded", "info")
+M.configs = {
+  ["refactoring.nvim"] = function()
+        require("refactoring").setup {}
+        local has_telescope = pcall(require, "telescope")
+        if (has_telescope) then -- TODO: integrate with telescope. Dont know why cannot load telescope here
+            local res = require("telescope").load_extension("refactoring")
+            print (" load extension:", res)
+        end
   end,
+
 }
 
-char_counter._insert_enter_char_count = nil
-char_counter._accumulated_difference = 0
-char_counter._get_current_buffer_char_count = function()
-  local lines = vim.api.nvim_buf_line_count(0)
-  local chars = 0
-  for _, line in ipairs(vim.api.nvim_buf_get_lines(0, 0, lines, false)) do
-    chars = chars + #line
-  end
-  return chars
-end
-
-char_counter.autocmds = {
-  {
-    "InsertEnter",
-    "*",
-    function()
-      -- Only operate on normal file buffers
-      print(("buftype: %s"):format(vim.bo.buftype))
-      if vim.bo.buftype == "" then
-        -- Store current char count
-        char_counter._insert_enter_char_count = char_counter._get_current_buffer_char_count()
-      end
-    end,
-  },
-  {
-    "InsertLeave",
-    "*",
-    function()
-      -- Only operate on normal file buffers
-      if vim.bo.buftype == "" and char_counter._insert_enter_char_count then
-        -- Find the amount of chars added or removed
-        local new_count = char_counter._get_current_buffer_char_count()
-        local diff = new_count - char_counter._insert_enter_char_count
-        print(new_count, diff)
-        -- Add the difference to the accumulated total
-        char_counter._accumulated_difference = char_counter._accumulated_difference + diff
-        print(("Accumulated difference %s"):format(char_counter._accumulated_difference))
-      end
-    end,
-  },
+M.autocmds = {
 }
 
-char_counter.cmds = {
-  {
-    "CountPrint",
-    function()
-      local Popup = require("nui.popup")
-      local popup = Popup(char_counter.settings.popup)
-      popup:mount()
-      popup:map("n", "<esc>", function()
-        popup:unmount()
-      end)
-
-      local msg = ("char_counter: You have typed %s characters since I started counting."):format(
-        char_counter._accumulated_difference
-      )
-      vim.api.nvim_buf_set_lines(popup.bufnr, 0, 1, false, { msg })
-    end,
-  },
-  {
-    "CountReset",
-    function()
-      char_counter._accumulated_difference = 0
-      vim.notify("char_counter: Reset count!", "info")
-    end,
-  },
+M.cmds = {
 }
+-- M.requires_modules = { "features.auto_install" }
 
-char_counter.binds = {
+M.binds = {
   {
-    "<leader>i",
-    name = "+info",
-    { -- Adds a new `whichkey` folder called `+info`
-      { "c", "<cmd>:CountPrint<CR>", name = "Print new chars" }, -- Binds `:CountPrint` to `<leader>ic`
-      { "r", "<cmd>:CountReset<CR>", name = "Reset char count" }, -- Binds `:CountPrint` to `<leader>ic`
+    "<leader>co",
+    name = "+Refactor",
+    mode = "n",
+    {
+            {"v", [[<cmd>lua require('refactoring').debug.print_var({ normal = true })<CR>]], name = "Debug Printvar"},
+            {"p", [[<cmd>lua require('refactoring').debug.printf({below = false})<CR>]], name = "Debug Print " },
+            {"c", [[<cmd>lua require('refactoring').debug.cleanup({})<CR>]], name = "Clean Debug" }
     },
   },
 }
 
-return char_counter
+return M
