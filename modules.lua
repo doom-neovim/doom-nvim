@@ -61,6 +61,8 @@ return {
     "git",
     "views",
    "fold",
+   "refactor",
+
 --     -- "charcounter", -- custom module test
   },
 
@@ -77,8 +79,8 @@ return {
     -- -- -- "ruby",
     -- --
     -- -- -- Web
-    -- "javascript",
-    -- "typescript",
+    "javascript",
+    "typescript",
     -- -- "css",
     -- -- -- "vue",
     -- -- -- "tailwindcss",
@@ -94,8 +96,8 @@ return {
     -- -- -- "kotlin",
     -- -- -- "java",
     -- --
-    -- "json",
-    -- "yaml",
+    "json",
+    "yaml",
     -- -- -- "toml",
     "markdown",
     -- -- -- "terraform",       -- Terraform / hcl files support

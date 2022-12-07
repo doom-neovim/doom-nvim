@@ -114,40 +114,43 @@ end
 -- -- some un categorized plugin here
 -- -- TODO: Will move them into a module
 --
--- -- doom.use_package({
--- --   "WhoIsSethDaniel/toggle-lsp-diagnostics.nvim",
--- --   config = function()
--- --     require'toggle_lsp_diagnostics'.init()
--- -- })
--- --   end
+
+doom.use_package({
+  "WhoIsSethDaniel/toggle-lsp-diagnostics.nvim",
+  config = function()
+    require("toggle_lsp_diagnostics").init()
+  end,
+})
 --
 --
 -- -- Packer
 --
-doom.use_package({
-  "folke/noice.nvim",
-  config = function()
-    require("noice").setup({
-
-      notify = { enabled = true, view = "notify" },
-      messages = { enabled = true, view = "mini", view_error = "notify", view_warn = "notify" },
-      -- messages = {enabled = true, view = "mini"},
-      lsp = {
-        -- progress = {enabled = false},
-        hover = { enabled = false },
-        signature = { enabled = false },
-      },
-    })
-  end,
-  requires = {
-    -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-    "MunifTanjim/nui.nvim",
-    -- OPTIONAL:
-    --   `nvim-notify` is only needed, if you want to use the notification view.
-    --   If not available, we use `mini` as the fallback
-    "rcarriga/nvim-notify",
-  },
-})
+------------------------------------------------------
+-- doom.use_package({
+--   "folke/noice.nvim",
+--   config = function()
+--     require("noice").setup({
+--
+--       notify = { enabled = true, view = "notify" },
+--       messages = { enabled = true, view = "mini", view_error = "notify", view_warn = "notify" },
+--       -- messages = {enabled = true, view = "mini"},
+--       lsp = {
+--         -- progress = {enabled = false},
+--         hover = { enabled = false },
+--         signature = { enabled = false },
+--       },
+--     })
+--   end,
+--   requires = {
+--     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+--     "MunifTanjim/nui.nvim",
+--     -- OPTIONAL:
+--     --   `nvim-notify` is only needed, if you want to use the notification view.
+--     --   If not available, we use `mini` as the fallback
+--     "rcarriga/nvim-notify",
+--   },
+-- })
+------------------------------------------------------
 --
 --     doom.use_package {
 --         'iamcco/markdown-preview.nvim',
@@ -161,7 +164,15 @@ doom.use_package({
 --   doom.use_package {"rafcamlet/nvim-luapad"}
 --   doom.use_package 'anuvyklack/hydra.nvim'
 -- -- fold setting
--- local opt = vim.opt
+local opt = vim.opt
+opt.list = true
+opt.listchars:append("eol:↴")
+
+-- tab options
+opt.tabstop = 2
+opt.shiftwidth = 4
+opt.expandtab = true
+--
 -- opt.foldmethod = "expr"
 -- opt.foldlevel = 1
 -- opt.foldlevelstart = 1
