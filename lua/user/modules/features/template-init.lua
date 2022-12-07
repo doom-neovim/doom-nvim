@@ -49,7 +49,6 @@ M.autocmds = {
 M.cmds = {
 }
 -- M.requires_modules = { "features.auto_install" }
-
 -- M.binds kk
 -- {
 --   -- {
@@ -60,4 +59,7 @@ M.cmds = {
 --   -- },
 -- }
 
+-- Notes:
+-- code for load module located at doom.core.module.load_modules
+-- code for binding: ddom.services.keymaps.applyKeymaps
 return M
