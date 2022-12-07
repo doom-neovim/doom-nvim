@@ -9,6 +9,15 @@ M.packages = {
   ["vimade"] = {
     "TaDaa/vimade",
   },
+  ["nvim-treesitter-context"] = {
+    "nvim-treesitter/nvim-treesitter-context",
+  },
+  ["vim-scratchpad"] = {
+    "konfekt/vim-scratchpad",
+  },
+  -- ["quick-scope"] = { -- highlight char to go left/righ
+  --   "unblevable/quick-scope",
+  -- },
 }
 
 M.configs = {
