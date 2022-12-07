@@ -10,13 +10,10 @@ M.packages = {
   ["vim-sandwich"] = {
     "machakann/vim-sandwich",
   },
-  ["symbols-outline.nvim"] = {
-    "simrat39/symbols-outline.nvim",
-  },
+  ["symbols-outline.nvim"] = { "simrat39/symbols-outline.nvim", },
 
   ["cutlass.nvim"] = {
-    "tuanbass/cutlass.nvim",
-  },
+    "tuanbass/cutlass.nvim", },
   ["textobj1"] = {
     "kana/vim-textobj-line",
   },
@@ -32,11 +29,14 @@ M.packages = {
   ["hop.nvim"] = {
     "phaazon/hop.nvim", -- jum to anywhere in screen
   },
-  ["quick-scope"] = { -- highlight char to go left/righ
-    "unblevable/quick-scope",
-  },
-  ["vim-matchup"] = { -- smart open/close match navigation 
+  ["vim-matchup"] = { -- smart open/close match navigation
     "andymass/vim-matchup",
+  },
+  ["delaytrain.nvim"] = { -- penalty when repeat j/k for navigation
+    "ja-ford/delaytrain.nvim",
+  },
+  ["better-escape.nvim"] = { -- penalty when repeat j/k for navigation
+    "max397574/better-escape.nvim",
   },
 }
 
@@ -50,6 +50,13 @@ M.configs = {
     require("cutlass").setup({
       cut_key = "m",
     })
+  end,
+  ["better-escape.nvim"] = function()
+      require("better_escape").setup({
+        mapping = {"jk", "jj", "kj", "kk"}, -- a table with mappings to use
+        keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
+      })
+
   end,
 
   ["hop.nvim"] = function()
@@ -83,6 +90,18 @@ M.configs = {
   ["vim-matchup"] = function()
      vim.g.matchup_matchparen_offscreen = {}
   end,
+  ["delaytrain.nvim"] = function()
+      require('delaytrain').setup {
+          delay_ms = 500,  -- How long repeated usage of a key should be prevented
+          grace_period = 3, -- How many repeated keypresses are allowed
+          keys = {          -- Which keys (in which modes) should be delayed
+              ['n'] = {'h', 'j', 'k', 'l'},
+              -- ['nvi'] = {'<Left>', '<Down>', '<Up>', '<Right>'},
+          },
+      }
+    -- vim.notify("Setting up cutlass plugin", "info")
+  end,
+
 }
 
 M.autocmds = {}
@@ -93,10 +112,10 @@ M.binds = {
 
   {
     -- Hop char
-    "C-g",
+    "<C-G>",
     [[<cmd>HopChar1<CR>]],
     name = "Go to anychar in the screen",
-    mode = "nv",
+    mode = "inv",
   },
   {
     "ghc",
@@ -106,6 +125,12 @@ M.binds = {
   },
   {
     "ghw",
+    [[<cmd>HopWord<CR>]],
+    name = "Go to word in the screen",
+    mode = "nv",
+  },
+  {
+    "<C-g>w",
     [[<cmd>HopWord<CR>]],
     name = "Go to word in the screen",
     mode = "nv",
