@@ -173,6 +173,9 @@ opt.tabstop = 2
 opt.shiftwidth = 4
 opt.expandtab = true
 --
+-- confirm when delete
+opt.confirm = true
+--
 -- opt.foldmethod = "expr"
 -- opt.foldlevel = 1
 -- opt.foldlevelstart = 1
