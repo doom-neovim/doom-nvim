@@ -71,8 +71,10 @@ modules.try_sync()
 profiler.stop("framework|doom.core.modules")
 
 -- Execute autocommand for user to hook custom config into
-vim.api.nvim_exec_autocmds("User", {
-  pattern = "DoomStarted",
-})
+if not modules._needs_sync then
+  vim.api.nvim_exec_autocmds("User", {
+    pattern = "DoomStarted",
+  })
+end
 
 -- vim: fdm=marker

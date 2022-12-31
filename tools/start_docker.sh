@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
-
-if ! docker info > /dev/null 2>&1; then
+DOCKER=$(command -v podman docker | head -n 1)
+if ! "${DOCKER}" info > /dev/null 2>&1; then
   echo "This script uses docker, and it isn't running - please start docker and try again!"
   exit 1
+fi
+
+if [ $(basename "${DOCKER}") = "podman" ]; then
+	DOCKER_RUN_FLAGS="--userns=keep-id"
+else
+    DOCKER_RUN_FLAGS=
 fi
 
 ############################################################
@@ -40,6 +46,7 @@ while getopts "b:h" option; do
       exit;;
   esac
 done
+shift $((OPTIND-1))
 
 cd "$SCRIPT_DIR" || exit
 
@@ -87,30 +94,31 @@ echo ""
 
 echo "2. Setting up docker environment"
 # Ensure docker image exists
-if [[ ! "$(docker images -q doom-nvim-contrib)" ]]; then
+if [[ ! "$("${DOCKER}" images -q doom-nvim-contrib)" ]]; then
   echo " - Docker image does not exist.  Building docker image..."
-  docker build -t doom-nvim-contrib .
+  "${DOCKER}" build -t doom-nvim-contrib . || exit
 fi
 
-if [ "$(docker ps -aq -f status=exited -f name=doom-nvim-contrib-container)" ]; then
+if [ "$("${DOCKER}" ps -aq -f status=exited -f name=doom-nvim-contrib-container)" ]; then
   echo " - Cleaning up old container..."
   # cleanup
-  docker rm doom-nvim-contrib-container >> /dev/null
+  "${DOCKER}" rm doom-nvim-contrib-container >> /dev/null
 fi
 
 # Create docker container if haven't already
 echo " - Success! Running docker container doom-nvim-contrib-container..."
-mkdir -p "${SCRIPT_DIR}/local-share-nvim" "${SCRIPT_DIR}/workspace"
+mkdir -p "${SCRIPT_DIR}/local-share-nvim" "${SCRIPT_DIR}/local-state" "${SCRIPT_DIR}/workspace"
 echo ""
-docker run \
+${DOCKER} run \
+  ${DOCKER_RUN_FLAGS} \
   -it \
   -e UID="1000" \
   -e GID="1000" \
-  -v "$SCRIPT_DIR"/doom-nvim-contrib:/home/doom/.config/nvim \
-  -v "$SCRIPT_DIR"/local-share-nvim:/home/doom/.local/share/nvim \
-  -v "$SCRIPT_DIR"/workspace:/home/doom/workspace \
+  -v "$SCRIPT_DIR"/doom-nvim-contrib:/home/doom/.config/nvim:Z \
+  -v "$SCRIPT_DIR"/local-state:/home/doom/.local/state:Z \
+  -v "$SCRIPT_DIR"/local-share-nvim:/home/doom/.local/share/nvim:Z \
+  -v "$SCRIPT_DIR"/workspace:/home/doom/workspace:Z \
   --name doom-nvim-contrib-container \
   --user doom \
-  doom-nvim-contrib
-
-
+  "$@" \
+  doom-nvim-contrib \

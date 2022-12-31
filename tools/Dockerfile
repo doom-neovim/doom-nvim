@@ -16,7 +16,7 @@ ENV \
 	PATH="/home/doom/.local/bin:${PATH}"
 
 # Update repositories
-RUN	pacman -Syy
+RUN	pacman -Syu --noconfirm
 
 # Install neovim
 RUN pacman -Sy neovim --noconfirm
@@ -25,7 +25,7 @@ RUN pacman -Sy neovim --noconfirm
 RUN pacman -Sy ripgrep nodejs-lts-fermium npm git bash gcc jq --noconfirm
 
 # Lua
-RUN pacman -Sy luacheck stylua --noconfirm
+RUN pacman -Sy luacheck stylua lua-language-server --noconfirm
 
 # Required for nvim-lsp-installer
 RUN pacman -Sy wget unzip make --noconfirm
@@ -35,6 +35,12 @@ RUN npm i -g chokidar-cli
 
 # Required for OCaml language
 # RUN pacman -Sy opam diffutils patch ocaml --noconfirm
+
+# For startup time profiling
+RUN pacman -Sy hyperfine --noconfirm
+
+# OCaml
+RUN pacman -Sy opam diffutils patch ocaml --noconfirm
 
 # Create the doom user and group
 RUN groupadd doom
