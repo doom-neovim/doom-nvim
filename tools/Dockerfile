@@ -36,6 +36,9 @@ RUN npm i -g chokidar-cli
 # Required for OCaml language
 # RUN pacman -Sy opam diffutils patch ocaml --noconfirm
 
+# For startup time profiling
+RUN pacman -Sy hyperfine --noconfirm
+
 # Create the doom user and group
 RUN groupadd doom
 RUN useradd -m -g doom doom
