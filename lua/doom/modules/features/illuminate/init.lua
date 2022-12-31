@@ -20,9 +20,16 @@ illuminate.packages = {
   },
 }
 
+
 illuminate.configs = {}
 illuminate.configs["vim-illuminate"] = function()
+  local is_module_enabled = require("doom.utils").is_module_enabled
   vim.g.Illuminate_ftblacklist = doom.features.illuminate.settings.blacklist
+  if is_module_enabled("features", "largefile") then
+    require('illuminate').configure({
+      large_file_cutoff = doom.features.largefile.settings.max_line_count
+    })
+  end
 end
 
 return illuminate

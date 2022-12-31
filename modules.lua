@@ -26,6 +26,7 @@ return {
     "indentlines", -- Show indent lines with special characters
     "range_highlight", -- Highlight selected range from commands
     "todo_comments", -- Highlight TODO: comments
+    "largefile", -- Disable treesitter and various other slow features on large files
     -- "doom_themes",     -- Extra themes for doom
 
     -- UI Components
