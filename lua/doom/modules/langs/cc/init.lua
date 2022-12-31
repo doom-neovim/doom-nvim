@@ -1,5 +1,3 @@
-local utils = require("doom.utils")
-
 local cc = {}
 
 cc.settings = {
