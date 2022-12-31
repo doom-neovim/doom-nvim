@@ -96,7 +96,7 @@ echo "2. Setting up docker environment"
 # Ensure docker image exists
 if [[ ! "$("${DOCKER}" images -q doom-nvim-contrib)" ]]; then
   echo " - Docker image does not exist.  Building docker image..."
-  "${DOCKER}" build -t doom-nvim-contrib .
+  "${DOCKER}" build -t doom-nvim-contrib . || exit
 fi
 
 if [ "$("${DOCKER}" ps -aq -f status=exited -f name=doom-nvim-contrib-container)" ]; then
