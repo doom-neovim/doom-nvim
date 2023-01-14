@@ -180,22 +180,6 @@ required.binds = function()
         },
       },
       {
-        "g",
-        name = "+git",
-        {
-          { "p", [[<cmd>TermExec cmd="git pull"<CR>]], name = "Pull" },
-          { "P", [[<cmd>TermExec cmd="git push"<CR>]], name = "Push" },
-          {
-            "C",
-            name = "+commit",
-            {
-              { "c", [[<cmd>TermExec cmd="git commit"<CR>]], name = "commit" },
-              { "a", [[<cmd>TermExec cmd="git commit --ammend"<CR>]], name = "ammend" },
-            },
-          },
-        },
-      },
-      {
         "h",
         name = "+help",
         {
