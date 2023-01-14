@@ -82,15 +82,14 @@ modules.load_modules = function()
             local spec = vim.deepcopy(packer_spec)
 
             -- Set/unset frozen packer dependencies
-            if type(spec.version) == "table" then
+            if type(spec.commit) == "table" then
               -- Commit can be a table of values, where the keys indicate
               -- which neovim version is required.
               spec.commit = utils.pick_compatible_field(spec.commit)
             end
 
-            if not doom.freeze_dependencies then
-              spec.commit = nil
-            end
+            -- Only pin dependencies if doom.freeze_dependencies is true
+            spec.lock = spec.commit and doom.freeze_dependencies
 
             -- Save module spec to be initialised later
             table.insert(doom.packages, spec)
