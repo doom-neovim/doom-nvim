@@ -7,7 +7,7 @@ neogit.packages = {
     "TimUntersberger/neogit",
     commit = "74c9e29b61780345d3ad9d7a4a4437607caead4a",
     cmd = "Neogit",
-    opt = true,
+    lazy = true,
   },
 }
 

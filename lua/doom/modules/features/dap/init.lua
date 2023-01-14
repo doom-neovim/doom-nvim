@@ -39,7 +39,6 @@ dap.packages = {
   ["nvim-dap"] = {
     "mfussenegger/nvim-dap",
     commit = "0b320f5bd4e5f81e8376f9d9681b5c4ee4483c25",
-    module = "dap",
   },
   ["nvim-dap-ui"] = {
     "rcarriga/nvim-dap-ui",

@@ -60,11 +60,6 @@ doom = {
   -- @default = true
   freeze_dependencies = true,
 
-  -- Enables impatent.nvim caching to speed up start time.
-  -- Can cause more issues so disabled by default
-  -- @default false
-  impatient_enabled = false,
-
   -- Autosave
   -- false : Disable autosave
   -- true  : Enable autosave

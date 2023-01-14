@@ -17,6 +17,7 @@ illuminate.packages = {
   ["vim-illuminate"] = {
     "RRethy/vim-illuminate",
     commit = "0603e75fc4ecde1ee5a1b2fc8106ed6704f34d14",
+    event = "VeryLazy",
   },
 }
 

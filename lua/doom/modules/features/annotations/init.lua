@@ -20,6 +20,8 @@ annotations.packages = {
   ["neogen"] = {
     "danymat/neogen",
     commit = "967b280d7d7ade52d97d06e868ec4d9a0bc59282",
+    keys = { "<leader>cg" },
+    cmd = "Neogen",
     after = "nvim-treesitter",
   },
 }

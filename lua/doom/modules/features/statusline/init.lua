@@ -500,7 +500,7 @@ statusline.autocmds = {
     function()
       vim.defer_fn(function()
         statusline.try_refresh()
-      end, 100)
+      end, 50)
     end,
     once = true,
   },
