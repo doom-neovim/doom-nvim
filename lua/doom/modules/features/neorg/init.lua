@@ -44,7 +44,7 @@ neorg.packages = {
     "nvim-neorg/neorg",
     commit = {
       ["nvim-0.7"] = "d93126cfcc2b5f90c063676f8669fed9b0806bcd",
-      ["latest"] = "07eafea0312379f6adb327cbdb69594108e2dd57",
+      ["latest"] = "aa613122f82ca7485b7055937a742b709ed3c576",
     },
     cmd = "Neorg",
     after = "nvim-treesitter",

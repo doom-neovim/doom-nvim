@@ -4,8 +4,8 @@ restclient.settings = {}
 
 restclient.packages = {
   ["rest.nvim"] = {
-    "NTBBloodbath/rest.nvim",
-    commit = "d902996de965d5d491f122e69ba9d03f9c673eb0",
+    "rest-nvim/rest.nvim",
+    commit = "090e253c114b6d5448bac5869a28a6623c195e3a",
     cmd = {
       "RestNvim",
       "RestNvimPreview",
