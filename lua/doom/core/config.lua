@@ -63,40 +63,95 @@ config.load = function()
   local enabled_modules = require("doom.core.modules").enabled_modules
 
   profiler.start("framework|import modules")
-  -- Iterate over each module and save it to the doom global object
-  for section_name, section_modules in pairs(enabled_modules) do
-    for _, module_name in pairs(section_modules) do
-      -- If the section is `user` resolves from `lua/user/modules`
-      local profiler_message = ("modules|import `%s.%s`"):format(section_name, module_name)
-      profiler.start(profiler_message)
-      local search_paths = {
-        ("user.modules.%s.%s"):format(section_name, module_name),
-        ("doom.modules.%s.%s"):format(section_name, module_name),
-      }
 
-      local ok, result
-      for _, path in ipairs(search_paths) do
-        ok, result = xpcall(require, debug.traceback, path)
-        if ok then
-          break
+  -- -- Iterate over each module and save it to the doom global object
+  -- for section_name, section_modules in pairs(enabled_modules) do
+  --   for _, module_name in pairs(section_modules) do
+  --     -- If the section is `user` resolves from `lua/user/modules`
+  --     local profiler_message = ("modules|import `%s.%s`"):format(section_name, module_name)
+  --     profiler.start(profiler_message)
+  --     local search_paths = {
+  --       ("user.modules.%s.%s"):format(section_name, module_name),
+  --       ("doom.modules.%s.%s"):format(section_name, module_name),
+  --     }
+  --
+  --     local ok, result
+  --     for _, path in ipairs(search_paths) do
+  --       ok, result = xpcall(require, debug.traceback, path)
+  --       if ok then
+  --         break
+  --       end
+  --     end
+  --     if ok then
+  --       doom[section_name][module_name] = result
+  --     else
+  --       local log = require("doom.utils.logging")
+  --       log.error(
+  --         string.format(
+  --           "There was an error loading module '%s.%s'. Traceback:\n%s",
+  --           section_name,
+  --           module_name,
+  --           result
+  --         )
+  --       )
+  --     end
+  --     profiler.stop(profiler_message)
+  --   end
+  -- end
+
+
+  -- Combine enabled modules (`modules.lua`) with core modules.
+  require("doom.utils.modules").traverse_enabled(
+    enabled_modules,
+    function(node, stack)
+      if type(node) == "string" then
+        local t_path = vim.tbl_map(function(stack_node)
+          return type(stack_node.key) == "string" and stack_node.key or stack_node.node
+        end, stack)
+
+        local path_module = table.concat(t_path, ".")
+
+        local profiler_message = ("modules|import `%s`"):format(path_module)
+        profiler.start(profiler_message)
+
+        -- If the section is `user` resolves from `lua/user/modules`
+        local search_paths = {
+          ("user.modules.%s"):format(path_module),
+          ("doom.modules.%s"):format(path_module),
+        }
+
+        local ok, result
+        for _, path in ipairs(search_paths) do
+          ok, result = xpcall(require, debug.traceback, path)
+          if ok then
+            break
+          end
         end
-      end
-      if ok then
-        doom[section_name][module_name] = result
-      else
-        local log = require("doom.utils.logging")
-        log.error(
-          string.format(
-            "There was an error loading module '%s.%s'. Traceback:\n%s",
-            section_name,
-            module_name,
-            result
+
+        if ok then
+          -- Add string tag so that we can easilly target modules with more
+          -- traversers, ie. in `core/modules` when traversing `doom.modules`
+          result.type = "doom_module_single"
+          utils.get_set_table_path(doom.modules, t_path, result)
+        else
+          local log = require("doom.utils.logging")
+          log.error(
+            string.format(
+              "There was an error loading module '%s'. Traceback:\n%s",
+              path_module,
+              result
+            )
           )
-        )
+        end
+
+        profiler.stop(profiler_message)
       end
-      profiler.stop(profiler_message)
     end
-  end
+    , { debug = doom.logging == "trace" or doom.logging == "debug" }
+  )
+
+
+
   profiler.stop("framework|import modules")
 
   profiler.start("framework|config.lua (user)")
