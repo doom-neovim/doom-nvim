@@ -63,40 +63,59 @@ config.load = function()
   local enabled_modules = require("doom.core.modules").enabled_modules
 
   profiler.start("framework|import modules")
-  -- Iterate over each module and save it to the doom global object
-  for section_name, section_modules in pairs(enabled_modules) do
-    for _, module_name in pairs(section_modules) do
-      -- If the section is `user` resolves from `lua/user/modules`
-      local profiler_message = ("modules|import `%s.%s`"):format(section_name, module_name)
-      profiler.start(profiler_message)
-      local search_paths = {
-        ("user.modules.%s.%s"):format(section_name, module_name),
-        ("doom.modules.%s.%s"):format(section_name, module_name),
-      }
 
-      local ok, result
-      for _, path in ipairs(search_paths) do
-        ok, result = xpcall(require, debug.traceback, path)
-        if ok then
-          break
+  -- Combine enabled modules (`modules.lua`) with core modules.
+  require("doom.utils.modules").traverse_enabled(
+    enabled_modules,
+    function(node, stack)
+      if type(node) == "string" then
+        local t_path = vim.tbl_map(function(stack_node)
+          return type(stack_node.key) == "string" and stack_node.key or stack_node.node
+        end, stack)
+
+        local path_module = table.concat(t_path, ".")
+
+        local profiler_message = ("modules|import `%s`"):format(path_module)
+        profiler.start(profiler_message)
+
+        -- If the section is `user` resolves from `lua/user/modules`
+        local search_paths = {
+          ("user.modules.%s"):format(path_module),
+          ("doom.modules.%s"):format(path_module),
+        }
+
+        local ok, result
+        for _, path in ipairs(search_paths) do
+          ok, result = xpcall(require, debug.traceback, path)
+          if ok then
+            break
+          end
         end
-      end
-      if ok then
-        doom[section_name][module_name] = result
-      else
-        local log = require("doom.utils.logging")
-        log.error(
-          string.format(
-            "There was an error loading module '%s.%s'. Traceback:\n%s",
-            section_name,
-            module_name,
-            result
+
+        if ok then
+          -- Add string tag so that we can easilly target modules with more
+          -- traversers, ie. in `core/modules` when traversing `doom.modules`
+          result.type = "doom_module_single"
+          utils.get_set_table_path(doom.modules, t_path, result)
+        else
+          local log = require("doom.utils.logging")
+          log.error(
+            string.format(
+              "There was an error loading module '%s'. Traceback:\n%s",
+              path_module,
+              result
+            )
           )
-        )
+        end
+
+        profiler.stop(profiler_message)
       end
-      profiler.stop(profiler_message)
     end
-  end
+    , { debug = doom.settings.logging == "trace" or doom.settings.logging == "debug" }
+  )
+
+
+
   profiler.stop("framework|import modules")
 
   profiler.start("framework|config.lua (user)")
@@ -109,10 +128,10 @@ config.load = function()
   profiler.stop("framework|config.lua (user)")
 
   -- Apply the necessary `doom.field_name` options
-  vim.opt.shiftwidth = doom.indent
-  vim.opt.softtabstop = doom.indent
+  vim.opt.shiftwidth = doom.settings.indent
+  vim.opt.softtabstop = doom.settings.indent
   vim.opt.tabstop = doom.indent
-  if doom.guicolors then
+  if doom.settings.guicolors then
     if vim.fn.exists("+termguicolors") == 1 then
       vim.opt.termguicolors = true
     elseif vim.fn.exists("+guicolors") == 1 then
@@ -120,49 +139,49 @@ config.load = function()
     end
   end
 
-  if doom.auto_comment then
+  if doom.settings.auto_comment then
     vim.opt.formatoptions:append("croj")
   end
-  if doom.movement_wrap then
+  if doom.settings.movement_wrap then
     vim.cmd("set whichwrap+=<,>,[,],h,l")
   end
 
-  if doom.undo_dir then
+  if doom.settings.undo_dir then
     vim.opt.undofile = true
-    vim.opt.undodir = doom.undo_dir
+    vim.opt.undodir = doom.settings.undo_dir
   else
     vim.opt.undofile = false
     vim.opt.undodir = nil
   end
 
-  if doom.global_statusline then
+  if doom.settings.global_statusline then
     vim.opt.laststatus = 3
   end
 
   -- Use system clipboard
-  if doom.clipboard then
+  if doom.settings.clipboard then
     vim.opt.clipboard = "unnamedplus"
   end
 
-  if doom.ignorecase then
+  if doom.settings.ignorecase then
     vim.cmd("set ignorecase")
   else
     vim.cmd("set noignorecase")
   end
-  if doom.smartcase then
+  if doom.settings.smartcase then
     vim.cmd("set smartcase")
   else
     vim.cmd("set nosmartcase")
   end
 
   -- Color column
-  vim.opt.colorcolumn = type(doom.max_columns) == "number" and tostring(doom.max_columns) or ""
+  vim.opt.colorcolumn = type(doom.settings.max_columns) == "number" and tostring(doom.settings.max_columns) or ""
 
   -- Number column
-  vim.opt.number = not doom.disable_numbering
-  vim.opt.relativenumber = not doom.disable_numbering and doom.relative_num
+  vim.opt.number = not doom.settings.disable_numbering
+  vim.opt.relativenumber = not doom.settings.disable_numbering and doom.settings.relative_num
 
-  vim.g.mapleader = doom.leader_key
+  vim.g.mapleader = doom.settings.leader_key
 end
 
 -- Path cases:

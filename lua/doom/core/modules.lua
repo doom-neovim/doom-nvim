@@ -38,13 +38,16 @@ local autocmds_service = require("doom.services.autocommands")
 --- Applies commands, autocommands, packages from enabled modules (`modules.lua`).
 modules.load_modules = function()
   local logger = require("doom.utils.logging")
+
   -- Handle the Modules
-  for section_name, _ in pairs(doom.modules) do
-    for module_name, module in pairs(doom.modules[section_name]) do
-      if type(module) ~= "table" then
-        print(("Error on module %s type is %s val is %s"):format(module_name, type(module), module))
-      end
-      local profile_msg = ("modules|init `%s.%s`"):format(section_name, module_name)
+  require("doom.utils.modules").traverse_loaded(doom.modules, function(node, stack)
+    if node.type then
+      local module = node
+      local t_path = vim.tbl_map(function(stack_node)
+        return type(stack_node.key) == "string" and stack_node.key
+      end, stack)
+      local path_module = table.concat(t_path, ".")
+      local profile_msg = ("modules|init `%s`"):format(path_module)
       profiler.start(profile_msg)
 
       -- Flag to continue enabling module
@@ -53,17 +56,13 @@ modules.load_modules = function()
       -- Check module has necessary dependencies
       if module.requires_modules then
         for _, dependent_module in ipairs(module.requires_modules) do
-          local dep_section_name, dep_module_name = unpack(vim.split(dependent_module, "%."))
-
-          if not doom.modules[dep_section_name][dep_module_name] then
+          if not utils.get_set_table_path(doom.modules, vim.split(dependent_module, "%.")) then
             should_enable_module = false
             logger.error(
-              ('Doom module "%s.%s" depends on a module that is not enabled "%s.%s".  Please enable the %s module.'):format(
-                section_name,
-                module_name,
-                dep_section_name,
-                dep_module_name,
-                dep_module_name
+              ('Doom module "%s" depends on a module that is not enabled "%s".  Please enable the %s module.'):format(
+                path_module,
+                dependent_module,
+                dependent_module
               )
             )
           end
@@ -88,8 +87,9 @@ modules.load_modules = function()
               spec.commit = utils.pick_compatible_field(spec.commit)
             end
 
-            -- Only pin dependencies if doom.freeze_dependencies is true
-            spec.lock = spec.commit and doom.freeze_dependencies
+            if not doom.settings.freeze_dependencies then
+              spec.commit = nil
+            end
 
             -- Save module spec to be initialised later
             table.insert(doom.packages, spec)
@@ -117,9 +117,11 @@ modules.load_modules = function()
           )
         end
       end
+
       profiler.stop(profile_msg)
     end
-  end
+  end, { debug = doom.logging == "trace" or doom.logging == "debug" })
+
 end
 
 --- Applies user's commands, autocommands, packages from `use_*` helper functions.

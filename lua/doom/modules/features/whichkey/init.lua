@@ -39,7 +39,7 @@ whichkey.settings = {
   },
   window = {
     padding = { 0, 0, 0, 0 },
-    border = doom.border_style,
+    border = doom.settings.border_style,
   },
   layout = {
     height = { min = 1, max = 10 },
@@ -121,18 +121,24 @@ whichkey.configs["which-key.nvim"] = function()
 
   local keymaps_service = require("doom.services.keymaps")
   local whichkey_integration = get_whichkey_integration()
-  for section_name, _ in pairs(doom.modules) do
-    for _, module in pairs(doom[section_name]) do
-      if module and module.binds then
-        -- table.insert(all_keymaps, type(module.binds) == "function" and module.binds() or module.binds)
-        keymaps_service.applyKeymaps(
-          type(module.binds) == "function" and module.binds() or module.binds,
-          nil,
-          { whichkey_integration }
-        )
+
+  require("doom.utils.modules").traverse_loaded(
+    doom.modules,
+    function(node, stack)
+      if node.type then
+        local module = node
+        if module.binds then
+          keymaps_service.applyKeymaps(
+            type(module.binds) == "function" and module.binds() or module.binds,
+            nil,
+            { whichkey_integration }
+          )
+        end
       end
     end
-  end
+    --, { debug = doom.settings.logging == "trace" or doom.settings.logging == "debug" }
+  )
+
 
   -- Add user keymaps to whichkey user keymaps
   if doom.binds and #doom.binds >= 1 then

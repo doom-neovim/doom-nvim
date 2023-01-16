@@ -158,10 +158,10 @@ explorer.configs["nvim-tree.lua"] = function()
       },
     },
     filters = {
-      dotfiles = not doom.show_hidden,
+      dotfiles = not doom.settings.show_hidden,
     },
     git = {
-      ignore = doom.hide_gitignore,
+      ignore = doom.settings.hide_gitignore,
     },
   }, doom.features.explorer.settings, override_table)
   require("nvim-tree").setup(config)
