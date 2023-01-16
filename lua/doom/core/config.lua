@@ -64,42 +64,6 @@ config.load = function()
 
   profiler.start("framework|import modules")
 
-  -- -- Iterate over each module and save it to the doom global object
-  -- for section_name, section_modules in pairs(enabled_modules) do
-  --   for _, module_name in pairs(section_modules) do
-  --     -- If the section is `user` resolves from `lua/user/modules`
-  --     local profiler_message = ("modules|import `%s.%s`"):format(section_name, module_name)
-  --     profiler.start(profiler_message)
-  --     local search_paths = {
-  --       ("user.modules.%s.%s"):format(section_name, module_name),
-  --       ("doom.modules.%s.%s"):format(section_name, module_name),
-  --     }
-  --
-  --     local ok, result
-  --     for _, path in ipairs(search_paths) do
-  --       ok, result = xpcall(require, debug.traceback, path)
-  --       if ok then
-  --         break
-  --       end
-  --     end
-  --     if ok then
-  --       doom[section_name][module_name] = result
-  --     else
-  --       local log = require("doom.utils.logging")
-  --       log.error(
-  --         string.format(
-  --           "There was an error loading module '%s.%s'. Traceback:\n%s",
-  --           section_name,
-  --           module_name,
-  --           result
-  --         )
-  --       )
-  --     end
-  --     profiler.stop(profiler_message)
-  --   end
-  -- end
-
-
   -- Combine enabled modules (`modules.lua`) with core modules.
   require("doom.utils.modules").traverse_enabled(
     enabled_modules,
