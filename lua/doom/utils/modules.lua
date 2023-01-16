@@ -37,13 +37,6 @@ M.traverse_enabled = traverser.build({
       ) -- Traverse back a layer but do not pass this value to the handler function.
     end
   end,
-  -- -- Optional debugging function that can be used to
-  -- debug_node = function(node, stack)
-  --   local parent = stack[#stack]
-  --   local indent_str = string.rep("--", #stack)
-  --   local indent_cap = type(node) == "table" and "+" or ">"
-  --   print(("%s%s %s"):format(indent_str, indent_cap, type(node) == "table" and parent.key or node))
-  -- end,
 })
 
 M.traverse_loaded = traverser.build({
@@ -63,14 +56,7 @@ M.traverse_loaded = traverser.build({
     --     )
     --   ) -- Traverse back a layer but do not pass this value to the handler function.
     -- end
-  end,
-  -- Optional debugging function that can be used to
-  -- debug_node = function(node, stack)
-  --   local parent = stack[#stack]
-  --   local indent_str = string.rep("--", #stack)
-  --   local indent_cap = type(node) == "table" and "+" or ">"
-  --   print(("%s%s %s"):format(indent_str, indent_cap, type(node) == "table" and parent.key or node))
-  -- end,
+  end
 })
 
 return M
