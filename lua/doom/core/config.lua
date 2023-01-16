@@ -111,7 +111,7 @@ config.load = function()
         profiler.stop(profiler_message)
       end
     end
-    , { debug = doom.logging == "trace" or doom.logging == "debug" }
+    , { debug = doom.settings.logging == "trace" or doom.settings.logging == "debug" }
   )
 
 
@@ -128,10 +128,10 @@ config.load = function()
   profiler.stop("framework|config.lua (user)")
 
   -- Apply the necessary `doom.field_name` options
-  vim.opt.shiftwidth = doom.indent
-  vim.opt.softtabstop = doom.indent
+  vim.opt.shiftwidth = doom.settings.indent
+  vim.opt.softtabstop = doom.settings.indent
   vim.opt.tabstop = doom.indent
-  if doom.guicolors then
+  if doom.settings.guicolors then
     if vim.fn.exists("+termguicolors") == 1 then
       vim.opt.termguicolors = true
     elseif vim.fn.exists("+guicolors") == 1 then
@@ -139,49 +139,49 @@ config.load = function()
     end
   end
 
-  if doom.auto_comment then
+  if doom.settings.auto_comment then
     vim.opt.formatoptions:append("croj")
   end
-  if doom.movement_wrap then
+  if doom.settings.movement_wrap then
     vim.cmd("set whichwrap+=<,>,[,],h,l")
   end
 
-  if doom.undo_dir then
+  if doom.settings.undo_dir then
     vim.opt.undofile = true
-    vim.opt.undodir = doom.undo_dir
+    vim.opt.undodir = doom.settings.undo_dir
   else
     vim.opt.undofile = false
     vim.opt.undodir = nil
   end
 
-  if doom.global_statusline then
+  if doom.settings.global_statusline then
     vim.opt.laststatus = 3
   end
 
   -- Use system clipboard
-  if doom.clipboard then
+  if doom.settings.clipboard then
     vim.opt.clipboard = "unnamedplus"
   end
 
-  if doom.ignorecase then
+  if doom.settings.ignorecase then
     vim.cmd("set ignorecase")
   else
     vim.cmd("set noignorecase")
   end
-  if doom.smartcase then
+  if doom.settings.smartcase then
     vim.cmd("set smartcase")
   else
     vim.cmd("set nosmartcase")
   end
 
   -- Color column
-  vim.opt.colorcolumn = type(doom.max_columns) == "number" and tostring(doom.max_columns) or ""
+  vim.opt.colorcolumn = type(doom.settings.max_columns) == "number" and tostring(doom.settings.max_columns) or ""
 
   -- Number column
-  vim.opt.number = not doom.disable_numbering
-  vim.opt.relativenumber = not doom.disable_numbering and doom.relative_num
+  vim.opt.number = not doom.settings.disable_numbering
+  vim.opt.relativenumber = not doom.settings.disable_numbering and doom.settings.relative_num
 
-  vim.g.mapleader = doom.leader_key
+  vim.g.mapleader = doom.settings.leader_key
 end
 
 -- Path cases:

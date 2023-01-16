@@ -87,7 +87,7 @@ modules.load_modules = function()
               spec.commit = utils.pick_compatible_field(spec.commit)
             end
 
-            if not doom.freeze_dependencies then
+            if not doom.settings.freeze_dependencies then
               spec.commit = nil
             end
 

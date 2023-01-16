@@ -41,7 +41,7 @@ require("doom.core")
 
 vim.defer_fn(function()
   -- Check for updates
-  if doom.check_updates and doom.core.updater then
+  if doom.settings.check_updates and doom.core.updater then
     doom.core.updater.check_updates(true)
   end
 end, 1)
