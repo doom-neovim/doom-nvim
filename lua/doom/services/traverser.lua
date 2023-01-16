@@ -20,7 +20,7 @@ end
 
 -- Default debug levels
 local default_log_levels =
-  { debug = doom.settings.logging == "trace" or doom.settings.logging == "debug" }
+  { debug = doom.logging == "trace" or doom.logging == "debug" }
 
 local tree_traverser = {
   build = function(builder_opts)
