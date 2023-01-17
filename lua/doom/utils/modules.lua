@@ -40,7 +40,7 @@ M.traverse_enabled = traverser.build({
 })
 
 M.traverse_loaded = traverser.build({
-  traverser = function(node, stack, traverse_in, traverse_out, err)
+  traverser = function(node, _, traverse_in, traverse_out, _)
     if node.type == "doom_module_single" then
       traverse_out()
     else
