@@ -137,13 +137,18 @@ mapper.configs["nvim-mapper"] = function()
 
   local profiler = require("doom.services.profiler")
   local count = 0
-  for section_name, _ in pairs(doom.modules) do
-    for module_name, module in pairs(doom[section_name]) do
+  require("doom.utils.modules").traverse_loaded(doom.modules, function(node, stack)
+    if node.type then
+      local module = node
+      local t_path = vim.tbl_map(function(stack_node)
+        return type(stack_node.key) == "string" and stack_node.key
+      end, stack)
+      local path_module = table.concat(t_path, ".")
       if module.binds then
         count = count + 1
         vim.defer_fn(function()
           -- table.insert(all_keymaps, type(module.binds) == "function" and module.binds() or module.binds)
-          local profiler_msg = ("keymaps(async)|module: %s.%s"):format(section_name, module_name)
+          local profiler_msg = ("keymaps(async)|module: %s"):format(path_module)
           profiler.start(profiler_msg)
           keymaps_service.applyKeymaps(
             type(module.binds) == "function" and module.binds() or module.binds,
@@ -154,7 +159,8 @@ mapper.configs["nvim-mapper"] = function()
         end, count)
       end
     end
-  end
+  end)
+
 end
 
 return mapper
