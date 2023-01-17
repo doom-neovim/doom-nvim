@@ -139,13 +139,23 @@ utils.get_diagnostic_count = function(bufnr, severity)
 end
 
 --- Check if the given plugin is disabled in doom-nvim/modules.lua
+---
+--- You only need to supply one single arg if `section == <path-to-module>`.
+---
 --- @param section string The module section, e.g. features
 --- @param plugin string The module identifier, e.g. statusline
 --- @return boolean
 utils.is_module_enabled = function(section, plugin)
   local modules = require("doom.core.modules").enabled_modules
 
-  return modules[section] and vim.tbl_contains(modules[section], plugin)
+  if type(section) == "table" then
+    local tp = section
+    local name = table.remove(tp, #tp)
+    local subsec = utils.get_set_table_path(modules, tp)
+    return vim.tbl_contains(subsec, name)
+  else
+    return modules[section] and vim.tbl_contains(modules[section], plugin)
+  end
 end
 
 --- Rounds a number, optionally to the nearest decimal place
