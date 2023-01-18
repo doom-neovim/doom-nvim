@@ -56,7 +56,7 @@ module.use_null_ls = function(package_name, null_ls_path, configure_function)
     -- Check if null-ls is loaded and load it if not.
     local ok = pcall(require, "null-ls")
     if not ok then
-      vim.cmd("packadd null-ls.nvim")
+      require("lazy").load("null-ls.nvim")
     end
 
     local start_null_ls = function()

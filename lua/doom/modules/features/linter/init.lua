@@ -14,7 +14,8 @@ linter.packages = {
   ["null-ls.nvim"] = {
     "jose-elias-alvarez/null-ls.nvim",
     commit = "915558963709ea17c5aa246ca1c9786bfee6ddb4",
-    after = "nvim-lspconfig",
+    dependencies={"neovim/nvim-lspconfig"},
+    -- after = "nvim-lspconfig",
   },
 }
 

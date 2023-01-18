@@ -89,7 +89,7 @@ modules.load_modules = function()
             end
 
             -- Only pin dependencies if doom.freeze_dependencies is true
-            spec.lock = spec.commit and doom.freeze_dependencies
+            spec.pin = spec.commit and doom.freeze_dependencies
 
             -- Save module spec to be initialised later
             table.insert(doom.packages, spec)

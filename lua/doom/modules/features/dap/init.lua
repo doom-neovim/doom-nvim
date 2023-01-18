@@ -15,7 +15,8 @@ dap.settings = {
       edit = "e",
       repl = "r",
     },
-    sidebar = {
+    layouts = {
+      {
       elements = {
         "scopes",
         "breakpoints",
@@ -24,13 +25,15 @@ dap.settings = {
       },
       size = 40,
       position = "left",
-    },
-    tray = {
-      elements = {
-        "repl",
       },
+      {
+        elements = {
+          "repl",
+          "console",
+        },
       size = 10,
       position = "bottom",
+      }
     },
   },
 }
@@ -43,7 +46,10 @@ dap.packages = {
   ["nvim-dap-ui"] = {
     "rcarriga/nvim-dap-ui",
     commit = "b80227ea56a48177786904f6322abc8b2dc0bc36",
-    after = { "nvim-dap" },
+    dependencies = {
+      "mfussenegger/nvim-dap",
+    }
+    -- after = { "nvim-dap" },
   },
 }
 
