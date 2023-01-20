@@ -139,7 +139,7 @@ explorer.configs["nvim-tree.lua"] = function()
           { key = "<BS>", cb = tree_cb("close_node") },
           { key = "<S-CR>", cb = tree_cb("close_node") },
           { key = "<Tab>", cb = tree_cb("preview") },
-          { key = "I", cb = tree_cb("toggle_ignored") },
+          { key = "I", cb = tree_cb("toggle_git_ignored") },
           { key = "H", cb = tree_cb("toggle_dotfiles") },
           { key = "R", cb = tree_cb("refresh") },
           { key = "a", cb = tree_cb("create") },
