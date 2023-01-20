@@ -48,8 +48,6 @@ c_sharp.autocmds = {
     "FileType",
     "cs,vb",
     langs_utils.wrap_language_setup("c_sharp", function()
-      vim.cmd("packadd nvim-lspconfig")
-
       if not c_sharp.settings.disable_lsp then
         langs_utils.use_lsp_mason(c_sharp.settings.lsp_name, {
           config = c_sharp.settings.lsp_config,

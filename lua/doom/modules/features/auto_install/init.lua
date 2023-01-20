@@ -36,7 +36,7 @@ auto_install.cmds = {
   {
     "LspInstall",
     function(opts)
-      vim.cmd("packadd mason-lspconfig")
+      require("lazy").load({ plugins = { "mason-lspconfig" } })
       vim.cmd("lua require('mason-lspconfig').setup(doom.features.auto_install.settings.lsp)")
       vim.cmd("LspInstall " .. opts.args)
     end,
@@ -44,7 +44,7 @@ auto_install.cmds = {
   {
     "LspUninstall",
     function(opts)
-      vim.cmd("packadd mason-lspconfig")
+      require("lazy").load({ plugins = { "mason-lspconfig" } })
       vim.cmd("lua require('mason-lspconfig').setup(doom.features.auto_install.settings.lsp)")
       vim.cmd("LspInstall " .. opts.args)
     end,
