@@ -271,7 +271,7 @@ functions.nuke = function(target)
 
   if target == "all" or target == "plugins" then
     -- Delete all plugins
-    local plugin_dir = fs.join_paths(vim.fn.stdpath("data"), "site", "pack")
+    local plugin_dir = fs.join_paths(vim.fn.stdpath("data"), "lazy")
     fs.rm_dir(plugin_dir)
     log.info("DoomNuke: Deleting lazy plugins.  Doom-nvim will re-install on next launch.")
   end
