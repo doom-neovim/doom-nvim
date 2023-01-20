@@ -114,32 +114,48 @@ lsp.packages = {
   ["cmp-nvim-lua"] = {
     "hrsh7th/cmp-nvim-lua",
     commit = "f3491638d123cfd2c8048aefaf66d246ff250ca6",
-    after = "nvim-cmp",
+    -- after = "nvim-cmp",
+    dependencies = {
+      "hrsh7th/nvim-cmp",
+    }
   },
   ["cmp-nvim-lsp"] = {
     "hrsh7th/cmp-nvim-lsp",
-    commit = "59224771f91b86d1de12570b4070fe4ad7cd1eeb",
-    after = "nvim-cmp",
+    -- after = "nvim-cmp",
+    dependencies = {
+      "hrsh7th/nvim-cmp",
+    }
   },
   ["cmp-path"] = {
     "hrsh7th/cmp-path",
-    commit = "91ff86cd9c29299a64f968ebb45846c485725f23",
-    after = "nvim-cmp",
+    -- after = "nvim-cmp",
+    dependencies = {
+      "hrsh7th/nvim-cmp",
+    }
   },
   ["cmp-buffer"] = {
     "hrsh7th/cmp-buffer",
     commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa",
-    after = "nvim-cmp",
+    -- after = "nvim-cmp",
+    dependencies = {
+      "hrsh7th/nvim-cmp",
+    }
   },
   ["cmp_luasnip"] = {
     "saadparwaiz1/cmp_luasnip",
     commit = "18095520391186d634a0045dacaa346291096566",
-    after = "nvim-cmp",
+    -- after = "nvim-cmp",
+    dependencies = {
+      "hrsh7th/nvim-cmp",
+    }
   },
   ["lsp_signature.nvim"] = {
     "ray-x/lsp_signature.nvim",
     commit = "1979f1118e2b38084e7c148f279eed6e9300a342",
-    after = "nvim-lspconfig",
+    -- after = "nvim-lspconfig",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
     event = "VeryLazy",
   },
 }

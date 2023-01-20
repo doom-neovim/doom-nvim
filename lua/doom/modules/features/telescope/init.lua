@@ -57,8 +57,9 @@ telescope.packages = {
     "nvim-telescope/telescope-file-browser.nvim",
     commit = "304508fb7bea78e3c0eeddd88c4837501e403ae8",
     cmd = "Telescope browse_files",
-    key = "<leader>.",
-    after = "telescope.nvim",
+    keys = "<leader>.",
+    dependencies = {"nvim-telescope/telescope.nvim"},
+    -- after = "telescope.nvim",
     lazy = true,
   },
 }

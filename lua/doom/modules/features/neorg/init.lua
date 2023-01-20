@@ -47,7 +47,8 @@ neorg.packages = {
       ["latest"] = "aa613122f82ca7485b7055937a742b709ed3c576",
     },
     cmd = "Neorg",
-    after = "nvim-treesitter",
+    dependencies = {"nvim-treesitter/nvim-treesitter"},
+    -- after = "nvim-treesitter",
   },
 }
 

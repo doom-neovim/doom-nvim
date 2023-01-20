@@ -56,13 +56,19 @@ treesitter.packages = {
   ["nvim-ts-context-commentstring"] = {
     "JoosepAlviste/nvim-ts-context-commentstring",
     commit = "4a42b30376c1bd625ab5016c2079631d531d797a",
-    after = "nvim-treesitter",
+    -- after = "nvim-treesitter",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter"
+    },
     event = "VeryLazy",
   },
   ["nvim-ts-autotag"] = {
     "windwp/nvim-ts-autotag",
     commit = "fdefe46c6807441460f11f11a167a2baf8e4534b",
-    after = "nvim-treesitter",
+    -- after = "nvim-treesitter",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter"
+    },
     event = "VeryLazy",
   },
 }
