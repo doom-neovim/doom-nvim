@@ -227,14 +227,6 @@ lsp.configs["nvim-cmp"] = function()
 
   local replace_termcodes = utils.replace_termcodes
 
-  local source_map = {
-    nvim_lsp = "[LSP]",
-    luasnip = "[Snp]",
-    buffer = "[Buf]",
-    nvim_lua = "[Lua]",
-    path = "[Path]",
-  }
-
   --- Helper function to check what <Tab> behaviour to use
   --- @return boolean
   local function check_backspace()

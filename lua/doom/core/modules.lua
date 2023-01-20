@@ -29,8 +29,6 @@ local core_modules = {
 }
 modules.enabled_modules = vim.tbl_deep_extend("keep", core_modules, dofile(modules.source))
 
-local system = require("doom.core.system")
-
 local keymaps_service = require("doom.services.keymaps")
 local commands_service = require("doom.services.commands")
 local autocmds_service = require("doom.services.autocommands")
