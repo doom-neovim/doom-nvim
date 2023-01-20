@@ -271,15 +271,13 @@ functions.nuke = function(target)
 
   if target == "all" or target == "plugins" then
     -- Delete all plugins
-    local util = require("lazy.util")
-    local plugin_dir = util.join_paths(vim.fn.stdpath("data"), "site", "pack")
+    local plugin_dir = fs.join_paths(vim.fn.stdpath("data"), "site", "pack")
     fs.rm_dir(plugin_dir)
     log.info("DoomNuke: Deleting lazy plugins.  Doom-nvim will re-install on next launch.")
   end
 
   if target == "all" or target == "mason" then
-    local util = require("lazy.util")
-    local mason_dir = util.join_paths(vim.fn.stdpath("data"), "mason")
+    local mason_dir = fs.join_paths(vim.fn.stdpath("data"), "mason")
     fs.rm_dir(mason_dir)
     log.info("DoomNuke: Deleting mason packages")
   end
