@@ -5,15 +5,15 @@ M.settings = {}
 M.packages = {
   -- ["noice.nvim"] = {
   --   "folke/noice.nvim",
-  --   requires = "MunifTanjim/nui.nvim",
+  --   requires = {"MunifTanjim/nui.nvim"},
   -- },
   ["vim-sandwich"] = {
     "machakann/vim-sandwich",
   },
   ["symbols-outline.nvim"] = { "simrat39/symbols-outline.nvim", },
 
-  ["cutlass.nvim"] = {
-    "tuanbass/cutlass.nvim", },
+  -- ["cutlass.nvim"] = {
+  --   "tuanbass/cutlass.nvim", },
   ["textobj1"] = {
     "kana/vim-textobj-line",
   },
@@ -27,7 +27,7 @@ M.packages = {
     "kana/vim-textobj-user",
   },
   ["hop.nvim"] = {
-    "phaazon/hop.nvim", -- jum to anywhere in screen
+    "phaazon/hop.nvim", -- jum to anywhere in screenvim-telescope/telescope.nvimc:Pn
   },
   ["vim-matchup"] = { -- smart open/close match navigation
     "andymass/vim-matchup",
@@ -38,6 +38,14 @@ M.packages = {
   ["better-escape.nvim"] = { -- penalty when repeat j/k for navigation
     "max397574/better-escape.nvim",
   },
+  -- ["telescope-fzf-native.nvim"] = { -- penalty when repeat j/k for navigation
+  --   "nvim-telescope/telescope-fzf-native.nvim",
+  --   -- requires = {'nvim-telescope/telescope.nvim'},
+  --
+  --   cmd = 'Telescope',
+  --   after = "telescope.nvim",
+  --   -- opt = true,
+  -- },
 }
 
 M.configs = {
@@ -45,13 +53,20 @@ M.configs = {
   --   require("noice").setup()
   -- end,
 
-  ["cutlass.nvim"] = function()
-    -- vim.notify("Setting up cutlass plugin", "info")
-    require("cutlass").setup({
-      cut_key = "m",
-    })
+  -- ["cutlass.nvim"] = function()
+  --   -- vim.notify("Setting up cutlass plugin", "info")
+  --   require("cutlass").setup({
+  --     cut_key = "m",
+  --   })
+  -- end,
+  ["telescope-fzf-native.nvim"] = function()
+    print ('loading fzf for telescope')
+
+    -- require('telescope').load_extension('fzf')
   end,
   ["better-escape.nvim"] = function()
+
+
       require("better_escape").setup({
         mapping = {"jk", "jj", "kj", "kk"}, -- a table with mappings to use
         keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
@@ -110,6 +125,13 @@ M.cmds = {}
 
 M.binds = {
 
+  {
+    -- Hop char
+    "s",
+    [[<cmd>HopChar1<CR>]],
+    name = "Go to anychar in the screen",
+    mode = "nv",
+  },
   {
     -- Hop char
     "<C-G>",
