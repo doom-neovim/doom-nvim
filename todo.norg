@@ -11,21 +11,26 @@ version: 0.0.15
 *
 TODO: check why out put some line in open file (currently workaround by out put it into mini)
 
-* C-k not work randomly
-* integrate git-sign into git feature
-* Error msg when save
-* mark down lsp (remark) not work
-* Markdown preview
-* integrate octo plugin (edit github PR in nvim)
-* Telescope find file (leader-f-f) work not correct
-* binding C-g for Hop , not 'ghw'
-* resize windows hydra
-* -------- better folding (maybe use UFO insteadof default tree-sitter)
-* Luasnip work independly (for golang)
-* copilot
-* sometime current line is undeadable because of grey color
-* Virtual whichkey hint
-* Neorg should auto load when open norg file
-* close (leader-b-d) buffer should go to the next buffer in bufferline
-* refactoring
-* Neogit confirm winfows when commiting code not correct (nothing display, not close )
+* [ ]C-k not work randomly
+* [x] integrate git-sign into git feature => done
+* [x] Error msg when save => done
+* [ ] mark down lsp (remark) not work
+* [ ] Markdown preview
+* [ ] integrate octo plugin (edit github PR in nvim)
+* [ ] Telescope find file (leader-f-f) work not correct (actually )
+* [x] binding C-g for Hop , not 'ghw'
+* [ ] resize windows hydra
+* [x]-------- better folding (maybe use UFO insteadof default tree-sitter)
+* [ ] Luasnip work independly (for golang)
+* [ ] copilot
+* [x] sometime current line is undeadable because of grey color =
+* [ ] Virtual whichkey hint
+* [ ] Neorg should auto load when open norg file
+* [ ] close (leader-b-d) buffer should go to the next buffer in bufferline
+* [ ] refactoring
+* [ ] Neogit confirm winfows when commiting code not correct (nothing display, not close )
+* [ ] Incorrect indent with golang
+* [ ] code format not work with golang -> not reducible animore
+* [ ] code action input for Noice
+* [ ] Space menu in visual mode
+* [ ] evaluate and integrate vim wilder/improvedft extension
