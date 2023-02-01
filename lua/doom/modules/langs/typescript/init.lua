@@ -23,17 +23,23 @@ typescript.settings = {
   disable_formatting = false,
   --- Mason.nvim package to auto install the formatter from
   --- @type string
+  -- formatting_package = "prettierd",
+  -- formatting_package = "prettier",
   formatting_package = "eslint_d",
+  -- formatting_package = "eslint-lsp",
   --- String to access the null_ls diagnositcs provider
   --- @type string
+  -- formatting_provider = "builtins.formatting.eslint",
   formatting_provider = "builtins.formatting.eslint_d",
+  -- formatting_provider = "builtins.formatting.prettier",
+  -- formatting_provider = "builtins.formatting.prettierd",
   --- Function to configure null-ls formatter
   --- @type function|nil
   formatting_config = nil,
 
   --- Disables null-ls diagnostic sources
   --- @type boolean
-  disable_diagnostics = false,
+  disable_diagnostics = true,
   --- Mason.nvim package to auto install the diagnostics provider from
   --- @type string
   diagnostics_package = "eslint_d",
