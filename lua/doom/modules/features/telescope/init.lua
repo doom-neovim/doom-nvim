@@ -50,16 +50,25 @@ telescope.packages = {
   ["telescope.nvim"] = {
     "nvim-telescope/telescope.nvim",
     commit = "f174a0367b4fc7cb17710d867e25ea792311c418",
-    cmd = "Telescope",
-    opt = true,
+    -- cmd = "Telescope",
+    opt = false,
   },
   ["telescope-file-browser.nvim"] = {
     "nvim-telescope/telescope-file-browser.nvim",
     commit = "6b4e22777bfa6a31787a4ac8e086b062ef241ede",
-    cmd = "Telescope browse_files",
+    -- cmd = "Telescope browse_files",
     key = "<leader>.",
     after = "telescope.nvim",
-    opt = true,
+    opt = false,
+  },
+  ["telescope-fzf-native.nvim"] = {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    -- cmd = "Telescope ",
+    after = "telescope.nvim",
+    config = function ()
+        require('telescope').load_extension('fzf')
+      end ,
+    opt = false,
   },
 }
 
