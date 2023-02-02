@@ -6,8 +6,8 @@ local fs = require("doom.utils.fs")
 --- Doom Nvim version
 utils.version = {
   major = 4,
-  minor = 0,
-  patch = 5,
+  minor = 1,
+  patch = 0,
 }
 
 --- Currently supported version of neovim for this build of doom-nvim

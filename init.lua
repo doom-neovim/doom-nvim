@@ -5,7 +5,7 @@ if vim.fn.has("nvim-0.7.0") ~= 1 then
     "",
     "Doom nvim and many of its plugins require at least version 0.7.0 to work as expected.",
     "Consider updating if you run into issues.",
-    "https://github.com/NTBBloodbath/doom-nvim/blob/main/docs/updating-neovim.md",
+    "https://github.com/doom-neovim/doom-nvim/blob/main/docs/updating-neovim.md",
   }, "\n")
   vim.notify(message, vim.log.levels.ERROR)
 end

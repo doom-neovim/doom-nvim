@@ -63,73 +63,8 @@ vue.settings = {
   code_actions_config = nil,
 
   -- Volar API lspconfig options
-  volar_api = {
-    default_config = {
-      filetypes = { "vue" },
-      -- If you want to use Volar's Take Over Mode (if you know, you know)
-      --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
-      init_options = {
-        languageFeatures = {
-          implementation = true, -- new in @volar/vue-language-server v0.33
-          references = true,
-          definition = true,
-          typeDefinition = true,
-          callHierarchy = true,
-          hover = true,
-          rename = true,
-          renameFileRefactoring = true,
-          signatureHelp = true,
-          codeAction = true,
-          workspaceSymbol = true,
-          completion = {
-            defaultTagNameCase = "both",
-            defaultAttrNameCase = "kebabCase",
-            getDocumentNameCasesRequest = false,
-            getDocumentSelectionRequest = false,
-          },
-        },
-      },
-    },
-  },
-  -- Volar Document lspconfig options
-  volar_doc = {
-    default_config = {
-      filetypes = { "vue" },
-      -- If you want to use Volar's Take Over Mode (if you know, you know):
-      --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
-      init_options = {
-        languageFeatures = {
-          implementation = true, -- new in @volar/vue-language-server v0.33
-          documentHighlight = true,
-          documentLink = true,
-          codeLens = { showReferencesNotification = true },
-          -- not supported - https://github.com/neovim/neovim/pull/15723
-          semanticTokens = false,
-          diagnostics = true,
-          schemaRequestService = true,
-        },
-      },
-    },
-  },
-  volar_html = {
-    default_config = {
-      filetypes = { "vue" },
-      -- If you want to use Volar's Take Over Mode (if you know, you know), intentionally no 'json':
-      --filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-      init_options = {
-        documentFeatures = {
-          selectionRange = true,
-          foldingRange = true,
-          linkedEditingRange = true,
-          documentSymbol = true,
-          -- not supported - https://github.com/neovim/neovim/pull/13654
-          documentColor = false,
-          documentFormatting = {
-            defaultPrintWidth = 100,
-          },
-        },
-      },
-    },
+  lsp_config = {
+    default_config = {},
   },
 }
 
@@ -143,7 +78,6 @@ vue.autocmds = {
         local lspconfig_util = require("lspconfig/util")
 
         local function get_typescript_server_path(root_dir)
-          print("Searching for ts server path at " .. root_dir)
           local tsdk_path = ""
           local function check_dir(path)
             tsdk_path = lspconfig_util.path.join(path, "node_modules", "typescript", "lib")
@@ -196,42 +130,14 @@ vue.autocmds = {
 
         -- Need to pre-install volar language server to get the install location
         langs_utils.use_mason_package("vue-language-server", function(handle)
-          print(vim.inspect(handle:get_install_path()))
-
-          -- Setup Volar API
-          local volar_api_config = vim.tbl_deep_extend(
+          local lsp_config = vim.tbl_deep_extend(
             "force",
             {},
-            doom.langs.vue.settings.volar_api,
+            doom.langs.vue.settings.lsp_config,
             build_base_config(handle)
           )
           langs_utils.use_lsp_mason("volar", {
-            name = "volar_api",
-            config = volar_api_config,
-          })
-
-          -- Setup Volar DOC
-          local volar_doc_config = vim.tbl_deep_extend(
-            "force",
-            {},
-            doom.langs.vue.settings.volar_doc,
-            build_base_config(handle)
-          )
-          langs_utils.use_lsp_mason("volar", {
-            name = "volar_doc",
-            config = volar_doc_config,
-          })
-
-          -- Setup Volar HTML
-          local volar_html_config = vim.tbl_deep_extend(
-            "force",
-            {},
-            doom.langs.vue.settings.volar_html,
-            build_base_config(handle)
-          )
-          langs_utils.use_lsp_mason("volar", {
-            name = "volar_html",
-            config = volar_html_config,
+            config = lsp_config,
           })
         end)
       end

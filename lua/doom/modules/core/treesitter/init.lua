@@ -95,7 +95,7 @@ treesitter.configs["nvim-treesitter"] = function()
 
       if version:match("clang") then
         log.warn(
-          "doom-treesitter:  clang has poor compatibility compiling treesitter parsers.  We recommend using gcc, see issue #246 for details.  (https://github.com/NTBBloodbath/doom-nvim/issues/246)\n"
+          "doom-treesitter:  clang has poor compatibility compiling treesitter parsers.  We recommend using gcc, see issue #246 for details.  (https://github.com/doom-neovim/doom-nvim/issues/246)\n"
             .. "Add this line to your config.lua to hide this message.\n\n"
             .. "doom.core.treesitter.settings.show_compiler_warning_message = false"
         )
