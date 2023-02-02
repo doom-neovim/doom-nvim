@@ -62,7 +62,7 @@ return {
     "views",
    "fold",
    "refactor",
-
+    "scratch"
 --     -- "charcounter", -- custom module test
   },
 
