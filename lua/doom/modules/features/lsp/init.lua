@@ -158,6 +158,11 @@ lsp.packages = {
     },
     event = "VeryLazy",
   },
+  ["cmp-cmdline"] = {
+    "hrsh7th/cmp-cmdline",
+    commit = "23c51b2a3c00f6abc4e922dbd7c3b9aca6992063",
+    after = "nvim-cmp",
+  },
 }
 
 lsp.configs = {}
@@ -305,6 +310,34 @@ lsp.configs["nvim-cmp"] = function()
       return _doom.cmp_enable and vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
     end,
   }))
+end
+lsp.configs["cmp-cmdline"] = function()
+    local cmp = require("cmp")
+
+    -- autocomplete for search
+    cmp.setup.cmdline('/', {
+          mapping = cmp.mapping.preset.cmdline(),
+          sources = {
+            { name = 'buffer' }
+          }
+        })
+
+        -- autocomplete for search
+    cmp.setup.cmdline(':', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+            { name = 'path' }
+        },
+        {
+            {
+              name = 'cmdline',
+              option = {
+                ignore_cmds = { 'Man', '!' }
+              }
+            }
+      })
+    })
+
 end
 lsp.configs["lsp_signature.nvim"] = function()
   -- Signature help
