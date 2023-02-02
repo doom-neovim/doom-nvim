@@ -19,7 +19,6 @@ M.configs = {
         local has_telescope = pcall(require, "telescope")
         if (has_telescope) then -- TODO: integrate with telescope. Dont know why cannot load telescope here
             local res = require("telescope").load_extension("refactoring")
-            print (" load extension:", res)
         end
   end,
 
