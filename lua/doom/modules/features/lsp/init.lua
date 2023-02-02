@@ -142,6 +142,11 @@ lsp.packages = {
     commit = "e65a63858771db3f086c8d904ff5f80705fd962b",
     after = "nvim-lspconfig",
   },
+  ["cmp-cmdline"] = {
+    "hrsh7th/cmp-cmdline",
+    commit = "23c51b2a3c00f6abc4e922dbd7c3b9aca6992063",
+    after = "nvim-cmp",
+  },
 }
 
 lsp.configs = {}
@@ -211,13 +216,13 @@ lsp.configs["nvim-cmp"] = function()
 
   local replace_termcodes = utils.replace_termcodes
 
-  local source_map = {
-    nvim_lsp = "[LSP]",
-    luasnip = "[Snp]",
-    buffer = "[Buf]",
-    nvim_lua = "[Lua]",
-    path = "[Path]",
-  }
+  -- local source_map = {
+  --   nvim_lsp = "[LSP]",
+  --   luasnip = "[Snp]",
+  --   buffer = "[Buf]",
+  --   nvim_lua = "[Lua]",
+  --   path = "[Path]",
+  -- }
 
   --- Helper function to check what <Tab> behaviour to use
   --- @return boolean
@@ -297,6 +302,34 @@ lsp.configs["nvim-cmp"] = function()
       return _doom.cmp_enable and vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
     end,
   }))
+end
+lsp.configs["cmp-cmdline"] = function()
+    local cmp = require("cmp")
+
+    -- autocomplete for search
+    cmp.setup.cmdline('/', {
+          mapping = cmp.mapping.preset.cmdline(),
+          sources = {
+            { name = 'buffer' }
+          }
+        })
+
+        -- autocomplete for search
+    cmp.setup.cmdline(':', {
+      mapping = cmp.mapping.preset.cmdline(),
+      sources = cmp.config.sources({
+            { name = 'path' }
+        },
+        {
+            {
+              name = 'cmdline',
+              option = {
+                ignore_cmds = { 'Man', '!' }
+              }
+            }
+      })
+    })
+
 end
 lsp.configs["lsp_signature.nvim"] = function()
   -- Signature help
