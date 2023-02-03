@@ -43,7 +43,11 @@ telescope.settings = {
     use_less = true,
     set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
   },
-  extensions = { "mapper" },
+  extensions = { "mapper",
+    ["ui-select"] = {
+          -- require("telescope.themes").get_dropdown { }
+    },
+  }
 }
 
 telescope.packages = {
@@ -70,6 +74,16 @@ telescope.packages = {
       end ,
     opt = false,
   },
+  ["telescope-ui-select.nvim"] = {
+    "nvim-telescope/telescope-ui-select.nvim",
+    -- cmd = "Telescope ",
+    after = "telescope.nvim",
+    config = function ()
+        require('telescope').load_extension('ui-select')
+      end ,
+    opt = false,
+  },
+
 }
 
 telescope.configs = {}
