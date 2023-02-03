@@ -9,7 +9,7 @@
 return {
   features = {
 --     -- Language features
---     "annotations", -- Code annotation generator
+    "annotations", -- Code annotation generator
     "auto_install", -- Auto install LSP providers
     "autopairs", -- Automatically close character pairs
      "comment", -- Adds keybinds to comment in any language

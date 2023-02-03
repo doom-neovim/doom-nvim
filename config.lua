@@ -39,7 +39,7 @@
 
 -- doom.indent = 2
 -- doom.core.treesitter.settings.show_compiler_warning_message = false
--- doom.core.reloader.settings.reload_on_save = false
+doom.core.reloader.settings.reload_on_save = false
 --
 if doom.langs.lua ~= nil then
   doom.langs.lua.settings.disable_lsp = true
