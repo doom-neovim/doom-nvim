@@ -51,7 +51,7 @@ return {
 --     -- "lazygit",         -- Lazy git integration
       -- "neogit",          -- A git client for neovim
 --     "neorg", -- Organise your life
---     "projects", -- Quickly switch between projects
+    "projects", -- Quickly switch between projects
 --     -- "superman",        -- Read unix man pages in neovim
 --     -- "suda",            -- Save using sudo when necessary
     "telescope", -- Fuzzy searcher to find files, grep code and more
