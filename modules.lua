@@ -21,7 +21,7 @@ return {
 -- --
 --     -- Editor
 --
---     "auto_session", -- Remember sessions between loads
+    "auto_session", -- Remember sessions between loads
     -- "colorizer", -- Show colors in neovim
     "editorconfig", -- Support editorconfig files
 --     -- "gitsigns", -- Show git changes in sidebar
