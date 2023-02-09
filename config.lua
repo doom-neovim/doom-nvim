@@ -48,6 +48,9 @@ end
 if doom.features.lsp ~= nil then
   doom.features.lsp.requires_modules = { "features.auto_install" }
 end
+
+-- not hide file with any prifix
+doom.features.explorer.settings.filters.custom={}
 -- doom.features.
 -- -- vim: sw=2 sts=2 ts=2 expandtab
 -- --
