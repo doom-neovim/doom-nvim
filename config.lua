@@ -194,3 +194,33 @@ opt.confirm = true
 -- ]])
 
 vim.opt.shortmess = "F"
+
+-- special for telescope find_files: in some windows we should not allow it to open
+-- TODO: move this snippet into a moduel
+local prohitbitedBuf = {
+  "term:",
+  "NvimTree_",
+}
+
+function telescope_find_files_custom()
+  local title = vim.fn.bufname("%")
+  if (#vim.api.nvim_list_wins() > 1 )then -- 2 windows or more open, we should no allow open telescope in Neotree, term...
+
+
+  for i, x in pairs(prohitbitedBuf) do
+    if title:find(x) == 1 then
+      -- this window title is prohibited
+      print("could not open find_files in this window")
+      return
+    end
+  end
+  end
+
+  require("telescope.builtin").find_files()
+end
+--
+doom.use_keybind({
+  -- The `name` field will add the keybind to whichkey
+  { "<leader>ff", name = "find_file_adv", ':lua telescope_find_files_custom()<CR>',
+  } ,
+})
