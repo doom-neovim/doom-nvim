@@ -59,13 +59,56 @@ M.configs = {
 
 M.autocmds = {}
 
-M.cmds = {}
+M.cmds = {
+  {
+    "FoldL",
+    function(opts)
+      local foldlvel = opts.args
+      -- vim.cmd("set foldlevelstart="..foldlvel) -- BDelete this
+      vim.cmd("set foldlevel="..foldlvel) -- BDelete this
+      -- vim.cmd(".,$-bdelete")
+      -- require('close_buffers').delete({ type = 'other' })
+    end,
+    { nargs = "*" },
+  },
+  {
+    "Fold",
+    function(opts)
+      local foldlvel = opts.args
+      vim.cmd("set foldlevelstart="..foldlvel) -- BDelete this
+      vim.cmd("set foldlevel="..foldlvel) -- BDelete this
+      -- vim.cmd(".,$-bdelete")
+      -- require('close_buffers').delete({ type = 'other' })
+    end,
+    { nargs = "*" },
+  },
+}
 
 M.binds = {
   {
     "zv",
     [[<cmd>lua require('ufo.preview'):peekFoldedLinesUnderCursor(true, false) <CR>]],
     name = "Fold preview",
+    mode = "nv",
+  },
+  {
+    "z1",
+    [[<cmd>set foldlevel=1<CR>]],
+    name = "Fold level 1",
+    mode = "nv",
+  },
+  { "z2", [[<cmd>set foldlevel=2<CR>]], name = "Fold level 2", mode = "nv" },
+  { "z9", [[<cmd>set foldlevel=9<CR>]], name = "Fold level 9", mode = "nv" },
+  {
+    "z+",
+    [[<cmd>let &foldlevel=&foldlevel + 1<CR>]],
+    name = "Increase fold level",
+    mode = "nv",
+  },
+  {
+    "z-",
+    [[<cmd>let &foldlevel=&foldlevel - 1<CR>]],
+    name = "Increase fold level",
     mode = "nv",
   },
 }
