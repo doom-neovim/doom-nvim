@@ -14,10 +14,10 @@ TODO: check why out put some line in open file (currently workaround by out put 
 * [ ]C-k not work randomly
 * [x] integrate git-sign into git feature => done
 * [x] Error msg when save => done
-* [ ] mark down lsp (remark) not work
-* [ ] Markdown preview
+* [x] mark down lsp (remark) not work
+* [x] Markdown preview
 * [ ] integrate octo plugin (edit github PR in nvim)
-* [ ] Telescope find file (leader-f-f) work not correct (actually )
+* [x] Telescope find file (leader-f-f) work not correct (actually )
 * [x] binding C-g for Hop , not 'ghw'
 * [ ] resize windows hydra
 * [x]-------- better folding (maybe use UFO insteadof default tree-sitter)
@@ -25,8 +25,8 @@ TODO: check why out put some line in open file (currently workaround by out put 
 * [ ] copilot
 * [x] sometime current line is undeadable because of grey color =
 * [ ] Virtual whichkey hint
-* [ ] Neorg should auto load when open norg file
-* [ ] close (leader-b-d) buffer should go to the next buffer in bufferline
+* [x] Neorg should auto load when open norg file
+* [x] close (leader-b-d) buffer should go to the next buffer in bufferline
 * [ ] refactoring
 * [ ] Neogit confirm winfows when commiting code not correct (nothing display, not close )
 * [ ] Incorrect indent with golang
