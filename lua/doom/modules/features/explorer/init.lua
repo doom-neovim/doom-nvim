@@ -94,7 +94,8 @@ explorer.settings = {
 explorer.packages = {
   ["nvim-tree.lua"] = {
     "nvim-tree/nvim-tree.lua",
-    commit = "3ce0a8e770f70a135ef969e0a640bd8d05baf42c",
+    commit = "aa99717",
+    module = "nvim-tree.api",
     cmd = {
       "NvimTreeClipboard",
       "NvimTreeClose",
@@ -111,7 +112,7 @@ explorer.configs["nvim-tree.lua"] = function()
   local utils = require("doom.utils")
   local is_module_enabled = utils.is_module_enabled
 
-  local tree_cb = require("nvim-tree.config").nvim_tree_callback
+  -- local tree_cb = require("nvim-tree.config").nvim_tree_callback
 
   local override_table = {}
   if is_module_enabled("features", "lsp") then
@@ -127,36 +128,39 @@ explorer.configs["nvim-tree.lua"] = function()
       },
     }
   end
+  local keymap=require ("doom.modules.features.explorer.key_mapping")
   local config = vim.tbl_deep_extend("force", {
-    view = {
-      mappings = {
-        list = {
-          { key = { "o", "<2-LeftMouse>" }, cb = tree_cb("edit") },
-          { key = { "<CR>", "<2-RightMouse>", "<C-]>" }, cb = tree_cb("cd") },
-          { key = "<C-v>", cb = tree_cb("vsplit") },
-          { key = "<C-x>", cb = tree_cb("split") },
-          { key = "<C-t>", cb = tree_cb("tabnew") },
-          { key = "<BS>", cb = tree_cb("close_node") },
-          { key = "<S-CR>", cb = tree_cb("close_node") },
-          { key = "<Tab>", cb = tree_cb("preview") },
-          { key = "I", cb = tree_cb("toggle_git_ignored") },
-          { key = "H", cb = tree_cb("toggle_dotfiles") },
-          { key = "R", cb = tree_cb("refresh") },
-          { key = "a", cb = tree_cb("create") },
-          { key = "d", cb = tree_cb("remove") },
-          { key = "r", cb = tree_cb("rename") },
-          { key = "<C-r>", cb = tree_cb("full_rename") },
-          { key = "x", cb = tree_cb("cut") },
-          { key = "c", cb = tree_cb("copy") },
-          { key = "p", cb = tree_cb("paste") },
-          { key = "[c", cb = tree_cb("prev_git_item") },
-          { key = "]c", cb = tree_cb("next_git_item") },
-          { key = "-", cb = tree_cb("dir_up") },
-          { key = "q", cb = tree_cb("close") },
-          { key = "g?", cb = tree_cb("toggle_help") },
-        },
-      },
-    },
+    on_attach = keymap.on_attach,
+
+    -- view = {
+    --   mappings = {
+    --     list = {
+    --       { key = { "o", "<2-LeftMouse>" }, cb = tree_cb("edit") },
+    --       { key = { "<CR>", "<2-RightMouse>", "<C-]>" }, cb = tree_cb("cd") },
+    --       { key = "<C-v>", cb = tree_cb("vsplit") },
+    --       { key = "<C-x>", cb = tree_cb("split") },
+    --       { key = "<C-t>", cb = tree_cb("tabnew") },
+    --       { key = "<BS>", cb = tree_cb("close_node") },
+    --       { key = "<S-CR>", cb = tree_cb("close_node") },
+    --       { key = "<Tab>", cb = tree_cb("preview") },
+    --       { key = "I", cb = tree_cb("toggle_git_ignored") },
+    --       { key = "H", cb = tree_cb("toggle_dotfiles") },
+    --       { key = "R", cb = tree_cb("refresh") },
+    --       { key = "a", cb = tree_cb("create") },
+    --       { key = "d", cb = tree_cb("remove") },
+    --       { key = "r", cb = tree_cb("rename") },
+    --       { key = "<C-r>", cb = tree_cb("full_rename") },
+    --       { key = "x", cb = tree_cb("cut") },
+    --       { key = "c", cb = tree_cb("copy") },
+    --       { key = "p", cb = tree_cb("paste") },
+    --       { key = "[c", cb = tree_cb("prev_git_item") },
+    --       { key = "]c", cb = tree_cb("next_git_item") },
+    --       { key = "-", cb = tree_cb("dir_up") },
+    --       { key = "q", cb = tree_cb("close") },
+    --       { key = "g?", cb = tree_cb("toggle_help") },
+    --     },
+    --   },
+    -- },
     filters = {
       dotfiles = not doom.show_hidden,
     },
