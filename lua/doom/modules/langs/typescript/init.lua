@@ -39,7 +39,7 @@ typescript.settings = {
 
   --- Disables null-ls diagnostic sources
   --- @type boolean
-  disable_diagnostics = true,
+  disable_diagnostics = false,
   --- Mason.nvim package to auto install the diagnostics provider from
   --- @type string
   diagnostics_package = "eslint_d",
