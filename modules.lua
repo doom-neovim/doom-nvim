@@ -64,6 +64,7 @@ return {
    "refactor",
     "entertainments",
     "scratch",
+    "github",
 --     -- "charcounter", -- custom module test
   },
 
