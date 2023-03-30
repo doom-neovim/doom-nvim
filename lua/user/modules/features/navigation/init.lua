@@ -81,16 +81,22 @@ M.configs = {
   ["vim-expand-region"] = function()
     vim.g.expand_region_text_objects = {
       ["i"] = 0,
+      ["i'"] = 0,
+      ['i"'] = 0,
       ["iw"] = 0,
       ["i]"] = 1,
+      ["a]"] = 1,
       ["i}"] = 1,
+      ["a}"] = 1,
       ["i)"] = 1,
+      ["a)"] = 1,
+      ["iW"] = 0,
       ["it"] = 1,
-      ["ib"] = 1,
-      ["iB"] = 1,
+      -- ["ib"] = 1,
+      -- ["iB"] = 1,
       ["il"] = 0,
-      ["ip"] = 0,
-      ["ie"] = 0,
+      -- ["ip"] = 0,
+      -- ["ie"] = 0,
     }
 
     -- TODO: convert to use module binding mechanism
