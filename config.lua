@@ -47,7 +47,16 @@ end
 
 if doom.features.lsp ~= nil then
   doom.features.lsp.requires_modules = { "features.auto_install" }
+  doom.features.lsp.settings.completion.sources = {
+      { name = "copilot" },
+      { name = "nvim_lua" },
+      { name = "nvim_lsp" },
+      { name = "luasnip" },
+      { name = "path" },
+      { name = "buffer" },
+  }
 end
+
 
 -- not hide file with any prifix
 doom.features.explorer.settings.filters.custom={}

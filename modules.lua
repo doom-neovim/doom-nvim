@@ -65,6 +65,8 @@ return {
     "entertainments",
     "scratch",
     "github",
+    -- "copilot",  -- Copilot using standard Copilot from github/tpope
+    "copilot2",  -- Copilot using Copilot lua plugin from zbirenbaum
 --     -- "charcounter", -- custom module test
   },
 
