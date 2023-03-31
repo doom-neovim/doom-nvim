@@ -69,6 +69,7 @@ return {
     "copilot2",  -- Copilot using Copilot lua plugin from zbirenbaum
     "mini-util",
     "session",
+    "hydra",
 --     -- "charcounter", -- custom module test
   },
 
