@@ -55,6 +55,8 @@ if doom.features.lsp ~= nil then
       { name = "path" },
       { name = "buffer" },
   }
+  -- doom.features.lsp.settings.completion.completeopt="menu,menuone,preview,noinsert,noselect" -- force user choose an item to complete
+  doom.features.lsp.settings.completion.completeopt="menu,menuone,preview,noinsert,noselect" -- force user choose an item to complete
 end
 
 
