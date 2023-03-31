@@ -7,9 +7,9 @@ M.packages = {
   --   "folke/noice.nvim",
   --   requires = {"MunifTanjim/nui.nvim"},
   -- },
-  ["vim-sandwich"] = {
-    "machakann/vim-sandwich",
-  },
+  -- ["vim-sandwich"] = {
+  --   "machakann/vim-sandwich",
+  -- },
   ["symbols-outline.nvim"] = { "simrat39/symbols-outline.nvim", },
 
   -- ["cutlass.nvim"] = {
@@ -92,6 +92,8 @@ M.configs = {
       ["a)"] = 1,
       ["iW"] = 0,
       ["it"] = 1,
+      ["ii"] = 1, -- inside indent from mini.nvim
+      ["ai"] = 1, -- around indent from mini.nvim
       -- ["ib"] = 1,
       -- ["iB"] = 1,
       ["il"] = 0,

@@ -12,7 +12,7 @@ return {
     "annotations", -- Code annotation generator
     "auto_install", -- Auto install LSP providers
     "autopairs", -- Automatically close character pairs
-     "comment", -- Adds keybinds to comment in any language
+     -- "comment", -- Adds keybinds to comment in any language
     "linter", -- Linting and formatting for languages
     "lsp", -- Code completion "lsp_progress", -- Check status of LSP loading
 --
@@ -21,7 +21,7 @@ return {
 -- --
 --     -- Editor
 --
-    "auto_session", -- Remember sessions between loads
+    -- "auto_session", -- Remember sessions between loads
     -- "colorizer", -- Show colors in neovim
     "editorconfig", -- Support editorconfig files
     "gitsigns", -- Show git changes in sidebar. Also required for shoing branch in statusline
@@ -67,6 +67,8 @@ return {
     "github",
     -- "copilot",  -- Copilot using standard Copilot from github/tpope
     "copilot2",  -- Copilot using Copilot lua plugin from zbirenbaum
+    "mini-util",
+    "session",
 --     -- "charcounter", -- custom module test
   },
 

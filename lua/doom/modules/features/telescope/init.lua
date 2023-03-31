@@ -43,11 +43,15 @@ telescope.settings = {
     use_less = true,
     set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
   },
-  extensions = { "mapper",
+  extensions = {
+    "mapper",
     ["ui-select"] = {
-          -- require("telescope.themes").get_dropdown { }
+      -- require("telescope.themes").get_dropdown { }
     },
-  }
+    sessions_picker = {
+      sessions_dir = vim.fn.stdpath("data") .. "/sessions/", -- same as '/home/user/.local/share/nvim/session'
+    },
+  },
 }
 
 telescope.packages = {
@@ -69,21 +73,20 @@ telescope.packages = {
     "nvim-telescope/telescope-fzf-native.nvim",
     -- cmd = "Telescope ",
     after = "telescope.nvim",
-    config = function ()
-        require('telescope').load_extension('fzf')
-      end ,
+    config = function()
+      require("telescope").load_extension("fzf")
+    end,
     opt = false,
   },
   ["telescope-ui-select.nvim"] = {
     "nvim-telescope/telescope-ui-select.nvim",
     -- cmd = "Telescope ",
     after = "telescope.nvim",
-    config = function ()
-        require('telescope').load_extension('ui-select')
-      end ,
+    config = function()
+      require("telescope").load_extension("ui-select")
+    end,
     opt = false,
   },
-
 }
 
 telescope.configs = {}
@@ -202,10 +205,10 @@ telescope.binds = function()
   }
   if is_module_enabled("features", "lsp") then
     table.insert(binds[2], {
+      {
+        "c",
+        name = "+code",
         {
-          "c",
-          name = "+code",
-          {
           { "s", "<cmd>Telescope lsp_document_symbols<CR>", name = "Lsp symbols", remap = true },
         },
       },
