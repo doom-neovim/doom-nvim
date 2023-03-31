@@ -39,6 +39,7 @@
 
 -- doom.indent = 2
 -- doom.core.treesitter.settings.show_compiler_warning_message = false
+doom.ignorecase = true
 doom.core.reloader.settings.reload_on_save = false
 --
 if doom.langs.lua ~= nil then
