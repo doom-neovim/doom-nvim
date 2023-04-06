@@ -48,7 +48,6 @@ M.autocmds = {}
 -- code for binding: ddom.services.keymaps.applyKeymaps
 M.window_hydra = function()
   local Hydra = require("hydra")
-  print("window_hydra")
   Hydra({
     name = "Windows",
     mode = "n",

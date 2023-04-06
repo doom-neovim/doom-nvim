@@ -134,13 +134,19 @@ tabline.packages = {
     "akinsho/bufferline.nvim",
     branch = "main",
     commit = "2d5266d14b7b5dbc54923469b4599f0349f7cedc",
-    event = "BufAdd",
+  },
+  ["scope.nvim"] = {
+    "tiagovla/scope.nvim",
   },
 }
 
 tabline.configs = {}
 tabline.configs["bufferline.nvim"] = function()
+  print("bufferline.nvim setup")
   require("bufferline").setup(doom.features.tabline.settings)
+end
+tabline.configs["scope.nvim"] = function()
+  require("scope").setup()
 end
 
 tabline.binds = {
