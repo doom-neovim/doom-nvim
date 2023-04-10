@@ -1,7 +1,6 @@
 local M = {}
 
-M.settings = {
-}
+M.settings = {}
 
 M.packages = {
   ["neogit"] = {
@@ -12,7 +11,7 @@ M.packages = {
   },
   ["diffview.nvim"] = {
     "sindrets/diffview.nvim",
-    requires = 'nvim-lua/plenary.nvim'
+    requires = "nvim-lua/plenary.nvim",
   },
   ["git-conflict.nvim"] = {
     "akinsho/git-conflict.nvim",
@@ -26,23 +25,36 @@ M.configs = {
   ["neogit"] = function()
     require("neogit").setup({
       integrations = {
-        diffview = true
+        diffview = true,
       },
     })
   end,
 
   ["git-conflict.nvim"] = function()
-    require('git-conflict').setup()
+    require("git-conflict").setup()
   end,
   ["gitsigns.nvim"] = function()
-    require('gitsigns').setup()
+    require("gitsigns").setup()
   end,
 }
 M.autocmds = {
+  {
+    "BufUnload",
+    "NeogitStatus",
+    function()
+      vim.defer_fn(function()
+        -- code
+        vim.cmd("tabclose")
+        -- Neogit auto open a new tab when create but does not clean up the tab when close
+        -- so we need to close it manually
+        -- this is a tricky way, but actually this is enough when we wait for a solution from Neogit
+        -- still bug when open neogit with no "normal" file buffer
+      end, 100)
+    end,
+  },
 }
 
-M.cmds = {
-}
+M.cmds = {}
 
 -- TODO: fix bug doom-nvim, so it can load if 'M.bind= {}'
 M.binds = {
@@ -65,6 +77,7 @@ M.binds = {
       { "g", "<cmd>Neogit<CR>", name = "Neogit" },
       { "l", "<cmd>Telescope git_bcommits<CR>", name = "Current buffer logs" },
       { "L", "<cmd>Telescope git_commits<CR>", name = "Git Logs" },
-    }
+    },
   },
-} return M
+}
+return M
