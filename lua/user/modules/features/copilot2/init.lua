@@ -1,6 +1,15 @@
 local M = {}
 
-M.settings = {}
+M.settings = {
+  filetypes_black_list = {
+    "text",
+    "csv",
+    "tsv",
+  },
+  filetypes_white_list = {
+    "markdown",
+  },
+}
 
 M.packages = {
 
@@ -34,12 +43,28 @@ M.configs = {
     --     },
     --   },
     -- })
-    vim.defer_fn(function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-    end, 100)
+
+    -- calculate the blacklisted filetypes
+    local this = doom.features.copilot2
+    local filetypes = {}
+    for _, filetype in ipairs(this.settings.filetypes_black_list) do
+      filetypes[filetype] = false
+    end
+
+    for _, filetype in ipairs(this.settings.filetypes_white_list) do
+      filetypes[filetype] = true
+    end
+
+
+    require("copilot").setup({
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+      filetypes = filetypes,
+      -- black_list = filetypes,
+      -- markdown = false,
+      -- text = false,
+      -- csv = false,
+    })
 
     -- require("copilot").setup({
     --   suggestion = { enabled = false },
