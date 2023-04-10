@@ -189,8 +189,14 @@ modules.load_modules = function()
         end
 
         if module.binds then
+          local bind_config = type(module.binds) == "function" and module.binds() or module.binds
+          if (bind_config.mode == nil)  then
+            bind_config.mode = "nv"
+          end
+
           keymaps_service.applyKeymaps(
-            type(module.binds) == "function" and module.binds() or module.binds
+            -- type(module.binds) == "function" and module.binds() or module.binds
+            bind_config
           )
         end
       end
