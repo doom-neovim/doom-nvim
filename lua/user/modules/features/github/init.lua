@@ -91,20 +91,23 @@ M.octo_menu = function()
   -- wk.register(wk_mappings, opts)
 end
 
--- M.autocmds = {
---   {
---     "FileType",
---     -- "*",
---     "*octo",
---     octo_help
---   },
--- }
+M.autocmds = {
+  {
+    "FileType",
+    "octo",
+    function()
+      vim.cmd [[
+          map <silent> <buffer> g? :OctoMenu<CR>
+      ]]
+    end,
+  },
+}
+
 
 M.cmds = {
   {
     "OctoMenu",
     function()
-      print("TestOcto")
       local github = require("user.modules.features.github")
       github.octo_menu()
 
