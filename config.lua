@@ -121,7 +121,7 @@ if doom.features.whichkey ~= nil then
 end
 
 if doom.features.fold ~= nil then
-  doom.features.fold.settings.foldlevelstart = 3
+  doom.features.fold.settings.foldlevelstart = 99
 end
 -- --
 -- --

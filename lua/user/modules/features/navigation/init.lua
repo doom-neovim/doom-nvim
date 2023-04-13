@@ -10,7 +10,7 @@ M.packages = {
   -- ["vim-sandwich"] = {
   --   "machakann/vim-sandwich",
   -- },
-  ["symbols-outline.nvim"] = { "simrat39/symbols-outline.nvim", },
+  ["symbols-outline.nvim"] = { "simrat39/symbols-outline.nvim" },
 
   -- ["cutlass.nvim"] = {
   --   "tuanbass/cutlass.nvim", },
@@ -60,22 +60,24 @@ M.configs = {
   --   })
   -- end,
   ["telescope-fzf-native.nvim"] = function()
-    print ('loading fzf for telescope')
+    print("loading fzf for telescope")
 
     -- require('telescope').load_extension('fzf')
   end,
   ["better-escape.nvim"] = function()
-
-
-      require("better_escape").setup({
-        mapping = {"jk", "jj", "kj", "kk"}, -- a table with mappings to use
-        keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
-      })
-
+    require("better_escape").setup({
+      mapping = { "jk", "jj", "kj", "kk" }, -- a table with mappings to use
+      keys = "<Esc>", -- keys used for escaping, if it is a function will use the result everytime
+    })
   end,
 
   ["hop.nvim"] = function()
     -- vim.notify("Setting up cutlass plugin", "info")
+    -- unmap t characters, so we can use it for HopChar
+    vim.defer_fn(function()
+      -- vim.cmd("unmap t")
+      vim.cmd("nmap t <cmd>HopChar1<CR>")
+    end, 0)
     require("hop").setup()
   end,
   ["vim-expand-region"] = function()
@@ -111,20 +113,19 @@ M.configs = {
     require("symbols-outline").setup()
   end,
   ["vim-matchup"] = function()
-     vim.g.matchup_matchparen_offscreen = {}
+    vim.g.matchup_matchparen_offscreen = {}
   end,
   ["delaytrain.nvim"] = function()
-      require('delaytrain').setup {
-          delay_ms = 500,  -- How long repeated usage of a key should be prevented
-          grace_period = 3, -- How many repeated keypresses are allowed
-          keys = {          -- Which keys (in which modes) should be delayed
-              ['n'] = {'h', 'j', 'k', 'l'},
-              -- ['nvi'] = {'<Left>', '<Down>', '<Up>', '<Right>'},
-          },
-      }
+    require("delaytrain").setup({
+      delay_ms = 500, -- How long repeated usage of a key should be prevented
+      grace_period = 3, -- How many repeated keypresses are allowed
+      keys = { -- Which keys (in which modes) should be delayed
+        ["n"] = { "h", "j", "k", "l" },
+        -- ['nvi'] = {'<Left>', '<Down>', '<Up>', '<Right>'},
+      },
+    })
     -- vim.notify("Setting up cutlass plugin", "info")
   end,
-
 }
 
 M.autocmds = {}
@@ -135,7 +136,7 @@ M.binds = {
 
   {
     -- Hop char
-    "s",
+    "t",
     [[<cmd>HopChar1<CR>]],
     name = "Go to anychar in the screen",
     mode = "nv",
@@ -174,5 +175,4 @@ M.binds = {
   --   mode = "nv",
   -- },
 }
-
 return M
