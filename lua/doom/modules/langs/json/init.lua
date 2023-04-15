@@ -43,8 +43,8 @@ json.settings = {
 json.packages = {
   ["SchemaStore.nvim"] = {
     "b0o/SchemaStore.nvim",
-    commit = "f55842dc797faad8cf7b0d9ce75c59da654aa018",
-    opt = true,
+    commit = "571056608b7fc569f856c8174fcbffaad548eec5",
+    ft = "json",
   },
 }
 
@@ -54,7 +54,7 @@ json.autocmds = {
     "FileType",
     "json",
     langs_utils.wrap_language_setup("json", function()
-      vim.cmd("packadd SchemaStore.nvim")
+      -- require("lazy").load("SchemaStore.nvim")
       if not json.settings.disable_lsp then
         langs_utils.use_lsp_mason(json.settings.lsp_name, {
           config = json.settings.lsp_config,

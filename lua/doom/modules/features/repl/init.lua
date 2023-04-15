@@ -41,7 +41,8 @@ repl.settings = {
 repl.packages = {
   ["iron.nvim"] = {
     "hkupty/iron.nvim",
-    commit = "d1e80812aacd0c7e1a5c3050596716851d223ce9",
+    commit = "f4131638454aeb96cbd92652dd8c396e48eb4118",
+    cmd = "IronRepl",
   },
 }
 

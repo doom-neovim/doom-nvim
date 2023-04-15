@@ -40,25 +40,6 @@ gitsigns.settings = {
     noremap = true,
     buffer = true,
 
-    ["n ]c"] = {
-      expr = true,
-      "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'",
-    },
-    ["n [c"] = {
-      expr = true,
-      "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'",
-    },
-
-    ["n <leader>gS"] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-    ["n <leader>gu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-    ["n <leader>gr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-    ["n <leader>gR"] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-    ["n <leader>gh"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-    ["n <leader>gb"] = '<cmd>lua require"gitsigns".blame_line()<CR>',
-
-    -- Text objects
-    ["o ih"] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
-    ["x ih"] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
   },
   watch_gitdir = { interval = 1000, follow_files = true },
   current_line_blame_opts = {
@@ -75,7 +56,8 @@ gitsigns.settings = {
 gitsigns.packages = {
   ["gitsigns.nvim"] = {
     "lewis6991/gitsigns.nvim",
-    commit = "9787c94178b4062f30d2f06b6d52984217196647",
+    commit = "addd6e174a85fc1c4007ab0b65d77e6555b417bf",
+    event = "VeryLazy",
   },
 }
 
@@ -83,5 +65,49 @@ gitsigns.configs = {}
 gitsigns.configs["gitsigns.nvim"] = function()
   require("gitsigns").setup(doom.features.gitsigns.settings)
 end
+
+gitsigns.binds = {
+  {
+    "<leader>g",
+    name = "+git",
+    {
+      {
+        "s",
+        "<cmd>lua require'gitsigns'.stage_hunk()<CR>",
+        name = " Stage Hunk",
+      },
+      {
+        "u",
+        "<cmd>lua require'gitsigns'.undo_stage_hunk()<CR>",
+        name = " Unstage Hunk",
+      },
+      {
+        "R",
+        "<cmd>lua require'gitsigns'.reset_hunk()<CR>",
+        name = " Reset Hunk",
+      },
+      {
+        "n",
+        "<cmd>lua require'gitsigns'.next_hunk()<CR>",
+        name = "Next Hunk",
+      },
+      {
+        "p",
+        "<cmd>lua require'gitsigns'.prev_hunk()<CR>",
+        name = "Prev Hunk",
+      },
+      {
+        "b",
+        "<cmd>lua require'gitsigns'.blame_line()<CR>",
+        name = "Blame Line",
+      },
+      {
+        "h",
+        "<cmd>lua require'gitsigns'.preview_hunk()<CR>",
+        name = " Preview Hunk",
+      },
+    },
+  },
+}
 
 return gitsigns

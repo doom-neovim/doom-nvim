@@ -21,7 +21,7 @@ fs.get_seperator = function()
 end
 
 --- Joins a number of strings into a valid path
----@vararg string[] String segments to convert to file system path
+---@vararg string String segments to convert to file system path
 fs.join_paths = function(...)
   return table.concat({ ... }, fs.get_seperator())
 end

@@ -51,7 +51,7 @@ zen.settings = {
 zen.packages = {
   ["TrueZen.nvim"] = {
     "Pocco81/TrueZen.nvim",
-    commit = "508b977d71650da5c9243698614a9a1416f116d4",
+    commit = "98740c76254c65576ec294551028b65081053588",
     module = "true-zen",
     event = "BufWinEnter",
   },

@@ -19,8 +19,12 @@ annotations.settings = {
 annotations.packages = {
   ["neogen"] = {
     "danymat/neogen",
-    commit = "967b280d7d7ade52d97d06e868ec4d9a0bc59282",
-    after = "nvim-treesitter",
+    commit = "0958aeffcddf46e57785c3026be934816b4f39d2",
+    keys = { "<leader>cg" },
+    cmd = "Neogen",
+    dependencies={
+      "nvim-treesitter/nvim-treesitter"
+    }
   },
 }
 

@@ -5,7 +5,7 @@ editorconfig.settings = {}
 editorconfig.packages = {
   ["editorconfig-vim"] = {
     "editorconfig/editorconfig-vim",
-    commit = "d354117b72b3b43b75a29b8e816c0f91af10efe9",
+    commit = "30ddc057f71287c3ac2beca876e7ae6d5abe26a0",
   },
 }
 

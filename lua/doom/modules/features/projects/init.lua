@@ -38,8 +38,9 @@ projects.settings = {
 projects.packages = {
   ["project.nvim"] = {
     "ahmedkhalf/project.nvim",
-    commit = "628de7e433dd503e782831fe150bb750e56e55d6",
-    requires = { "nvim-treesitter/nvim-treesitter" },
+    commit = "685bc8e3890d2feb07ccf919522c97f7d33b94e4",
+    cmd = "Telescope projects",
+    dependencies =  { "nvim-treesitter/nvim-treesitter" },
   },
 }
 
