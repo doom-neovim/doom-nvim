@@ -31,27 +31,27 @@ tabline.settings = {
         return true
       end
     end,
-    groups = {
-      options = {
-        toggle_hidden_on_enter = true, -- when you re-enter a hidden group this options re-opens that group so the buffer is visible
-      },
-      items = {
-        {
-          name = "Tests",
-          auto_close = true,
-          matcher = function(buf)
-            return buf.filename:match("%_test") or buf.filename:match("%_spec")
-          end,
-        },
-        {
-          name = "Docs",
-          auto_close = true,
-          matcher = function(buf)
-            return buf.filename:match("%.md") or buf.filename:match("%.txt")
-          end,
-        },
-      },
-    },
+    -- groups = {
+    --   options = {
+    --     toggle_hidden_on_enter = true, -- when you re-enter a hidden group this options re-opens that group so the buffer is visible
+    --   },
+    --   items = {
+    --     {
+    --       name = "Tests",
+    --       auto_close = true,
+    --       matcher = function(buf)
+    --         return buf.filename:match("%_test") or buf.filename:match("%_spec")
+    --       end,
+    --     },
+    --     {
+    --       name = "Docs",
+    --       auto_close = true,
+    --       matcher = function(buf)
+    --         return buf.filename:match("%.md") or buf.filename:match("%.txt")
+    --       end,
+    --     },
+    --   },
+    -- },
     offsets = {
       {
         filetype = "NvimTree",
@@ -86,7 +86,7 @@ tabline.settings = {
     persist_buffer_sort = true,
     separator_style = "thick",
     enforce_regular_tabs = true,
-    always_show_bufferline = false,
+    always_show_bufferline = true,
     sort_by = "directory",
     custom_areas = {
       right = function()
@@ -134,13 +134,19 @@ tabline.packages = {
     "akinsho/bufferline.nvim",
     branch = "main",
     commit = "2d5266d14b7b5dbc54923469b4599f0349f7cedc",
-    event = "BufAdd",
+  },
+  ["scope.nvim"] = {
+    "tiagovla/scope.nvim",
   },
 }
 
 tabline.configs = {}
 tabline.configs["bufferline.nvim"] = function()
+  print("bufferline.nvim setup")
   require("bufferline").setup(doom.features.tabline.settings)
+end
+tabline.configs["scope.nvim"] = function()
+  require("scope").setup()
 end
 
 tabline.binds = {

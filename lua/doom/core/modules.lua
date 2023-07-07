@@ -110,9 +110,21 @@ modules.load_modules = function()
         end
 
         if module.binds then
-          keymaps_service.applyKeymaps(
-            type(module.binds) == "function" and module.binds() or module.binds
-          )
+          local bind_config = type(module.binds) == "function" and module.binds() or module.binds
+          if (bind_config.mode == nil)  then
+            bind_config.mode = "nv"
+          end
+
+          if (#bind_config >0) then
+            keymaps_service.applyKeymaps(
+                -- type(module.binds) == "function" and module.binds() or module.binds
+                bind_config
+            )
+          else
+            -- without assign it to nil, it crashed if a module declare module.binds as an empty collection
+            -- Not really found the root cause, but this is the easiest way to avoid it
+            module.binds = nil
+          end
         end
       end
       profiler.stop(profile_msg)

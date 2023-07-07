@@ -133,6 +133,7 @@ You can find a full list of modules [here](./docs/modules.md#all-modules)
 Doom nvim provides a number of config options, including wrapping some of vim's
 own options.  See all available config options [in the API Reference](./docs/api.md).
 
+
 ```lua
 -- config.lua
 
@@ -328,7 +329,8 @@ You will also need to delete `packer_compiled.lua` from `$XDG_DATA_HOME/nvim/plu
 
 ## Contributing
 
-For for information please see our [contributing docs](./docs/contributing.md).
+For for information please see our [contributing docs](./docs/contributing.md).<br>
+Also try to refer to [excelent guide to develop in nvim lua](https://github.com/nanotee/nvim-lua-guide)
 
 ## Contributors
 
