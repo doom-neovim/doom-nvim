@@ -1,6 +1,8 @@
 
 <div align="center">
 
+This is my own config for manjaro.
+
 # Doom Nvim
 
 ![License](https://img.shields.io/github/license/doom-neovim/doom-nvim?style=for-the-badge)
