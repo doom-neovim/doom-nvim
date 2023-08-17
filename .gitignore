@@ -18,3 +18,4 @@ tools/workspace
 user/modules/*
 # Editor files
 .luarc.json
+lazy-lock.json
