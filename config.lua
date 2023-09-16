@@ -16,6 +16,50 @@ doom.use_package({
 
 doom.use_package("averms/black-nvim")
 
+doom.use_package({
+  "nvim-orgmode/orgmode",
+  config = function()
+    require('orgmode').setup_ts_grammar()
+    require("orgmode").setup({
+      -- These are nnoremap maps
+      mappings = {
+        org = {
+          org_todo = {"t", "cit"},
+          org_insert_heading_respect_content = {"<Enter>", "<Leader>oih"},
+          org_cycle = {"<TAB>", "za"},
+          org_global_cycle = {"<S-TAB>", "zA"}
+        }
+      }
+    })
+  end
+})
+
+-- Orgmode: input mode tab and shift-tab to promote/demote subtree
+doom.use_cmd({
+  {"MyTabOrgDemote", function ()
+    local ok, orgMappings = pcall(require, "orgmode.org.mappings")
+    if ok and orgMappings and vim.bo.filetype == "org" then
+      orgMappings.do_demote({ args = { true }, opts = { desc = 'org demote subtree' } })
+    end
+  end},
+  {"MyTabOrgPromote", function ()
+    local ok, orgMappings = pcall(require, "orgmode.org.mappings")
+    if ok and orgMappings and vim.bo.filetype == "org" then
+      orgMappings.do_promote({ args = { true }, opts = { desc = 'org demote subtree' } })
+    end
+  end},
+})
+
+doom.use_keybind({
+  { mode = "i",
+    {
+      {"<TAB>", "<cmd>MyTabOrgDemote<CR>"},
+      {"<S-TAB>", "<cmd>MyTabOrgPromote<CR>"},
+    }
+  }
+})
+
+
 -- ADDING A KEYBIND
 --
 -- doom.use_keybind({
@@ -36,6 +80,7 @@ doom.use_package("averms/black-nvim")
 --   {"CustomCommand1", function() print("Trigger my custom command 1") end},
 --   {"CustomCommand2", function() print("Trigger my custom command 2") end}
 -- })
+
 
 -- ADDING AN AUTOCOMMAND
 --

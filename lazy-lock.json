@@ -39,6 +39,7 @@
   "nvim-ts-autotag": { "branch": "main", "commit": "fdefe46c6807441460f11f11a167a2baf8e4534b" },
   "nvim-ts-context-commentstring": { "branch": "main", "commit": "4a42b30376c1bd625ab5016c2079631d531d797a" },
   "nvim-web-devicons": { "branch": "master", "commit": "a8cf88cbdb5c58e2b658e179c4b2aa997479b3da" },
+  "orgmode": { "branch": "master", "commit": "34f977c090da2ff9f8cea01eecae8bd7d83fdef9" },
   "persistence.nvim": { "branch": "main", "commit": "8484fdaa284207f77ec69b9627316bf334ad653f" },
   "plenary.nvim": { "branch": "master", "commit": "1c7e3e6b0f4dd5a174fcea9fda8a4d7de593b826" },
   "project.nvim": { "branch": "main", "commit": "685bc8e3890d2feb07ccf919522c97f7d33b94e4" },
@@ -47,6 +48,7 @@
   "telescope-file-browser.nvim": { "branch": "master", "commit": "304508fb7bea78e3c0eeddd88c4837501e403ae8" },
   "telescope.nvim": { "branch": "master", "commit": "1ba7278cf08da8048e7f589ef6b65a39fd3e4dbf" },
   "todo-comments.nvim": { "branch": "main", "commit": "077c59586d9d0726b0696dc5680eb863f4e04bc5" },
+  "toggleterm.nvim": { "branch": "main", "commit": "a54e6c471ce1cd8ef8357e34598a28a955297131" },
   "trouble.nvim": { "branch": "main", "commit": "83ec606e7065adf134d17f4af6bae510e3c491c1" },
   "which-key.nvim": { "branch": "main", "commit": "e4fa445065a2bb0bbc3cca85346b67817f28e83e" }
 }
