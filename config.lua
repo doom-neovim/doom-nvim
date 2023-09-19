@@ -16,6 +16,8 @@ doom.use_package({
 
 doom.use_package("averms/black-nvim")
 
+-- doom.use_package("Vigemus/iron.nvim")
+
 doom.use_package({
   "nvim-orgmode/orgmode",
   config = function()
@@ -57,6 +59,12 @@ doom.use_keybind({
       {"<S-TAB>", "<cmd>MyTabOrgPromote<CR>"},
     }
   }
+})
+
+
+-- defaults to n noremap silent
+doom.use_keybind({
+    {"<Space>", "<Nop>"},
 })
 
 

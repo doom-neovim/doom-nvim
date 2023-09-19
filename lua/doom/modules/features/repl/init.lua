@@ -72,6 +72,7 @@ repl.binds = {
       { "<cr>", "<NOP>", name = "Enter" },
       { "C", "<NOP>", name = "Clear" },
     },
+    mode = "nv",
   },
   {
     "<C-e>",
