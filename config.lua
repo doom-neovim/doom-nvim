@@ -10,63 +10,88 @@
 doom.use_package({
   "ur4ltz/surround.nvim",
   config = function()
-    require("surround").setup({mappings_style = "sandwich"})
-  end
+    require("surround").setup({ mappings_style = "sandwich" })
+  end,
 })
 
 doom.use_package("averms/black-nvim")
 
--- doom.use_package("Vigemus/iron.nvim")
+doom.use_package({ "dccsillag/magma-nvim", run = ":UpdateRemotePlugins" })
 
 doom.use_package({
   "nvim-orgmode/orgmode",
   config = function()
-    require('orgmode').setup_ts_grammar()
+    require("orgmode").setup_ts_grammar()
     require("orgmode").setup({
       -- These are nnoremap maps
       mappings = {
         org = {
-          org_todo = {"t", "cit"},
-          org_insert_heading_respect_content = {"<Enter>", "<Leader>oih"},
-          org_cycle = {"<TAB>", "za"},
-          org_global_cycle = {"<S-TAB>", "zA"}
-        }
-      }
+          org_todo = { "t", "cit" },
+          org_insert_heading_respect_content = { "<Enter>", "<Leader>oih" },
+          org_cycle = { "<TAB>", "za" },
+          org_global_cycle = { "<S-TAB>", "zA" },
+        },
+      },
     })
-  end
+  end,
 })
 
 -- Orgmode: input mode tab and shift-tab to promote/demote subtree
 doom.use_cmd({
-  {"MyTabOrgDemote", function ()
-    local ok, orgMappings = pcall(require, "orgmode.org.mappings")
-    if ok and orgMappings and vim.bo.filetype == "org" then
-      orgMappings.do_demote({ args = { true }, opts = { desc = 'org demote subtree' } })
-    end
-  end},
-  {"MyTabOrgPromote", function ()
-    local ok, orgMappings = pcall(require, "orgmode.org.mappings")
-    if ok and orgMappings and vim.bo.filetype == "org" then
-      orgMappings.do_promote({ args = { true }, opts = { desc = 'org demote subtree' } })
-    end
-  end},
+  {
+    "MyTabOrgDemote",
+    function()
+      local ok, orgMappings = pcall(require, "orgmode.org.mappings")
+      if ok and orgMappings and vim.bo.filetype == "org" then
+        orgMappings.do_demote({ args = { true }, opts = { desc = "org demote subtree" } })
+      end
+    end,
+  },
+  {
+    "MyTabOrgPromote",
+    function()
+      local ok, orgMappings = pcall(require, "orgmode.org.mappings")
+      if ok and orgMappings and vim.bo.filetype == "org" then
+        orgMappings.do_promote({ args = { true }, opts = { desc = "org demote subtree" } })
+      end
+    end,
+  },
 })
-
 doom.use_keybind({
-  { mode = "i",
+  {
+    mode = "i",
     {
-      {"<TAB>", "<cmd>MyTabOrgDemote<CR>"},
-      {"<S-TAB>", "<cmd>MyTabOrgPromote<CR>"},
-    }
-  }
+      { "<TAB>",   "<cmd>MyTabOrgDemote<CR>" },
+      { "<S-TAB>", "<cmd>MyTabOrgPromote<CR>" },
+    },
+  },
 })
 
-
--- defaults to n noremap silent
+doom.use_package({
+  "github/copilot.vim",
+  config = function()
+    vim.g.copilot_no_tab_map = true
+  end,
+})
 doom.use_keybind({
-    {"<Space>", "<Nop>"},
+  -- https://github.com/orgs/community/discussions/29817#discussioncomment-4217615
+  {
+    mode = "i",
+    {
+      {
+        options = { expr = true, script = true, replace_keycodes = false },
+        {
+          { "<C-g>", 'copilot#Accept("<CR>")' },
+          { "<C-CR>", 'copilot#Accept("<CR>")' },
+        },
+      },
+      { "<C-j>", "<Plug>(copilot-next)" },
+      { "<C-k>", "<Plug>(copilot-previous)" },
+      { "<C-o>", "<Plug>(copilot-dismiss)" },
+      { "<C-f>", "<Plug>(copilot-suggest)" },
+    },
+  },
 })
-
 
 -- ADDING A KEYBIND
 --
@@ -89,7 +114,6 @@ doom.use_keybind({
 --   {"CustomCommand2", function() print("Trigger my custom command 2") end}
 -- })
 
-
 -- ADDING AN AUTOCOMMAND
 --
 -- doom.use_autocmd({
@@ -104,9 +128,12 @@ doom.use_keybind({
 local orig_notify = vim.notify
 local filter_notify = function(text, level, opts)
   -- more specific to this case
-  if type(text) == "string" and (string.find(text, "get_query", 1, true) or string.find(text, "get_node_text", 1, true)) then
-  -- for all deprecated and stack trace warnings
-  -- if type(text) == "string" and (string.find(text, ":help deprecated", 1, true) or string.find(text, "stack trace", 1, true)) then
+  if
+      type(text) == "string"
+      and (string.find(text, "get_query", 1, true) or string.find(text, "get_node_text", 1, true))
+  then
+    -- for all deprecated and stack trace warnings
+    -- if type(text) == "string" and (string.find(text, ":help deprecated", 1, true) or string.find(text, "stack trace", 1, true)) then
     return
   end
   orig_notify(text, level, opts)
