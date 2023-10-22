@@ -6,7 +6,7 @@ auto_install.settings = {
   --- Settings for mason-lspconfig
   lsp = {
     --- List of lsp providers to automatically install and setup
-    ensure_installed = {},
+    ensure_installed = {"lua"},
     --- Whether or not to automatically install the lsp providers in ensure_installed
     automatic_installation = true,
   },

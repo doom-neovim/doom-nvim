@@ -23,6 +23,7 @@ vim.o.linebreak = true
 -- ADDING A PACKAGE
 --
 -- doom.use_package("EdenEast/nightfox.nvim", "sainnhe/sonokai")
+--
 doom.use_package({
   "ur4ltz/surround.nvim",
   config = function()
@@ -32,93 +33,110 @@ doom.use_package({
 
 doom.use_package("averms/black-nvim")
 
-doom.use_package("luk400/vim-jukit")
+-- doom.use_package({"kiyoon/jupynium.nvim", build = "pip3 install --user ."})
+-- doom.use_package("kiyoon/jupynium.nvim")
+doom.use_package("rcarriga/nvim-notify")
+doom.use_package("stevearc/dressing.nvim")
 
--- Legit jukit settings
-vim.g.jukit_terminal = "kitty"
--- Only map jukit keys in these filetypes
-vim.g.jukit_mappings_ext_enabled= {'py', 'ipynb'}
--- For kitty, split output in an os window
-vim.g.jukit_output_new_os_window = 1
--- Remove all default mappings
-vim.g.jukit_mappings = 0
 
--- luacheck: ignore 113 143 148 542
-doom.use_keybind({
-  { '<leader>o',  {
-    { 's', ':call jukit#splits#output()<CR>', name = 'jukit#splits#output' },
-    { 'hs', ':call jukit#splits#output_and_history()<CR>', name = 'jukit#splits#output_and_history' },
-    { 'd', ':call jukit#splits#close_output_split()<CR>', name = 'jukit#splits#close_output_split' },
-    { 'hd', ':call jukit#splits#close_output_and_history(1)<CR>', name = 'jukit#splits#close_output_and_history' }
-  } },
-  { '<leader>t',  {
-    { 's', ':call jukit#splits#term()<CR>', name = 'jukit#splits#term' }
-  } },
-  { '<leader>h',  {
-    { 's', ':call jukit#splits#history()<CR>', name = 'jukit#splits#history' },
-    { 'd', ':call jukit#splits#close_history()<CR>', name = 'jukit#splits#close_history' },
-    { 't', ':call jukit#convert#save_nb_to_file(0,1,\'html\')<CR>', name = 'jukit#convert#save_nb_to_file' }
-  } },
-  { '<leader>s',  {
-    { 'o', ':call jukit#splits#show_last_cell_output(1)<CR>', name = 'jukit#splits#show_last_cell_output' },
-    { 'l', ':call jukit#layouts#set_layout()<CR>', name = 'jukit#layouts#set_layout' }
-  } },
-  -- { '<leader>j',  {
-  --   { '', ':call jukit#splits#out_hist_scroll(1)<CR>', name = 'jukit#splits#out_hist_scroll' }
-  -- } },
-  -- { '<leader>k',  {
-  --   { '', ':call jukit#splits#out_hist_scroll(0)<CR>', name = 'jukit#splits#out_hist_scroll' }
-  -- } },
-  { '<leader>a',  {
-    { 'h', ':call jukit#splits#toggle_auto_hist()<CR>', name = 'jukit#splits#toggle_auto_hist' }
-  } },
-  { '<leader>c',  {
-    { 'o', ':call jukit#cells#create_below(0)<CR>', name = 'jukit#cells#create_below' },
-    { 'O', ':call jukit#cells#create_above(0)<CR>', name = 'jukit#cells#create_above' },
-    { 't', ':call jukit#cells#create_below(1)<CR>', name = 'jukit#cells#create_below' },
-    { 'T', ':call jukit#cells#create_above(1)<CR>', name = 'jukit#cells#create_above' },
-    { 'd', ':call jukit#cells#delete()<CR>', name = 'jukit#cells#delete' },
-    { 's', ':call jukit#cells#split()<CR>', name = 'jukit#cells#split' },
-    { 'M', ':call jukit#cells#merge_above()<CR>', name = 'jukit#cells#merge_above' },
-    { 'm', ':call jukit#cells#merge_below()<CR>', name = 'jukit#cells#merge_below' },
-    { 'k', ':call jukit#cells#move_up()<CR>', name = 'jukit#cells#move_up' },
-    { 'j', ':call jukit#cells#move_down()<CR>', name = 'jukit#cells#move_down' }
-  } },
-  { '<leader>j',  {
-    { '', ':call jukit#cells#jump_to_next_cell()<CR>', name = 'jukit#cells#jump_to_next_cell' }
-  } },
-  { '<leader>k',  {
-    { '', ':call jukit#cells#jump_to_previous_cell()<CR>', name = 'jukit#cells#jump_to_previous_cell' }
-  } },
-  { '<leader>d',  {
-    { 'do', ':call jukit#cells#delete_outputs(0)<CR>', name = 'jukit#cells#delete_outputs' },
-    { 'da', ':call jukit#cells#delete_outputs(1)<CR>', name = 'jukit#cells#delete_outputs' }
-  } },
-  { '<leader>n',  {
-    { 'p', ':call jukit#convert#notebook_convert("jupyter-notebook")<CR>', name = 'jukit#convert#notebook_convert' }
-  } },
-  { '<leader>r',  {
-    { 'ht', ':call jukit#convert#save_nb_to_file(1,1,\'html\')<CR>', name = 'jukit#convert#save_nb_to_file' },
-    { 'pd', ':call jukit#convert#save_nb_to_file(1,1,\'pdf\')<CR>', name = 'jukit#convert#save_nb_to_file' }
-  } },
-  { '<leader>p',  {
-    { 'd', ':call jukit#convert#save_nb_to_file(0,1,\'pdf\')<CR>', name = 'jukit#convert#save_nb_to_file' }
-  } }
-})
-doom.use_keybind({
-  { '<leader>',  {
-    { '<space>', ':call jukit#send#section(0)<CR>', name = 'jukit#send#section' }
-  } },
-  { '<cr>',  {
-    { '', ':call jukit#send#line()<CR>', name = 'jukit#send#line' }
-  } },
-  { '<leader>c',  {
-    { 'c', ':call jukit#send#until_current_section()<CR>', name = 'jukit#send#until_current_section' }
-  } },
-  { '<leader>a',  {
-    { 'll', ':call jukit#send#all()<CR>', name = 'jukit#send#all' }
-  } }
-})
+-- doom.use_package("luk400/vim-jukit")
+-- vim.cmd[[highlight jukit_cellmarker_colors guifg=#1d615a guibg=#1d615a ctermbg=22 ctermfg=22]]
+
+-- -- Legit jukit settings
+-- vim.g.jukit_terminal = "kitty"
+-- -- Only map jukit keys in these filetypes
+-- vim.g.jukit_mappings_ext_enabled= {'py', 'ipynb'}
+-- -- For kitty, split output in an os window
+-- vim.g.jukit_output_new_os_window = 1
+-- vim.g.jukit_hl_ext_enabled = {'py', 'ipynb'}
+-- vim.g.jukit_highlight_markers = 1
+-- vim.g.jukit_enable_textcell_bg_hl = 1
+-- vim.g.jukit_enable_textcell_syntax = 1
+-- local vimruntime = vim.fn.expand('$VIMRUNTIME')
+-- local jukit_text_syntax_file = vimruntime .. '/syntax/markdown.vim'
+-- vim.g.jukit_text_syntax_file = jukit_text_syntax_file
+-- vim.g.jukit_notebook_viewer = 'code'
+-- -- vim.g.jukit_hist_use_ueberzug = 1
+-- -- vim.g.jukit_ueberzug_use_cached = 1
+-- -- Remove all default mappings
+-- vim.g.jukit_mappings = 0
+--
+-- -- luacheck: ignore 113 143 148 542
+-- doom.use_keybind({
+--   { '<leader>o',  {
+--     { 's', ':call jukit#splits#output()<CR>', name = 'jukit#splits#output' },
+--     { 'hs', ':call jukit#splits#output_and_history()<CR>', name = 'jukit#splits#output_and_history' },
+--     { 'd', ':call jukit#splits#close_output_split()<CR>', name = 'jukit#splits#close_output_split' },
+--     { 'hd', ':call jukit#splits#close_output_and_history(1)<CR>', name = 'jukit#splits#close_output_and_history' }
+--   } },
+--   { '<leader>t',  {
+--     { 's', ':call jukit#splits#term()<CR>', name = 'jukit#splits#term' }
+--   } },
+--   { '<leader>h',  {
+--     { 's', ':call jukit#splits#history()<CR>', name = 'jukit#splits#history' },
+--     { 'd', ':call jukit#splits#close_history()<CR>', name = 'jukit#splits#close_history' },
+--     { 't', ':call jukit#convert#save_nb_to_file(0,1,\'html\')<CR>', name = 'jukit#convert#save_nb_to_file' }
+--   } },
+--   { '<leader>s',  {
+--     { 'o', ':call jukit#splits#show_last_cell_output(1)<CR>', name = 'jukit#splits#show_last_cell_output' },
+--     { 'l', ':call jukit#layouts#set_layout()<CR>', name = 'jukit#layouts#set_layout' }
+--   } },
+--   -- { '<leader>j',  {
+--   --   { '', ':call jukit#splits#out_hist_scroll(1)<CR>', name = 'jukit#splits#out_hist_scroll' }
+--   -- } },
+--   -- { '<leader>k',  {
+--   --   { '', ':call jukit#splits#out_hist_scroll(0)<CR>', name = 'jukit#splits#out_hist_scroll' }
+--   -- } },
+--   { '<leader>a',  {
+--     { 'h', ':call jukit#splits#toggle_auto_hist()<CR>', name = 'jukit#splits#toggle_auto_hist' }
+--   } },
+--   { '<leader>c',  {
+--     { 'o', ':call jukit#cells#create_below(0)<CR>', name = 'jukit#cells#create_below' },
+--     { 'O', ':call jukit#cells#create_above(0)<CR>', name = 'jukit#cells#create_above' },
+--     { 't', ':call jukit#cells#create_below(1)<CR>', name = 'jukit#cells#create_below' },
+--     { 'T', ':call jukit#cells#create_above(1)<CR>', name = 'jukit#cells#create_above' },
+--     { 'd', ':call jukit#cells#delete()<CR>', name = 'jukit#cells#delete' },
+--     { 's', ':call jukit#cells#split()<CR>', name = 'jukit#cells#split' },
+--     { 'M', ':call jukit#cells#merge_above()<CR>', name = 'jukit#cells#merge_above' },
+--     { 'm', ':call jukit#cells#merge_below()<CR>', name = 'jukit#cells#merge_below' },
+--     { 'k', ':call jukit#cells#move_up()<CR>', name = 'jukit#cells#move_up' },
+--     { 'j', ':call jukit#cells#move_down()<CR>', name = 'jukit#cells#move_down' }
+--   } },
+--   { '<leader>j',  {
+--     { '', ':call jukit#cells#jump_to_next_cell()<CR>', name = 'jukit#cells#jump_to_next_cell' }
+--   } },
+--   { '<leader>k',  {
+--     { '', ':call jukit#cells#jump_to_previous_cell()<CR>', name = 'jukit#cells#jump_to_previous_cell' }
+--   } },
+--   { '<leader>d',  {
+--     { 'do', ':call jukit#cells#delete_outputs(0)<CR>', name = 'jukit#cells#delete_outputs' },
+--     { 'da', ':call jukit#cells#delete_outputs(1)<CR>', name = 'jukit#cells#delete_outputs' }
+--   } },
+--   { '<leader>n',  {
+--     { 'p', ':call jukit#convert#notebook_convert("jupyter-notebook")<CR>', name = 'jukit#convert#notebook_convert' }
+--   } },
+--   { '<leader>r',  {
+--     { 'ht', ':call jukit#convert#save_nb_to_file(1,1,\'html\')<CR>', name = 'jukit#convert#save_nb_to_file' },
+--     { 'pd', ':call jukit#convert#save_nb_to_file(1,1,\'pdf\')<CR>', name = 'jukit#convert#save_nb_to_file' }
+--   } },
+--   { '<leader>p',  {
+--     { 'd', ':call jukit#convert#save_nb_to_file(0,1,\'pdf\')<CR>', name = 'jukit#convert#save_nb_to_file' }
+--   } }
+-- })
+-- doom.use_keybind({
+--   { '<leader>',  {
+--     { '<space>', ':call jukit#send#section(0)<CR>', name = 'jukit#send#section' }
+--   } },
+--   { '<cr>',  {
+--     { '', ':call jukit#send#line()<CR>', name = 'jukit#send#line' }
+--   } },
+--   { '<leader>c',  {
+--     { 'c', ':call jukit#send#until_current_section()<CR>', name = 'jukit#send#until_current_section' }
+--   } },
+--   { '<leader>a',  {
+--     { 'll', ':call jukit#send#all()<CR>', name = 'jukit#send#all' }
+--   } }
+-- })
 
 doom.use_package({
   "nvim-orgmode/orgmode",
