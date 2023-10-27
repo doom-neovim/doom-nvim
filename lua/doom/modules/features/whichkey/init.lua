@@ -64,7 +64,8 @@ whichkey.settings = {
 whichkey.packages = {
   ["which-key.nvim"] = {
     "folke/which-key.nvim",
-    commit = "6885b669523ff4238de99a7c653d47b081b5506d",
+    commit = "e4fa445065a2bb0bbc3cca85346b67817f28e83e",
+    keys = { "<leader>" },
   },
 }
 
@@ -120,19 +121,15 @@ whichkey.configs["which-key.nvim"] = function()
 
   local keymaps_service = require("doom.services.keymaps")
   local whichkey_integration = get_whichkey_integration()
-  local count = 0
   for section_name, _ in pairs(doom.modules) do
     for _, module in pairs(doom[section_name]) do
       if module and module.binds then
-        count = count + 1
-        vim.defer_fn(function()
-          -- table.insert(all_keymaps, type(module.binds) == "function" and module.binds() or module.binds)
-          keymaps_service.applyKeymaps(
-            type(module.binds) == "function" and module.binds() or module.binds,
-            nil,
-            { whichkey_integration }
-          )
-        end, count)
+        -- table.insert(all_keymaps, type(module.binds) == "function" and module.binds() or module.binds)
+        keymaps_service.applyKeymaps(
+          type(module.binds) == "function" and module.binds() or module.binds,
+          nil,
+          { whichkey_integration }
+        )
       end
     end
   end

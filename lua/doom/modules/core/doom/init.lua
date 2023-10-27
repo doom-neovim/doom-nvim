@@ -5,35 +5,16 @@ required.settings = {
 }
 
 required.packages = {
-  ["packer.nvim"] = {
-    "wbthomason/packer.nvim",
-  },
-  -- Required by some treesitter modules
-  ["aniseed"] = {
-    "Olical/aniseed",
-    commit = "9892a40d4cf970a2916a984544b7f984fc12f55c",
-    module_pattern = "aniseed",
+  ["lazy.nvim"] = {
+    "folke/lazy.nvim",
   },
   ["plenary.nvim"] = {
     "nvim-lua/plenary.nvim",
-    commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7",
-    module = "plenary",
-  },
-  ["popup.nvim"] = {
-    "nvim-lua/popup.nvim",
-    commit = "b7404d35d5d3548a82149238289fa71f7f6de4ac",
-    module = "popup",
+    commit = "1c7e3e6b0f4dd5a174fcea9fda8a4d7de593b826",
   },
   ["nvim-web-devicons"] = {
     "kyazdani42/nvim-web-devicons",
     commit = "a8cf88cbdb5c58e2b658e179c4b2aa997479b3da",
-    module = "nvim-web-devicons",
-  },
-  -- Must include impatient.nvim here, even though it's bootstrapped in
-  -- core.modules.lua so that packer doesn't try and clean it up.
-  ["impatient.nvim"] = {
-    "lewis6991/impatient.nvim",
-    disabled = not doom.impatient_enabled,
   },
 }
 
@@ -161,12 +142,11 @@ required.binds = function()
           { "r", "<cmd>DoomRollback<CR>", name = "Rollback" },
           { "R", "<cmd>DoomReport<CR>", name = "Report issue" },
           { "u", "<cmd>DoomUpdate<CR>", name = "Update" },
-          { "s", "<cmd>PackerSync<CR>", name = "Sync packages" },
-          { "I", "<cmd>PackerInstall<CR>", name = "Install packages" },
-          { "C", "<cmd>PackerClean<CR>", name = "Clean packages" },
-          { "b", "<cmd>PackerCompile<CR>", name = "Build packages" },
-          { "S", "<cmd>PackerStatus<CR>", name = "Inform packages" },
-          { "p", "<cmd>PackerProfile<CR>", name = "Profile" },
+          { "s", "<cmd>Lazy sync<CR>", name = "Sync packages" },
+          { "I", "<cmd>Lazy install<CR>", name = "Install packages" },
+          { "C", "<cmd>Lazy clean<CR>", name = "Clean packages" },
+          -- { "b", "<cmd>Lazy build<CR>", name = "Build packages" },
+          { "p", "<cmd>Lazy profile<CR>", name = "Profile" },
         },
       },
       {
@@ -195,22 +175,6 @@ required.binds = function()
               vim.cmd("w " .. new_name)
             end,
             name = "Save as",
-          },
-        },
-      },
-      {
-        "g",
-        name = "+git",
-        {
-          { "p", [[<cmd>TermExec cmd="git pull"<CR>]], name = "Pull" },
-          { "P", [[<cmd>TermExec cmd="git push"<CR>]], name = "Push" },
-          {
-            "C",
-            name = "+commit",
-            {
-              { "c", [[<cmd>TermExec cmd="git commit"<CR>]], name = "commit" },
-              { "a", [[<cmd>TermExec cmd="git commit --ammend"<CR>]], name = "ammend" },
-            },
           },
         },
       },

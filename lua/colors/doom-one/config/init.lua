@@ -24,7 +24,6 @@ local configuration = {
     startify = true,
     whichkey = true,
     indent_blankline = true,
-    vim_illuminate = true,
     lspsaga = false,
   },
 }

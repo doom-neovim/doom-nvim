@@ -49,17 +49,18 @@ telescope.settings = {
 telescope.packages = {
   ["telescope.nvim"] = {
     "nvim-telescope/telescope.nvim",
-    commit = "f174a0367b4fc7cb17710d867e25ea792311c418",
+    commit = "1ba7278cf08da8048e7f589ef6b65a39fd3e4dbf",
     cmd = "Telescope",
-    opt = true,
+    lazy = true,
   },
   ["telescope-file-browser.nvim"] = {
     "nvim-telescope/telescope-file-browser.nvim",
-    commit = "6b4e22777bfa6a31787a4ac8e086b062ef241ede",
+    commit = "304508fb7bea78e3c0eeddd88c4837501e403ae8",
     cmd = "Telescope browse_files",
-    key = "<leader>.",
-    after = "telescope.nvim",
-    opt = true,
+    keys = "<leader>.",
+    dependencies = {"nvim-telescope/telescope.nvim"},
+    -- after = "telescope.nvim",
+    lazy = true,
   },
 }
 
@@ -148,8 +149,8 @@ telescope.binds = function()
         "g",
         name = "+git",
         {
-          { "s", "<cmd>Telescope git_status<CR>", name = "Status" },
-          { "b", "<cmd>Telescope git_branches<CR>", name = "Branches" },
+          { "S", "<cmd>Telescope git_status<CR>", name = "Status" },
+          { "B", "<cmd>Telescope git_branches<CR>", name = "Branches" },
           { "c", "<cmd>Telescope git_commits<CR>", name = "Commits" },
         },
       },

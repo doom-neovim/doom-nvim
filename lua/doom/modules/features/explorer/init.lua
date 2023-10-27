@@ -93,9 +93,8 @@ explorer.settings = {
 
 explorer.packages = {
   ["nvim-tree.lua"] = {
-    "kyazdani42/nvim-tree.lua",
-    commit = "7282f7de8aedf861fe0162a559fc2b214383c51c",
-    module = "nvim-tree.api",
+    "nvim-tree/nvim-tree.lua",
+    commit = "3ce0a8e770f70a135ef969e0a640bd8d05baf42c",
     cmd = {
       "NvimTreeClipboard",
       "NvimTreeClose",
@@ -140,7 +139,7 @@ explorer.configs["nvim-tree.lua"] = function()
           { key = "<BS>", cb = tree_cb("close_node") },
           { key = "<S-CR>", cb = tree_cb("close_node") },
           { key = "<Tab>", cb = tree_cb("preview") },
-          { key = "I", cb = tree_cb("toggle_ignored") },
+          { key = "I", cb = tree_cb("toggle_git_ignored") },
           { key = "H", cb = tree_cb("toggle_dotfiles") },
           { key = "R", cb = tree_cb("refresh") },
           { key = "a", cb = tree_cb("create") },

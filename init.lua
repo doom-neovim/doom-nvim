@@ -13,6 +13,20 @@ end
 local profiler = require("doom.services.profiler")
 profiler.start("framework|init.lua")
 
+-- Preload lazy nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  print("Bootstrapping lazy.nvim, please wait...")
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
 -- Makes sure ~/.local/share/nvim exists, to prevent problems with logging
 vim.fn.mkdir(vim.fn.stdpath("data"), "p")

@@ -5,7 +5,7 @@ extra_snippets.settings = {}
 extra_snippets.packages = {
   ["friendly-snippets"] = {
     "rafamadriz/friendly-snippets",
-    after = "LuaSnip",
+    event = "VeryLazy",
   },
 }
 

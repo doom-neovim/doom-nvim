@@ -5,7 +5,8 @@ todo_comments.settings = {}
 todo_comments.packages = {
   ["todo-comments.nvim"] = {
     "folke/todo-comments.nvim",
-    commit = "8df75dbb9ddd78a378b9661f25f0b193f38f06dd",
+    commit = "077c59586d9d0726b0696dc5680eb863f4e04bc5",
+    event = "VeryLazy",
   },
 }
 

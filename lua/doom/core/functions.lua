@@ -257,29 +257,27 @@ end
 functions.nuke = function(target)
   if target == nil or #target == 0 then
     vim.notify(
-      "Warning, this command deletes packer caches and causes a re-install of doom-nvim on next launch.\n\n :DoomNuke plugins|cache|mason|all. \n\t `cache` - Clear packer_compiled.lua\n\t `plugins` - Clear all installed plugins\n\t `mason` - Clear all Mason.nvim packages\n\t `all` - Delete all of the above."
+      "Warning, this command deletes lazy caches and causes a re-install of doom-nvim on next launch.\n\n :DoomNuke plugins|cache|mason|all. \n\t `cache` - Clear lazy.lua\n\t `plugins` - Clear all installed plugins\n\t `mason` - Clear all Mason.nvim packages\n\t `all` - Delete all of the above."
     )
     return
   end
 
   local log = require("doom.utils.logging")
-  -- Delete packer compiled
+  -- Delete lazy compiled
   if target == "all" or target == "cache" then
     os.remove(system.doom_compile_path)
-    log.info("DoomNuke: Deleting packer compiled.")
+    log.info("DoomNuke: Deleting lazy compiled.")
   end
 
   if target == "all" or target == "plugins" then
     -- Delete all plugins
-    local util = require("packer.util")
-    local plugin_dir = util.join_paths(vim.fn.stdpath("data"), "site", "pack")
+    local plugin_dir = fs.join_paths(vim.fn.stdpath("data"), "lazy")
     fs.rm_dir(plugin_dir)
-    log.info("DoomNuke: Deleting packer plugins.  Doom-nvim will re-install on next launch.")
+    log.info("DoomNuke: Deleting lazy plugins.  Doom-nvim will re-install on next launch.")
   end
 
   if target == "all" or target == "mason" then
-    local util = require("packer.util")
-    local mason_dir = util.join_paths(vim.fn.stdpath("data"), "mason")
+    local mason_dir = fs.join_paths(vim.fn.stdpath("data"), "mason")
     fs.rm_dir(mason_dir)
     log.info("DoomNuke: Deleting mason packages")
   end

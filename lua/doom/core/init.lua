@@ -55,7 +55,6 @@ utils.safe_require("doom.core.commands")
 profiler.start("framework|doom.core.modules")
 -- Load Doom modules.
 local modules = utils.safe_require("doom.core.modules")
-modules.start()
 profiler.start("framework|init enabled modules")
 modules.load_modules()
 profiler.stop("framework|init enabled modules")
@@ -63,6 +62,7 @@ profiler.start("framework|user settings")
 modules.handle_user_config()
 profiler.stop("framework|user settings")
 modules.try_sync()
+modules.handle_lazynvim()
 profiler.stop("framework|doom.core.modules")
 
 -- Load the colourscheme

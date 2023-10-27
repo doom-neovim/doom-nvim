@@ -18,10 +18,11 @@
 
 </div>
 
-> Note: Doom nvim v4.0.0 has just been released (29th July 2022).
-> This release introduces many changes so feel free to ask questions on the
-> discord or in the github discussions page or create an issue ticket and I'll
-> solve it as soon as possible.
+##### IMPORTANT NOTICE
+
+This project is **NOT** abandoned. There is a major refactoring and incremental rewrite happening under the hood. If you want to
+know the current progress on this or if you want to contribute by making suggestions, reporting bugs, writing code for Doom, etc.
+please join us in the [Discord](https://discord.gg/xhvBM45zBf) server. Any suggestion is welcome!
 
 ## What is Doom Nvim?
 
@@ -43,7 +44,7 @@ Some of the defining features that make this project unique are:
 ### Mac OS / Linux
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/doom-neovim/doom-nvim/main/tools/install.sh)
+curl -s https://raw.githubusercontent.com/doom-neovim/doom-nvim/main/tools/install.sh | sh
 ```
 
 ### Manual (Mac OS / Linux)
