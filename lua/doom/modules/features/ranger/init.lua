@@ -5,7 +5,6 @@ ranger.settings = {}
 ranger.packages = {
   ["ranger.vim"] = {
     "francoiscabrol/ranger.vim",
-    commit = "91e82debdf566dfaf47df3aef0a5fd823cedf41c",
     dependencies = {
       "rbgrouleff/bclose.vim"
     },

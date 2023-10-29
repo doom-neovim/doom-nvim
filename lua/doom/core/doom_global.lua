@@ -2,7 +2,7 @@
 --
 -- Sets the `doom` global object including defaults and helper functions.
 -- We set it directly within this file (rather than returning the object) and
--- setting it elsewhere to allow sumneko_lua to provide documented type
+-- setting it elsewhere to allow lua_ls to provide documented type
 -- completions.
 
 --- TYPE DEFINITIONS

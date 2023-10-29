@@ -35,12 +35,6 @@ gitsigns.settings = {
   },
   numhl = false,
   linehl = false,
-  keymaps = {
-    -- Default keymap options
-    noremap = true,
-    buffer = true,
-
-  },
   watch_gitdir = { interval = 1000, follow_files = true },
   current_line_blame_opts = {
     delay = 1000,
@@ -56,7 +50,6 @@ gitsigns.settings = {
 gitsigns.packages = {
   ["gitsigns.nvim"] = {
     "lewis6991/gitsigns.nvim",
-    commit = "addd6e174a85fc1c4007ab0b65d77e6555b417bf",
     event = "VeryLazy",
   },
 }

@@ -121,47 +121,50 @@ module.use_mason_package = function(package_name, success_handler, error_handler
   end
   profiler.start("mason|using package " .. package_name)
   local ok, err = xpcall(function()
-    local package = mason.get_package(package_name)
-    if not package:is_installed() then
-      -- If statusline enabled, push the package to the statusline state
-      -- So we can provide feedback to user
-      local statusline = doom.features.statusline
-      if statusline then
-        statusline.state.start_mason_package(package_name)
-      end
+    local registry = require("mason-registry")
+    registry.refresh(function ()
+      local package = mason.get_package(package_name)
+      if not package:is_installed() then
+        -- If statusline enabled, push the package to the statusline state
+        -- So we can provide feedback to user
+        local statusline = doom.features.statusline
+        if statusline then
+          statusline.state.start_mason_package(package_name)
+        end
 
-      package:install()
-      package:on("install:success", function(handle)
-        -- Remove package from statusline state to hide it
-        if statusline then
-          statusline.state.finish_mason_package(package_name)
-        end
-        vim.schedule(function()
-          success_handler(handle)
-        end)
-        profiler.stop("mason|using package " .. package_name)
-      end)
-      package:on("install:failed", function(pkg)
-        -- Remove package from statusline state to hide it
-        if statusline then
-          statusline.state.finish_mason_package(package_name)
-        end
-        local err = "Mason.nvim install failed.  Reason:\n"
-        if pkg and pkg.stdio and pkg.stdio.buffers and pkg.stdio.buffers.stderr then
-          for _, line in ipairs(pkg.stdio.buffers.stderr) do
-            err = err .. line
+        package:install()
+        package:on("install:success", function(handle)
+          -- Remove package from statusline state to hide it
+          if statusline then
+            statusline.state.finish_mason_package(package_name)
           end
-        end
-
-        vim.schedule(function()
-          on_err(package_name, err)
+          vim.schedule(function()
+            success_handler(handle)
+          end)
+          profiler.stop("mason|using package " .. package_name)
         end)
+        package:on("install:failed", function(pkg)
+          -- Remove package from statusline state to hide it
+          if statusline then
+            statusline.state.finish_mason_package(package_name)
+          end
+          local err = "Mason.nvim install failed.  Reason:\n"
+          if pkg and pkg.stdio and pkg.stdio.buffers and pkg.stdio.buffers.stderr then
+            for _, line in ipairs(pkg.stdio.buffers.stderr) do
+              err = err .. line
+            end
+          end
+
+          vim.schedule(function()
+            on_err(package_name, err)
+          end)
+          profiler.stop("mason|using package " .. package_name)
+        end)
+      else
         profiler.stop("mason|using package " .. package_name)
-      end)
-    else
-      profiler.stop("mason|using package " .. package_name)
-      success_handler(package, package.get_handle(package))
-    end
+        success_handler(package, package.get_handle(package))
+      end
+    end)
   end, debug.traceback)
   if not ok then
     profiler.stop("mason|using package " .. package_name)
@@ -246,7 +249,7 @@ module.use_lsp_mason = function(lsp_name, options)
           and lsp_config_server.manager.try_add_wrapper
         or lsp_config_server.manager.try_add
       for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-        buffer_handler(bufnr)
+        buffer_handler(lsp_config_server.manager, bufnr)
       end
     end
   end

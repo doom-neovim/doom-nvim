@@ -5,7 +5,6 @@ range_highlight.settings = {}
 range_highlight.packages = {
   ["range-highlight.nvim"] = {
     "winston0410/range-highlight.nvim",
-    commit = "8b5e8ccb3460b2c3675f4639b9f54e64eaab36d9",
     dependencies = {
       { "winston0410/cmd-parser.nvim" },
     },
