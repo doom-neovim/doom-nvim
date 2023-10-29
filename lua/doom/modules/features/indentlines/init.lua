@@ -11,7 +11,6 @@ indentlines.settings = {
 indentlines.packages = {
   ["indent-blankline.nvim"] = {
     "lukas-reineke/indent-blankline.nvim",
-    commit = "c4c203c3e8a595bc333abaf168fcb10c13ed5fb7",
   },
 }
 

@@ -203,7 +203,6 @@ version: 0.0.11
      example.packages = {
        ["example-plugin.nvim"] = { -- Use the repository name as the key
          "GithubUser/example-plugin.nvim",
-         commit = "..." -- We like to pin plugins to commits to avoid issues upgrading.
        }
      }
 

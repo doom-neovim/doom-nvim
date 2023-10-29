@@ -5,7 +5,6 @@ neogit.settings = {}
 neogit.packages = {
   ["neogit"] = {
     "NeogitOrg/neogit",
-    commit = "28b0227405e135424a79824ff6b840897cb4aba5",
     cmd = "Neogit",
     lazy = true,
   },

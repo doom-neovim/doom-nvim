@@ -207,7 +207,6 @@ example.settings = {...} -- Doom-nvim provided object to change settings
 example.packages = {
   ["example-plugin.nvim"] = { -- Use the repository name as the key
     "GithubUser/example-plugin.nvim",
-    commit = "..." -- We like to pin plugins to commits to avoid issues upgrading.
   }
 }
 

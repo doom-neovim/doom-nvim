@@ -5,7 +5,6 @@ suda.settings = {}
 suda.packages = {
   ["suda.vim"] = {
     "lambdalisue/suda.vim",
-    commit = "08abd39dfe1cee681b8ce3e7321da5fa03e045c1",
     lazy = true,
     cmd = { "SudaRead", "SudaWrite" },
   },
