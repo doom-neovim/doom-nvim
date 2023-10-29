@@ -24,13 +24,12 @@ symbols.packages = {
       "SymbolsOutlineOpen",
       "SymbolsOutlineClose",
     },
-    opt = true,
   },
 }
 
 symbols.configs = {}
-symbols.configs["symbols_outline.nvim"] = function()
-  vim.g.symbols_outline = doom.features.symbols.settings
+symbols.configs["symbols-outline.nvim"] = function()
+  require("symbols-outline").setup(doom.features.symbols.settings)
 end
 
 symbols.binds = {
