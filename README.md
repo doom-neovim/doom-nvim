@@ -233,7 +233,7 @@ return {
 ```
 
 The same module with be avaliable in your `config.lua` in the `doom.features.module_name` field.
-The settings should have autocomplete from sumneko lua lsp.
+The settings should have autocomplete from lua lsp.
 ```lua
 -- config.lua
 local whichkey = doom.features.whichkey -- Get the whichkey module

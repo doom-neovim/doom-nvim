@@ -25,6 +25,8 @@
   "leap.nvim": { "branch": "main", "commit": "b6ae80f8fc9993638608fc1a51c6ab0eeb12618c" },
   "lsp_signature.nvim": { "branch": "master", "commit": "1979f1118e2b38084e7c148f279eed6e9300a342" },
   "lush.nvim": { "branch": "main", "commit": "966aad1accd47fa11fbe2539234f81f678fef2de" },
+  "mason-lspconfig": { "branch": "main", "commit": "40301e1c74bc0946eece13edf2b1c561cc497491" },
+  "mason.nvim": { "branch": "main", "commit": "cd7835b15f5a4204fc37e0aa739347472121a54c" },
   "mini.cursorword": { "branch": "main", "commit": "21af5679b39cf1a6bc6bf4eeaabc35e1b5ee7110" },
   "neodev.nvim": { "branch": "main", "commit": "f3f5d756f4043180523bb69072a104f7216b5f42" },
   "neogen": { "branch": "main", "commit": "0958aeffcddf46e57785c3026be934816b4f39d2" },

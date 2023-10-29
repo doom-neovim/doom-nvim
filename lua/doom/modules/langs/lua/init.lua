@@ -13,15 +13,15 @@ lua.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  lsp_name = "sumneko_lua",
+  lsp_name = "lua_ls",
   --- Custom config to pass to nvim-lspconfig
   --- @type table|nil
   lsp_config = {
-    formatter = {
-      enabled = true,
-    },
     settings = {
       Lua = {
+        format = {
+          enable = true,
+        },
         completion = {
           callSnippet = "Replace",
         },

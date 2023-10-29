@@ -246,7 +246,7 @@ module.use_lsp_mason = function(lsp_name, options)
           and lsp_config_server.manager.try_add_wrapper
         or lsp_config_server.manager.try_add
       for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-        buffer_handler(bufnr)
+        buffer_handler(lsp_config_server.manager, bufnr)
       end
     end
   end
