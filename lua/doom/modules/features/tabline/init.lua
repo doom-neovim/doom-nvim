@@ -40,14 +40,14 @@ tabline.settings = {
           name = "Tests",
           auto_close = true,
           matcher = function(buf)
-            return buf.filename:match("%_test") or buf.filename:match("%_spec")
+            return buf.name:match("%_test") or buf.name:match("%_spec")
           end,
         },
         {
           name = "Docs",
           auto_close = true,
           matcher = function(buf)
-            return buf.filename:match("%.md") or buf.filename:match("%.txt")
+            return buf.name:match("%.md") or buf.name:match("%.txt")
           end,
         },
       },
