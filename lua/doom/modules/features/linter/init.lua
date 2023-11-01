@@ -32,7 +32,7 @@ linter.configs["null-ls.nvim"] = function()
         vim.cmd([[
         augroup LspFormatting
           autocmd! * <buffer>
-          autocmd BufWritePre <buffer> lua type(vim.lsp.buf.format) == "function" and vim.lsp.buf.format() or vim.lsp.buf.formatting_sync()
+          autocmd BufWritePre <buffer> lua if vim.lsp.buf.format ~= nil then vim.lsp.buf.format() else vim.lsp.buf.formatting_sync() end
         augroup END
         ]])
       end
@@ -45,7 +45,7 @@ linter.binds = {
     "<leader>cf",
     function()
       local null_ls_settings = doom.features.linter.settings.null_ls_settings
-      if type(vim.lsp.buf.format) == "function" then
+      if vim.lsp.buf.format ~= nil then
         vim.lsp.buf.format({
           timeout_ms = null_ls_settings.default_timeout,
         })
