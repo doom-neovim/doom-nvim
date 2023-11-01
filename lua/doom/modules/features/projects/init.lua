@@ -48,8 +48,8 @@ projects.requires_modules = { "features.telescope" }
 projects.configs = {}
 projects.configs["project.nvim"] = function()
   require("project_nvim").setup(doom.features.projects.settings)
-
-  table.insert(doom.features.telescope.settings.extensions, "projects")
+  require('telescope').load_extension('projects')
+  -- table.insert(doom.features.telescope.settings.extensions, "projects")
 end
 
 projects.binds = {
