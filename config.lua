@@ -10,11 +10,11 @@
 -- Fix annoying lua check warnings
 -- Need to use both to top level inline comment and this one
 doom.modules.langs.lua.settings.lsp_config.settings.Lua.diagnostics = {
-  globals = {"vim", "doom"},
+  globals = { "vim", "doom" },
   std = {
-    globals = {"vim", "doom"},
+    globals = { "vim", "doom" },
   },
-  disable = {"missing-fields", "incomplete-signature-doc"},
+  disable = { "missing-fields", "incomplete-signature-doc" },
 }
 
 vim.g.python3_host_prog = "/home/k/mambaforge/envs/python311/bin/python3"
@@ -34,10 +34,61 @@ doom.use_package({
 doom.use_package("averms/black-nvim")
 
 -- doom.use_package({"kiyoon/jupynium.nvim", build = "pip3 install --user ."})
--- doom.use_package("kiyoon/jupynium.nvim")
-doom.use_package("rcarriga/nvim-notify")
+doom.use_package("kiyoon/jupynium.nvim")
+doom.use_package({
+  "rcarriga/nvim-notify",
+  config = function()
+    require("notify").setup({
+      background_colour = "#000000",
+    })
+  end,
+})
 doom.use_package("stevearc/dressing.nvim")
 
+-- Jupynium keybinds
+doom.use_keybind({
+  {
+    "<leader>",
+    {
+      { "x",  "<NOP>", name = "Execute current cell" },
+      -- { "c",  "<NOP>", name = "Clear current cell" },
+      { "j", {
+        name = "+jump/Jupynium",
+        { "j", "<NOP>", name = "Go to cell seperator" },
+        { "S", ":JupyniumStartAndAttachToServer<CR>", name = "Start and attach to server" },
+        { "f", ":JupyniumStartSync<CR>", name = "Sync this fille" },
+        { "d", ":JupyniumDownloadIpynb<CR>", name = "Save as ipynb" },
+        { "l", ":JupyniumLoadFromIpynbTab 2<CR>", name = "Load from browser tab (2nd tab)" },
+      }},
+    },
+  },
+  {
+    "[",
+    {
+      { "j", "<NOP>", name = "Go to prev cell" },
+    },
+  },
+  {
+    "]",
+    {
+      { "j", "<NOP>", name = "Go to next cell" },
+    },
+  },
+  {
+    "va",
+    {
+      { "j", "<NOP>", name = "Select current cell [:)" },
+      { "J", "<NOP>", name = "Select current cell [:]" },
+    },
+  },
+  {
+    "vi",
+    {
+      { "j", "<NOP>", name = "Select current inner cell (:)" },
+      { "J", "<NOP>", name = "Select current inner cell (:]" },
+    },
+  },
+})
 
 -- doom.use_package("luk400/vim-jukit")
 -- vim.cmd[[highlight jukit_cellmarker_colors guifg=#1d615a guibg=#1d615a ctermbg=22 ctermfg=22]]
