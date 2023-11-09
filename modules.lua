@@ -59,29 +59,28 @@ return {
     -- Scripts
     "lua",
     "python",
-    -- "bash",
+    "bash",
     -- "fish",
-    -- "gdscript",
-    -- "gdscript",
+    "gdscript",
     -- "php",
     -- "ruby",
 
     -- Web
-    -- "javascript",
-    -- "typescript",
-    -- "css",
+    "javascript",
+    "typescript",
+    "css",
     -- "vue",
-    -- "tailwindcss",
+    "tailwindcss",
     -- "svelte",
 
     -- Compiled
     -- "rust",
-    -- "cc",
+    "cc",
     -- "ocaml",
     -- "haskell",
 
     -- JIT
-    -- "c_sharp",
+    "c_sharp",
     -- "kotlin",
     -- "java",
 
