@@ -51,7 +51,7 @@ telescope.packages = {
     "nvim-telescope/telescope.nvim",
     commit = "1ba7278cf08da8048e7f589ef6b65a39fd3e4dbf",
     cmd = "Telescope",
-    lazy = true,
+    lazy = false,
   },
   ["telescope-file-browser.nvim"] = {
     "nvim-telescope/telescope-file-browser.nvim",
@@ -60,7 +60,7 @@ telescope.packages = {
     keys = "<leader>.",
     dependencies = {"nvim-telescope/telescope.nvim"},
     -- after = "telescope.nvim",
-    lazy = true,
+    lazy = false,
   },
 }
 

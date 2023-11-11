@@ -17,8 +17,25 @@ doom.modules.langs.lua.settings.lsp_config.settings.Lua.diagnostics = {
   disable = { "missing-fields", "incomplete-signature-doc" },
 }
 
-vim.g.python3_host_prog = "/home/k/mambaforge/envs/python311/bin/python3"
+-- vim.g.python3_host_prog = "/home/k/mambaforge/envs/python311/bin/python3"
+vim.g.python3_host_prog = "/home/k/mambaforge/bin/python"
 vim.o.linebreak = true
+
+doom.use_keybind({
+  {
+    "<leader>",
+    {
+      {
+        "f",
+        name = "+file",
+        {
+          { "f", "<cmd>Telescope file_browser<CR>", name = "File browser" },
+          { "F", "<cmd>Telescope find_files<CR>", name = "Find in project" },
+        },
+      },
+    },
+  },
+})
 
 -- ADDING A PACKAGE
 --
@@ -34,7 +51,14 @@ doom.use_package({
 doom.use_package("averms/black-nvim")
 
 -- doom.use_package({"kiyoon/jupynium.nvim", build = "pip3 install --user ."})
-doom.use_package("kiyoon/jupynium.nvim")
+doom.use_package({
+  "kiyoon/jupynium.nvim",
+  config = function()
+    require("jupynium").setup({
+      -- python_host = "python"
+    })
+  end,
+})
 doom.use_package({
   "rcarriga/nvim-notify",
   config = function()
@@ -50,16 +74,28 @@ doom.use_keybind({
   {
     "<leader>",
     {
-      { "x",  "<NOP>", name = "Execute current cell" },
+      { "x", "<NOP>", name = "Execute current cell" },
       -- { "c",  "<NOP>", name = "Clear current cell" },
-      { "j", {
-        name = "+jump/Jupynium",
-        { "j", "<NOP>", name = "Go to cell seperator" },
-        { "S", ":JupyniumStartAndAttachToServer<CR>", name = "Start and attach to server" },
-        { "f", ":JupyniumStartSync<CR>", name = "Sync this fille" },
-        { "d", ":JupyniumDownloadIpynb<CR>", name = "Save as ipynb" },
-        { "l", ":JupyniumLoadFromIpynbTab 2<CR>", name = "Load from browser tab (2nd tab)" },
-      }},
+      {
+        "j",
+        {
+          name = "+jump/Jupynium",
+          { "j", "<NOP>", name = "Go to cell seperator" },
+          { "S", ":JupyniumStartAndAttachToServer<CR>", name = "Start and attach to server" },
+          { "f", ":JupyniumStartSync<CR>", name = "Sync this fille" },
+          { "d", ":JupyniumDownloadIpynb<CR>", name = "Save as ipynb" },
+          { "l", ":JupyniumLoadFromIpynbTab 2<CR>", name = "Load from browser tab (2nd tab)" },
+          {
+            "k",
+            {
+              name = "Kernel",
+              { "s", ":JupyniumKernelSelect<CR>", name = "Select Kernel" },
+              { "r", ":JupyniumKernelRestart<CR>", name = "Restart Kernel" },
+              { "i", ":JupyniumKernelInterrupt<CR>", name = "Interrupt Kernel" },
+            },
+          },
+        },
+      },
     },
   },
   {
@@ -242,7 +278,7 @@ doom.use_keybind({
   {
     mode = "i",
     {
-      { "<TAB>",   "<cmd>MyTabOrgDemote<CR>" },
+      { "<TAB>", "<cmd>MyTabOrgDemote<CR>" },
       { "<S-TAB>", "<cmd>MyTabOrgPromote<CR>" },
     },
   },
@@ -270,7 +306,7 @@ doom.use_keybind({
       {
         options = { expr = true, script = true, replace_keycodes = false },
         {
-          { "<C-g>",  'copilot#Accept("<CR>")' },
+          { "<C-g>", 'copilot#Accept("<CR>")' },
           { "<C-CR>", 'copilot#Accept("<CR>")' },
         },
       },
@@ -330,8 +366,8 @@ local orig_notify = vim.notify
 local filter_notify = function(text, level, opts)
   -- more specific to this case
   if
-      type(text) == "string"
-      and (string.find(text, "get_query", 1, true) or string.find(text, "get_node_text", 1, true))
+    type(text) == "string"
+    and (string.find(text, "get_query", 1, true) or string.find(text, "get_node_text", 1, true))
   then
     -- for all deprecated and stack trace warnings
     -- if type(text) == "string" and (string.find(text, ":help deprecated", 1, true) or string.find(text, "stack trace", 1, true)) then
