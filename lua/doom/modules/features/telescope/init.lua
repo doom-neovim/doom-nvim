@@ -49,7 +49,8 @@ telescope.settings = {
 telescope.packages = {
   ["telescope.nvim"] = {
     "nvim-telescope/telescope.nvim",
-    commit = "1ba7278cf08da8048e7f589ef6b65a39fd3e4dbf",
+    -- commit = "1ba7278cf08da8048e7f589ef6b65a39fd3e4dbf",
+    tag = '0.1.3',
     cmd = "Telescope",
     lazy = false,
   },

@@ -1,6 +1,3 @@
--- luacheck: ignore 113 143 148 542
--- the above line is a special comment to fix annoying lua check warnings
-
 -- doom_config - Doom Nvim user configurations file
 --
 -- This file contains the user-defined configurations for Doom nvim.
@@ -19,6 +16,57 @@ doom.modules.langs.lua.settings.lsp_config.settings.Lua.diagnostics = {
 
 -- vim.g.python3_host_prog = "/home/k/mambaforge/envs/python311/bin/python3"
 vim.g.python3_host_prog = "/home/k/mambaforge/bin/python"
+
+doom.use_package({
+  "folke/tokyonight.nvim",
+  lazy = false,
+  priority = 1000,
+  opts = {},
+  config = function()
+    require("tokyonight").setup({
+      transparent = true,
+      style = "storm",
+    })
+  end,
+})
+-- doom.colorscheme = "tokyonight"
+
+doom.use_package({
+  "catppuccin/nvim",
+  name = "catppuccin",
+  priority = 1000,
+  lazy = false,
+  config = function()
+    require("catppuccin").setup({
+      flavour = "mocha",
+      transparent_background = true
+    })
+  end
+})
+doom.colorscheme = "catppuccin"
+
+doom.use_package({
+  "linux-cultist/venv-selector.nvim",
+  dependencies = {
+    "neovim/nvim-lspconfig",
+    "nvim-telescope/telescope.nvim",
+    "mfussenegger/nvim-dap-python",
+  },
+  opts = {
+    -- Your options go here
+    -- name = "venv",
+    auto_refresh = false,
+    anaconda_envs_path = "~/mambaforge/envs",
+  },
+  event = "VeryLazy", -- Optional: needed only if you want to type `:VenvSelect` without a keymapping
+  -- keys = {
+  --   -- Keymap to open VenvSelector to pick a venv.
+  --   { "<leader>vs", "<cmd>VenvSelect<cr>" },
+  --   -- Keymap to retrieve the venv from a cache (the one previously used for the same project directory).
+  --   { "<leader>vc", "<cmd>VenvSelectCached<cr>" },
+  -- },
+})
+
 vim.o.linebreak = true
 
 doom.use_keybind({
@@ -30,9 +78,33 @@ doom.use_keybind({
         name = "+file",
         {
           { "f", "<cmd>Telescope file_browser<CR>", name = "File browser" },
-          { "F", "<cmd>Telescope find_files<CR>", name = "Find in project" },
+          { "F", "<cmd>Telescope find_files<CR>",   name = "Find in project" },
         },
       },
+      {
+        "v",
+        name = "+venv",
+        {
+          { "s", "<cmd>VenvSelect<CR>",       name = "Select venv" },
+          { "c", "<cmd>VenvSelectCached<CR>", name = "Select cached venv" },
+        },
+      },
+      {
+        "t",
+        name = "+tweak/toggle",
+        {
+          { "t", "<cmd>TodoTelescope<CR>", name = "Project TODOs" },
+        },
+      },
+      {
+        "h",
+        name = "+help",
+        {
+          { "x", "<cmd>Telescope commands<CR>",  name = "Plugin Commands" },
+          { "t", "<cmd>Telescope help_tags<CR>", name = "Built-in commands(tags)" },
+        },
+      },
+      { ":", "<cmd>Telescope commands<CR>", name = "Plugin Commands" },
     },
   },
 })
@@ -80,17 +152,17 @@ doom.use_keybind({
         "j",
         {
           name = "+jump/Jupynium",
-          { "j", "<NOP>", name = "Go to cell seperator" },
+          { "j", "<NOP>",                               name = "Go to cell seperator" },
           { "S", ":JupyniumStartAndAttachToServer<CR>", name = "Start and attach to server" },
-          { "f", ":JupyniumStartSync<CR>", name = "Sync this fille" },
-          { "d", ":JupyniumDownloadIpynb<CR>", name = "Save as ipynb" },
-          { "l", ":JupyniumLoadFromIpynbTab 2<CR>", name = "Load from browser tab (2nd tab)" },
+          { "f", ":JupyniumStartSync<CR>",              name = "Sync this fille" },
+          { "d", ":JupyniumDownloadIpynb<CR>",          name = "Save as ipynb" },
+          { "l", ":JupyniumLoadFromIpynbTab 2<CR>",     name = "Load from browser tab (2nd tab)" },
           {
             "k",
             {
               name = "Kernel",
-              { "s", ":JupyniumKernelSelect<CR>", name = "Select Kernel" },
-              { "r", ":JupyniumKernelRestart<CR>", name = "Restart Kernel" },
+              { "s", ":JupyniumKernelSelect<CR>",    name = "Select Kernel" },
+              { "r", ":JupyniumKernelRestart<CR>",   name = "Restart Kernel" },
               { "i", ":JupyniumKernelInterrupt<CR>", name = "Interrupt Kernel" },
             },
           },
@@ -278,7 +350,7 @@ doom.use_keybind({
   {
     mode = "i",
     {
-      { "<TAB>", "<cmd>MyTabOrgDemote<CR>" },
+      { "<TAB>",   "<cmd>MyTabOrgDemote<CR>" },
       { "<S-TAB>", "<cmd>MyTabOrgPromote<CR>" },
     },
   },
@@ -306,7 +378,7 @@ doom.use_keybind({
       {
         options = { expr = true, script = true, replace_keycodes = false },
         {
-          { "<C-g>", 'copilot#Accept("<CR>")' },
+          { "<C-g>",  'copilot#Accept("<CR>")' },
           { "<C-CR>", 'copilot#Accept("<CR>")' },
         },
       },
@@ -366,8 +438,8 @@ local orig_notify = vim.notify
 local filter_notify = function(text, level, opts)
   -- more specific to this case
   if
-    type(text) == "string"
-    and (string.find(text, "get_query", 1, true) or string.find(text, "get_node_text", 1, true))
+      type(text) == "string"
+      and (string.find(text, "get_query", 1, true) or string.find(text, "get_node_text", 1, true))
   then
     -- for all deprecated and stack trace warnings
     -- if type(text) == "string" and (string.find(text, ":help deprecated", 1, true) or string.find(text, "stack trace", 1, true)) then
