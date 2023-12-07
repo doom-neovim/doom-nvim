@@ -27,10 +27,74 @@ doom.use_package({
 })
 
 doom.use_package({
+  "lewis6991/hover.nvim",
+  config = function()
+    require("hover").setup({
+      init = function()
+        -- Require providers
+        require("hover.providers.lsp")
+        -- require('hover.providers.gh')
+        -- require('hover.providers.gh_user')
+        -- require('hover.providers.jira')
+        -- require('hover.providers.man')
+        -- require('hover.providers.dictionary')
+      end,
+      preview_opts = {
+        border = "single",
+      },
+      -- Whether the contents of a currently open hover window should be moved
+      -- to a :h preview-window when pressing the hover keymap.
+      preview_window = false,
+      title = true,
+      mouse_providers = {
+        "LSP",
+      },
+      mouse_delay = 1000,
+    })
+    -- Setup keymaps
+    vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
+    vim.keymap.set("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
+
+  end,
+})
+
+doom.use_package({
   "folke/noice.nvim",
-  event = "VeryLazy",
+  -- event = "VeryLazy",
+  lazy = false,
   opts = {
     -- add any options here
+    routes = {
+      {
+        filter = {
+          event = "msg_show",
+          find = "lines --",
+        },
+        opts = { skip = true },
+      },
+      {
+        filter = {
+          warning = true,
+          find = "vim.treesitter.query.get_query() is deprecated",
+        },
+        opts = { skip = true },
+      },
+      {
+        filter = {
+          event = "msg_show",
+          kind = "",
+          find = "written",
+        },
+        opts = { skip = true },
+      },
+      {
+        filter = {
+          event = "msg_show",
+          kind = "search_count",
+        },
+        opts = { skip = true },
+      },
+    },
   },
   dependencies = {
     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
@@ -52,6 +116,9 @@ doom.use_package({
         signature = { enabled = false },
         progress = { enabled = false },
         message = { enabled = false },
+        hover = {
+          silent = true,
+        },
       },
       -- you can enable a preset for easier configuration
       presets = {
@@ -62,6 +129,27 @@ doom.use_package({
         lsp_doc_border = false,       -- add a border to hover docs and signature help
       },
     })
+
+    -- PATCH: in order to address the message:
+    -- vim.treesitter.query.get_query() is deprecated, use vim.treesitter.query.get() instead. :help deprecated
+    --   This feature will be removed in Nvim version 0.10
+    -- PATCH: in order to address the message:
+    -- vim.treesitter.query.get_query() is deprecated, use vim.treesitter.query.get() instead. :help deprecated
+    --   This feature will be removed in Nvim version 0.10
+    local orig_notify = require("noice")
+    local filter_notify = function(text, level, opts)
+      -- more specific to this case
+      if
+          type(text) == "string"
+          and (string.find(text, "get_query", 1, true) or string.find(text, "get_node_text", 1, true))
+      then
+        -- for all deprecated and stack trace warnings
+        -- if type(text) == "string" and (string.find(text, ":help deprecated", 1, true) or string.find(text, "stack trace", 1, true)) then
+        return
+      end
+      orig_notify(text, level, opts)
+    end
+    vim.notify = filter_notify
   end,
 })
 
@@ -122,6 +210,10 @@ doom.use_package({
   },
 })
 
+doom.use_package({
+  "nvim-pack/nvim-spectre",
+})
+
 -- ADDING A PACKAGE
 --
 -- doom.use_package("EdenEast/nightfox.nvim", "sainnhe/sonokai")
@@ -150,6 +242,27 @@ doom.use_package({
     require("notify").setup({
       background_colour = "#000000",
     })
+
+    -- PATCH: in order to address the message:
+    -- vim.treesitter.query.get_query() is deprecated, use vim.treesitter.query.get() instead. :help deprecated
+    --   This feature will be removed in Nvim version 0.10
+    local orig_notify = vim.notify
+    local filter_notify = function(text, level, opts)
+      -- more specific to this case
+      -- if type(text) == "string" and (string.find(text, "get_query", 1, true) or string.find(text, "get_node_text", 1, true)) then
+      -- for all deprecated and stack trace warnings
+      if
+          type(text) == "string"
+          and (
+            string.find(text, ":help deprecated", 1, true)
+            or string.find(text, "stack trace", 1, true)
+          )
+      then
+        return
+      end
+      orig_notify(text, level, opts)
+    end
+    vim.notify = filter_notify
   end,
 })
 doom.use_package("stevearc/dressing.nvim")
@@ -207,6 +320,13 @@ doom.use_keybind({
         {
           { "x", "<cmd>Telescope commands<CR>",  name = "Plugin Commands" },
           { "t", "<cmd>Telescope help_tags<CR>", name = "Built-in commands(tags)" },
+        },
+      },
+      {
+        "s",
+        name = "+search",
+        {
+          { "s", "<cmd>lua require('spectre').toggle()<CR>",  name = "Search and replace" },
         },
       },
       { ":", "<cmd>Telescope commands<CR>", name = "Plugin Commands" },
@@ -370,4 +490,3 @@ doom.use_keybind({
 -- })
 
 -- vim: sw=2 sts=2 ts=2 expandtab
-
