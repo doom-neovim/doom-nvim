@@ -19,10 +19,33 @@ vim.g.python3_host_prog = "/home/k/mambaforge/bin/python"
 vim.o.linebreak = true
 doom.colorscheme = "catppuccin"
 
+vim.o.foldcolumn = "1" -- '0' is not bad
+vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+
 doom.use_package({
   "github/copilot.vim",
   config = function()
     vim.g.copilot_no_tab_map = true
+  end,
+})
+
+doom.use_package({ "kevinhwang91/nvim-ufo", dependencies = "kevinhwang91/promise-async",
+  config = function()
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true
+    }
+    local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
+    for _, ls in ipairs(language_servers) do
+        require('lspconfig')[ls].setup({
+            capabilities = capabilities
+            -- you can add other fields for setting up lsp server in this table
+        })
+    end
+    require('ufo').setup()
   end,
 })
 
@@ -54,7 +77,6 @@ doom.use_package({
     -- Setup keymaps
     vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
     vim.keymap.set("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
-
   end,
 })
 
@@ -326,7 +348,7 @@ doom.use_keybind({
         "s",
         name = "+search",
         {
-          { "s", "<cmd>lua require('spectre').toggle()<CR>",  name = "Search and replace" },
+          { "s", "<cmd>lua require('spectre').toggle()<CR>", name = "Search and replace" },
         },
       },
       { ":", "<cmd>Telescope commands<CR>", name = "Plugin Commands" },
@@ -458,6 +480,17 @@ doom.use_keybind({
       { "<C-k>", "<Plug>(copilot-previous)" },
       { "<C-o>", "<Plug>(copilot-dismiss)" },
       { "<C-f>", "<Plug>(copilot-suggest)" },
+    },
+  },
+})
+
+-- nvim.ufo keybinds
+doom.use_keybind({
+  {
+    mode = "n",
+    {
+      { "zO", "<cmd>lua require('ufo').openAllFolds()<CR>" },
+      { "zC", "<cmd>lua require('ufo').closeAllFolds()<CR>" },
     },
   },
 })
