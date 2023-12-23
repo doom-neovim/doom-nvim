@@ -44,7 +44,7 @@ Some of the defining features that make this project unique are:
 ### Mac OS / Linux
 
 ```bash
-curl -s https://raw.githubusercontent.com/doom-neovim/doom-nvim/main/tools/install.sh | sh
+curl -s https://raw.githubusercontent.com/doom-neovim/doom-nvim/main/tools/install.sh && ./install.sh
 ```
 
 ### Manual (Mac OS / Linux)
