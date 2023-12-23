@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-declare -r XDG_DATA_HOME="${XDG_DATA_HOME:-"$HOME/.local/share"}"
-declare -r XDG_CACHE_HOME="${XDG_CACHE_HOME:-"$HOME/.cache"}"
-declare -r XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
+typeset -r XDG_DATA_HOME="${XDG_DATA_HOME:-"$HOME/.local/share"}"
+typeset -r XDG_CACHE_HOME="${XDG_CACHE_HOME:-"$HOME/.cache"}"
+typeset -r XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
 
 DOOM_REPO_URL="https://github.com/doom-neovim/doom-nvim"
-declare -r DOOM_CONFIG_DIR="${DOOM_CONFIG_DIR:-"$XDG_CONFIG_HOME/nvim"}"
+typeset -r DOOM_CONFIG_DIR="${DOOM_CONFIG_DIR:-"$XDG_CONFIG_HOME/nvim"}"
 
-declare BASEDIR
+typeset BASEDIR
 BASEDIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 BASEDIR="$(dirname -- "$(dirname -- "$BASEDIR")")"
 readonly BASEDIR
@@ -26,8 +26,8 @@ function help() {
   echo "    -y, --yes                                Skip all prompts"
 }
 
-declare -a system_dependencies=("nvim" "git" "node" "npm" "fd;optional" "rg;optional" "wget;optional" "unzip;optional")
-declare -a npm_dependencies=("tree-sitter")
+typeset -a system_dependencies=("nvim" "git" "node" "npm" "fd;optional" "rg;optional" "wget;optional" "unzip;optional")
+typeset -a npm_dependencies=("tree-sitter")
 
 function banner() {
     echo "                                                                              "
