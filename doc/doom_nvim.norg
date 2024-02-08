@@ -157,7 +157,7 @@ Some of the defining features that make this project unique are:
    @end
 
     The same module with be avaliable in your `config.lua` in the `doom.features.module_name` field.
-    The settings should have autocomplete from sumneko lua lsp.
+    The settings should have autocomplete from lua lsp.
     @code lua
     -- config.lua
     local whichkey = doom.features.whichkey -- Get the whichkey module

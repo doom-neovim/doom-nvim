@@ -25,7 +25,6 @@ terminal.settings = {
 terminal.packages = {
   ["toggleterm.nvim"] = {
     "akinsho/toggleterm.nvim",
-    commit = "a54e6c471ce1cd8ef8357e34598a28a955297131",
     cmd = { "ToggleTerm", "TermExec" },
     keys = {terminal.settings.open_mapping},
     lazy = true,
@@ -48,6 +47,14 @@ terminal.binds = {
         { "t", "<cmd>ToggleTerm<CR>", name = "Terminal" },
       },
     },
+  },
+}
+
+terminal.autocmds = {
+  {
+    "TermOpen",
+    "*",
+    "setlocal laststatus=0 noshowmode noruler nonumber norelativenumber",
   },
 }
 

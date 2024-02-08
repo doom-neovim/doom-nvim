@@ -13,15 +13,15 @@ lua.settings = {
   disable_lsp = false,
   --- Name of the language server
   --- @type string
-  lsp_name = "sumneko_lua",
+  lsp_name = "lua_ls",
   --- Custom config to pass to nvim-lspconfig
   --- @type table|nil
   lsp_config = {
-    formatter = {
-      enabled = true,
-    },
     settings = {
       Lua = {
+        format = {
+          enable = true,
+        },
         completion = {
           callSnippet = "Replace",
         },
@@ -91,7 +91,6 @@ lua.settings = {
 lua.packages = {
   ["lua-dev.nvim"] = {
     "folke/neodev.nvim",
-    commit = "0e3f5e763639951f96f9acbdc9f52a9fedf91b46",
     ft = "lua",
   },
 }

@@ -15,11 +15,9 @@ auto_install.settings = {
 auto_install.packages = {
   ["mason.nvim"] = {
     "williamboman/mason.nvim",
-    commit = "5ab101aa11849c2424d5b87726105daae8cb49e8",
   },
   ["mason-lspconfig"] = {
     "williamboman/mason-lspconfig",
-    commit = "43c7f402cb9822b61b5dc05bf0b385928df256a6",
   },
 }
 

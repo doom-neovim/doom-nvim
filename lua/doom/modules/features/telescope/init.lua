@@ -56,7 +56,6 @@ telescope.packages = {
   },
   ["telescope-file-browser.nvim"] = {
     "nvim-telescope/telescope-file-browser.nvim",
-    commit = "304508fb7bea78e3c0eeddd88c4837501e403ae8",
     cmd = "Telescope browse_files",
     keys = "<leader>.",
     dependencies = {"nvim-telescope/telescope.nvim"},
