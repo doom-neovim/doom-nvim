@@ -182,19 +182,6 @@ doom.use_package({
 })
 
 doom.use_package({
-  "folke/tokyonight.nvim",
-  lazy = false,
-  priority = 1000,
-  opts = {},
-  config = function()
-    require("tokyonight").setup({
-      transparent = true,
-      style = "storm",
-    })
-  end,
-})
-
-doom.use_package({
   "catppuccin/nvim",
   name = "catppuccin",
   priority = 1000,
@@ -236,10 +223,6 @@ doom.use_package({
   "nvim-pack/nvim-spectre",
 })
 
--- ADDING A PACKAGE
---
--- doom.use_package("EdenEast/nightfox.nvim", "sainnhe/sonokai")
---
 doom.use_package({
   "ur4ltz/surround.nvim",
   config = function()
@@ -250,14 +233,15 @@ doom.use_package({
 doom.use_package("averms/black-nvim")
 
 -- doom.use_package({"kiyoon/jupynium.nvim", build = "pip3 install --user ."})
-doom.use_package({
-  "kiyoon/jupynium.nvim",
-  config = function()
-    require("jupynium").setup({
-      -- python_host = "python"
-    })
-  end,
-})
+-- doom.use_package({
+--   "kiyoon/jupynium.nvim",
+--   config = function()
+--     require("jupynium").setup({
+--       -- python_host = "python"
+--     })
+--   end,
+-- })
+--
 doom.use_package({
   "rcarriga/nvim-notify",
   config = function()
@@ -289,24 +273,28 @@ doom.use_package({
 })
 doom.use_package("stevearc/dressing.nvim")
 
-doom.use_package({
-  "nvim-orgmode/orgmode",
-  config = function()
-    require("orgmode").setup_ts_grammar()
-    require("orgmode").setup({
-      -- These are nnoremap maps
-      mappings = {
-        org = {
-          org_todo = { "t", "cit" },
-          org_insert_heading_respect_content = { "<S-CR>", "<Leader>oih" },
-          org_cycle = { "<TAB>", "za" },
-          org_global_cycle = { "<S-TAB>", "zA" },
+doom.use_package({"jackMort/ChatGPT.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("chatgpt").setup({
+        api_key_cmd = "sh /home/k/openaikey.sh",
+        openai_params = {
+             model = "gpt-4-turbo-preview",
         },
-      },
+        openai_edit_params = {
+          model = "gpt-4-turbo-preview",
+        },
     })
-  end,
+    end,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "folke/trouble.nvim",
+      "nvim-telescope/telescope.nvim"
+    },
 })
 
+-- Keybinds
 doom.use_keybind({
   {
     "<leader>",
@@ -413,48 +401,6 @@ doom.use_keybind({
   },
 })
 
-doom.use_keybind({
-  {
-    "<leader>o",
-    name = "+open/close",
-    {
-      { "a", "<NOP>", name = "Org Agenda" },
-      { "c", "<NOP>", name = "Org Capture" },
-    },
-  },
-})
-
--- Orgmode: input mode tab and shift-tab to promote/demote subtree
-doom.use_cmd({
-  {
-    "MyTabOrgDemote",
-    function()
-      local ok, orgMappings = pcall(require, "orgmode.org.mappings")
-      if ok and orgMappings and vim.bo.filetype == "org" then
-        orgMappings.do_demote({ args = { true }, opts = { desc = "org demote subtree" } })
-      end
-    end,
-  },
-  {
-    "MyTabOrgPromote",
-    function()
-      local ok, orgMappings = pcall(require, "orgmode.org.mappings")
-      if ok and orgMappings and vim.bo.filetype == "org" then
-        orgMappings.do_promote({ args = { true }, opts = { desc = "org demote subtree" } })
-      end
-    end,
-  },
-})
-doom.use_keybind({
-  {
-    mode = "i",
-    {
-      { "<TAB>",   "<cmd>MyTabOrgDemote<CR>" },
-      { "<S-TAB>", "<cmd>MyTabOrgPromote<CR>" },
-    },
-  },
-})
-
 -- Sane jk behaviour
 doom.use_keybind({
   {
@@ -494,7 +440,6 @@ doom.use_keybind({
     },
   },
 })
-
 -- ADDING A KEYBIND
 --
 -- doom.use_keybind({
